@@ -78,7 +78,7 @@ describe('API Service', () => {
     const result = await getLocations();
     
     // Verify API was called with correct endpoint 
-    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/locations');
+    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/api/v1/bus-schedules/locations', { params: { lang: 'en' } });
     expect(result).toEqual(mockLocations);
   });
 
@@ -110,10 +110,10 @@ describe('API Service', () => {
     const result = await searchBuses(fromLocation, toLocation);
     
     // Verify API was called with correct endpoint and params
-    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/buses', {
+    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/api/v1/bus-schedules/search', {
       params: {
-        from: fromLocation.id,
-        to: toLocation.id
+        fromLocationId: fromLocation.id,
+        toLocationId: toLocation.id
       }
     });
     expect(result).toEqual(mockBuses);
@@ -138,7 +138,7 @@ describe('API Service', () => {
     const result = await getStops(1);
     
     // Verify API was called with correct endpoint
-    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/buses/1/stops');
+    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/api/v1/bus-schedules/1/stops', { params: { lang: 'en' } });
     expect(result).toEqual(mockStops);
   });
 
@@ -170,10 +170,10 @@ describe('API Service', () => {
     const result = await getConnectingRoutes(fromLocation, toLocation);
     
     // Verify API was called with correct endpoint and params
-    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/connecting-routes', {
+    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/api/v1/bus-schedules/connecting-routes', {
       params: {
-        from: fromLocation.id,
-        to: toLocation.id
+        fromLocationId: fromLocation.id,
+        toLocationId: toLocation.id
       }
     });
     expect(result).toEqual(mockConnectingRoutes);

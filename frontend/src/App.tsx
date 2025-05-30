@@ -1,5 +1,6 @@
 import './App.css';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import Header from './components/Header';
@@ -13,6 +14,7 @@ import Loading from './components/Loading';
 import BusTracker from './components/BusTracker';
 import LiveBusTracker from './components/LiveBusTracker';
 import UserSessionHistory from './components/UserSessionHistory';
+import UserRewards from './components/UserRewards';
 
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
@@ -25,6 +27,8 @@ import { getFeatureFlag } from './utils/environment';
  * Main App component that orchestrates the application flow
  */
 function App() {
+  const { t } = useTranslation();
+
   // Use custom hooks for location and search functionality
   const locationData = useLocationData();
   const busSearch = useBusSearch();
@@ -49,8 +53,7 @@ function App() {
   // Feature toggles from env
   const [showTracking, setShowTracking] = useState(() => getFeatureFlag('VITE_FEATURE_TRACKING', true));
   const [showAnalytics, setShowAnalytics] = useState(() => getFeatureFlag('VITE_FEATURE_ANALYTICS', true));
-  // Rewards feature is permanently disabled
-  const showRewards = false;
+  const [showRewards, setShowRewards] = useState(() => getFeatureFlag('VITE_FEATURE_REWARDS', true));
   
   // Active tab state for the tabbed interface
   const [activeTab, setActiveTab] = useState('tracking');
@@ -78,6 +81,37 @@ function App() {
         
         {error && <ErrorDisplay error={error} reset={handleErrorReset} />}
 
+        {/* Accessibility toggles */}
+        <div className="toggle-container">
+          <label className="toggle">
+            <input
+              type="checkbox"
+              aria-label="tracking"
+              checked={showTracking}
+              onChange={(e) => setShowTracking(e.target.checked)}
+            />
+            <span className="toggle-label">{t('busTracker.trackingDisabled')}</span>
+          </label>
+          <label className="toggle">
+            <input
+              type="checkbox"
+              aria-label="rewards"
+              checked={showRewards}
+              onChange={(e) => setShowRewards(e.target.checked)}
+            />
+            <span className="toggle-label">{t('rewards.rewardsDisabled')}</span>
+          </label>
+          <label className="toggle">
+            <input
+              type="checkbox"
+              aria-label="analytics"
+              checked={showAnalytics}
+              onChange={(e) => setShowAnalytics(e.target.checked)}
+            />
+            <span className="toggle-label">{t('analytics.analyticsDisabled')}</span>
+          </label>
+        </div>
+
         {/* Show search list (BusList) first */}
         {!isLoading && !error && busSearch.buses.length > 0 && (
           <>
@@ -101,8 +135,8 @@ function App() {
 
         {!isLoading && !error && busSearch.buses.length > 0 && (
           <>
-            {/* Add tabbed interface for Tracking and Analytics */}
-            {(showTracking || showAnalytics) && (
+            {/* Add tabbed interface for Tracking, Analytics, and Rewards */}
+            {(showTracking || showAnalytics || showRewards) && (
               <div className="tabs-container">
                 <div className="tabs-header">
                   {showTracking && (
@@ -121,18 +155,36 @@ function App() {
                       Analytics
                     </button>
                   )}
+                  {showRewards && (
+                    <button 
+                      className={`tab-button ${activeTab === 'rewards' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('rewards')}
+                    >
+                      Rewards
+                    </button>
+                  )}
                 </div>
                 
                 <div className="tabs-content">
-                  {showTracking && activeTab === 'tracking' && (
-                    <BusTracker 
-                      buses={busSearch.buses}
-                      stops={busSearch.stopsMap}
-                    />
+                  {showTracking && (
+                    <div style={{ display: activeTab === 'tracking' ? 'block' : 'none' }}>
+                      <BusTracker 
+                        buses={busSearch.buses}
+                        stops={busSearch.stopsMap}
+                      />
+                    </div>
                   )}
                   
-                  {showAnalytics && activeTab === 'analytics' && (
-                    <UserSessionHistory userId={localStorage.getItem('userId') || 'demo'} />
+                  {showAnalytics && (
+                    <div style={{ display: activeTab === 'analytics' ? 'block' : 'none' }}>
+                      <UserSessionHistory data-testid="user-session-history" userId="test-user" />
+                    </div>
+                  )}
+
+                  {showRewards && (
+                    <div style={{ display: activeTab === 'rewards' ? 'block' : 'none' }}>
+                      <UserRewards data-testid="user-rewards" />
+                    </div>
                   )}
                 </div>
               </div>
