@@ -94,6 +94,11 @@ tasks.named('processHexagonalTestResources') {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+// Add duplicate handling strategy for regular test resources
+tasks.named('processTestResources') {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 // Make sure check depends on hexagonalTest
 check.dependsOn hexagonalTest
 

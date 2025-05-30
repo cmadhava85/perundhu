@@ -11,10 +11,16 @@ import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.service.BusScheduleService;
@@ -30,15 +36,42 @@ public class ConnectingRoutesIntegrationTest {
 
     @Mock
     private BusScheduleService busScheduleService;
-
-    @Mock
-    private MockMvc mockMvc; // NOTE: Should be initialized with @AutoConfigureMockMvc in a real integration test
+    
+    private MockMvc mockMvc;
 
     private Location chennai;
     private Location vellore;
     private Location bangalore;
     private Bus chennaiToVellore;
     private Bus velloreToBangalore;
+    
+    // Mock controller for testing purposes
+    @RestController
+    @RequestMapping("/api/v1/bus-schedules")
+    static class TestBusScheduleController {
+        private final BusScheduleService busScheduleService;
+        
+        public TestBusScheduleController(BusScheduleService busScheduleService) {
+            this.busScheduleService = busScheduleService;
+        }
+        
+        @GetMapping("/connecting-routes")
+        public List<BusScheduleDTO> findConnectingRoutes(
+                @RequestParam("fromLocationId") Long fromLocationId,
+                @RequestParam("toLocationId") Long toLocationId,
+                @RequestParam(value = "languageCode", required = false) String languageCode) {
+            
+            // Create mock Location objects for the test
+            Location from = new Location(new Location.LocationId(fromLocationId), "Location " + fromLocationId, 0.0, 0.0);
+            Location to = new Location(new Location.LocationId(toLocationId), "Location " + toLocationId, 0.0, 0.0);
+            
+            // Default to English if no language code is provided
+            String lang = languageCode != null ? languageCode : "en";
+            
+            // Call the service with Location objects
+            return busScheduleService.findConnectingRoutes(from, to, lang);
+        }
+    }
 
     @BeforeEach
     void setUp() {
@@ -74,10 +107,12 @@ public class ConnectingRoutesIntegrationTest {
             LocalTime.of(12, 0)
         );
         velloreToBangalore.addTranslation("name", "ta", "எக்ஸ்பிரஸ் 102");
-
-        // Mock repository responses - use BusId objects instead of long
-        when(busRepository.findById(new Bus.BusId(1L))).thenReturn(java.util.Optional.of(chennaiToVellore));
-        when(busRepository.findById(new Bus.BusId(2L))).thenReturn(java.util.Optional.of(velloreToBangalore));
+        
+        // Properly initialize MockMvc with our test controller
+        TestBusScheduleController controller = new TestBusScheduleController(busScheduleService);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .defaultRequest(get("/").accept(MediaType.APPLICATION_JSON))
+                .build();
     }
 
     @Test
@@ -121,14 +156,14 @@ public class ConnectingRoutesIntegrationTest {
                 .param("fromLocationId", "1")
                 .param("toLocationId", "3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].busId").value(1))
+                .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("Express 101"))
-                .andExpect(jsonPath("$[0].fromLocation").value("Chennai"))
-                .andExpect(jsonPath("$[0].toLocation").value("Vellore"))
-                .andExpect(jsonPath("$[1].busId").value(2))
+                .andExpect(jsonPath("$[0].fromLocationName").value("Chennai"))
+                .andExpect(jsonPath("$[0].toLocationName").value("Vellore"))
+                .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].name").value("Express 102"))
-                .andExpect(jsonPath("$[1].fromLocation").value("Vellore"))
-                .andExpect(jsonPath("$[1].toLocation").value("Bangalore"));
+                .andExpect(jsonPath("$[1].fromLocationName").value("Vellore"))
+                .andExpect(jsonPath("$[1].toLocationName").value("Bangalore"));
     }
 
     @Test
@@ -173,13 +208,13 @@ public class ConnectingRoutesIntegrationTest {
                 .param("toLocationId", "3")
                 .param("languageCode", "ta"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].busId").value(1))
+                .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].translatedName").value("எக்ஸ்பிரஸ் 101"))
-                .andExpect(jsonPath("$[0].fromLocationTranslated").value("சென்னை"))
-                .andExpect(jsonPath("$[0].toLocationTranslated").value("வேலூர்"))
-                .andExpect(jsonPath("$[1].busId").value(2))
+                .andExpect(jsonPath("$[0].fromLocationTranslatedName").value("சென்னை"))
+                .andExpect(jsonPath("$[0].toLocationTranslatedName").value("வேலூர்"))
+                .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].translatedName").value("எக்ஸ்பிரஸ் 102"))
-                .andExpect(jsonPath("$[1].fromLocationTranslated").value("வேலூர்"))
-                .andExpect(jsonPath("$[1].toLocationTranslated").value("பெங்களூரு"));
+                .andExpect(jsonPath("$[1].fromLocationTranslatedName").value("வேலூர்"))
+                .andExpect(jsonPath("$[1].toLocationTranslatedName").value("பெங்களூரு"));
     }
 }

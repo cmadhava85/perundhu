@@ -63,6 +63,9 @@ public class BusTrackingServiceImplTest {
     
     @BeforeEach
     void setUp() {
+        // Reset the stop order tracking in the Stop class to avoid errors between tests
+        Stop.resetStopOrders();
+        
         // Set up test data using all-args constructors (immutable)
         Location fromLocation = new Location(new Location.LocationId(1L), "Start Station", 12.9716, 77.5946);
         Location toLocation = new Location(new Location.LocationId(2L), "End Station", 12.9816, 77.6046);
