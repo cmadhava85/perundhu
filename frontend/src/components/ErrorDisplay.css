@@ -1,0 +1,126 @@
+.error-container {
+  background-color: #fff3f3;
+  border: 1px solid #ff8a8a;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 4px rgba(255, 0, 0, 0.1);
+}
+
+.error-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.error-icon {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.error-header h3 {
+  margin: 0;
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.error-message {
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.error-message p {
+  margin: 8px 0;
+}
+
+.error-suggestion {
+  font-style: italic;
+  color: #666;
+}
+
+.error-details {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.error-details summary {
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+  font-weight: 500;
+}
+
+.error-details ul {
+  margin-top: 8px;
+  padding-left: 20px;
+  color: #555;
+}
+
+.error-code {
+  font-family: monospace;
+  background-color: #f1f1f1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #666;
+}
+
+.error-retry-button {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.error-retry-button:hover {
+  background-color: #b71c1c;
+}
+
+.error-retry-button:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-container {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-color: #b71c1c;
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.2);
+  }
+  
+  .error-header h3 {
+    color: #f44336;
+  }
+  
+  .error-message {
+    color: #e0e0e0;
+  }
+  
+  .error-suggestion {
+    color: #bdbdbd;
+  }
+  
+  .error-details {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .error-details summary {
+    color: #bdbdbd;
+  }
+  
+  .error-details ul {
+    color: #bdbdbd;
+  }
+  
+  .error-code {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+  }
+}
