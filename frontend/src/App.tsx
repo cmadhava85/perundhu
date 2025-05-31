@@ -90,7 +90,7 @@ function App() {
               checked={showTracking}
               onChange={(e) => setShowTracking(e.target.checked)}
             />
-            <span className="toggle-label">{t('busTracker.trackingDisabled')}</span>
+            <span className="toggle-label"></span>
           </label>
           <label className="toggle">
             <input
@@ -99,7 +99,7 @@ function App() {
               checked={showRewards}
               onChange={(e) => setShowRewards(e.target.checked)}
             />
-            <span className="toggle-label">{t('rewards.rewardsDisabled')}</span>
+            <span className="toggle-label"></span>
           </label>
           <label className="toggle">
             <input
@@ -108,7 +108,7 @@ function App() {
               checked={showAnalytics}
               onChange={(e) => setShowAnalytics(e.target.checked)}
             />
-            <span className="toggle-label">{t('analytics.analyticsDisabled')}</span>
+            <span className="toggle-label"></span>
           </label>
         </div>
 

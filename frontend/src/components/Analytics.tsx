@@ -46,8 +46,14 @@ const Analytics: React.FC<AnalyticsProps> = ({ fromLocation, toLocation, busId }
   const [punctualityData, setPunctualityData] = useState<PunctualityData[]>([]);
   const [routePerformance, setRoutePerformance] = useState<RoutePerformanceData[]>([]);
   const [crowdData, setCrowdData] = useState<CrowdData[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [analyticsEnabled] = useState<boolean>(
+    localStorage.getItem('perundhu-analytics-enabled') === 'true'
+  );
+
+  // Don't fetch data or render anything if analytics are disabled
+  if (!analyticsEnabled) {
+    return null;
+  }
 
   // Load historical data when component mounts or when user selects a different time range
   useEffect(() => {

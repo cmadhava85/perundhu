@@ -11,9 +11,14 @@ const UserRewards: React.FC = () => {
   const [rewards, setRewards] = useState<RewardPoints | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [rewardsEnabled] = useState<boolean>(
+    localStorage.getItem('perundhu-rewards-enabled') === 'true'
+  );
 
   // Load user reward points data
   useEffect(() => {
+    if (!rewardsEnabled) return;
+    
     const loadRewards = async () => {
       try {
         setLoading(true);
@@ -30,7 +35,11 @@ const UserRewards: React.FC = () => {
     };
 
     loadRewards();
-  }, [t]);
+  }, [t, rewardsEnabled]);
+
+  if (!rewardsEnabled) {
+    return null;
+  }
 
   // Format the date for display
   const formatDate = (timestamp: string) => {

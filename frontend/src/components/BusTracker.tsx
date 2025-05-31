@@ -39,6 +39,13 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     setSelectedStopId(stopId);
   };
 
+  // Get currently selected stop name
+  const getSelectedStopName = (): string => {
+    if (!selectedStopId) return '';
+    const stop = busStops.find(stop => stop.id === selectedStopId);
+    return stop ? stop.name : '';
+  };
+
   // Toggle tracking on/off
   const toggleTracking = () => {
     const newValue = !trackingEnabled;
@@ -218,6 +225,10 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     return () => clearTimeout(movementTimer);
   }, [isTracking, movementDetected, userLocation]);
 
+  if (!trackingEnabled) {
+    return null;
+  }
+
   return (
     <div className="bus-tracker">
       <h3>{t('busTracker.title', 'Help Track Buses')}</h3>
@@ -238,14 +249,9 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
           />
           <span className="toggle-slider"></span>
         </label>
-        <span className="toggle-label">
-          {trackingEnabled 
-            ? t('busTracker.trackingEnabled', 'Bus tracking enabled') 
-            : t('busTracker.trackingDisabled', 'Bus tracking disabled')}
-        </span>
       </div>
-
-      {trackingEnabled && !isOnboard && (
+      
+      {!isOnboard && (
         <>
           <div className="tracker-section">
             <label>{t('busTracker.selectBus', 'Select your bus:')}</label>
@@ -275,7 +281,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
                 <option value="">{t('busTracker.chooseStop', '-- Choose stop --')}</option>
                 {busStops.map((stop, index) => (
                   <option key={`stop-${stop.id || index}`} value={stop.id}>
-                    {stop.name} ({stop.departureTime})
+                    {stop.name} {stop.departureTime ? `(${stop.departureTime})` : ''}
                   </option>
                 ))}
               </select>
