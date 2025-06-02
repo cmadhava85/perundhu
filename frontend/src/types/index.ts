@@ -3,7 +3,17 @@ export interface Location {
   name: string;
   latitude: number;  // No longer optional
   longitude: number; // No longer optional
-  translatedName?: string; // Added to support localized names
+  translatedName?: string; // Simple translated name for the current language
+  taName?: string; // Tamil name specifically
+  translations?: {
+    [key: string]: {
+      name: string;
+      [key: string]: any;
+    };
+  };
+  translatedNames?: {
+    [key: string]: string;
+  };
 }
 
 export interface Bus {

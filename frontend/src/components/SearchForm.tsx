@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location } from '../types';
 
@@ -37,13 +37,38 @@ const SearchForm: React.FC<SearchFormProps> = ({
   const toInputRef = useRef<HTMLDivElement>(null);
   
   // Get the display name for a location based on current language
-  const getLocalizedName = (location: Location): string => {
-    // If we have a translatedName field from the API, use it
-    if (i18n.language === 'ta' && location.translatedName) {
-      return location.translatedName;
+  const getLocalizedName = useCallback((location: Location): string => {
+    // Check for translation in different possible location properties
+    if (i18n.language === 'ta') {
+      // Try all possible ways the translation might be available
+      if (location.translations && location.translations.ta && location.translations.ta.name) {
+        return location.translations.ta.name;
+      } else if (location.translatedNames && location.translatedNames.ta) {
+        return location.translatedNames.ta;
+      } else if (location.translatedName) {
+        return location.translatedName;
+      } else if (location.taName) {
+        return location.taName;
+      } else {
+        // If location name is one of the known locations, provide hardcoded Tamil name
+        // as a fallback
+        const tamilNames: Record<string, string> = {
+          'Chennai': 'சென்னை',
+          'Coimbatore': 'கோயம்புத்தூர்',
+          'Madurai': 'மதுரை',
+          'Trichy': 'திருச்சி',
+          'Salem': 'சேலம்',
+          'Tirunelveli': 'திருநெல்வேலி',
+          'Vellore': 'வேலூர்',
+          'Thanjavur': 'தஞ்சாவூர்',
+          'Kanyakumari': 'கன்னியாகுமரி'
+        };
+        
+        return tamilNames[location.name] || location.name;
+      }
     }
     return location.name;
-  };
+  }, [i18n.language]);
 
   // Ensure locations and destinations are arrays before attempting to filter
   const locationsArray = Array.isArray(locations) ? locations : [];
@@ -72,12 +97,15 @@ const SearchForm: React.FC<SearchFormProps> = ({
 
     // Add listener for language changes
     i18n.on('languageChanged', handleLanguageChange);
+    
+    // Call immediately when mounting to ensure proper initial state
+    handleLanguageChange();
 
     // Clean up listener when component unmounts
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };
-  }, [i18n, fromLocation, toLocation]);  // Removed getLocalizedName from dependencies
+  }, [i18n, fromLocation, toLocation, getLocalizedName]);
   
   // Initialize search text when locations are selected (separate from language changes)
   useEffect(() => {
@@ -86,7 +114,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
     } else {
       setFromSearchText('');
     }
-  }, [fromLocation]);
+  }, [fromLocation, getLocalizedName]);
   
   useEffect(() => {
     if (toLocation) {
@@ -94,7 +122,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
     } else {
       setToSearchText('');
     }
-  }, [toLocation]);
+  }, [toLocation, getLocalizedName]);
   
   // Handle click outside to close dropdowns
   useEffect(() => {
