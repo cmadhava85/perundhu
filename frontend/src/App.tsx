@@ -27,7 +27,8 @@ import { getFeatureFlag } from './utils/environment';
  * Main App component that orchestrates the application flow
  */
 function App() {
-  const { t } = useTranslation();
+  // Use i18n for future internationalization needs
+  useTranslation(); // Not using destructured variables to avoid unused variable warnings
 
   // Use custom hooks for location and search functionality
   const locationData = useLocationData();

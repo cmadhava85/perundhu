@@ -389,6 +389,72 @@ class OfflineService {
       console.error('Error cleaning up old bus location data:', error);
     }
   }
+
+  async cleanupOldData(maxAgeDays: number = 7): Promise<void> {
+    try {
+      const db = await this.initDB();
+      const stores = [
+        STORES.ROUTES,
+        STORES.SCHEDULES, 
+        STORES.STOPS, 
+        STORES.BUSES, 
+        STORES.LOCATIONS, 
+        STORES.CONNECTING_ROUTES
+      ];
+      
+      const now = new Date();
+      
+      for (const storeName of stores) {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        const keys = await store.getAllKeys();
+        
+        for (const key of keys) {
+          const item = await store.get(key);
+          if (item && item.timestamp) {
+            const timestamp = new Date(item.timestamp);
+            const diffTime = Math.abs(now.getTime() - timestamp.getTime());
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+            
+            // Delete data older than maxAgeDays
+            if (diffDays > maxAgeDays) {
+              await store.delete(key);
+            }
+          }
+        }
+      }
+      
+      console.log('Completed cleanup of old offline data');
+    } catch (error) {
+      console.error('Error cleaning up old data:', error);
+    }
+  }
+  
+  async getLastSyncTime(key: string): Promise<string | null> {
+    try {
+      const db = await this.initDB();
+      const result = await db.get(STORES.SYNC_TIMESTAMPS, key);
+      return result?.timestamp || null;
+    } catch (error) {
+      console.error('Error getting last sync time:', error);
+      return null;
+    }
+  }
+  
+  async updateSyncTimestamp(key: string): Promise<void> {
+    try {
+      const db = await this.initDB();
+      const tx = db.transaction(STORES.SYNC_TIMESTAMPS, 'readwrite');
+      const store = tx.objectStore(STORES.SYNC_TIMESTAMPS);
+      
+      await store.put({
+        id: key,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Error updating sync timestamp:', error);
+    }
+  }
 }
 
 export const offlineService = new OfflineService();
@@ -414,8 +480,8 @@ export const saveBusLocationsOffline = (fromLocationId: number, toLocationId: nu
   offlineService.saveBusLocationsOffline(fromLocationId, toLocationId, locations);
 export const getBusLocationsOffline = (fromLocationId: number, toLocationId: number) =>
   offlineService.getBusLocationsOffline(fromLocationId, toLocationId);
-export const getDataAgeDays = (key: string) =>
-  offlineService.getDataAgeDays(key);
-export const cleanupOldBusLocationData = () =>
-  offlineService.cleanupOldBusLocationData();
+export const cleanupOldData = (maxAgeDays?: number) => offlineService.cleanupOldData(maxAgeDays);
+export const getLastSyncTime = (key: string) => offlineService.getLastSyncTime(key);
+export const updateSyncTimestamp = (key: string) => offlineService.updateSyncTimestamp(key);
+export const cleanupOldBusLocationData = () => offlineService.cleanupOldBusLocationData();
 

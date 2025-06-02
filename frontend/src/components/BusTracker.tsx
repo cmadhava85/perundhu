@@ -39,13 +39,6 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     setSelectedStopId(stopId);
   };
 
-  // Get currently selected stop name
-  const getSelectedStopName = (): string => {
-    if (!selectedStopId) return '';
-    const stop = busStops.find(stop => stop.id === selectedStopId);
-    return stop ? stop.name : '';
-  };
-
   // Toggle tracking on/off
   const toggleTracking = () => {
     const newValue = !trackingEnabled;

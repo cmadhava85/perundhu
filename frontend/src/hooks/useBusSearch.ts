@@ -1,20 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { searchBuses as apiSearchBuses, getStops, getConnectingRoutes as apiGetConnectingRoutes } from '../services/api';
+import { searchBuses as apiSearchBuses, getStops, getConnectingRoutes as apiGetConnectingRoutes, ApiError } from '../services/api';
 import type { Bus, Location, Stop, ConnectingRoute } from '../types';
-
-// Custom ApiError class for consistent error handling
-export class ApiError extends Error {
-  status: number;
-  details?: any;
-
-  constructor(message: string, status: number, details?: any) {
-    super(message);
-    this.name = 'ApiError';
-    this.status = status;
-    this.details = details;
-  }
-}
 
 /**
  * Custom hook for managing bus search state and operations
@@ -62,18 +49,13 @@ export const useBusSearch = () => {
         setConnectingRoutes(connectingData);
         
         if (connectingData.length === 0) {
-          throw new ApiError(
+          const noRoutesError = new ApiError(
             t('error.noRoutesFound', 'No routes found between these locations.'), 
             404,
-            { 
-              code: "NO_ROUTES_FOUND", 
-              details: [
-                `No direct or connecting routes available from ${fromLocation.name} to ${toLocation.name}.`,
-                "Try selecting different locations or adjusting your search."
-              ],
-              timestamp: new Date().toISOString()
-            }
+            "NO_ROUTES_FOUND"
           );
+          setError(noRoutesError);
+          return; // Don't throw, just set the error state
         }
       } else {
         setBuses(busData);
@@ -81,10 +63,26 @@ export const useBusSearch = () => {
       }
     } catch (err) {
       console.error('Error during search:', err);
-      if (err instanceof Error) {
+      if (err instanceof ApiError) {
         setError(err);
+      } else if (err instanceof Error) {
+        // Check if it's an API error from external service that hasn't been properly converted
+        const apiErr = err as any;
+        if (apiErr.status && apiErr.message) {
+          setError(new ApiError(
+            apiErr.message, 
+            apiErr.status, 
+            apiErr.errorCode || "API_ERROR"
+          ));
+        } else {
+          setError(err);
+        }
       } else {
-        setError(new Error(t('error.unknown', 'An unknown error occurred')));
+        setError(new ApiError(
+          t('error.unknown', 'An unknown error occurred'), 
+          500, 
+          "UNKNOWN_ERROR"
+        ));
       }
     } finally {
       setLoading(false);
@@ -112,21 +110,32 @@ export const useBusSearch = () => {
         setSelectedBusId(busId);
       } catch (err) {
         console.error('Error fetching bus stops:', err);
-        const apiError = err as any;
-        if (apiError && apiError.status === 404) {
-          setStopsMap(prev => ({
-            ...prev,
-            [busId]: []
-          }));
-          setSelectedBusId(busId);
+        if (err instanceof ApiError) {
+          setError(err);
+        } else if (err instanceof Error) {
+          // Check if it's an API error from external service that hasn't been properly converted
+          const apiErr = err as any;
+          if (apiErr.status && apiErr.message) {
+            setError(new ApiError(
+              apiErr.message, 
+              apiErr.status, 
+              apiErr.errorCode || "API_ERROR"
+            ));
+          } else {
+            setError(err);
+          }
         } else {
-          setError(err instanceof Error ? err : new Error(t('error.stopsNotFound', 'Could not retrieve bus stops')));
+          setError(new ApiError(
+            t('error.stopsNotFound', 'Could not retrieve bus stops'), 
+            500, 
+            "STOPS_NOT_FOUND"
+          ));
         }
       } finally {
         setLoading(false);
       }
     }
-  }, [selectedBusId, stopsMap, t]);
+  }, [selectedBusId, stopsMap, t, i18n.language]);
 
   /**
    * Reset error state

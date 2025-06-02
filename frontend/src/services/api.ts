@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { AxiosInstance } from 'axios';
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute } from '../types/index';
 import * as offlineService from './offlineService';
 import i18n from '../i18n';
@@ -22,15 +23,52 @@ export class ApiError extends Error {
 }
 
 // Create axios instance with common configuration
-const api = axios.create({
-  baseURL: '', // Remove '/api' prefix, as all endpoints now include '/api/v1/...'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+export const createApiInstance = (): AxiosInstance => {
+  return axios.create({
+    baseURL: '', // Remove '/api' prefix, as all endpoints now include '/api/v1/...'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // Add proxy configuration for Ford network
+    proxy: {
+      host: 'internet.ford.com',
+      port: 23,
+      protocol: 'http'
+    }
+  });
+};
+
+// Default API instance
+let api = createApiInstance();
+
+// For testing purposes - allows injecting a mock
+export const setApiInstance = (instance: AxiosInstance): void => {
+  api = instance;
+};
 
 // Add a flag to track if we're in offline mode
 let isOfflineMode = false;
+
+// Add data age tracking for testing purposes
+const dataAges: Record<string, number> = {};
+
+// Testing helpers
+export const _setMockDataAge = (key: string, days: number): void => {
+  dataAges[key] = days;
+};
+
+export const _clearMockDataAges = (): void => {
+  Object.keys(dataAges).forEach(key => {
+    delete dataAges[key];
+  });
+};
+
+/**
+ * Set offline mode status (mainly for testing purposes)
+ */
+export const setOfflineMode = (status: boolean): void => {
+  isOfflineMode = status;
+};
 
 /**
  * Check if we're online. Updates the offline mode flag.
@@ -328,6 +366,8 @@ export const getOfflineMode = (): boolean => {
 
 /**
  * Get the age of offline data in days
+ * @param dataType The type of data to check (e.g., 'locations', 'buses')
+ * @returns The age in days, or -1 if no data available
  */
 export const getOfflineDataAge = async (
   dataType: string,
@@ -357,7 +397,49 @@ export const getOfflineDataAge = async (
       return null;
   }
   
-  return await offlineService.getDataAgeDays(key);
+  // For testing support - return mock data age if available
+  if (dataAges[key] !== undefined) {
+    return dataAges[key];
+  }
+  
+  // Otherwise check from offline storage
+  const lastSync = await offlineService.getLastSyncTime(key);
+  if (!lastSync) {
+    return null;
+  }
+  
+  const now = new Date();
+  const syncDate = new Date(lastSync);
+  const diffTime = Math.abs(now.getTime() - syncDate.getTime());
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+};
+
+/**
+ * Get the age of buses data in days
+ * @param fromLocationId The origin location ID
+ * @param toLocationId The destination location ID
+ */
+export const getBusesDataAge = async (fromLocationId: number, toLocationId: number): Promise<number | null> => {
+  const key = `lastBusSync_${fromLocationId}_${toLocationId}`;
+  
+  // For testing purposes, use mock data if available
+  if (dataAges[key] !== undefined) {
+    return dataAges[key];
+  }
+  
+  return getOfflineDataAge('buses', fromLocationId, toLocationId);
+};
+
+/**
+ * Cleanup old data from offline storage
+ * @param maxAgeDays Maximum age in days before data is considered stale
+ */
+export const cleanupOldData = async (maxAgeDays: number = 7): Promise<void> => {
+  try {
+    await offlineService.cleanupOldData(maxAgeDays);
+  } catch (error) {
+    console.error('Error cleaning up old data:', error);
+  }
 };
 
 /**
