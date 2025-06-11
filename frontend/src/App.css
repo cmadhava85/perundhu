@@ -120,21 +120,27 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 6px 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
 }
 
-.toggle-label {
-  font-size: 0.9rem;
-  color: var(--light-text);
-}
-
-/* Toggle switch styling */
 .toggle-switch {
   position: relative;
   display: inline-block;
   width: 44px;
   height: 24px;
+  margin-right: 4px;
+  vertical-align: middle;
 }
 
+.toggle-label {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  vertical-align: middle;
+}
+
+/* Toggle switch styling */
 .toggle-switch input {
   opacity: 0;
   width: 0;

@@ -88,11 +88,11 @@
   }
 
   .header-content h1 {
-    @apply text-2xl md:text-3xl font-bold text-blue-700 dark:text-blue-400;
+    @apply text-xl md:text-2xl font-semibold text-blue-600 dark:text-blue-400;
   }
 
   .header-actions {
-    @apply flex items-center gap-6;
+    @apply flex justify-end items-center gap-4 flex-wrap;
   }
 
   .location-toggle {

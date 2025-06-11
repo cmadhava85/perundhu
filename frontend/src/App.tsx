@@ -58,7 +58,7 @@ function App() {
     locationData.clearError();
     busSearch.clearError();
   };
-
+  
   // Feature toggles from env
   const [showTracking, setShowTracking] = useState(() => getFeatureFlag('VITE_FEATURE_TRACKING', true));
   const [showAnalytics, setShowAnalytics] = useState(() => getFeatureFlag('VITE_FEATURE_ANALYTICS', true));
@@ -125,7 +125,7 @@ function App() {
   // If admin route, display admin dashboard
   if (isAdminRoute && showAdmin) {
     return (
-      <div className={`app-container ${browserInfo.deviceType}`} data-testid="app-container" data-browser={browserInfo.browserName.toLowerCase()}>
+      <div className="app-container" data-testid="app-container" data-browser={browserInfo.browserName.toLowerCase()}>
         <Header 
           autoLocationEnabled={locationData.autoLocationEnabled}
           onToggleAutoLocation={locationData.toggleAutoLocation}
@@ -154,7 +154,7 @@ function App() {
 
   return (
     <div 
-      className={`app-container ${browserInfo.deviceType} ${browserInfo.isLandscape ? 'landscape' : 'portrait'}`} 
+      className="app-container" 
       data-testid="app-container"
       data-browser={browserInfo.browserName.toLowerCase()}
     >
@@ -164,9 +164,9 @@ function App() {
       />
       
       <main className={`app-main ${browserInfo.isLandscape && browserInfo.isMobile ? 'landscape-adjust' : ''}`}>
-        {/* Display browser info on development environments */}
+        {/* Display browser info on development environments - with proper styling */}
         {process.env.NODE_ENV === 'development' && (
-          <div className="browser-info-dev-banner">
+          <div className="browser-info-dev-banner visually-hidden">
             <small>
               {browserInfo.browserName} | {browserInfo.deviceType} | 
               {browserInfo.isLandscape ? 'Landscape' : 'Portrait'}

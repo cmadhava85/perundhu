@@ -21,17 +21,18 @@ const Header: React.FC<HeaderProps> = ({
         <h1>
           {isAdmin 
             ? t('header.adminTitle', 'Admin Dashboard') 
-            : t('header.title')
+            : t('header.title', 'Tamil Nadu Bus Schedule')
           }
         </h1>
         <div className="header-actions">
           {!isAdmin && onToggleAutoLocation && (
             <div className="location-toggle">
-              <label className="toggle-switch">
+              <label className="toggle-switch" title={t('header.autoDetectLocationHint', 'Enable to automatically detect your current location')}>
                 <input 
                   type="checkbox" 
                   checked={autoLocationEnabled}
                   onChange={onToggleAutoLocation}
+                  aria-label={t('header.autoDetectLocation', 'Auto-detect location')}
                 />
                 <span className="toggle-slider"></span>
               </label>
@@ -43,7 +44,9 @@ const Header: React.FC<HeaderProps> = ({
               {t('header.backToHome', 'Back to Home')}
             </a>
           )}
-          <LanguageSwitcher />
+          <div className="language-switcher-wrapper">
+            <LanguageSwitcher />
+          </div>
         </div>
       </div>
     </header>
