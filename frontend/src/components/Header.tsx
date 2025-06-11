@@ -5,20 +5,27 @@ import LanguageSwitcher from './LanguageSwitcher';
 interface HeaderProps {
   autoLocationEnabled?: boolean;
   onToggleAutoLocation?: () => void;
+  isAdmin?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
   autoLocationEnabled = false, 
-  onToggleAutoLocation 
+  onToggleAutoLocation,
+  isAdmin = false
 }) => {
   const { t } = useTranslation();
   
   return (
     <header className="app-header">
       <div className="header-content">
-        <h1>{t('header.title')}</h1>
+        <h1>
+          {isAdmin 
+            ? t('header.adminTitle', 'Admin Dashboard') 
+            : t('header.title')
+          }
+        </h1>
         <div className="header-actions">
-          {onToggleAutoLocation && (
+          {!isAdmin && onToggleAutoLocation && (
             <div className="location-toggle">
               <label className="toggle-switch">
                 <input 
@@ -30,6 +37,11 @@ const Header: React.FC<HeaderProps> = ({
               </label>
               <span className="toggle-label">{t('header.autoDetectLocation', 'Auto-detect location')}</span>
             </div>
+          )}
+          {isAdmin && (
+            <a href="/" className="home-link">
+              {t('header.backToHome', 'Back to Home')}
+            </a>
           )}
           <LanguageSwitcher />
         </div>

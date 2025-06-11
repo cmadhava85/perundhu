@@ -34,6 +34,16 @@ export interface Stop {
   departureTime: string;
   order?: number;     // Keep for backward compatibility
   stopOrder?: number; // Added to match the API response
+  taName?: string; // Tamil name specifically
+  translations?: {
+    [key: string]: {
+      name: string;
+      [key: string]: any;
+    };
+  };
+  translatedNames?: {
+    [key: string]: string;
+  };
 }
 
 export interface BusLeg extends Bus {
@@ -133,5 +143,56 @@ export interface RewardActivity {
   pointsEarned: number;
   timestamp: string;
   description: string;
+}
+
+/**
+ * User-contributed bus route information
+ */
+export interface RouteContribution {
+  id?: number;
+  userId?: string;
+  busName: string;
+  busNumber: string;
+  fromLocationName: string;
+  fromLatitude?: number;
+  fromLongitude?: number;
+  toLocationName: string;
+  toLatitude?: number;
+  toLongitude?: number;
+  departureTime: string;
+  arrivalTime: string;
+  submissionDate?: string;
+  status?: string;
+  validationMessage?: string;
+  processedDate?: string;
+  stops: StopContribution[];
+}
+
+/**
+ * User-contributed bus stop information
+ */
+export interface StopContribution {
+  id?: number;
+  name: string;
+  latitude?: number;
+  longitude?: number;
+  arrivalTime: string;
+  departureTime: string;
+  stopOrder: number;
+}
+
+/**
+ * User-contributed bus schedule image
+ */
+export interface ImageContribution {
+  id?: number;
+  userId?: string;
+  imageUrl?: string;
+  description?: string;
+  submissionDate?: string;
+  status?: string;
+  validationMessage?: string;
+  processedDate?: string;
+  extractedData?: string;
 }
 

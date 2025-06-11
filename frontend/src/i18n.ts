@@ -4,6 +4,13 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import enTranslation from './locales/en/translation.json';
 import taTranslation from './locales/ta/translation.json';
+import taAdditionalTranslation from './locales/ta.json';
+
+// Merge both Tamil translation files
+const mergedTaTranslations = {
+  ...taTranslation,
+  ...taAdditionalTranslation
+};
 
 // Get saved language preference or detect from browser
 const savedLanguage = localStorage.getItem('perundhu-language');
@@ -22,7 +29,7 @@ i18n
         translation: enTranslation
       },
       ta: {
-        translation: taTranslation
+        translation: mergedTaTranslations
       }
     },
     lng: defaultLanguage,
@@ -34,14 +41,28 @@ i18n
       order: ['localStorage', 'navigator'],
       lookupLocalStorage: 'perundhu-language',
       caches: ['localStorage']
-    }
+    },
+    debug: true // Temporarily enable debug to see what's happening
   });
 
 // Handle language changes and store in localStorage
 i18n.on('languageChanged', (lng) => {
   localStorage.setItem('perundhu-language', lng);
   document.documentElement.lang = lng;
-  document.documentElement.dir = lng === 'ta' ? 'ltr' : 'ltr'; // Both English and Tamil are left-to-right
+  
+  // Both English and Tamil are left-to-right, but we set it explicitly to ensure consistency
+  document.documentElement.dir = 'ltr';
+  
+  // Apply language-specific font adjustments if needed
+  if (lng === 'ta') {
+    document.documentElement.classList.add('lang-ta');
+    document.documentElement.classList.remove('lang-en');
+    console.log('Switched to Tamil language');
+  } else {
+    document.documentElement.classList.add('lang-en');
+    document.documentElement.classList.remove('lang-ta');
+    console.log('Switched to English language');
+  }
 });
 
 export default i18n;

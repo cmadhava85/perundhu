@@ -24,7 +24,7 @@ CREATE TABLE bus_location_history (
     nearest_stop_id BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_bus_location_history_bus FOREIGN KEY (bus_id) REFERENCES buses(id),
-    CONSTRAINT fk_bus_location_history_stop FOREIGN KEY (nearest_stop_id) REFERENCES stops(id)
+    CONSTRAINT fk_bus_location_history_stop FOREIGN KEY (nearest_stop_id) REFERENCES stop(id)
 );
 
 -- Table for user rewards system
@@ -123,6 +123,5 @@ CREATE INDEX idx_trip_statistics_bus_date ON trip_statistics(bus_id, trip_date);
 CREATE INDEX idx_trip_statistics_status ON trip_statistics(status);
 
 -- Add record in migration_history table if it exists
--- Note: This might need adjustment based on how your H2 migration history is managed
 INSERT INTO migration_history (migration_name, description) 
 VALUES ('V2.0__bus_tracking_analytics', 'Added tables for bus tracking, historical data analytics, and user rewards system');

@@ -1,5 +1,36 @@
 import i18next from 'i18next';
-import { fetchWithLang } from './api';
+import { api } from './api';
+
+/**
+ * Helper function to make API calls with language context
+ */
+const fetchWithLang = async <T>(url: string, options?: RequestInit): Promise<T> => {
+  try {
+    const lang = i18next.language || 'en';
+    const fullUrl = url.startsWith('/') ? `/api${url}` : `/api/${url}`;
+    
+    // Create proper headers for Axios
+    const headers: Record<string, string> = { 'Accept-Language': lang };
+    if (options?.headers) {
+      const originalHeaders = options.headers as Record<string, string>;
+      Object.keys(originalHeaders).forEach(key => {
+        headers[key] = originalHeaders[key];
+      });
+    }
+    
+    const response = await api.request({
+      url: fullUrl,
+      method: options?.method || 'GET',
+      headers,
+      data: options?.body ? JSON.parse(options.body as string) : undefined
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error in translation API call:', error);
+    throw new Error('Failed to fetch translations');
+  }
+};
 
 /**
  * Get translations for a specific entity

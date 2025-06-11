@@ -61,12 +61,23 @@ export const LiveBusTracker: React.FC<LiveBusTrackerProps> = ({
     const loadBusLocations = async () => {
       try {
         setLoading(true);
-        const locations = await getCurrentBusLocations(fromLocation.id, toLocation.id);
-        setBusLocations(locations);
+        // Get all current bus locations
+        const locations = await getCurrentBusLocations();
+        
+        // Filter locations based on fromLocation and toLocation
+        // Since routeId doesn't exist, filter by matching bus routes that go between these locations
+        const filteredLocations = locations.filter(loc => 
+          (loc.fromLocation && loc.fromLocation.includes(fromLocation.name) && 
+           loc.toLocation && loc.toLocation.includes(toLocation.name)) ||
+          (loc.fromLocation && loc.fromLocation.includes(toLocation.name) && 
+           loc.toLocation && loc.toLocation.includes(fromLocation.name))
+        );
+        
+        setBusLocations(filteredLocations);
         setError(null);
         
         // If no live bus data is available, show the static buses after a delay
-        if (locations.length === 0 && buses.length > 0) {
+        if (filteredLocations.length === 0 && buses.length > 0) {
           setTimeout(() => setShowStaticBuses(true), 2000);
         } else {
           setShowStaticBuses(false);
@@ -282,8 +293,7 @@ export const LiveBusTracker: React.FC<LiveBusTrackerProps> = ({
                 onCloseClick={handleInfoClose}
               >
                 <div className="bus-info-window">
-                  <h3>{selectedBus.busName}</h3>
-                  <p className="bus-number">{selectedBus.busNumber}</p>
+                  <h3>{selectedBus.busName} {selectedBus.busNumber}</h3>
                   <div className="info-grid">
                     <div className="info-row">
                       <span className="info-label">{t('liveTracker.lastUpdated', 'Last updated')}:</span>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { RewardPoints, RewardActivity } from '../types';
+import type { RewardPoints } from '../types';
 import { getUserRewards } from '../services/userRewardsService';
 
 /**

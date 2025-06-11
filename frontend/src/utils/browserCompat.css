@@ -1,0 +1,106 @@
+/* Browser-specific mobile compatibility fixes */
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Fix for iOS Safari's 100vh issue */
+  .h-screen, .min-h-screen {
+    height: -webkit-fill-available;
+  }
+  
+  /* Fix for iOS Safari input focusing & zooming issue */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Fix for iOS Safari momentum scrolling */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix for Safari sticky position */
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+/* Android Chrome specific fixes */
+@supports not (-webkit-touch-callout: none) and (-webkit-tap-highlight-color: transparent) {
+  /* Disable tap highlight on Android Chrome */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Fix for Android Chrome's input styling */
+  input[type="date"], input[type="time"], input[type="datetime-local"] {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+  }
+}
+
+/* Samsung Internet & older Android browser fixes */
+@supports (-webkit-appearance:none) {
+  /* Smooth scrolling on older Android browsers */
+  html, body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix for broken flex layouts in older browsers */
+  .flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+}
+
+/* Microsoft Edge (Chromium) specific fixes */
+@supports (-ms-ime-align:auto) {
+  /* Edge-specific fixes if needed */
+}
+
+/* Firefox for Android specific fixes */
+@supports (-moz-appearance:none) {
+  /* Firefox mobile specific fixes if needed */
+  select {
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+  }
+}
+
+/* Common mobile fixes for all browsers */
+
+/* Prevent text size adjust after orientation changes */
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Improve tap target sizes for better mobile usability */
+button, a, input[type="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Fix for position:fixed on iOS Safari */
+.fixed {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Prevent overflow issues on mobile */
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Media query for landscape orientation adjustments */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .landscape-adjust {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}

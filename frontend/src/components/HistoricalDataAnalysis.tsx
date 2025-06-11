@@ -12,7 +12,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import DownloadIcon from '@mui/icons-material/Download';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { format, subDays, subWeeks, subMonths } from 'date-fns';
@@ -76,9 +75,8 @@ const HistoricalDataAnalysis: React.FC = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedView, setSelectedView] = useState<number>(0);
   const [routePerformance, setRoutePerformance] = useState<RoutePerformance[]>([]);
-  const [routeId, setRouteId] = useState<number | string>('all');
+  const routeId = 'all'; 
   const [dataType, setDataType] = useState<string>('punctuality');
-  const [chartType, setChartType] = useState<string>('line');
 
   // Time range options
   const timeRangeOptions: TimeRangeOption[] = [
@@ -87,9 +85,6 @@ const HistoricalDataAnalysis: React.FC = () => {
     { value: 'month', label: t('analytics.month') },
     { value: 'custom', label: t('analytics.customRange') },
   ];
-
-  // COLORS for charts
-  const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   // Data type options
   const dataTypeOptions = [
@@ -101,7 +96,7 @@ const HistoricalDataAnalysis: React.FC = () => {
   // Effect for loading data
   useEffect(() => {
     fetchHistoricalData();
-  }, [timeRange, routeId, i18n.language]);
+  }, [timeRange, i18n.language]);
 
   // Function to fetch historical data
   const fetchHistoricalData = async () => {
@@ -128,8 +123,8 @@ const HistoricalDataAnalysis: React.FC = () => {
       const startStr = start ? format(start, 'yyyy-MM-dd') : '';
       const endStr = end ? format(end, 'yyyy-MM-dd') : '';
       
-      // Fetch data
-      const response = await axios.get('/api/analytics/historical-data', {
+      // Fetch data from real backend API
+      const response = await axios.get('/api/v1/analytics/historical-data', {
         params: {
           routeId: routeId === 'all' ? undefined : routeId,
           startDate: startStr,
@@ -140,7 +135,7 @@ const HistoricalDataAnalysis: React.FC = () => {
       setHistoricalData(response.data);
       
       // Fetch route performance
-      const routeResponse = await axios.get('/api/analytics/route-performance', {
+      const routeResponse = await axios.get('/api/v1/analytics/route-performance', {
         params: {
           startDate: startStr,
           endDate: endStr
@@ -155,108 +150,6 @@ const HistoricalDataAnalysis: React.FC = () => {
       setLoading(false);
     }
   };
-
-  // Mock data generation for demo purposes
-  const generateMockData = () => {
-    // Generate mock arrival data
-    const arrivalData: ArrivalData[] = [];
-    const now = new Date();
-    
-    for (let i = 0; i < 30; i++) {
-      const date = subDays(now, i);
-      const delay = Math.floor(Math.random() * 20) - 5; // Between -5 and 15 minutes
-      
-      arrivalData.push({
-        date: format(date, 'yyyy-MM-dd'),
-        predictedTime: '08:30:00',
-        actualTime: '08:35:00',
-        delayMinutes: delay,
-        busId: 1001,
-        routeId: 101,
-        stopId: 5001
-      });
-    }
-    
-    // Generate mock punctuality stats
-    const punctualityStats = {
-      early: 10,
-      onTime: 65,
-      delayed: 20,
-      veryDelayed: 5
-    };
-    
-    // Generate mock bus utilization
-    const busUtilization = [];
-    for (let i = 0; i < 7; i++) {
-      const date = subDays(now, i);
-      busUtilization.push({
-        date: format(date, 'yyyy-MM-dd'),
-        utilization: 50 + Math.floor(Math.random() * 40) // Between 50% and 90%
-      });
-    }
-    
-    // Generate mock crowd levels
-    const crowdLevels = [];
-    for (let hour = 6; hour <= 22; hour++) {
-      let avgCrowd;
-      if (hour >= 7 && hour <= 9) {
-        // Morning rush
-        avgCrowd = 70 + Math.floor(Math.random() * 25);
-      } else if (hour >= 17 && hour <= 19) {
-        // Evening rush
-        avgCrowd = 75 + Math.floor(Math.random() * 20);
-      } else {
-        // Regular hours
-        avgCrowd = 30 + Math.floor(Math.random() * 20);
-      }
-      
-      crowdLevels.push({
-        hour,
-        averageCrowd: avgCrowd
-      });
-    }
-    
-    // Generate mock route performance
-    const mockRoutePerformance = [
-      {
-        routeId: 101,
-        routeName: 'Chennai Central - T.Nagar',
-        onTimePercentage: 85,
-        averageDelay: 3.2,
-        totalTrips: 124
-      },
-      {
-        routeId: 102,
-        routeName: 'Chennai Airport - Koyambedu',
-        onTimePercentage: 78,
-        averageDelay: 5.7,
-        totalTrips: 98
-      },
-      {
-        routeId: 103,
-        routeName: 'Tambaram - Broadway',
-        onTimePercentage: 82,
-        averageDelay: 4.1,
-        totalTrips: 112
-      }
-    ];
-    
-    setRoutePerformance(mockRoutePerformance);
-    
-    return {
-      arrivalData,
-      punctualityStats,
-      busUtilization,
-      crowdLevels
-    };
-  };
-
-  // Use mock data if no real data is available
-  useEffect(() => {
-    if (!historicalData && !loading) {
-      setHistoricalData(generateMockData());
-    }
-  }, [loading, historicalData]);
 
   // Function to export data
   const exportData = () => {
@@ -281,7 +174,7 @@ const HistoricalDataAnalysis: React.FC = () => {
   };
 
   // Tab change handler
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setSelectedView(newValue);
   };
 

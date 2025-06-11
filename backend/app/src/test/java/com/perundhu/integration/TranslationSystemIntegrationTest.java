@@ -79,7 +79,7 @@ class TranslationSystemIntegrationTest {
         lenient().doNothing().when(translationService).saveTranslation(entity, "name", "ta", translatedName);
         
         lenient().when(translationRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta", "name"))
-            .thenReturn(java.util.Optional.of(new TranslationJpaEntity("bus", 1L, "name", tamilLanguageCode, translatedName)));
+            .thenReturn(java.util.Optional.of(new TranslationJpaEntity("bus", 1L, "name", tamilLanguageCode.getCode(), translatedName)));
 
         // Execute and verify repository interaction
         TranslationJpaEntity savedTranslation = translationRepository

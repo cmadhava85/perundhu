@@ -17,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.StopDTO;
+import com.perundhu.application.dto.ConnectingRouteDTO;
+import com.perundhu.application.dto.BusRouteSegmentDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
@@ -195,29 +197,74 @@ public class BusScheduleIntegrationTest {
         Location fromLocation = Location.reference(1L);
         Location toLocation = Location.reference(3L);
 
-        BusScheduleDTO mockRoute = new BusScheduleDTO(
-            1L,                     // id
-            "Express 101",          // name
-            null,                   // translatedName
-            "TN-01-1234",           // busNumber
-            "Chennai",              // fromLocationName
-            null,                   // fromLocationTranslatedName
-            "Vellore",              // toLocationName
-            null,                   // toLocationTranslatedName
-            LocalTime.of(6, 0),     // departureTime
-            LocalTime.of(8, 30)     // arrivalTime
-        );
+        // Create route segments for the connecting route
+        BusRouteSegmentDTO firstLeg = BusRouteSegmentDTO.builder()
+            .busId(1L)
+            .busName("Express 101")
+            .busNumber("TN-01-1234")
+            .departureTime(LocalTime.of(6, 0).toString())
+            .from("Chennai")
+            .to("Vellore")
+            .duration(150)
+            .distance(130.0)
+            .build();
+            
+        BusRouteSegmentDTO secondLeg = BusRouteSegmentDTO.builder()
+            .busId(2L)
+            .busName("Express 102")
+            .busNumber("TN-01-5678")
+            .departureTime(LocalTime.of(9, 0).toString())
+            .from("Vellore")
+            .to("Bangalore")
+            .arrivalTime(LocalTime.of(12, 0).toString())
+            .duration(180)
+            .distance(210.0)
+            .build();
+            
+        ConnectingRouteDTO mockRoute = ConnectingRouteDTO.builder()
+            .id(1L)
+            .connectionPoint("Vellore")
+            .waitTime(30)
+            .totalDuration(330)
+            .totalDistance(340.0)
+            .firstLeg(firstLeg)
+            .secondLeg(secondLeg)
+            .connectionStops(new ArrayList<>())
+            .build();
 
         when(busScheduleService.findConnectingRoutes(fromLocation, toLocation, "en"))
             .thenReturn(List.of(mockRoute));
 
-        List<BusScheduleDTO> connectingRoutes = busScheduleService.findConnectingRoutes(fromLocation, toLocation, "en");
+        List<ConnectingRouteDTO> connectingRoutes = busScheduleService.findConnectingRoutes(fromLocation, toLocation, "en");
 
         assertNotNull(connectingRoutes);
         if (!connectingRoutes.isEmpty()) {
-            BusScheduleDTO dto = connectingRoutes.get(0);
-            assertValidBusScheduleDTO(dto);
+            ConnectingRouteDTO dto = connectingRoutes.get(0);
+            assertValidConnectingRouteDTO(dto);
         }
+    }
+    
+    private void assertValidConnectingRouteDTO(ConnectingRouteDTO dto) {
+        assertNotNull(dto);
+        assertNotNull(dto.getId());
+        assertNotNull(dto.getConnectionPoint());
+        assertNotNull(dto.getFirstLeg());
+        assertNotNull(dto.getSecondLeg());
+        
+        BusRouteSegmentDTO firstLeg = dto.getFirstLeg();
+        assertNotNull(firstLeg.getBusId());
+        assertNotNull(firstLeg.getBusName());
+        assertNotNull(firstLeg.getBusNumber());
+        assertNotNull(firstLeg.getFrom());
+        assertNotNull(firstLeg.getTo());
+        assertNotNull(firstLeg.getDepartureTime());
+        
+        BusRouteSegmentDTO secondLeg = dto.getSecondLeg();
+        assertNotNull(secondLeg.getBusId());
+        assertNotNull(secondLeg.getBusName());
+        assertNotNull(secondLeg.getBusNumber());
+        assertNotNull(secondLeg.getFrom());
+        assertNotNull(secondLeg.getTo());
     }
 
     @Test

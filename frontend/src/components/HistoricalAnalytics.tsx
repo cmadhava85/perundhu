@@ -5,7 +5,7 @@ import {
   Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell 
 } from 'recharts';
 import { getHistoricalData } from '../services/analyticsService';
-import { Location, Bus } from '../types';
+import type { Location, Bus } from '../types';
 
 interface HistoricalAnalyticsProps {
   fromLocation?: Location;
@@ -28,9 +28,11 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
   const [analyticsData, setAnalyticsData] = useState<any>(null);
   const [customStartDate, setCustomStartDate] = useState<string>('');
   const [customEndDate, setCustomEndDate] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [hasMoreData, setHasMoreData] = useState<boolean>(false);
+  const pageSize = 10; // Number of items per page
 
   // Define chart colors
-  const COLORS = ['#00C49F', '#0088FE', '#FFBB28', '#FF8042'];
   const PUNCTUALITY_COLORS = {
     early: '#82ca9d',
     onTime: '#0088FE',
@@ -48,8 +50,13 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     setCustomEndDate(now.toISOString().split('T')[0]);
   }, []);
 
+  // Reset pagination when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [timeRange, dataType, fromLocation, toLocation, bus, customStartDate, customEndDate]);
+
   // Fetch historical data
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (isLoadingMore = false) => {
     if (!fromLocation || !toLocation) {
       return;
     }
@@ -81,37 +88,47 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
           break;
       }
 
-      // Call API to get historical data
+      // Call API to get historical data with pagination
       const data = await getHistoricalData(
         fromLocation.id,
         toLocation.id,
         bus?.id,
         startDate.toISOString(),
         endDate.toISOString(),
-        dataType
+        dataType,
+        page,
+        pageSize
       );
       
-      setAnalyticsData(data);
+      // Check if there might be more data
+      setHasMoreData(data.length === pageSize);
+      
+      // Append data for "load more" or replace for new filters
+      if (isLoadingMore && analyticsData) {
+        setAnalyticsData([...analyticsData, ...data]);
+      } else {
+        setAnalyticsData(data);
+      }
     } catch (err) {
       console.error('Error fetching historical data:', err);
       setError(t('analytics.error', 'Failed to load historical data'));
     } finally {
       setLoading(false);
     }
-  }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, t]);
+  }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, page, analyticsData, t]);
+
+  // Load more data
+  const handleLoadMore = useCallback(() => {
+    setPage(prevPage => prevPage + 1);
+    fetchData(true);
+  }, [fetchData]);
 
   // Fetch data when inputs change
   useEffect(() => {
     if (fromLocation && toLocation) {
       fetchData();
     }
-  }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, fetchData]);
-
-  // Format timestamp for display
-  const formatTime = (time: string) => {
-    const date = new Date(time);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
+  }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, page, fetchData]);
 
   // Format date for display
   const formatDate = (date: string) => {
@@ -123,9 +140,13 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     });
   };
   
-  // Calculate percentage for pie chart
-  const getPercentage = (value: number, total: number) => {
-    return total > 0 ? Math.round((value / total) * 100) : 0;
+  // Format time for display
+  const formatTime = (time: string) => {
+    const t = new Date(`1970-01-01T${time}`);
+    return t.toLocaleTimeString(undefined, { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
   };
   
   // Custom tooltip for charts
@@ -165,7 +186,7 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
         <h2>{t('analytics.title', 'Historical Data Analysis')}</h2>
         <div className="analytics-error">
           <p>{error}</p>
-          <button onClick={fetchData}>{t('error.retry', 'Try Again')}</button>
+          <button onClick={() => fetchData(false)}>{t('error.retry', 'Try Again')}</button>
         </div>
       </div>
     );
@@ -310,7 +331,7 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
                       nameKey="name"
                       label={({ name, percent }: {name: string, percent: number}) => `${name}: ${(percent * 100).toFixed(0)}%`}
                     >
-                      {analyticsData.pieData.map((entry: any, index: number) => (
+                      {analyticsData.pieData.map((_entry: {name: string, value: number}, index: number) => (
                         <Cell key={`cell-${index}`} fill={Object.values(PUNCTUALITY_COLORS)[index % 4]} />
                       ))}
                     </Pie>
@@ -469,6 +490,44 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
           {analyticsData.summary.dataPoints} {t('analytics.dataPoints', 'data points')}
         </p>
       </div>
+
+      <ContinueIteration 
+        hasMore={hasMoreData}
+        isLoading={loading}
+        onContinue={handleLoadMore}
+        className="historical-analytics__continue"
+      />
+    </div>
+  );
+};
+
+interface ContinueIterationProps {
+  hasMore: boolean;
+  isLoading: boolean;
+  onContinue: () => void;
+  className?: string;
+}
+
+// Simple ContinueIteration component as it was missing
+const ContinueIteration: React.FC<ContinueIterationProps> = ({ 
+  hasMore, 
+  isLoading, 
+  onContinue,
+  className 
+}) => {
+  const { t } = useTranslation();
+  
+  if (!hasMore) return null;
+  
+  return (
+    <div className={`continue-iteration ${className || ''}`}>
+      <button 
+        onClick={onContinue} 
+        disabled={isLoading}
+        className="load-more-button"
+      >
+        {isLoading ? t('common.loading', 'Loading...') : t('common.loadMore', 'Load More')}
+      </button>
     </div>
   );
 };

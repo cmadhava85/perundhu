@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.perundhu.application.dto.BusScheduleDTO;
+import com.perundhu.application.dto.BusRouteSegmentDTO;
+import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
@@ -56,7 +57,7 @@ public class ConnectingRoutesIntegrationTest {
         }
         
         @GetMapping("/connecting-routes")
-        public List<BusScheduleDTO> findConnectingRoutes(
+        public List<ConnectingRouteDTO> findConnectingRoutes(
                 @RequestParam("fromLocationId") Long fromLocationId,
                 @RequestParam("toLocationId") Long toLocationId,
                 @RequestParam(value = "languageCode", required = false) String languageCode) {
@@ -117,91 +118,114 @@ public class ConnectingRoutesIntegrationTest {
 
     @Test
     void shouldFindConnectingRouteInEnglish() throws Exception {
-        // Create BusScheduleDTO objects for the service response using all-args constructor
-        List<BusScheduleDTO> mockSchedules = new ArrayList<>();
+        // Create ConnectingRouteDTO objects for the service response
+        List<ConnectingRouteDTO> mockRoutes = new ArrayList<>();
         
-        BusScheduleDTO scheduleDTO1 = new BusScheduleDTO(
-            1L,                 // id
-            "Express 101",      // name
-            null,               // translatedName
-            "TN-01-1234",       // busNumber
-            "Chennai",          // fromLocationName
-            null,               // fromLocationTranslatedName
-            "Vellore",          // toLocationName
-            null,               // toLocationTranslatedName
-            LocalTime.of(6, 0), // departureTime
-            LocalTime.of(8, 0)  // arrivalTime
-        );
-        mockSchedules.add(scheduleDTO1);
-        
-        BusScheduleDTO scheduleDTO2 = new BusScheduleDTO(
-            2L,                  // id
-            "Express 102",       // name
-            null,                // translatedName
-            "TN-01-5678",        // busNumber
-            "Vellore",           // fromLocationName
-            null,                // fromLocationTranslatedName
-            "Bangalore",         // toLocationName
-            null,                // toLocationTranslatedName
-            LocalTime.of(8, 30), // departureTime
-            LocalTime.of(12, 0)  // arrivalTime
-        );
-        mockSchedules.add(scheduleDTO2);
+        BusRouteSegmentDTO firstLeg = BusRouteSegmentDTO.builder()
+            .busId(1L)
+            .busName("Express 101")
+            .busNumber("TN-01-1234")
+            .departureTime(LocalTime.of(6, 0).toString())
+            .from("Chennai")
+            .to("Vellore")
+            .duration(120)
+            .distance(140.0)
+            .build();
+            
+        BusRouteSegmentDTO secondLeg = BusRouteSegmentDTO.builder()
+            .busId(2L)
+            .busName("Express 102")
+            .busNumber("TN-01-5678")
+            .departureTime(LocalTime.of(8, 30).toString())
+            .from("Vellore")
+            .to("Bangalore")
+            .arrivalTime(LocalTime.of(12, 0).toString())
+            .duration(210)
+            .distance(220.0)
+            .build();
+            
+        ConnectingRouteDTO route = ConnectingRouteDTO.builder()
+            .id(1L)
+            .connectionPoint("Vellore")
+            .waitTime(30)
+            .totalDuration(330)
+            .totalDistance(360.0)
+            .firstLeg(firstLeg)
+            .secondLeg(secondLeg)
+            .connectionStops(new ArrayList<>())
+            .build();
+            
+        mockRoutes.add(route);
         
         // Mock service response - use Location objects
         when(busScheduleService.findConnectingRoutes(any(Location.class), any(Location.class), any(String.class)))
-            .thenReturn(mockSchedules);
+            .thenReturn(mockRoutes);
 
         mockMvc.perform(get("/api/v1/bus-schedules/connecting-routes")
                 .param("fromLocationId", "1")
                 .param("toLocationId", "3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("Express 101"))
-                .andExpect(jsonPath("$[0].fromLocationName").value("Chennai"))
-                .andExpect(jsonPath("$[0].toLocationName").value("Vellore"))
-                .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[1].name").value("Express 102"))
-                .andExpect(jsonPath("$[1].fromLocationName").value("Vellore"))
-                .andExpect(jsonPath("$[1].toLocationName").value("Bangalore"));
+                .andExpect(jsonPath("$[0].connectionPoint").value("Vellore"))
+                .andExpect(jsonPath("$[0].firstLeg.busName").value("Express 101"))
+                .andExpect(jsonPath("$[0].firstLeg.from").value("Chennai"))
+                .andExpect(jsonPath("$[0].firstLeg.to").value("Vellore"))
+                .andExpect(jsonPath("$[0].secondLeg.busName").value("Express 102"))
+                .andExpect(jsonPath("$[0].secondLeg.from").value("Vellore"))
+                .andExpect(jsonPath("$[0].secondLeg.to").value("Bangalore"));
     }
 
     @Test
     void shouldFindConnectingRouteInTamil() throws Exception {
-        // Create BusScheduleDTO objects for the service response using all-args constructor
-        List<BusScheduleDTO> mockSchedules = new ArrayList<>();
+        // Create ConnectingRouteDTO objects for the service response with Tamil translations
+        List<ConnectingRouteDTO> mockRoutes = new ArrayList<>();
         
-        BusScheduleDTO scheduleDTO1 = new BusScheduleDTO(
-            1L,                    // id
-            "Express 101",         // name
-            "எக்ஸ்பிரஸ் 101",       // translatedName
-            "TN-01-1234",          // busNumber
-            "Chennai",             // fromLocationName
-            "சென்னை",             // fromLocationTranslatedName
-            "Vellore",             // toLocationName
-            "வேலூர்",              // toLocationTranslatedName
-            LocalTime.of(6, 0),    // departureTime
-            LocalTime.of(8, 0)     // arrivalTime
-        );
-        mockSchedules.add(scheduleDTO1);
-        
-        BusScheduleDTO scheduleDTO2 = new BusScheduleDTO(
-            2L,                     // id
-            "Express 102",          // name
-            "எக்ஸ்பிரஸ் 102",        // translatedName
-            "TN-01-5678",           // busNumber
-            "Vellore",              // fromLocationName
-            "வேலூர்",               // fromLocationTranslatedName
-            "Bangalore",            // toLocationName
-            "பெங்களூரு",            // toLocationTranslatedName
-            LocalTime.of(8, 30),    // departureTime
-            LocalTime.of(12, 0)     // arrivalTime
-        );
-        mockSchedules.add(scheduleDTO2);
+        BusRouteSegmentDTO firstLeg = BusRouteSegmentDTO.builder()
+            .busId(1L)
+            .busName("Express 101")
+            .busNameTranslated("எக்ஸ்பிரஸ் 101")
+            .busNumber("TN-01-1234")
+            .departureTime(LocalTime.of(6, 0).toString())
+            .from("Chennai")
+            .fromTranslated("சென்னை")
+            .to("Vellore")
+            .toTranslated("வேலூர்")
+            .duration(120)
+            .distance(140.0)
+            .build();
+            
+        BusRouteSegmentDTO secondLeg = BusRouteSegmentDTO.builder()
+            .busId(2L)
+            .busName("Express 102")
+            .busNameTranslated("எக்ஸ்பிரஸ் 102")
+            .busNumber("TN-01-5678")
+            .departureTime(LocalTime.of(8, 30).toString())
+            .from("Vellore")
+            .fromTranslated("வேலூர்")
+            .to("Bangalore")
+            .toTranslated("பெங்களூரு")
+            .arrivalTime(LocalTime.of(12, 0).toString())
+            .duration(210)
+            .distance(220.0)
+            .build();
+            
+        ConnectingRouteDTO route = ConnectingRouteDTO.builder()
+            .id(1L)
+            .connectionPoint("Vellore")
+            .connectionPointTranslated("வேலூர்")
+            .waitTime(30)
+            .totalDuration(330)
+            .totalDistance(360.0)
+            .firstLeg(firstLeg)
+            .secondLeg(secondLeg)
+            .connectionStops(new ArrayList<>())
+            .build();
+            
+        mockRoutes.add(route);
         
         // Mock service response - use Location objects
         when(busScheduleService.findConnectingRoutes(any(Location.class), any(Location.class), any(String.class)))
-            .thenReturn(mockSchedules);
+            .thenReturn(mockRoutes);
 
         mockMvc.perform(get("/api/v1/bus-schedules/connecting-routes")
                 .param("fromLocationId", "1")
@@ -209,12 +233,12 @@ public class ConnectingRoutesIntegrationTest {
                 .param("languageCode", "ta"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].translatedName").value("எக்ஸ்பிரஸ் 101"))
-                .andExpect(jsonPath("$[0].fromLocationTranslatedName").value("சென்னை"))
-                .andExpect(jsonPath("$[0].toLocationTranslatedName").value("வேலூர்"))
-                .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[1].translatedName").value("எக்ஸ்பிரஸ் 102"))
-                .andExpect(jsonPath("$[1].fromLocationTranslatedName").value("வேலூர்"))
-                .andExpect(jsonPath("$[1].toLocationTranslatedName").value("பெங்களூரு"));
+                .andExpect(jsonPath("$[0].connectionPointTranslated").value("வேலூர்"))
+                .andExpect(jsonPath("$[0].firstLeg.busNameTranslated").value("எக்ஸ்பிரஸ் 101"))
+                .andExpect(jsonPath("$[0].firstLeg.fromTranslated").value("சென்னை"))
+                .andExpect(jsonPath("$[0].firstLeg.toTranslated").value("வேலூர்"))
+                .andExpect(jsonPath("$[0].secondLeg.busNameTranslated").value("எக்ஸ்பிரஸ் 102"))
+                .andExpect(jsonPath("$[0].secondLeg.fromTranslated").value("வேலூர்"))
+                .andExpect(jsonPath("$[0].secondLeg.toTranslated").value("பெங்களூரு"));
     }
 }

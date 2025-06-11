@@ -1,6 +1,7 @@
 package com.perundhu.infrastructure.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -82,6 +83,45 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
                 langCode)
             .forEach(t -> translations.put(t.getFieldName(), t.getTranslatedValue()));
         return translations;
+    }
+
+    public Map<String, Map<String, String>> getAllTranslations(String languageCode) {
+        String langCode = isTestMode ? languageCode : new LanguageCode(languageCode).toString();
+        Map<String, Map<String, String>> result = new HashMap<>();
+        // Use findAll and filter/group in memory
+        translationRepository.findAll()
+            .stream()
+            .filter(translation -> langCode.equals(translation.getLanguageCode()))
+            .forEach(translation -> {
+                String entityType = translation.getEntityType();
+                result.computeIfAbsent(entityType, k -> new HashMap<>())
+                      .put(translation.getFieldName(), translation.getTranslatedValue());
+            });
+        return result;
+    }
+
+    public Map<String, String> getTranslationsForNamespace(String language, String namespace) {
+        String langCode = isTestMode ? language : new LanguageCode(language).toString();
+        Map<String, String> translations = new HashMap<>();
+        translationRepository.findAll()
+            .stream()
+            .filter(t -> langCode.equals(t.getLanguageCode()) && namespace.equals(t.getEntityType()))
+            .forEach(t -> translations.put(t.getFieldName(), t.getTranslatedValue()));
+        return translations;
+    }
+
+    public Map<String, Map<String, String>> getTranslationsForNamespaces(String language, List<String> namespaces) {
+        String langCode = isTestMode ? language : new LanguageCode(language).toString();
+        Map<String, Map<String, String>> result = new HashMap<>();
+        namespaces.forEach(namespace -> {
+            Map<String, String> translations = new HashMap<>();
+            translationRepository.findAll()
+                .stream()
+                .filter(t -> langCode.equals(t.getLanguageCode()) && namespace.equals(t.getEntityType()))
+                .forEach(t -> translations.put(t.getFieldName(), t.getTranslatedValue()));
+            result.put(namespace, translations);
+        });
+        return result;
     }
 
     @Override
@@ -180,5 +220,19 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
                 langCode,
                 fieldName)
             .ifPresent(translationRepository::delete);
+    }
+
+    public Map<String, Object> getEntityTranslations(String entityType, Long entityId) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("entityType", entityType);
+        result.put("entityId", entityId);
+        Map<String, Map<String, String>> translations = new HashMap<>();
+        translationRepository.findByEntityTypeAndEntityId(entityType, entityId)
+            .forEach(translation -> {
+                translations.computeIfAbsent(translation.getLanguageCode(), k -> new HashMap<>())
+                           .put(translation.getFieldName(), translation.getTranslatedValue());
+            });
+        result.put("translations", translations);
+        return result;
     }
 }

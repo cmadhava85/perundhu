@@ -232,6 +232,15 @@ export const mockApiService = {
   })
 };
 
+// Mock environment utilities
+jest.mock('../../utils/environment', () => ({
+  getEnv: (key: string) => {
+    if (key === 'VITE_API_URL') return 'http://localhost:8080/api/v1';
+    return '';
+  },
+  getFeatureFlag: (_: string, defaultValue: boolean) => defaultValue
+}));
+
 export default mockApiService;
 
 // Add a simple test to prevent the "empty test suite" error

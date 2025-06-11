@@ -14,7 +14,7 @@ class TranslatableProxyTest {
     @Test
     void shouldReturnCorrectId() {
         TranslatableProxy proxy = new TranslatableProxyImpl("bus", 123L);
-        assertThat(proxy.getEntityId()).isEqualTo("123"); // getEntityId returns String
+        assertThat(proxy.getEntityIdAsString()).isEqualTo("123"); // Using getEntityIdAsString instead of getEntityId
     }
 
     // The following test is not valid because getTranslations() does not exist on TranslatableProxyImpl

@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.Value;
+import lombok.Builder;
 
 @Value
+@Builder
 public class Stop implements Translatable<Stop> {
     // Using ThreadLocal to avoid issues with concurrent requests
     private static final ThreadLocal<Map<Long, Map<Integer, Boolean>>> busStopOrdersThreadLocal = 
@@ -20,6 +22,7 @@ public class Stop implements Translatable<Stop> {
     LocalTime departureTime;
     Integer stopOrder;
     
+    @Builder
     public Stop(StopId id, String name, Bus bus, Location location, LocalTime arrivalTime, LocalTime departureTime, Integer stopOrder) {
         // Thread-safe implementation
         Map<Long, Map<Integer, Boolean>> busStopOrders = busStopOrdersThreadLocal.get();
@@ -78,7 +81,12 @@ public class Stop implements Translatable<Stop> {
     }
     
     @Value
+    @Builder
     public static class StopId {
         Long value;
+        
+        public StopId(Long value) {
+            this.value = value;
+        }
     }
 }

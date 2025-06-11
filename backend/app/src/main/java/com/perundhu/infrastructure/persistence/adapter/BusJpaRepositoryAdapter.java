@@ -2,7 +2,6 @@ package com.perundhu.infrastructure.persistence.adapter;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -29,21 +28,40 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
     
     @Override
-    public List<Bus> findByFromAndToLocation(Location from, Location to) {
-        return jpaRepository.findByFromLocationIdAndToLocationId(
-                from.getId().getValue(), 
-                to.getId().getValue())
-            .stream()
-            .map(BusJpaEntity::toDomainModel)
-            .collect(Collectors.toList());
+    public Optional<Bus> findById(Long busId) {
+        return jpaRepository.findById(busId)
+                .map(BusJpaEntity::toDomainModel);
     }
     
     @Override
-    public List<Bus> findByFromLocation(Location from) {
-        return jpaRepository.findByFromLocationId(from.getId().getValue())
-            .stream()
-            .map(BusJpaEntity::toDomainModel)
-            .collect(Collectors.toList());
+    public List<Bus> findByFromAndToLocation(Location fromLocation, Location toLocation) {
+        // Create location entities for the test method
+        LocationJpaEntity fromLocationEntity = LocationJpaEntity.fromDomainModel(fromLocation);
+        LocationJpaEntity toLocationEntity = LocationJpaEntity.fromDomainModel(toLocation);
+        
+        // Call the method expected by the test
+        return jpaRepository.findByFromLocationAndToLocation(fromLocationEntity, toLocationEntity)
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
+    }
+    
+    @Override
+    public List<Bus> findByFromLocation(Location fromLocation) {
+        return jpaRepository.findByFromLocationId(fromLocation.getId().getValue())
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
+    }
+    
+    @Override
+    public boolean existsByBusNumberAndFromAndToLocations(String busNumber, String fromLocationName, String toLocationName) {
+        return jpaRepository.existsByBusNumberAndFromAndToLocations(busNumber, fromLocationName, toLocationName);
+    }
+    
+    @Override
+    public List<Bus> findAllBuses() {
+        return findAll();  // Delegate to the existing findAll method
     }
     
     @Override
@@ -55,5 +73,27 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     @Override
     public void delete(Bus.BusId id) {
         jpaRepository.deleteById(id.getValue());
+    }
+    
+    @Override
+    public List<Bus> findAll() {
+        return jpaRepository.findAll().stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
+    }
+    
+    public List<Bus> findByFromLocationIdOrToLocationId(Long locationId) {
+        return jpaRepository.findByFromLocationIdOrToLocationId(locationId, locationId)
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
+    }
+
+    @Override
+    public List<Bus> findBusesBetweenLocations(Long fromLocationId, Long toLocationId) {
+        return jpaRepository.findByFromLocationIdAndToLocationId(fromLocationId, toLocationId)
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
     }
 }

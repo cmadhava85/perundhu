@@ -36,22 +36,17 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error, reset }) => {
         <p className="error-suggestion">{suggestion}</p>
       </div>
       
-      {apiError && apiError.details && apiError.details.length > 0 && (
-        <div className="error-details">
-          <details>
-            <summary>{t('error.details', 'See Details')}</summary>
-            <ul>
-              {apiError.details.map((detail, index) => (
-                <li key={index}>{detail}</li>
-              ))}
-            </ul>
-          </details>
+      {/* Display additional info for API errors */}
+      {apiError && apiError.status && (
+        <div className="error-status">
+          <p>{t('error.status', 'Status')}: {apiError.status}</p>
         </div>
       )}
       
-      {apiError && apiError.errorCode && (
+      {/* Display error code if available */}
+      {apiError && apiError.code && (
         <div className="error-code">
-          {t('error.code', 'Error Code')}: {apiError.errorCode}
+          {t('error.code', 'Error Code')}: {apiError.code}
         </div>
       )}
       

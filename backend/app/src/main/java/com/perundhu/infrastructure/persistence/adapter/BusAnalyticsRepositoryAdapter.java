@@ -7,21 +7,25 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.BusAnalytics;
+import com.perundhu.domain.model.Location;
 import com.perundhu.domain.port.BusAnalyticsRepository;
 import com.perundhu.infrastructure.persistence.entity.BusAnalyticsJpaEntity;
+import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.BusAnalyticsJpaRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@RequiredArgsConstructor
 public class BusAnalyticsRepositoryAdapter implements BusAnalyticsRepository {
 
     private final BusAnalyticsJpaRepository jpaRepository;
+
+    public BusAnalyticsRepositoryAdapter(@Qualifier("jpaPackageBusAnalyticsJpaRepository") BusAnalyticsJpaRepository jpaRepository) {
+        this.jpaRepository = jpaRepository;
+    }
 
     @Override
     public BusAnalytics save(BusAnalytics busAnalytics) {
@@ -70,8 +74,116 @@ public class BusAnalyticsRepositoryAdapter implements BusAnalyticsRepository {
 
     @Override
     public void deleteOlderThan(LocalDateTime dateTime) {
-        // If you want to implement this, add the method to your repository interface
-        // jpaRepository.deleteOlderThan(dateTime);
-        throw new UnsupportedOperationException("deleteOlderThan is not implemented in BusAnalyticsJpaRepository");
+        jpaRepository.deleteOlderThan(dateTime);
+    }
+
+    @Override
+    public List<BusAnalytics> findByFromLocationAndToLocationAndBusIdAndDateTimeBetween(
+            Location fromLocation, Location toLocation, Long busId,
+            LocalDateTime startDateTime, LocalDateTime endDateTime, int offset, int limit) {
+        var fromEntity = fromLocation != null ? LocationJpaEntity.fromDomainModel(fromLocation) : null;
+        var toEntity = toLocation != null ? LocationJpaEntity.fromDomainModel(toLocation) : null;
+
+        return jpaRepository.findByFromLocationAndToLocationAndBusIdAndDateTimeBetween(
+                fromEntity, toEntity, busId, startDateTime, endDateTime, offset, limit)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    public List<BusAnalytics> findByFromLocationAndToLocationAndDateTimeBetween(
+            Location fromLocation, Location toLocation,
+            LocalDateTime startDateTime, LocalDateTime endDateTime, int offset, int limit) {
+        var fromEntity = fromLocation != null ? LocationJpaEntity.fromDomainModel(fromLocation) : null;
+        var toEntity = toLocation != null ? LocationJpaEntity.fromDomainModel(toLocation) : null;
+
+        return jpaRepository.findByFromLocationAndToLocationAndDateTimeBetween(
+                fromEntity, toEntity, startDateTime, endDateTime, offset, limit)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    public List<BusAnalytics> findByBusIdAndDateTimeBetween(
+            Long busId, LocalDateTime startDateTime, LocalDateTime endDateTime, int offset, int limit) {
+        return jpaRepository.findByBusIdAndDateTimeBetween(
+                busId, startDateTime, endDateTime, offset, limit)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    public List<BusAnalytics> findByDateTimeBetween(
+            LocalDateTime startDateTime, LocalDateTime endDateTime, int offset, int limit) {
+        return jpaRepository.findByDateTimeBetween(
+                startDateTime, endDateTime, offset, limit)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BusAnalytics> findByFromLocationAndToLocationAndDateTimeBetween(
+            Location fromLocation, Location toLocation, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        var fromEntity = fromLocation != null ? LocationJpaEntity.fromDomainModel(fromLocation) : null;
+        var toEntity = toLocation != null ? LocationJpaEntity.fromDomainModel(toLocation) : null;
+
+        return jpaRepository.findByFromLocationAndToLocationAndDateTimeBetween(
+                fromEntity, toEntity, startDateTime, endDateTime)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    public List<BusAnalytics> findByBusIdAndDateTimeBetween(
+            Long busId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return jpaRepository.findByBusIdAndDateTimeBetween(
+                busId, startDateTime, endDateTime)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BusAnalytics> findByDateTimeBetween(
+            LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return jpaRepository.findByDateTimeBetween(
+                startDateTime, endDateTime)
+                .stream()
+                .map(BusAnalyticsJpaEntity::toDomainModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int countByFromLocationAndToLocationAndBusIdAndDateTimeBetween(
+            Location fromLocation, Location toLocation, Long busId,
+            LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        var fromEntity = fromLocation != null ? LocationJpaEntity.fromDomainModel(fromLocation) : null;
+        var toEntity = toLocation != null ? LocationJpaEntity.fromDomainModel(toLocation) : null;
+
+        return jpaRepository.countByFromLocationAndToLocationAndBusIdAndDateTimeBetween(
+                fromEntity, toEntity, busId, startDateTime, endDateTime);
+    }
+
+    public int countByFromLocationAndToLocationAndDateTimeBetween(
+            Location fromLocation, Location toLocation,
+            LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        var fromEntity = fromLocation != null ? LocationJpaEntity.fromDomainModel(fromLocation) : null;
+        var toEntity = toLocation != null ? LocationJpaEntity.fromDomainModel(toLocation) : null;
+
+        return jpaRepository.countByFromLocationAndToLocationAndDateTimeBetween(
+                fromEntity, toEntity, startDateTime, endDateTime);
+    }
+
+    public int countByBusIdAndDateTimeBetween(
+            Long busId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return jpaRepository.countByBusIdAndDateTimeBetween(
+                busId, startDateTime, endDateTime);
+    }
+
+    public int countByDateTimeBetween(
+            LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return jpaRepository.countByDateTimeBetween(startDateTime, endDateTime);
     }
 }
+

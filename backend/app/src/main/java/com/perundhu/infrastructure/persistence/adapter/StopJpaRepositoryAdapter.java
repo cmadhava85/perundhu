@@ -2,7 +2,6 @@ package com.perundhu.infrastructure.persistence.adapter;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -29,18 +28,9 @@ public class StopJpaRepositoryAdapter implements StopRepository {
     
     @Override
     public List<Stop> findByBusOrderByStopOrder(Bus bus) {
-        return jpaRepository.findByBusIdOrderByStopOrder(bus.getId().getValue())
-                .stream()
+        return jpaRepository.findByBusIdOrderByStopOrder(bus.getId().getValue()).stream()
                 .map(StopJpaEntity::toDomainModel)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    public List<Stop> findByBusId(Bus.BusId busId) {
-        return jpaRepository.findByBusIdOrderByStopOrder(busId.getValue())
-                .stream()
-                .map(StopJpaEntity::toDomainModel)
-                .collect(Collectors.toList());
+                .toList();
     }
     
     @Override
@@ -53,4 +43,26 @@ public class StopJpaRepositoryAdapter implements StopRepository {
     public void delete(Stop.StopId id) {
         jpaRepository.deleteById(id.getValue());
     }
+    
+    @Override
+    public List<Stop> findByLocationId(Long locationId) {
+        return jpaRepository.findByLocationId(locationId).stream()
+                .map(StopJpaEntity::toDomainModel)
+                .toList();
+    }
+    
+    @Override
+    public List<Stop> findByBusId(Long busId) {
+        return jpaRepository.findByBusId(busId).stream()
+                .map(StopJpaEntity::toDomainModel)
+                .toList();
+    }
+    
+    @Override
+    public List<Stop> findByBusId(Bus.BusId busId) {
+        return jpaRepository.findByBusId(busId.getValue()).stream()
+                .map(StopJpaEntity::toDomainModel)
+                .toList();
+    }
 }
+

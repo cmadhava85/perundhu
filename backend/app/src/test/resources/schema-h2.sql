@@ -1,6 +1,6 @@
 -- Test schema for H2 database
 -- Drop tables first to avoid constraint issues
-DROP TABLE IF EXISTS stop;
+DROP TABLE IF EXISTS stops;
 DROP TABLE IF EXISTS buses;
 DROP TABLE IF EXISTS locations;
 
@@ -33,7 +33,7 @@ CREATE TABLE buses (
 );
 
 -- Stops table
-CREATE TABLE stop (
+CREATE TABLE stops (
     id INT AUTO_INCREMENT PRIMARY KEY,
     bus_id INT,
     location_id INT,
@@ -46,3 +46,4 @@ CREATE TABLE stop (
     CONSTRAINT fk_bus FOREIGN KEY (bus_id) REFERENCES buses(id),
     CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES locations(id)
 );
+

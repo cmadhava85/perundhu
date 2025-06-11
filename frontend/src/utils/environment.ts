@@ -15,7 +15,7 @@ interface EnvVars {
 const mockEnvVars: EnvVars = {
   VITE_GOOGLE_MAPS_API_KEY: 'TEST_GOOGLE_MAPS_API_KEY',
   VITE_PERUNDHU_MAP_ID: 'TEST_MAP_ID',
-  VITE_ENABLE_MAP: 'false',
+  VITE_ENABLE_MAP: 'true', // Changed from 'false' to 'true' to ensure map is enabled
 };
 
 /**

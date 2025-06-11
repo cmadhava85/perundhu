@@ -8,7 +8,7 @@ import com.perundhu.domain.model.Location;
  * Domain service for validating location data.
  * This service ensures that locations have valid names and coordinates.
  */
-@Service
+@Service("domainLocationValidationService")
 public class LocationValidationService {
     
     /**

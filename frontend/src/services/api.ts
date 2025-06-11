@@ -1,8 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
-import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute } from '../types/index';
-import * as offlineService from './offlineService';
-import i18n from '../i18n';
+import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
 
 /**
  * Custom error class for API errors with additional properties
@@ -22,66 +20,129 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * Interface for pagination parameters
+ */
+export interface PaginationParams {
+  page: number;
+  size: number;
+}
+
+/**
+ * Interface for paginated response
+ */
+export interface PaginatedResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
+
 // Create axios instance with common configuration
 export const createApiInstance = (): AxiosInstance => {
   return axios.create({
-    baseURL: '', // Remove '/api' prefix, as all endpoints now include '/api/v1/...'
+    baseURL: import.meta.env.VITE_API_URL || '', // Use environment variable or empty string
     headers: {
       'Content-Type': 'application/json',
     },
-    // Add proxy configuration for Ford network
-    proxy: {
-      host: 'internet.ford.com',
-      port: 23,
-      protocol: 'http'
-    }
+   
   });
 };
 
 // Default API instance
 let api = createApiInstance();
 
-// For testing purposes - allows injecting a mock
+// Export api instance for direct use in services
+export { api };
+
+// For testing purposes - allows injecting a mock in test environment only
 export const setApiInstance = (instance: AxiosInstance): void => {
-  api = instance;
+  if (process.env.NODE_ENV === 'test') {
+    api = instance;
+  } else {
+    console.warn('Attempted to set API instance outside of test environment - ignored');
+  }
 };
 
-// Add a flag to track if we're in offline mode
+// Offline mode state management
 let isOfflineMode = false;
-
-// Add data age tracking for testing purposes
-const dataAges: Record<string, number> = {};
-
-// Testing helpers
-export const _setMockDataAge = (key: string, days: number): void => {
-  dataAges[key] = days;
-};
-
-export const _clearMockDataAges = (): void => {
-  Object.keys(dataAges).forEach(key => {
-    delete dataAges[key];
-  });
-};
+let lastOnlineTime: Date | null = null;
 
 /**
- * Set offline mode status (mainly for testing purposes)
+ * Set offline mode status
+ * @param status True to enable offline mode, false to disable
  */
 export const setOfflineMode = (status: boolean): void => {
   isOfflineMode = status;
+  if (!status) {
+    // If going online, update last online time
+    lastOnlineTime = new Date();
+  }
+  console.log(`Offline mode ${status ? 'enabled' : 'disabled'}`);
 };
 
 /**
- * Check if we're online. Updates the offline mode flag.
+ * Get current offline mode status
+ * @returns Current offline mode status
+ */
+export const getOfflineMode = (): boolean => {
+  return isOfflineMode;
+};
+
+/**
+ * Get the age of offline data in minutes
+ * @returns Age of offline data in minutes, or null if never been online
+ */
+export const getOfflineDataAge = (): number | null => {
+  if (!lastOnlineTime) return null;
+  
+  const now = new Date();
+  const diffMs = now.getTime() - lastOnlineTime.getTime();
+  return Math.floor(diffMs / (1000 * 60)); // Convert to minutes
+};
+
+/**
+ * Check if the application is online by making a lightweight request
+ * @returns Promise resolving to true if online, false if offline
  */
 export const checkOnlineStatus = async (): Promise<boolean> => {
   try {
-    const online = await offlineService.isOnline();
-    isOfflineMode = !online;
-    return online;
+    // Make a HEAD request to a reliable endpoint to check connectivity
+    await api.head('/api/v1/health/status');
+    setOfflineMode(false);
+    return true;
   } catch (error) {
-    console.error('Error checking online status:', error);
-    isOfflineMode = true;
+    setOfflineMode(true);
+    console.warn('Network connection appears to be offline', error);
     return false;
+  }
+};
+
+/**
+ * Get current bus locations for tracking
+ * @returns Promise with the current bus locations
+ */
+export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
+  try {
+    // Changed from '/api/v1/bus-tracking/current' to '/api/v1/bus-tracking/live'
+    const response = await api.get('/api/v1/bus-tracking/live');
+    
+    // The response structure might be different (Map<Long, BusLocationDTO> vs BusLocation[])
+    // Convert from object map to array if needed
+    if (response.data && typeof response.data === 'object' && !Array.isArray(response.data)) {
+      return Object.values(response.data);
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching current bus locations:', error);
+    if (isOfflineMode) {
+      // Return empty array in offline mode
+      return [];
+    }
+    throw new ApiError('Failed to fetch current bus locations. Please try again.');
   }
 };
 
@@ -92,34 +153,16 @@ export const checkOnlineStatus = async (): Promise<boolean> => {
 export const getLocations = async (language?: string): Promise<Location[]> => {
   try {
     console.log('getLocations: Starting location fetch');
-    // Try to get online data first
-    if (!isOfflineMode) {
-      try {
-        console.log('getLocations: Attempting online fetch');
-        // Updated to match backend endpoint: /api/v1/bus-schedules/locations
-        const response = await api.get('/api/v1/bus-schedules/locations', {
-          params: {
-            lang: language || 'en' // Default to English if language not provided
-          }
-        });
-        console.log('getLocations: Online API response received', response.data);
-        // Cache the locations for offline use
-        await offlineService.saveLocationsOffline(response.data);
-        return response.data;
-      } catch (error) {
-        console.error('getLocations: Failed to get online locations', error);
-        isOfflineMode = true;
+    const response = await api.get('/api/v1/bus-schedules/locations', {
+      params: {
+        lang: language || 'en' // Default to English if language not provided
       }
-    }
-    
-    // Fall back to offline data
-    console.log('getLocations: Falling back to offline data');
-    const offlineData = await offlineService.getLocationsOffline();
-    console.log('getLocations: Offline data retrieved', offlineData);
-    return offlineData;
+    });
+    console.log('getLocations: Online API response received', response.data);
+    return response.data;
   } catch (error) {
     console.error('Error fetching locations:', error);
-    throw new Error('Failed to fetch locations. Please try again.');
+    throw new ApiError('Failed to fetch locations. Please try again.');
   }
 };
 
@@ -131,30 +174,16 @@ export const searchBuses = async (
   toLocation: Location
 ): Promise<Bus[]> => {
   try {
-    // Try to get online data first
-    if (!isOfflineMode) {
-      try {
-        // Updated to match backend endpoint: /api/v1/bus-schedules/search
-        const response = await api.get('/api/v1/bus-schedules/search', {
-          params: {
-            fromLocationId: fromLocation.id,
-            toLocationId: toLocation.id
-          }
-        });
-        // Cache the buses for offline use
-        await offlineService.saveBusesOffline(fromLocation.id, toLocation.id, response.data);
-        return response.data;
-      } catch (error) {
-        console.log('Failed to get online buses, switching to offline mode');
-        isOfflineMode = true;
+    const response = await api.get('/api/v1/bus-schedules/search', {
+      params: {
+        fromLocationId: fromLocation.id,
+        toLocationId: toLocation.id
       }
-    }
-    
-    // Fall back to offline data
-    return await offlineService.getBusesOffline(fromLocation.id, toLocation.id);
+    });
+    return response.data;
   } catch (error) {
     console.error('Error searching buses:', error);
-    throw new Error('Failed to search for buses. Please try again.');
+    throw new ApiError('Failed to search for buses. Please try again.');
   }
 };
 
@@ -163,32 +192,15 @@ export const searchBuses = async (
  */
 export const getStops = async (busId: number, languageCode: string = 'en'): Promise<Stop[]> => {
   try {
-    // Check for invalid busId in test environment
-    if (process.env.NODE_ENV === 'test' && busId === 999) {
-      throw new Error('Failed to fetch bus stops. Please try again.');
-    }
-    
-    // Try to get online data first
-    if (!isOfflineMode) {
-      try {
-        // Confirmed alignment with backend endpoint: /api/v1/bus-schedules/${busId}/stops
-        const response = await api.get(`/api/v1/bus-schedules/${busId}/stops`, {
-          params: { lang: languageCode }
-        });
-        // Cache the stops for offline use
-        await offlineService.saveStopsOffline(busId, response.data);
-        return response.data;
-      } catch (error) {
-        console.log('Failed to get online stops, switching to offline mode');
-        isOfflineMode = true;
-      }
-    }
-    
-    // Fall back to offline data
-    return await offlineService.getStopsOffline(busId);
+    console.log(`Fetching stops for bus ${busId} with language ${languageCode}`);
+    const response = await api.get(`/api/v1/bus-schedules/${busId}/stops`, {
+      params: { lang: languageCode }
+    });
+    console.log('Stops API response:', response.data);
+    return response.data;
   } catch (error) {
-    console.error('Error fetching stops:', error);
-    throw new Error('Failed to fetch bus stops. Please try again.');
+    console.error(`Error fetching stops for bus ${busId}:`, error);
+    throw new ApiError(`Failed to fetch bus stops for bus ID ${busId}. Please try again.`);
   }
 };
 
@@ -206,30 +218,16 @@ export const getConnectingRoutes = async (
     const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
     const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
     
-    // Try to get online data first
-    if (!isOfflineMode) {
-      try {
-        // Confirmed alignment with backend endpoint: /api/v1/bus-schedules/connecting-routes
-        const response = await api.get('/api/v1/bus-schedules/connecting-routes', {
-          params: {
-            fromLocationId: fromId,
-            toLocationId: toId
-          }
-        });
-        // Cache the connecting routes for offline use
-        await offlineService.saveConnectingRoutesOffline(fromId, toId, response.data);
-        return response.data;
-      } catch (error) {
-        console.log('Failed to get online connecting routes, switching to offline mode');
-        isOfflineMode = true;
+    const response = await api.get('/api/v1/bus-schedules/connecting-routes', {
+      params: {
+        fromLocationId: fromId,
+        toLocationId: toId
       }
-    }
-    
-    // Fall back to offline data
-    return await offlineService.getConnectingRoutesOffline(fromId, toId);
+    });
+    return response.data;
   } catch (error) {
     console.error('Error fetching connecting routes:', error);
-    throw new Error('Failed to fetch connecting routes. Please try again.');
+    throw new ApiError('Failed to fetch connecting routes. Please try again.');
   }
 };
 
@@ -240,14 +238,7 @@ export const reportBusLocation = async (
   busId: number,
   report: BusLocationReport
 ): Promise<boolean> => {
-  // Only allow reporting when online
-  if (isOfflineMode) {
-    console.warn('Cannot report bus location while offline');
-    return false;
-  }
-  
   try {
-    // Updated to match backend endpoint: /api/v1/bus-tracking/report
     await api.post(`/api/v1/bus-tracking/report`, {
       busId,
       ...report,
@@ -256,9 +247,7 @@ export const reportBusLocation = async (
     return true;
   } catch (error) {
     console.error('Error reporting bus location:', error);
-    // If we get an error, we might be offline
-    isOfflineMode = true;
-    return false;
+    throw new ApiError('Failed to report bus location. Please try again.');
   }
 };
 
@@ -269,14 +258,7 @@ export const disembarkBus = async (
   busId: number,
   stopId: number
 ): Promise<boolean> => {
-  // Only allow disembarking logging when online
-  if (isOfflineMode) {
-    console.warn('Cannot log disembarking while offline');
-    return false;
-  }
-  
   try {
-    // Updated to match backend endpoint: /api/v1/bus-tracking/disembark/${busId}
     await api.post(`/api/v1/bus-tracking/disembark/${busId}`, {
       stopId,
       timestamp: new Date().toISOString()
@@ -284,9 +266,7 @@ export const disembarkBus = async (
     return true;
   } catch (error) {
     console.error('Error logging disembarking:', error);
-    // If we get an error, we might be offline
-    isOfflineMode = true;
-    return false;
+    throw new ApiError('Failed to log disembarking. Please try again.');
   }
 };
 
@@ -298,25 +278,11 @@ export const getLiveBusLocations = async (
   toLocation: Location
 ): Promise<BusLocation[]> => {
   try {
-    // Try to get online data first
-    if (!isOfflineMode) {
-      try {
-        // Updated to match backend endpoint: /api/v1/bus-tracking/route/${fromLocation.id}/${toLocation.id}
-        const response = await api.get(`/api/v1/bus-tracking/route/${fromLocation.id}/${toLocation.id}`);
-        // Cache the bus locations for offline use
-        await offlineService.saveBusLocationsOffline(fromLocation.id, toLocation.id, response.data);
-        return response.data;
-      } catch (error) {
-        console.log('Failed to get online bus locations, switching to offline mode');
-        isOfflineMode = true;
-      }
-    }
-    
-    // Fall back to offline data
-    return await offlineService.getBusLocationsOffline(fromLocation.id, toLocation.id);
+    const response = await api.get(`/api/v1/bus-tracking/route/${fromLocation.id}/${toLocation.id}`);
+    return response.data;
   } catch (error) {
     console.error('Error fetching live bus locations:', error);
-    throw new Error('Failed to fetch live bus locations. Please try again.');
+    throw new ApiError('Failed to fetch live bus locations. Please try again.');
   }
 };
 
@@ -324,23 +290,7 @@ export const getLiveBusLocations = async (
  * Get user reward points
  */
 export const getUserRewardPoints = async (userId: string): Promise<RewardPoints> => {
-  // This is personal data that doesn't make sense to cache offline
-  // Only return data when online
-  if (isOfflineMode) {
-    // Return a default empty reward points object
-    return {
-      userId: 'offline',
-      totalPoints: 0,
-      currentTripPoints: 0,
-      lifetimePoints: 0,
-      userRank: 'Beginner',
-      leaderboardPosition: 0,
-      recentActivities: []
-    };
-  }
-  
   try {
-    // Updated to match backend endpoint: /api/v1/bus-tracking/rewards/${userId}
     const response = await api.get(`/api/v1/bus-tracking/rewards/${userId}`);
     return response.data;
   } catch (error: any) {
@@ -357,119 +307,224 @@ export const getUserRewardPoints = async (userId: string): Promise<RewardPoints>
   }
 };
 
-/**
- * Check if we're currently in offline mode
- */
-export const getOfflineMode = (): boolean => {
-  return isOfflineMode;
+// Error handler utility for consistent error responses
+export const handleApiError = (error: any): never => {
+  console.error('API error:', error);
+  if (error.response) {
+    throw new ApiError(
+      error.response.data?.message || 'An error occurred with the API request',
+      error.response.status,
+      error.response.data?.errorCode
+    );
+  }
+  throw new ApiError('Failed to connect to the server. Please check your internet connection.');
 };
 
 /**
- * Get the age of offline data in days
- * @param dataType The type of data to check (e.g., 'locations', 'buses')
- * @returns The age in days, or -1 if no data available
+ * Submit a user-contributed bus route
+ * 
+ * @param data Route contribution data
+ * @returns Promise with the submission result
  */
-export const getOfflineDataAge = async (
-  dataType: string,
-  fromLocationId?: number,
-  toLocationId?: number,
-  busId?: number
-): Promise<number | null> => {
-  let key = '';
-  
-  switch (dataType) {
-    case 'locations':
-      key = 'lastLocationSync';
-      break;
-    case 'buses':
-      key = `lastBusSync_${fromLocationId}_${toLocationId}`;
-      break;
-    case 'stops':
-      key = `lastStopSync_${busId}`;
-      break;
-    case 'busLocations':
-      key = `lastBusLocationSync_${fromLocationId}_${toLocationId}`;
-      break;
-    case 'connectingRoutes':
-      key = `lastConnectingRouteSync_${fromLocationId}_${toLocationId}`;
-      break;
-    default:
-      return null;
-  }
-  
-  // For testing support - return mock data age if available
-  if (dataAges[key] !== undefined) {
-    return dataAges[key];
-  }
-  
-  // Otherwise check from offline storage
-  const lastSync = await offlineService.getLastSyncTime(key);
-  if (!lastSync) {
-    return null;
-  }
-  
-  const now = new Date();
-  const syncDate = new Date(lastSync);
-  const diffTime = Math.abs(now.getTime() - syncDate.getTime());
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-};
-
-/**
- * Get the age of buses data in days
- * @param fromLocationId The origin location ID
- * @param toLocationId The destination location ID
- */
-export const getBusesDataAge = async (fromLocationId: number, toLocationId: number): Promise<number | null> => {
-  const key = `lastBusSync_${fromLocationId}_${toLocationId}`;
-  
-  // For testing purposes, use mock data if available
-  if (dataAges[key] !== undefined) {
-    return dataAges[key];
-  }
-  
-  return getOfflineDataAge('buses', fromLocationId, toLocationId);
-};
-
-/**
- * Cleanup old data from offline storage
- * @param maxAgeDays Maximum age in days before data is considered stale
- */
-export const cleanupOldData = async (maxAgeDays: number = 7): Promise<void> => {
+export const submitRouteContribution = async (data: RouteContribution) => {
   try {
-    await offlineService.cleanupOldData(maxAgeDays);
+    const response = await api.post(`/api/v1/contributions/routes`, data);
+    return response.data;
   } catch (error) {
-    console.error('Error cleaning up old data:', error);
+    return handleApiError(error);
   }
 };
 
 /**
- * Clean up old offline data
+ * Submit an image of a bus schedule
+ * 
+ * @param data Metadata about the image
+ * @param file The image file to upload
+ * @returns Promise with the submission result
  */
-export const cleanupOldOfflineData = async (): Promise<void> => {
+export const submitImageContribution = async (data: ImageContribution, file: File) => {
   try {
-    await offlineService.cleanupOldBusLocationData();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('data', JSON.stringify(data));
+
+    const response = await api.post(
+      `/api/v1/contributions/images`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    );
+
+    return response.data;
   } catch (error) {
-    console.error('Error cleaning up old offline data:', error);
+    return handleApiError(error);
   }
 };
 
 /**
- * Get current bus locations by location IDs
- * This function exists to maintain backward compatibility with the LiveBusTracker component
+ * Get all contributions for the current user
+ *
+ * @param userId The ID of the user
+ * @returns Promise with an array of contribution objects
  */
-export const getCurrentBusLocations = async (fromLocationId: number, toLocationId: number): Promise<BusLocation[]> => {
-  // Find location objects by their IDs
-  const locations = await getLocations(i18n.language);
-  const fromLocation = locations.find(loc => loc.id === fromLocationId);
-  const toLocation = locations.find(loc => loc.id === toLocationId);
-
-  if (!fromLocation || !toLocation) {
-    throw new Error('Invalid location IDs');
+export const getUserContributions = async (userId: string) => {
+  try {
+    const response = await api.get(`/api/v1/contributions/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
   }
-
-  // Call the actual implementation
-  return getLiveBusLocations(fromLocation, toLocation);
 };
 
-// Initialize by checking online status
-checkOnlineStatus();
+/**
+ * Get all contributions (for admin users)
+ *
+ * @returns Promise with an array of all contributions
+ */
+export const getAllContributions = async () => {
+  try {
+    const response = await api.get(`/api/admin/contributions/all`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Get pending route contributions (for admin review)
+ *
+ * @returns Promise with array of pending route contributions
+ */
+export const getPendingRouteContributions = async () => {
+  try {
+    const response = await api.get(`/api/admin/contributions/routes/pending`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Get pending image contributions (for admin review)
+ *
+ * @returns Promise with array of pending image contributions
+ */
+export const getPendingImageContributions = async () => {
+  try {
+    const response = await api.get(`/api/admin/contributions/images/pending`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Approve a route contribution
+ *
+ * @param id The ID of the contribution to approve
+ * @returns Promise with the updated contribution
+ */
+export const approveRouteContribution = async (id: string) => {
+  try {
+    const response = await api.post(`/api/admin/contributions/routes/${id}/approve`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Reject a route contribution
+ *
+ * @param id The ID of the contribution to reject
+ * @param reason The reason for rejection
+ * @returns Promise with the updated contribution
+ */
+export const rejectRouteContribution = async (id: string, reason: string) => {
+  try {
+    const response = await api.post(`/api/admin/contributions/routes/${id}/reject`, { reason });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Approve an image contribution
+ *
+ * @param id The ID of the contribution to approve
+ * @returns Promise with the updated contribution
+ */
+export const approveImageContribution = async (id: string) => {
+  try {
+    const response = await api.post(`/api/admin/contributions/images/${id}/approve`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Reject an image contribution
+ *
+ * @param id The ID of the contribution to reject
+ * @param reason The reason for rejection
+ * @returns Promise with the updated contribution
+ */
+export const rejectImageContribution = async (id: string, reason: string) => {
+  try {
+    const response = await api.post(`/api/admin/contributions/images/${id}/reject`, { reason });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Get the status of a user's contributions
+ * 
+ * @returns Promise with an array of contribution status objects
+ */
+export const getContributionStatus = async () => {
+  const response = await axios.get(`/api/v1/contributions/status`);
+  return response.data;
+};
+
+/**
+ * API Service class for managing API calls
+ */
+export class APIService {
+  private axios: AxiosInstance;
+
+  constructor() {
+    this.axios = createApiInstance();
+  }
+
+  /**
+   * Gets bus schedules with optional pagination support
+   * @param paginationParams Optional pagination parameters
+   * @returns Promise with bus schedules, potentially paginated
+   */
+  async getBusSchedules(paginationParams?: PaginationParams): Promise<PaginatedResponse<Bus> | Bus[]> {
+    try {
+      let url = '/api/bus/schedules';
+      
+      // Add pagination parameters if provided
+      if (paginationParams) {
+        url += `?page=${paginationParams.page}&size=${paginationParams.size}`;
+        const response = await this.axios.get(url);
+        return response.data;
+      } else {
+        // Original implementation without pagination
+        const response = await this.axios.get(url);
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Error fetching bus schedules:', error);
+      throw error;
+    }
+  }
+}

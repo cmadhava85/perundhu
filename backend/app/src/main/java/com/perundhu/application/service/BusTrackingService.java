@@ -2,6 +2,7 @@ package com.perundhu.application.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import com.perundhu.application.dto.BusLocationDTO;
 import com.perundhu.application.dto.BusLocationReportDTO;
@@ -52,4 +53,29 @@ public interface BusTrackingService {
      * @return Reward points information for the user
      */
     RewardPointsDTO getUserRewardPoints(String userId);
+    
+    /**
+     * Get all current active bus locations
+     * 
+     * @return Map of bus IDs to their current locations
+     */
+    Map<Long, BusLocationDTO> getActiveBusLocations();
+    
+    /**
+     * Get historical location data for a specific bus
+     * 
+     * @param busId The ID of the bus
+     * @param since Timestamp to retrieve data from
+     * @return List of historical bus locations
+     */
+    List<BusLocationDTO> getBusLocationHistory(Long busId, LocalDateTime since);
+    
+    /**
+     * Get estimated arrival time of a bus at a specific stop
+     * 
+     * @param busId The ID of the bus
+     * @param stopId The ID of the stop
+     * @return Map containing estimated arrival information
+     */
+    Map<String, Object> getEstimatedArrival(Long busId, Long stopId);
 }

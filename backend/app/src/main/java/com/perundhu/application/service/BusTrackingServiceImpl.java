@@ -3,6 +3,7 @@ package com.perundhu.application.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -136,6 +137,69 @@ public class BusTrackingServiceImpl implements BusTrackingService {
     @Override
     public RewardPointsDTO getUserRewardPoints(String userId) {
         return userRewards.getOrDefault(userId, createEmptyRewardResponse(userId));
+    }
+    
+    @Override
+    public Map<Long, BusLocationDTO> getActiveBusLocations() {
+        log.info("Getting all active bus locations");
+        
+        // Simply return the current map of bus locations
+        return new HashMap<>(currentBusLocations);
+    }
+    
+    @Override
+    public List<BusLocationDTO> getBusLocationHistory(Long busId, LocalDateTime since) {
+        log.info("Getting location history for bus {} since {}", busId, since);
+        
+        // Stub implementation - would typically query from database
+        List<BusLocationDTO> history = new ArrayList<>();
+        
+        // Return current location as the only entry if we have one
+        BusLocationDTO current = currentBusLocations.get(busId);
+        if (current != null) {
+            history.add(current);
+        }
+        
+        return history;
+    }
+    
+    @Override
+    public Map<String, Object> getEstimatedArrival(Long busId, Long stopId) {
+        log.info("Getting estimated arrival for bus {} at stop {}", busId, stopId);
+        
+        Map<String, Object> result = new HashMap<>();
+        
+        // Get current bus location
+        BusLocationDTO location = getCurrentBusLocation(busId);
+        if (location == null || location.getTimestamp() == null) {  // Using timestamp instead of lastUpdated
+            result.put("error", "Bus location not available");
+            return result;
+        }
+        
+        // Get stop info
+        Optional<Stop> stopOpt = stopRepository.findById(new Stop.StopId(stopId));  // Using Stop.StopId constructor
+        if (stopOpt.isEmpty()) {
+            result.put("error", "Stop not found");
+            return result;
+        }
+        
+        Stop stop = stopOpt.get();
+        
+        // In a real implementation, this would calculate ETA based on:
+        // - Current bus position
+        // - Distance to stop
+        // - Average speed
+        // - Traffic conditions
+        // - Historic travel times
+        
+        // Stub implementation - return dummy data
+        result.put("busId", busId);
+        result.put("stopId", stopId);
+        result.put("stopName", stop.getName());
+        result.put("estimatedArrival", LocalDateTime.now().plusMinutes(15).toString());
+        result.put("confidence", 70);
+        
+        return result;
     }
     
     /**

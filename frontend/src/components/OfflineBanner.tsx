@@ -13,9 +13,9 @@ const OfflineBanner: React.FC = () => {
   const [isCheckingConnection, setIsCheckingConnection] = useState<boolean>(false);
 
   useEffect(() => {
-    // Get the age of the locations data as an indicator
+    // Get the age of the offline data as an indicator
     const fetchDataAge = async () => {
-      const age = await getOfflineDataAge('locations');
+      const age = await getOfflineDataAge();
       setDataAge(age);
     };
 

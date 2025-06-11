@@ -8,9 +8,9 @@ public interface TranslatableProxy {
     /**
      * Gets the unique identifier for this translatable entity.
      * 
-     * @return The unique identifier
+     * @return The unique identifier as a String
      */
-    String getEntityId();
+    String getEntityIdAsString();
     
     /**
      * Gets the type of entity being translated.

@@ -1,1104 +1,178 @@
--- Create tables with IF NOT EXISTS to prevent errors on repeated runs
-CREATE TABLE IF NOT EXISTS locations (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    address VARCHAR(255),
-    latitude DOUBLE,
-    longitude DOUBLE
-);
+-- Sample data for locations
+INSERT INTO locations (name, latitude, longitude) VALUES
+('Chennai Central', 13.0827, 80.2707),
+('Tambaram', 12.9249, 80.1000),
+('Velachery', 12.9714, 80.2180),
+('T Nagar', 13.0410, 80.2354),
+('Adyar', 13.0012, 80.2565),
+('Porur', 13.0359, 80.1567),
+('Anna Nagar', 13.0850, 80.2101),
+('Ambattur', 13.1143, 80.1548),
+('Shollinganallur', 12.9010, 80.2279),
+('Thiruvanmiyur', 12.9830, 80.2594),
+('Madurai', 9.9252, 78.1198),
+('Coimbatore', 11.0168, 76.9558),
+('Trichy', 10.7905, 78.7047),
+('Villupuram', 11.9401, 79.4861),
+('Salem', 11.6643, 78.1460)
+ON DUPLICATE KEY UPDATE name=name;
+
+-- Sample data for buses
+INSERT INTO buses (name, bus_number, departure_time, arrival_time, from_location_id, to_location_id) VALUES
+('Chennai Express', '45A', '08:00:00', '09:30:00', 1, 2),
+('Tambaram Special', '18C', '09:15:00', '10:45:00', 2, 1),
+('Velachery Direct', '29C', '07:30:00', '08:45:00', 3, 1),
+('T Nagar Shuttle', '23B', '08:45:00', '09:30:00', 4, 1),
+('Adyar Line', '5B', '07:00:00', '08:15:00', 5, 1),
+('Porur Express', '54C', '06:30:00', '08:00:00', 6, 1),
+('Anna Nagar Direct', '27B', '07:45:00', '09:00:00', 7, 1),
+('Ambattur Route', '14A', '06:45:00', '08:30:00', 8, 1),
+('IT Corridor Bus', '102', '08:30:00', '10:00:00', 9, 1),
+('Beach Route', '21G', '09:00:00', '10:15:00', 10, 1),
+('Chennai-Madurai Superfast', 'TN-01-SF-001', '06:00:00', '13:30:00', 1, 11),
+('Chennai-Coimbatore Express', 'TN-01-SF-002', '07:00:00', '15:00:00', 1, 12),
+('Madurai-Chennai Daily', 'TN-01-SF-003', '16:00:00', '23:30:00', 11, 1),
+('Coimbatore-Chennai Deluxe', 'TN-01-SF-004', '17:00:00', '01:00:00', 12, 1)
+ON DUPLICATE KEY UPDATE name=name;
+
+-- Sample data for stops
+INSERT INTO stops (name, bus_id, location_id, arrival_time, departure_time, stop_order) VALUES
+('Meenambakkam', 1, 2, '08:30:00', '08:32:00', 1),
+('Guindy', 1, 3, '08:45:00', '08:47:00', 2),
+('Saidapet', 1, 4, '09:00:00', '09:02:00', 3),
+('Nandanam', 1, 5, '09:15:00', '09:17:00', 4),
+('Chrompet', 2, 3, '09:45:00', '09:47:00', 1),
+('St. Thomas Mount', 2, 4, '10:00:00', '10:02:00', 2),
+('Guindy', 2, 5, '10:15:00', '10:17:00', 3),
+('Kodambakkam', 3, 6, '07:50:00', '07:52:00', 1),
+('T. Nagar', 3, 7, '08:05:00', '08:07:00', 2),
+('Teynampet', 3, 8, '08:20:00', '08:22:00', 3),
+-- Chennai to Madurai route stops (bus_id 11) - Fixed location IDs
+('Chennai Central', 11, 1, '06:00:00', '06:15:00', 1),
+('Tambaram', 11, 2, '06:50:00', '07:00:00', 2),
+('Chengalpattu', 11, 3, '07:45:00', '07:55:00', 3),
+('Villupuram', 11, 14, '09:00:00', '09:15:00', 4),
+('Trichy', 11, 13, '11:00:00', '11:15:00', 5),
+('Madurai', 11, 11, '13:30:00', '13:45:00', 6),
+-- Chennai to Coimbatore route stops (bus_id 12) - Fixed location IDs
+('Chennai Central', 12, 1, '07:00:00', '07:15:00', 1),
+('Kanchipuram', 12, 3, '08:30:00', '08:40:00', 2),
+('Vellore', 12, 7, '10:00:00', '10:15:00', 3), 
+('Salem', 12, 15, '12:00:00', '12:15:00', 4),
+('Coimbatore', 12, 12, '15:00:00', '15:15:00', 5),
+-- Madurai to Chennai route stops (bus_id 13) - Fixed location IDs
+('Madurai', 13, 11, '16:00:00', '16:15:00', 1),
+('Trichy', 13, 13, '18:30:00', '18:45:00', 2),
+('Villupuram', 13, 14, '20:30:00', '20:45:00', 3),
+('Chengalpattu', 13, 3, '21:50:00', '22:00:00', 4),
+('Tambaram', 13, 2, '22:45:00', '22:55:00', 5),
+('Chennai Central', 13, 1, '23:30:00', '23:45:00', 6),
+-- Coimbatore to Chennai route stops (bus_id 14) - Fixed location IDs
+('Coimbatore', 14, 12, '17:00:00', '17:15:00', 1),
+('Salem', 14, 15, '20:00:00', '20:15:00', 2),
+('Vellore', 14, 7, '22:00:00', '22:15:00', 3),
+('Kanchipuram', 14, 3, '23:45:00', '23:55:00', 4),
+('Chennai Central', 14, 1, '01:00:00', '01:15:00', 5)
+ON DUPLICATE KEY UPDATE name=name;
+
+-- Sample data for route contributions
+INSERT INTO route_contributions (id, user_id, bus_number, from_location_name, to_location_name, from_latitude, from_longitude, to_latitude, to_longitude, schedule_info, status, submission_date, additional_notes) VALUES
+('11111111-1111-1111-1111-111111111111', 'user1', '75F', 'Medavakkam', 'Chennai Central', 12.9176, 80.1920, 13.0827, 80.2707, 'Hourly from 6 AM to 10 PM', 'PENDING', '2025-05-15 10:23:45', 'New route suggestion'),
+('22222222-2222-2222-2222-222222222222', 'user2', '12B', 'Pallavaram', 'T Nagar', 12.9675, 80.1491, 13.0410, 80.2354, 'Every 30 mins from 7 AM to 9 PM', 'APPROVED', '2025-05-20 14:15:30', 'Frequent service needed'),
+('33333333-3333-3333-3333-333333333333', 'user3', '119', 'Siruseri', 'Koyambedu', 12.8196, 80.2278, 13.0694, 80.1948, 'Morning 6 AM, 7 AM, 8 AM and evening 5 PM, 7 PM, 9 PM', 'REJECTED', '2025-05-25 09:45:12', 'For IT employees')
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+-- Sample data for image contributions
+INSERT INTO image_contributions (id, user_id, description, location, route_name, image_url, status, submission_date, additional_notes) VALUES
+('44444444-4444-4444-4444-444444444444', 'user1', 'Bus stop sign faded and hard to read', 'Guindy Bus Stand', 'Chennai Central - Tambaram', 'https://storage.perundhu.com/images/contributions/busstop1.jpg', 'PENDING', '2025-06-01 11:30:00', 'Needs immediate attention'),
+('55555555-5555-5555-5555-555555555555', 'user2', 'New electronic display board installed', 'T Nagar Bus Terminal', 'Multiple Routes', 'https://storage.perundhu.com/images/contributions/display1.jpg', 'APPROVED', '2025-06-02 15:45:00', 'Working perfectly'),
+('66666666-6666-6666-6666-666666666666', 'user3', 'Bus schedule poster unreadable', 'Adyar Bus Depot', 'Adyar - Chennai Central', 'https://storage.perundhu.com/images/contributions/schedule1.jpg', 'APPROVED', '2025-06-03 09:15:00', 'Need laminated posters')
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+-- Sample data for bus location history
+INSERT INTO bus_location_history (id, bus_id, latitude, longitude, speed, heading, accuracy, timestamp) VALUES
+('77777777-7777-7777-7777-777777777777', 1, 13.0500, 80.2200, 35.5, 90, 4.5, '2025-06-05 08:15:00'),
+('88888888-8888-8888-8888-888888888888', 1, 13.0550, 80.2250, 32.0, 90, 5.0, '2025-06-05 08:20:00'),
+('99999999-9999-9999-9999-999999999999', 2, 12.9300, 80.1050, 40.2, 270, 3.8, '2025-06-05 09:25:00')
+ON DUPLICATE KEY UPDATE bus_id=bus_id;
+
+-- Sample data for bus analytics
+INSERT INTO bus_analytics (bus_id, date, passenger_count, avg_speed, on_time_percentage, total_trips, fuel_consumption) VALUES
+(1, '2025-06-04', 1250, 32.5, 94.5, 24, 85.2),
+(2, '2025-06-04', 980, 30.8, 91.2, 22, 82.6),
+(3, '2025-06-04', 1100, 34.2, 95.0, 20, 78.9)
+ON DUPLICATE KEY UPDATE passenger_count=passenger_count;
+
+-- Sample data for user tracking sessions
+INSERT INTO user_tracking_sessions (id, device_id, session_start, session_end, from_location_id, to_location_id, bus_id, status) VALUES
+('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'device123', '2025-06-05 07:30:00', '2025-06-05 08:45:00', 1, 2, 1, 'COMPLETED'),
+('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'device456', '2025-06-05 08:15:00', '2025-06-05 09:30:00', 2, 1, 2, 'COMPLETED'),
+('cccccccc-cccc-cccc-cccc-cccccccccccc', 'device789', '2025-06-05 09:00:00', NULL, 3, 1, 3, 'IN_PROGRESS')
+ON DUPLICATE KEY UPDATE device_id=device_id;
+
+-- Sample data for bus travel metrics
+INSERT INTO bus_travel_metrics (bus_id, date, total_distance, avg_travel_time, fuel_efficiency, co2_emission) VALUES
+(1, '2025-06-04', 245.6, 85, 12.4, 198.2),
+(2, '2025-06-04', 220.3, 92, 11.8, 186.7),
+(3, '2025-06-04', 198.5, 78, 13.2, 150.4)
+ON DUPLICATE KEY UPDATE total_distance=total_distance;
+
+-- Sample data for translations
+INSERT INTO translations (entity_type, entity_id, language_code, field_name, translated_value) VALUES
+('location', 1, 'ta', 'name', 'சென்னை சென்ட்ரல்'),
+('location', 2, 'ta', 'name', 'தாம்பரம்'),
+('location', 3, 'ta', 'name', 'வேளச்சேரி'),
+('location', 4, 'ta', 'name', 'தி நகர்'),
+('location', 5, 'ta', 'name', 'அடையாறு'),
+('location', 6, 'ta', 'name', 'போரூர்'),
+('location', 7, 'ta', 'name', 'அண்ணா நகர்'),
+('location', 8, 'ta', 'name', 'அம்பத்தூர்'),
+('location', 9, 'ta', 'name', 'சோழிங்கநல்லூர்'),
+('location', 10, 'ta', 'name', 'திருவான்மியூர்'),
+('location', 11, 'ta', 'name', 'மதுரை'),
+('location', 12, 'ta', 'name', 'கோயம்புத்தூர்'),
+('location', 13, 'ta', 'name', 'திருச்சி'),
+('location', 14, 'ta', 'name', 'விழுப்புரம்'),
+('location', 15, 'ta', 'name', 'சேலம்'),
+('bus', 1, 'ta', 'name', 'சென்னை எக்ஸ்பிரஸ்'),
+('bus', 2, 'ta', 'name', 'தாம்பரம் ஸ்பெஷல்'),
+('bus', 3, 'ta', 'name', 'வேளச்சேரி நேரடி'),
+('bus', 4, 'ta', 'name', 'தி நகர் ஷட்டில்'),
+('bus', 5, 'ta', 'name', 'அடையாறு லைன்'),
+('bus', 6, 'ta', 'name', 'போரூர் எக்ஸ்பிரஸ்'),
+('bus', 7, 'ta', 'name', 'அண்ணா நகர் நேரடி'),
+('bus', 8, 'ta', 'name', 'அம்பத்தூர் வழி'),
+('bus', 9, 'ta', 'name', 'ஐ.டி பாதை பஸ்'),
+('bus', 10, 'ta', 'name', 'கடற்கரை வழி'),
+('bus', 11, 'ta', 'name', 'சென்னை-மதுரை சூப்பர் ஃபாஸ்ட்'),
+('bus', 12, 'ta', 'name', 'சென்னை-கோயம்புத்தூர் எக்ஸ்பிரஸ்'),
+('bus', 13, 'ta', 'name', 'மதுரை-சென்னை டெய்லி'),
+('bus', 14, 'ta', 'name', 'கோயம்புத்தூர்-சென்னை டீலக்ஸ்'),
+('stop', 11, 'ta', 'name', 'சென்னை சென்ட்ரல்'),
+('stop', 12, 'ta', 'name', 'தாம்பரம்'),
+('stop', 13, 'ta', 'name', 'செங்கல்பட்டு'),
+('stop', 14, 'ta', 'name', 'விழுப்புரம்'),
+('stop', 15, 'ta', 'name', 'திருச்சி'),
+('stop', 16, 'ta', 'name', 'மதுரை'),
+('stop', 17, 'ta', 'name', 'சென்னை சென்ட்ரல்'),
+('stop', 18, 'ta', 'name', 'காஞ்சிபுரம்'),
+('stop', 19, 'ta', 'name', 'வேலூர்'),
+('stop', 20, 'ta', 'name', 'சேலம்'),
+('stop', 21, 'ta', 'name', 'கோயம்புத்தூர்'),
+('stop', 22, 'ta', 'name', 'மதுரை'),
+('stop', 23, 'ta', 'name', 'திருச்சி'),
+('stop', 24, 'ta', 'name', 'விழுப்புரம்'),
+('stop', 25, 'ta', 'name', 'செங்கல்பட்டு'),
+('stop', 26, 'ta', 'name', 'தாம்பரம்'),
+('stop', 27, 'ta', 'name', 'சென்னை சென்ட்ரல்'),
+('stop', 28, 'ta', 'name', 'கோயம்புத்தூர்'),
+('stop', 29, 'ta', 'name', 'சேலம்'),
+('stop', 30, 'ta', 'name', 'வேலூர்'),
+('stop', 31, 'ta', 'name', 'காஞ்சிபுரம்'),
+('stop', 32, 'ta', 'name', 'சென்னை சென்ட்ரல்'),
+('bus_number', 11, 'ta', 'number', 'டி.என்-01-எஸ்.எஃப்-001'),
+('bus_number', 12, 'ta', 'number', 'டி.என்-01-எஸ்.எஃப்-002'),
+('bus_number', 13, 'ta', 'number', 'டி.என்-01-எஸ்.எஃப்-003'),
+('bus_number', 14, 'ta', 'number', 'டி.என்-01-எஸ்.எஃப்-004')
+ON DUPLICATE KEY UPDATE translated_value=translated_value;
 
-CREATE TABLE IF NOT EXISTS buses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    from_location_id INT NOT NULL,
-    to_location_id INT NOT NULL,
-    bus_name VARCHAR(255),
-    bus_number VARCHAR(255),
-    departure_time TIME NOT NULL,
-    arrival_time TIME NOT NULL,
-    FOREIGN KEY (from_location_id) REFERENCES locations(id),
-    FOREIGN KEY (to_location_id) REFERENCES locations(id)
-);
-
-CREATE TABLE IF NOT EXISTS stops (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    bus_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    arrival_time TIME,
-    departure_time TIME,
-    stop_order INT NOT NULL,
-    location_id INT,
-    FOREIGN KEY (bus_id) REFERENCES buses(id),
-    FOREIGN KEY (location_id) REFERENCES locations(id)
-);
-
--- Create new table for connecting routes
-CREATE TABLE IF NOT EXISTS connecting_route (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    from_location_id INT NOT NULL,
-    to_location_id INT NOT NULL,
-    first_bus_id INT NOT NULL,
-    second_bus_id INT NOT NULL,
-    connection_location_id INT NOT NULL,
-    wait_time_minutes INT NOT NULL,
-    FOREIGN KEY (from_location_id) REFERENCES locations(id),
-    FOREIGN KEY (to_location_id) REFERENCES locations(id),
-    FOREIGN KEY (first_bus_id) REFERENCES buses(id),
-    FOREIGN KEY (second_bus_id) REFERENCES buses(id),
-    FOREIGN KEY (connection_location_id) REFERENCES locations(id)
-);
-
--- Only insert data if the locations table is empty
-INSERT INTO locations (name)
-SELECT 'Chennai' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations LIMIT 1);
-
--- Only proceed with inserts if the locations table was previously empty
-INSERT INTO locations (name) 
-SELECT 'Coimbatore' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) = 1);
-
--- Original locations from the initial script
-INSERT INTO locations (name) 
-SELECT 'Madurai' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 2);
-
-INSERT INTO locations (name) 
-SELECT 'Trichy' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 3);
-
-INSERT INTO locations (name) 
-SELECT 'Salem' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 4);
-
-INSERT INTO locations (name) 
-SELECT 'Tirunelveli' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 5);
-
-INSERT INTO locations (name) 
-SELECT 'Kanyakumari' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 6);
-
-INSERT INTO locations (name) 
-SELECT 'Vellore' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 7);
-
-INSERT INTO locations (name) 
-SELECT 'Thanjavur' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 8);
-
-INSERT INTO locations (name) 
-SELECT 'Thoothukudi' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 9);
-
-INSERT INTO locations (name) 
-SELECT 'Dindigul' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 10);
-
-INSERT INTO locations (name) 
-SELECT 'Erode' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 11);
-
-INSERT INTO locations (name) 
-SELECT 'Tirupur' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 12);
-
-INSERT INTO locations (name) 
-SELECT 'Nagercoil' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 13);
-
-INSERT INTO locations (name) 
-SELECT 'Hosur' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 14);
-
-INSERT INTO locations (name) 
-SELECT 'Karur' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 15);
-
-INSERT INTO locations (name) 
-SELECT 'Namakkal' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 16);
-
-INSERT INTO locations (name) 
-SELECT 'Rameswaram' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 17);
-
-INSERT INTO locations (name) 
-SELECT 'Kodaikanal' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 18);
-
-INSERT INTO locations (name) 
-SELECT 'Ooty' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 19);
-
-INSERT INTO locations (name) 
-SELECT 'Coonoor' FROM dual WHERE EXISTS (SELECT 1 FROM locations WHERE name = 'Chennai' AND (SELECT COUNT(*) FROM locations) <= 20);
-
--- Additional locations from various regions of Tamil Nadu
-INSERT INTO locations (name) 
-SELECT 'Kanchipuram' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Kanchipuram');
-
-INSERT INTO locations (name) 
-SELECT 'Kumbakonam' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Kumbakonam');
-
-INSERT INTO locations (name) 
-SELECT 'Tenkasi' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Tenkasi');
-
-INSERT INTO locations (name) 
-SELECT 'Theni' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Theni');
-
-INSERT INTO locations (name) 
-SELECT 'Cuddalore' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Cuddalore');
-
-INSERT INTO locations (name) 
-SELECT 'Chengalpattu' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Chengalpattu');
-
-INSERT INTO locations (name) 
-SELECT 'Dharmapuri' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Dharmapuri');
-
-INSERT INTO locations (name) 
-SELECT 'Krishnagiri' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Krishnagiri');
-
-INSERT INTO locations (name) 
-SELECT 'Kallakurichi' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Kallakurichi');
-
-INSERT INTO locations (name) 
-SELECT 'Ariyalur' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Ariyalur');
-
-INSERT INTO locations (name) 
-SELECT 'Perambalur' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Perambalur');
-
-INSERT INTO locations (name) 
-SELECT 'Nagapattinam' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Nagapattinam');
-
-INSERT INTO locations (name) 
-SELECT 'Mayiladuthurai' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Mayiladuthurai');
-
-INSERT INTO locations (name) 
-SELECT 'Pudukkottai' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Pudukkottai');
-
-INSERT INTO locations (name) 
-SELECT 'Virudhunagar' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Virudhunagar');
-
-INSERT INTO locations (name) 
-SELECT 'Sivakasi' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Sivakasi');
-
-INSERT INTO locations (name) 
-SELECT 'Ramanathapuram' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Ramanathapuram');
-
-INSERT INTO locations (name) 
-SELECT 'Sivaganga' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Sivaganga');
-
-INSERT INTO locations (name) 
-SELECT 'Tiruvannamalai' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Tiruvannamalai');
-
-INSERT INTO locations (name) 
-SELECT 'Poonamallee' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Poonamallee');
-
-INSERT INTO locations (name) 
-SELECT 'Tirupathur' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Tirupathur');
-
-INSERT INTO locations (name) 
-SELECT 'Ranipet' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Ranipet');
-
-INSERT INTO locations (name) 
-SELECT 'Thiruvallur' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Thiruvallur');
-
-INSERT INTO locations (name) 
-SELECT 'Kanyakumari Town' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Kanyakumari Town');
-
-INSERT INTO locations (name) 
-SELECT 'Pollachi' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Pollachi');
-
-INSERT INTO locations (name) 
-SELECT 'Palani' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Palani');
-
-INSERT INTO locations (name) 
-SELECT 'Tuticorin' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Tuticorin');
-
-INSERT INTO locations (name) 
-SELECT 'Yercaud' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Yercaud');
-
-INSERT INTO locations (name) 
-SELECT 'Mahabalipuram' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Mahabalipuram');
-
-INSERT INTO locations (name) 
-SELECT 'Kotagiri' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Kotagiri');
-
-INSERT INTO locations (name) 
-SELECT 'Valparai' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Valparai');
-
-INSERT INTO locations (name) 
-SELECT 'Courtallam' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Courtallam');
-
-INSERT INTO locations (name) 
-SELECT 'Hogenakkal' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Hogenakkal');
-
-INSERT INTO locations (name) 
-SELECT 'Mettupalayam' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Mettupalayam');
-
-INSERT INTO locations (name) 
-SELECT 'Kovilpatti' FROM dual WHERE NOT EXISTS (SELECT 1 FROM locations WHERE name = 'Kovilpatti');
-
--- Only insert buses if the buses table is empty
--- Chennai to multiple destinations
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 2, 'SETC Chennai Express', 'TN-01-1234', '06:00:00', '12:30:00' FROM dual
-WHERE NOT EXISTS (SELECT 1 FROM buses LIMIT 1);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 2, 'TNSTC Kovai Deluxe', 'TN-01-5678', '08:00:00', '14:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 1);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 2, 'Chennai-Coimbatore Super Fast', 'TN-01-9876', '10:00:00', '16:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 2);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 3, 'SETC Madurai Express', 'TN-01-2345', '07:00:00', '14:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 3);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 3, 'TNSTC Madurai Special', 'TN-01-6789', '09:00:00', '16:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 4);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 4, 'SETC Trichy Express', 'TN-01-3456', '08:00:00', '14:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 5);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 4, 'TNSTC Trichy Flyer', 'TN-01-7890', '10:00:00', '16:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 6);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 5, 'SETC Salem Express', 'TN-01-4567', '07:30:00', '12:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 7);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 5, 'TNSTC Salem Special', 'TN-01-8901', '09:30:00', '14:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 8);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 6, 'SETC Tirunelveli Express', 'TN-01-5678', '18:00:00', '06:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 9);
-
--- Add more bus routes
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 7, 'SETC Kanyakumari Express', 'TN-01-6789', '20:00:00', '10:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 10);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 1, 8, 'TNSTC Vellore Traveller', 'TN-01-7890', '08:30:00', '11:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 11);
-
--- Coimbatore to multiple destinations
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 2, 1, 'SETC Coimbatore Express', 'TN-02-1234', '06:00:00', '12:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 12);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 2, 3, 'TNSTC Kovai-Madurai Express', 'TN-02-2345', '07:00:00', '11:30:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 13);
-
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 2, 4, 'SETC Kovai-Trichy Liner', 'TN-02-3456', '08:00:00', '13:00:00' FROM dual
-WHERE EXISTS (SELECT 1 FROM buses WHERE id = 14);
-
--- Insert stops data if the stops table is empty
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 1, 'Chennai', '06:00:00', '06:00:00', 1 FROM dual
-WHERE NOT EXISTS (SELECT 1 FROM stops LIMIT 1);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 1, 'Vellore', '07:30:00', '07:35:00', 2 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 1);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 1, 'Salem', '09:30:00', '09:40:00', 3 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 2);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 1, 'Erode', '11:00:00', '11:05:00', 4 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 3);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 1, 'Coimbatore', '12:30:00', '12:30:00', 5 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 4);
-
--- Stops for Chennai to Madurai Express (Bus ID 4)
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 4, 'Chennai', '07:00:00', '07:00:00', 1 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 5);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 4, 'Villupuram', '08:30:00', '08:35:00', 2 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 6);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 4, 'Trichy', '11:00:00', '11:10:00', 3 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 7);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 4, 'Dindigul', '12:30:00', '12:35:00', 4 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 8);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 4, 'Madurai', '14:00:00', '14:00:00', 5 FROM dual
-WHERE EXISTS (SELECT 1 FROM stops WHERE id = 9);
-
--- Stops for Chennai to Tirunelveli Express route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Tirunelveli Express' LIMIT 1),
-    'Chennai', '18:00:00', '18:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Tirunelveli Express' LIMIT 1),
-    'Villupuram', '20:30:00', '20:35:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Tirunelveli Express' LIMIT 1),
-    'Trichy', '23:00:00', '23:15:00', 3
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Tirunelveli Express' LIMIT 1),
-    'Madurai', '01:30:00', '01:45:00', 4
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Tirunelveli Express' LIMIT 1),
-    'Tirunelveli', '06:00:00', '06:00:00', 5
-FROM dual;
-
--- Stops for Coimbatore to Madurai Express route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'TNSTC Kovai-Madurai Express' LIMIT 1),
-    'Coimbatore', '07:00:00', '07:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'TNSTC Kovai-Madurai Express' LIMIT 1),
-    'Palladam', '07:45:00', '07:50:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'TNSTC Kovai-Madurai Express' LIMIT 1),
-    'Karur', '09:00:00', '09:10:00', 3
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'TNSTC Kovai-Madurai Express' LIMIT 1),
-    'Dindigul', '10:15:00', '10:20:00', 4
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'TNSTC Kovai-Madurai Express' LIMIT 1),
-    'Madurai', '11:30:00', '11:30:00', 5
-FROM dual;
-
--- Stops for Coimbatore to Trichy route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Kovai-Trichy Liner' LIMIT 1),
-    'Coimbatore', '08:00:00', '08:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Kovai-Trichy Liner' LIMIT 1),
-    'Karur', '10:00:00', '10:10:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Kovai-Trichy Liner' LIMIT 1),
-    'Kulithalai', '11:15:00', '11:20:00', 3
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT id FROM buses WHERE bus_name = 'SETC Kovai-Trichy Liner' LIMIT 1),
-    'Trichy', '13:00:00', '13:00:00', 4
-FROM dual;
-
--- Stops for Chennai to Kanchipuram route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kanchipuram' 
-     LIMIT 1),
-    'Chennai', '06:00:00', '06:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kanchipuram' 
-     LIMIT 1),
-    'Poonamallee', '06:30:00', '06:35:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kanchipuram' 
-     LIMIT 1),
-    'Kanchipuram', '07:30:00', '07:30:00', 3
-FROM dual;
-
--- Stops for Chennai to Tiruvannamalai route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Tiruvannamalai' 
-     LIMIT 1),
-    'Chennai', '07:00:00', '07:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Tiruvannamalai' 
-     LIMIT 1),
-    'Kanchipuram', '08:15:00', '08:20:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Tiruvannamalai' 
-     LIMIT 1),
-    'Tiruvannamalai', '10:30:00', '10:30:00', 3
-FROM dual;
-
--- Stops for Coimbatore to Valparai route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Coimbatore' AND l2.name = 'Valparai' 
-     LIMIT 1),
-    'Coimbatore', '07:00:00', '07:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Coimbatore' AND l2.name = 'Valparai' 
-     LIMIT 1),
-    'Pollachi', '08:15:00', '08:25:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Coimbatore' AND l2.name = 'Valparai' 
-     LIMIT 1),
-    'Aliyar', '09:30:00', '09:35:00', 3
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Coimbatore' AND l2.name = 'Valparai' 
-     LIMIT 1),
-    'Attakatti', '10:30:00', '10:35:00', 4
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Coimbatore' AND l2.name = 'Valparai' 
-     LIMIT 1),
-    'Valparai', '11:30:00', '11:30:00', 5
-FROM dual;
-
--- Stops for Salem to Yercaud route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Salem' AND l2.name = 'Yercaud' 
-     LIMIT 1),
-    'Salem', '08:00:00', '08:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Salem' AND l2.name = 'Yercaud' 
-     LIMIT 1),
-    'Yercaud Foothills', '08:30:00', '08:35:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Salem' AND l2.name = 'Yercaud' 
-     LIMIT 1),
-    'Yercaud', '09:15:00', '09:15:00', 3
-FROM dual;
-
--- Stops for Madurai to Theni route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Madurai' AND l2.name = 'Theni' 
-     LIMIT 1),
-    'Madurai', '07:30:00', '07:30:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Madurai' AND l2.name = 'Theni' 
-     LIMIT 1),
-    'Andipatti', '08:15:00', '08:20:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Madurai' AND l2.name = 'Theni' 
-     LIMIT 1),
-    'Theni', '09:00:00', '09:00:00', 3
-FROM dual;
-
--- Stops for Madurai to Palani route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Madurai' AND l2.name = 'Palani' 
-     LIMIT 1),
-    'Madurai', '06:00:00', '06:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Madurai' AND l2.name = 'Palani' 
-     LIMIT 1),
-    'Perumal Malai', '07:15:00', '07:20:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Madurai' AND l2.name = 'Palani' 
-     LIMIT 1),
-    'Palani', '09:00:00', '09:00:00', 3
-FROM dual;
-
--- Stops for Tirunelveli to Courtallam route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Tirunelveli' AND l2.name = 'Courtallam' 
-     LIMIT 1),
-    'Tirunelveli', '08:00:00', '08:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Tirunelveli' AND l2.name = 'Courtallam' 
-     LIMIT 1),
-    'Tenkasi', '08:30:00', '08:35:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Tirunelveli' AND l2.name = 'Courtallam' 
-     LIMIT 1),
-    'Courtallam', '09:00:00', '09:00:00', 3
-FROM dual;
-
--- Stops for Trichy to Thanjavur route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Trichy' AND l2.name = 'Thanjavur' 
-     LIMIT 1),
-    'Trichy', '07:00:00', '07:00:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Trichy' AND l2.name = 'Thanjavur' 
-     LIMIT 1),
-    'Tiruverumbur', '07:20:00', '07:25:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Trichy' AND l2.name = 'Thanjavur' 
-     LIMIT 1),
-    'Thanjavur', '08:15:00', '08:15:00', 3
-FROM dual;
-
--- Stops for Trichy to Pudukkottai route
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Trichy' AND l2.name = 'Pudukkottai' 
-     LIMIT 1),
-    'Trichy', '07:30:00', '07:30:00', 1
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Trichy' AND l2.name = 'Pudukkottai' 
-     LIMIT 1),
-    'Keeranur', '08:15:00', '08:20:00', 2
-FROM dual;
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Trichy' AND l2.name = 'Pudukkottai' 
-     LIMIT 1),
-    'Pudukkottai', '09:00:00', '09:00:00', 3
-FROM dual;
-
--- Add stops for Chennai-Coimbatore Super Fast (Bus ID 2)
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order, location_id)
-VALUES 
-    (2, 'Chennai', '10:00:00', '10:00:00', 1, (SELECT id FROM locations WHERE name = 'Chennai')),
-    (2, 'Vellore', '11:30:00', '11:35:00', 2, (SELECT id FROM locations WHERE name = 'Vellore')),
-    (2, 'Salem', '13:30:00', '13:40:00', 3, (SELECT id FROM locations WHERE name = 'Salem')),
-    (2, 'Erode', '15:00:00', '15:05:00', 4, (SELECT id FROM locations WHERE name = 'Erode')),
-    (2, 'Coimbatore', '16:30:00', '16:30:00', 5, (SELECT id FROM locations WHERE name = 'Coimbatore'));
-
--- Add stops for Chennai-Coimbatore Super Fast (Bus ID 3)
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order, location_id)
-VALUES 
-    (3, 'Chennai', '10:00:00', '10:00:00', 1, (SELECT id FROM locations WHERE name = 'Chennai')),
-    (3, 'Vellore', '11:30:00', '11:35:00', 2, (SELECT id FROM locations WHERE name = 'Vellore')),
-    (3, 'Salem', '13:30:00', '13:40:00', 3, (SELECT id FROM locations WHERE name = 'Salem')),
-    (3, 'Erode', '15:00:00', '15:05:00', 4, (SELECT id FROM locations WHERE name = 'Erode')),
-    (3, 'Coimbatore', '16:30:00', '16:30:00', 5, (SELECT id FROM locations WHERE name = 'Coimbatore'));
-
--- Bus routes for additional locations
-
--- Chennai to Kanchipuram
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Kanchipuram'),
-    'TNSTC Chennai-Kanchipuram Express', 'TN-01-K-1234', '06:00:00', '07:30:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kanchipuram'
-);
-
--- Chennai to Tiruvannamalai
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Tiruvannamalai'),
-    'SETC Arunachala Express', 'TN-01-T-5678', '07:00:00', '10:30:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Tiruvannamalai'
-);
-
--- Chennai to Kumbakonam
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Kumbakonam'),
-    'SETC Chennai-Kumbakonam Deluxe', 'TN-01-K-7890', '20:00:00', '05:00:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-);
-
--- Chennai to Hogenakkal
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Hogenakkal'),
-    'TNSTC Falls Special', 'TN-01-H-2345', '06:30:00', '12:00:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Hogenakkal'
-);
-
--- Coimbatore to Pollachi
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Coimbatore'), 
-    (SELECT id FROM locations WHERE name = 'Pollachi'),
-    'TNSTC Kovai-Pollachi Shuttle', 'TN-38-P-1234', '06:00:00', '07:30:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Coimbatore' AND l2.name = 'Pollachi'
-);
-
--- Coimbatore to Valparai
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Coimbatore'), 
-    (SELECT id FROM locations WHERE name = 'Valparai'),
-    'TNSTC Hill Express', 'TN-38-V-5678', '07:00:00', '11:30:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Coimbatore' AND l2.name = 'Valparai'
-);
-
--- Salem to Yercaud
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Salem'), 
-    (SELECT id FROM locations WHERE name = 'Yercaud'),
-    'TNSTC Hill Climber', 'TN-30-Y-1234', '08:00:00', '09:15:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Salem' AND l2.name = 'Yercaud'
-);
-
--- Madurai to Theni
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Madurai'), 
-    (SELECT id FROM locations WHERE name = 'Theni'),
-    'TNSTC Madurai-Theni Express', 'TN-59-T-1234', '07:30:00', '09:00:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Madurai' AND l2.name = 'Theni'
-);
-
--- Madurai to Palani
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Madurai'), 
-    (SELECT id FROM locations WHERE name = 'Palani'),
-    'TNSTC Murugan Special', 'TN-59-P-5678', '06:00:00', '09:00:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Madurai' AND l2.name = 'Palani'
-);
-
--- Tirunelveli to Courtallam
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Tirunelveli'), 
-    (SELECT id FROM locations WHERE name = 'Courtallam'),
-    'TNSTC Falls Express', 'TN-72-C-1234', '08:00:00', '09:00:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Tirunelveli' AND l2.name = 'Courtallam'
-);
-
--- Tirunelveli to Tenkasi
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Tirunelveli'), 
-    (SELECT id FROM locations WHERE name = 'Tenkasi'),
-    'TNSTC Nellai-Tenkasi Link', 'TN-72-T-5678', '07:00:00', '08:30:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Tirunelveli' AND l2.name = 'Tenkasi'
-);
-
--- Trichy to Pudukkottai
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Trichy'), 
-    (SELECT id FROM locations WHERE name = 'Pudukkottai'),
-    'TNSTC Rockfort Link', 'TN-45-P-1234', '07:30:00', '09:00:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Trichy' AND l2.name = 'Pudukkottai'
-);
-
--- Trichy to Thanjavur
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Trichy'), 
-    (SELECT id FROM locations WHERE name = 'Thanjavur'),
-    'TNSTC Chola Express', 'TN-45-T-5678', '07:00:00', '08:15:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Trichy' AND l2.name = 'Thanjavur'
-);
-
--- Kanyakumari to Nagercoil
-INSERT INTO buses (from_location_id, to_location_id, bus_name, bus_number, departure_time, arrival_time)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Kanyakumari Town'), 
-    (SELECT id FROM locations WHERE name = 'Nagercoil'),
-    'TNSTC Cape Shuttle', 'TN-74-N-1234', '07:00:00', '07:45:00'
-FROM dual
-WHERE NOT EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Kanyakumari Town' AND l2.name = 'Nagercoil'
-);
-
--- Adding stops data for one route as an example - Chennai to Kumbakonam bus
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' 
-     LIMIT 1),
-    'Chennai', '20:00:00', '20:00:00', 1
-FROM dual
-WHERE EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-) AND NOT EXISTS (
-    SELECT 1 FROM stops s 
-    JOIN buses b ON s.bus_id = b.id
-    JOIN locations l1 ON b.from_location_id = l1.id
-    JOIN locations l2 ON b.to_location_id = l2.id
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' AND s.stop_order = 1
-);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' 
-     LIMIT 1),
-    'Chengalpattu', '21:00:00', '21:05:00', 2
-FROM dual
-WHERE EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' 
-     LIMIT 1),
-    'Villupuram', '22:30:00', '22:40:00', 3
-FROM dual
-WHERE EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' 
-     LIMIT 1),
-    'Trichy', '02:00:00', '02:15:00', 4
-FROM dual
-WHERE EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' 
-     LIMIT 1),
-    'Thanjavur', '03:30:00', '03:45:00', 5
-FROM dual
-WHERE EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-);
-
-INSERT INTO stops (bus_id, name, arrival_time, departure_time, stop_order)
-SELECT 
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id 
-     WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam' 
-     LIMIT 1),
-    'Kumbakonam', '05:00:00', '05:00:00', 6
-FROM dual
-WHERE EXISTS (
-    SELECT 1 FROM buses b 
-    JOIN locations l1 ON b.from_location_id = l1.id 
-    JOIN locations l2 ON b.to_location_id = l2.id 
-    WHERE l1.name = 'Chennai' AND l2.name = 'Kumbakonam'
-);
-
--- Insert sample connecting routes data
--- Example: Chennai to Courtallam via Tirunelveli
-INSERT INTO connecting_route (from_location_id, to_location_id, first_bus_id, second_bus_id, connection_location_id, wait_time_minutes)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Courtallam'),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Chennai') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Tirunelveli') LIMIT 1),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Tirunelveli') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Courtallam') LIMIT 1),
-    (SELECT id FROM locations WHERE name = 'Tirunelveli'),
-    30
-FROM dual
-WHERE NOT EXISTS (SELECT 1 FROM connecting_route LIMIT 1);
-
--- Chennai to Yercaud via Salem
-INSERT INTO connecting_route (from_location_id, to_location_id, first_bus_id, second_bus_id, connection_location_id, wait_time_minutes)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Yercaud'),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Chennai') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Salem') LIMIT 1),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Salem') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Yercaud') LIMIT 1),
-    (SELECT id FROM locations WHERE name = 'Salem'),
-    45
-FROM dual
-WHERE EXISTS (SELECT 1 FROM connecting_route LIMIT 1);
-
--- Chennai to Pollachi via Coimbatore
-INSERT INTO connecting_route (from_location_id, to_location_id, first_bus_id, second_bus_id, connection_location_id, wait_time_minutes)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Pollachi'),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Chennai') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Coimbatore') LIMIT 1),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Coimbatore') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Pollachi') LIMIT 1),
-    (SELECT id FROM locations WHERE name = 'Coimbatore'),
-    60
-FROM dual
-WHERE EXISTS (SELECT 1 FROM connecting_route WHERE id = 2);
-
--- Chennai to Theni via Madurai
-INSERT INTO connecting_route (from_location_id, to_location_id, first_bus_id, second_bus_id, connection_location_id, wait_time_minutes)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Chennai'), 
-    (SELECT id FROM locations WHERE name = 'Theni'),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Chennai') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Madurai') LIMIT 1),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Madurai') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Theni') LIMIT 1),
-    (SELECT id FROM locations WHERE name = 'Madurai'),
-    45
-FROM dual
-WHERE EXISTS (SELECT 1 FROM connecting_route WHERE id = 3);
-
--- Coimbatore to Ooty via Mettupalayam
-INSERT INTO connecting_route (from_location_id, to_location_id, first_bus_id, second_bus_id, connection_location_id, wait_time_minutes)
-SELECT 
-    (SELECT id FROM locations WHERE name = 'Coimbatore'), 
-    (SELECT id FROM locations WHERE name = 'Ooty'),
-    (SELECT id FROM buses WHERE from_location_id = (SELECT id FROM locations WHERE name = 'Coimbatore') 
-                         AND to_location_id = (SELECT id FROM locations WHERE name = 'Mettupalayam') LIMIT 1),
-    (SELECT b.id FROM buses b 
-     JOIN locations l1 ON b.from_location_id = l1.id 
-     JOIN locations l2 ON b.to_location_id = l2.id
-     WHERE l1.name = 'Mettupalayam' AND l2.name = 'Ooty' LIMIT 1),
-    (SELECT id FROM locations WHERE name = 'Mettupalayam'),
-    30
-FROM dual
-WHERE EXISTS (SELECT 1 FROM connecting_route WHERE id = 4);

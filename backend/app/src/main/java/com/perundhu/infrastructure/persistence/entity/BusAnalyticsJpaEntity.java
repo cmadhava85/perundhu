@@ -7,93 +7,79 @@ import com.perundhu.domain.model.BusAnalytics;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "bus_analytics")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BusAnalyticsJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(name = "bus_id", nullable = false)
-    private UUID busId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bus_id")
+    @NotNull(message = "Bus must not be null")
+    private BusJpaEntity bus;
 
     @Column(name = "date", nullable = false)
+    @NotNull(message = "Date must not be null")
     private LocalDateTime date;
 
     @Column(name = "passenger_count")
     private Integer passengerCount;
-
-    @Column(name = "fuel_consumption")
-    private Double fuelConsumption;
-
-    @Column(name = "distance_traveled")
-    private Double distanceTraveled;
-
-    @Column(name = "maintenance_status")
-    private String maintenanceStatus;
-    
-    @Column(name = "revenue")
-    private Double revenue;
-    
-    @Column(name = "operational_cost")
-    private Double operationalCost;
     
     @Column(name = "delay_minutes")
     private Integer delayMinutes;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     public static BusAnalyticsJpaEntity fromDomainModel(BusAnalytics analytics) {
         if (analytics == null) return null;
 
-        UUID resolvedBusId = null;
-        if (analytics.getBus() != null && analytics.getBus().getId() != null) {
-            Object busIdValue = analytics.getBus().getId().getValue();
-            if (busIdValue instanceof UUID) {
-                resolvedBusId = (UUID) busIdValue;
-            }
-            // If busIdValue is a Long or other type, resolvedBusId remains null
-        }
-
         return BusAnalyticsJpaEntity.builder()
             .id(analytics.getId() != null ? analytics.getId().getValue() : null)
-            .busId(resolvedBusId)
+            .bus(analytics.getBus() != null ? BusJpaEntity.fromDomainModel(analytics.getBus()) : null)
             .date(analytics.getDate() != null ? analytics.getDate().atStartOfDay() : null)
             .passengerCount(analytics.getTotalPassengers())
-            .fuelConsumption(null) // Map if available in domain
-            .distanceTraveled(null) // Map if available in domain
-            .maintenanceStatus(null) // Map if available in domain
-            .revenue(null) // Map if available in domain
-            .operationalCost(null) // Map if available in domain
             .delayMinutes(analytics.getAverageDelay() != null ? analytics.getAverageDelay().intValue() : null)
+            .createdAt(analytics.getCreatedAt())
+            .updatedAt(analytics.getUpdatedAt())
             .build();
     }
 
     public BusAnalytics toDomainModel() {
         return BusAnalytics.builder()
-            .id(id != null ? new BusAnalytics.BusAnalyticsId(id) : null)
-            .bus(null) // You may need to fetch the Bus by busId elsewhere
+            .id(new BusAnalytics.BusAnalyticsId(id))
+            .bus(bus != null ? bus.toDomainModel() : null)
             .date(date != null ? date.toLocalDate() : null)
             .totalPassengers(passengerCount)
             .averageDelay(delayMinutes != null ? delayMinutes.doubleValue() : null)
-            .averageSpeed(null) // Map if available in entity
-            .totalTrips(null) // Map if available in entity
-            .onTimePerformance(null) // Map if available in entity
-            .averageOccupancy(null) // Map if available in entity
-            .createdAt(null) // Not present in entity
-            .updatedAt(null) // Not present in entity
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
             .build();
     }
 }

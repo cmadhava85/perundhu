@@ -1,8 +1,13 @@
 package com.perundhu.domain.model;
 
 import lombok.Value;
+import lombok.Builder;
 
+/**
+ * Immutable value object for translations
+ */
 @Value
+@Builder
 public class Translation {
     Long id;
     String entityType;
@@ -10,10 +15,8 @@ public class Translation {
     String languageCode;
     String fieldName;
     String translatedValue;
-    
-    public void setTranslatedValue(String translatedValue) {
-        // This is a workaround for @Value which makes fields final
-        // In a real implementation, you would use a builder pattern or a mutable class
-        throw new UnsupportedOperationException("Cannot modify immutable object");
+
+    public Translation withTranslatedValue(String newValue) {
+        return new Translation(id, entityType, entityId, languageCode, fieldName, newValue);
     }
 }

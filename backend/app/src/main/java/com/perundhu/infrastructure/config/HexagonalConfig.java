@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.BusScheduleServiceImpl;
+import com.perundhu.application.service.BusAnalyticsService;
+import com.perundhu.application.service.BusAnalyticsServiceImpl;
 import com.perundhu.application.service.MessageServiceImpl;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
@@ -12,19 +14,17 @@ import com.perundhu.domain.port.MessageService;
 import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
+import com.perundhu.domain.port.BusAnalyticsRepository;
 import com.perundhu.domain.service.BusScheduleValidationService;
 import com.perundhu.domain.service.ConnectingRouteService;
 import com.perundhu.domain.service.LocationValidationService;
 import com.perundhu.domain.service.RouteValidationService;
-import com.perundhu.infrastructure.persistence.adapter.TranslationJpaRepositoryAdapter;
-import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
-import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
-import com.perundhu.infrastructure.persistence.adapter.StopJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.StopJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
 import com.perundhu.infrastructure.service.TranslationServiceImpl;
+import com.perundhu.infrastructure.persistence.adapter.*;
 
 @Configuration
 public class HexagonalConfig {
@@ -96,5 +96,12 @@ public class HexagonalConfig {
                 translationService,
                 translationRepository,
                 connectingRouteService);
+    }
+
+    @Bean
+    public BusAnalyticsService busAnalyticsService(
+            BusAnalyticsRepository busAnalyticsRepository,
+            LocationRepository locationRepository) {
+        return new BusAnalyticsServiceImpl(busAnalyticsRepository, locationRepository);
     }
 }

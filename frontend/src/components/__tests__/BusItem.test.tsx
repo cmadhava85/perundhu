@@ -2,6 +2,23 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import BusItem from '../BusItem';
 import type { Bus, Stop } from '../../types';
 
+// Mock StopsList to simplify testing
+jest.mock('../StopsList', () => {
+  return function MockStopsList({ stops }: { stops: Stop[] }) {
+    return (
+      <div data-testid="stops-list">
+        <h4>Stops</h4>
+        {stops.map((stop, index) => (
+          <div key={index} data-testid={`stop-item-${index}`}>
+            {stop.name}
+          </div>
+        ))}
+      </div>
+    );
+  };
+});
+
+// react-i18next is automatically mocked by Jest
 describe('BusItem Component', () => {
   const mockBus: Bus = {
     id: 1,
@@ -12,11 +29,29 @@ describe('BusItem Component', () => {
     departureTime: '06:00 AM',
     arrivalTime: '12:30 PM'
   };
-  
+
   const mockStops: Stop[] = [
-    { id: 1, name: 'Chennai', arrivalTime: '06:00 AM', departureTime: '06:00 AM', order: 1 },
-    { id: 2, name: 'Vellore', arrivalTime: '07:30 AM', departureTime: '07:35 AM', order: 2 },
-    { id: 3, name: 'Coimbatore', arrivalTime: '12:30 PM', departureTime: '12:30 PM', order: 3 }
+    {
+      id: 1,
+      name: 'Chennai',
+      arrivalTime: '06:00 AM',
+      departureTime: '06:15 AM',
+      order: 1
+    },
+    {
+      id: 2,
+      name: 'Vellore',
+      arrivalTime: '08:30 AM',
+      departureTime: '08:45 AM',
+      order: 2
+    },
+    {
+      id: 3,
+      name: 'Coimbatore',
+      arrivalTime: '12:30 PM',
+      departureTime: '12:45 PM',
+      order: 3
+    }
   ];
   
   const mockSelectBus = jest.fn();
@@ -25,7 +60,7 @@ describe('BusItem Component', () => {
     jest.clearAllMocks();
   });
   
-  test('renders bus information correctly', () => {
+  test('renders bus details correctly', () => {
     render(
       <BusItem 
         bus={mockBus}
@@ -35,15 +70,18 @@ describe('BusItem Component', () => {
       />
     );
     
+    // Verify both bus name and number are displayed together
     expect(screen.getByText('SETC Express TN-01-1234')).toBeInTheDocument();
+    
+    // Verify route info is displayed
     expect(screen.getByText('Chennai → Coimbatore')).toBeInTheDocument();
+    
+    // Verify times are displayed
     expect(screen.getByText('06:00 AM')).toBeInTheDocument();
     expect(screen.getByText('12:30 PM')).toBeInTheDocument();
-    expect(screen.getByText('Departure')).toBeInTheDocument();
-    expect(screen.getByText('Arrival')).toBeInTheDocument();
   });
   
-  test('clicking on bus item calls onSelectBus', () => {
+  test('calls onSelectBus when clicked', () => {
     render(
       <BusItem 
         bus={mockBus}

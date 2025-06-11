@@ -1,62 +1,181 @@
-import * as apiService from '../api';
-import * as offlineService from '../offlineService';
-import { Location } from '../../types'; 
+import axios from 'axios';
+import { getLocations, searchBuses, getStops, getConnectingRoutes, getCurrentBusLocations, api } from '../api';
 
-// Define mock data for tests
-const mockLocations = [
-  { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
-  { id: 2, name: 'Madurai', latitude: 9.9252, longitude: 78.1198 }
-] as Location[];
+// Mock axios directly instead of using axios-mock-adapter
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-// Mock the modules needed for testing
-jest.mock('../offlineService', () => ({
-  isOnline: jest.fn(),
-  getLocationsOffline: jest.fn(),
-  saveLocationsOffline: jest.fn(),
-  getBusesOffline: jest.fn(),
-  saveBusesOffline: jest.fn(),
-  getStopsOffline: jest.fn(),
-  saveStopsOffline: jest.fn(),
-  getBusLocationsOffline: jest.fn(),
-  saveBusLocationsOffline: jest.fn()
-}));
-
-// Mock axios module at a higher level
-jest.mock('axios', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
-  create: jest.fn().mockReturnValue({
+// Mock the api instance to avoid import.meta.env usage in tests
+jest.mock('../api', () => {
+  const originalModule = jest.requireActual('../api');
+  
+  // Create a mock axios instance
+  const mockAxios = {
     get: jest.fn(),
-    post: jest.fn()
-  })
+    post: jest.fn(),
+    head: jest.fn(),
+    create: jest.fn().mockReturnValue({
+      get: jest.fn(),
+      post: jest.fn(),
+      head: jest.fn()
+    })
+  };
+
+  // Replace api with our mock
+  return {
+    ...originalModule,
+    api: mockAxios,
+    createApiInstance: jest.fn().mockReturnValue(mockAxios),
+  };
+});
+
+// Mock environment utilities
+jest.mock('../../utils/environment', () => ({
+  getEnv: (key: string) => {
+    if (key === 'VITE_API_URL') {
+      return 'http://localhost:8080';
+    }
+    return '';
+  }
 }));
 
 describe('API Service', () => {
-  // Test the existence of API functions
-  test('API service exports expected functions', () => {
-    // Check that all expected functions exist in the API service
-    expect(typeof apiService.getLocations).toBe('function');
-    expect(typeof apiService.searchBuses).toBe('function'); 
-    expect(typeof apiService.getStops).toBe('function');
-    expect(typeof apiService.getCurrentBusLocations).toBe('function');
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  // Test offline data access paths
-  test('API service can access offline data', async () => {
-    // Mock the offline service to return offline mode and data
-    (offlineService.isOnline as jest.Mock).mockResolvedValue(false);
-    (offlineService.getLocationsOffline as jest.Mock).mockResolvedValue(mockLocations);
+  // Mock data for testing
+  const mockLocations = [
+    { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
+    { id: 2, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 },
+    { id: 3, name: 'Madurai', latitude: 9.9252, longitude: 78.1198 }
+  ];
+
+  const mockBuses = [
+    {
+      id: 1,
+      busNumber: 'TN-01-1234',
+      busName: 'SETC Express',
+      from: 'Chennai',
+      to: 'Coimbatore',
+      departureTime: '06:00',
+      arrivalTime: '12:30'
+    }
+  ];
+
+  const mockStops = [
+    { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707, arrivalTime: '06:00', departureTime: '06:00', order: 1 },
+    { id: 2, name: 'Vellore', latitude: 12.9165, longitude: 79.1325, arrivalTime: '07:30', departureTime: '07:35', order: 2 },
+    { id: 3, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558, arrivalTime: '12:30', departureTime: '12:30', order: 3 }
+  ];
+
+  const mockConnectingRoutes = [
+    {
+      id: 1,
+      isDirectRoute: false,
+      firstLeg: { id: 1, from: 'Chennai', to: 'Trichy' },
+      connectionPoint: 'Trichy',
+      secondLeg: { id: 2, from: 'Trichy', to: 'Madurai' },
+      waitTime: '00:30',
+      totalDuration: '8h 30m'
+    }
+  ];
+
+  const mockBusLocations = [
+    { 
+      id: 1, 
+      busNumber: 'TN-01-1234', 
+      latitude: 12.5, 
+      longitude: 78.5, 
+      speed: 65, 
+      direction: 'N',
+      lastUpdated: new Date().toISOString(),
+      routeId: 1
+    }
+  ];
+
+  test('getLocations fetches locations from API', async () => {
+    api.get.mockResolvedValueOnce({ data: mockLocations });
     
-    // This should use the offline data path
+    const result = await getLocations();
+    
+    expect(api.get).toHaveBeenCalledWith('/api/v1/bus-schedules/locations', {
+      params: { lang: 'en' }
+    });
+    expect(result).toEqual(mockLocations);
+  });
+
+  test('searchBuses searches buses between locations', async () => {
+    const fromLocation = mockLocations[0];
+    const toLocation = mockLocations[1];
+    
+    api.get.mockResolvedValueOnce({ data: mockBuses });
+    
+    const result = await searchBuses(fromLocation, toLocation);
+    
+    expect(api.get).toHaveBeenCalledWith(
+      '/api/v1/bus-schedules/search',
+      { params: { fromLocationId: 1, toLocationId: 2 } }
+    );
+    expect(result).toEqual(mockBuses);
+  });
+
+  test('getStops fetches stops for a bus', async () => {
+    api.get.mockResolvedValueOnce({ data: mockStops });
+    
+    const result = await getStops(1);
+    
+    expect(api.get).toHaveBeenCalledWith(
+      '/api/v1/bus-schedules/1/stops',
+      { params: { lang: 'en' } }
+    );
+    expect(result).toEqual(mockStops);
+  });
+
+  test('getConnectingRoutes fetches connecting routes between locations', async () => {
+    api.get.mockResolvedValueOnce({ data: mockConnectingRoutes });
+    
+    const result = await getConnectingRoutes(1, 3);
+    
+    expect(api.get).toHaveBeenCalledWith(
+      '/api/v1/bus-schedules/connecting-routes',
+      { params: { fromLocationId: 1, toLocationId: 3 } }
+    );
+    expect(result).toEqual(mockConnectingRoutes);
+  });
+
+  test('getCurrentBusLocations fetches current locations of buses', async () => {
+    api.get.mockResolvedValueOnce({ data: mockBusLocations });
+    
+    const result = await getCurrentBusLocations();
+    
+    expect(api.get).toHaveBeenCalledWith(
+      '/api/v1/bus-tracking/live'
+    );
+    expect(result).toEqual(mockBusLocations);
+  });
+
+  test('handles API error responses properly', async () => {
+    const errorResponse = {
+      response: {
+        status: 404,
+        data: {
+          message: 'Resource not found',
+          code: 'NOT_FOUND',
+          details: ['The requested resource could not be found']
+        }
+      }
+    };
+    
+    api.get.mockRejectedValueOnce(errorResponse);
+    
     try {
-      const locations = await apiService.getLocations();
-      
-      // Verify that we got the mock data back
-      expect(Array.isArray(locations)).toBe(true);
-      expect(offlineService.getLocationsOffline).toHaveBeenCalled();
-    } catch (error) {
-      // If we get an error, the test should fail
-      fail('Should not have thrown an error: ' + error);
+      await getLocations();
+      // Should not reach this line
+      expect(true).toBe(false);
+    } catch (error: any) {
+      expect(error.message).toContain('Failed to fetch locations');
+      expect(error.name).toBe('ApiError');
     }
   });
 });

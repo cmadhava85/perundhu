@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { searchBuses as apiSearchBuses, getStops, getConnectingRoutes as apiGetConnectingRoutes, ApiError } from '../services/api';
 import type { Bus, Location, Stop, ConnectingRoute } from '../types';
@@ -6,7 +6,7 @@ import type { Bus, Location, Stop, ConnectingRoute } from '../types';
 /**
  * Custom hook for managing bus search state and operations
  */
-export const useBusSearch = () => {
+const useBusSearch = () => {
   const { t, i18n } = useTranslation();
   
   // Search results state
@@ -93,19 +93,26 @@ export const useBusSearch = () => {
    * Select a bus to view its details
    */
   const selectBus = useCallback(async (busId: number) => {
+    console.log(`selectBus called with busId: ${busId}, current selectedBusId: ${selectedBusId}`);
+    
     if (selectedBusId === busId) {
+      console.log('Deselecting current bus');
       setSelectedBusId(null);
     } else {
       try {
         // Only fetch stops if we haven't already fetched them for this bus
         if (!stopsMap[busId]) {
+          console.log(`No stops data for bus ${busId} in cache, fetching from API`);
           setLoading(true);
-          // Pass the current language code to get properly translated stops
+          // Pass the current language code to the API
           const stopsData = await getStops(busId, i18n.language);
+          console.log(`Received stops data for bus ${busId}:`, stopsData);
           setStopsMap(prev => ({
             ...prev,
             [busId]: stopsData
           }));
+        } else {
+          console.log(`Using cached stops data for bus ${busId}:`, stopsMap[busId]);
         }
         setSelectedBusId(busId);
       } catch (err) {
@@ -135,7 +142,34 @@ export const useBusSearch = () => {
         setLoading(false);
       }
     }
-  }, [selectedBusId, stopsMap, t, i18n.language]);
+  }, [selectedBusId, stopsMap, t, i18n.language]); // Added i18n.language dependency
+
+  /**
+   * Refresh stops data for currently selected bus when language changes
+   */
+  const refreshStopsForLanguage = useCallback(async () => {
+    // Only refresh if we have a selected bus
+    if (selectedBusId) {
+      try {
+        console.log(`Refreshing stops for bus ${selectedBusId} with language ${i18n.language}`);
+        setLoading(true);
+        const stopsData = await getStops(selectedBusId, i18n.language);
+        setStopsMap(prev => ({
+          ...prev,
+          [selectedBusId]: stopsData
+        }));
+      } catch (err) {
+        console.error('Error refreshing bus stops for language change:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+  }, [selectedBusId, i18n.language]);
+
+  // Effect to refresh stops when language changes
+  useEffect(() => {
+    refreshStopsForLanguage();
+  }, [i18n.language, refreshStopsForLanguage]);
 
   /**
    * Reset error state
@@ -150,6 +184,7 @@ export const useBusSearch = () => {
     selectedBusId,
     stopsMap,
     loading,
+    isLoading: loading, // Add this for consistency with useLocationData
     error,
     connectingRoutes,
     
@@ -157,6 +192,11 @@ export const useBusSearch = () => {
     searchBuses,
     selectBus,
     resetResults,
-    clearError
+    clearError,
+    refreshStopsForLanguage
   };
 };
+
+// Export the hook as both default and named export for flexibility
+export { useBusSearch };
+export default useBusSearch;

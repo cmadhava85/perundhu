@@ -12,28 +12,34 @@ import lombok.Value;
 
 @AllArgsConstructor
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @EqualsAndHashCode(of = "id")
 public class BusAnalytics {
-    
     private final BusAnalyticsId id;
     private final Bus bus;
     private final LocalDate date;
+    private final Integer totalPassengers;
+    private final Double averageDelay;
     private final Double averageSpeed;
     private final Integer totalTrips;
-    private final Double onTimePerformance; // percentage of on-time arrivals
-    private final Double averageDelay; // in minutes
-    private final Integer totalPassengers;
-    private final Double averageOccupancy; // percentage
+    private final Double onTimePerformance;
+    private final Double averageOccupancy;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
     
     @Value
+    @Builder
     public static class BusAnalyticsId {
         UUID value;
         
+        public BusAnalyticsId(UUID value) {
+            this.value = value;
+        }
+        
         public static BusAnalyticsId generate() {
-            return new BusAnalyticsId(UUID.randomUUID());
+            return BusAnalyticsId.builder()
+                .value(UUID.randomUUID())
+                .build();
         }
     }
 }

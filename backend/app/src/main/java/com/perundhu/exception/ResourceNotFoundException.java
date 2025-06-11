@@ -8,14 +8,36 @@ import lombok.Getter;
 @Getter
 public class ResourceNotFoundException extends RuntimeException {
     
-    private final String resourceName;
-    private final String fieldName;
-    private final String fieldValue;
+    // Using record for resource identification
+    public record ResourceIdentifier(String resourceName, String fieldName, Object fieldValue) {
+        @Override
+        public String toString() {
+            return String.format("%s not found with %s: '%s'", resourceName, fieldName, fieldValue);
+        }
+    }
+    
+    private final ResourceIdentifier resourceIdentifier;
 
-    public ResourceNotFoundException(String resourceName, String fieldName, String fieldValue) {
+    public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
         super(String.format("%s not found with %s: '%s'", resourceName, fieldName, fieldValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
+        this.resourceIdentifier = new ResourceIdentifier(resourceName, fieldName, fieldValue);
+    }
+    
+    public ResourceNotFoundException(ResourceIdentifier resourceIdentifier) {
+        super(resourceIdentifier.toString());
+        this.resourceIdentifier = resourceIdentifier;
+    }
+    
+    // Convenience getters to maintain backward compatibility
+    public String getResourceName() {
+        return resourceIdentifier.resourceName();
+    }
+    
+    public String getFieldName() {
+        return resourceIdentifier.fieldName();
+    }
+    
+    public Object getFieldValue() {
+        return resourceIdentifier.fieldValue();
     }
 }

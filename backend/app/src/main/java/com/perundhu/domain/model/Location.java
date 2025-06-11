@@ -1,17 +1,26 @@
 package com.perundhu.domain.model;
 
 import lombok.Value;
+import lombok.Builder;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 
 @Value
+@Builder
+@AllArgsConstructor
 public class Location implements Translatable<Location> {
     LocationId id;
     String name;
     Double latitude;
     Double longitude;
-    List<Translation> translations;
+    @Builder.Default
+    List<Translation> translations = new ArrayList<>();
     
+    /**
+     * Constructor for backward compatibility with tests
+     * Creates a Location with default empty translations list
+     */
     public Location(LocationId id, String name, Double latitude, Double longitude) {
         this.id = id;
         this.name = name;
@@ -40,8 +49,6 @@ public class Location implements Translatable<Location> {
     
     @Override
     public void addTranslation(String fieldName, String languageCode, String value) {
-        // Since this is an immutable class (@Value), we can't modify the translations list directly
-        // But we can add to it as it's initialized as a mutable ArrayList
         translations.add(new Translation(null, getEntityType(), getEntityId(), languageCode, fieldName, value));
     }
     
@@ -50,16 +57,21 @@ public class Location implements Translatable<Location> {
      * Used when we only need the ID to look up the full entity
      */
     public static Location reference(Long id) {
-        return new Location(
-            new LocationId(id),
-            "Reference Location", // Placeholder name
-            0.0,  // Placeholder latitude
-            0.0   // Placeholder longitude
-        );
+        return Location.builder()
+            .id(new LocationId(id))
+            .name("Reference Location")
+            .latitude(0.0)
+            .longitude(0.0)
+            .build();
     }
     
     @Value
+    @Builder
     public static class LocationId {
         Long value;
+        
+        public LocationId(Long value) {
+            this.value = value;
+        }
     }
 }

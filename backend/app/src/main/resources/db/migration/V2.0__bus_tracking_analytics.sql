@@ -27,7 +27,7 @@ CREATE TABLE bus_location_history (
     nearest_stop_id BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_bus_location_history_bus FOREIGN KEY (bus_id) REFERENCES buses(id),
-    CONSTRAINT fk_bus_location_history_stop FOREIGN KEY (nearest_stop_id) REFERENCES stops(id)
+    CONSTRAINT fk_bus_location_history_stop FOREIGN KEY (nearest_stop_id) REFERENCES stop(id)
 );
 
 -- Table for user rewards system

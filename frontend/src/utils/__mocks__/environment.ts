@@ -3,8 +3,8 @@
  */
 
 /**
- * Mock implementation of getFeatureFlag that always returns the default value
+ * Mock implementation of getFeatureFlag that always returns true
  */
-export const getFeatureFlag = (key: string, defaultValue: boolean): boolean => {
-  return defaultValue;
+export const getFeatureFlag = (_defaultValue: boolean): boolean => {
+  return true;
 };

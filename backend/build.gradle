@@ -44,20 +44,20 @@ sourceSets {
     // Configure the main source set to include the app module sources
     main {
         java {
-            srcDirs = ['app/src/main/java']
+            srcDirs = ['app/src/main/java', 'src/main/java']
         }
         resources {
-            srcDirs = ['app/src/main/resources']
+            srcDirs = ['app/src/main/resources', 'src/main/resources']
         }
     }
     
     // Configure the test source set to include app module test sources
     test {
         java {
-            srcDirs = ['app/src/test/java']
+            srcDirs = ['app/src/test/java', 'src/test/java']
         }
         resources {
-            srcDirs = ['app/src/main/resources', 'app/src/test/resources']
+            srcDirs = ['app/src/main/resources', 'app/src/test/resources', 'src/test/resources']
         }
     }
     
@@ -86,6 +86,19 @@ task hexagonalTest(type: Test) {
     
     testLogging {
         events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+        showStandardStreams = true
+    }
+}
+
+// Make sure the main test task uses JUnit Platform as well
+tasks.named('test') {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+        showStandardStreams = true
     }
 }
 
@@ -136,6 +149,9 @@ dependencies {
     // Testing dependencies - using Spring Boot managed versions for consistency
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
+    // Add additional Spring Boot test slices for repository and web tests
+    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
+    
     // JUnit Platform Suite dependencies with aligned versions
     testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.2'
     testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.2'
@@ -152,6 +168,16 @@ dependencies {
     configurations.all {
         exclude group: 'junit', module: 'junit'
     }
+    
+    // Add Spring Boot configuration processor
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    
+    // Spring Boot starters
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // JSON handling
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 }
 
 flyway {
@@ -200,11 +226,37 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint:deprecation'
     options.deprecation = true
+    options.compilerArgs << '-parameters'
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.encoding = 'UTF-8'
+    // Add source/target compatibility to ensure consistent compilation
+    options.release = 17
+    // Enable preview features for Java 17
+    options.compilerArgs += ['--enable-preview']
+}
+
+tasks.withType(Test) {
+    // Enable preview features for tests as well
+    jvmArgs += ['--enable-preview']
+}
+
+tasks.withType(JavaExec) {
+    // Enable preview features for application execution
+    jvmArgs += ['--enable-preview']
+}
+
+// Enable annotation processing
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 application {

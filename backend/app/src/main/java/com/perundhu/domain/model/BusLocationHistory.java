@@ -11,7 +11,7 @@ import lombok.Value;
 
 @AllArgsConstructor
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @EqualsAndHashCode(of = "id")
 public class BusLocationHistory {
     
@@ -23,11 +23,18 @@ public class BusLocationHistory {
     private final Double heading;
     
     @Value
+    @Builder
     public static class BusLocationHistoryId {
         UUID value;
         
+        public BusLocationHistoryId(UUID value) {
+            this.value = value;
+        }
+        
         public static BusLocationHistoryId generate() {
-            return new BusLocationHistoryId(UUID.randomUUID());
+            return BusLocationHistoryId.builder()
+                .value(UUID.randomUUID())
+                .build();
         }
     }
     

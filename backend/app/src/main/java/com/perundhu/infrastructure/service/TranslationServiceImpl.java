@@ -4,24 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.model.Translatable;
 import com.perundhu.domain.model.Translation;
-import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
-
-import lombok.extern.slf4j.Slf4j;
+import com.perundhu.domain.port.LocationRepository;
 
 @Service
-@Slf4j
 public class TranslationServiceImpl implements TranslationService {
     
+    private static final Logger log = LoggerFactory.getLogger(TranslationServiceImpl.class);
     private final TranslationRepository translationRepository;
     private final LocationRepository locationRepository;
     
@@ -75,7 +74,7 @@ public class TranslationServiceImpl implements TranslationService {
                 }
             }
         }
-        
+
         // 3. Try entity's in-memory translations list
         if (entity.getTranslations() != null && !entity.getTranslations().isEmpty()) {
             log.debug("Checking entity's {} in-memory translations", entity.getTranslations().size());
@@ -98,7 +97,6 @@ public class TranslationServiceImpl implements TranslationService {
         // 4. For locations directly query the translation table as a last resort
         if (entity instanceof Location && entityId != null) {
             log.debug("Directly querying translation table for location entity");
-            // Direct database query as a last resort
             List<Translation> allTranslations = translationRepository.findByEntityAndLanguage(
                 "location", entityId, languageCode);
             
@@ -114,7 +112,7 @@ public class TranslationServiceImpl implements TranslationService {
                 return value;
             }
         }
-
+        
         // 5. Fallback to default value
         String defaultValue = entity.getDefaultValue(fieldName);
         log.debug("No translation found, returning default value: {}", defaultValue);
@@ -179,12 +177,17 @@ public class TranslationServiceImpl implements TranslationService {
         
         if (existingTranslation.isPresent()) {
             Translation translation = existingTranslation.get();
-            translation.setTranslatedValue(value);
-            translationRepository.save(translation);
+            Translation updatedTranslation = translation.withTranslatedValue(value);
+            translationRepository.save(updatedTranslation);
             log.debug("Updated existing translation");
         } else {
-            Translation newTranslation = new Translation(
-                null, entityType, entityId, languageCode, fieldName, value);
+            Translation newTranslation = Translation.builder()
+                .entityType(entityType)
+                .entityId(entityId)
+                .languageCode(languageCode)
+                .fieldName(fieldName)
+                .translatedValue(value)
+                .build();
             translationRepository.save(newTranslation);
             log.debug("Created new translation");
         }
@@ -203,5 +206,65 @@ public class TranslationServiceImpl implements TranslationService {
         
         translationRepository.findTranslation(entityType, entityId, languageCode, fieldName)
             .ifPresent(translationRepository::delete);
+    }
+
+    @Override
+    public Map<String, Object> getEntityTranslations(String entityType, Long entityId) {
+        log.debug("Getting translations for entity type: {} with ID: {}", entityType, entityId);
+        
+        Map<String, Object> result = new HashMap<>();
+        result.put("entityType", entityType);
+        result.put("entityId", entityId);
+        
+        Map<String, Map<String, String>> translations = new HashMap<>();
+        translationRepository.findByEntity(entityType, entityId)
+            .forEach(translation -> {
+                translations.computeIfAbsent(translation.getLanguageCode(), k -> new HashMap<>())
+                           .put(translation.getFieldName(), translation.getTranslatedValue());
+            });
+        
+        result.put("translations", translations);
+        return result;
+    }
+
+    @Override
+    public Map<String, String> getTranslationsForNamespace(String language, String namespace) {
+        log.debug("Getting translations for language: {} and namespace: {}", language, namespace);
+        Map<String, String> translations = new HashMap<>();
+        
+        translationRepository.findByEntityAndLanguage(namespace, null, language)
+            .forEach(translation -> 
+                translations.put(translation.getFieldName(), translation.getTranslatedValue()));
+        
+        return translations;
+    }
+
+    @Override
+    public Map<String, Map<String, String>> getTranslationsForNamespaces(String language, List<String> namespaces) {
+        log.debug("Getting translations for language: {} and namespaces: {}", language, namespaces);
+        Map<String, Map<String, String>> result = new HashMap<>();
+        
+        namespaces.forEach(namespace -> {
+            Map<String, String> translations = getTranslationsForNamespace(language, namespace);
+            if (!translations.isEmpty()) {
+                result.put(namespace, translations);
+            }
+        });
+        
+        return result;
+    }
+
+    @Override
+    public Map<String, Map<String, String>> getAllTranslations(String language) {
+        log.debug("Getting all translations for language: {}", language);
+        Map<String, Map<String, String>> result = new HashMap<>();
+        
+        translationRepository.findByEntityAndLanguage(null, null, language)
+            .forEach(translation -> {
+                result.computeIfAbsent(translation.getEntityType(), k -> new HashMap<>())
+                      .put(translation.getFieldName(), translation.getTranslatedValue());
+            });
+        
+        return result;
     }
 }

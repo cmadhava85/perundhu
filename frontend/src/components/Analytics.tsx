@@ -4,7 +4,7 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, XAxis, YAxis, 
   CartesianGrid, Tooltip, Legend, Cell, ResponsiveContainer 
 } from 'recharts';
-import { Location } from '../types';
+import type { Location } from '../types';
 
 // Define analytics data interfaces
 interface DelayData {
@@ -46,6 +46,8 @@ const Analytics: React.FC<AnalyticsProps> = ({ fromLocation, toLocation, busId }
   const [punctualityData, setPunctualityData] = useState<PunctualityData[]>([]);
   const [routePerformance, setRoutePerformance] = useState<RoutePerformanceData[]>([]);
   const [crowdData, setCrowdData] = useState<CrowdData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [analyticsEnabled] = useState<boolean>(
     localStorage.getItem('perundhu-analytics-enabled') === 'true'
   );
