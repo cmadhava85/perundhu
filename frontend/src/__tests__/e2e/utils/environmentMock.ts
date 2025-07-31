@@ -24,3 +24,19 @@ export const getFeatureFlag = (key: string, defaultValue: boolean = false): bool
   if (!value) return defaultValue;
   return value.toLowerCase() === 'true' || value === '1';
 };
+
+// Add a test to prevent the "empty test suite" error
+describe('Environment Mock Tests', () => {
+  test('getEnv returns correct API URL', () => {
+    expect(getEnv('VITE_API_URL')).toBe('http://localhost:8080');
+  });
+
+  test('getEnv returns correct Google Maps API key', () => {
+    expect(getEnv('VITE_GOOGLE_MAPS_API_KEY')).toBe('test-api-key');
+  });
+
+  test('getFeatureFlag returns boolean value correctly', () => {
+    expect(getFeatureFlag('VITE_FEATURE_TRACKING')).toBe(true);
+    expect(getFeatureFlag('NONEXISTENT_FLAG', false)).toBe(false);
+  });
+});

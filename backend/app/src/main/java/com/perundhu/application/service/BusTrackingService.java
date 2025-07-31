@@ -78,4 +78,13 @@ public interface BusTrackingService {
      * @return Map containing estimated arrival information
      */
     Map<String, Object> getEstimatedArrival(Long busId, Long stopId);
+
+    /**
+     * Predict the next stop for a bus based on its current location
+     *
+     * @param busId The bus ID
+     * @return The next predicted stop
+     */
+    com.perundhu.domain.model.Stop predictNextStop(Long busId);
 }
+

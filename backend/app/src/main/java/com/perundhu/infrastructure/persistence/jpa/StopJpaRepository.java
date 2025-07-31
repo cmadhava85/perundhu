@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.perundhu.infrastructure.persistence.entity.StopJpaEntity;
 
-@Repository
+@Repository("jpaPackageStopJpaRepository")
 public interface StopJpaRepository extends JpaRepository<StopJpaEntity, Long> {
     
     List<StopJpaEntity> findByBusIdOrderByStopOrder(Long busId);
@@ -31,3 +31,4 @@ public interface StopJpaRepository extends JpaRepository<StopJpaEntity, Long> {
     @Query("SELECT s FROM StopJpaEntity s WHERE s.location.id = :locationId")
     List<StopJpaEntity> findByLocationId(@Param("locationId") Long locationId);
 }
+

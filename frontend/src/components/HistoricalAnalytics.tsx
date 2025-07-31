@@ -1,11 +1,90 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, 
-  Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell 
-} from 'recharts';
 import { getHistoricalData } from '../services/analyticsService';
 import type { Location, Bus } from '../types';
+import '../styles/HistoricalAnalytics.css';
+
+// Import our new components
+import AnalyticsFilterControls from './analytics/AnalyticsFilterControls';
+import PunctualityChart from './analytics/PunctualityChart';
+import CrowdLevelsChart, { type CrowdLevelsData } from './analytics/CrowdLevelsChart';
+import BusUtilizationChart, { type BusUtilizationData } from './analytics/BusUtilizationChart';
+import ContinueIteration from './analytics/ContinueIteration';
+import NoDataDisplay from './analytics/NoDataDisplay';
+import AnalyticsLoading from './analytics/AnalyticsLoading';
+import AnalyticsError from './analytics/AnalyticsError';
+import ExportSection from './analytics/ExportSection';
+
+// Import types and utilities with type-only imports
+import type { TimeRange, DataType, AnalyticsData } from './analytics/types';
+import { formatDate, formatTime } from './analytics/formatters';
+
+// Adapter functions to transform data for specific chart components
+const adaptDataForPunctualityChart = (data: AnalyticsData): any => {
+  return {
+    data: data.data.map(item => ({
+      date: String(item.date || ''),
+      early: Number(item.early || 0),
+      onTime: Number(item.onTime || 0),
+      delayed: Number(item.delayed || 0),
+      veryDelayed: Number(item.veryDelayed || 0)
+    })) || [],
+    pieData: data.pieData || [],
+    summary: {
+      title: data.summary.title,
+      description: data.summary.description,
+      dataPoints: data.summary.dataPoints
+    },
+    bestDays: Array.isArray(data.bestDays) ? data.bestDays : [],
+    worstDays: Array.isArray(data.worstDays) ? data.worstDays : []
+  };
+};
+
+const adaptDataForCrowdLevelsChart = (data: AnalyticsData): CrowdLevelsData => {
+  return {
+    hourly: data.data.map(item => ({
+      time: String(item.time || item.date || ''),
+      low: Number(item.lowCrowd || 0),
+      medium: Number(item.mediumCrowd || 0),
+      high: Number(item.highCrowd || 0)
+    })) || [],
+    daily: data.data.map(item => ({
+      date: String(item.date || ''),
+      low: Number(item.lowCrowd || 0),
+      medium: Number(item.mediumCrowd || 0),
+      high: Number(item.highCrowd || 0),
+      total: Number(item.totalPassengers || 0)
+    })) || [],
+    summary: {
+      averageCrowdLevel: Number(data.summary.averageCrowdLevel || 0),
+      peakHours: Array.isArray(data.summary.peakHours) ? data.summary.peakHours.map(String) : [],
+      quietHours: Array.isArray(data.summary.quietHours) ? data.summary.quietHours.map(String) : []
+    }
+  };
+};
+
+const adaptDataForBusUtilizationChart = (data: AnalyticsData): BusUtilizationData => {
+  return {
+    buses: data.data.map(item => ({
+      busId: String(item.busId || ''),
+      busName: String(item.busName || ''),
+      utilization: Number(item.utilization || 0),
+      capacity: Number(item.capacity || 0),
+      averagePassengers: Number(item.avgPassengers || 0)
+    })) || [],
+    timeSeries: data.data.map(item => ({
+      time: String(item.time || item.date || ''),
+      utilization: Number(item.utilization || 0),
+      passengers: Number(item.passengers || 0)
+    })) || [],
+    summary: {
+      totalTrips: Number(data.summary.totalTrips || 0),
+      averageUtilization: Number(data.summary.averageUtilization || 0),
+      mostCrowdedBus: String(data.summary.mostCrowdedBus || '-'),
+      leastCrowdedBus: String(data.summary.leastCrowdedBus || '-')
+    }
+  };
+};
 
 interface HistoricalAnalyticsProps {
   fromLocation?: Location;
@@ -13,11 +92,9 @@ interface HistoricalAnalyticsProps {
   bus?: Bus;
 }
 
-type TimeRange = 'day' | 'week' | 'month' | 'custom';
-type DataType = 'punctuality' | 'crowdLevels' | 'busUtilization';
-
 /**
  * Component to display historical data analysis of bus performance
+ * Refactored to use smaller, more maintainable components
  */
 const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation, toLocation, bus }) => {
   const { t } = useTranslation();
@@ -25,20 +102,12 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
   const [error, setError] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>('week');
   const [dataType, setDataType] = useState<DataType>('punctuality');
-  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
   const [customStartDate, setCustomStartDate] = useState<string>('');
   const [customEndDate, setCustomEndDate] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [hasMoreData, setHasMoreData] = useState<boolean>(false);
   const pageSize = 10; // Number of items per page
-
-  // Define chart colors
-  const PUNCTUALITY_COLORS = {
-    early: '#82ca9d',
-    onTime: '#0088FE',
-    delayed: '#FFBB28',
-    veryDelayed: '#FF8042'
-  };
 
   // Generate dates for custom range
   useEffect(() => {
@@ -86,6 +155,9 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
           startDate = new Date(customStartDate);
           endDate = new Date(customEndDate);
           break;
+        default:
+          startDate = new Date();
+          startDate.setDate(startDate.getDate() - 7);
       }
 
       // Call API to get historical data with pagination
@@ -101,11 +173,16 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
       );
       
       // Check if there might be more data
-      setHasMoreData(data.length === pageSize);
+      setHasMoreData(data.data?.length === pageSize);
       
       // Append data for "load more" or replace for new filters
       if (isLoadingMore && analyticsData) {
-        setAnalyticsData([...analyticsData, ...data]);
+        // Properly merge the data arrays while keeping the rest of the structure
+        const mergedData = {
+          ...data,
+          data: [...analyticsData.data, ...data.data]
+        };
+        setAnalyticsData(mergedData);
       } else {
         setAnalyticsData(data);
       }
@@ -130,51 +207,30 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     }
   }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, page, fetchData]);
 
-  // Format date for display
-  const formatDate = (date: string) => {
-    const d = new Date(date);
-    return d.toLocaleDateString(undefined, { 
-      weekday: 'short', 
-      month: 'short', 
-      day: 'numeric' 
-    });
-  };
-  
-  // Format time for display
-  const formatTime = (time: string) => {
-    const t = new Date(`1970-01-01T${time}`);
-    return t.toLocaleTimeString(undefined, { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  };
-  
-  // Custom tooltip for charts
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="analytics-custom-tooltip">
-          <p className="tooltip-label">{`${label}`}</p>
-          {payload.map((entry: any, index: number) => (
-            <p key={`tooltip-${index}`} style={{ color: entry.color }}>
-              {`${entry.name}: ${entry.value}`}
-            </p>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
+  // Handle exporting data
+  const handleExport = useCallback(() => {
+    if (!analyticsData) return;
+    
+    // Implement export logic here (e.g., CSV download)
+    const data = JSON.stringify(analyticsData);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `analytics-${dataType}-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, [analyticsData, dataType]);
 
   // Render loading state
-  if (loading) {
+  if (loading && !analyticsData) {
     return (
       <div className="analytics-section">
         <h2>{t('analytics.title', 'Historical Data Analysis')}</h2>
-        <div className="analytics-loading">
-          <div className="spinner"></div>
-          <p>{t('common.loading', 'Loading...')}</p>
-        </div>
+        <AnalyticsLoading />
       </div>
     );
   }
@@ -184,10 +240,7 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     return (
       <div className="analytics-section">
         <h2>{t('analytics.title', 'Historical Data Analysis')}</h2>
-        <div className="analytics-error">
-          <p>{error}</p>
-          <button onClick={() => fetchData(false)}>{t('error.retry', 'Try Again')}</button>
-        </div>
+        <AnalyticsError error={error} onRetry={() => fetchData(false)} />
       </div>
     );
   }
@@ -197,58 +250,16 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     return (
       <div className="analytics-section">
         <h2>{t('analytics.title', 'Historical Data Analysis')}</h2>
-        <div className="analytics-filter-bar">
-          <div className="filter-group">
-            <label>{t('analytics.timeRange', 'Time Range')}</label>
-            <select 
-              value={timeRange}
-              onChange={(e) => setTimeRange(e.target.value as TimeRange)}
-            >
-              <option value="day">{t('analytics.today', 'Today')}</option>
-              <option value="week">{t('analytics.lastWeek', 'Last Week')}</option>
-              <option value="month">{t('analytics.lastMonth', 'Last Month')}</option>
-              <option value="custom">{t('analytics.customRange', 'Custom Range')}</option>
-            </select>
-          </div>
-          
-          <div className="filter-group">
-            <label>{t('analytics.dataType', 'Data Type')}</label>
-            <select
-              value={dataType}
-              onChange={(e) => setDataType(e.target.value as DataType)}
-            >
-              <option value="punctuality">{t('analytics.punctuality', 'Punctuality')}</option>
-              <option value="crowdLevels">{t('analytics.crowdLevels', 'Crowd Levels')}</option>
-              <option value="busUtilization">{t('analytics.busUtilization', 'Bus Utilization')}</option>
-            </select>
-          </div>
-        </div>
-
-        {timeRange === 'custom' && (
-          <div className="date-range-picker">
-            <div className="date-field">
-              <label>{t('analytics.startDate', 'Start Date')}</label>
-              <input 
-                type="date" 
-                value={customStartDate}
-                onChange={(e) => setCustomStartDate(e.target.value)}
-              />
-            </div>
-            <div className="date-field">
-              <label>{t('analytics.endDate', 'End Date')}</label>
-              <input 
-                type="date" 
-                value={customEndDate}
-                onChange={(e) => setCustomEndDate(e.target.value)}
-              />
-            </div>
-          </div>
-        )}
-        
-        <div className="analytics-no-data">
-          <p>{t('analytics.noDataAvailable', 'No data available')}</p>
-          <p>{t('analytics.tryDifferentFilters', 'Try a different time range or data type')}</p>
-        </div>
+        <NoDataDisplay
+          timeRange={timeRange}
+          dataType={dataType}
+          customStartDate={customStartDate}
+          customEndDate={customEndDate}
+          onTimeRangeChange={setTimeRange}
+          onDataTypeChange={setDataType}
+          onStartDateChange={setCustomStartDate}
+          onEndDateChange={setCustomEndDate}
+        />
       </div>
     );
   }
@@ -258,53 +269,16 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     <div className="analytics-section">
       <h2>{t('analytics.title', 'Historical Data Analysis')}</h2>
       
-      <div className="analytics-filter-bar">
-        <div className="filter-group">
-          <label>{t('analytics.timeRange', 'Time Range')}</label>
-          <select 
-            value={timeRange}
-            onChange={(e) => setTimeRange(e.target.value as TimeRange)}
-          >
-            <option value="day">{t('analytics.today', 'Today')}</option>
-            <option value="week">{t('analytics.lastWeek', 'Last Week')}</option>
-            <option value="month">{t('analytics.lastMonth', 'Last Month')}</option>
-            <option value="custom">{t('analytics.customRange', 'Custom Range')}</option>
-          </select>
-        </div>
-        
-        <div className="filter-group">
-          <label>{t('analytics.dataType', 'Data Type')}</label>
-          <select
-            value={dataType}
-            onChange={(e) => setDataType(e.target.value as DataType)}
-          >
-            <option value="punctuality">{t('analytics.punctuality', 'Punctuality')}</option>
-            <option value="crowdLevels">{t('analytics.crowdLevels', 'Crowd Levels')}</option>
-            <option value="busUtilization">{t('analytics.busUtilization', 'Bus Utilization')}</option>
-          </select>
-        </div>
-      </div>
-
-      {timeRange === 'custom' && (
-        <div className="date-range-picker">
-          <div className="date-field">
-            <label>{t('analytics.startDate', 'Start Date')}</label>
-            <input 
-              type="date" 
-              value={customStartDate}
-              onChange={(e) => setCustomStartDate(e.target.value)}
-            />
-          </div>
-          <div className="date-field">
-            <label>{t('analytics.endDate', 'End Date')}</label>
-            <input 
-              type="date" 
-              value={customEndDate}
-              onChange={(e) => setCustomEndDate(e.target.value)}
-            />
-          </div>
-        </div>
-      )}
+      <AnalyticsFilterControls
+        timeRange={timeRange}
+        dataType={dataType}
+        customStartDate={customStartDate}
+        customEndDate={customEndDate}
+        onTimeRangeChange={setTimeRange}
+        onDataTypeChange={setDataType}
+        onStartDateChange={setCustomStartDate}
+        onEndDateChange={setCustomEndDate}
+      />
 
       <div className="analytics-summary">
         <h3>{analyticsData.summary.title}</h3>
@@ -312,184 +286,36 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
       </div>
 
       <div className="analytics-charts">
-        {/* Render different charts based on data type */}
+        {/* Render appropriate chart based on data type */}
         {dataType === 'punctuality' && (
-          <div className="chart-container">
-            <h4>{t('analytics.onTimePerformance', 'On-Time Performance')}</h4>
-            <div className="chart-row">
-              <div className="chart-col">
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={analyticsData.pieData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                      nameKey="name"
-                      label={({ name, percent }: {name: string, percent: number}) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {analyticsData.pieData.map((_entry: {name: string, value: number}, index: number) => (
-                        <Cell key={`cell-${index}`} fill={Object.values(PUNCTUALITY_COLORS)[index % 4]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="chart-col">
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={analyticsData.data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="date" 
-                      tickFormatter={(value) => formatDate(value)}
-                    />
-                    <YAxis />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Legend />
-                    <Bar dataKey="early" name={t('analytics.early', 'Early')} fill={PUNCTUALITY_COLORS.early} />
-                    <Bar dataKey="onTime" name={t('analytics.onTime', 'On Time')} fill={PUNCTUALITY_COLORS.onTime} />
-                    <Bar dataKey="delayed" name={t('analytics.delayed', 'Delayed')} fill={PUNCTUALITY_COLORS.delayed} />
-                    <Bar dataKey="veryDelayed" name={t('analytics.veryDelayed', 'Very Delayed')} fill={PUNCTUALITY_COLORS.veryDelayed} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            
-            <div className="analytics-details">
-              <div className="detail-stat">
-                <h5>{t('analytics.mostOnTimeDays', 'Most On-Time Days')}</h5>
-                <ul>
-                  {analyticsData.bestDays.map((day: any, index: number) => (
-                    <li key={index}>
-                      {formatDate(day.date)}: {day.onTimePercentage}% {t('analytics.onTime', 'On Time')}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="detail-stat">
-                <h5>{t('analytics.mostDelayedDays', 'Most Delayed Days')}</h5>
-                <ul>
-                  {analyticsData.worstDays.map((day: any, index: number) => (
-                    <li key={index}>
-                      {formatDate(day.date)}: {day.delayedPercentage}% {t('analytics.delayed', 'Delayed')}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
+          <PunctualityChart 
+            data={adaptDataForPunctualityChart(analyticsData)} 
+            formatDate={formatDate}
+            formatTime={formatTime}
+          />
         )}
 
         {dataType === 'crowdLevels' && (
-          <div className="chart-container">
-            <h4>{t('analytics.crowdLevels', 'Crowd Levels')}</h4>
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={analyticsData.data}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="time" 
-                  tickFormatter={(value) => formatTime(value)}
-                />
-                <YAxis />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="crowdLevel" 
-                  name={t('analytics.crowdLevel', 'Crowd Level')}
-                  stroke="#8884d8" 
-                  activeDot={{ r: 8 }} 
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="capacity" 
-                  name={t('analytics.capacity', 'Capacity')}
-                  stroke="#82ca9d" 
-                  strokeDasharray="5 5" 
-                />
-              </LineChart>
-            </ResponsiveContainer>
-            
-            <div className="analytics-details">
-              <div className="detail-stat">
-                <h5>{t('analytics.peakHours', 'Peak Hours')}</h5>
-                <ul>
-                  {analyticsData.peakHours.map((hour: any, index: number) => (
-                    <li key={index}>
-                      {formatTime(hour.time)}: {hour.crowdLevel}% {t('analytics.capacity', 'Capacity')}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="detail-stat">
-                <h5>{t('analytics.leastCrowdedHours', 'Least Crowded Hours')}</h5>
-                <ul>
-                  {analyticsData.leastCrowdedHours.map((hour: any, index: number) => (
-                    <li key={index}>
-                      {formatTime(hour.time)}: {hour.crowdLevel}% {t('analytics.capacity', 'Capacity')}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
+          <CrowdLevelsChart 
+            data={adaptDataForCrowdLevelsChart(analyticsData)} 
+            formatDate={formatDate}
+            formatTime={formatTime}
+          />
         )}
 
         {dataType === 'busUtilization' && (
-          <div className="chart-container">
-            <h4>{t('analytics.busUtilization', 'Bus Utilization')}</h4>
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={analyticsData.data}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="date" 
-                  tickFormatter={(value) => formatDate(value)}
-                />
-                <YAxis />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                <Bar 
-                  dataKey="tripsCompleted" 
-                  name={t('analytics.tripsCompleted', 'Trips Completed')}
-                  fill="#8884d8" 
-                />
-                <Bar 
-                  dataKey="passengersServed" 
-                  name={t('analytics.passengersServed', 'Passengers Served')}
-                  fill="#82ca9d" 
-                />
-              </BarChart>
-            </ResponsiveContainer>
-            
-            <div className="analytics-details">
-              <div className="detail-stat">
-                <h5>{t('analytics.busUtilizationSummary', 'Bus Utilization Summary')}</h5>
-                <ul>
-                  <li>{t('analytics.totalTrips', 'Total Trips')}: {analyticsData.summary.totalTrips}</li>
-                  <li>{t('analytics.totalPassengers', 'Total Passengers')}: {analyticsData.summary.totalPassengers}</li>
-                  <li>{t('analytics.averagePassengersPerTrip', 'Average Passengers Per Trip')}: {analyticsData.summary.averagePassengersPerTrip}</li>
-                  <li>{t('analytics.utilization', 'Utilization')}: {analyticsData.summary.utilization}%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <BusUtilizationChart 
+            data={adaptDataForBusUtilizationChart(analyticsData)} 
+            formatDate={formatDate}
+            formatTime={formatTime}
+          />
         )}
       </div>
 
-      <div className="export-section">
-        <button className="export-btn">
-          <i className="export-icon"></i>
-          {t('analytics.exportData', 'Export Data')}
-        </button>
-        <p className="data-points-info">
-          {analyticsData.summary.dataPoints} {t('analytics.dataPoints', 'data points')}
-        </p>
-      </div>
+      <ExportSection 
+        dataPoints={analyticsData.summary.dataPoints} 
+        onExport={handleExport}
+      />
 
       <ContinueIteration 
         hasMore={hasMoreData}
@@ -497,37 +323,6 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
         onContinue={handleLoadMore}
         className="historical-analytics__continue"
       />
-    </div>
-  );
-};
-
-interface ContinueIterationProps {
-  hasMore: boolean;
-  isLoading: boolean;
-  onContinue: () => void;
-  className?: string;
-}
-
-// Simple ContinueIteration component as it was missing
-const ContinueIteration: React.FC<ContinueIterationProps> = ({ 
-  hasMore, 
-  isLoading, 
-  onContinue,
-  className 
-}) => {
-  const { t } = useTranslation();
-  
-  if (!hasMore) return null;
-  
-  return (
-    <div className={`continue-iteration ${className || ''}`}>
-      <button 
-        onClick={onContinue} 
-        disabled={isLoading}
-        className="load-more-button"
-      >
-        {isLoading ? t('common.loading', 'Loading...') : t('common.loadMore', 'Load More')}
-      </button>
     </div>
   );
 };

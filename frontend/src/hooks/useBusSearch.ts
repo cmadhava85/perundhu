@@ -1,6 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { searchBuses as apiSearchBuses, getStops, getConnectingRoutes as apiGetConnectingRoutes, ApiError } from '../services/api';
+import { 
+  searchBuses as apiSearchBuses, 
+  searchBusesViaStops as apiSearchBusesViaStops,
+  getStops, 
+  getConnectingRoutes as apiGetConnectingRoutes, 
+  ApiError 
+} from '../services/api';
 import type { Bus, Location, Stop, ConnectingRoute } from '../types';
 
 /**
@@ -16,6 +22,7 @@ const useBusSearch = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | ApiError | null>(null);
   const [connectingRoutes, setConnectingRoutes] = useState<ConnectingRoute[]>([]);
+  const [includeIntermediateStops, setIncludeIntermediateStops] = useState<boolean>(true);
 
   /**
    * Reset all search results
@@ -38,10 +45,36 @@ const useBusSearch = () => {
     setError(null);
     
     try {
-      // Load buses between locations
-      const busData = await apiSearchBuses(fromLocation, toLocation);
+      let busData: Bus[] = [];
       
-      // If no direct buses, try connecting routes
+      // Always get direct buses between locations
+      const directBusData = await apiSearchBuses(fromLocation, toLocation);
+      
+      if (includeIntermediateStops) {
+        // If intermediate stops is enabled, also search for buses that have these locations as stops
+        const viaBusData = await apiSearchBusesViaStops(fromLocation, toLocation);
+        
+        // Create a map of bus IDs we've already added to avoid duplicates
+        const busIdMap = new Map<number, boolean>();
+        
+        // Add all direct buses first
+        directBusData.forEach(bus => {
+          busData.push(bus);
+          busIdMap.set(bus.id, true);
+        });
+        
+        // Then add any via buses that aren't already in our list
+        viaBusData.forEach(bus => {
+          if (!busIdMap.has(bus.id)) {
+            busData.push(bus);
+          }
+        });
+      } else {
+        // If intermediate stops is disabled, just use direct buses
+        busData = directBusData;
+      }
+      
+      // If no direct buses or via buses, try connecting routes
       if (busData.length === 0) {
         // Pass only location IDs instead of full location objects
         const connectingData = await apiGetConnectingRoutes(fromLocation.id, toLocation.id);
@@ -87,7 +120,14 @@ const useBusSearch = () => {
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, [includeIntermediateStops, t]);
+
+  /**
+   * Toggle whether to include buses that pass through locations as intermediate stops
+   */
+  const toggleIncludeIntermediateStops = useCallback(() => {
+    setIncludeIntermediateStops(prev => !prev);
+  }, []);
 
   /**
    * Select a bus to view its details
@@ -187,13 +227,15 @@ const useBusSearch = () => {
     isLoading: loading, // Add this for consistency with useLocationData
     error,
     connectingRoutes,
+    includeIntermediateStops,
     
     // Actions
     searchBuses,
     selectBus,
     resetResults,
     clearError,
-    refreshStopsForLanguage
+    refreshStopsForLanguage,
+    toggleIncludeIntermediateStops
   };
 };
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import '../styles/ConnectingRoutes.css';
 
 // Define proper type for connecting routes
 interface BusLeg {

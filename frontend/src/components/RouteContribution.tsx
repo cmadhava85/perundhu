@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { submitRouteContribution, submitImageContribution, getContributionStatus } from "../services/api";
-import type { RouteContribution as RouteContributionType, StopContribution, ImageContribution } from '../types';
-import './RouteContribution.css';
+import type { RouteContribution as RouteContributionType, StopContribution, Location } from '../types';
+import LocationDropdown from './search/LocationDropdown';
+import '../styles/RouteContribution.css';
+import { apiService } from '../services/apiService';
+import type { RouteType, BusType, Operator } from '../services/referenceDataService';
+import { getRouteTypes, getBusTypes, getOperators } from '../services/referenceDataService';
+
+interface RouteContributionComponentProps {
+  userId: string;
+}
 
 /**
  * Component that allows users to contribute bus route information
  * through manual entry or image uploads.
  */
-const RouteContributionComponent: React.FC = () => {
+const RouteContributionComponent: React.FC<RouteContributionComponentProps> = ({ userId }) => {
   const { t } = useTranslation();
   const [contributionMethod, setContributionMethod] = useState<'manual' | 'image'>('manual');
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -33,6 +41,11 @@ const RouteContributionComponent: React.FC = () => {
     setShowContributions(!showContributions);
   };
 
+  const resetForm = () => {
+    setSubmissionStatus('idle');
+    setStatusMessage('');
+  };
+
   return (
     <div className="route-contribution-container">
       <div className="contribution-header">
@@ -46,14 +59,20 @@ const RouteContributionComponent: React.FC = () => {
         <div className="contribution-method-selector">
           <button 
             className={`method-button ${contributionMethod === 'manual' ? 'active' : ''}`}
-            onClick={() => setContributionMethod('manual')}
+            onClick={() => {
+              setContributionMethod('manual');
+              resetForm();
+            }}
           >
             <span className="icon">📝</span>
             {t('contribution.manualEntry', 'Manual Entry')}
           </button>
           <button 
             className={`method-button ${contributionMethod === 'image' ? 'active' : ''}`}
-            onClick={() => setContributionMethod('image')}
+            onClick={() => {
+              setContributionMethod('image');
+              resetForm();
+            }}
           >
             <span className="icon">📷</span>
             {t('contribution.uploadImage', 'Upload Schedule Image')}
@@ -177,19 +196,34 @@ interface UnifiedRouteFormProps {
 }
 
 const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language; // Get current language (e.g., 'en', 'ta')
+  
   const [formData, setFormData] = useState<RouteContributionType>({
     busName: '',
     busNumber: '',
     fromLocationName: '',
     toLocationName: '',
+    
+    // Initialize secondary language fields
+    busName_secondary: '',
+    fromLocationName_secondary: '',
+    toLocationName_secondary: '',
+    
+    // Set source language based on current UI language
+    sourceLanguage: currentLanguage,
+    
     departureTime: '',
     arrivalTime: '',
     stops: []
   });
   
+  const [fromLocation, setFromLocation] = useState<Location | null>(null);
+  const [toLocation, setToLocation] = useState<Location | null>(null);
+  
   const [currentStop, setCurrentStop] = useState<StopContribution>({
     name: '',
+    name_secondary: '',
     arrivalTime: '',
     departureTime: '',
     stopOrder: 0
@@ -209,6 +243,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
   // Track if the form has been submitted once
   const [attemptedSubmit, setAttemptedSubmit] = useState<boolean>(false);
   
+  // Handle primary and secondary language fields based on current language setting
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -216,14 +251,6 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     // Clear errors when user types
     if ((name === 'busName' || name === 'busNumber') && errors.busIdentifier) {
       setErrors({ ...errors, busIdentifier: undefined });
-    }
-    
-    if (name === 'fromLocationName' && errors.fromLocation) {
-      setErrors({ ...errors, fromLocation: undefined });
-    }
-    
-    if (name === 'toLocationName' && errors.toLocation) {
-      setErrors({ ...errors, toLocation: undefined });
     }
     
     if ((name === 'departureTime' || name === 'arrivalTime') && errors.timeRequired) {
@@ -235,18 +262,85 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
       }
     }
   };
+
+  const handleFromLocationSelect = (location: Location) => {
+    setFromLocation(location);
+    
+    // Set the primary name based on the current language
+    const isCurrentLanguageTamil = currentLanguage === 'ta';
+    const primaryName = location.name;
+    const secondaryName = isCurrentLanguageTamil 
+      ? location.name // If current language is Tamil, the English name is the original
+      : (location.translatedName || primaryName); // If current language is English, use the Tamil name if available
+    
+    setFormData({
+      ...formData,
+      fromLocationName: primaryName,
+      fromLocationName_secondary: secondaryName,
+      fromLatitude: location.latitude,
+      fromLongitude: location.longitude
+    });
+    
+    if (errors.fromLocation) {
+      setErrors({ ...errors, fromLocation: undefined });
+    }
+    
+    if (toLocation) {
+      validateLocationLogic();
+    }
+  };
   
-  // Validate that departure time is before arrival time
+  const handleToLocationSelect = (location: Location) => {
+    // Log the location data to help with debugging
+    console.log('Destination location selected:', location);
+    
+    // Set the full location object in state, including coordinates
+    setToLocation(location);
+    
+    // Set the primary name based on the current language
+    const isCurrentLanguageTamil = currentLanguage === 'ta';
+    const primaryName = location.name;
+    const secondaryName = isCurrentLanguageTamil 
+      ? location.name // If current language is Tamil, the English name is the original
+      : (location.translatedName || primaryName); // If current language is English, use the Tamil name if available
+    
+    // Update the form data with the location name and coordinates
+    setFormData({
+      ...formData,
+      toLocationName: primaryName,
+      toLocationName_secondary: secondaryName,
+      toLatitude: location.latitude,
+      toLongitude: location.longitude
+    });
+    
+    // Clear any validation errors
+    if (errors.toLocation) {
+      setErrors({ ...errors, toLocation: undefined });
+    }
+    
+    // Check location logic if we also have an origin selected
+    if (fromLocation) {
+      validateLocationLogic();
+    }
+  };
+
+  const handleStopChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCurrentStop({ ...currentStop, [name]: value });
+    
+    if ((name === 'arrivalTime' || name === 'departureTime') && errors.stopTimeRequired) {
+      setErrors({ ...errors, stopTimeRequired: undefined });
+    }
+  };
+
   const validateTimesLogic = (departureTime: string, arrivalTime: string) => {
     if (departureTime && arrivalTime) {
-      // Convert times to comparable format
       const depParts = departureTime.split(':');
       const arrParts = arrivalTime.split(':');
       
       const depMinutes = parseInt(depParts[0]) * 60 + parseInt(depParts[1]);
       const arrMinutes = parseInt(arrParts[0]) * 60 + parseInt(arrParts[1]);
       
-      // Check if departure is after arrival
       if (depMinutes >= arrMinutes) {
         setErrors({
           ...errors,
@@ -257,7 +351,6 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
         });
         return false;
       } else {
-        // Clear the error if times are now valid
         if (errors.routeLogic) {
           setErrors({
             ...errors,
@@ -270,10 +363,11 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     return true;
   };
   
-  // Check for duplicate or overlapping locations
   const validateLocationLogic = () => {
-    const from = formData.fromLocationName.trim().toLowerCase();
-    const to = formData.toLocationName.trim().toLowerCase();
+    if (!fromLocation || !toLocation) return true;
+    
+    const from = fromLocation.name.trim().toLowerCase();
+    const to = toLocation.name.trim().toLowerCase();
     
     if (from && to && from === to) {
       setErrors({
@@ -288,290 +382,110 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     return true;
   };
   
-  // Validate that stops are in a logical sequence
-  const validateStopsSequence = () => {
-    // Skip if there are no stops or just one stop
-    if (!formData.stops.length || formData.stops.length < 2) return true;
+  const handleAddStop = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    // If both arrival and departure times are provided for all stops, check sequence
-    const stopsWithTimes = formData.stops.filter(stop => stop.arrivalTime && stop.departureTime);
-    
-    if (stopsWithTimes.length < 2) return true; // Not enough stops with complete times to check
-    
-    let isValid = true;
-    for (let i = 0; i < stopsWithTimes.length - 1; i++) {
-      const currentStop = stopsWithTimes[i];
-      const nextStop = stopsWithTimes[i + 1];
-      
-      // Convert times to minutes for comparison
-      const currentDepartureTime = currentStop.departureTime.split(':');
-      const nextArrivalTime = nextStop.arrivalTime.split(':');
-      
-      const currentDepartureMinutes = parseInt(currentDepartureTime[0]) * 60 + parseInt(currentDepartureTime[1]);
-      const nextArrivalMinutes = parseInt(nextArrivalTime[0]) * 60 + parseInt(nextArrivalTime[1]);
-      
-      if (currentDepartureMinutes >= nextArrivalMinutes) {
-        setErrors({
-          ...errors,
-          stopsOverlap: t(
-            'contribution.stopsSequenceError', 
-            'Stop sequence has timing issues. Ensure each stop\'s departure time is before the next stop\'s arrival time.'
-          )
-        });
-        isValid = false;
-        break;
-      }
-    }
-    
-    if (isValid && errors.stopsOverlap) {
-      // Clear error if it's now valid
+    if (!currentStop.name) {
       setErrors({
         ...errors,
-        stopsOverlap: undefined
-      });
-    }
-    
-    return isValid;
-  };
-  
-  const handleStopChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCurrentStop({ ...currentStop, [name]: value });
-    
-    // Clear error when user types
-    if ((name === 'arrivalTime' || name === 'departureTime') && errors.stopTimeRequired) {
-      setErrors({ ...errors, stopTimeRequired: undefined });
-    }
-  };
-  
-  const handleAddStop = () => {
-    // Validate that the stop has a name and at least one time
-    if (!currentStop.name.trim()) {
-      setErrors({
-        ...errors,
-        stopTimeRequired: t(
-          'contribution.stopNameRequired',
-          'Stop name is required'
-        )
+        stopTimeRequired: t('contribution.stopNameRequired', 'Stop name is required')
       });
       return;
     }
     
-    const hasArrivalTime = !!currentStop.arrivalTime;
-    const hasDepartureTime = !!currentStop.departureTime;
+    const newStop = {
+      ...currentStop,
+      stopOrder: formData.stops.length + 1
+    };
     
-    if (!hasArrivalTime && !hasDepartureTime) {
-      setErrors({
-        ...errors,
-        stopTimeRequired: t(
-          'contribution.stopTimeRequired',
-          'Please provide either an arrival time or departure time for the stop'
-        )
-      });
-      return;
-    }
-    
-    // Validate that this stop's name isn't the same as origin or destination
-    const stopName = currentStop.name.trim().toLowerCase();
-    const fromLocation = formData.fromLocationName.trim().toLowerCase();
-    const toLocation = formData.toLocationName.trim().toLowerCase();
-    
-    if ((stopName === fromLocation) || (stopName === toLocation)) {
-      setErrors({
-        ...errors,
-        stopTimeRequired: t(
-          'contribution.stopSameAsEndpoint',
-          'A stop cannot have the same name as the origin or destination'
-        )
-      });
-      return;
-    }
-    
-    // Check for duplicate stop names
-    const stopNames = formData.stops.map(s => s.name.trim().toLowerCase());
-    if (stopNames.includes(stopName)) {
-      setErrors({
-        ...errors,
-        stopTimeRequired: t(
-          'contribution.duplicateStop',
-          'This stop name already exists in your route'
-        )
-      });
-      return;
-    }
-    
-    setErrors({ ...errors, stopTimeRequired: undefined });
-    
-    // Add the stop to the route with the next order number
-    const newStop = { ...currentStop, stopOrder: formData.stops.length + 1 };
     setFormData({
       ...formData,
       stops: [...formData.stops, newStop]
     });
     
-    // Reset the stop form
-    setCurrentStop({ name: '', arrivalTime: '', departureTime: '', stopOrder: 0 });
+    setCurrentStop({
+      name: '',
+      name_secondary: '',
+      arrivalTime: '',
+      departureTime: '',
+      stopOrder: 0
+    });
   };
   
-  const removeStop = (index: number) => {
-    const updatedStops = [...formData.stops];
-    updatedStops.splice(index, 1);
-    
-    // Update stop orders
-    updatedStops.forEach((stop, idx) => {
-      stop.stopOrder = idx + 1;
-    });
+  const handleRemoveStop = (stopIndex: number) => {
+    const updatedStops = formData.stops.filter((_, index) => index !== stopIndex)
+      .map((stop, index) => ({ ...stop, stopOrder: index + 1 }));
     
     setFormData({
       ...formData,
       stops: updatedStops
     });
+  };
+  
+  const validateForm = () => {
+    const newErrors: any = {};
+    let isValid = true;
     
-    // Validate stop sequence again after removing a stop
-    if (errors.stopsOverlap) {
-      validateStopsSequence();
+    if (!formData.busName && !formData.busNumber) {
+      newErrors.busIdentifier = t(
+        'contribution.busIdentifierRequired', 
+        'Either bus name or number is required'
+      );
+      isValid = false;
     }
+    
+    if (!formData.fromLocationName.trim()) {
+      newErrors.fromLocation = t(
+        'contribution.fromLocationRequired', 
+        'Origin location is required'
+      );
+      isValid = false;
+    }
+    
+    if (!formData.toLocationName.trim()) {
+      newErrors.toLocation = t(
+        'contribution.toLocationRequired', 
+        'Destination location is required'
+      );
+      isValid = false;
+    }
+    
+    if (!formData.departureTime && !formData.arrivalTime) {
+      newErrors.timeRequired = t(
+        'contribution.timeRequired', 
+        'Either departure or arrival time is required'
+      );
+      isValid = false;
+    }
+    
+    setErrors(newErrors);
+    
+    isValid = validateLocationLogic() && isValid;
+    
+    if (formData.departureTime && formData.arrivalTime) {
+      isValid = validateTimesLogic(formData.departureTime, formData.arrivalTime) && isValid;
+    }
+    
+    return isValid;
   };
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setAttemptedSubmit(true);
     
-    // Validate that at least one bus identifier is provided
-    const hasBusName = !!formData.busName.trim();
-    const hasBusNumber = !!formData.busNumber.trim();
-    
-    // Validate that from/to locations are provided
-    const hasFromLocation = !!formData.fromLocationName.trim();
-    const hasToLocation = !!formData.toLocationName.trim();
-    
-    // Validate that at least one time is provided
-    const hasDepartureTime = !!formData.departureTime;
-    const hasArrivalTime = !!formData.arrivalTime;
-    
-    const newErrors: any = {};
-    
-    if (!hasBusName && !hasBusNumber) {
-      newErrors.busIdentifier = t(
-        'contribution.busIdentifierRequired', 
-        'Please provide either a bus name or bus number'
-      );
-    }
-    
-    if (!hasFromLocation) {
-      newErrors.fromLocation = t(
-        'contribution.fromLocationRequired', 
-        'Origin location is required'
-      );
-    }
-    
-    if (!hasToLocation) {
-      newErrors.toLocation = t(
-        'contribution.toLocationRequired', 
-        'Destination location is required'
-      );
-    }
-    
-    if (!hasDepartureTime && !hasArrivalTime) {
-      newErrors.timeRequired = t(
-        'contribution.timeRequired', 
-        'Please provide either a departure time or arrival time'
-      );
-    }
-    
-    // Check for logical validation only if basic validation passes
-    if (Object.keys(newErrors).length === 0) {
-      const isLocationsValid = validateLocationLogic();
-      const isTimesValid = hasDepartureTime && hasArrivalTime ? 
-        validateTimesLogic(formData.departureTime, formData.arrivalTime) : true;
-      const isStopsValid = validateStopsSequence();
+    if (validateForm()) {
+      // Ensure the source language is set correctly before submission
+      const dataToSubmit = {
+        ...formData,
+        sourceLanguage: currentLanguage
+      };
       
-      if (!isLocationsValid || !isTimesValid || !isStopsValid) {
-        // Don't submit if any logical validation fails
-        return;
-      }
+      onSubmit(dataToSubmit);
     }
-    
-    // If there are errors, set them and stop submission
-    if (Object.keys(newErrors).length > 0) {
-      setErrors({...errors, ...newErrors});
-      return;
-    }
-    
-    // No errors, proceed with submission
-    onSubmit(formData);
   };
-
-  // Define field error highlighting class
-  const fieldErrorClass = (errorKey: keyof typeof errors) => {
-    return attemptedSubmit && errors[errorKey] ? 'field-error' : '';
-  };
-
-  // Check if we have any errors to display
-  const hasErrors = Object.values(errors).some(error => error !== undefined);
-
+  
   return (
-    <form className="unified-route-form" onSubmit={handleSubmit}>
-      {/* Consolidated error messages section - moved to the top of the form */}
-      {attemptedSubmit && hasErrors && (
-        <div className="errors-summary">
-          <div className="errors-header">
-            <span className="error-icon">⚠</span>
-            {t('contribution.errorSummary', 'Please correct the following issues:')}
-          </div>
-          <div className="errors-grid">
-            {errors.busIdentifier && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.busDetails', 'Bus Details')}</div>
-                <div className="error-message">{errors.busIdentifier}</div>
-              </div>
-            )}
-            
-            {errors.fromLocation && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.origin', 'Origin')}</div>
-                <div className="error-message">{errors.fromLocation}</div>
-              </div>
-            )}
-            
-            {errors.toLocation && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.destination', 'Destination')}</div>
-                <div className="error-message">{errors.toLocation}</div>
-              </div>
-            )}
-            
-            {errors.timeRequired && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.time', 'Timing')}</div>
-                <div className="error-message">{errors.timeRequired}</div>
-              </div>
-            )}
-            
-            {errors.routeLogic && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.routeLogic', 'Route Logic')}</div>
-                <div className="error-message">{errors.routeLogic}</div>
-              </div>
-            )}
-            
-            {errors.stopTimeRequired && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.stop', 'Stop')}</div>
-                <div className="error-message">{errors.stopTimeRequired}</div>
-              </div>
-            )}
-            
-            {errors.stopsOverlap && (
-              <div className="error-category">
-                <div className="error-field">{t('contribution.stopSequence', 'Stop Sequence')}</div>
-                <div className="error-message">{errors.stopsOverlap}</div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-      
+    <form onSubmit={handleSubmit}>
       <div className="form-section">
         <h3 className="section-title">
           <span className="section-icon">🚌</span>
@@ -581,36 +495,42 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="busName">
-              {t('contribution.busName', 'Bus Name')}
-              <span className="field-hint"> {t('contribution.eitherRequired', '(Either name or number required)')}</span>
+              {t('contribution.busName', 'Bus Name')} 
+              <span className="field-hint"> ({t('contribution.eitherRequired', 'Either name or number required')})</span>
             </label>
-            <input
-              type="text"
-              id="busName"
-              name="busName"
-              value={formData.busName}
-              onChange={handleChange}
-              placeholder={t('contribution.busNamePlaceholder', 'e.g. SETC Chennai Express')}
-              className={fieldErrorClass('busIdentifier')}
+            <input 
+              type="text" 
+              id="busName" 
+              name="busName" 
+              value={formData.busName} 
+              onChange={handleChange} 
+              placeholder={t('contribution.busNamePlaceholder', 'e.g. SETC Chennai Express')} 
+              className={attemptedSubmit && errors.busIdentifier && !formData.busName && !formData.busNumber ? 'field-error' : ''}
             />
           </div>
           
           <div className="form-group">
             <label htmlFor="busNumber">
               {t('contribution.busNumber', 'Bus Number')}
-              <span className="field-hint"> {t('contribution.eitherRequired', '(Either name or number required)')}</span>
+              <span className="field-hint"> ({t('contribution.eitherRequired', 'Either name or number required')})</span>
             </label>
-            <input
-              type="text"
-              id="busNumber"
-              name="busNumber"
-              value={formData.busNumber}
+            <input 
+              type="text" 
+              id="busNumber" 
+              name="busNumber" 
+              value={formData.busNumber} 
               onChange={handleChange}
               placeholder={t('contribution.busNumberPlaceholder', 'e.g. TN-01-1234')}
-              className={fieldErrorClass('busIdentifier')}
+              className={attemptedSubmit && errors.busIdentifier && !formData.busName && !formData.busNumber ? 'field-error' : ''}
             />
           </div>
         </div>
+        
+        {attemptedSubmit && errors.busIdentifier && (
+          <p className="error-message">
+            <span className="error-icon">⚠</span> {errors.busIdentifier}
+          </p>
+        )}
       </div>
       
       <div className="form-section">
@@ -623,43 +543,59 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
           <div className="visualization-container">
             <div className="route-start-point">
               <div className="location-marker origin-marker"></div>
-              <input
-                type="text"
-                id="fromLocationName"
-                name="fromLocationName"
-                value={formData.fromLocationName}
-                onChange={handleChange}
-                placeholder={t('contribution.fromLocation', 'Origin')}
-                className={`route-location-input ${fieldErrorClass('fromLocation')}`}
-              />
-              <input
-                type="time"
-                id="departureTime"
-                name="departureTime"
-                value={formData.departureTime}
-                onChange={handleChange}
-                className={`time-input ${fieldErrorClass('timeRequired')}`}
-              />
+              <div className="route-location-input">
+                <LocationDropdown
+                  id="fromLocationName"
+                  label={t('contribution.origin', 'Origin')}
+                  placeholder={t('contribution.originPlaceholder', 'Starting location')}
+                  selectedLocation={fromLocation}
+                  onSelect={handleFromLocationSelect}
+                  showValidationFeedback={attemptedSubmit}
+                />
+                {attemptedSubmit && errors.fromLocation && (
+                  <p className="error-message">
+                    <span className="error-icon">⚠</span> {errors.fromLocation}
+                  </p>
+                )}
+              </div>
+              <div className="time-input">
+                <label htmlFor="departureTime">{t('contribution.departureTime', 'Departure')}</label>
+                <input 
+                  type="time" 
+                  id="departureTime" 
+                  name="departureTime" 
+                  value={formData.departureTime} 
+                  onChange={handleChange}
+                  className={attemptedSubmit && errors.timeRequired && !formData.departureTime && !formData.arrivalTime ? 'field-error' : ''}
+                />
+              </div>
             </div>
             
             {formData.stops.length > 0 && (
               <div className="route-stops-container">
                 {formData.stops.map((stop, index) => (
-                  <div key={index} className="route-stop-point">
+                  <div className="route-stop-point" key={index}>
                     <div className="location-marker stop-marker"></div>
                     <div className="stop-info">
                       <div className="stop-name">{stop.name}</div>
                       <div className="stop-times">
-                        {stop.arrivalTime && <span className="arrival-time">{stop.arrivalTime}</span>}
-                        {stop.arrivalTime && stop.departureTime && <span> - </span>}
-                        {stop.departureTime && <span className="departure-time">{stop.departureTime}</span>}
+                        {stop.arrivalTime && (
+                          <span>
+                            {t('contribution.arrives', 'Arrives')}: {stop.arrivalTime}
+                          </span>
+                        )}
+                        {stop.arrivalTime && stop.departureTime && ' | '}
+                        {stop.departureTime && (
+                          <span>
+                            {t('contribution.departs', 'Departs')}: {stop.departureTime}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <button 
                       type="button" 
                       className="remove-stop-btn"
-                      onClick={() => removeStop(index)}
-                      aria-label="Remove stop"
+                      onClick={() => handleRemoveStop(index)}
                     >
                       ×
                     </button>
@@ -670,33 +606,55 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
             
             <div className="route-end-point">
               <div className="location-marker destination-marker"></div>
-              <input
-                type="text"
-                id="toLocationName"
-                name="toLocationName"
-                value={formData.toLocationName}
-                onChange={handleChange}
-                placeholder={t('contribution.toLocation', 'Destination')}
-                className={`route-location-input ${fieldErrorClass('toLocation')}`}
-              />
-              <input
-                type="time"
-                id="arrivalTime"
-                name="arrivalTime"
-                value={formData.arrivalTime}
-                onChange={handleChange}
-                className={`time-input ${fieldErrorClass('timeRequired')}`}
-              />
+              <div className="route-location-input">
+                <LocationDropdown
+                  id="toLocationName"
+                  label={t('contribution.destination', 'Destination')}
+                  placeholder={t('contribution.destinationPlaceholder', 'Final destination')}
+                  selectedLocation={toLocation}
+                  onSelect={handleToLocationSelect}
+                  showValidationFeedback={attemptedSubmit}
+                  excludeLocations={fromLocation ? [fromLocation] : []}
+                />
+                {attemptedSubmit && errors.toLocation && (
+                  <p className="error-message">
+                    <span className="error-icon">⚠</span> {errors.toLocation}
+                  </p>
+                )}
+              </div>
+              <div className="time-input">
+                <label htmlFor="arrivalTime">{t('contribution.arrivalTime', 'Arrival')}</label>
+                <input 
+                  type="time" 
+                  id="arrivalTime" 
+                  name="arrivalTime" 
+                  value={formData.arrivalTime} 
+                  onChange={handleChange}
+                  className={attemptedSubmit && errors.timeRequired && !formData.departureTime && !formData.arrivalTime ? 'field-error' : ''}
+                />
+              </div>
             </div>
           </div>
+          
+          {attemptedSubmit && errors.timeRequired && (
+            <p className="error-message">
+              <span className="error-icon">⚠</span> {errors.timeRequired}
+            </p>
+          )}
+          
+          {attemptedSubmit && errors.routeLogic && (
+            <p className="error-message">
+              <span className="error-icon">⚠</span> {errors.routeLogic}
+            </p>
+          )}
         </div>
       </div>
       
       <div className="form-section">
         <h3 className="section-title">
           <span className="section-icon">🚏</span>
-          {t('contribution.addStops', 'Add Stops')}
-          <span className="field-hint"> {t('contribution.optional', '(Optional)')}</span>
+          {t('contribution.addStops', 'Add Intermediate Stops')} 
+          <span className="field-hint"> ({t('contribution.optional', 'Optional')})</span>
         </h3>
         
         <p className="section-description">
@@ -707,73 +665,73 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="stopName">{t('contribution.stopName', 'Stop Name')}</label>
-              <input
-                type="text"
-                id="stopName"
-                name="name"
-                value={currentStop.name}
+              <input 
+                type="text" 
+                id="stopName" 
+                name="name" 
+                value={currentStop.name} 
                 onChange={handleStopChange}
                 placeholder={t('contribution.stopNamePlaceholder', 'e.g. Vellore')}
-                className={errors.stopTimeRequired ? "field-error" : ""}
               />
             </div>
             
             <div className="form-group">
-              <label htmlFor="stopArrivalTime">
-                {t('contribution.arrivalTime', 'Arrival Time')}
-                <span className="field-hint"> {t('contribution.eitherRequired', '(Either required)')}</span>
-              </label>
-              <input
-                type="time"
-                id="stopArrivalTime"
-                name="arrivalTime"
-                value={currentStop.arrivalTime}
+              <label htmlFor="stopArrivalTime">{t('contribution.arrivalTime', 'Arrival Time')}</label>
+              <input 
+                type="time" 
+                id="stopArrivalTime" 
+                name="arrivalTime" 
+                value={currentStop.arrivalTime} 
                 onChange={handleStopChange}
-                className={errors.stopTimeRequired && !currentStop.arrivalTime && !currentStop.departureTime ? "field-error" : ""}
               />
             </div>
             
             <div className="form-group">
-              <label htmlFor="stopDepartureTime">
-                {t('contribution.departureTime', 'Departure Time')}
-                <span className="field-hint"> {t('contribution.eitherRequired', '(Either required)')}</span>
-              </label>
-              <input
-                type="time"
-                id="stopDepartureTime"
-                name="departureTime"
-                value={currentStop.departureTime}
+              <label htmlFor="stopDepartureTime">{t('contribution.departureTime', 'Departure Time')}</label>
+              <input 
+                type="time" 
+                id="stopDepartureTime" 
+                name="departureTime" 
+                value={currentStop.departureTime} 
                 onChange={handleStopChange}
-                className={errors.stopTimeRequired && !currentStop.arrivalTime && !currentStop.departureTime ? "field-error" : ""}
               />
-            </div>
-            
-            <div className="form-action">
-              <button 
-                type="button" 
-                className="add-stop-btn"
-                onClick={handleAddStop}
-                disabled={!currentStop.name}
-              >
-                + {t('contribution.addStop', 'Add Stop')}
-              </button>
             </div>
           </div>
+          
+          <div className="form-action">
+            <button 
+              type="button" 
+              className="add-stop-btn"
+              onClick={handleAddStop}
+              disabled={!currentStop.name}
+            >
+              {t('contribution.addStop', '+ Add Stop')}
+            </button>
+          </div>
+          
+          {errors.stopTimeRequired && (
+            <p className="error-message">
+              <span className="error-icon">⚠</span> {errors.stopTimeRequired}
+            </p>
+          )}
+          
+          {errors.stopsOverlap && (
+            <p className="error-message">
+              <span className="error-icon">⚠</span> {errors.stopsOverlap}
+            </p>
+          )}
         </div>
         
         {formData.stops.length > 0 && (
           <div className="stops-summary">
-            <h4>{t('contribution.stopsAdded', 'Stops Added')}: {formData.stops.length}</h4>
+            <h4>{t('contribution.addedStops', `${formData.stops.length} stops added`)}</h4>
           </div>
         )}
       </div>
       
       <div className="form-actions">
-        <button 
-          type="submit" 
-          className="submit-btn"
-        >
-          {t('contribution.submitRoute', 'Submit Route')}
+        <button type="submit" className="submit-btn">
+          {t('contribution.submitRoute', 'Submit Route Information')}
         </button>
       </div>
     </form>
@@ -781,173 +739,502 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
 };
 
 /**
- * Simplified form for uploading bus schedule images
+ * Simple form for uploading bus schedule images
  */
 interface SimpleImageUploadFormProps {
   onSubmit: (data: ImageContribution, file: File) => void;
 }
 
+// Update the ImageContribution interface to include the new fields
+interface ImageContribution {
+  busName: string;
+  busNumber: string;
+  fromLocationName: string;
+  toLocationName: string;
+  notes: string;
+  busTypeId?: number;
+  operatorId?: number;
+}
+
 const SimpleImageUploadForm: React.FC<SimpleImageUploadFormProps> = ({ onSubmit }) => {
   const { t } = useTranslation();
-  // Create a form state with properly typed properties that match our updated ImageContribution type
-  const [formData, setFormData] = useState<{
-    description: string, 
-    busNumber: string
-  }>({
-    description: '',
-    busNumber: ''
+  const [formData, setFormData] = useState<ImageContribution>({
+    busName: '',
+    busNumber: '',
+    fromLocationName: '',
+    toLocationName: '',
+    notes: '',
+    busTypeId: 0,
+    operatorId: 0,
   });
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const selectedFile = e.target.files[0];
-      
-      // Validate file size (5MB max)
-      if (selectedFile.size > 5 * 1024 * 1024) {
-        setError(t(
-          'contribution.fileTooLarge', 
-          'File is too large. Please select an image under 5MB.'
-        ));
-        return;
+  const [fromLocation, setFromLocation] = useState<Location | null>(null);
+  const [toLocation, setToLocation] = useState<Location | null>(null);
+  const [busTypes, setBusTypes] = useState<BusType[]>([]);
+  const [operators, setOperators] = useState<Operator[]>([]);
+  
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{
+    file?: string;
+    busIdentifier?: string;
+  }>({});
+  const [attemptedSubmit, setAttemptedSubmit] = useState<boolean>(false);
+  
+  // Fetch reference data when component mounts
+  useEffect(() => {
+    const fetchReferenceData = async () => {
+      try {
+        const [busTypesData, operatorsData] = await Promise.all([
+          getBusTypes(),
+          getOperators()
+        ]);
+        
+        setBusTypes(busTypesData);
+        setOperators(operatorsData);
+      } catch (err) {
+        console.error('Error fetching reference data:', err);
       }
-      
-      // Validate file type
-      if (!selectedFile.type.startsWith('image/')) {
-        setError(t(
-          'contribution.invalidFileType', 
-          'Please select a valid image file (JPEG, PNG, etc.)'
-        ));
-        return;
-      }
-      
-      setFile(selectedFile);
-      setError(null);
-      
-      // Create a preview
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
+    };
+    
+    fetchReferenceData();
+  }, []);
+  
+  const handleFromLocationSelect = (location: Location) => {
+    setFromLocation(location);
+    setFormData({
+      ...formData,
+      fromLocationName: location.name
+    });
+  };
+  
+  const handleToLocationSelect = (location: Location) => {
+    setToLocation(location);
+    setFormData({
+      ...formData,
+      toLocationName: location.name
+    });
+  };
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    if ((name === 'busName' || name === 'busNumber') && errors.busIdentifier) {
+      setErrors({ ...errors, busIdentifier: undefined });
     }
   };
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      
+      if (!file.type.includes('image/')) {
+        setErrors({ ...errors, file: t('contribution.invalidFileType', 'Please select an image file') });
+        return;
+      }
+      
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+      setErrors({ ...errors, file: undefined });
+    }
+  };
+  
+  const validateForm = () => {
+    const newErrors: any = {};
+    let isValid = true;
+    
+    if (!selectedFile) {
+      newErrors.file = t(
+        'contribution.fileRequired', 
+        'Please select an image file to upload'
+      );
+      isValid = false;
+    }
+    
+    if (!formData.busName && !formData.busNumber) {
+      newErrors.busIdentifier = t(
+        'contribution.identifierRequired', 
+        'Either bus name or number is required'
+      );
+      isValid = false;
+    }
+    
+    setErrors(newErrors);
+    return isValid;
   };
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setAttemptedSubmit(true);
     
-    if (!file) {
-      setError(t(
-        'contribution.noFileSelected', 
-        'Please select an image file to upload'
-      ));
-      return;
+    if (validateForm() && selectedFile) {
+      onSubmit(formData, selectedFile);
     }
-    
-    onSubmit(formData, file);
   };
-
+  
   return (
-    <form className="image-form" onSubmit={handleSubmit}>
-      {/* Error message at the top for image form */}
-      {error && (
-        <div className="errors-summary">
-          <div className="errors-header">
-            <span className="error-icon">⚠</span>
-            {t('contribution.errorSummary', 'Please correct the following issues:')}
-          </div>
-          <div className="errors-grid">
-            <div className="error-category">
-              <div className="error-field">{t('contribution.image', 'Image')}</div>
-              <div className="error-message">{error}</div>
-            </div>
-          </div>
-        </div>
-      )}
-      
-      <div className="form-section expanded">
-        <div className="section-header">
-          <h3>
-            <span className="section-icon">📷</span>
-            {t('contribution.uploadSchedule', 'Upload Bus Schedule')}
-          </h3>
-        </div>
+    <form onSubmit={handleSubmit} className="image-form">
+      <div className="form-section">
+        <h3 className="section-title">
+          <span className="section-icon">📷</span>
+          {t('contribution.uploadScheduleImage', 'Upload Schedule Image')}
+        </h3>
         
-        <div className="section-content">
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="busNumber">{t('contribution.busNumber', 'Bus Number (if known)')}</label>
-              <input
-                type="text"
-                id="busNumber"
-                name="busNumber"
-                value={formData.busNumber}
-                onChange={handleChange}
-                placeholder={t('contribution.busNumberPlaceholder', 'e.g. TN-01-1234')}
-              />
-            </div>
-          </div>
+        <p className="section-description">
+          {t('contribution.uploadDescription', 'Upload a clear image of the bus schedule. This helps us quickly add the route information to our database.')}
+        </p>
+        
+        <div className={`file-upload-container ${errors.file ? 'has-error' : ''}`}>
+          <input
+            type="file"
+            id="scheduleImage"
+            name="scheduleImage"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="file-input"
+          />
+          <label htmlFor="scheduleImage" className="file-label">
+            <span className="upload-icon">📤</span>
+            {t('contribution.selectImage', 'Select Image')}
+          </label>
           
-          <div className={`file-upload-container ${error ? 'has-error' : ''}`}>
-            <input
-              type="file"
-              id="schedule-image"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="file-input"
-            />
-            <label htmlFor="schedule-image" className="file-label">
-              <span className="upload-icon">📁</span>
-              {t('contribution.selectImage', 'Select an image')}
-            </label>
-            
-            {preview && (
-              <div className="image-preview-container">
-                <img src={preview} alt="Schedule preview" className="image-preview" />
-              </div>
-            )}
-            
-            <p className="upload-tip">
-              <span className="tip-icon">💡</span>
-              {t('contribution.imageTip', 'For best results, ensure the schedule is clearly visible (max 5MB)')}
+          <p className="upload-tip">
+            <span className="tip-icon">💡</span>
+            {t('contribution.imageTip', 'Upload a clear, well-lit photo of the schedule for best results')}
+          </p>
+          
+          {previewUrl && (
+            <div className="image-preview-container">
+              <img src={previewUrl} alt="Preview" className="image-preview" />
+            </div>
+          )}
+          
+          {attemptedSubmit && errors.file && (
+            <p className="error-message">
+              <span className="error-icon">⚠</span> {errors.file}
             </p>
+          )}
+        </div>
+      </div>
+      
+      <div className="form-section">
+        <h3 className="section-title">
+          <span className="section-icon">ℹ️</span>
+          {t('contribution.additionalInfo', 'Additional Information')}
+        </h3>
+        
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="uploadBusName">
+              {t('contribution.busName', 'Bus Name')}
+              <span className="field-hint"> ({t('contribution.eitherRequired', 'Either name or number required')})</span>
+            </label>
+            <input 
+              type="text" 
+              id="uploadBusName" 
+              name="busName" 
+              value={formData.busName} 
+              onChange={handleChange}
+              placeholder={t('contribution.busNamePlaceholder', 'e.g. SETC Chennai Express')}
+              className={attemptedSubmit && errors.busIdentifier && !formData.busName && !formData.busNumber ? 'field-error' : ''}
+            />
           </div>
           
           <div className="form-group">
-            <label htmlFor="description">{t('contribution.description', 'Description (Optional)')}</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
+            <label htmlFor="uploadBusNumber">
+              {t('contribution.busNumber', 'Bus Number')}
+              <span className="field-hint"> ({t('contribution.eitherRequired', 'Either name or number required')})</span>
+            </label>
+            <input 
+              type="text" 
+              id="uploadBusNumber" 
+              name="busNumber" 
+              value={formData.busNumber} 
               onChange={handleChange}
-              placeholder={t('contribution.descriptionPlaceholder', 'Add any details that might help us process this image...')}
-              rows={3}
+              placeholder={t('contribution.busNumberPlaceholder', 'e.g. TN-01-1234')}
+              className={attemptedSubmit && errors.busIdentifier && !formData.busName && !formData.busNumber ? 'field-error' : ''}
             />
           </div>
-          
-          <div className="form-actions">
-            <button 
-              type="submit" 
-              className="submit-btn"
-              disabled={!file}
+        </div>
+        
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="busType">
+              {t('contribution.busType', 'Bus Type')}
+              <span className="field-hint"> ({t('contribution.optional', 'Optional')})</span>
+            </label>
+            <select
+              id="busType"
+              name="busTypeId"
+              value={formData.busTypeId || ''}
+              onChange={handleChange}
+              className="form-select"
             >
-              {t('contribution.submitImage', 'Upload Schedule')}
-            </button>
+              <option value="">{t('contribution.selectBusType', 'Select bus type')}</option>
+              {busTypes.map((type) => (
+                <option key={`bus-type-${type.id}`} value={type.id}>
+                  {type.name} {type.description ? `(${type.description})` : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="operator">
+              {t('contribution.operator', 'Operator')}
+              <span className="field-hint"> ({t('contribution.optional', 'Optional')})</span>
+            </label>
+            <select
+              id="operator"
+              name="operatorId"
+              value={formData.operatorId || ''}
+              onChange={handleChange}
+              className="form-select"
+            >
+              <option value="">{t('contribution.selectOperator', 'Select operator')}</option>
+              {operators.map((op) => (
+                <option key={`operator-${op.id}`} value={op.id}>
+                  {op.name} {op.description ? `(${op.description})` : ''}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
+        
+        {attemptedSubmit && errors.busIdentifier && (
+          <p className="error-message">
+            <span className="error-icon">⚠</span> {errors.busIdentifier}
+          </p>
+        )}
+        
+        <div className="form-group">
+          <label htmlFor="uploadNotes">
+            {t('contribution.notes', 'Additional Notes')}
+            <span className="field-hint"> ({t('contribution.optional', 'Optional')})</span>
+          </label>
+          <textarea 
+            id="uploadNotes" 
+            name="notes" 
+            value={formData.notes} 
+            onChange={handleChange}
+            placeholder={t('contribution.notesPlaceholder', 'Any additional information about this schedule')}
+            rows={3}
+          />
+        </div>
+      </div>
+      
+      <div className="form-actions">
+        <button type="submit" className="submit-btn">
+          {t('contribution.uploadSchedule', 'Upload Schedule')}
+        </button>
       </div>
     </form>
   );
 };
 
-// Export both the type and the component
-export type { RouteContributionType };
+/**
+ * RouteContribution component for contributing route information
+ */
+interface RouteContributionProps {
+  userId: string;
+}
+
+const RouteContribution: React.FC<RouteContributionProps> = ({ userId }) => {
+  const { t } = useTranslation();
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [fromLocationId, setFromLocationId] = useState<number>(0);
+  const [toLocationId, setToLocationId] = useState<number>(0);
+  const [description, setDescription] = useState<string>('');
+  const [routeType, setRouteType] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [routeTypes, setRouteTypes] = useState<RouteType[]>([]);
+
+  useEffect(() => {
+    // Fetch available locations and route types
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [locationsData, routeTypesData] = await Promise.all([
+          apiService.getLocations(),
+          getRouteTypes()
+        ]);
+        setLocations(locationsData);
+        setRouteTypes(routeTypesData);
+        
+        // Set default route type if available
+        if (routeTypesData.length > 0) {
+          setRouteType(routeTypesData[0].id.toString());
+        }
+        
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError(t('contribution.error.fetchData', 'Failed to load necessary data. Please try again.'));
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [t]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!fromLocationId || !toLocationId) {
+      setError(t('contribution.error.missingLocations', 'Please select both origin and destination.'));
+      return;
+    }
+    
+    if (fromLocationId === toLocationId) {
+      setError(t('contribution.error.sameLocations', 'Origin and destination cannot be the same.'));
+      return;
+    }
+    
+    if (!description.trim()) {
+      setError(t('contribution.error.missingDescription', 'Please provide a description.'));
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      setError(null);
+      
+      await apiService.submitRouteContribution({
+        userId,
+        routeType,
+        fromLocationId,
+        toLocationId,
+        description
+      });
+      
+      setSuccess(true);
+      // Reset form
+      setFromLocationId(0);
+      setToLocationId(0);
+      setDescription('');
+      setRouteType('');
+      
+      // Reset success message after a delay
+      setTimeout(() => setSuccess(false), 5000);
+    } catch (err) {
+      console.error('Error submitting route contribution:', err);
+      setError(t('contribution.error.submission', 'Failed to submit contribution. Please try again.'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="route-contribution-container">
+      <h2 className="contribution-title">{t('contribution.title', 'Contribute a Route')}</h2>
+      <p className="contribution-description">
+        {t('contribution.description', 'Help improve our route database by contributing routes you know about.')}
+      </p>
+      
+      {success && (
+        <div className="success-message">
+          {t('contribution.successMessage', 'Thank you for your contribution! It will be reviewed by our team.')}
+        </div>
+      )}
+      
+      {error && <div className="error-message">{error}</div>}
+      
+      <form onSubmit={handleSubmit} className="contribution-form">
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="routeType">{t('contribution.routeType', 'Route Type')}</label>
+            <select 
+              id="routeType"
+              value={routeType}
+              onChange={(e) => setRouteType(e.target.value)}
+              disabled={loading}
+              className="form-select"
+            >
+              <option value="">{t('contribution.selectRouteType', 'Select a route type')}</option>
+              {routeTypes.map((type) => (
+                <option key={`type-${type.id}`} value={type.id.toString()}>
+                  {type.name} {type.description ? `(${type.description})` : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="fromLocation">{t('contribution.from', 'From')}</label>
+            <select 
+              id="fromLocation"
+              value={fromLocationId}
+              onChange={(e) => setFromLocationId(Number(e.target.value))}
+              disabled={loading || locations.length === 0}
+              className="form-select"
+            >
+              <option value={0}>{t('contribution.selectLocation', 'Select a location')}</option>
+              {locations.map((loc) => (
+                <option key={`from-${loc.id}`} value={loc.id}>{loc.name}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="toLocation">{t('contribution.to', 'To')}</label>
+            <select 
+              id="toLocation"
+              value={toLocationId}
+              onChange={(e) => setToLocationId(Number(e.target.value))}
+              disabled={loading || locations.length === 0}
+              className="form-select"
+            >
+              <option value={0}>{t('contribution.selectLocation', 'Select a location')}</option>
+              {locations.map((loc) => (
+                <option key={`to-${loc.id}`} value={loc.id}>{loc.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="description">{t('contribution.description', 'Description')}</label>
+          <textarea 
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={loading}
+            placeholder={t('contribution.descriptionPlaceholder', 'Provide details about the route, such as schedule, stops, fare, etc.')}
+            className="form-textarea"
+            rows={4}
+          />
+        </div>
+        
+        <div className="form-actions">
+          <button 
+            type="submit" 
+            disabled={loading || !fromLocationId || !toLocationId || !description.trim()}
+            className="submit-button"
+          >
+            {loading 
+              ? t('contribution.submitting', 'Submitting...') 
+              : t('contribution.submit', 'Submit Contribution')}
+          </button>
+        </div>
+      </form>
+      
+      <div className="contribution-info">
+        <h3>{t('contribution.whyContribute', 'Why Contribute?')}</h3>
+        <ul>
+          <li>{t('contribution.reason1', 'Help other travelers find the best routes')}</li>
+          <li>{t('contribution.reason2', 'Improve transportation data for your community')}</li>
+          <li>{t('contribution.reason3', 'Earn reward points for verified contributions')}</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
 export default RouteContributionComponent;
+export { RouteContribution };
 

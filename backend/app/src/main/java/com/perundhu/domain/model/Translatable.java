@@ -1,63 +1,80 @@
 package com.perundhu.domain.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
- * Interface that must be implemented by all entities that support translations
+ * Interface for entities that can be translated
  */
 public interface Translatable<T> {
+
     /**
-     * Gets the type of the translatable entity
-     * @return entity type
+     * Get the entity type for translation
+     * 
+     * @return Entity type string
      */
     String getEntityType();
 
     /**
-     * Gets the numeric ID value for translation storage
-     * @return Long ID for translation storage
+     * Get the entity ID for translation
+     * 
+     * @return Entity ID
      */
     Long getEntityId();
 
     /**
-     * Gets the default value for a given field name
-     * @param fieldName the name of the field
-     * @return default value for the field
+     * Get default value for a field
+     * 
+     * @param fieldName Field name
+     * @return Default value for the field
      */
     String getDefaultValue(String fieldName);
 
     /**
-     * Gets the translation ID, defaulting to the entity ID
-     * @return Long translation ID
+     * Get the translatable fields map
+     * Key: field name, Value: original text
+     * 
+     * @return Map of field names to original text values
      */
-    default Long getTranslationId() {
-        return getEntityId();
+    default Map<String, String> getTranslatableFields() {
+        return Map.of();
     }
 
     /**
-     * Gets the list of translations
-     * @return list of translations
+     * Get translations for this entity
+     * 
+     * @return Map of field names to translations
      */
-    default List<Translation> getTranslations() {
-        return new ArrayList<>(); // Return an empty list by default instead of throwing an exception
+    default Map<String, Map<String, String>> getTranslations() {
+        return Map.of();
     }
 
     /**
-     * Adds a translation for a given field name, language code, and value
-     * @param fieldName the name of the field
-     * @param languageCode the language code
-     * @param value the translation value
+     * Set translations for this entity
+     * 
+     * @param translations Map of field names to translations
      */
-    default void addTranslation(String fieldName, String languageCode, String value) {
-        // Default implementation does nothing - should be overridden by classes that need it
-        // Classes using this interface should override this method if they need to store translations
+    default void setTranslations(Map<String, Map<String, String>> translations) {
+        // Default implementation does nothing
     }
-    
+
     /**
-     * Determines whether to continue iteration process
-     * @return true if iteration should continue, false otherwise
+     * Add translation for a field
+     * 
+     * @param fieldName    Field name to translate
+     * @param languageCode Language code
+     * @param value        Translated value
+     * @return Translation object created
      */
-    default boolean continueToIterate() {
-        return true; // By default, continue iteration
+    Translation addTranslation(String fieldName, String languageCode, String value);
+
+    /**
+     * Get related location for this entity
+     * This is used for fallback translations when the entity itself doesn't have
+     * translations
+     * 
+     * @return Related location or null if none
+     */
+    default Location getRelatedLocation() {
+        return null;
     }
 }

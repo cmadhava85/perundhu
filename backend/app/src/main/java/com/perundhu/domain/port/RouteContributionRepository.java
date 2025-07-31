@@ -1,73 +1,49 @@
 package com.perundhu.domain.port;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.perundhu.domain.model.LanguageCode;
 import com.perundhu.domain.model.RouteContribution;
 
 /**
  * Repository interface for RouteContribution entity
+ * Updated to use proper Java 17 record-based ID types
  */
 public interface RouteContributionRepository {
     
-    /**
-     * Save a route contribution
-     * 
-     * @param contribution The contribution to save
-     * @return The saved contribution with ID
-     */
     RouteContribution save(RouteContribution contribution);
     
-    /**
-     * Find a route contribution by ID
-     * 
-     * @param id The contribution ID
-     * @return An Optional containing the contribution if found
-     */
-    Optional<RouteContribution> findById(Long id);
-    
-    /**
-     * Find all route contributions by a user
-     * 
-     * @param userId The user ID
-     * @return List of contributions made by the user
-     */
+    Optional<RouteContribution> findById(RouteContribution.RouteContributionId id);
+
     List<RouteContribution> findByUserId(String userId);
     
-    /**
-     * Find all contributions with a specific status
-     * 
-     * @param status The status to filter by (e.g., "PENDING", "APPROVED", "REJECTED")
-     * @return List of contributions with the specified status
-     */
-    List<RouteContribution> findByStatus(String status);
-    
-    /**
-     * Find all route contributions
-     * 
-     * @return List of all contributions
-     */
-    List<RouteContribution> findAll();
-    
-    /**
-     * Delete a contribution
-     * 
-     * @param id The ID of the contribution to delete
-     */
-    void deleteById(Long id);
-    
+    List<RouteContribution> findByStatus(RouteContribution.ContributionStatus status);
+
+    List<RouteContribution> findPendingContributions();
+
+    List<RouteContribution> findBySubmissionDateBetween(LocalDateTime start, LocalDateTime end);
+
+    void delete(RouteContribution.RouteContributionId id);
+
+    // Enhanced methods using Java 17 features
+    List<RouteContribution> findByBusNumber(String busNumber);
+
+    List<RouteContribution> findBySourceLanguage(LanguageCode sourceLanguage);
+
+    List<RouteContribution> findByUserIdAndStatus(String userId, RouteContribution.ContributionStatus status);
+
+    List<RouteContribution> findReadyForSubmission();
+
+    long countByStatus(RouteContribution.ContributionStatus status);
+
     /**
      * Count all route contributions
-     * 
-     * @return The total number of contributions
+     *
+     * @return The total number of route contributions
      */
     long count();
-    
-    /**
-     * Count route contributions with a specific status
-     * 
-     * @param status The status to count (e.g., "PENDING", "APPROVED", "REJECTED")
-     * @return The number of contributions with the specified status
-     */
-    long countByStatus(String status);
+
+    boolean existsByBusNumberAndRoute(String busNumber, String fromLocationName, String toLocationName);
 }

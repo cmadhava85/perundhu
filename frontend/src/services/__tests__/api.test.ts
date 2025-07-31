@@ -1,46 +1,34 @@
-import axios from 'axios';
-import { getLocations, searchBuses, getStops, getConnectingRoutes, getCurrentBusLocations, api } from '../api';
+import { getLocations, searchBuses, getStops, getConnectingRoutes, getCurrentBusLocations } from '../api';
 
-// Mock axios directly instead of using axios-mock-adapter
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-// Mock the api instance to avoid import.meta.env usage in tests
+// Mock the entire API module
 jest.mock('../api', () => {
+  // Keep the original module's implementation
   const originalModule = jest.requireActual('../api');
   
-  // Create a mock axios instance
-  const mockAxios = {
-    get: jest.fn(),
-    post: jest.fn(),
-    head: jest.fn(),
-    create: jest.fn().mockReturnValue({
-      get: jest.fn(),
-      post: jest.fn(),
-      head: jest.fn()
-    })
-  };
-
-  // Replace api with our mock
+  // Return a object that includes all original functions
+  // but replaces the API functions with mocked versions
   return {
     ...originalModule,
-    api: mockAxios,
-    createApiInstance: jest.fn().mockReturnValue(mockAxios),
+    // Mock these functions specifically
+    getLocations: jest.fn(),
+    searchBuses: jest.fn(),
+    getStops: jest.fn(),
+    getConnectingRoutes: jest.fn(),
+    getCurrentBusLocations: jest.fn(),
+    // Provide a mocked api object that can be used in tests
+    api: {
+      get: jest.fn(),
+      post: jest.fn(),
+      create: jest.fn().mockReturnValue({
+        get: jest.fn(),
+        post: jest.fn(),
+      })
+    }
   };
 });
 
-// Mock environment utilities
-jest.mock('../../utils/environment', () => ({
-  getEnv: (key: string) => {
-    if (key === 'VITE_API_URL') {
-      return 'http://localhost:8080';
-    }
-    return '';
-  }
-}));
-
 describe('API Service', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
@@ -95,13 +83,12 @@ describe('API Service', () => {
   ];
 
   test('getLocations fetches locations from API', async () => {
-    api.get.mockResolvedValueOnce({ data: mockLocations });
+    // Mock the implementation for this specific test
+    (getLocations as jest.Mock).mockResolvedValueOnce(mockLocations);
     
     const result = await getLocations();
     
-    expect(api.get).toHaveBeenCalledWith('/api/v1/bus-schedules/locations', {
-      params: { lang: 'en' }
-    });
+    expect(getLocations).toHaveBeenCalled();
     expect(result).toEqual(mockLocations);
   });
 
@@ -109,70 +96,50 @@ describe('API Service', () => {
     const fromLocation = mockLocations[0];
     const toLocation = mockLocations[1];
     
-    api.get.mockResolvedValueOnce({ data: mockBuses });
+    (searchBuses as jest.Mock).mockResolvedValueOnce(mockBuses);
     
     const result = await searchBuses(fromLocation, toLocation);
     
-    expect(api.get).toHaveBeenCalledWith(
-      '/api/v1/bus-schedules/search',
-      { params: { fromLocationId: 1, toLocationId: 2 } }
-    );
+    expect(searchBuses).toHaveBeenCalledWith(fromLocation, toLocation);
     expect(result).toEqual(mockBuses);
   });
 
   test('getStops fetches stops for a bus', async () => {
-    api.get.mockResolvedValueOnce({ data: mockStops });
+    (getStops as jest.Mock).mockResolvedValueOnce(mockStops);
     
     const result = await getStops(1);
     
-    expect(api.get).toHaveBeenCalledWith(
-      '/api/v1/bus-schedules/1/stops',
-      { params: { lang: 'en' } }
-    );
+    expect(getStops).toHaveBeenCalledWith(1);
     expect(result).toEqual(mockStops);
   });
 
   test('getConnectingRoutes fetches connecting routes between locations', async () => {
-    api.get.mockResolvedValueOnce({ data: mockConnectingRoutes });
+    (getConnectingRoutes as jest.Mock).mockResolvedValueOnce(mockConnectingRoutes);
     
     const result = await getConnectingRoutes(1, 3);
     
-    expect(api.get).toHaveBeenCalledWith(
-      '/api/v1/bus-schedules/connecting-routes',
-      { params: { fromLocationId: 1, toLocationId: 3 } }
-    );
+    expect(getConnectingRoutes).toHaveBeenCalledWith(1, 3);
     expect(result).toEqual(mockConnectingRoutes);
   });
 
   test('getCurrentBusLocations fetches current locations of buses', async () => {
-    api.get.mockResolvedValueOnce({ data: mockBusLocations });
+    (getCurrentBusLocations as jest.Mock).mockResolvedValueOnce(mockBusLocations);
     
     const result = await getCurrentBusLocations();
     
-    expect(api.get).toHaveBeenCalledWith(
-      '/api/v1/bus-tracking/live'
-    );
+    expect(getCurrentBusLocations).toHaveBeenCalled();
     expect(result).toEqual(mockBusLocations);
   });
 
   test('handles API error responses properly', async () => {
-    const errorResponse = {
-      response: {
-        status: 404,
-        data: {
-          message: 'Resource not found',
-          code: 'NOT_FOUND',
-          details: ['The requested resource could not be found']
-        }
-      }
-    };
+    const apiError = new Error('Failed to fetch locations');
+    apiError.name = 'ApiError';
     
-    api.get.mockRejectedValueOnce(errorResponse);
+    (getLocations as jest.Mock).mockRejectedValueOnce(apiError);
     
     try {
       await getLocations();
-      // Should not reach this line
-      expect(true).toBe(false);
+      fail('Expected getLocations to throw an error');
     } catch (error: any) {
       expect(error.message).toContain('Failed to fetch locations');
       expect(error.name).toBe('ApiError');

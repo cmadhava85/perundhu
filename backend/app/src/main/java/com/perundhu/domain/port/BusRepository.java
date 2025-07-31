@@ -4,48 +4,41 @@ import java.util.List;
 import java.util.Optional;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 
+/**
+ * Repository interface for the Bus domain entity.
+ * Updated to use proper Java 17 record-based ID types
+ */
 public interface BusRepository {
-    Optional<Bus> findById(Bus.BusId id);
-    List<Bus> findByFromAndToLocation(Location from, Location to);
-    List<Bus> findByFromLocation(Location from);
-    Bus save(Bus bus);
-    void delete(Bus.BusId id);
-    
-    /**
-     * Check if a bus with the given number and route already exists
-     * @param busNumber The bus number to check
-     * @param fromLocationName The origin location name
-     * @param toLocationName The destination location name
-     * @return true if such a bus exists, false otherwise
-     */
-    boolean existsByBusNumberAndFromAndToLocations(String busNumber, String fromLocationName, String toLocationName);
-    
-    /**
-     * Find all buses in the system
-     * @return List of all buses
-     */
-    List<Bus> findAllBuses();
-    
-    /**
-     * Find all buses
-     * @return List of all buses
-     */
+    Optional<Bus> findById(BusId id);
+
     List<Bus> findAll();
-    
+
+    Bus save(Bus bus);
+
+    void delete(BusId id);
+
+    List<Bus> findBusesBetweenLocations(LocationId fromLocationId, LocationId toLocationId);
+
+    List<Bus> findByFromLocation(Location fromLocation);
+
+    List<Bus> findByFromAndToLocation(Location fromLocation, Location toLocation);
+
+    boolean existsByBusNumberAndFromAndToLocations(String busNumber, String fromLocationName, String toLocationName);
+
     /**
-     * Find buses between two locations using location IDs
-     * @param fromLocationId The ID of the origin location
-     * @param toLocationId The ID of the destination location
-     * @return List of buses between the specified locations
+     * Enhanced methods using Java 17 features
      */
-    List<Bus> findBusesBetweenLocations(Long fromLocationId, Long toLocationId);
-    
-    /**
-     * Find a bus by its ID (using Long)
-     * @param busId The bus ID
-     * @return Optional containing the bus if found
-     */
-    Optional<Bus> findById(Long busId);
+    List<Bus> findByBusNumber(String busNumber);
+
+    List<Bus> findByCategory(String category);
+
+    Optional<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId, LocationId toLocationId);
+
+    List<Bus> findInService();
+
+    long countByCategory(String category);
 }

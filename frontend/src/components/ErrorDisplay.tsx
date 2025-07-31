@@ -1,57 +1,44 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ApiError } from '../services/api';
-import { getUserFriendlyErrorMessage } from '../utils/errorHandling';
-import './ErrorDisplay.css';
+import '../styles/ErrorDisplay.css';
 
 interface ErrorDisplayProps {
-  error: Error | ApiError | null;
-  reset?: () => void;
+  message: string;
+  title?: string;
+  onRetry?: () => void;
 }
 
 /**
- * Component to display errors with user-friendly messages and retry option
+ * Component for displaying error messages to users
  */
-const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error, reset }) => {
+const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ 
+  message, 
+  title, 
+  onRetry 
+}) => {
   const { t } = useTranslation();
   
-  if (!error) return null;
-  
-  // Check if it's an API Error with details
-  const isApiError = error instanceof ApiError;
-  const apiError = isApiError ? error as ApiError : null;
-  
-  // Get user-friendly error message
-  const { message, suggestion } = getUserFriendlyErrorMessage(error);
-  
   return (
-    <div className="error-container" data-testid="error-display">
-      <div className="error-header">
-        <div className="error-icon">⚠️</div>
-        <h3>{t('error.title', 'Error')}</h3>
+    <div className="error-display">
+      <div className="error-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12" y2="16" />
+        </svg>
       </div>
       
-      <div className="error-message">
-        <p>{message}</p>
-        <p className="error-suggestion">{suggestion}</p>
-      </div>
+      <h2 className="error-title">
+        {title || t('error.defaultTitle', 'Something went wrong')}
+      </h2>
       
-      {/* Display additional info for API errors */}
-      {apiError && apiError.status && (
-        <div className="error-status">
-          <p>{t('error.status', 'Status')}: {apiError.status}</p>
-        </div>
-      )}
+      <p className="error-message">{message}</p>
       
-      {/* Display error code if available */}
-      {apiError && apiError.code && (
-        <div className="error-code">
-          {t('error.code', 'Error Code')}: {apiError.code}
-        </div>
-      )}
-      
-      {reset && (
-        <button className="error-retry-button" onClick={reset}>
+      {onRetry && (
+        <button 
+          onClick={onRetry}
+          className="retry-button"
+        >
           {t('error.retry', 'Try Again')}
         </button>
       )}

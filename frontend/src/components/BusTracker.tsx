@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../types';
 import { getCurrentPosition } from '../utils/geolocation';
+import '../styles/BusTracker.css';
 
 interface BusTrackerProps {
   buses: Bus[];
@@ -218,10 +219,6 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     return () => clearTimeout(movementTimer);
   }, [isTracking, movementDetected, userLocation]);
 
-  if (!trackingEnabled) {
-    return null;
-  }
-
   return (
     <div className="bus-tracker">
       <h3>{t('busTracker.title', 'Help Track Buses')}</h3>
@@ -239,96 +236,106 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
             type="checkbox" 
             checked={trackingEnabled}
             onChange={toggleTracking}
+            aria-label={t('busTracker.enableTracking', 'Enable bus tracking')}
           />
           <span className="toggle-slider"></span>
         </label>
+        <span className="tracker-toggle-label">{t('busTracker.enableTracking', 'Enable bus tracking')}</span>
       </div>
       
-      {!isOnboard && (
+      {trackingEnabled ? (
         <>
-          <div className="tracker-section">
-            <label>{t('busTracker.selectBus', 'Select your bus:')}</label>
-            <select 
-              value={selectedBusId || ''} 
-              onChange={(e) => handleBusSelect(Number(e.target.value))}
-              className="tracker-select"
-            >
-              <option value="">{t('busTracker.chooseBus', '-- Choose bus --')}</option>
-              {buses.map((bus, index) => (
-                <option key={`bus-${bus.id || index}`} value={bus.id}>
-                  {bus.busNumber} {bus.busName && `- ${bus.busName}`} {(bus.from || bus.to) && 
-                    `(${bus.from || t('busTracker.unknown')} to ${bus.to || t('busTracker.unknown')})`}
-                </option>
-              ))}
-            </select>
-          </div>
+          {!isOnboard && (
+            <>
+              <div className="tracker-section">
+                <label>{t('busTracker.selectBus', 'Select your bus:')}</label>
+                <select 
+                  value={selectedBusId || ''} 
+                  onChange={(e) => handleBusSelect(Number(e.target.value))}
+                  className="tracker-select"
+                >
+                  <option value="">{t('busTracker.chooseBus', '-- Choose bus --')}</option>
+                  {buses.map((bus, index) => (
+                    <option key={`bus-${bus.id || index}`} value={bus.id}>
+                      {bus.busNumber} {bus.busName && `- ${bus.busName}`} {(bus.from || bus.to) && 
+                        `(${bus.from || t('busTracker.unknown')} to ${bus.to || t('busTracker.unknown')})`}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {selectedBusId && busStops.length > 0 && (
-            <div className="tracker-section">
-              <label>{t('busTracker.selectStop', 'Select the stop you boarded at:')}</label>
-              <select 
-                value={selectedStopId || ''} 
-                onChange={(e) => handleStopSelect(Number(e.target.value))}
-                className="tracker-select"
+              {selectedBusId && busStops.length > 0 && (
+                <div className="tracker-section">
+                  <label>{t('busTracker.selectStop', 'Select the stop you boarded at:')}</label>
+                  <select 
+                    value={selectedStopId || ''} 
+                    onChange={(e) => handleStopSelect(Number(e.target.value))}
+                    className="tracker-select"
+                  >
+                    <option value="">{t('busTracker.chooseStop', '-- Choose stop --')}</option>
+                    {busStops.map((stop, index) => (
+                      <option key={`stop-${stop.id || index}`} value={stop.id}>
+                        {stop.name} {stop.departureTime ? `(${stop.departureTime})` : ''}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {selectedBusId && selectedStopId && (
+                <button 
+                  className="tracker-button" 
+                  onClick={startTracking}
+                >
+                  {t('busTracker.startTracking', 'I\'m boarding this bus')}
+                </button>
+              )}
+            </>
+          )}
+
+          {isOnboard && (
+            <div className="tracking-active">
+              <div className="tracking-status">
+                <span className="tracking-indicator"></span>
+                {t('busTracker.activelyTracking', 'Actively tracking your bus')}
+              </div>
+              
+              <div className="bus-info-card">
+                <h4>{buses.find(b => b.id === selectedBusId)?.busName}</h4>
+                <p>{buses.find(b => b.id === selectedBusId)?.busNumber}</p>
+                {lastReportTime && (
+                  <p className="last-report">
+                    {t('busTracker.lastUpdate', 'Last update')}: {formatTime(lastReportTime)}
+                  </p>
+                )}
+              </div>
+
+              <button 
+                className="stop-tracking-button" 
+                onClick={stopTracking}
               >
-                <option value="">{t('busTracker.chooseStop', '-- Choose stop --')}</option>
-                {busStops.map((stop, index) => (
-                  <option key={`stop-${stop.id || index}`} value={stop.id}>
-                    {stop.name} {stop.departureTime ? `(${stop.departureTime})` : ''}
-                  </option>
-                ))}
-              </select>
-            </div>
+                {t('busTracker.stopTracking', 'I\'ve reached my destination')}
+              </button>
+            </div>  
           )}
 
-          {selectedBusId && selectedStopId && (
-            <button 
-              className="tracker-button" 
-              onClick={startTracking}
-            >
-              {t('busTracker.startTracking', 'I\'m boarding this bus')}
-            </button>
-          )}
+          <div className="tracker-info">
+            <h4>{t('busTracker.howItWorks', 'How it works:')}</h4>
+            <ul>
+              <li>{t('busTracker.step1', 'Select the bus you\'re boarding')}</li>
+              <li>{t('busTracker.step2', 'Choose the stop where you boarded')}</li>
+              <li>{t('busTracker.step3', 'Tap "I\'m boarding this bus" when you get on')}</li>
+              <li>{t('busTracker.step4', 'Your location helps others track this bus')}</li>
+              <li>{t('busTracker.step5', 'Tap "I\'ve reached my destination" when you get off')}</li>
+            </ul>
+            <p className="tracker-note">{t('busTracker.privacyNote', 'Your location is only shared while you\'re on the bus. Battery usage is optimized.')}</p>
+          </div>
         </>
+      ) : (
+        <p className="tracker-disabled-message">
+          {t('busTracker.trackingDisabled', 'Enable bus tracking to help other travelers by reporting your bus location.')}
+        </p>
       )}
-
-      {isOnboard && (
-        <div className="tracking-active">
-          <div className="tracking-status">
-            <span className="tracking-indicator"></span>
-            {t('busTracker.activelyTracking', 'Actively tracking your bus')}
-          </div>
-          
-          <div className="bus-info-card">
-            <h4>{buses.find(b => b.id === selectedBusId)?.busName}</h4>
-            <p>{buses.find(b => b.id === selectedBusId)?.busNumber}</p>
-            {lastReportTime && (
-              <p className="last-report">
-                {t('busTracker.lastUpdate', 'Last update')}: {formatTime(lastReportTime)}
-              </p>
-            )}
-          </div>
-
-          <button 
-            className="stop-tracking-button" 
-            onClick={stopTracking}
-          >
-            {t('busTracker.stopTracking', 'I\'ve reached my destination')}
-          </button>
-        </div>  
-      )}
-
-      <div className="tracker-info">
-        <h4>{t('busTracker.howItWorks', 'How it works:')}</h4>
-        <ul>
-          <li>{t('busTracker.step1', 'Select the bus you\'re boarding')}</li>
-          <li>{t('busTracker.step2', 'Choose the stop where you boarded')}</li>
-          <li>{t('busTracker.step3', 'Tap "I\'m boarding this bus" when you get on')}</li>
-          <li>{t('busTracker.step4', 'Your location helps others track this bus')}</li>
-          <li>{t('busTracker.step5', 'Tap "I\'ve reached my destination" when you get off')}</li>
-        </ul>
-        <p className="tracker-note">{t('busTracker.privacyNote', 'Your location is only shared while you\'re on the bus. Battery usage is optimized.')}</p>
-      </div>
     </div>
   );
 };

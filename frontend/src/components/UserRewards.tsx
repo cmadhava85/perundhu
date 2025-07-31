@@ -1,190 +1,143 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { RewardPoints } from '../types';
-import { getUserRewards } from '../services/userRewardsService';
+import { apiService } from '../services/apiService';
+import '../styles/UserRewards.css';
 
-/**
- * Component to display user rewards and achievements for contributing to bus tracking
- */
-const UserRewards: React.FC = () => {
+interface UserRewardsProps {
+  userId: string;
+}
+
+interface RewardActivity {
+  id: number;
+  userId: string;
+  activity: string;
+  points: number;
+  timestamp: string;
+}
+
+interface UserRewardData {
+  totalPoints: number;
+  recentActivities: RewardActivity[];
+}
+
+const UserRewards: React.FC<UserRewardsProps> = ({ userId }) => {
   const { t } = useTranslation();
-  const [rewards, setRewards] = useState<RewardPoints | null>(null);
+  const [rewards, setRewards] = useState<UserRewardData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [rewardsEnabled] = useState<boolean>(
-    localStorage.getItem('perundhu-rewards-enabled') === 'true'
-  );
 
-  // Load user reward points data
   useEffect(() => {
-    if (!rewardsEnabled) return;
-    
-    const loadRewards = async () => {
+    const fetchRewards = async () => {
       try {
         setLoading(true);
-        const userId = localStorage.getItem('userId') || 'demo';
-        const data = await getUserRewards(userId);
-        setRewards(data);
         setError(null);
+        const data = await apiService.getUserRewardPoints(userId);
+        setRewards(data);
       } catch (err) {
-        console.error('Failed to load user rewards:', err);
-        setError(t('rewards.loadError', 'Could not load your reward points'));
+        console.error('Error fetching user rewards:', err);
+        setError(t('rewards.error', 'Failed to load your rewards. Please try again later.'));
       } finally {
         setLoading(false);
       }
     };
 
-    loadRewards();
-  }, [t, rewardsEnabled]);
-
-  if (!rewardsEnabled) {
-    return null;
-  }
-
-  // Format the date for display
-  const formatDate = (timestamp: string) => {
-    try {
-      const date = new Date(timestamp);
-      return date.toLocaleString(undefined, { 
-        day: 'numeric', 
-        month: 'short',
-        hour: '2-digit', 
-        minute: '2-digit' 
-      });
-    } catch (e) {
-      return timestamp;
-    }
-  };
-
-  // Find the badge character based on user rank
-  const getBadgeCharacter = (rank: string): string => {
-    switch (rank) {
-      case 'Beginner':
-        return '🔰';
-      case 'Regular Traveler':
-        return '🌟';
-      case 'Frequent Commuter':
-        return '🚌';
-      case 'Bus Expert':
-        return '🏆';
-      case 'Master Navigator':
-        return '👑';
-      default:
-        return '🔰';
-    }
-  };
-
-  // Get rank description based on user rank
-  const getRankDescription = (rank: string): string => {
-    switch (rank) {
-      case 'Beginner':
-        return t('rewards.beginnerDesc', 'You\'re just getting started. Keep tracking buses to level up!');
-      case 'Regular Traveler':
-        return t('rewards.regularDesc', 'You\'re becoming a valuable contributor to the bus tracking community.');
-      case 'Frequent Commuter':
-        return t('rewards.frequentDesc', 'Your tracking data is helping many others plan their journey better.');
-      case 'Bus Expert':
-        return t('rewards.expertDesc', 'You\'re one of our top contributors. Thank you for your dedication!');
-      case 'Master Navigator':
-        return t('rewards.masterDesc', 'Legendary status! Your contributions have helped countless travelers.');
-      default:
-        return t('rewards.defaultDesc', 'Start tracking bus locations to earn points and rewards.');
-    }
-  };
+    fetchRewards();
+  }, [userId, t]);
 
   if (loading) {
     return (
-      <div className="user-rewards">
-        <h2>{t('rewards.title', 'Your Rewards')}</h2>
-        <div className="rewards-loading">
-          <div className="spinner"></div>
-          <p>{t('common.loading', 'Loading...')}</p>
-        </div>
+      <div className="rewards-loading">
+        <div className="loading-spinner"></div>
+        <p>{t('rewards.loading', 'Loading your rewards...')}</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="user-rewards">
-        <h2>{t('rewards.title', 'Your Rewards')}</h2>
-        <div className="rewards-error">
-          <p>{error}</p>
-          <button onClick={() => window.location.reload()}>
-            {t('rewards.tryAgain', 'Try Again')}
-          </button>
-        </div>
+      <div className="rewards-error">
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>
+          {t('common.retry', 'Retry')}
+        </button>
       </div>
     );
   }
 
   if (!rewards) {
     return (
-      <div className="user-rewards">
-        <h2>{t('rewards.title', 'Your Rewards')}</h2>
-        <div className="rewards-empty">
-          <p>{t('rewards.noRewards', 'Start tracking buses to earn rewards!')}</p>
-          <p>{t('rewards.howToEarn', 'Contribute by enabling bus tracking when you board a bus.')}</p>
-        </div>
+      <div className="rewards-empty">
+        <p>{t('rewards.noData', 'No rewards data available.')}</p>
       </div>
     );
   }
 
   return (
-    <div className="user-rewards">
-      <h2>{t('rewards.title', 'Your Rewards')}</h2>
-      
-      <div className="user-stats">
-        <div className="stat-card">
-          <div className="stat-value">{rewards.totalPoints}</div>
-          <div className="stat-label">{t('rewards.totalPoints', 'Total Points')}</div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="stat-value">{rewards.currentTripPoints}</div>
-          <div className="stat-label">{t('rewards.currentTrip', 'Current Trip')}</div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="stat-value">{rewards.lifetimePoints}</div>
-          <div className="stat-label">{t('rewards.lifetime', 'Lifetime Points')}</div>
+    <div className="rewards-container">
+      <div className="rewards-header">
+        <h2>{t('rewards.title', 'Your Rewards')}</h2>
+        <div className="rewards-total">
+          <span className="rewards-points">{rewards.totalPoints}</span>
+          <span className="rewards-label">{t('rewards.points', 'Points')}</span>
         </div>
       </div>
-      
-      <div className="user-rank">
-        <div className="rank-badge">{getBadgeCharacter(rewards.userRank)}</div>
-        <div className="rank-info">
-          <h3 className="rank-title">{rewards.userRank}</h3>
-          <p className="rank-description">{getRankDescription(rewards.userRank)}</p>
-        </div>
+
+      <div className="rewards-info-card">
+        <h3>{t('rewards.howItWorks', 'How It Works')}</h3>
+        <p>{t('rewards.explanation', 'Earn points by reporting bus locations, contributing to routes, and using the app regularly. Redeem your points for discounts on bus tickets and other rewards.')}</p>
       </div>
-      
-      {rewards.recentActivities && rewards.recentActivities.length > 0 && (
-        <div className="activities-list">
-          <h3>{t('rewards.recentActivity', 'Recent Activity')}</h3>
-          
-          {rewards.recentActivities.map((activity, index) => (
-            <div className="activity-item" key={`activity-${index}`}>
-              <div className="activity-info">
-                <div className="activity-description">{activity.description}</div>
-                <div className="activity-time">{formatDate(activity.timestamp)}</div>
+
+      <div className="rewards-activities">
+        <h3>{t('rewards.recentActivities', 'Recent Activities')}</h3>
+        
+        {rewards.recentActivities.length === 0 ? (
+          <p className="no-activities">{t('rewards.noActivities', 'No recent activities found.')}</p>
+        ) : (
+          <div className="activities-list">
+            {rewards.recentActivities.map((activity) => (
+              <div key={activity.id} className="activity-item">
+                <div className="activity-details">
+                  <div className="activity-name">{activity.activity}</div>
+                  <div className="activity-date">
+                    {new Date(activity.timestamp).toLocaleDateString()}
+                  </div>
+                </div>
+                <div className="activity-points">+{activity.points}</div>
               </div>
-              <div className="activity-points">
-                +{activity.pointsEarned} {t('rewards.points', 'pts')}
-              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="rewards-redemption">
+        <h3>{t('rewards.redeem', 'Redeem Points')}</h3>
+        <div className="redemption-options">
+          <div className="redemption-option">
+            <div className="option-details">
+              <h4>{t('rewards.discountTicket', 'Bus Ticket Discount')}</h4>
+              <p>{t('rewards.discountDescription', '10% off on your next bus ticket')}</p>
             </div>
-          ))}
+            <button 
+              className="redeem-button"
+              disabled={rewards.totalPoints < 500}
+            >
+              {t('rewards.redeemFor', 'Redeem for 500 points')}
+            </button>
+          </div>
+          
+          <div className="redemption-option">
+            <div className="option-details">
+              <h4>{t('rewards.priorityBooking', 'Priority Booking')}</h4>
+              <p>{t('rewards.priorityDescription', 'Early access to book high-demand routes')}</p>
+            </div>
+            <button 
+              className="redeem-button"
+              disabled={rewards.totalPoints < 1000}
+            >
+              {t('rewards.redeemFor', 'Redeem for 1000 points')}
+            </button>
+          </div>
         </div>
-      )}
-      
-      <div className="rewards-info">
-        <h3>{t('rewards.howItWorks', 'How It Works:')}</h3>
-        <ul>
-          <li>{t('rewards.earnDesc1', 'Earn 5 points each time you report a bus location')}</li>
-          <li>{t('rewards.earnDesc2', 'Get bonus points for accurate locations & complete trips')}</li>
-          <li>{t('rewards.earnDesc3', 'Level up to new ranks as you earn more points')}</li>
-          <li>{t('rewards.earnDesc4', 'Help others find their buses in real-time')}</li>
-        </ul>
       </div>
     </div>
   );

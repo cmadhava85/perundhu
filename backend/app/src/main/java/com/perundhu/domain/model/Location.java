@@ -1,77 +1,48 @@
 package com.perundhu.domain.model;
 
-import lombok.Value;
-import lombok.Builder;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 
-@Value
-@Builder
-@AllArgsConstructor
-public class Location implements Translatable<Location> {
-    LocationId id;
-    String name;
-    Double latitude;
-    Double longitude;
-    @Builder.Default
-    List<Translation> translations = new ArrayList<>();
-    
-    /**
-     * Constructor for backward compatibility with tests
-     * Creates a Location with default empty translations list
-     */
-    public Location(LocationId id, String name, Double latitude, Double longitude) {
-        this.id = id;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.translations = new ArrayList<>();
+public record Location(LocationId id, String name, Double latitude, Double longitude)
+        implements Translatable<Location> {
+
+    public static record LocationId(Long value) {
     }
-    
+
     @Override
     public String getEntityType() {
         return "location";
     }
-    
+
     @Override
     public Long getEntityId() {
-        return id.getValue();
+        return id != null ? id.value() : null;
     }
-    
+
     @Override
     public String getDefaultValue(String fieldName) {
-        if ("name".equals(fieldName)) {
-            return name;
-        }
-        return null;
+        return "name".equals(fieldName) ? name : "";
     }
-    
-    @Override
-    public void addTranslation(String fieldName, String languageCode, String value) {
-        translations.add(new Translation(null, getEntityType(), getEntityId(), languageCode, fieldName, value));
+
+    // Helper method for compatibility with existing code
+    public LocationId getId() {
+        return id;
     }
-    
+
     /**
-     * Creates a reference location with just an ID
-     * Used when we only need the ID to look up the full entity
+     * Add translation for a field in this location
+     * 
+     * @param fieldName    Field name to translate
+     * @param languageCode Language code
+     * @param value        Translated value
+     * @return Translation object created
      */
-    public static Location reference(Long id) {
-        return Location.builder()
-            .id(new LocationId(id))
-            .name("Reference Location")
-            .latitude(0.0)
-            .longitude(0.0)
-            .build();
-    }
-    
-    @Value
-    @Builder
-    public static class LocationId {
-        Long value;
-        
-        public LocationId(Long value) {
-            this.value = value;
-        }
+    public Translation addTranslation(String fieldName, String languageCode, String value) {
+        return new Translation(
+                getEntityType(),
+                getEntityId(),
+                fieldName,
+                languageCode,
+                value);
     }
 }

@@ -41,6 +41,17 @@ public interface BusScheduleService {
     List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId);
     
     /**
+     * Find connecting routes between two locations using location IDs with specified max depth
+     * This helps users who need to change buses to reach their destination
+     * 
+     * @param fromLocationId The ID of the origin location
+     * @param toLocationId The ID of the destination location  
+     * @param maxDepth Maximum number of connections to consider
+     * @return List of connecting routes
+     */
+    List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId, Integer maxDepth);
+    
+    /**
      * Find connecting routes between two locations using Location objects
      * This overload accepts Location objects and language code
      */
@@ -60,4 +71,14 @@ public interface BusScheduleService {
      * Find bus schedules between two locations
      */
     List<BusScheduleDTO> findBusSchedules(Location fromLocation, Location toLocation, String languageCode);
+    
+    /**
+     * Find all buses that have stops at both specified locations in the correct order
+     * This includes buses where these locations are intermediate stops on a longer route
+     * 
+     * @param fromLocationId The ID of the origin location
+     * @param toLocationId The ID of the destination location
+     * @return List of buses that have stops at these locations in order
+     */
+    List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId);
 }

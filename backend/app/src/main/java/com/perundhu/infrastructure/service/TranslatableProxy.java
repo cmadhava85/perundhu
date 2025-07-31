@@ -1,21 +1,49 @@
 package com.perundhu.infrastructure.service;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
- * Interface for entities that can be translated.
- * This serves as a proxy interface for objects that need translations.
+ * Interface for translation proxy objects.
+ * Used to access translated entity data with added functionality.
  */
 public interface TranslatableProxy {
+
     /**
-     * Gets the unique identifier for this translatable entity.
+     * Get the entity ID as a string
      * 
-     * @return The unique identifier as a String
+     * @return The entity ID as a string
      */
     String getEntityIdAsString();
-    
+
     /**
-     * Gets the type of entity being translated.
+     * Get the translated entity as a map
      * 
-     * @return The entity type name
+     * @return The translated entity
      */
-    String getEntityType();
+    Map<String, Object> getTranslatedEntity();
+
+    /**
+     * Get the available languages for this entity
+     * 
+     * @return The set of available language codes
+     */
+    Set<String> getAvailableLanguages();
+
+    /**
+     * Add a translation for a specific field and language
+     * 
+     * @param fieldName    The field name
+     * @param languageCode The language code
+     * @param value        The translated value
+     */
+    void addTranslation(String fieldName, String languageCode, String value);
+
+    /**
+     * Remove a translation for a specific field and language
+     * 
+     * @param fieldName    The field name
+     * @param languageCode The language code
+     */
+    void removeTranslation(String fieldName, String languageCode);
 }

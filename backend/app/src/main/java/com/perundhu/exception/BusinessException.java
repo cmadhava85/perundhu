@@ -3,12 +3,10 @@ package com.perundhu.exception;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-
 /**
  * Exception thrown when a business rule is violated
+ * Modernized to use Java 17 features without Lombok
  */
-@Getter
 public class BusinessException extends RuntimeException {
     
     // Using record for error details
@@ -57,4 +55,14 @@ public class BusinessException extends RuntimeException {
     public void addDetail(String code, String detail) {
         this.details.add(new ErrorDetail(code, detail));
     }
+
+    // Explicit getters instead of Lombok @Getter
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public List<ErrorDetail> getDetails() {
+        return details;
+    }
 }
+

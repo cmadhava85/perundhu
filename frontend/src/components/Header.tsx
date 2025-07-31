@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import '../styles/Header.css';
 
 interface HeaderProps {
   autoLocationEnabled?: boolean;

@@ -5,9 +5,10 @@ import type { Location } from '../types';
 
 /**
  * Custom hook to fetch location data from the API
+ * @param language Optional language code for fetching translated content
  * @returns Object containing locations, loading state, and error information
  */
-const useLocationData = () => {
+const useLocationData = (language?: string) => {
   const { i18n } = useTranslation();
   const [locations, setLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -22,8 +23,10 @@ const useLocationData = () => {
       try {
         setIsLoading(true);
         setError(null);
+        // Use provided language parameter or fall back to i18n.language
+        const currentLanguage = language || i18n.language;
         // Pass the current language to the API
-        const data = await getLocations(i18n.language);
+        const data = await getLocations(currentLanguage);
         setLocations(data);
         
         // If we have locations data, set the destinations too
@@ -38,7 +41,7 @@ const useLocationData = () => {
     };
 
     fetchLocations();
-  }, [i18n.language]); // Use i18n.language as dependency to reload when language changes
+  }, [i18n.language, language]); // Use both i18n.language and language as dependencies
 
   // Clear error state
   const clearError = useCallback(() => {

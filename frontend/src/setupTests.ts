@@ -1,7 +1,78 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
+// Jest setup file
 import '@testing-library/jest-dom';
+
+// Mock for process.env to be used by modules that read from import.meta.env
+process.env.VITE_API_URL = 'http://localhost:8080';
+process.env.VITE_API_BASE_URL = 'http://localhost:8080';
+process.env.VITE_ANALYTICS_API_URL = 'http://localhost:8081/api/v1';
+process.env.NODE_ENV = 'test';
+process.env.VITE_FEATURE_TRACKING = 'true';
+process.env.VITE_FEATURE_REWARDS = 'true';
+process.env.VITE_FEATURE_ANALYTICS = 'true';
+
+// Mock window.matchMedia which is not available in Jest environment
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+// Mock ResizeObserver which is not available in Jest environment
+globalThis.ResizeObserver = class ResizeObserver {
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+};
+
+// Mock Intersection Observer properly with required properties
+globalThis.IntersectionObserver = class IntersectionObserver {
+  root = null;
+  rootMargin = '0px';
+  thresholds = [0];
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+  takeRecords = jest.fn().mockReturnValue([]);
+  constructor(_callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+    // Store options if needed
+    if (options) {
+      if (options.rootMargin) this.rootMargin = options.rootMargin;
+      if (options.threshold) this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold];
+      // Don't assign root as it causes type issues
+    }
+  }
+};
+
+// Suppress specific console errors during tests
+const originalError = console.error;
+console.error = (...args) => {
+  // Filter out specific React-related warnings that are safe to ignore in tests
+  if (
+    /Warning.*not wrapped in act/.test(args[0]) ||
+    /Warning: An update to .* inside a test was not wrapped in act/.test(args[0]) ||
+    /Warning: Can't perform a React state update on an unmounted component/.test(args[0])
+  ) {
+    return;
+  }
+  originalError(...args);
+};
+
+// Suppress prop type warnings during tests
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  if (args[0]?.includes?.('Failed prop type:')) {
+    return;
+  }
+  originalWarn(...args);
+}
 
 // Set up global mocks for Google Maps
 Object.defineProperty(global, 'google', {
@@ -123,4 +194,37 @@ jest.mock('axios', () => ({
       response: { use: jest.fn(), eject: jest.fn() }
     }
   })
+}));
+
+// Mock apiClient to fix import.meta issues
+jest.mock('./services/apiClient', () => ({
+  apiClient: {
+    get: jest.fn().mockResolvedValue({ data: {} }),
+    post: jest.fn().mockResolvedValue({ data: {} }),
+    put: jest.fn().mockResolvedValue({ data: {} }),
+    delete: jest.fn().mockResolvedValue({ data: {} }),
+    interceptors: {
+      request: { use: jest.fn(), eject: jest.fn() },
+      response: { use: jest.fn(), eject: jest.fn() }
+    }
+  }
+}), { virtual: true });
+
+// Mock import.meta.env helper function used in apiClient.ts
+jest.mock('./utils/environment', () => ({
+  getEnv: (key: string, defaultValue: string = '') => {
+    if (process.env[key]) {
+      return process.env[key];
+    }
+    return defaultValue;
+  },
+  getFeatureFlag: (key: string, defaultValue: boolean = false) => {
+    if (process.env[key] === 'true') {
+      return true;
+    }
+    if (process.env[key] === 'false') {
+      return false;
+    }
+    return defaultValue;
+  }
 }));

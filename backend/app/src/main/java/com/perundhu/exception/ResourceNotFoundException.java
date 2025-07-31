@@ -1,11 +1,9 @@
 package com.perundhu.exception;
 
-import lombok.Getter;
-
 /**
  * Exception thrown when a requested resource cannot be found
+ * Modernized to use Java 17 features without Lombok
  */
-@Getter
 public class ResourceNotFoundException extends RuntimeException {
     
     // Using record for resource identification
@@ -28,6 +26,11 @@ public class ResourceNotFoundException extends RuntimeException {
         this.resourceIdentifier = resourceIdentifier;
     }
     
+    // Explicit getter instead of Lombok @Getter
+    public ResourceIdentifier getResourceIdentifier() {
+        return resourceIdentifier;
+    }
+
     // Convenience getters to maintain backward compatibility
     public String getResourceName() {
         return resourceIdentifier.resourceName();
@@ -41,3 +44,4 @@ public class ResourceNotFoundException extends RuntimeException {
         return resourceIdentifier.fieldValue();
     }
 }
+
