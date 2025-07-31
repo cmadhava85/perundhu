@@ -1,11 +1,25 @@
 {
-  "extends": "./tsconfig.app.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "verbatimModuleSyntax": false,
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "types": ["jest", "node", "@testing-library/jest-dom"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "isolatedModules": true,
+    "jsx": "react-jsx"  // Add JSX support for React
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.test.ts", "src/**/*.test.tsx"]
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.test.ts", 
+    "src/**/*.test.tsx", 
+    "src/types/jest-mock.d.ts"
+  ]
 }

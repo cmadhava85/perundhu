@@ -16,8 +16,12 @@ interface MapContainerProps {
 const MapContainer: React.FC<MapContainerProps> = ({ children, className, style }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerElement, setContainerElement] = useState<HTMLDivElement | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Mark component as mounted on client
+    setIsMounted(true);
+    
     // Only set the container element once the ref is definitely attached to a DOM element
     if (containerRef.current) {
       setContainerElement(containerRef.current);
@@ -30,7 +34,8 @@ const MapContainer: React.FC<MapContainerProps> = ({ children, className, style 
       className={className || 'map-container'} 
       style={style || { width: '100%', height: '400px' }}
     >
-      {containerElement && children(containerElement)}
+      {/* Only render children on the client side */}
+      {isMounted && containerElement && children(containerElement)}
     </div>
   );
 };

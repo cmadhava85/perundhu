@@ -1,27 +1,35 @@
 package com.perundhu.application.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * Service for managing image uploads to cloud storage
  */
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class CloudStorageService {
 
+    private static final Logger log = LoggerFactory.getLogger(CloudStorageService.class);
+    
     // For demo purposes, we'll just store images locally
     // In production, this would use a cloud storage provider
     private final Path uploadDirectory = Paths.get(System.getProperty("user.home"), "perundhu_uploads");
+
+    /**
+     * Constructor for CloudStorageService
+     * Since there are no dependencies to inject, this is a default constructor
+     */
+    public CloudStorageService() {
+        // No dependencies to inject
+    }
 
     /**
      * Upload an image and return its URL
@@ -67,3 +75,4 @@ public class CloudStorageService {
         return "";
     }
 }
+

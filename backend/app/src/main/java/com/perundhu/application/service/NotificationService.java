@@ -1,8 +1,8 @@
 package com.perundhu.application.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.ImageContribution;
@@ -10,11 +10,18 @@ import com.perundhu.domain.model.ImageContribution;
 /**
  * Service for handling notifications to users
  */
-@Service
-@RequiredArgsConstructor
-@Slf4j
+@Service("applicationNotificationService")
 public class NotificationService {
-    
+
+    private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
+
+    /**
+     * Default constructor as there are no dependencies to inject
+     */
+    public NotificationService() {
+        // No dependencies to inject
+    }
+
     /**
      * Notify user that their contribution was approved
      * 
@@ -24,17 +31,17 @@ public class NotificationService {
         if (isInvalidContribution(contribution)) {
             return;
         }
-        
+
         // In a real implementation, this would use a messaging/email service
         // For now, we'll just log the notification
         log.info("NOTIFICATION to user {}: Your route contribution from {} to {} has been approved!",
-            contribution.getUserId(),
-            contribution.getFromLocationName(),
-            contribution.getToLocationName());
-            
+                contribution.userId(),
+                contribution.fromLocationName(),
+                contribution.toLocationName());
+
         // Future: Send push notification, email or in-app message
     }
-    
+
     /**
      * Notify user that their contribution was rejected
      * 
@@ -44,14 +51,14 @@ public class NotificationService {
         if (isInvalidContribution(contribution)) {
             return;
         }
-        
+
         log.info("NOTIFICATION to user {}: Your route contribution from {} to {} could not be processed: {}",
-            contribution.getUserId(),
-            contribution.getFromLocationName(),
-            contribution.getToLocationName(),
-            contribution.getValidationMessage());
+                contribution.userId(),
+                contribution.fromLocationName(),
+                contribution.toLocationName(),
+                contribution.validationMessage());
     }
-    
+
     /**
      * Notify user that their image contribution was approved
      * 
@@ -61,11 +68,11 @@ public class NotificationService {
         if (isInvalidContribution(contribution)) {
             return;
         }
-        
+
         log.info("NOTIFICATION to user {}: Your image contribution has been approved!",
-            contribution.getUserId());
+                contribution.userId());
     }
-    
+
     /**
      * Notify user that their image contribution was rejected
      * 
@@ -75,17 +82,18 @@ public class NotificationService {
         if (isInvalidContribution(contribution)) {
             return;
         }
-        
+
         log.info("NOTIFICATION to user {}: Your image contribution could not be processed: {}",
-            contribution.getUserId(),
-            contribution.getValidationMessage());
+                contribution.userId(),
+                contribution.validationMessage());
     }
-    
+
     /**
-     * Generic notification method that uses pattern matching for different contribution types
+     * Generic notification method that uses pattern matching for different
+     * contribution types
      * 
      * @param contribution The contribution that generated the notification
-     * @param isApproved Whether the contribution was approved or rejected
+     * @param isApproved   Whether the contribution was approved or rejected
      */
     public void notifyUser(Object contribution, boolean isApproved) {
         if (contribution instanceof RouteContribution routeContribution) {
@@ -101,11 +109,11 @@ public class NotificationService {
                 notifyContributionRejected(imageContribution);
             }
         } else {
-            log.warn("Unknown contribution type: {}", 
-                contribution != null ? contribution.getClass().getName() : "null");
+            log.warn("Unknown contribution type: {}",
+                    contribution != null ? contribution.getClass().getName() : "null");
         }
     }
-    
+
     /**
      * Check if a contribution is invalid (null or missing user ID)
      * 
@@ -117,16 +125,24 @@ public class NotificationService {
             log.warn("Cannot notify user for null contribution");
             return true;
         }
-        
-        // Using pattern matching for instanceof with binding variable
-        if (contribution instanceof RouteContribution rc && rc.getUserId() == null) {
-            log.warn("Cannot notify user for route contribution with missing user ID");
-            return true;
-        } else if (contribution instanceof ImageContribution ic && ic.getUserId() == null) {
-            log.warn("Cannot notify user for image contribution with missing user ID");
+
+        // Standard pattern matching approach without preview features
+        if (contribution instanceof RouteContribution rc) {
+            if (rc.userId() == null) {
+                log.warn("Cannot notify user for route contribution with missing user ID");
+                return true;
+            }
+            return false;
+        } else if (contribution instanceof ImageContribution ic) {
+            if (ic.userId() == null) {
+                log.warn("Cannot notify user for image contribution with missing user ID");
+                return true;
+            }
+            return false;
+        } else {
+            log.warn("Cannot notify user for unknown contribution type: {}",
+                    contribution.getClass().getName());
             return true;
         }
-        
-        return false;
     }
 }

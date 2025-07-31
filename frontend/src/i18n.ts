@@ -6,11 +6,34 @@ import enTranslation from './locales/en/translation.json';
 import taTranslation from './locales/ta/translation.json';
 import taAdditionalTranslation from './locales/ta.json';
 
-// Merge both Tamil translation files
-const mergedTaTranslations = {
-  ...taTranslation,
-  ...taAdditionalTranslation
-};
+// Helper function to perform deep merge of objects
+function deepMerge(target: any, source: any): any {
+  const output = { ...target };
+  
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach(key => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = deepMerge(target[key], source[key]);
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  
+  return output;
+}
+
+// Helper to check if value is an object
+function isObject(item: any): boolean {
+  return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+// Deep merge both Tamil translation files to preserve all keys
+const mergedTaTranslations = deepMerge(taTranslation, taAdditionalTranslation);
 
 // Get saved language preference or detect from browser
 const savedLanguage = localStorage.getItem('perundhu-language');

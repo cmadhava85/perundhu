@@ -12,7 +12,7 @@ jest.mock('../../utils/environment', () => ({
 }));
 
 // Import the API module after mocking environment
-import { api } from '../../services/api';
+// Removed unused import
 
 // Skip actual e2e tests when running in CI/CD pipeline
 describe('API E2E Tests', () => {

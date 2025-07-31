@@ -6,22 +6,29 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.perundhu.domain.model.UserTrackingSession;
 import com.perundhu.domain.port.UserTrackingSessionRepository;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service for user tracking session management
  */
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class UserTrackingService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserTrackingService.class);
+
     private final UserTrackingSessionRepository userTrackingSessionRepository;
+
+    /**
+     * Constructor for dependency injection
+     * Replaces Lombok's @RequiredArgsConstructor
+     */
+    public UserTrackingService(UserTrackingSessionRepository userTrackingSessionRepository) {
+        this.userTrackingSessionRepository = userTrackingSessionRepository;
+    }
 
     /**
      * Get all tracking sessions for a user
@@ -42,20 +49,29 @@ public class UserTrackingService {
     @Transactional
     public UserTrackingSession startSession(UserTrackingSession session) {
         log.info("Starting new tracking session for user: {}, bus: {}",
-                session.getUserId(), session.getBusId());
+                session.userId(), session.busId());
 
-        // Ensure start time is set
-        if (session.getStartTime() == null) {
-            session.setStartTime(LocalDateTime.now());
-        }
+        // Since the session is immutable, we ensure it has a start time by creating a
+        // new instance if needed
+        UserTrackingSession sessionToSave = (session.startTime() == null) ? UserTrackingSession.builder()
+                .sessionId(session.sessionId())
+                .userId(session.userId())
+                .busId(session.busId())
+                .startLocationId(session.startLocationId())
+                .deviceInfo(session.deviceInfo())
+                .ipAddress(session.ipAddress())
+                .userAgent(session.userAgent())
+                .startTime(LocalDateTime.now()) // Set the start time
+                .build()
+                : session;
 
-        return userTrackingSessionRepository.save(session);
+        return userTrackingSessionRepository.save(sessionToSave);
     }
 
     /**
      * End an existing tracking session
      *
-     * @param sessionId The ID of the session to end
+     * @param sessionId     The ID of the session to end
      * @param endLocationId The ID of the end location
      * @return The updated session, or empty if not found
      */
@@ -67,10 +83,23 @@ public class UserTrackingService {
 
         if (existingSession.isPresent()) {
             UserTrackingSession session = existingSession.get();
-            session.setEndLocationId(endLocationId);
-            session.setEndTime(LocalDateTime.now());
 
-            return Optional.of(userTrackingSessionRepository.save(session));
+            // Create a new session with the end data (immutable pattern)
+            UserTrackingSession updatedSession = UserTrackingSession.builder()
+                    .id(session.id())
+                    .sessionId(session.sessionId())
+                    .userId(session.userId())
+                    .busId(session.busId())
+                    .startLocationId(session.startLocationId())
+                    .deviceInfo(session.deviceInfo())
+                    .ipAddress(session.ipAddress())
+                    .userAgent(session.userAgent())
+                    .startTime(session.startTime())
+                    .endTime(LocalDateTime.now())
+                    .endLocationId(endLocationId)
+                    .build();
+
+            return Optional.of(userTrackingSessionRepository.save(updatedSession));
         }
 
         return Optional.empty();

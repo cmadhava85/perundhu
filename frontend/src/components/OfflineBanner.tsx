@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getOfflineMode, getOfflineDataAge, checkOnlineStatus } from '../services/api';
+import '../styles/OfflineBanner.css';
 
 /**
  * A banner displayed when the app is in offline mode.

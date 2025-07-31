@@ -1,78 +1,61 @@
 package com.perundhu.application.dto;
 
-import java.util.List;
 /**
- * Generic wrapper for all API responses
+ * DTO for standardized API responses
  */
-public class ApiResponse<T> {
-    private boolean success;
-    private String message;
-    private ErrorDetails error;
-    private T data;
-    private String path;
+public class ApiResponse {
 
-    public ApiResponse() {
-    }
+    private final String status;
+    private final String message;
+    private final Object data;
 
-    public ApiResponse(boolean success, String message, ErrorDetails error, T data, String path) {
-        this.success = success;
+    /**
+     * Constructor with status, message, and data
+     * 
+     * @param status  The response status (success/error)
+     * @param message The response message
+     * @param data    The response payload data
+     */
+    public ApiResponse(String status, String message, Object data) {
+        this.status = status;
         this.message = message;
-        this.error = error;
         this.data = data;
-        this.path = path;
     }
 
-    public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>(true, message, null, data, null);
+    /**
+     * Constructor with status and message, without data
+     * 
+     * @param status  The response status (success/error)
+     * @param message The response message
+     */
+    public ApiResponse(String status, String message) {
+        this(status, message, null);
     }
 
-    public static <T> ApiResponse<T> error(String message, String errorCode) {
-        ErrorDetails error = new ErrorDetails(errorCode, message, null);
-        return new ApiResponse<>(false, message, error, null, null);
-    }
-    
-    public static <T> ApiResponse<T> error(String message, String errorCode, List<String> details) {
-        ErrorDetails error = new ErrorDetails(errorCode, message, details);
-        return new ApiResponse<>(false, message, error, null, null);
-    }
-
-    public boolean isSuccess() {
-        return success;
+    /**
+     * Get the response status
+     * 
+     * @return The status
+     */
+    public String getStatus() {
+        return status;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
+    /**
+     * Get the response message
+     * 
+     * @return The message
+     */
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public ErrorDetails getError() {
-        return error;
-    }
-
-    public void setError(ErrorDetails error) {
-        this.error = error;
-    }
-
-    public T getData() {
+    /**
+     * Get the response data
+     * 
+     * @return The data
+     */
+    public Object getData() {
         return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

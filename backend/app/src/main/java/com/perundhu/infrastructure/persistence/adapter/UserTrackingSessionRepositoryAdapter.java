@@ -1,5 +1,6 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
 
     private final UserTrackingSessionJpaRepository repository;
 
-    public UserTrackingSessionRepositoryAdapter(UserTrackingSessionJpaRepository repository) {
+    public UserTrackingSessionRepositoryAdapter(@Qualifier("repositoryPackageUserTrackingSessionJpaRepository") UserTrackingSessionJpaRepository repository) {
         this.repository = repository;
     }
 
@@ -38,10 +39,9 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
     }
 
     @Override
-    public List<UserTrackingSession> findByUserId(String userId) {
-        return repository.findByUserId(userId).stream()
-                .map(UserTrackingSessionEntity::toDomainModel)
-                .toList();
+    public Optional<UserTrackingSession> findBySessionId(String sessionId) {
+        return repository.findBySessionId(sessionId)
+                .map(UserTrackingSessionEntity::toDomainModel);
     }
 
     @Override
@@ -50,9 +50,16 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
                 .map(UserTrackingSessionEntity::toDomainModel)
                 .toList();
     }
-
+    
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<UserTrackingSession> findByUserId(String userId) {
+        return repository.findByUserId(userId).stream()
+                .map(UserTrackingSessionEntity::toDomainModel)
+                .toList();
     }
 }

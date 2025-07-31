@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AdminService from '../../services/adminService';
 import RejectModal from './RejectModal';
-import type { ContributionStatus, RouteContribution } from '@/types/contributionTypes';
+import type { ContributionStatus, RouteContribution } from '../../types/contributionTypes';
 
 const RouteContributionList: React.FC = () => {
   const { t } = useTranslation();
@@ -33,10 +33,10 @@ const RouteContributionList: React.FC = () => {
     }
   };
 
-  const handleApprove = async (id: number | undefined) => {
+  const handleApprove = async (id: string | number | undefined) => {
     if (id === undefined) return;
     try {
-      await AdminService.approveRouteContribution(id);
+      await AdminService.approveRouteContribution(Number(id));
       fetchContributions(); // Refresh the list
     } catch (error) {
       console.error('Error approving contribution:', error);
@@ -47,7 +47,7 @@ const RouteContributionList: React.FC = () => {
     if (!selectedContribution || selectedContribution.id === undefined) return;
     
     try {
-      await AdminService.rejectRouteContribution(selectedContribution.id, reason);
+      await AdminService.rejectRouteContribution(Number(selectedContribution.id), reason);
       setRejectModalOpen(false);
       setSelectedContribution(null);
       fetchContributions(); // Refresh the list
@@ -56,12 +56,12 @@ const RouteContributionList: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number | undefined) => {
+  const handleDelete = async (id: string | number | undefined) => {
     if (id === undefined) return;
     
     if (window.confirm(t('admin.confirm.deleteContribution', 'Are you sure you want to delete this contribution?'))) {
       try {
-        await AdminService.deleteRouteContribution(id);
+        await AdminService.deleteRouteContribution(Number(id));
         fetchContributions(); // Refresh the list
       } catch (error) {
         console.error('Error deleting contribution:', error);

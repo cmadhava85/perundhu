@@ -29,18 +29,32 @@ public class MessageServiceImpl implements MessageService {
 
     /**
      * Get message by key and language code
-     * @param key Message key
+     * 
+     * @param key          Message key
      * @param languageCode Language code
      * @return The message or the key itself if not found
      */
     @Override
     public String getMessage(String key, String languageCode) {
-        Map<String, String> messages = translationsByLang.getOrDefault(languageCode, translationsByLang.get("en"));
-        return messages.getOrDefault(key, key);
+        // Check if the key exists in the requested language
+        Map<String, String> messages = translationsByLang.getOrDefault(languageCode, new HashMap<>());
+        if (messages.containsKey(key)) {
+            return messages.get(key);
+        }
+
+        // If not found, check if it exists in English
+        Map<String, String> englishMessages = translationsByLang.get("en");
+        if (englishMessages != null && englishMessages.containsKey(key)) {
+            return englishMessages.get(key);
+        }
+
+        // If not found in any language, return the key itself
+        return key != null ? key : "null";
     }
 
     /**
      * Get message by key with default language
+     * 
      * @param key Message key
      * @return The message or the key itself if not found
      */
@@ -48,10 +62,11 @@ public class MessageServiceImpl implements MessageService {
     public String getMessage(String key) {
         return getMessage(key, "en");
     }
-    
+
     /**
      * Get message by key and format with parameters
-     * @param key Message key
+     * 
+     * @param key  Message key
      * @param args Arguments for formatting
      * @return The formatted message or the key itself if not found
      */
@@ -59,12 +74,13 @@ public class MessageServiceImpl implements MessageService {
     public String getFormattedMessage(String key, Object[] args) {
         return getFormattedMessage(key, "en", args);
     }
-    
+
     /**
      * Get message by key and language code and format with parameters
-     * @param key Message key
+     * 
+     * @param key          Message key
      * @param languageCode Language code
-     * @param args Arguments for formatting
+     * @param args         Arguments for formatting
      * @return The formatted message or the key itself if not found
      */
     @Override
@@ -75,6 +91,7 @@ public class MessageServiceImpl implements MessageService {
 
     /**
      * Set translations for a specific language
+     * 
      * @param languageCode Language code
      * @param translations Map of message keys to translated messages
      */

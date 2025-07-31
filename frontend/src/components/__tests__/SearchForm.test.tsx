@@ -1,6 +1,50 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import SearchForm from '../SearchForm';
 import type { Location } from '../../types';
+import * as locationService from '../../services/locationService';
+
+// Mock location service
+jest.mock('../../services/locationService', () => ({
+  searchLocations: jest.fn(),
+  validateLocation: jest.fn()
+}));
+
+// Mock the LocationDropdown component to simplify testing
+jest.mock('../search/LocationDropdown', () => {
+  return function MockLocationDropdown({ 
+    label, 
+    id, 
+    placeholder, 
+    onSelect, 
+    value, 
+    disabled 
+  }: any) {
+    return (
+      <div data-testid={`mock-dropdown-${id}`}>
+        <label htmlFor={id}>{label}</label>
+        <input 
+          id={id} 
+          placeholder={placeholder}
+          disabled={disabled}
+          value={value?.name || ''}
+          readOnly
+        />
+        <button 
+          data-testid={`${id}-select-chennai`}
+          onClick={() => onSelect({ id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 })}
+        >
+          Select Chennai
+        </button>
+        <button 
+          data-testid={`${id}-select-coimbatore`}
+          onClick={() => onSelect({ id: 2, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 })}
+        >
+          Select Coimbatore
+        </button>
+      </div>
+    );
+  };
+});
 
 // Mock the react-i18next hook
 jest.mock('react-i18next', () => ({
@@ -50,6 +94,8 @@ describe('SearchForm Component', () => {
   
   beforeEach(() => {
     jest.clearAllMocks();
+    (locationService.searchLocations as jest.Mock).mockResolvedValue(mockLocations);
+    (locationService.validateLocation as jest.Mock).mockResolvedValue(true);
   });
   
   test('renders search form with location dropdowns', () => {
@@ -83,36 +129,32 @@ describe('SearchForm Component', () => {
   test('selecting from location calls setFromLocation', () => {
     render(<SearchForm {...defaultProps} />);
     
-    // First click the input field to show the dropdown
-    const fromInput = screen.getByLabelText('From:');
-    fireEvent.click(fromInput);
+    // Use our mocked dropdown component's button
+    const selectChennaiBtn = screen.getByTestId('from-location-select-chennai');
+    fireEvent.click(selectChennaiBtn);
     
-    // Then click on the first location item in the dropdown
-    // Note: In the actual implementation, your dropdown might work differently.
-    // Adjust this test to match how your component actually handles selection.
-    const locationOptions = screen.getAllByText('Chennai');
-    fireEvent.click(locationOptions[0]);
-    
-    expect(mockSetFromLocation).toHaveBeenCalled();
+    expect(mockSetFromLocation).toHaveBeenCalledWith(expect.objectContaining({
+      id: 1, 
+      name: 'Chennai'
+    }));
   });
   
   test('selecting to location calls setToLocation', () => {
     render(
       <SearchForm 
         {...defaultProps}
-        fromLocation={mockLocations[0]}
+        fromLocation={mockLocations[0]} // Set from location so To dropdown is enabled
       />
     );
     
-    // First click the input field to show the dropdown
-    const toInput = screen.getByLabelText('To:');
-    fireEvent.click(toInput);
+    // Use our mocked dropdown component's button
+    const selectCoimbatoreBtn = screen.getByTestId('to-location-select-coimbatore');
+    fireEvent.click(selectCoimbatoreBtn);
     
-    // Then click on the first destination item in the dropdown
-    const locationOptions = screen.getAllByText('Coimbatore');
-    fireEvent.click(locationOptions[0]);
-    
-    expect(mockSetToLocation).toHaveBeenCalled();
+    expect(mockSetToLocation).toHaveBeenCalledWith(expect.objectContaining({
+      id: 2, 
+      name: 'Coimbatore'
+    }));
   });
   
   test('clicking search button calls onSearch', () => {

@@ -2,18 +2,18 @@ package com.perundhu.application.dto;
 
 import java.time.LocalTime;
 
-import lombok.Value;
-
-@Value
-public class BusScheduleDTO {
-    Long id;
-    String name;
-    String translatedName;
-    String busNumber;
-    String fromLocationName;
-    String fromLocationTranslatedName;
-    String toLocationName;
-    String toLocationTranslatedName;
-    LocalTime departureTime;
-    LocalTime arrivalTime;
-}
+/**
+ * Data Transfer Object for Bus Schedule information
+ */
+public record BusScheduleDTO(
+    Long id,
+    String name,
+    String translatedName,
+    String busNumber,
+    String fromLocation,
+    String fromLocationTranslated,
+    String toLocation,
+    String toLocationTranslated,
+    LocalTime departureTime,
+    LocalTime arrivalTime
+) {}

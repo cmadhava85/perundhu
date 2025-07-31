@@ -1,586 +1,389 @@
 package com.perundhu.application.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.BusDTO;
-import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.BusRouteSegmentDTO;
+import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
+import com.perundhu.domain.model.ConnectingRoute;
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
+import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.model.Translation;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.port.TranslationRepository;
-import com.perundhu.domain.port.TranslationService;
 import com.perundhu.domain.service.ConnectingRouteService;
 
 @Service
 public class BusScheduleServiceImpl implements BusScheduleService {
-    
-    private static final Logger log = LoggerFactory.getLogger(BusScheduleServiceImpl.class);
-    
+
+    // Constants to avoid string duplication
+    private static final String ENTITY_TYPE_LOCATION = "Location";
+    private static final String ENTITY_TYPE_BUS = "Bus";
+    private static final String ENTITY_TYPE_STOP = "Stop";
+    private static final String FIELD_NAME = "name";
+
     private final BusRepository busRepository;
     private final LocationRepository locationRepository;
     private final StopRepository stopRepository;
-    private final TranslationService translationService;
     private final TranslationRepository translationRepository;
     private final ConnectingRouteService connectingRouteService;
-    
+
+    // Constructor injection instead of field injection
     public BusScheduleServiceImpl(
             BusRepository busRepository,
             LocationRepository locationRepository,
             StopRepository stopRepository,
-            TranslationService translationService,
             TranslationRepository translationRepository,
             ConnectingRouteService connectingRouteService) {
         this.busRepository = busRepository;
         this.locationRepository = locationRepository;
         this.stopRepository = stopRepository;
-        this.translationService = translationService;
         this.translationRepository = translationRepository;
         this.connectingRouteService = connectingRouteService;
     }
-    
-    /**
-     * Implementation for the original method (kept for backward compatibility)
-     */
-    public List<BusScheduleDTO> findBusSchedules(Location from, Location to, String languageCode) {
-        return busRepository.findByFromAndToLocation(from, to)
-            .stream()
-            .map(bus -> mapToDTO(bus, languageCode))
-            .toList();
-    }
-    
-    @Override
-    public List<StopDTO> getStopsForBus(Long busId, String languageCode) {
-        return findBusStops(busId, languageCode);
-    }
-    
-    public List<StopDTO> findBusStops(Long busId, String languageCode) {
-        log.info("Finding stops for bus {} with language {}", busId, languageCode);
-        
-        // Add detailed debugging to identify issues
-        var busOptional = busRepository.findById(new Bus.BusId(busId));
-        if (busOptional.isEmpty()) {
-            log.error("Bus with ID {} not found in the database", busId);
-            return List.of();
-        }
-        
-        Bus bus = busOptional.get();
-        log.info("Found bus: id={}, name={}, from={}, to={}", 
-                bus.getId().getValue(), bus.getName(), 
-                bus.getFromLocation().getName(), 
-                bus.getToLocation().getName());
-        
-        var stops = stopRepository.findByBusOrderByStopOrder(bus);
-        log.info("Found {} stops for bus {}", stops.size(), busId);
-        
-        // Log details of each stop for debugging
-        stops.forEach(stop -> 
-            log.info("Stop: id={}, name={}, location_id={}, order={}", 
-                    stop.getId().getValue(), stop.getName(), 
-                    stop.getLocation() != null ? stop.getLocation().getId().getValue() : "null", 
-                    stop.getStopOrder())
-        );
-        
-        return switch (languageCode) {
-            case "ta" -> handleTamilStops(busId);
-            default -> handleDefaultLanguageStops(busId, languageCode);
-        };
-    }
-    
-    private List<StopDTO> handleTamilStops(Long busId) {
-        log.info("Tamil language requested for stops, using direct translation lookup");
-        return busRepository.findById(new Bus.BusId(busId))
-            .map(bus -> stopRepository.findByBusOrderByStopOrder(bus).stream()
-                .map(stop -> {
-                    var stopName = stop.getName();
-                    var translatedName = stopName;
-                    
-                    var translations = translationRepository
-                        .findByEntityAndLanguage("stop", stop.getId().getValue(), "ta");
-                        
-                    translatedName = translations.stream()
-                        .filter(t -> "name".equals(t.getFieldName()))
-                        .findFirst()
-                        .map(Translation::getTranslatedValue)
-                        .or(() -> {
-                            var location = stop.getLocation();
-                            if (location != null) {
-                                return translationRepository.findByEntityAndLanguage("location", location.getId().getValue(), "ta")
-                                    .stream()
-                                    .filter(t -> "name".equals(t.getFieldName()))
-                                    .findFirst()
-                                    .map(Translation::getTranslatedValue);
-                            }
-                            
-                            return locationRepository.findAll().stream()
-                                .filter(loc -> stopName.equalsIgnoreCase(loc.getName()))
-                                .findFirst()
-                                .flatMap(loc -> translationRepository.findByEntityAndLanguage("location", loc.getId().getValue(), "ta")
-                                    .stream()
-                                    .filter(t -> "name".equals(t.getFieldName()))
-                                    .findFirst()
-                                    .map(Translation::getTranslatedValue)
-                                );
-                        })
-                        .orElse(stopName);
-                    
-                    return new StopDTO(
-                        stopName,
-                        translatedName,
-                        stop.getArrivalTime(),
-                        stop.getDepartureTime(),
-                        stop.getStopOrder()
-                    );
-                })
-                .toList()
-            )
-            .orElse(List.of());
-    }
-    
-    private List<StopDTO> handleDefaultLanguageStops(Long busId, String languageCode) {
-        return busRepository.findById(new Bus.BusId(busId))
-            .map(bus -> stopRepository.findByBusOrderByStopOrder(bus).stream()
-                .map(stop -> new StopDTO(
-                    stop.getName(),
-                    translationService.getTranslation(stop, "name", languageCode),
-                    stop.getArrivalTime(),
-                    stop.getDepartureTime(),
-                    stop.getStopOrder()
-                ))
-                .toList()
-            )
-            .orElse(List.of());
-    }
-    
-    /**
-     * Implementation for the interface method
-     * This converts the BusScheduleDTO objects to ConnectingRouteDTO objects
-     */
-    @Override
-    public List<ConnectingRouteDTO> findConnectingRoutes(Location from, Location to, String languageCode) {
-        log.info("Finding connecting routes between locations with language: {}", languageCode);
-        
-        var allBuses = busRepository.findByFromLocation(from);
-        var routes = connectingRouteService.findConnectingRoutes(allBuses, from, to);
-        
-        List<BusScheduleDTO> busSchedules = routes.stream()
-            .flatMap(List::stream)
-            .map(bus -> mapToDTO(bus, languageCode))
-            .toList();
-            
-        // Convert BusScheduleDTO objects to ConnectingRouteDTO objects
-        return busSchedules.stream()
-            .map(bus -> {
-                BusRouteSegmentDTO firstLeg = BusRouteSegmentDTO.builder()
-                    .busId(bus.getId())
-                    .busName(bus.getName())
-                    .busNumber(bus.getBusNumber())
-                    .departureTime(bus.getDepartureTime().toString())
-                    .from(bus.getFromLocationName())
-                    .to("Connection Point")
-                    .duration(60)
-                    .distance(15.5)
-                    .build();
-                
-                BusRouteSegmentDTO secondLeg = BusRouteSegmentDTO.builder()
-                    .busId(bus.getId())
-                    .busName(bus.getName())
-                    .busNumber(bus.getBusNumber())
-                    .departureTime(bus.getDepartureTime().toString())
-                    .from("Connection Point")
-                    .to(bus.getToLocationName())
-                    .arrivalTime(bus.getArrivalTime().toString())
-                    .duration(60)
-                    .distance(15.5)
-                    .build();
-                
-                return ConnectingRouteDTO.builder()
-                    .id(bus.getId())
-                    .connectionPoint("Transfer Station")
-                    .waitTime(15)
-                    .totalDuration(120)
-                    .totalDistance(31.0)
-                    .firstLeg(firstLeg)
-                    .secondLeg(secondLeg)
-                    .connectionStops(new ArrayList<>())
-                    .build();
-            })
-            .collect(Collectors.toList());
-    }
-    
-    public List<LocationDTO> getAllLocations() {
-        return locationRepository.findAll().stream()
-            .map(location -> new LocationDTO(
-                location.getId().getValue(),
-                location.getName(),
-                location.getLatitude(),
-                location.getLongitude()
-            ))
-            .toList();
-    }
-    
-    @Override
-    public List<LocationDTO> getAllLocations(String languageCode) {
-        return getAllLocationsWithLanguage(languageCode);
-    }
-    
-    public List<LocationDTO> getAllLocationsWithLanguage(String languageCode) {
-        log.info("Getting all locations with language: {}", languageCode);
-        
-        return switch (languageCode) {
-            case "ta" -> handleTamilLocations();
-            default -> handleDefaultLanguageLocations(languageCode);
-        };
-    }
-    
-    private List<LocationDTO> handleTamilLocations() {
-        log.info("Tamil language requested, using direct translation lookup");
-        return locationRepository.findAll().stream()
-            .map(location -> {
-                var locationId = location.getId().getValue();
-                log.info("Looking up translations for location id={}, name={}", locationId, location.getName());
-                
-                var translations = translationRepository
-                    .findByEntityAndLanguage("location", locationId, "ta");
-                
-                log.info("Found {} Tamil translations for location id={}", translations.size(), locationId);
-                translations.forEach(t -> 
-                    log.info("  - Translation for {}: {}", t.getFieldName(), t.getTranslatedValue()));
-                
-                var translatedName = translations.stream()
-                    .filter(t -> "name".equals(t.getFieldName()))
-                    .findFirst()
-                    .map(Translation::getTranslatedValue)
-                    .orElse(location.getName());
-                
-                if (!translatedName.equals(location.getName())) {
-                    log.info("Using translation for location {}: {}", locationId, translatedName);
-                } else {
-                    log.info("No translation found for location {}, using default name: {}", 
-                          locationId, location.getName());
-                }
-                
-                var dto = new LocationDTO(
-                    locationId,
-                    location.getName(),
-                    translatedName,
-                    location.getLatitude(),
-                    location.getLongitude()
-                );
-                
-                log.info("Created DTO for location={}: name={}, translatedName={}", 
-                      locationId, dto.getName(), dto.getTranslatedName());
-                
-                return dto;
-            })
-            .toList();
-    }
-    
-    private List<LocationDTO> handleDefaultLanguageLocations(String languageCode) {
-        return locationRepository.findAll().stream()
-            .map(location -> {
-                var translatedName = translationService.getTranslation(location, "name", languageCode);
-                log.info("Regular flow - Location {}: translated name = {}", 
-                      location.getId().getValue(), translatedName);
-                
-                return new LocationDTO(
-                    location.getId().getValue(),
-                    location.getName(),
-                    translatedName,
-                    location.getLatitude(),
-                    location.getLongitude()
-                );
-            })
-            .toList();
-    }
-    
-    public List<LocationDTO> getDestinations(Long fromId) {
-        return locationRepository.findAllExcept(new Location.LocationId(fromId)).stream()
-            .map(location -> new LocationDTO(
-                location.getId().getValue(),
-                location.getName(),
-                translationService.getTranslation(location, "name", "en"),
-                location.getLatitude(),
-                location.getLongitude()
-            ))
-            .toList();
-    }
-    
-    public List<LocationDTO> getDestinationsWithLanguage(Long fromId, String languageCode) {
-        return locationRepository.findAllExcept(new Location.LocationId(fromId)).stream()
-            .map(location -> new LocationDTO(
-                location.getId().getValue(),
-                location.getName(),
-                translationService.getTranslation(location, "name", languageCode),
-                location.getLatitude(),
-                location.getLongitude()
-            ))
-            .toList();
-    }
-    
-    public List<BusScheduleDTO> getBuses(Long fromId, Long toId) {
-        return locationRepository.findById(new Location.LocationId(fromId))
-            .flatMap(fromLocation -> locationRepository.findById(new Location.LocationId(toId))
-                .map(toLocation -> busRepository.findByFromAndToLocation(fromLocation, toLocation)
-                    .stream()
-                    .map(bus -> mapToDTO(bus, null))
-                    .toList()
-                )
-            )
-            .orElse(List.of());
-    }
-    
-    public List<BusScheduleDTO> getBusesWithLanguage(Long fromId, Long toId, String languageCode) {
-        return locationRepository.findById(new Location.LocationId(fromId))
-            .flatMap(fromLocation -> locationRepository.findById(new Location.LocationId(toId))
-                .map(toLocation -> busRepository.findByFromAndToLocation(fromLocation, toLocation)
-                    .stream()
-                    .map(bus -> mapToDTO(bus, languageCode))
-                    .toList()
-                )
-            )
-            .orElse(List.of());
-    }
-    
-    public List<BusScheduleDTO> findConnectingRoutesByIds(Long fromId, Long toId) {
-        return getLocations(fromId, toId)
-            .map(locations -> {
-                // First get the connecting routes as ConnectingRouteDTO objects
-                List<ConnectingRouteDTO> routeDTOs = findConnectingRoutes(locations.from(), locations.to(), null);
-                
-                // Then convert them to BusScheduleDTO objects
-                return routeDTOs.stream()
-                    .map(route -> new BusScheduleDTO(
-                        route.getId(),
-                        route.getFirstLeg().getBusName(),
-                        route.getFirstLeg().getBusName(),
-                        route.getFirstLeg().getBusNumber(),
-                        route.getFirstLeg().getFrom(),
-                        route.getFirstLeg().getFrom(),
-                        route.getSecondLeg().getTo(),
-                        route.getSecondLeg().getTo(),
-                        null, // Can't easily convert string back to LocalTime
-                        null  // Can't easily convert string back to LocalTime
-                    ))
-                    .toList();
-            })
-            .orElse(List.of());
-    }
-    
-    public List<BusScheduleDTO> findConnectingRoutesByIdsWithLanguage(Long fromId, Long toId, String languageCode) {
-        return getLocations(fromId, toId)
-            .map(locations -> {
-                // First get the connecting routes as ConnectingRouteDTO objects
-                List<ConnectingRouteDTO> routeDTOs = findConnectingRoutes(locations.from(), locations.to(), languageCode);
-                
-                // Then convert them to BusScheduleDTO objects
-                return routeDTOs.stream()
-                    .map(route -> new BusScheduleDTO(
-                        route.getId(),
-                        route.getFirstLeg().getBusName(),
-                        route.getFirstLeg().getBusName(),
-                        route.getFirstLeg().getBusNumber(),
-                        route.getFirstLeg().getFrom(),
-                        route.getFirstLeg().getFrom(),
-                        route.getSecondLeg().getTo(),
-                        route.getSecondLeg().getTo(),
-                        null, // Can't easily convert string back to LocalTime
-                        null  // Can't easily convert string back to LocalTime
-                    ))
-                    .toList();
-            })
-            .orElse(List.of());
-    }
-    
-    @Override
-    public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId) {
-        log.info("Finding connecting routes between locations: {} and {}", fromLocationId, toLocationId);
-        
-        Optional<LocationPair> locationPair = getLocations(fromLocationId, toLocationId);
-        if (locationPair.isPresent()) {
-            return findConnectingRoutes(locationPair.get().from(), locationPair.get().to(), null);
-        }
-        
-        return List.of();
-    }
-    
-    @Override
-    public List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId) {
-        log.info("Finding buses between locations: {} and {}", fromLocationId, toLocationId);
-        List<BusScheduleDTO> routes = findRoutesBetweenLocations(fromLocationId, toLocationId);
-        
-        List<BusDTO> result = new ArrayList<>();
-        for (BusScheduleDTO route : routes) {
-            result.add(new BusDTO(
-                route.getId(),
-                route.getName(),
-                route.getBusNumber(),
-                route.getFromLocationName(),
-                route.getToLocationName(),
-                route.getDepartureTime(),
-                route.getArrivalTime()
-            ));
-        }
-        return result;
-    }
-    
+
     @Override
     public List<BusDTO> getAllBuses() {
-        log.info("Getting all buses");
-        
-        return busRepository.findAllBuses().stream()
-            .map(bus -> new BusDTO(
-                bus.getId().getValue(),
-                bus.getName(),
-                bus.getBusNumber(),
-                bus.getFromLocation().getName(),
-                bus.getToLocation().getName(),
-                bus.getDepartureTime(),
-                bus.getArrivalTime()
-            ))
-            .collect(Collectors.toList());
+        // Get all buses from the repository
+        List<Bus> buses = busRepository.findAll();
+
+        // Convert the Bus entities to DTOs using the static factory method
+        return buses.stream()
+                .map(BusDTO::fromDomain)
+                .toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
     }
-    
+
     @Override
     public Optional<BusDTO> getBusById(Long busId) {
-        log.info("Getting bus by ID: {}", busId);
-        
-        return busRepository.findById(busId)
-            .map(bus -> new BusDTO(
-                bus.getId().getValue(),
-                bus.getName(),
-                bus.getBusNumber(),
-                bus.getFromLocation().getName(),
-                bus.getToLocation().getName(),
-                bus.getDepartureTime(),
-                bus.getArrivalTime()
-            ));
+        return busRepository.findById(new BusId(busId))
+                .map(BusDTO::fromDomain);
     }
-    
-    private record LocationPair(Location from, Location to) {}
-    
-    private Optional<LocationPair> getLocations(Long fromId, Long toId) {
-        return locationRepository.findById(new Location.LocationId(fromId))
-            .flatMap(fromLocation -> locationRepository.findById(new Location.LocationId(toId))
-                .map(toLocation -> new LocationPair(fromLocation, toLocation))
-            );
+
+    @Override
+    public List<LocationDTO> getAllLocations(String languageCode) {
+        List<Location> locations = locationRepository.findAll();
+
+        return locations.stream().map(location -> {
+            var translatedName = location.name();
+
+            // If language code is provided, try to get translation
+            if (languageCode != null && !languageCode.isEmpty() && location.id() != null) {
+                // Using Java 17's map/orElse pattern for cleaner Optional handling
+                translatedName = translationRepository
+                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                ENTITY_TYPE_LOCATION, location.id().value(), FIELD_NAME, languageCode)
+                        .map(Translation::getTranslatedValue)
+                        .orElse(location.name());
+            }
+
+            return new LocationDTO(
+                    location.id() != null ? location.id().value() : null,
+                    location.name(),
+                    translatedName,
+                    location.latitude(),
+                    location.longitude());
+        }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
     }
-    
-    public List<BusScheduleDTO> getAllRoutes() {
-        log.info("Getting all bus routes");
-        
-        return busRepository.findAllBuses().stream()
-            .map(bus -> mapToDTO(bus, null))
-            .toList();
+
+    @Override
+    public List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId) {
+        LocationId fromId = new LocationId(fromLocationId);
+        LocationId toId = new LocationId(toLocationId);
+
+        List<Bus> buses = busRepository.findBusesBetweenLocations(fromId, toId);
+
+        return buses.stream()
+                .map(BusDTO::fromDomain)
+                .toList();
     }
-    
-    public Optional<BusScheduleDTO> getRouteById(Long routeId) {
-        log.info("Getting bus route by ID: {}", routeId);
-        
-        return busRepository.findById(new Bus.BusId(routeId))
-            .map(bus -> mapToDTO(bus, null));
+
+    @Override
+    public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId) {
+        // Get the location entities using domain IDs
+        Optional<Location> fromLocationOptional = locationRepository.findById(new Location.LocationId(fromLocationId));
+        Optional<Location> toLocationOptional = locationRepository.findById(new Location.LocationId(toLocationId));
+
+        if (fromLocationOptional.isEmpty() || toLocationOptional.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Location fromLocation = fromLocationOptional.get();
+        Location toLocation = toLocationOptional.get();
+
+        // Get all buses for constructing routes
+        List<Bus> allBuses = busRepository.findAll();
+
+        // Use the connecting route service to find routes with domain model
+        List<ConnectingRoute> domainRoutes = connectingRouteService.findConnectingRoutesDetailed(allBuses, fromLocation,
+                toLocation, null);
+
+        // Convert domain models to DTOs
+        return convertToDTOs(domainRoutes, null);
     }
-    
-    public List<StopDTO> getStopsForRoute(Long routeId) {
-        log.info("Getting stops for route ID: {}", routeId);
-        
-        return busRepository.findById(new Bus.BusId(routeId))
-            .map(bus -> stopRepository.findByBusOrderByStopOrder(bus).stream()
-                .map(stop -> new StopDTO(
-                    stop.getName(),
+
+    @Override
+    public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId, Integer maxDepth) {
+        // Get the location entities using domain IDs
+        Optional<Location> fromLocationOptional = locationRepository.findById(new Location.LocationId(fromLocationId));
+        Optional<Location> toLocationOptional = locationRepository.findById(new Location.LocationId(toLocationId));
+
+        if (fromLocationOptional.isEmpty() || toLocationOptional.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Location fromLocation = fromLocationOptional.get();
+        Location toLocation = toLocationOptional.get();
+
+        // Get all buses for constructing routes
+        List<Bus> allBuses = busRepository.findAll();
+
+        // Use the connecting route service to find routes with domain model
+        List<ConnectingRoute> domainRoutes = connectingRouteService.findConnectingRoutesDetailed(allBuses, fromLocation,
+                toLocation, null, maxDepth);
+
+        // Convert domain models to DTOs
+        return convertToDTOs(domainRoutes, null);
+    }
+
+    @Override
+    public List<ConnectingRouteDTO> findConnectingRoutes(Location fromLocation, Location toLocation,
+            String languageCode) {
+        // Get all buses for constructing routes
+        List<Bus> allBuses = busRepository.findAll();
+
+        // Use the connecting route service to find routes with domain model
+        List<ConnectingRoute> domainRoutes = connectingRouteService.findConnectingRoutesDetailed(allBuses, fromLocation,
+                toLocation, languageCode);
+
+        // Convert domain models to DTOs
+        return convertToDTOs(domainRoutes, languageCode);
+    }
+
+    @Override
+    public List<StopDTO> getStopsForBus(Long busId, String languageCode) {
+        Optional<Bus> busOptional = busRepository.findById(new BusId(busId));
+
+        if (busOptional.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Bus bus = busOptional.get();
+        List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
+
+        return stops.stream().map(stop -> {
+            // Create a final copy of the name for use in lambda - using Lombok getter
+            final String stopName = stop.getName();
+            final String[] translatedNameHolder = { stopName };
+
+            // If language code is provided, try to get translation
+            if (languageCode != null && !languageCode.isEmpty()) {
+                // Get translation for the stop name if available - using Lombok getter
+                translationRepository
+                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                ENTITY_TYPE_STOP, stop.getId().value(), FIELD_NAME, languageCode)
+                        .ifPresent(translation -> {
+                            // Using var for local variable type inference (Java 10+)
+                            var translatedValue = translation.getTranslatedValue();
+                            if (translatedValue != null && !translatedValue.isEmpty()) {
+                                translatedNameHolder[0] = translatedValue;
+                            }
+                        });
+            }
+
+            return new StopDTO(
+                    translatedNameHolder[0],
                     stop.getName(),
                     stop.getArrivalTime(),
                     stop.getDepartureTime(),
-                    stop.getStopOrder()
-                ))
-                .toList()
-            )
-            .orElse(List.of());
+                    stop.getStopOrder());
+        }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
     }
-    
-    public List<BusScheduleDTO> findRoutesBetweenLocations(Long fromLocationId, Long toLocationId) {
-        log.info("Finding routes between locations: {} and {}", fromLocationId, toLocationId);
-        
-        return getLocations(fromLocationId, toLocationId)
-            .map(locations -> busRepository.findByFromAndToLocation(locations.from(), locations.to())
-                .stream()
-                .map(bus -> mapToDTO(bus, null))
-                .toList()
-            )
-            .orElse(List.of());
+
+    @Override
+    public List<StopDTO> findBusStops(Long busId, String languageCode) {
+        // This is essentially the same as getStopsForBus
+        return getStopsForBus(busId, languageCode);
     }
-    
-    private BusScheduleDTO mapToDTO(Bus bus, String languageCode) {
-        var fromLocationTranslated = bus.getFromLocation().getName();
-        var toLocationTranslated = bus.getToLocation().getName();
-        var busNameTranslated = bus.getName();
-        
-        if (languageCode != null) {
-            switch (languageCode) {
-                case "ta" -> {
-                    log.info("Tamil translation requested for bus {}", bus.getId().getValue());
-                    
-                    busNameTranslated = translationRepository
-                        .findByEntityAndLanguage("bus", bus.getId().getValue(), "ta")
-                        .stream()
-                        .filter(t -> "name".equals(t.getFieldName()))
-                        .findFirst()
-                        .map(Translation::getTranslatedValue)
-                        .orElse(busNameTranslated);
-                    
-                    if (bus.getFromLocation() != null) {
-                        fromLocationTranslated = translationRepository
-                            .findByEntityAndLanguage("location", bus.getFromLocation().getId().getValue(), "ta")
-                            .stream()
-                            .filter(t -> "name".equals(t.getFieldName()))
-                            .findFirst()
-                            .map(Translation::getTranslatedValue)
-                            .orElse(fromLocationTranslated);
-                    }
-                    
-                    if (bus.getToLocation() != null) {
-                        toLocationTranslated = translationRepository
-                            .findByEntityAndLanguage("location", bus.getToLocation().getId().getValue(), "ta")
-                            .stream()
-                            .filter(t -> "name".equals(t.getFieldName()))
-                            .findFirst()
-                            .map(Translation::getTranslatedValue)
-                            .orElse(toLocationTranslated);
-                    }
+
+    @Override
+    public List<BusScheduleDTO> findBusSchedules(Location fromLocation, Location toLocation, String languageCode) {
+        List<Bus> buses = busRepository.findByFromAndToLocation(fromLocation, toLocation);
+
+        return buses.stream().map(bus -> {
+            // Initialize with original values
+            String translatedName = bus.name();
+            String fromLocationTranslatedName = fromLocation.name();
+            String toLocationTranslatedName = toLocation.name();
+
+            // If language code is provided, try to get translations
+            if (languageCode != null && !languageCode.isEmpty()) {
+                // For bus name
+                final String[] finalTranslatedName = { translatedName };
+                translationRepository
+                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                ENTITY_TYPE_BUS, bus.id().value(), FIELD_NAME, languageCode)
+                        .ifPresent(translation -> finalTranslatedName[0] = translation.getTranslatedValue());
+                translatedName = finalTranslatedName[0];
+
+                // For from location name
+                final String[] finalFromLocationName = { fromLocationTranslatedName };
+                if (fromLocation.id() != null) {
+                    translationRepository
+                            .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                    ENTITY_TYPE_LOCATION, fromLocation.id().value(), FIELD_NAME, languageCode)
+                            .ifPresent(translation -> finalFromLocationName[0] = translation.getTranslatedValue());
                 }
-                default -> {
-                    fromLocationTranslated = translationService.getTranslation(bus.getFromLocation(), "name", languageCode);
-                    toLocationTranslated = translationService.getTranslation(bus.getToLocation(), "name", languageCode);
-                    busNameTranslated = translationService.getTranslation(bus, "name", languageCode);
+                fromLocationTranslatedName = finalFromLocationName[0];
+
+                // For to location name
+                final String[] finalToLocationName = { toLocationTranslatedName };
+                if (toLocation.id() != null) {
+                    translationRepository
+                            .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
+                                    ENTITY_TYPE_LOCATION, toLocation.id().value(), FIELD_NAME, languageCode)
+                            .ifPresent(translation -> finalToLocationName[0] = translation.getTranslatedValue());
+                }
+                toLocationTranslatedName = finalToLocationName[0];
+            }
+
+            return new BusScheduleDTO(
+                    bus.id().value(), // 1. Long id
+                    bus.name(), // 2. String name
+                    translatedName, // 3. String translatedName
+                    bus.busNumber(), // 4. String busNumber
+                    fromLocation.name(), // 5. String fromLocation
+                    fromLocationTranslatedName, // 6. String fromLocationTranslated
+                    toLocation.name(), // 7. String toLocation
+                    toLocationTranslatedName, // 8. String toLocationTranslated
+                    bus.departureTime(), // 9. LocalTime departureTime
+                    bus.arrivalTime() // 10. LocalTime arrivalTime
+            );
+        }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
+    }
+
+    @Override
+    public List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId) {
+        List<Bus> buses = busRepository.findAll();
+        List<Bus> resultBuses = new ArrayList<>();
+
+        for (Bus bus : buses) {
+            List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
+
+            boolean hasFromLocation = false;
+            boolean hasToLocation = false;
+
+            for (Stop stop : stops) {
+                // Compare the Long value from the LocationId with fromLocationId - using Lombok
+                // getter
+                if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(fromLocationId)) {
+                    hasFromLocation = true;
+                } else if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(toLocationId)
+                        && hasFromLocation) {
+                    hasToLocation = true;
+                    break;
                 }
             }
+
+            if (hasFromLocation && hasToLocation) {
+                resultBuses.add(bus);
+            }
         }
-        
-        return new BusScheduleDTO(
-            bus.getId().getValue(),
-            bus.getName(),
-            busNameTranslated,
-            bus.getBusNumber(),
-            bus.getFromLocation().getName(),
-            fromLocationTranslated,
-            bus.getToLocation().getName(),
-            toLocationTranslated,
-            bus.getDepartureTime(),
-            bus.getArrivalTime()
-        );
+
+        return resultBuses.stream()
+                .map(BusDTO::fromDomain)
+                .toList();
+    }
+
+    /**
+     * Helper method to check if there's a direct route between two locations
+     * This method is not part of the BusScheduleService interface but can be useful
+     * internally
+     */
+    public boolean hasDirectRoute(Long fromLocationId, Long toLocationId) {
+        List<Bus> buses = busRepository.findAll();
+
+        for (Bus bus : buses) {
+            List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
+
+            boolean hasFromLocation = false;
+            boolean hasToLocation = false;
+
+            for (Stop stop : stops) {
+                // Compare the Long value from the LocationId with fromLocationId - using Lombok
+                // getter
+                if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(fromLocationId)) {
+                    hasFromLocation = true;
+                } else if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(toLocationId)
+                        && hasFromLocation) {
+                    hasToLocation = true;
+                    break;
+                }
+            }
+
+            if (hasFromLocation && hasToLocation) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Convert domain ConnectingRoute objects to ConnectingRouteDTO objects
+     * This is where the transformation from domain to application layer happens
+     */
+    private List<ConnectingRouteDTO> convertToDTOs(List<ConnectingRoute> domainRoutes, String languageCode) {
+        List<ConnectingRouteDTO> dtos = new ArrayList<>();
+
+        for (ConnectingRoute route : domainRoutes) {
+            // Create bus route segments for this connecting route
+            List<BusRouteSegmentDTO> segments = new ArrayList<>();
+            List<Bus> buses = route.getBuses();
+
+            for (int i = 0; i < buses.size(); i++) {
+                Bus bus = buses.get(i);
+
+                // Determine from/to location names for this segment
+                String fromName = i == 0 ? route.getFrom().name() : null;
+                String toName = i == buses.size() - 1 ? route.getTo().name() : null;
+
+                BusRouteSegmentDTO segment = new BusRouteSegmentDTO(
+                        bus.id().value(),
+                        bus.name(),
+                        bus.busNumber(),
+                        fromName,
+                        toName,
+                        bus.departureTime(),
+                        bus.arrivalTime());
+
+                segments.add(segment);
+            }
+
+            // Build the DTO
+            ConnectingRouteDTO dto = ConnectingRouteDTO.builder()
+                    .from(route.getFrom().name())
+                    .to(route.getTo().name())
+                    .departureTime(route.getDepartureTime())
+                    .arrivalTime(route.getArrivalTime())
+                    .transfers(route.getTransfers())
+                    .segments(segments)
+                    .build();
+
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 }

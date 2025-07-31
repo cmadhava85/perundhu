@@ -1,3 +1,13 @@
+/**
+ * Generic API response wrapper
+ */
+export interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message?: string;
+  timestamp?: string;
+}
+
 export interface Location {
   id: number;
   name: string;
@@ -14,6 +24,7 @@ export interface Location {
   translatedNames?: {
     [key: string]: string;
   };
+  source?: 'database' | 'map' | 'local' | 'offline'; // Added source property
 }
 
 export interface Bus {
@@ -43,6 +54,17 @@ export interface Stop {
   };
   translatedNames?: {
     [key: string]: string;
+  };
+  // Added properties for test compatibility
+  latitude?: number;
+  longitude?: number;
+  lat?: number;
+  lng?: number;
+  stopLat?: number; // For tests
+  stopLng?: number; // For tests
+  location?: {
+    latitude: number;
+    longitude: number;
   };
 }
 
@@ -101,12 +123,15 @@ export interface BusLocation {
   longitude: number;
   speed: number;
   heading: number;
+  direction?: string; // Added for test compatibility
   timestamp: string;
+  lastUpdated?: string; // Added for test compatibility
   lastReportedStopName: string;
   nextStopName: string;
   estimatedArrivalTime: string;
   reportCount: number;
   confidenceScore: number;
+  routeId?: number; // Added for test compatibility
 }
 
 /**
@@ -153,10 +178,21 @@ export interface RouteContribution {
   userId?: string;
   busName: string;
   busNumber: string;
+  
+  // Primary language fields (as entered by user)
   fromLocationName: string;
+  toLocationName: string;
+  
+  // Secondary language fields (translated)
+  busName_secondary?: string;
+  fromLocationName_secondary?: string;
+  toLocationName_secondary?: string;
+  
+  // Language tracking
+  sourceLanguage?: string; // 'en' for English, 'ta' for Tamil
+  
   fromLatitude?: number;
   fromLongitude?: number;
-  toLocationName: string;
   toLatitude?: number;
   toLongitude?: number;
   departureTime: string;
@@ -174,6 +210,7 @@ export interface RouteContribution {
 export interface StopContribution {
   id?: number;
   name: string;
+  name_secondary?: string; // Secondary language name (translated)
   latitude?: number;
   longitude?: number;
   arrivalTime: string;
@@ -187,6 +224,11 @@ export interface StopContribution {
 export interface ImageContribution {
   id?: number;
   userId?: string;
+  busName: string;
+  busNumber: string;
+  fromLocationName: string;
+  toLocationName: string;
+  notes: string;
   imageUrl?: string;
   description?: string;
   submissionDate?: string;
@@ -194,5 +236,7 @@ export interface ImageContribution {
   validationMessage?: string;
   processedDate?: string;
   extractedData?: string;
+  // Add missing field needed by tests
+  imageData?: string;
 }
 

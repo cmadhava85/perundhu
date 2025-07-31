@@ -22,7 +22,7 @@ const mockEnvVars: EnvVars = {
  * Get environment variable safely
  * Works in both browser (Vite) and test (Jest) environments
  */
-export const getEnv = (key: string): string => {
+export const getEnv = (key: string, defaultValue: string = ''): string => {
   // In browser environment, access Vite's import.meta.env directly
   if (typeof window !== 'undefined') {
     // @ts-ignore - Vite's import.meta.env is not typed
@@ -34,25 +34,65 @@ export const getEnv = (key: string): string => {
   
   // For test environment, use Node's process.env
   if (typeof process !== 'undefined' && process.env && typeof process.env[key] !== 'undefined') {
-    return process.env[key] || '';
+    return process.env[key] || defaultValue;
   }
   
   // Finally fall back to mocks (should only happen in tests)
-  return mockEnvVars[key] || '';
+  return mockEnvVars[key] || defaultValue;
 };
 
 /**
- * Get a feature flag value from environment variables
- * @param key - The environment variable key to check
- * @param defaultValue - Default value if the environment variable is not set
- * @returns The boolean value of the feature flag
+ * Environment and feature flag utility functions
  */
-export const getFeatureFlag = (key: string, defaultValue: boolean): boolean => {
-  const value = getEnv(key);
-  // Only return false if the value is explicitly set to 'false'
-  if (value === 'false') return false;
-  // If there's a value of 'true', return true
-  if (value === 'true') return true;
-  // For empty or any other values, use the provided default
-  return defaultValue;
-};
+
+/**
+ * Get the value of a feature flag from environment variables
+ * 
+ * @param flag - Feature flag name
+ * @param defaultValue - Default value if flag is not defined
+ * @returns Boolean indicating if feature is enabled
+ */
+export function getFeatureFlag(flag: string, defaultValue: boolean = false): boolean {
+  const value = getEnv(`VITE_${flag}`);
+  
+  if (value === undefined) {
+    return defaultValue;
+  }
+  
+  return value === 'true' || value === '1';
+}
+
+/**
+ * Check if the application is running in development mode
+ */
+export function isDevelopment(): boolean {
+  return getEnv('NODE_ENV', 'development') === 'development';
+}
+
+/**
+ * Check if the application is running in production mode
+ */
+export function isProduction(): boolean {
+  return getEnv('NODE_ENV') === 'production';
+}
+
+/**
+ * Get the API base URL from environment
+ */
+export function getApiBaseUrl(): string {
+  return getEnv('VITE_API_BASE_URL', 'http://localhost:8080');
+}
+
+/**
+ * Get the analytics API URL from environment
+ */
+export function getAnalyticsApiUrl(): string {
+  return getEnv('VITE_ANALYTICS_API_URL', 'http://localhost:8081/api/v1');
+}
+
+/**
+ * Get the current version of the application
+ */
+export function getAppVersion(): string {
+  return getEnv('VITE_APP_VERSION', '0.0.0');
+}

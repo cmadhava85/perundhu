@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AdminService from '../../services/adminService';
 import RejectModal from './RejectModal';
-import type { ContributionStatus, ImageContribution } from '@/types/contributionTypes';
+import type { ContributionStatus, ImageContribution } from '../../types/contributionTypes';
 
 const ImageContributionList: React.FC = () => {
   const { t } = useTranslation();
@@ -34,10 +34,10 @@ const ImageContributionList: React.FC = () => {
     }
   };
 
-  const handleApprove = async (id: number | undefined) => {
+  const handleApprove = async (id: string | number | undefined) => {
     if (id === undefined) return;
     try {
-      await AdminService.approveImageContribution(id);
+      await AdminService.approveImageContribution(Number(id));
       fetchContributions();
     } catch (error) {
       console.error('Error approving image contribution:', error);
@@ -48,7 +48,7 @@ const ImageContributionList: React.FC = () => {
     if (!selectedContribution || selectedContribution.id === undefined) return;
     
     try {
-      await AdminService.rejectImageContribution(selectedContribution.id, reason);
+      await AdminService.rejectImageContribution(Number(selectedContribution.id), reason);
       setRejectModalOpen(false);
       setSelectedContribution(null);
       fetchContributions();
@@ -57,12 +57,12 @@ const ImageContributionList: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number | undefined) => {
+  const handleDelete = async (id: string | number | undefined) => {
     if (id === undefined) return;
     
     if (window.confirm(t('admin.confirm.deleteContribution', 'Are you sure you want to delete this contribution?'))) {
       try {
-        await AdminService.deleteImageContribution(id);
+        await AdminService.deleteImageContribution(Number(id));
         fetchContributions();
       } catch (error) {
         console.error('Error deleting image contribution:', error);

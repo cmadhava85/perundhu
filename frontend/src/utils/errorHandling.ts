@@ -29,6 +29,14 @@ export const handleError = (error: unknown, defaultMessage = 'An unknown error o
  */
 export const getUserFriendlyErrorMessage = (error: Error | ApiError): { message: string; suggestion: string } => {
   if (error instanceof ApiError) {
+    // Check for specific error codes first
+    if (error.code === 'NO_ROUTES_FOUND') {
+      return {
+        message: 'We couldn\'t find any bus routes between these locations.',
+        suggestion: 'Try different locations or help improve our database by contributing a route if you know one exists.'
+      };
+    }
+    
     switch (error.status) {
       case 404:
         return {

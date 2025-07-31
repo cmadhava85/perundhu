@@ -1,6 +1,35 @@
 import axios from 'axios';
-import type { AxiosInstance } from 'axios';
+import type { AxiosInstance, AxiosResponse, Method } from 'axios';
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
+import { getLocationsOffline } from './offlineService';
+
+/**
+ * Generic request function to be used by other services
+ * @param method HTTP method
+ * @param url API endpoint
+ * @param data Optional request body data
+ * @param params Optional query parameters
+ * @returns Promise with the response
+ */
+export const apiRequest = async <T>(
+  method: Method, 
+  url: string, 
+  data?: any, 
+  params?: any
+): Promise<T> => {
+  try {
+    const response: AxiosResponse<T> = await api.request({
+      method,
+      url,
+      data,
+      params
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`API Request Error (${method} ${url}):`, error);
+    throw new ApiError(`Failed to ${method.toLowerCase()} ${url}. Please try again.`);
+  }
+};
 
 /**
  * Custom error class for API errors with additional properties
@@ -41,14 +70,54 @@ export interface PaginatedResponse<T> {
   hasPrevious: boolean;
 }
 
+// Helper function to safely get environment variables in both Jest and Vite environments
+const getEnv = (key: string, defaultValue: string): string => {
+  // Jest environment (Node.js)
+  if (typeof process !== 'undefined' && process.env && process.env[key]) {
+    return process.env[key] as string;
+  }
+  
+  // Support for Jest test environment with mocked import.meta
+  if (typeof global !== 'undefined' && 
+      (global as any).import && 
+      (global as any).import.meta && 
+      (global as any).import.meta.env && 
+      (global as any).import.meta.env[key]) {
+    return (global as any).import.meta.env[key];
+  }
+  
+  // Vite environment (browser)
+  // Safe access without direct import.meta reference
+  try {
+    // @ts-ignore - For Vite/browser environment
+    if (typeof window !== 'undefined' && window.__VITE_ENV__ && window.__VITE_ENV__[key]) {
+      // @ts-ignore - Get from injected object
+      return window.__VITE_ENV__[key];
+    }
+  } catch (e) {
+    console.warn(`Error accessing environment variable ${key}, using default value`);
+  }
+  
+  return defaultValue;
+};
+
 // Create axios instance with common configuration
 export const createApiInstance = (): AxiosInstance => {
+  // Use the safe environment variable getter
+  const apiUrl = getEnv('VITE_API_URL', getEnv('VITE_API_BASE_URL', 'http://localhost:8080'));
+  
+  // Log API URL to help with debugging
+  console.log(`Creating API instance with baseURL: ${apiUrl}`);
+  
   return axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '', // Use environment variable or empty string
+    baseURL: apiUrl,
     headers: {
       'Content-Type': 'application/json',
     },
-   
+    // Disable caching to always get fresh data from the backend
+    params: {
+      _: new Date().getTime() // Add timestamp to prevent caching
+    }
   });
 };
 
@@ -60,7 +129,7 @@ export { api };
 
 // For testing purposes - allows injecting a mock in test environment only
 export const setApiInstance = (instance: AxiosInstance): void => {
-  if (process.env.NODE_ENV === 'test') {
+  if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'test') {
     api = instance;
   } else {
     console.warn('Attempted to set API instance outside of test environment - ignored');
@@ -110,13 +179,26 @@ export const getOfflineDataAge = (): number | null => {
  */
 export const checkOnlineStatus = async (): Promise<boolean> => {
   try {
-    // Make a HEAD request to a reliable endpoint to check connectivity
-    await api.head('/api/v1/health/status');
+    // Make a HEAD request to Spring Boot's standard health endpoint
+    await api.head('/actuator/health');
+    
+    // If successful, ensure we're in online mode
+    if (isOfflineMode) {
+      console.log('Connection restored. Switching to online mode.');
+    }
     setOfflineMode(false);
     return true;
   } catch (error) {
-    setOfflineMode(true);
-    console.warn('Network connection appears to be offline', error);
+    console.error('Network connection appears to be offline, or backend server is not available', error);
+    
+    // Only set offline mode if we're truly offline - we want to keep trying to reach the real backend
+    // This ensures we don't fall back to mock/stub data in production
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+      setOfflineMode(true);
+    } else {
+      // In production, we don't want to use mock data, so we don't set offline mode
+      console.error('Backend server connection failed in production environment');
+    }
     return false;
   }
 };
@@ -127,15 +209,17 @@ export const checkOnlineStatus = async (): Promise<boolean> => {
  */
 export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
   try {
-    // Changed from '/api/v1/bus-tracking/current' to '/api/v1/bus-tracking/live'
     const response = await api.get('/api/v1/bus-tracking/live');
     
-    // The response structure might be different (Map<Long, BusLocationDTO> vs BusLocation[])
-    // Convert from object map to array if needed
+    // The backend can return either Map<Long, BusLocationDTO> or BusLocation[]
+    // Properly handle both formats to ensure consistent array response
     if (response.data && typeof response.data === 'object' && !Array.isArray(response.data)) {
-      return Object.values(response.data);
+      // If it's an object map (Map<Long, BusLocationDTO>), convert to array
+      return Object.values(response.data).map(location => transformBusLocation(location));
     }
-    return response.data;
+    
+    // If it's already an array, ensure all required fields
+    return Array.isArray(response.data) ? response.data.map(location => transformBusLocation(location)) : [];
   } catch (error) {
     console.error('Error fetching current bus locations:', error);
     if (isOfflineMode) {
@@ -184,6 +268,32 @@ export const searchBuses = async (
   } catch (error) {
     console.error('Error searching buses:', error);
     throw new ApiError('Failed to search for buses. Please try again.');
+  }
+};
+
+/**
+ * Search for buses that pass through specific locations (even as intermediate stops)
+ * This finds buses that have both locations as stops in their route, in the correct order
+ */
+export const searchBusesViaStops = async (
+  fromLocation: Location | number, 
+  toLocation: Location | number
+): Promise<Bus[]> => {
+  try {
+    // Extract location IDs based on what was passed
+    const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
+    const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
+    
+    const response = await api.get('/api/v1/bus-schedules/search/via-stops', {
+      params: {
+        fromLocationId: fromId,
+        toLocationId: toId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error searching buses via stops:', error);
+    throw new ApiError('Failed to search for buses via stops. Please try again.');
   }
 };
 
@@ -489,8 +599,87 @@ export const rejectImageContribution = async (id: string, reason: string) => {
  * @returns Promise with an array of contribution status objects
  */
 export const getContributionStatus = async () => {
-  const response = await axios.get(`/api/v1/contributions/status`);
-  return response.data;
+  try {
+    const response = await api.get(`/api/v1/contributions/status`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Search for locations by name
+ * This API will first check the database for matching locations
+ * If not found or insufficient results, it will use the map API as fallback
+ * 
+ * @param query The search query
+ * @param limit Maximum number of results to return (default 10)
+ * @returns Promise with matching locations
+ */
+export const searchLocations = async (query: string, limit = 10): Promise<Location[]> => {
+  if (!query || query.length < 2) {
+    return [];
+  }
+  
+  try {
+    // First search in database
+    console.log(`searchLocations: Searching for "${query}" in database`);
+    const response = await api.get('/api/v1/locations/search', {
+      params: { 
+        query,
+        limit,
+        source: 'database' // Explicitly request database search first
+      }
+    });
+    
+    const dbResults = response.data;
+    console.log(`searchLocations: Found ${dbResults.length} database results for "${query}"`);
+    
+    // If we have enough results from DB, return them
+    if (dbResults.length >= limit) {
+      return dbResults;
+    }
+    
+    // If database has no results or insufficient results, check map API
+    try {
+      console.log(`searchLocations: Not enough database results, trying map API for "${query}"`);
+      const mapResponse = await api.get('/api/v1/locations/search', {
+        params: { 
+          query,
+          limit: limit - dbResults.length, // Only get what we still need
+          source: 'map' // Explicitly request map API search
+        }
+      });
+      
+      const mapResults = mapResponse.data;
+      console.log(`searchLocations: Found ${mapResults.length} map API results for "${query}"`);
+      
+      // Combine results, prioritizing database results
+      const combinedResults = [...dbResults, ...mapResults].slice(0, limit);
+      return combinedResults;
+    } catch (mapError) {
+      console.warn('Map API search failed, returning database results only:', mapError);
+      return dbResults;
+    }
+  } catch (error) {
+    console.error('Error searching locations:', error);
+    
+    // Try offline data as last resort
+    if (isOfflineMode) {
+      try {
+        const offlineLocations = await getLocationsOffline();
+        console.log(`searchLocations: Using offline data for "${query}"`);
+        // Filter locations based on query
+        return offlineLocations.filter(location => 
+          location.name.toLowerCase().includes(query.toLowerCase())
+        ).slice(0, limit);
+      } catch (offlineError) {
+        console.error('Error getting offline locations:', offlineError);
+      }
+    }
+    
+    throw new ApiError('Failed to search locations. Please try again.');
+  }
 };
 
 /**
@@ -528,3 +717,34 @@ export class APIService {
     }
   }
 }
+
+/**
+ * Transform bus location data to BusLocation type
+ * @param location The raw location data
+ * @returns Transformed BusLocation object
+ */
+export const transformBusLocation = (location: any): BusLocation => {
+  if (!location) {
+    throw new Error('Cannot transform undefined or null bus location');
+  }
+
+  const typedLocation = location as Record<string, any>;
+  
+  return {
+    busId: typedLocation.busId || 0,
+    busName: typedLocation.busName || "",
+    busNumber: typedLocation.busNumber || "",
+    fromLocation: typedLocation.fromLocation || "",
+    toLocation: typedLocation.toLocation || "",
+    latitude: typedLocation.latitude || 0,
+    longitude: typedLocation.longitude || 0,
+    speed: typedLocation.speed || 0,
+    heading: typedLocation.heading || 0,
+    timestamp: typedLocation.timestamp || new Date().toISOString(),
+    lastReportedStopName: typedLocation.lastReportedStopName || "",
+    nextStopName: typedLocation.nextStopName || "",
+    estimatedArrivalTime: typedLocation.estimatedArrivalTime || "",
+    reportCount: typedLocation.reportCount || 0,
+    confidenceScore: typedLocation.confidenceScore || 0,
+  };
+};

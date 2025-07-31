@@ -14,6 +14,7 @@ interface BrowserInfo {
   browserName: string;
   deviceType: 'mobile' | 'tablet' | 'desktop';
   isLandscape: boolean;
+  browser: string; // Added the missing browser property
 }
 
 export const useBrowserDetection = (): BrowserInfo => {
@@ -30,7 +31,8 @@ export const useBrowserDetection = (): BrowserInfo => {
     isUCBrowser: false,
     browserName: 'unknown',
     deviceType: 'desktop',
-    isLandscape: false
+    isLandscape: false,
+    browser: 'unknown' // Initialize the browser property
   });
 
   useEffect(() => {
@@ -42,7 +44,8 @@ export const useBrowserDetection = (): BrowserInfo => {
       const isMobile = mobileRegex.test(userAgent);
       
       // Detect specific platforms
-      const isIOS = /iPhone|iPad|iPod/i.test(userAgent) && !window.MSStream;
+      // Check for iOS but handle MSStream safely for TypeScript
+      const isIOS = /iPhone|iPad|iPod/i.test(userAgent) && !('MSStream' in window);
       const isAndroid = /Android/i.test(userAgent);
       
       // Detect specific browsers
@@ -93,7 +96,8 @@ export const useBrowserDetection = (): BrowserInfo => {
         isUCBrowser,
         browserName,
         deviceType,
-        isLandscape
+        isLandscape,
+        browser: browserName // Set the browser property to browserName for compatibility
       });
     };
     

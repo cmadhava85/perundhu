@@ -1,270 +1,533 @@
 package com.perundhu.infrastructure.service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Location;
-import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.model.Translatable;
 import com.perundhu.domain.model.Translation;
 import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
-import com.perundhu.domain.port.LocationRepository;
+import com.perundhu.infrastructure.config.TranslationProperties;
 
 @Service
 public class TranslationServiceImpl implements TranslationService {
-    
+
     private static final Logger log = LoggerFactory.getLogger(TranslationServiceImpl.class);
     private final TranslationRepository translationRepository;
-    private final LocationRepository locationRepository;
-    
-    public TranslationServiceImpl(TranslationRepository translationRepository, LocationRepository locationRepository) {
+    private final TranslationProperties translationProperties;
+
+    public TranslationServiceImpl(TranslationRepository translationRepository,
+            TranslationProperties translationProperties) {
         this.translationRepository = translationRepository;
-        this.locationRepository = locationRepository;
+        this.translationProperties = translationProperties;
     }
-    
-    @Override
+
     public <T> String getTranslation(Translatable<T> entity, String fieldName, String languageCode) {
+        if (entity == null) {
+            log.warn("Null entity passed to getTranslation");
+            return null;
+        }
+
         String entityType = entity.getEntityType();
         Long entityId = entity.getEntityId();
-        
+
         log.debug("Looking up translation: entity={}, id={}, field={}, lang={}",
-                 entityType, entityId, fieldName, languageCode);
-        
-        // Skip translation lookup for null or empty language codes
+                entityType, entityId, fieldName, languageCode);
+
         if (languageCode == null || languageCode.isEmpty() || "en".equals(languageCode)) {
-            String defaultValue = entity.getDefaultValue(fieldName);
-            log.debug("Using default value for English or null language: {}", defaultValue);
-            return defaultValue;
-        }
-        
-        // 1. Try database translation first
-        Optional<Translation> translation = translationRepository.findTranslation(
-            entityType, entityId, languageCode, fieldName);
-        
-        if (translation.isPresent()) {
-            String value = translation.get().getTranslatedValue();
-            log.debug("Found translation in database: {}", value);
-            return value;
-        }
-        
-        log.debug("No direct translation found in database");
-
-        // 2. For Stop entities, try Location translation
-        if (entity instanceof Stop stop) {
-            Location location = stop.getLocation();
-            if (location != null) {
-                log.debug("Trying location translation for stop with location ID {}", location.getEntityId());
-                
-                Optional<Translation> locationTranslation = translationRepository.findTranslation(
-                    location.getEntityType(), location.getEntityId(), languageCode, fieldName);
-                
-                if (locationTranslation.isPresent()) {
-                    String value = locationTranslation.get().getTranslatedValue();
-                    log.debug("Found location translation: {}", value);
-                    return value;
-                } else {
-                    log.debug("No location translation found");
-                }
-            }
+            return entity.getDefaultValue(fieldName);
         }
 
-        // 3. Try entity's in-memory translations list
-        if (entity.getTranslations() != null && !entity.getTranslations().isEmpty()) {
-            log.debug("Checking entity's {} in-memory translations", entity.getTranslations().size());
-            
-            Optional<String> inMemoryTranslation = entity.getTranslations().stream()
-                .filter(t -> languageCode.equals(t.getLanguageCode()) && fieldName.equals(t.getFieldName()))
+        return translationRepository.findTranslation(entityType, entityId, languageCode, fieldName)
                 .map(Translation::getTranslatedValue)
-                .findFirst();
-                
-            if (inMemoryTranslation.isPresent()) {
-                String value = inMemoryTranslation.get();
-                log.debug("Found in-memory translation: {}", value);
-                return value;
-            }
-            log.debug("No matching in-memory translation found");
-        } else {
-            log.debug("Entity has no in-memory translations");
-        }
-        
-        // 4. For locations directly query the translation table as a last resort
-        if (entity instanceof Location && entityId != null) {
-            log.debug("Directly querying translation table for location entity");
-            List<Translation> allTranslations = translationRepository.findByEntityAndLanguage(
-                "location", entityId, languageCode);
-            
-            log.debug("Found {} direct translations for location", allTranslations.size());
-            
-            Optional<Translation> directTranslation = allTranslations.stream()
-                .filter(t -> fieldName.equals(t.getFieldName()))
-                .findFirst();
-                
-            if (directTranslation.isPresent()) {
-                String value = directTranslation.get().getTranslatedValue();
-                log.debug("Found direct translation: {}", value);
-                return value;
-            }
-        }
-        
-        // 5. Fallback to default value
-        String defaultValue = entity.getDefaultValue(fieldName);
-        log.debug("No translation found, returning default value: {}", defaultValue);
-        return defaultValue;
+                .or(() -> {
+                    Location location = getRelatedLocation(entity);
+                    if (location != null) {
+                        return translationRepository.findTranslation(
+                                location.getEntityType(),
+                                location.getEntityId(),
+                                languageCode,
+                                fieldName)
+                                .map(Translation::getTranslatedValue);
+                    }
+                    return Optional.empty();
+                })
+                .orElse(entity.getDefaultValue(fieldName));
     }
-    
-    @Override
+
+    private <T> Location getRelatedLocation(Translatable<T> entity) {
+        try {
+            if (entity instanceof Location) {
+                return (Location) entity;
+            }
+            return null;
+        } catch (Exception e) {
+            log.warn("Error getting related location for entity: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public Translation getTranslation(String entityType, Long entityId, String fieldName, String language) {
+        if (entityType == null || entityId == null || fieldName == null || language == null) {
+            log.warn("Null parameters passed to getTranslation");
+            return null;
+        }
+
+        return translationRepository.findTranslation(entityType, entityId, language, fieldName).orElse(null);
+    }
+
+    public Map<String, Map<String, String>> getTranslationsForNamespaces(String language, List<String> namespaces) {
+        log.debug("Getting translations for namespaces: lang={}, namespaces={}", language, namespaces);
+
+        Map<String, Map<String, String>> result = new HashMap<>();
+
+        for (String namespace : namespaces) {
+            Map<String, String> namespaceTranslations = getTranslationsForNamespace(language, namespace);
+            if (!namespaceTranslations.isEmpty()) {
+                result.put(namespace, namespaceTranslations);
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, String> getTranslationsForNamespace(String language, String namespace) {
+        log.debug("Getting translations for namespace: lang={}, namespace={}", language, namespace);
+
+        List<Translation> translations = translationRepository.findByEntityTypeAndLanguage(namespace, language);
+        Map<String, String> result = new HashMap<>();
+
+        for (Translation translation : translations) {
+            String key = translation.getFieldName();
+            if (translation.getEntityId() != null) {
+                key = translation.getEntityId() + "." + key;
+            }
+            result.put(key, translation.getTranslatedValue());
+        }
+
+        return result;
+    }
+
     public <T> Map<String, String> getAllTranslations(Translatable<T> entity, String languageCode) {
+        if (entity == null || languageCode == null) {
+            log.warn("Null entity or language code passed to getAllTranslations");
+            return new HashMap<>();
+        }
+
         String entityType = entity.getEntityType();
         Long entityId = entity.getEntityId();
-        
+
         log.debug("Getting all translations for entity={}, id={}, lang={}",
-                 entityType, entityId, languageCode);
-        
-        List<Translation> translations = translationRepository.findByEntityAndLanguage(
-            entityType, entityId, languageCode);
-        
+                entityType, entityId, languageCode);
+
         Map<String, String> translationMap = new HashMap<>();
+
+        List<Translation> translations = translationRepository.findByEntityAndLanguage(
+                entityType, entityId, languageCode);
+
         translations.forEach(t -> {
             translationMap.put(t.getFieldName(), t.getTranslatedValue());
             log.debug("Added translation for {}: {}", t.getFieldName(), t.getTranslatedValue());
         });
-        
-        // Also add in-memory translations if not already present
-        if (entity.getTranslations() != null) {
-            entity.getTranslations().stream()
-                .filter(t -> languageCode.equals(t.getLanguageCode()))
-                .forEach(t -> {
-                    if (!translationMap.containsKey(t.getFieldName())) {
-                        translationMap.put(t.getFieldName(), t.getTranslatedValue());
-                        log.debug("Added in-memory translation for {}: {}", 
-                                 t.getFieldName(), t.getTranslatedValue());
-                    }
-                });
-        }
-        
-        // Directly query translations for locations (safeguard)
-        if ("location".equals(entityType) && translationMap.isEmpty()) {
-            log.debug("Translations map is empty, attempting direct query for location");
-            List<Translation> directTranslations = translationRepository
-                .findByEntityAndLanguage("location", entityId, languageCode);
-                
-            directTranslations.forEach(t -> {
-                translationMap.put(t.getFieldName(), t.getTranslatedValue());
-                log.debug("Added direct translation for {}: {}", t.getFieldName(), t.getTranslatedValue());
+
+        Location location = entity.getRelatedLocation();
+        if (location != null && translationMap.isEmpty()) {
+            log.debug("Checking related location translations for entity={}, location={}",
+                    entityType, location.getEntityId());
+
+            List<Translation> locationTranslations = translationRepository
+                    .findByEntityAndLanguage(location.getEntityType(), location.getEntityId(), languageCode);
+
+            locationTranslations.forEach(t -> {
+                if (!translationMap.containsKey(t.getFieldName())) {
+                    translationMap.put(t.getFieldName(), t.getTranslatedValue());
+                    log.debug("Added related location translation for {}: {}",
+                            t.getFieldName(), t.getTranslatedValue());
+                }
             });
         }
-        
+
         return translationMap;
     }
-    
+
     @Override
+    public <T> Map<String, String> getTranslations(Translatable<T> entity, String languageCode) {
+        // This is an alias for getAllTranslations to maintain compatibility with the
+        // interface
+        return getAllTranslations(entity, languageCode);
+    }
+
+    public Map<String, Map<String, String>> getAllTranslations(String language) {
+        log.debug("Getting all translations for language: {}", language);
+
+        List<Translation> translations = translationRepository.findByLanguage(language);
+        Map<String, Map<String, String>> result = new HashMap<>();
+
+        for (Translation translation : translations) {
+            Map<String, String> entityTranslations = result.computeIfAbsent(
+                    translation.getEntityType(), k -> new HashMap<>());
+
+            String key = translation.getFieldName();
+            if (translation.getEntityId() != null) {
+                key = translation.getEntityType() + "." + translation.getEntityId() + "." + key;
+            }
+
+            entityTranslations.put(key, translation.getTranslatedValue());
+        }
+
+        return result;
+    }
+
+    @Transactional
     public <T> void saveTranslation(Translatable<T> entity, String fieldName, String languageCode, String value) {
+        if (entity == null || fieldName == null || languageCode == null) {
+            log.warn("Null entity, field name, or language code passed to saveTranslation");
+            return;
+        }
+
         String entityType = entity.getEntityType();
         Long entityId = entity.getEntityId();
-        
+
         log.debug("Saving translation: entity={}, id={}, field={}, lang={}, value={}",
-                 entityType, entityId, fieldName, languageCode, value);
-        
+                entityType, entityId, fieldName, languageCode, value);
+
         Optional<Translation> existingTranslation = translationRepository.findTranslation(
-            entityType, entityId, languageCode, fieldName);
-        
+                entityType, entityId, languageCode, fieldName);
+
         if (existingTranslation.isPresent()) {
             Translation translation = existingTranslation.get();
-            Translation updatedTranslation = translation.withTranslatedValue(value);
-            translationRepository.save(updatedTranslation);
+            translation.updateValue(value);
+            translationRepository.save(translation);
             log.debug("Updated existing translation");
         } else {
-            Translation newTranslation = Translation.builder()
-                .entityType(entityType)
-                .entityId(entityId)
-                .languageCode(languageCode)
-                .fieldName(fieldName)
-                .translatedValue(value)
-                .build();
+            Translation newTranslation = new Translation(entityType, entityId, languageCode, fieldName, value);
             translationRepository.save(newTranslation);
             log.debug("Created new translation");
         }
-        
-        // Also update entity's in-memory translations
-        entity.addTranslation(fieldName, languageCode, value);
     }
-    
+
     @Override
-    public <T> void deleteTranslation(Translatable<T> entity, String fieldName, String languageCode) {
+    public <T> void addTranslation(Translatable<T> entity, String fieldName, String languageCode, String value) {
+        // This method is an alias for saveTranslation with the same implementation
+        saveTranslation(entity, fieldName, languageCode, value);
+    }
+
+    public Translation saveTranslation(Translation translation) {
+        if (translation.getId() == null) {
+            return addTranslation(translation);
+        } else {
+            return updateTranslation(translation.getId().getValue(), translation);
+        }
+    }
+
+    public Translation addTranslation(Translation translation) {
+        if (translation == null) {
+            return null;
+        }
+        return translationRepository.save(translation);
+    }
+
+    public Translation updateTranslation(Long id, Translation translation) {
+        if (id == null || translation == null) {
+            return null;
+        }
+
+        // Use the nested TranslationId from Translation class instead of the standalone
+        // TranslationId
+        translation.setId(new Translation.TranslationId(id));
+        return translationRepository.save(translation);
+    }
+
+    @Transactional
+    public <T> boolean deleteTranslation(Translatable<T> entity, String fieldName, String languageCode) {
+        if (entity == null || fieldName == null || languageCode == null) {
+            log.warn("Null entity, field name, or language code passed to deleteTranslation");
+            return false;
+        }
+
         String entityType = entity.getEntityType();
         Long entityId = entity.getEntityId();
-        
+
         log.debug("Deleting translation: entity={}, id={}, field={}, lang={}",
-                 entityType, entityId, fieldName, languageCode);
-        
-        translationRepository.findTranslation(entityType, entityId, languageCode, fieldName)
-            .ifPresent(translationRepository::delete);
+                entityType, entityId, fieldName, languageCode);
+
+        Optional<Translation> translation = translationRepository.findTranslation(
+                entityType, entityId, languageCode, fieldName);
+
+        if (translation.isPresent()) {
+            translationRepository.delete(translation.get());
+            log.debug("Deleted translation");
+            return true;
+        } else {
+            log.warn("Translation not found for deletion");
+            return false;
+        }
+    }
+
+    public boolean deleteTranslation(Long id) {
+        if (id == null) {
+            return false;
+        }
+
+        try {
+            // Use the Translation's ID class and repository's deleteById method
+            translationRepository.delete(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error deleting translation: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public List<String> getSupportedLanguages() {
+        return translationProperties != null ? translationProperties.getSupportedLanguages()
+                : List.of("en", "ta", "hi", "ml", "te", "kn");
+    }
+
+    public Map<String, String> getEntityTranslations(String type, Long id, String language) {
+        if (type == null || id == null) {
+            return Map.of();
+        }
+
+        List<Translation> translations = translationRepository.findByEntityAndLanguage(type, id, language);
+        Map<String, String> result = new HashMap<>();
+
+        for (Translation t : translations) {
+            result.put(t.getFieldName(), t.getTranslatedValue());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean shouldContinueIteration() {
+        log.debug("Checking if translation iteration should continue");
+
+        double completionRate = getTranslationCompletionRate();
+        double errorRate = getTranslationErrorRate();
+        double qualityScore = getTranslationQualityScore();
+
+        return completionRate < translationProperties.getCompletionThreshold()
+                || (errorRate > translationProperties.getErrorThreshold()
+                        && qualityScore < translationProperties.getQualityThreshold());
+    }
+
+    @Override
+    public boolean shouldContinueIteration(int iteration, Double completionRate, String qualityMetric) {
+        log.debug("Checking if translation iteration should continue: iteration={}, completion={}, quality={}",
+                iteration, completionRate, qualityMetric);
+
+        double completion = completionRate != null ? completionRate : getTranslationCompletionRate();
+        double errorRate = getTranslationErrorRate();
+        double qualityScore = getTranslationQualityScore();
+
+        double completionThreshold = translationProperties != null ? translationProperties.getCompletionThreshold()
+                : 0.95;
+        double errorThreshold = translationProperties != null ? translationProperties.getErrorThreshold() : 0.1;
+        double qualityThreshold = translationProperties != null ? translationProperties.getQualityThreshold() : 0.8;
+
+        return completion < completionThreshold
+                || (errorRate > errorThreshold
+                        && qualityScore < qualityThreshold);
+    }
+
+    private double getTranslationCompletionRate() {
+        return 0.85;
+    }
+
+    private double getTranslationErrorRate() {
+        return 0.05;
+    }
+
+    private double getTranslationQualityScore() {
+        return 0.9;
+    }
+
+    @Override
+    public String detectLanguage(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            log.warn("Null or empty text passed to detectLanguage");
+            return "en";
+        }
+
+        log.debug("Detecting language for text: {}", text.length() > 50 ? text.substring(0, 50) + "..." : text);
+
+        if (text.matches(".*[\\u0B80-\\u0BFF].*")) {
+            log.debug("Detected Tamil characters");
+            return "ta";
+        }
+
+        if (text.matches(".*[\\u0900-\\u097F].*")) {
+            log.debug("Detected Hindi/Devanagari characters");
+            return "hi";
+        }
+
+        if (text.matches(".*[\\u0D00-\\u0D7F].*")) {
+            log.debug("Detected Malayalam characters");
+            return "ml";
+        }
+
+        if (text.matches(".*[\\u0C00-\\u0C7F].*")) {
+            log.debug("Detected Telugu characters");
+            return "te";
+        }
+
+        if (text.matches(".*[\\u0C80-\\u0CFF].*")) {
+            log.debug("Detected Kannada characters");
+            return "kn";
+        }
+
+        log.debug("No specific language detected, defaulting to English");
+        return "en";
+    }
+
+    @Override
+    public boolean isAvailable() {
+        try {
+            log.debug("Checking translation service availability");
+
+            translationRepository.findByLanguage("en");
+
+            log.debug("Translation service is available");
+            return true;
+        } catch (Exception e) {
+            log.error("Translation service is not available: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public String translate(String text, String sourceLanguage, String targetLanguage) {
+        if (text == null || text.trim().isEmpty()) {
+            log.warn("Null or empty text passed to translate");
+            return text;
+        }
+
+        if (sourceLanguage == null || targetLanguage == null) {
+            log.warn("Null source or target language passed to translate");
+            return text;
+        }
+
+        log.debug("Translating text from {} to {}: {}", sourceLanguage, targetLanguage,
+                text.length() > 50 ? text.substring(0, 50) + "..." : text);
+
+        if (sourceLanguage.equals(targetLanguage)) {
+            return text;
+        }
+
+        if ("en".equals(targetLanguage)) {
+            return text;
+        }
+
+        try {
+            List<Translation> translations = translationRepository.findByLanguage(targetLanguage);
+            for (Translation translation : translations) {
+                if (text.equals(translation.getTranslatedValue()) || text.equals(translation.getFieldName())) {
+                    return translation.getTranslatedValue();
+                }
+            }
+
+            log.debug("No translation found for text, returning original");
+            return text;
+        } catch (Exception e) {
+            log.error("Error during translation: {}", e.getMessage());
+            return text;
+        }
     }
 
     @Override
     public Map<String, Object> getEntityTranslations(String entityType, Long entityId) {
-        log.debug("Getting translations for entity type: {} with ID: {}", entityType, entityId);
-        
+        if (entityType == null || entityId == null) {
+            log.warn("Null entity type or entity ID passed to getEntityTranslations");
+            return new HashMap<>();
+        }
+
+        log.debug("Getting entity translations for entityType={}, entityId={}", entityType, entityId);
+
         Map<String, Object> result = new HashMap<>();
         result.put("entityType", entityType);
         result.put("entityId", entityId);
-        
-        Map<String, Map<String, String>> translations = new HashMap<>();
-        translationRepository.findByEntity(entityType, entityId)
-            .forEach(translation -> {
-                translations.computeIfAbsent(translation.getLanguageCode(), k -> new HashMap<>())
-                           .put(translation.getFieldName(), translation.getTranslatedValue());
-            });
-        
-        result.put("translations", translations);
-        return result;
-    }
 
-    @Override
-    public Map<String, String> getTranslationsForNamespace(String language, String namespace) {
-        log.debug("Getting translations for language: {} and namespace: {}", language, namespace);
         Map<String, String> translations = new HashMap<>();
-        
-        translationRepository.findByEntityAndLanguage(namespace, null, language)
-            .forEach(translation -> 
-                translations.put(translation.getFieldName(), translation.getTranslatedValue()));
-        
-        return translations;
-    }
 
-    @Override
-    public Map<String, Map<String, String>> getTranslationsForNamespaces(String language, List<String> namespaces) {
-        log.debug("Getting translations for language: {} and namespaces: {}", language, namespaces);
-        Map<String, Map<String, String>> result = new HashMap<>();
-        
-        namespaces.forEach(namespace -> {
-            Map<String, String> translations = getTranslationsForNamespace(language, namespace);
-            if (!translations.isEmpty()) {
-                result.put(namespace, translations);
-            }
-        });
-        
+        List<Translation> entityTranslations = translationRepository.findByEntityAndLanguage(entityType, entityId,
+                null);
+
+        for (Translation translation : entityTranslations) {
+            String key = translation.getLanguageCode() + "." + translation.getFieldName();
+            translations.put(key, translation.getTranslatedValue());
+        }
+
+        result.put("translations", translations);
+
+        log.debug("Found {} translations for entity {}:{}", translations.size(), entityType, entityId);
         return result;
     }
 
     @Override
-    public Map<String, Map<String, String>> getAllTranslations(String language) {
-        log.debug("Getting all translations for language: {}", language);
-        Map<String, Map<String, String>> result = new HashMap<>();
-        
-        translationRepository.findByEntityAndLanguage(null, null, language)
-            .forEach(translation -> {
-                result.computeIfAbsent(translation.getEntityType(), k -> new HashMap<>())
-                      .put(translation.getFieldName(), translation.getTranslatedValue());
+    public Optional<Translatable> getTranslatable(String entityType, Long entityId) {
+        log.debug("Fetching translatable entity: type={}, id={}", entityType, entityId);
+
+        // Implementation depends on how you map entity types to actual entities
+        // This is a simplified placeholder implementation
+        return Optional.empty();
+    }
+
+    @Override
+    public <T> void saveTranslations(Translatable<T> entity, Map<String, Map<String, String>> translations) {
+        if (entity == null || translations == null) {
+            log.warn("Null entity or translations passed to saveTranslations");
+            return;
+        }
+
+        String entityType = entity.getEntityType();
+        Long entityId = entity.getEntityId();
+
+        log.debug("Saving multiple translations for entity={}, id={}", entityType, entityId);
+
+        // Process translations by language code and field name
+        translations.forEach((languageCode, fieldTranslations) -> {
+            fieldTranslations.forEach((fieldName, value) -> {
+                saveTranslation(entity, fieldName, languageCode, value);
+                log.debug("Saved translation for language={}, field={}", languageCode, fieldName);
             });
-        
-        return result;
+        });
+    }
+
+    @Override
+    public <T> Set<String> getAvailableLanguages(Translatable<T> entity) {
+        if (entity == null) {
+            log.warn("Null entity passed to getAvailableLanguages");
+            return new HashSet<>(getSupportedLanguages());
+        }
+
+        String entityType = entity.getEntityType();
+        Long entityId = entity.getEntityId();
+
+        log.debug("Getting available languages for entity={}, id={}", entityType, entityId);
+
+        // Find all translations for this entity
+        List<Translation> entityTranslations = translationRepository.findByEntity(entityType, entityId);
+
+        // Extract unique language codes
+        Set<String> languages = entityTranslations.stream()
+                .map(Translation::getLanguageCode)
+                .collect(java.util.stream.Collectors.toSet());
+
+        // Always ensure English is available as fallback
+        languages.add("en");
+
+        return languages;
     }
 }

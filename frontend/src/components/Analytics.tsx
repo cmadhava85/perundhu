@@ -5,6 +5,7 @@ import {
   CartesianGrid, Tooltip, Legend, Cell, ResponsiveContainer 
 } from 'recharts';
 import type { Location } from '../types';
+import { api } from '../services/api'; // Import the API instance
 
 // Define analytics data interfaces
 interface DelayData {
@@ -64,23 +65,28 @@ const Analytics: React.FC<AnalyticsProps> = ({ fromLocation, toLocation, busId }
       setError(null);
       
       try {
-        // Normally we would fetch from API with:
-        // const response = await api.get('/analytics/data', { params: { timeRange, fromLocation, toLocation, busId } });
+        // Fetch real analytics data from the backend Java 17 API
+        const params: Record<string, any> = { timeRange };
+        
+        // Add optional filter parameters if provided
+        if (fromLocation) params.fromLocationId = fromLocation.id;
+        if (toLocation) params.toLocationId = toLocation.id;
+        if (busId) params.busId = busId;
+        
+        // Make API calls to fetch the different analytics datasets
+        const [delayResponse, punctualityResponse, performanceResponse, crowdResponse] = await Promise.all([
+          api.get('/api/v1/analytics/delay', { params }),
+          api.get('/api/v1/analytics/punctuality', { params }),
+          api.get('/api/v1/analytics/performance', { params }),
+          api.get('/api/v1/analytics/crowding', { params })
+        ]);
 
-        // For now we'll use mock data for demonstration
-        // In a real implementation, we would fetch this from the backend API
-        setTimeout(() => {
-          const mockDelayData: DelayData[] = generateMockDelayData();
-          const mockPunctualityData: PunctualityData[] = generateMockPunctualityData();
-          const mockRoutePerformance: RoutePerformanceData[] = generateMockRoutePerformance();
-          const mockCrowdData: CrowdData[] = generateMockCrowdData();
-          
-          setDelayData(mockDelayData);
-          setPunctualityData(mockPunctualityData);
-          setRoutePerformance(mockRoutePerformance);
-          setCrowdData(mockCrowdData);
-          setIsLoading(false);
-        }, 800);
+        // Set the data from API responses
+        setDelayData(delayResponse.data);
+        setPunctualityData(punctualityResponse.data);
+        setRoutePerformance(performanceResponse.data);
+        setCrowdData(crowdResponse.data);
+        setIsLoading(false);
       } catch (err) {
         console.error('Error fetching analytics data:', err);
         setError(t('error.networkError'));
@@ -90,44 +96,6 @@ const Analytics: React.FC<AnalyticsProps> = ({ fromLocation, toLocation, busId }
 
     fetchAnalyticsData();
   }, [timeRange, fromLocation, toLocation, busId, t]);
-
-  // Generate mock data functions for demonstration
-  const generateMockDelayData = (): DelayData[] => {
-    return Array.from({ length: 24 }, (_, i) => ({
-      hour: i,
-      averageDelay: Math.floor(Math.random() * 15) + (i > 7 && i < 20 ? 5 : 2),
-      busCount: Math.floor(Math.random() * 10) + (i > 7 && i < 20 ? 15 : 5),
-    }));
-  };
-
-  const generateMockPunctualityData = (): PunctualityData[] => {
-    return [
-      { category: 'early', value: 10, color: '#82ca9d' },
-      { category: 'onTime', value: 65, color: '#8884d8' },
-      { category: 'delayed', value: 20, color: '#ffc658' },
-      { category: 'veryDelayed', value: 5, color: '#ff8042' },
-    ];
-  };
-
-  const generateMockRoutePerformance = (): RoutePerformanceData[] => {
-    const dates = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return dates.map(date => ({
-      date,
-      onTime: Math.floor(Math.random() * 30) + 60,
-      delayed: Math.floor(Math.random() * 20) + 10,
-      early: Math.floor(Math.random() * 10) + 5,
-      canceled: Math.floor(Math.random() * 3),
-    }));
-  };
-
-  const generateMockCrowdData = (): CrowdData[] => {
-    return Array.from({ length: 24 }, (_, i) => ({
-      hour: i,
-      averageCrowd: Math.floor(Math.random() * 70) + 
-        (i >= 7 && i <= 9 ? 80 : 0) + 
-        (i >= 17 && i <= 19 ? 90 : 0),
-    }));
-  };
 
   if (isLoading) {
     return (

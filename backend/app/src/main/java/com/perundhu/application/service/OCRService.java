@@ -1,8 +1,8 @@
 package com.perundhu.application.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,10 +17,17 @@ import com.perundhu.domain.model.RouteContribution;
  * Service for optical character recognition (OCR) on bus schedule images
  */
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class OCRService {
     
+    private static final Logger log = LoggerFactory.getLogger(OCRService.class);
+
+    /**
+     * Default constructor as there are no dependencies to inject
+     */
+    public OCRService() {
+        // No dependencies to inject
+    }
+
     /**
      * Extract text from an image using OCR
      * 
@@ -60,17 +67,22 @@ public class OCRService {
     public RouteContribution parseScheduleText(String text) {
         log.info("Parsing extracted schedule text: {}", text.substring(0, Math.min(100, text.length())));
         
-        RouteContribution contribution = new RouteContribution();
-        
+        // Initialize variables to hold parsed data
+        String busNumber = "Unknown";
+        String busName = "Express Bus";
+        String fromLocationName = null;
+        String toLocationName = null;
+        String departureTime = "08:00";
+        String arrivalTime = "12:00";
+
         // Extract bus number
         Pattern busNumberPattern = Pattern.compile("Bus\\s+(?:Number|No|#)\\s*:?\\s*([A-Z0-9\\-]+)", 
             Pattern.CASE_INSENSITIVE);
         Matcher busNumberMatcher = busNumberPattern.matcher(text);
         if (busNumberMatcher.find()) {
-            contribution.setBusNumber(busNumberMatcher.group(1).trim());
+            busNumber = busNumberMatcher.group(1).trim();
         } else {
             log.warn("Could not extract bus number from text");
-            contribution.setBusNumber("Unknown");
         }
         
         // Extract bus name
@@ -78,10 +90,9 @@ public class OCRService {
             Pattern.CASE_INSENSITIVE);
         Matcher busNameMatcher = busNamePattern.matcher(text);
         if (busNameMatcher.find()) {
-            contribution.setBusName(busNameMatcher.group(1).trim());
+            busName = busNameMatcher.group(1).trim();
         } else {
             log.warn("Could not extract bus name from text");
-            contribution.setBusName("Express Bus");
         }
         
         // Extract source and destination
@@ -90,8 +101,8 @@ public class OCRService {
         Matcher routeMatcher = routePattern.matcher(text);
         
         if (routeMatcher.find()) {
-            contribution.setFromLocationName(routeMatcher.group(1).trim());
-            contribution.setToLocationName(routeMatcher.group(2).trim());
+            fromLocationName = routeMatcher.group(1).trim();
+            toLocationName = routeMatcher.group(2).trim();
         } else {
             // Try alternate pattern with FROM-TO format
             Pattern altRoutePattern = Pattern.compile("([\\w\\s]+)\\s*-\\s*([\\w\\s]+)", 
@@ -99,8 +110,8 @@ public class OCRService {
             Matcher altRouteMatcher = altRoutePattern.matcher(text);
             
             if (altRouteMatcher.find()) {
-                contribution.setFromLocationName(altRouteMatcher.group(1).trim());
-                contribution.setToLocationName(altRouteMatcher.group(2).trim());
+                fromLocationName = altRouteMatcher.group(1).trim();
+                toLocationName = altRouteMatcher.group(2).trim();
             } else {
                 log.warn("Could not extract source and destination from text");
                 throw new IllegalArgumentException("Could not determine source and destination from schedule");
@@ -113,12 +124,10 @@ public class OCRService {
         Matcher timeMatcher = timePattern.matcher(text);
         
         if (timeMatcher.find()) {
-            contribution.setDepartureTime(standardizeTime(timeMatcher.group(1).trim()));
-            contribution.setArrivalTime(standardizeTime(timeMatcher.group(2).trim()));
+            departureTime = standardizeTime(timeMatcher.group(1).trim());
+            arrivalTime = standardizeTime(timeMatcher.group(2).trim());
         } else {
             log.warn("Could not extract departure and arrival times from text");
-            contribution.setDepartureTime("08:00");
-            contribution.setArrivalTime("12:00");
         }
         
         // Extract stops (if any)
@@ -129,33 +138,65 @@ public class OCRService {
         Matcher stopsMatcher = stopsPattern.matcher(text);
         
         while (stopsMatcher.find()) {
-            RouteContribution.StopContribution stop = new RouteContribution.StopContribution();
-            stop.setStopOrder(Integer.parseInt(stopsMatcher.group(1).trim()));
-            stop.setName(stopsMatcher.group(2).trim());
-            
+            int stopOrder = Integer.parseInt(stopsMatcher.group(1).trim());
+            String stopName = stopsMatcher.group(2).trim();
+
             String arrTime = stopsMatcher.group(3);
-            if (arrTime != null) {
-                stop.setArrivalTime(standardizeTime(arrTime.trim()));
-            } else {
-                stop.setArrivalTime("00:00"); // Default
-            }
-            
+            String stopArrivalTime = arrTime != null ? standardizeTime(arrTime.trim()) : "00:00";
+
             String depTime = stopsMatcher.group(4);
-            if (depTime != null) {
-                stop.setDepartureTime(standardizeTime(depTime.trim()));
-            } else {
-                stop.setDepartureTime("00:00"); // Default
-            }
-            
+            String stopDepartureTime = depTime != null ? standardizeTime(depTime.trim()) : "00:00";
+
+            // Create StopContribution using constructor (assuming it's a record)
+            RouteContribution.StopContribution stop = new RouteContribution.StopContribution(
+                stopName,
+                null, // nameSecondary - not available from OCR
+                null, // latitude - not available from OCR
+                null, // longitude - not available from OCR
+                LocalTime.parse(stopArrivalTime),
+                LocalTime.parse(stopDepartureTime),
+                stopOrder
+            );
+
             stops.add(stop);
         }
         
-        contribution.setStops(stops);
-        log.info("Successfully parsed schedule information: {} to {} ({})", 
-            contribution.getFromLocationName(), 
-            contribution.getToLocationName(),
-            contribution.getBusNumber());
-            
+        // Convert time strings to LocalTime
+        LocalTime depTime = LocalTime.parse(departureTime);
+        LocalTime arrTime = LocalTime.parse(arrivalTime);
+
+        // Create RouteContribution using constructor
+        RouteContribution contribution = new RouteContribution(
+            null, // id - will be generated
+            null, // userId - not available from OCR
+            busNumber,
+            busName,
+            fromLocationName,
+            toLocationName,
+            null, // busNameSecondary
+            null, // fromLocationNameSecondary
+            null, // toLocationNameSecondary
+            null, // sourceLanguage
+            null, // fromLatitude - not available from OCR
+            null, // fromLongitude - not available from OCR
+            null, // toLatitude - not available from OCR
+            null, // toLongitude - not available from OCR
+            depTime,
+            arrTime,
+            null, // scheduleInfo
+            null, // status - will be set by service
+            null, // submissionDate - will be set by service
+            null, // processedDate
+            null, // additionalNotes
+            null, // validationMessage
+            stops
+        );
+
+        log.info("Successfully parsed schedule information: {} to {} ({})",
+            fromLocationName,
+            toLocationName,
+            busNumber);
+
         return contribution;
     }
     
@@ -208,3 +249,4 @@ public class OCRService {
                "Stop 3: Salem          Arr: 01:15 PM    Dep: 01:30 PM\n";
     }
 }
+
