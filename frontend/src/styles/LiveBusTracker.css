@@ -1,0 +1,217 @@
+/* LiveBusTracker Component Styles */
+
+.live-tracker-section {
+  margin-bottom: 24px;
+}
+
+.live-tracker-section h2 {
+  margin-bottom: 16px;
+}
+
+/* Loading styles */
+.live-tracker-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-top: 4px solid #4CAF50;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error message */
+.live-tracker-error {
+  color: #FF0000;
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+/* Info panels */
+.live-tracker-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* Confidence legend */
+.confidence-legend {
+  flex: 1;
+  max-width: 60%;
+}
+
+.confidence-legend h4 {
+  margin-bottom: 8px;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  margin-bottom: 8px;
+}
+
+.legend-color {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 3px;
+}
+
+/* Active trackers */
+.active-trackers {
+  text-align: right;
+}
+
+.active-trackers h4 {
+  margin-bottom: 8px;
+}
+
+.trackers-count {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.trackers-label {
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+/* Selected bus info panel */
+.bus-info-panel {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  max-width: 300px;
+  z-index: 1000;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+}
+
+.bus-info-content h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.info-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.info-value {
+  font-weight: 600;
+}
+
+/* Confidence indicator */
+.confidence-indicator {
+  margin-top: 15px;
+}
+
+.confidence-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.confidence-bar-bg {
+  background-color: #f0f0f0;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.confidence-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.confidence-value {
+  font-weight: 600;
+  float: right;
+}
+
+/* Static buses info */
+.static-buses-info {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+/* No buses message */
+.no-buses-message {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.no-buses-message p:first-child {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* Refresh info */
+.refresh-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  color: #666;
+}
+
+.refresh-icon {
+  font-size: 18px;
+  margin-right: 8px;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

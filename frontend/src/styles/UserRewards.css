@@ -1,0 +1,263 @@
+.user-rewards-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.rewards-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.rewards-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.rewards-header p {
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rewards-summary {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.rewards-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-width: 200px;
+  flex: 1;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.rewards-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rewards-card h3 {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.rewards-card .count {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4a6eb5;
+  margin-bottom: 0.5rem;
+}
+
+.rewards-card .label {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.rewards-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.rewards-button {
+  background-color: #4a6eb5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.rewards-button:hover {
+  background-color: #3a5e9f;
+}
+
+.rewards-button.secondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.rewards-button.secondary:hover {
+  background-color: #e0e0e0;
+}
+
+.rewards-history {
+  margin-top: 2rem;
+}
+
+.rewards-history h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.history-table th {
+  background-color: #f5f5f5;
+  color: #555;
+  font-weight: 600;
+}
+
+.history-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.points-badge {
+  display: inline-block;
+  background-color: #4a6eb5;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.badge-positive {
+  background-color: #4caf50;
+}
+
+.badge-negative {
+  background-color: #f44336;
+}
+
+.redeem-section {
+  margin-top: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.redeem-section h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.redeem-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.redeem-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+  min-width: 250px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.redeem-card:hover {
+  transform: translateY(-5px);
+}
+
+.redeem-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.redeem-card p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.redeem-card .points-required {
+  color: #4a6eb5;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.redeem-card .redeem-button {
+  background-color: #4a6eb5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.redeem-card .redeem-button:hover {
+  background-color: #3a5e9f;
+}
+
+.redeem-card .redeem-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .rewards-summary {
+    flex-direction: column;
+  }
+  
+  .rewards-card {
+    margin-bottom: 1rem;
+  }
+  
+  .rewards-actions {
+    flex-direction: column;
+  }
+  
+  .history-table thead {
+    display: none;
+  }
+  
+  .history-table td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+  
+  .history-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: 600;
+    text-align: left;
+  }
+  
+  .history-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+  }
+}
