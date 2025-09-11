@@ -1,0 +1,62 @@
+package com.perundhu.domain.port;
+
+import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.Location;
+
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Repository interface for Bus entities following hexagonal architecture principles.
+ * This is a domain port (output port) that defines the contract for bus data access.
+ */
+public interface BusRepository {
+  Optional<Bus> findById(Bus.BusId id);
+
+  List<Bus> findByFromAndToLocation(Location from, Location to);
+
+  List<Bus> findByFromLocation(Location from);
+
+  Bus save(Bus bus);
+
+  void delete(Bus.BusId id);
+
+  boolean existsByBusNumberAndFromAndToLocations(String busNumber, String fromLocationName,
+                  String toLocationName);
+
+  boolean existsByBusNumberAndFromAndToLocationsAndTiming(String busNumber, String fromLocationName,
+                  String toLocationName, LocalTime departureTime, LocalTime arrivalTime);
+
+  List<Bus> findAllBuses();
+
+  List<Bus> findAll();
+
+  List<Bus> findBusesBetweenLocations(Long fromLocationId, Long toLocationId);
+
+  Optional<Bus> findById(Long busId);
+
+  List<Bus> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId);
+
+  /**
+   * Find buses that continue beyond the destination city
+   * This finds buses where fromLocation and toLocation are both stops,
+   * but toLocation is NOT the final destination
+   * 
+   * @param fromLocationId The ID of the origin location
+   * @param toLocationId   The ID of the intermediate destination location
+   * @return List of buses that pass through toLocation and continue further
+   */
+  List<Bus> findBusesContinuingBeyondDestination(Long fromLocationId, Long toLocationId);
+
+  List<Bus> findByBusNumber(String busNumber);
+
+  List<Bus> findByCategory(String category);
+
+  Optional<Bus> findByBusNumberAndRoute(String busNumber, Location.LocationId fromLocationId,
+                  Location.LocationId toLocationId);
+
+  List<Bus> findInService();
+
+  long countByCategory(String category);
+}
