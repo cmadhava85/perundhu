@@ -29,7 +29,10 @@
     "noUnusedParameters": false, // Changed to false to ignore unused parameters
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    
+    /* Vite environment support */
+    "types": ["vite/client", "vitest/globals"]
   },
   "include": ["src"],
   "exclude": [

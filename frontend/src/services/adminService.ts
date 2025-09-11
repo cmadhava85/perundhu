@@ -1,88 +1,111 @@
-import { api } from './api';
-// Fix the import path to ensure it resolves correctly
+import axios from 'axios';
 import type { RouteContribution, ImageContribution } from '../types/contributionTypes';
+import AuthService from './authService';
+
+// Use empty base URL since Vite proxy handles /api routing
+const API_URL = '';
 
 /**
- * Service for admin operations on contributions
- * Updated to align with Java 17 backend implementation
+ * Service to handle admin operations with development admin authentication
  */
 const AdminService = {
+  // Helper method to get admin token for development
+  getAdminToken: (): string => {
+    // For development, use a special admin token that the MockJwtDecoder will recognize
+    const existingToken = AuthService.getToken();
+    if (existingToken) {
+      return existingToken;
+    }
+    // Return development admin token
+    return 'dev-admin-token';
+  },
+
   // Route contribution methods
   getRouteContributions: async (): Promise<RouteContribution[]> => {
-    const response = await api.get('/api/admin/contributions/routes');
+    const token = AdminService.getAdminToken();
+    const response = await axios.get(`${API_URL}/api/admin/contributions/routes`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   },
 
   getPendingRouteContributions: async (): Promise<RouteContribution[]> => {
-    const response = await api.get('/api/admin/contributions/routes/pending');
+    const token = AdminService.getAdminToken();
+    const response = await axios.get(`${API_URL}/api/admin/contributions/routes/pending`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   },
 
-  approveRouteContribution: async (id: number, notes?: string): Promise<RouteContribution> => {
-    const response = await api.post(`/api/admin/contributions/routes/${id}/approve`, 
-      notes ? { notes } : undefined);
-    return response.data;
-  },
-
-  rejectRouteContribution: async (id: number, notes?: string): Promise<RouteContribution> => {
-    const response = await api.post(`/api/admin/contributions/routes/${id}/reject`, 
-      notes ? { notes } : undefined);
-    return response.data;
-  },
-
-  deleteRouteContribution: async (id: number): Promise<void> => {
-    await api.delete(`/api/admin/contributions/routes/${id}`);
-  },
-
-  // Image contribution methods
-  getImageContributions: async (): Promise<ImageContribution[]> => {
-    const response = await api.get('/api/admin/contributions/images');
-    return response.data;
-  },
-
-  getPendingImageContributions: async (): Promise<ImageContribution[]> => {
-    const response = await api.get('/api/admin/contributions/images/pending');
-    return response.data;
-  },
-
-  approveImageContribution: async (id: number, notes?: string): Promise<ImageContribution> => {
-    const response = await api.post(`/api/admin/contributions/images/${id}/approve`, 
-      notes ? { notes } : undefined);
-    return response.data;
-  },
-
-  rejectImageContribution: async (id: number, reason?: string): Promise<ImageContribution> => {
-    const response = await api.post(`/api/admin/contributions/images/${id}/reject`, 
-      reason ? { reason } : undefined);
-    return response.data;
-  },
-
-  deleteImageContribution: async (id: number): Promise<void> => {
-    await api.delete(`/api/admin/contributions/images/${id}`);
-  },
-
-  /**
-   * Update status for an image contribution with action pattern matching
-   * Aligns with the Java 17 backend implementation using ContributionAction record
-   */
-  updateImageContributionStatus: async (
-    id: number, 
-    action: 'APPROVE' | 'REJECT', 
-    notes?: string
-  ): Promise<ImageContribution> => {
-    const response = await api.post(
-      `/api/admin/contributions/images/${id}/status`, 
-      { action, notes }
+  approveRouteContribution: async (id: number): Promise<RouteContribution> => {
+    const token = AdminService.getAdminToken();
+    const response = await axios.post(
+      `${API_URL}/api/admin/contributions/routes/${id}/approve`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data;
   },
 
-  /**
-   * Get admin dashboard statistics
-   */
-  getAdminStats: async (): Promise<Record<string, any>> => {
-    const response = await api.get('/api/admin/contributions/stats');
+  rejectRouteContribution: async (id: number, reason: string): Promise<RouteContribution> => {
+    const token = AdminService.getAdminToken();
+    const response = await axios.post(
+      `${API_URL}/api/admin/contributions/routes/${id}/reject`, 
+      { reason },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     return response.data;
+  },
+
+  deleteRouteContribution: async (id: number): Promise<void> => {
+    const token = AdminService.getAdminToken();
+    await axios.delete(`${API_URL}/api/admin/contributions/routes/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  },
+
+  // Image contribution methods
+  getImageContributions: async (): Promise<ImageContribution[]> => {
+    const token = AdminService.getAdminToken();
+    const response = await axios.get(`${API_URL}/api/admin/contributions/images`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  },
+
+  getPendingImageContributions: async (): Promise<ImageContribution[]> => {
+    const token = AdminService.getAdminToken();
+    const response = await axios.get(`${API_URL}/api/admin/contributions/images/pending`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  },
+
+  approveImageContribution: async (id: number): Promise<ImageContribution> => {
+    const token = AdminService.getAdminToken();
+    const response = await axios.post(
+      `${API_URL}/api/admin/contributions/images/${id}/approve`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return response.data;
+  },
+
+  rejectImageContribution: async (id: number, reason: string): Promise<ImageContribution> => {
+    const token = AdminService.getAdminToken();
+    const response = await axios.post(
+      `${API_URL}/api/admin/contributions/images/${id}/reject`,
+      { reason },
+      { headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  },
+
+  deleteImageContribution: async (id: number): Promise<void> => {
+    const token = AdminService.getAdminToken();
+    await axios.delete(`${API_URL}/api/admin/contributions/images/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   }
 };
 

@@ -1,20 +1,28 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useCallback } from 'react';
 import { 
-  searchBuses as apiSearchBuses, 
-  searchBusesViaStops as apiSearchBusesViaStops,
-  getStops, 
-  getConnectingRoutes as apiGetConnectingRoutes, 
-  ApiError 
+  searchBuses as apiSearchBuses
 } from '../services/api';
+import { OSMDiscoveryService, type OSMBusStop, type OSMBusRoute } from '../services/osmDiscoveryService';
 import type { Bus, Location, Stop, ConnectingRoute } from '../types';
+
+// Error class definition
+export class ApiError extends Error {
+  message: string;
+  status: number;
+  errorCode: string;
+  
+  constructor(message: string, status: number, errorCode: string) {
+    super(message);
+    this.message = message;
+    this.status = status;
+    this.errorCode = errorCode;
+  }
+}
 
 /**
  * Custom hook for managing bus search state and operations
  */
 const useBusSearch = () => {
-  const { t, i18n } = useTranslation();
-  
   // Search results state
   const [buses, setBuses] = useState<Bus[]>([]);
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
@@ -23,197 +31,81 @@ const useBusSearch = () => {
   const [error, setError] = useState<Error | ApiError | null>(null);
   const [connectingRoutes, setConnectingRoutes] = useState<ConnectingRoute[]>([]);
   const [includeIntermediateStops, setIncludeIntermediateStops] = useState<boolean>(true);
+  const [includeContinuingBuses, setIncludeContinuingBuses] = useState<boolean>(true);
+  const [osmStops, setOsmStops] = useState<OSMBusStop[]>([]);
+  const [osmRoutes, setOsmRoutes] = useState<OSMBusRoute[]>([]);
+  const [showOSMData, setShowOSMData] = useState<boolean>(false);
 
-  /**
-   * Reset all search results
-   */
-  const resetResults = useCallback(() => {
-    setBuses([]);
-    setSelectedBusId(null);
-    setStopsMap({});
-    setError(null);
-    setConnectingRoutes([]);
-  }, []);
-
-  /**
-   * Search for buses between two locations
-   */
-  const searchBuses = useCallback(async (fromLocation: Location, toLocation: Location) => {
-    if (!fromLocation || !toLocation) return;
-    
+  // Search functions
+  const searchBuses = useCallback(async (
+    fromLocation: Location,
+    toLocation: Location,
+    includeContinuing: boolean = includeContinuingBuses
+  ): Promise<void> => {
     setLoading(true);
     setError(null);
     
     try {
-      let busData: Bus[] = [];
-      
-      // Always get direct buses between locations
-      const directBusData = await apiSearchBuses(fromLocation, toLocation);
-      
-      if (includeIntermediateStops) {
-        // If intermediate stops is enabled, also search for buses that have these locations as stops
-        const viaBusData = await apiSearchBusesViaStops(fromLocation, toLocation);
-        
-        // Create a map of bus IDs we've already added to avoid duplicates
-        const busIdMap = new Map<number, boolean>();
-        
-        // Add all direct buses first
-        directBusData.forEach(bus => {
-          busData.push(bus);
-          busIdMap.set(bus.id, true);
-        });
-        
-        // Then add any via buses that aren't already in our list
-        viaBusData.forEach(bus => {
-          if (!busIdMap.has(bus.id)) {
-            busData.push(bus);
-          }
-        });
-      } else {
-        // If intermediate stops is disabled, just use direct buses
-        busData = directBusData;
-      }
-      
-      // If no direct buses or via buses, try connecting routes
-      if (busData.length === 0) {
-        // Pass only location IDs instead of full location objects
-        const connectingData = await apiGetConnectingRoutes(fromLocation.id, toLocation.id);
-        setBuses([]);
-        setConnectingRoutes(connectingData);
-        
-        if (connectingData.length === 0) {
-          const noRoutesError = new ApiError(
-            t('error.noRoutesFound', 'No routes found between these locations.'), 
-            404,
-            "NO_ROUTES_FOUND"
-          );
-          setError(noRoutesError);
-          return; // Don't throw, just set the error state
-        }
-      } else {
-        setBuses(busData);
-        setConnectingRoutes([]);
-      }
+      const result = await apiSearchBuses(fromLocation, toLocation, includeContinuing);
+      setBuses(result);
     } catch (err) {
-      console.error('Error during search:', err);
-      if (err instanceof ApiError) {
-        setError(err);
-      } else if (err instanceof Error) {
-        // Check if it's an API error from external service that hasn't been properly converted
-        const apiErr = err as any;
-        if (apiErr.status && apiErr.message) {
-          setError(new ApiError(
-            apiErr.message, 
-            apiErr.status, 
-            apiErr.errorCode || "API_ERROR"
-          ));
-        } else {
-          setError(err);
-        }
-      } else {
-        setError(new ApiError(
-          t('error.unknown', 'An unknown error occurred'), 
-          500, 
-          "UNKNOWN_ERROR"
-        ));
-      }
+      setError(err as Error);
     } finally {
       setLoading(false);
     }
-  }, [includeIntermediateStops, t]);
+  }, [includeContinuingBuses]);
 
-  /**
-   * Toggle whether to include buses that pass through locations as intermediate stops
-   */
+  const searchBusesWithOSM = useCallback(async (
+    fromLocation: Location,
+    toLocation: Location
+  ): Promise<void> => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Regular search
+      const buses = await apiSearchBuses(fromLocation, toLocation, includeContinuingBuses);
+      setBuses(buses);
+
+      // OSM discovery if enabled
+      if (showOSMData) {
+        const [stops, routes] = await Promise.all([
+          OSMDiscoveryService.discoverIntermediateStops(fromLocation, toLocation),
+          OSMDiscoveryService.discoverOSMRoutes(fromLocation, toLocation)
+        ]);
+        
+        setOsmStops(stops);
+        setOsmRoutes(routes);
+      }
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setLoading(false);
+    }
+  }, [includeContinuingBuses, showOSMData]);
+
+  // Toggle functions
   const toggleIncludeIntermediateStops = useCallback(() => {
     setIncludeIntermediateStops(prev => !prev);
   }, []);
 
-  /**
-   * Select a bus to view its details
-   */
-  const selectBus = useCallback(async (busId: number) => {
-    console.log(`selectBus called with busId: ${busId}, current selectedBusId: ${selectedBusId}`);
-    
-    if (selectedBusId === busId) {
-      console.log('Deselecting current bus');
-      setSelectedBusId(null);
-    } else {
-      try {
-        // Only fetch stops if we haven't already fetched them for this bus
-        if (!stopsMap[busId]) {
-          console.log(`No stops data for bus ${busId} in cache, fetching from API`);
-          setLoading(true);
-          // Pass the current language code to the API
-          const stopsData = await getStops(busId, i18n.language);
-          console.log(`Received stops data for bus ${busId}:`, stopsData);
-          setStopsMap(prev => ({
-            ...prev,
-            [busId]: stopsData
-          }));
-        } else {
-          console.log(`Using cached stops data for bus ${busId}:`, stopsMap[busId]);
-        }
-        setSelectedBusId(busId);
-      } catch (err) {
-        console.error('Error fetching bus stops:', err);
-        if (err instanceof ApiError) {
-          setError(err);
-        } else if (err instanceof Error) {
-          // Check if it's an API error from external service that hasn't been properly converted
-          const apiErr = err as any;
-          if (apiErr.status && apiErr.message) {
-            setError(new ApiError(
-              apiErr.message, 
-              apiErr.status, 
-              apiErr.errorCode || "API_ERROR"
-            ));
-          } else {
-            setError(err);
-          }
-        } else {
-          setError(new ApiError(
-            t('error.stopsNotFound', 'Could not retrieve bus stops'), 
-            500, 
-            "STOPS_NOT_FOUND"
-          ));
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, [selectedBusId, stopsMap, t, i18n.language]); // Added i18n.language dependency
+  const toggleIncludeContinuingBuses = useCallback(() => {
+    setIncludeContinuingBuses(prev => !prev);
+  }, []);
 
-  /**
-   * Refresh stops data for currently selected bus when language changes
-   */
-  const refreshStopsForLanguage = useCallback(async () => {
-    // Only refresh if we have a selected bus
-    if (selectedBusId) {
-      try {
-        console.log(`Refreshing stops for bus ${selectedBusId} with language ${i18n.language}`);
-        setLoading(true);
-        const stopsData = await getStops(selectedBusId, i18n.language);
-        setStopsMap(prev => ({
-          ...prev,
-          [selectedBusId]: stopsData
-        }));
-      } catch (err) {
-        console.error('Error refreshing bus stops for language change:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, [selectedBusId, i18n.language]);
+  const toggleOSMData = useCallback(() => {
+    setShowOSMData(prev => !prev);
+  }, []);
 
-  // Effect to refresh stops when language changes
-  useEffect(() => {
-    refreshStopsForLanguage();
-  }, [i18n.language, refreshStopsForLanguage]);
+  // Reset functions
+  const resetResults = useCallback(() => {
+    setBuses([]);
+    setConnectingRoutes([]);
+    setOsmStops([]);
+    setOsmRoutes([]);
+    setError(null);
+  }, []);
 
-  /**
-   * Reset error state
-   */
   const clearError = useCallback(() => {
     setError(null);
   }, []);
@@ -224,18 +116,24 @@ const useBusSearch = () => {
     selectedBusId,
     stopsMap,
     loading,
-    isLoading: loading, // Add this for consistency with useLocationData
     error,
     connectingRoutes,
     includeIntermediateStops,
+    includeContinuingBuses,
+    osmStops,
+    osmRoutes,
+    showOSMData,
     
     // Actions
     searchBuses,
-    selectBus,
+    searchBusesWithOSM,
+    toggleIncludeIntermediateStops,
+    toggleIncludeContinuingBuses,
+    toggleOSMData,
     resetResults,
     clearError,
-    refreshStopsForLanguage,
-    toggleIncludeIntermediateStops
+    setSelectedBusId,
+    setStopsMap
   };
 };
 

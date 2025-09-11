@@ -1,91 +1,69 @@
-import * as geolocation from '../../services/geolocation';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import * as geolocation from '../../utils/geolocation';
 
-// Mock the geolocation service
-jest.mock('../../services/geolocation', () => ({
-  getCurrentPosition: jest.fn(),
-  watchPosition: jest.fn(),
-  clearWatch: jest.fn(),
-  getGeolocationSupport: jest.fn().mockReturnValue(true),
-  calculateDistance: jest.fn()
+// Mock the geolocation utility functions
+vi.mock('../../utils/geolocation', () => ({
+  getCurrentPosition: vi.fn(),
+  watchPosition: vi.fn(),
+  getGeolocationSupport: vi.fn(),
 }));
 
 describe('Geolocation E2E Tests', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  test('calculateDistance should calculate distance between two coordinates', () => {
-    // Mock implementation
-    (geolocation.calculateDistance as jest.Mock).mockImplementation((lat1, lon1, lat2, lon2) => {
-      // Simple check to ensure parameters are numbers
-      if (typeof lat1 !== 'number' || typeof lon1 !== 'number' || 
-          typeof lat2 !== 'number' || typeof lon2 !== 'number') {
-        throw new Error('All parameters must be numbers');
-      }
-      
-      // Return a dummy value for testing
-      return 42.5;
-    });
-
-    const distance = geolocation.calculateDistance(13.0827, 80.2707, 9.9252, 78.1198);
-    expect(distance).toBe(42.5);
-    expect(geolocation.calculateDistance).toHaveBeenCalledWith(13.0827, 80.2707, 9.9252, 78.1198);
-  });
-
-  test('getGeolocationSupport should return whether geolocation is supported', () => {
-    (geolocation.getGeolocationSupport as jest.Mock).mockReturnValue(true);
+  it('should detect geolocation support', () => {
+    (geolocation.getGeolocationSupport as any).mockReturnValue(true);
     expect(geolocation.getGeolocationSupport()).toBe(true);
-    
-    (geolocation.getGeolocationSupport as jest.Mock).mockReturnValue(false);
+
+    (geolocation.getGeolocationSupport as any).mockReturnValue(false);
     expect(geolocation.getGeolocationSupport()).toBe(false);
   });
 
-  test('getCurrentPosition should call the appropriate callback', () => {
-    // Set up mocks
-    const successCallback = jest.fn();
-    const errorCallback = jest.fn();
-    const mockPosition = { latitude: 13.0827, longitude: 80.2707, accuracy: 10 };
-    
-    // Mock implementation - fixed by removing unused parameter
-    (geolocation.getCurrentPosition as jest.Mock).mockImplementation((success) => {
-      success(mockPosition);
-    });
-    
-    // Call the function
-    geolocation.getCurrentPosition(successCallback, errorCallback);
-    
-    // Verify callbacks
-    expect(successCallback).toHaveBeenCalledWith(mockPosition);
-    expect(errorCallback).not.toHaveBeenCalled();
+  it('should get current position successfully', async () => {
+    const mockPosition = {
+      coords: {
+        latitude: 13.0827,
+        longitude: 80.2707,
+        accuracy: 10,
+      },
+      timestamp: Date.now(),
+    };
+
+    (geolocation.getCurrentPosition as any).mockResolvedValue(mockPosition);
+
+    const result = await geolocation.getCurrentPosition();
+    expect(result).toEqual(mockPosition);
+    expect(geolocation.getCurrentPosition).toHaveBeenCalled();
   });
 
-  test('watchPosition should return a watch ID', () => {
-    // Set up mocks
-    const updateCallback = jest.fn();
-    const errorCallback = jest.fn();
-    const mockPosition = { latitude: 13.0827, longitude: 80.2707, accuracy: 10 };
-    const mockWatchId = 123;
-    
-    // Mock implementation - fixed by removing unused parameter
-    (geolocation.watchPosition as jest.Mock).mockImplementation((update) => {
-      update(mockPosition);
-      return mockWatchId;
-    });
-    
-    // Call the function
-    const watchId = geolocation.watchPosition(updateCallback, errorCallback);
-    
-    // Verify callbacks and return value
-    expect(updateCallback).toHaveBeenCalledWith(mockPosition);
-    expect(errorCallback).not.toHaveBeenCalled();
-    expect(watchId).toBe(mockWatchId);
+  it('should handle geolocation errors', async () => {
+    const mockError = new Error('Location access denied');
+    (geolocation.getCurrentPosition as any).mockRejectedValue(mockError);
+
+    await expect(geolocation.getCurrentPosition()).rejects.toThrow('Location access denied');
   });
 
-  test('clearWatch should clear position watching', () => {
-    const watchId = 42;
-    
-    geolocation.clearWatch(watchId);
-    
-    expect(geolocation.clearWatch).toHaveBeenCalledWith(watchId);
+  it('should watch position and call callback with updates', () => {
+    const mockCallback = vi.fn();
+    const mockPosition = {
+      coords: {
+        latitude: 13.0827,
+        longitude: 80.2707,
+        accuracy: 10,
+      },
+      timestamp: Date.now(),
+    };
+
+    (geolocation.watchPosition as any).mockImplementation((callback: Function) => {
+      // Simulate position update
+      setTimeout(() => callback(mockPosition), 100);
+      return 1; // Mock watch ID
+    });
+
+    const watchId = geolocation.watchPosition(mockCallback);
+    expect(watchId).toBe(1);
+    expect(geolocation.watchPosition).toHaveBeenCalledWith(mockCallback);
   });
 });

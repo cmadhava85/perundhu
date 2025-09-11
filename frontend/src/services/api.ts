@@ -1,35 +1,7 @@
 import axios from 'axios';
-import type { AxiosInstance, AxiosResponse, Method } from 'axios';
-import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
-import { getLocationsOffline } from './offlineService';
-
-/**
- * Generic request function to be used by other services
- * @param method HTTP method
- * @param url API endpoint
- * @param data Optional request body data
- * @param params Optional query parameters
- * @returns Promise with the response
- */
-export const apiRequest = async <T>(
-  method: Method, 
-  url: string, 
-  data?: any, 
-  params?: any
-): Promise<T> => {
-  try {
-    const response: AxiosResponse<T> = await api.request({
-      method,
-      url,
-      data,
-      params
-    });
-    return response.data;
-  } catch (error) {
-    console.error(`API Request Error (${method} ${url}):`, error);
-    throw new ApiError(`Failed to ${method.toLowerCase()} ${url}. Please try again.`);
-  }
-};
+import type { AxiosInstance } from 'axios';
+import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution } from '../types/index';
+import SecurityService from './securityService';
 
 /**
  * Custom error class for API errors with additional properties
@@ -70,56 +42,87 @@ export interface PaginatedResponse<T> {
   hasPrevious: boolean;
 }
 
-// Helper function to safely get environment variables in both Jest and Vite environments
-const getEnv = (key: string, defaultValue: string): string => {
-  // Jest environment (Node.js)
-  if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    return process.env[key] as string;
-  }
-  
-  // Support for Jest test environment with mocked import.meta
-  if (typeof global !== 'undefined' && 
-      (global as any).import && 
-      (global as any).import.meta && 
-      (global as any).import.meta.env && 
-      (global as any).import.meta.env[key]) {
-    return (global as any).import.meta.env[key];
-  }
-  
-  // Vite environment (browser)
-  // Safe access without direct import.meta reference
-  try {
-    // @ts-ignore - For Vite/browser environment
-    if (typeof window !== 'undefined' && window.__VITE_ENV__ && window.__VITE_ENV__[key]) {
-      // @ts-ignore - Get from injected object
-      return window.__VITE_ENV__[key];
-    }
-  } catch (e) {
-    console.warn(`Error accessing environment variable ${key}, using default value`);
-  }
-  
-  return defaultValue;
-};
-
 // Create axios instance with common configuration
 export const createApiInstance = (): AxiosInstance => {
-  // Use the safe environment variable getter
-  const apiUrl = getEnv('VITE_API_URL', getEnv('VITE_API_BASE_URL', 'http://localhost:8080'));
-  
-  // Log API URL to help with debugging
-  console.log(`Creating API instance with baseURL: ${apiUrl}`);
-  
-  return axios.create({
-    baseURL: apiUrl,
+  // Use environment variables with proper fallbacks for different environments
+  const getEnvVar = (key: string, defaultValue: string = '') => {
+    // In browser environment with Vite
+    if (typeof window !== 'undefined' && (window as any).importMeta?.env) {
+      return (window as any).importMeta.env[key] || defaultValue;
+    }
+    // In test environment or Node.js environment
+    if (typeof globalThis !== 'undefined' && (globalThis as any).process?.env) {
+      return (globalThis as any).process.env[key] || defaultValue;
+    }
+    // Fallback for any other environment
+    return defaultValue;
+  };
+
+  const instance = axios.create({
+    baseURL: getEnvVar('VITE_API_URL', ''),
     headers: {
       'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-API-Key': getEnvVar('VITE_API_KEY', ''),
     },
-    // Disable caching to always get fresh data from the backend
-    params: {
-      _: new Date().getTime() // Add timestamp to prevent caching
-    }
+    timeout: 30000, // 30 second timeout
   });
+
+  // Add safety check for interceptors (prevents test errors)
+  if (instance && instance.interceptors) {
+    // Add request interceptor for security headers
+    instance.interceptors.request.use(
+      (config) => {
+        // Add security headers
+        config.headers['X-Request-ID'] = generateRequestId();
+        config.headers['X-Client-Version'] = getEnvVar('VITE_APP_VERSION', '1.0.0');
+        
+        // Add rate limiting check with safety check
+        if (SecurityService && SecurityService.isRequestAllowed && !SecurityService.isRequestAllowed(config.url || '')) {
+          return Promise.reject(new Error('Rate limit exceeded'));
+        }
+
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    // Add response interceptor for security validation
+    instance.interceptors.response.use(
+      (response) => {
+        // Validate security headers in response
+        const rateLimit = response.headers['x-rate-limit-remaining'];
+        
+        if (rateLimit && parseInt(rateLimit) < 10) {
+          console.warn('Rate limit warning: Only', rateLimit, 'requests remaining');
+        }
+
+        // Log security level for monitoring
+        if (response.headers['x-security-level']) {
+          console.debug('Security level:', response.headers['x-security-level']);
+        }
+
+        return response;
+      },
+      (error) => {
+        if (error.response?.status === 429) {
+          console.error('Rate limit exceeded');
+          if (SecurityService && SecurityService.handleSecurityBreach) {
+            SecurityService.handleSecurityBreach('Rate limit exceeded');
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  return instance;
 };
+
+// Generate unique request ID for tracking
+function generateRequestId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 
 // Default API instance
 let api = createApiInstance();
@@ -129,7 +132,13 @@ export { api };
 
 // For testing purposes - allows injecting a mock in test environment only
 export const setApiInstance = (instance: AxiosInstance): void => {
-  if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'test') {
+  // Check if we're in test environment using safer methods
+  const isTestEnv = typeof globalThis !== 'undefined' && 
+    ((globalThis as any).process?.env?.NODE_ENV === 'test' || 
+     (globalThis as any).vitest !== undefined ||
+     typeof (globalThis as any).expect !== 'undefined');
+     
+  if (isTestEnv) {
     api = instance;
   } else {
     console.warn('Attempted to set API instance outside of test environment - ignored');
@@ -179,47 +188,45 @@ export const getOfflineDataAge = (): number | null => {
  */
 export const checkOnlineStatus = async (): Promise<boolean> => {
   try {
-    // Make a HEAD request to Spring Boot's standard health endpoint
-    await api.head('/actuator/health');
-    
-    // If successful, ensure we're in online mode
-    if (isOfflineMode) {
-      console.log('Connection restored. Switching to online mode.');
-    }
+    // Make a HEAD request to a reliable endpoint to check connectivity
+    await api.head('/api/v1/health/status');
     setOfflineMode(false);
     return true;
   } catch (error) {
-    console.error('Network connection appears to be offline, or backend server is not available', error);
-    
-    // Only set offline mode if we're truly offline - we want to keep trying to reach the real backend
-    // This ensures we don't fall back to mock/stub data in production
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-      setOfflineMode(true);
-    } else {
-      // In production, we don't want to use mock data, so we don't set offline mode
-      console.error('Backend server connection failed in production environment');
-    }
+    setOfflineMode(true);
+    console.warn('Network connection appears to be offline', error);
     return false;
   }
 };
 
 /**
- * Get current bus locations for tracking
- * @returns Promise with the current bus locations
+ * Get current bus locations for live tracking
  */
 export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
   try {
+    console.log('Fetching current bus locations from API...');
     const response = await api.get('/api/v1/bus-tracking/live');
     
-    // The backend can return either Map<Long, BusLocationDTO> or BusLocation[]
-    // Properly handle both formats to ensure consistent array response
+    // The response structure is Map<Long, BusLocationDTO> from backend
+    // Convert from object map to array if needed
+    let busLocations: BusLocation[] = [];
+    
     if (response.data && typeof response.data === 'object' && !Array.isArray(response.data)) {
-      // If it's an object map (Map<Long, BusLocationDTO>), convert to array
-      return Object.values(response.data).map(location => transformBusLocation(location));
+      busLocations = Object.values(response.data);
+    } else if (Array.isArray(response.data)) {
+      busLocations = response.data;
     }
     
-    // If it's already an array, ensure all required fields
-    return Array.isArray(response.data) ? response.data.map(location => transformBusLocation(location)) : [];
+    // Validate and log coordinates
+    busLocations.forEach(bus => {
+      console.log(`Bus ${bus.busNumber}: lat=${bus.latitude}, lng=${bus.longitude}`);
+      if (!bus.latitude || !bus.longitude) {
+        console.warn(`Bus ${bus.busNumber} missing coordinates:`, bus);
+      }
+    });
+    
+    console.log(`Retrieved ${busLocations.length} bus locations`);
+    return busLocations;
   } catch (error) {
     console.error('Error fetching current bus locations:', error);
     if (isOfflineMode) {
@@ -251,17 +258,64 @@ export const getLocations = async (language?: string): Promise<Location[]> => {
 };
 
 /**
- * Search for buses between two locations
+ * Get available destinations for a given location
+ * @param fromLocationId The ID of the origin location
+ * @param language The language code (e.g., 'en', 'ta') for localized destination names
+ */
+export const getDestinations = async (fromLocationId?: number, language?: string): Promise<Location[]> => {
+  try {
+    console.log('getDestinations: Starting destinations fetch');
+    const response = await api.get('/api/v1/bus-schedules/destinations', {
+      params: {
+        fromLocationId,
+        lang: language || 'en'
+      }
+    });
+    console.log('getDestinations: Online API response received', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching destinations:', error);
+    throw new ApiError('Failed to fetch destinations. Please try again.');
+  }
+};
+
+/**
+ * Get buses between two locations by location IDs
+ * @param fromLocationId The ID of the origin location
+ * @param toLocationId The ID of the destination location
+ */
+export const getBuses = async (fromLocationId: number, toLocationId: number): Promise<Bus[]> => {
+  try {
+    console.log(`getBuses: Fetching buses from ${fromLocationId} to ${toLocationId}`);
+    const response = await api.get('/api/v1/bus-schedules/buses', {
+      params: {
+        fromLocationId,
+        toLocationId
+      }
+    });
+    console.log('getBuses: Online API response received', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching buses:', error);
+    throw new ApiError('Failed to fetch buses. Please try again.');
+  }
+};
+
+/**
+ * Search for buses between two locations using the enhanced endpoint
+ * This automatically includes direct buses, intermediate stops, and continuing buses
  */
 export const searchBuses = async (
   fromLocation: Location, 
-  toLocation: Location
+  toLocation: Location,
+  includeContinuing: boolean = true
 ): Promise<Bus[]> => {
   try {
     const response = await api.get('/api/v1/bus-schedules/search', {
       params: {
         fromLocationId: fromLocation.id,
-        toLocationId: toLocation.id
+        toLocationId: toLocation.id,
+        includeContinuing: includeContinuing
       }
     });
     return response.data;
@@ -272,28 +326,48 @@ export const searchBuses = async (
 };
 
 /**
- * Search for buses that pass through specific locations (even as intermediate stops)
- * This finds buses that have both locations as stops in their route, in the correct order
+ * Search for buses that pass through both locations as stops (including intermediate stops)
+ * This includes buses where these locations are intermediate stops on a longer route
+ * For example: Chennai to Madurai bus via Trichy will appear when searching Chennai to Trichy
  */
 export const searchBusesViaStops = async (
-  fromLocation: Location | number, 
-  toLocation: Location | number
+  fromLocation: Location, 
+  toLocation: Location
 ): Promise<Bus[]> => {
   try {
-    // Extract location IDs based on what was passed
-    const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
-    const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
-    
-    const response = await api.get('/api/v1/bus-schedules/search/via-stops', {
+    const response = await api.get('/api/v1/bus-schedules/search-via-stops', {
       params: {
-        fromLocationId: fromId,
-        toLocationId: toId
+        fromLocationId: fromLocation.id,
+        toLocationId: toLocation.id
       }
     });
     return response.data;
   } catch (error) {
     console.error('Error searching buses via stops:', error);
-    throw new ApiError('Failed to search for buses via stops. Please try again.');
+    throw new ApiError('Failed to search for buses via intermediate stops. Please try again.');
+  }
+};
+
+/**
+ * Search for buses that continue beyond the destination city
+ * This shows buses that go from origin to destination and then continue to other cities
+ * For example: Chennai to Trichy search will show Chennai->Madurai bus (via Trichy)
+ */
+export const searchBusesContinuingBeyondDestination = async (
+  fromLocation: Location, 
+  toLocation: Location
+): Promise<Bus[]> => {
+  try {
+    const response = await api.get('/api/v1/bus-schedules/search-continuing-beyond', {
+      params: {
+        fromLocationId: fromLocation.id,
+        toLocationId: toLocation.id
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error searching buses continuing beyond destination:', error);
+    throw new ApiError('Failed to search for buses continuing beyond destination. Please try again.');
   }
 };
 
@@ -303,7 +377,8 @@ export const searchBusesViaStops = async (
 export const getStops = async (busId: number, languageCode: string = 'en'): Promise<Stop[]> => {
   try {
     console.log(`Fetching stops for bus ${busId} with language ${languageCode}`);
-    const response = await api.get(`/api/v1/bus-schedules/${busId}/stops`, {
+    // Use the public basic stops endpoint instead of the premium one
+    const response = await api.get(`/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
       params: { lang: languageCode }
     });
     console.log('Stops API response:', response.data);
@@ -438,39 +513,174 @@ export const handleApiError = (error: any): never => {
  */
 export const submitRouteContribution = async (data: RouteContribution) => {
   try {
-    const response = await api.post(`/api/v1/contributions/routes`, data);
+    // Format data properly for the backend
+    const formattedData = {
+      ...data,
+      // Ensure these fields are included and properly formatted
+      busNumber: data.busNumber || '',
+      busName: data.route || data.busName || '',
+      fromLocationName: data.origin || data.fromLocationName || '',
+      toLocationName: data.destination || data.toLocationName || '',
+      // Make sure coordinates are sent as numbers, not strings
+      fromLatitude: data.fromLatitude ? Number(data.fromLatitude) : undefined,
+      fromLongitude: data.fromLongitude ? Number(data.fromLongitude) : undefined,
+      toLatitude: data.toLatitude ? Number(data.toLatitude) : undefined,
+      toLongitude: data.toLongitude ? Number(data.toLongitude) : undefined,
+      // Convert detailed stops if present
+      stops: data.detailedStops ? data.detailedStops.map(stop => ({
+        name: stop.name,
+        latitude: stop.latitude,
+        longitude: stop.longitude,
+        arrivalTime: stop.arrivalTime || '',
+        departureTime: stop.departureTime || '',
+        stopOrder: stop.order || 0
+      })) : [],
+      submittedBy: data.submittedBy || 'anonymous'
+    };
+
+    // Temporary debugging logs
+    console.log('Submitting route contribution with data:', JSON.stringify(formattedData, null, 2));
+    
+    const response = await api.post(`/api/v1/contributions/routes`, formattedData);
+    
+    console.log('Route contribution submission response:', response.data);
     return response.data;
   } catch (error) {
+    // Temporary debugging logs
+    console.error('Route contribution submission error details:', error);
     return handleApiError(error);
   }
 };
 
 /**
- * Submit an image of a bus schedule
+ * Submit an image contribution with enhanced AI/OCR processing
  * 
- * @param data Metadata about the image
- * @param file The image file to upload
+ * @param formData FormData containing image file and metadata
  * @returns Promise with the submission result
  */
-export const submitImageContribution = async (data: ImageContribution, file: File) => {
+export const submitImageContribution = async (formData: FormData) => {
   try {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('data', JSON.stringify(data));
+    console.log('Submitting image contribution...');
+    
+    const response = await api.post('/api/v1/contributions/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      timeout: 60000 // 60 second timeout for image upload and processing
+    });
 
-    const response = await api.post(
-      `/api/v1/contributions/images`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-    );
-
+    console.log('Image contribution submission response:', response.data);
     return response.data;
-  } catch (error) {
-    return handleApiError(error);
+  } catch (error: any) {
+    console.error('Image contribution submission error:', error);
+    if (error.response) {
+      throw new ApiError(
+        error.response.data?.message || 'Failed to submit image contribution',
+        error.response.status,
+        error.response.data?.errorCode
+      );
+    }
+    throw new ApiError('Failed to submit image contribution. Please try again.');
+  }
+};
+
+/**
+ * Submit an image contribution with enhanced AI/OCR processing
+ * 
+ * @param formData FormData containing image file and metadata
+ * @returns Promise with the submission result
+ */
+export const submitImageContributionWithProcessing = async (formData: FormData) => {
+  try {
+    console.log('Submitting image contribution...');
+    
+    const response = await api.post('/api/v1/contributions/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      timeout: 60000 // 60 second timeout for image upload and processing
+    });
+
+    console.log('Image contribution submission response:', response.data);
+    return response.data;
+  } catch (error: any) {
+    console.error('Image contribution submission error:', error);
+    if (error.response) {
+      throw new ApiError(
+        error.response.data?.message || 'Failed to submit image contribution',
+        error.response.status,
+        error.response.data?.errorCode
+      );
+    }
+    throw new ApiError('Failed to submit image contribution. Please try again.');
+  }
+};
+
+/**
+ * Get the processing status of an image contribution
+ * 
+ * @param contributionId The ID of the image contribution
+ * @returns Promise with the current processing status
+ */
+export const getImageProcessingStatus = async (contributionId: string) => {
+  try {
+    const response = await api.get(`/api/v1/contributions/images/${contributionId}/status`);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error getting image processing status:', error);
+    if (error.response) {
+      throw new ApiError(
+        error.response.data?.message || 'Failed to get processing status',
+        error.response.status,
+        error.response.data?.errorCode
+      );
+    }
+    throw new ApiError('Failed to get processing status. Please try again.');
+  }
+};
+
+/**
+ * Retry processing for a failed image contribution
+ * 
+ * @param contributionId The ID of the image contribution to retry
+ * @returns Promise with the retry result
+ */
+export const retryImageProcessing = async (contributionId: string) => {
+  try {
+    const response = await api.post(`/api/v1/contributions/images/${contributionId}/retry`);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error retrying image processing:', error);
+    if (error.response) {
+      throw new ApiError(
+        error.response.data?.message || 'Failed to retry processing',
+        error.response.status,
+        error.response.data?.errorCode
+      );
+    }
+    throw new ApiError('Failed to retry processing. Please try again.');
+  }
+};
+
+/**
+ * Get image processing statistics (admin only)
+ * 
+ * @returns Promise with processing statistics
+ */
+export const getImageProcessingStatistics = async () => {
+  try {
+    const response = await api.get('/api/v1/contributions/images/admin/stats');
+    return response.data;
+  } catch (error: any) {
+    console.error('Error getting image processing statistics:', error);
+    if (error.response) {
+      throw new ApiError(
+        error.response.data?.message || 'Failed to get processing statistics',
+        error.response.status,
+        error.response.data?.errorCode
+      );
+    }
+    throw new ApiError('Failed to get processing statistics. Please try again.');
   }
 };
 
@@ -599,8 +809,65 @@ export const rejectImageContribution = async (id: string, reason: string) => {
  * @returns Promise with an array of contribution status objects
  */
 export const getContributionStatus = async () => {
+  const response = await axios.get(`/api/v1/contributions/status`);
+  return response.data;
+};
+
+/**
+ * Analyze an uploaded image to extract bus schedule information
+ * 
+ * @param file The image file to analyze
+ * @returns Promise with AI analysis results including smart suggestions
+ */
+export const analyzeScheduleImage = async (file: File): Promise<{
+  busNumber?: string;
+  route?: string;
+  fromLocation?: string;
+  toLocation?: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  confidence: number;
+  extractedText?: string;
+  suggestions?: {
+    busNumber?: string;
+    route?: string;
+  };
+}> => {
   try {
-    const response = await api.get(`/api/v1/contributions/status`);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const response = await api.post('/api/v1/contributions/analyze-image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      timeout: 30000 // 30 second timeout for AI processing
+    });
+
+    return response.data;
+  } catch (error: any) {
+    console.error('Error analyzing image:', error);
+    if (error.response) {
+      throw new ApiError(
+        error.response.data?.message || 'Failed to analyze image',
+        error.response.status,
+        error.response.data?.errorCode
+      );
+    }
+    throw new ApiError('Failed to analyze image. Please try again.');
+  }
+};
+
+/**
+ * Enhanced validation service for contributions
+ */
+export const validateRouteContribution = async (data: RouteContribution): Promise<{
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+}> => {
+  try {
+    const response = await api.post('/api/v1/contributions/validate', data);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -608,77 +875,32 @@ export const getContributionStatus = async () => {
 };
 
 /**
- * Search for locations by name
- * This API will first check the database for matching locations
- * If not found or insufficient results, it will use the map API as fallback
- * 
- * @param query The search query
- * @param limit Maximum number of results to return (default 10)
- * @returns Promise with matching locations
+ * Check for potential duplicates before submission
  */
-export const searchLocations = async (query: string, limit = 10): Promise<Location[]> => {
-  if (!query || query.length < 2) {
-    return [];
-  }
-  
+export const checkDuplicateRoute = async (busNumber: string, fromLocation: string, toLocation: string) => {
   try {
-    // First search in database
-    console.log(`searchLocations: Searching for "${query}" in database`);
-    const response = await api.get('/api/v1/locations/search', {
-      params: { 
-        query,
-        limit,
-        source: 'database' // Explicitly request database search first
-      }
+    const response = await api.post('/api/v1/contributions/check-duplicate', {
+      busNumber,
+      fromLocation,
+      toLocation
     });
-    
-    const dbResults = response.data;
-    console.log(`searchLocations: Found ${dbResults.length} database results for "${query}"`);
-    
-    // If we have enough results from DB, return them
-    if (dbResults.length >= limit) {
-      return dbResults;
-    }
-    
-    // If database has no results or insufficient results, check map API
-    try {
-      console.log(`searchLocations: Not enough database results, trying map API for "${query}"`);
-      const mapResponse = await api.get('/api/v1/locations/search', {
-        params: { 
-          query,
-          limit: limit - dbResults.length, // Only get what we still need
-          source: 'map' // Explicitly request map API search
-        }
-      });
-      
-      const mapResults = mapResponse.data;
-      console.log(`searchLocations: Found ${mapResults.length} map API results for "${query}"`);
-      
-      // Combine results, prioritizing database results
-      const combinedResults = [...dbResults, ...mapResults].slice(0, limit);
-      return combinedResults;
-    } catch (mapError) {
-      console.warn('Map API search failed, returning database results only:', mapError);
-      return dbResults;
-    }
+    return response.data;
   } catch (error) {
-    console.error('Error searching locations:', error);
-    
-    // Try offline data as last resort
-    if (isOfflineMode) {
-      try {
-        const offlineLocations = await getLocationsOffline();
-        console.log(`searchLocations: Using offline data for "${query}"`);
-        // Filter locations based on query
-        return offlineLocations.filter(location => 
-          location.name.toLowerCase().includes(query.toLowerCase())
-        ).slice(0, limit);
-      } catch (offlineError) {
-        console.error('Error getting offline locations:', offlineError);
-      }
-    }
-    
-    throw new ApiError('Failed to search locations. Please try again.');
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Get location suggestions with validation
+ */
+export const getLocationSuggestions = async (query: string, type: 'origin' | 'destination') => {
+  try {
+    const response = await api.get(`/api/v1/locations/suggest`, {
+      params: { query, type }
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
   }
 };
 
@@ -717,34 +939,3 @@ export class APIService {
     }
   }
 }
-
-/**
- * Transform bus location data to BusLocation type
- * @param location The raw location data
- * @returns Transformed BusLocation object
- */
-export const transformBusLocation = (location: any): BusLocation => {
-  if (!location) {
-    throw new Error('Cannot transform undefined or null bus location');
-  }
-
-  const typedLocation = location as Record<string, any>;
-  
-  return {
-    busId: typedLocation.busId || 0,
-    busName: typedLocation.busName || "",
-    busNumber: typedLocation.busNumber || "",
-    fromLocation: typedLocation.fromLocation || "",
-    toLocation: typedLocation.toLocation || "",
-    latitude: typedLocation.latitude || 0,
-    longitude: typedLocation.longitude || 0,
-    speed: typedLocation.speed || 0,
-    heading: typedLocation.heading || 0,
-    timestamp: typedLocation.timestamp || new Date().toISOString(),
-    lastReportedStopName: typedLocation.lastReportedStopName || "",
-    nextStopName: typedLocation.nextStopName || "",
-    estimatedArrivalTime: typedLocation.estimatedArrivalTime || "",
-    reportCount: typedLocation.reportCount || 0,
-    confidenceScore: typedLocation.confidenceScore || 0,
-  };
-};

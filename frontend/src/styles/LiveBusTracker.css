@@ -1,134 +1,149 @@
-/* LiveBusTracker Component Styles */
+/* Live Bus Tracker Styles */
 
-.live-tracker-section {
-  margin-bottom: 24px;
-}
-
-.live-tracker-section h2 {
-  margin-bottom: 16px;
-}
-
-/* Loading styles */
-.live-tracker-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border-top: 4px solid #4CAF50;
-  animation: spin 1s linear infinite;
-  margin-bottom: 10px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Error message */
-.live-tracker-error {
-  color: #FF0000;
-  background-color: rgba(255, 0, 0, 0.1);
-  padding: 10px;
-  border-radius: 5px;
-  margin: 10px 0;
-}
-
-/* Info panels */
-.live-tracker-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-/* Confidence legend */
-.confidence-legend {
-  flex: 1;
-  max-width: 60%;
-}
-
-.confidence-legend h4 {
-  margin-bottom: 8px;
-}
-
-.legend-items {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  margin-right: 16px;
-  margin-bottom: 8px;
-}
-
-.legend-color {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 6px;
-  border-radius: 3px;
-}
-
-/* Active trackers */
-.active-trackers {
-  text-align: right;
-}
-
-.active-trackers h4 {
-  margin-bottom: 8px;
-}
-
-.trackers-count {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.trackers-label {
-  font-size: 14px;
-  margin-left: 5px;
-}
-
-/* Selected bus info panel */
-.bus-info-panel {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.live-bus-tracker-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   border-radius: 8px;
-  padding: 15px;
-  max-width: 300px;
-  z-index: 1000;
 }
 
-.close-button {
+.live-bus-map {
+  height: 100%;
+  min-height: 400px;
+  width: 100%;
+  z-index: 1;
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 12px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   position: absolute;
   top: 10px;
   right: 10px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
+  z-index: 10;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ff4444;
+  border-radius: 50%;
+  position: relative;
+}
+
+.pulse-dot::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #ff4444;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.live-text {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.bus-marker {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.bus-icon {
+  width: 100%;
+  height: 100%;
+  background-color: #3c73e9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid white;
+}
+
+.bus-icon.active {
+  background-color: #ff4444;
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.moving {
+  animation: moveBus 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes moveBus {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-3px); }
+}
+
+.bus-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+  z-index: 100;
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+
+.bus-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+.tooltip-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.tooltip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
   color: #666;
-}
-
-.bus-info-content h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.info-grid {
-  display: grid;
-  gap: 8px;
 }
 
 .info-row {
@@ -137,81 +152,301 @@
 }
 
 .info-label {
-  color: #666;
   font-weight: 500;
+}
+
+.bus-path {
+  stroke: #3c73e9;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 6, 8;
+  animation: dash 30s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.bus-stop-marker {
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border: 3px solid #4CAF50;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bus-stop-marker.passed {
+  border-color: #9e9e9e;
+}
+
+.bus-stop-marker.next {
+  border-color: #ff9800;
+  animation: pulseBusStop 1.5s infinite;
+}
+
+@keyframes pulseBusStop {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(255, 152, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+  }
+}
+
+.controls-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+}
+
+.control-button {
+  padding: 8px 16px;
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.control-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.control-button.active {
+  background-color: #3c73e9;
+  color: white;
+}
+
+.bus-info-panel {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 280px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.panel-header {
+  background: linear-gradient(90deg, #3c73e9, #6c5ce7);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.panel-content {
+  padding: 16px;
+}
+
+.info-group {
+  margin-bottom: 12px;
+}
+
+.info-heading {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
 }
 
 .info-value {
-  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
 }
 
-/* Confidence indicator */
-.confidence-indicator {
-  margin-top: 15px;
-}
-
-.confidence-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.confidence-bar-bg {
-  background-color: #f0f0f0;
-  height: 8px;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 5px;
-}
-
-.confidence-bar-fill {
-  height: 100%;
-  border-radius: 4px;
-}
-
-.confidence-value {
-  font-weight: 600;
-  float: right;
-}
-
-/* Static buses info */
-.static-buses-info {
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-}
-
-/* No buses message */
-.no-buses-message {
-  text-align: center;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  margin: 15px 0;
-}
-
-.no-buses-message p:first-child {
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-/* Refresh info */
-.refresh-info {
+.status-indicator {
   display: flex;
+  gap: 8px;
   align-items: center;
-  justify-content: center;
-  margin-top: 15px;
+  margin-top: 8px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.on-time {
+  background-color: #4CAF50;
+}
+
+.delayed {
+  background-color: #ff9800;
+}
+
+.very-delayed {
+  background-color: #ff4444;
+}
+
+.status-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.progress-container {
+  margin-top: 16px;
+}
+
+.progress-track {
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  position: relative;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3c73e9, #6c5ce7);
+  border-radius: 3px;
+}
+
+.stop-markers {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stop-marker {
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border: 2px solid #9e9e9e;
+  border-radius: 50%;
+  position: absolute;
+  top: -15px;
+  transform: translateX(-50%);
+}
+
+.stop-marker.passed {
+  border-color: #4CAF50;
+  background-color: #4CAF50;
+}
+
+.stop-marker.current {
+  border-color: #3c73e9;
+  background-color: #3c73e9;
+  transform: scale(1.2) translateX(-40%);
+}
+
+.next-stop-info {
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.arrival-time {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.time-remaining {
+  font-size: 0.8rem;
   color: #666;
 }
 
-.refresh-icon {
-  font-size: 18px;
-  margin-right: 8px;
-  animation: rotate 3s linear infinite;
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.action-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.action-button.primary {
+  background-color: #3c73e9;
+  color: white;
+}
+
+.action-button.secondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bus-info-panel {
+    width: calc(100% - 40px);
+    bottom: 70px;
+  }
+  
+  .controls-container {
+    bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .live-indicator {
+    top: 70px;
+  }
+  
+  .controls-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+    bottom: 10px;
+  }
+  
+  .control-button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }

@@ -1,29 +1,38 @@
+import { vi } from 'vitest';
+
 /**
  * This is a global mock for axios used in tests
  */
 
-const mockAxiosInstance = {
-  get: jest.fn(),
-  post: jest.fn(),
+const axiosMock = {
+  create: vi.fn(() => axiosMock),
+  get: vi.fn(),
+  post: vi.fn(),
+  put: vi.fn(),
+  delete: vi.fn(),
+  patch: vi.fn(),
+  request: vi.fn(),
+  defaults: {
+    headers: {
+      common: {},
+      delete: {},
+      get: {},
+      head: {},
+      post: {},
+      put: {},
+      patch: {},
+    },
+  },
   interceptors: {
-    request: { use: jest.fn(), eject: jest.fn() },
-    response: { use: jest.fn(), eject: jest.fn() }
-  }
+    request: {
+      use: vi.fn(),
+      eject: vi.fn(),
+    },
+    response: {
+      use: vi.fn(),
+      eject: vi.fn(),
+    },
+  },
 };
 
-// Mock the default export
-const axios = {
-  create: jest.fn().mockReturnValue(mockAxiosInstance),
-  get: jest.fn(),
-  post: jest.fn(),
-  defaults: { baseURL: '' },
-  interceptors: {
-    request: { use: jest.fn(), eject: jest.fn() },
-    response: { use: jest.fn(), eject: jest.fn() }
-  }
-};
-
-export default axios;
-
-// Export the instance for test to access
-export { mockAxiosInstance };
+export default axiosMock;

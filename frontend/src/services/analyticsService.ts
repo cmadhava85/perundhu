@@ -1,7 +1,4 @@
-import { api, handleApiError } from './api';
-import { apiClient } from './apiClient';
-import { apiRequest } from '../utils/apiUtils';
-import { handleApiError as handleErrorUtils } from '../utils/errorUtils';
+import { api } from './api';
 
 // Interface for offline data cache storage
 interface OfflineCachedData {
@@ -11,83 +8,6 @@ interface OfflineCachedData {
   dataType: string;
   data: any;
   timestamp: number;
-}
-
-// Analytics data types
-export interface PunctualityData {
-  date: string;
-  onTime: number;
-  delayed: number;
-}
-
-export interface CrowdLevelData {
-  time: string;
-  low: number;
-  medium: number;
-  high: number;
-}
-
-export interface BusUtilizationData {
-  busId: string;
-  utilization: number;
-  capacity: number;
-}
-
-export interface AnalyticsData {
-  punctuality: PunctualityData[];
-  crowdLevels: CrowdLevelData[];
-  busUtilization: BusUtilizationData[];
-}
-
-export interface Route {
-  id: string;
-  name: string;
-}
-
-export interface Bus {
-  id: string;
-  name: string;
-  route: string;
-}
-
-export interface AnalyticsFilters {
-  fromDate?: string;
-  toDate?: string;
-  busId?: string;
-  routeId?: string;
-  timeOfDay?: string;
-  page?: number;
-}
-
-// Types for analytics data
-export interface HistoricalDataPoint {
-  date: string;
-  count: number;
-  minutes: number;
-  distance?: number;
-}
-
-export interface TravelTrend {
-  day: string;
-  count: number;
-}
-
-export interface PopularRoute {
-  from: string;
-  to: string;
-  count: number;
-  busIds: number[];
-  busNames?: string[];
-}
-
-export interface UserAnalytics {
-  totalTrips: number;
-  totalTravelTime: number; // in minutes
-  averageTripDuration: number; // in minutes
-  totalDistance: number; // in km
-  travelTrends: TravelTrend[];
-  popularRoutes: PopularRoute[];
-  lastUpdated: string;
 }
 
 /**
@@ -217,140 +137,215 @@ export const getHistoricalData = async (
   }
 };
 
-/**
- * Fetch analytics data based on given filters
- */
-export const fetchAnalyticsData = async (filters: AnalyticsFilters): Promise<AnalyticsData> => {
-  try {
-    // Use apiClient for dedicated analytics endpoints
-    const response = await apiClient.get('/analytics', { params: filters });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching analytics data:', error);
-    throw error;
-  }
-};
+export interface AnalyticsData {
+  id: string;
+  eventType: 'SEARCH' | 'BOOKING' | 'ROUTE_VIEW' | 'USER_ACTION';
+  timestamp: string;
+  userId?: string;
+  sessionId: string;
+  data: Record<string, any>;
+}
 
-/**
- * Fetch available routes for analytics filtering
- */
-export const fetchRoutes = async (): Promise<Route[]> => {
-  try {
-    const response = await api.get('/api/v1/analytics/routes');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching routes:', error);
-    throw handleApiError(error);
-  }
-};
+export interface RouteAnalytics {
+  routeId: string;
+  routeName: string;
+  totalSearches: number;
+  totalBookings: number;
+  popularTimes: Array<{
+    hour: number;
+    searches: number;
+    bookings: number;
+  }>;
+  conversionRate: number;
+}
 
-/**
- * Fetch available buses for analytics filtering
- */
-export const fetchBuses = async (routeId?: string): Promise<Bus[]> => {
-  try {
-    const params = routeId ? { routeId } : {};
-    const response = await api.get('/api/v1/analytics/buses', { params });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching buses:', error);
-    throw handleApiError(error);
-  }
-};
+export interface UserBehaviorAnalytics {
+  totalUsers: number;
+  activeUsers: number;
+  averageSessionDuration: number;
+  topRoutes: RouteAnalytics[];
+  deviceBreakdown: {
+    desktop: number;
+    mobile: number;
+    tablet: number;
+  };
+}
 
-/**
- * Fetches historical travel data for a user within a specified date range
- * 
- * @param userId - The ID of the user
- * @param startDate - Optional start date in ISO format
- * @param endDate - Optional end date in ISO format
- * @returns Promise with historical data
- */
-export const getUserHistoricalData = async (
-  userId: string,
-  startDate?: string,
-  endDate?: string
-): Promise<HistoricalDataPoint[]> => {
-  try {
-    const queryParams = new URLSearchParams();
-    
-    if (startDate) {
-      queryParams.append('startDate', startDate);
+export interface PerformanceMetrics {
+  averageLoadTime: number;
+  apiResponseTime: number;
+  errorRate: number;
+  uptime: number;
+}
+
+class AnalyticsService {
+  private baseURL = '/api/analytics';
+
+  // New methods expected by tests
+  async getUserAnalytics(): Promise<{
+    totalJourneys: number;
+    averageRating: number;
+    carbonSaved: number;
+    totalDistance: number;
+  }> {
+    try {
+      const response = await fetch(`${this.baseURL}/user`);
+      if (!response.ok) throw new Error('Failed to fetch user analytics');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching user analytics:', error);
+      return {
+        totalJourneys: 0,
+        averageRating: 0,
+        carbonSaved: 0,
+        totalDistance: 0,
+      };
     }
-    
-    if (endDate) {
-      queryParams.append('endDate', endDate);
+  }
+
+  async getJourneyTrends(): Promise<Array<{ date: string; journeys: number }>> {
+    try {
+      const response = await fetch(`${this.baseURL}/journey-trends`);
+      if (!response.ok) throw new Error('Failed to fetch journey trends');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching journey trends:', error);
+      return [];
     }
-    
-    const queryString = queryParams.toString();
-    const endpoint = `/api/analytics/history/${userId}${queryString ? `?${queryString}` : ''}`;
-    
-    return await apiRequest<HistoricalDataPoint[]>(endpoint);
-  } catch (error) {
-    return handleErrorUtils('Error fetching historical data', error);
   }
-};
 
-/**
- * Fetches aggregated analytics for a user
- * 
- * @param userId - The ID of the user
- * @returns Promise with user analytics data
- */
-export const getUserAnalytics = async (userId: string): Promise<UserAnalytics> => {
-  try {
-    return await apiRequest<UserAnalytics>(`/api/analytics/summary/${userId}`);
-  } catch (error) {
-    return handleErrorUtils('Error fetching user analytics', error);
+  async getTimeDistribution(): Promise<Array<{ time: string; percentage: number }>> {
+    try {
+      const response = await fetch(`${this.baseURL}/time-distribution`);
+      if (!response.ok) throw new Error('Failed to fetch time distribution');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching time distribution:', error);
+      return [];
+    }
   }
-};
 
-/**
- * Fetches travel pattern data for a user (trips by day of week)
- * 
- * @param userId - The ID of the user
- * @returns Promise with travel trends data
- */
-export const getTravelPatterns = async (userId: string): Promise<TravelTrend[]> => {
-  try {
-    return await apiRequest<TravelTrend[]>(`/api/analytics/patterns/${userId}`);
-  } catch (error) {
-    return handleErrorUtils('Error fetching travel patterns', error);
-  }
-};
+  async trackEvent(eventType: string, data: Record<string, any>): Promise<void> {
+    try {
+      const payload = {
+        eventType,
+        timestamp: new Date().toISOString(),
+        sessionId: this.getSessionId(),
+        data
+      };
 
-/**
- * Fetches the user's most frequent routes
- * 
- * @param userId - The ID of the user
- * @param limit - Maximum number of routes to return
- * @returns Promise with popular routes data
- */
-export const getPopularRoutes = async (userId: string, limit: number = 5): Promise<PopularRoute[]> => {
-  try {
-    return await apiRequest<PopularRoute[]>(`/api/analytics/routes/${userId}?limit=${limit}`);
-  } catch (error) {
-    return handleErrorUtils('Error fetching popular routes', error);
-  }
-};
-
-/**
- * Exports user analytics data in requested format
- * 
- * @param userId - The ID of the user
- * @param format - The export format ('csv' or 'pdf')
- * @returns Promise with the download URL
- */
-export const exportAnalyticsData = async (userId: string, format: 'csv' | 'pdf'): Promise<{ downloadUrl: string }> => {
-  try {
-    return await apiRequest<{ downloadUrl: string }>(
-      `/api/analytics/export/${userId}`,
-      {
+      await fetch(`${this.baseURL}/events`, {
         method: 'POST',
-        body: JSON.stringify({ format }),
-      }
-    );
-  } catch (error) {
-    return handleErrorUtils('Error exporting analytics data', error);
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error('Error tracking event:', error);
+    }
   }
-};
+
+  async getUserBehaviorAnalytics(dateRange?: { start: string; end: string }): Promise<UserBehaviorAnalytics> {
+    try {
+      const params = new URLSearchParams();
+      if (dateRange) {
+        params.append('start', dateRange.start);
+        params.append('end', dateRange.end);
+      }
+
+      const response = await fetch(`${this.baseURL}/user-behavior?${params}`);
+      if (!response.ok) throw new Error('Failed to fetch user behavior analytics');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching user behavior analytics:', error);
+      return {
+        totalUsers: 0,
+        activeUsers: 0,
+        averageSessionDuration: 0,
+        topRoutes: [],
+        deviceBreakdown: { desktop: 0, mobile: 0, tablet: 0 }
+      };
+    }
+  }
+
+  async getRouteAnalytics(routeId?: string): Promise<RouteAnalytics[]> {
+    try {
+      const url = routeId 
+        ? `${this.baseURL}/routes/${routeId}`
+        : `${this.baseURL}/routes`;
+      
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch route analytics');
+      const data = await response.json();
+      return Array.isArray(data) ? data : [data];
+    } catch (error) {
+      console.error('Error fetching route analytics:', error);
+      return [];
+    }
+  }
+
+  async getPerformanceMetrics(): Promise<PerformanceMetrics> {
+    try {
+      const response = await fetch(`${this.baseURL}/performance`);
+      if (!response.ok) throw new Error('Failed to fetch performance metrics');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching performance metrics:', error);
+      return {
+        averageLoadTime: 0,
+        apiResponseTime: 0,
+        errorRate: 0,
+        uptime: 0
+      };
+    }
+  }
+
+  async getPopularRoutes(limit: number = 10): Promise<RouteAnalytics[]> {
+    try {
+      const response = await fetch(`${this.baseURL}/popular-routes?limit=${limit}`);
+      if (!response.ok) throw new Error('Failed to fetch popular routes');
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching popular routes:', error);
+      return [];
+    }
+  }
+
+  private getSessionId(): string {
+    let sessionId = sessionStorage.getItem('analytics_session_id');
+    if (!sessionId) {
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem('analytics_session_id', sessionId);
+    }
+    return sessionId;
+  }
+
+  // Track specific events
+  trackSearch(from: string, to: string, results: number): void {
+    this.trackEvent('SEARCH', {
+      from,
+      to,
+      resultsCount: results,
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  trackRouteView(routeId: string, routeName: string): void {
+    this.trackEvent('ROUTE_VIEW', {
+      routeId,
+      routeName,
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  trackUserAction(action: string, details?: Record<string, any>): void {
+    this.trackEvent('USER_ACTION', {
+      action,
+      ...details,
+      timestamp: new Date().toISOString()
+    });
+  }
+}
+
+export default new AnalyticsService();

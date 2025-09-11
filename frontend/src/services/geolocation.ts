@@ -92,7 +92,7 @@ export const watchPosition = (
  * Stop watching position changes
  */
 export const clearWatch = (watchId: number): void => {
-  if (getGeolocationSupport() && watchId !== -1) {
+  if (typeof navigator !== 'undefined' && 'geolocation' in navigator) {
     navigator.geolocation.clearWatch(watchId);
   }
 };

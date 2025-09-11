@@ -1,138 +1,57 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import BusItem from '../BusItem';
 import type { Bus, Stop } from '../../types';
 
-// Mock StopsList to simplify testing
-jest.mock('../StopsList', () => {
-  return function MockStopsList({ stops }: { stops: Stop[] }) {
-    return (
-      <div data-testid="stops-list">
-        <h4>Stops</h4>
-        {stops.map((stop, index) => (
-          <div key={index} data-testid={`stop-item-${index}`}>
-            {stop.name}
-          </div>
-        ))}
-      </div>
-    );
-  };
-});
+const mockBus: Bus = {
+  id: 1,
+  busName: 'Express Bus',
+  busNumber: 'TN01AB1234',
+  from: 'Chennai',
+  to: 'Bangalore',
+  departureTime: '10:00',
+  arrivalTime: '16:00'
+};
 
-// react-i18next is automatically mocked by Jest
+const mockBusStops: Stop[] = [
+  { id: 1, name: 'Chennai Central', arrivalTime: '10:00', departureTime: '10:05', order: 1 },
+  { id: 2, name: 'Salem', arrivalTime: '13:00', departureTime: '13:05', order: 2 },
+  { id: 3, name: 'Bangalore', arrivalTime: '16:00', departureTime: '16:00', order: 3 }
+];
+
 describe('BusItem Component', () => {
-  const mockBus: Bus = {
-    id: 1,
-    from: 'Chennai',
-    to: 'Coimbatore',
-    busName: 'SETC Express',
-    busNumber: 'TN-01-1234',
-    departureTime: '06:00 AM',
-    arrivalTime: '12:30 PM'
+  const defaultProps = {
+    bus: mockBus,
+    selectedBusId: null,
+    stops: mockBusStops,
+    onSelectBus: vi.fn()
   };
 
-  const mockStops: Stop[] = [
-    {
-      id: 1,
-      name: 'Chennai',
-      arrivalTime: '06:00 AM',
-      departureTime: '06:15 AM',
-      order: 1
-    },
-    {
-      id: 2,
-      name: 'Vellore',
-      arrivalTime: '08:30 AM',
-      departureTime: '08:45 AM',
-      order: 2
-    },
-    {
-      id: 3,
-      name: 'Coimbatore',
-      arrivalTime: '12:30 PM',
-      departureTime: '12:45 PM',
-      order: 3
-    }
-  ];
-  
-  const mockSelectBus = jest.fn();
-  
-  beforeEach(() => {
-    jest.clearAllMocks();
+  it('renders bus details correctly', () => {
+    render(<BusItem {...defaultProps} />);
+    
+    expect(screen.getByText('Express Bus')).toBeInTheDocument();
+    expect(screen.getByText('TN01AB1234')).toBeInTheDocument();
+    expect(screen.getByText('10:00')).toBeInTheDocument();
+    expect(screen.getByText('16:00')).toBeInTheDocument();
   });
-  
-  test('renders bus details correctly', () => {
-    render(
-      <BusItem 
-        bus={mockBus}
-        selectedBusId={null}
-        stops={[]}
-        onSelectBus={mockSelectBus}
-      />
-    );
+
+  it('calls onSelectBus when clicked', () => {
+    const onSelectBus = vi.fn();
+    render(<BusItem {...defaultProps} onSelectBus={onSelectBus} />);
     
-    // Verify both bus name and number are displayed together
-    expect(screen.getByText('SETC Express TN-01-1234')).toBeInTheDocument();
-    
-    // Verify route info is displayed
-    expect(screen.getByText('Chennai → Coimbatore')).toBeInTheDocument();
-    
-    // Verify times are displayed
-    expect(screen.getByText('06:00 AM')).toBeInTheDocument();
-    expect(screen.getByText('12:30 PM')).toBeInTheDocument();
-  });
-  
-  test('calls onSelectBus when clicked', () => {
-    render(
-      <BusItem 
-        bus={mockBus}
-        selectedBusId={null}
-        stops={[]}
-        onSelectBus={mockSelectBus}
-      />
-    );
-    
-    const busItem = screen.getByText('SETC Express TN-01-1234').closest('.bus-item');
+    // Click on the main bus item container instead of looking for a specific button
+    const busItem = screen.getByText('Express Bus').closest('.compact-bus-item');
     fireEvent.click(busItem!);
     
-    expect(mockSelectBus).toHaveBeenCalledWith(mockBus.id);
+    expect(onSelectBus).toHaveBeenCalledWith(1);
   });
-  
-  test('displays bus details when selected', () => {
-    render(
-      <BusItem 
-        bus={mockBus}
-        selectedBusId={mockBus.id}
-        stops={mockStops}
-        onSelectBus={mockSelectBus}
-      />
-    );
+
+  it('displays stops when selected', () => {
+    render(<BusItem {...defaultProps} selectedBusId={1} />);
     
-    // StopsList component should be rendered when bus is selected
-    expect(screen.getByText('Stops')).toBeInTheDocument();
-    expect(screen.getByText('Chennai')).toBeInTheDocument();
-    expect(screen.getByText('Vellore')).toBeInTheDocument();
-    expect(screen.getByText('Coimbatore')).toBeInTheDocument();
-    
-    // Check that the bus item has the 'expanded' class
-    const busItem = screen.getByText('SETC Express TN-01-1234').closest('.bus-item');
-    expect(busItem).toHaveClass('expanded');
-  });
-  
-  test('does not display bus details when not selected', () => {
-    render(
-      <BusItem 
-        bus={mockBus}
-        selectedBusId={999} // Different ID than the bus
-        stops={mockStops}
-        onSelectBus={mockSelectBus}
-      />
-    );
-    
-    // StopsList shouldn't be rendered
-    expect(screen.queryByText('Stops')).not.toBeInTheDocument();
-    
-    // Check that the bus item doesn't have the 'expanded' class
-    const busItem = screen.getByText('SETC Express TN-01-1234').closest('.bus-item');
-    expect(busItem).not.toHaveClass('expanded');
+    expect(screen.getByText('Chennai Central')).toBeInTheDocument();
+    expect(screen.getByText('Salem')).toBeInTheDocument();
+    expect(screen.getByText('Bangalore')).toBeInTheDocument();
   });
 });

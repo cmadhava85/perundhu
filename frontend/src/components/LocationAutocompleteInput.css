@@ -1,0 +1,257 @@
+/* Location Autocomplete Input Styling */
+.location-autocomplete-container {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.autocomplete-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  min-height: 48px;
+  background: #ffffff;
+  font-family: inherit;
+  font-weight: 500;
+  color: #1f2937;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-input:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  background: #fafbff;
+}
+
+.autocomplete-input::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Loading spinner */
+.autocomplete-loading {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #4285f4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Suggestions dropdown */
+.autocomplete-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.autocomplete-suggestion {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.autocomplete-suggestion:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-suggestion:hover {
+  background-color: #f8f9fa;
+}
+
+.suggestion-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.suggestion-name {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.suggestion-translated {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+.suggestion-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #888;
+  font-weight: 400;
+}
+
+.source-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.source-badge:last-child {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+/* No suggestions message */
+.no-suggestions {
+  padding: 16px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.no-suggestions small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #999;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .autocomplete-suggestions {
+    max-height: 200px;
+    border-radius: 6px;
+  }
+  
+  .autocomplete-suggestion {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .suggestion-name {
+    font-size: 0.85rem;
+  }
+  
+  .suggestion-translated {
+    font-size: 0.75rem;
+  }
+  
+  .suggestion-type {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    align-self: flex-end;
+  }
+  
+  .source-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .autocomplete-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .autocomplete-input:focus {
+    border-color: #60a5fa;
+    background: #1f2937;
+  }
+  
+  .autocomplete-suggestions {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .autocomplete-suggestion {
+    border-bottom-color: #374151;
+  }
+  
+  .autocomplete-suggestion:hover {
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  }
+  
+  .suggestion-name {
+    color: #f9fafb;
+  }
+  
+  .suggestion-translated {
+    color: #d1d5db;
+  }
+  
+  .suggestion-type {
+    background: #374151;
+    color: #d1d5db;
+  }
+  
+  .no-suggestions {
+    background: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+  
+  .autocomplete-label {
+    color: #f9fafb;
+  }
+}

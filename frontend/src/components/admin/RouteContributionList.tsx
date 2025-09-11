@@ -1,38 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import AdminService from '../../services/adminService';
+import './RouteContributionList.css';
 import RejectModal from './RejectModal';
+<<<<<<< HEAD
 import type { ContributionStatus, RouteContribution } from '../../types/contributionTypes';
+=======
+import AdminService from '../../services/adminService';
+import type { RouteContribution } from '../../types/contributionTypes';
+import { ContributionStatus } from '../../types/admin';
+>>>>>>> 75c2859 (production ready code need to test)
 
+/**
+ * Component for displaying and managing route contributions
+ */
 const RouteContributionList: React.FC = () => {
   const { t } = useTranslation();
   const [contributions, setContributions] = useState<RouteContribution[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [filter, setFilter] = useState<ContributionStatus | 'ALL'>('PENDING');
-  const [rejectModalOpen, setRejectModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>('pending');
+  const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState<RouteContribution | null>(null);
-
+  
+  // Load contributions on component mount
   useEffect(() => {
-    fetchContributions();
-  }, [filter]);
+    loadContributions();
+  }, [statusFilter]);
 
-  const fetchContributions = async () => {
-    setLoading(true);
+  // Function to load contributions based on status filter
+  const loadContributions = async () => {
     try {
+      setLoading(true);
       let data;
-      if (filter === 'PENDING') {
+      
+      if (statusFilter === 'all') {
+        data = await AdminService.getRouteContributions();
+      } else if (statusFilter === 'pending') {
         data = await AdminService.getPendingRouteContributions();
       } else {
         data = await AdminService.getRouteContributions();
+        // Filter by status if not 'all'
+        data = data.filter((c: RouteContribution) => c.status?.toLowerCase() === statusFilter);
       }
-      setContributions(filter === 'ALL' ? data : data.filter(c => c.status === filter));
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching route contributions:', error);
+      
+      setContributions(data);
+      setError(null);
+    } catch (err) {
+      setError('Failed to load route contributions. Please try again later.');
+      console.error('Error loading contributions:', err);
+    } finally {
       setLoading(false);
     }
   };
 
+<<<<<<< HEAD
   const handleApprove = async (id: string | number | undefined) => {
     if (id === undefined) return;
     try {
@@ -70,85 +91,181 @@ const RouteContributionList: React.FC = () => {
   };
 
   const openRejectModal = (contribution: RouteContribution) => {
+=======
+  // Handle contribution approval
+  const handleApprove = async (id: number | undefined) => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      await AdminService.approveRouteContribution(id);
+      
+      // Reload contributions to get updated list
+      await loadContributions();
+    } catch (err) {
+      setError('Failed to approve contribution. Please try again.');
+      console.error('Error approving contribution:', err);
+      setLoading(false);
+    }
+  };
+
+  // Open reject modal with selected contribution
+  const handleOpenRejectModal = (contribution: RouteContribution) => {
+>>>>>>> 75c2859 (production ready code need to test)
     setSelectedContribution(contribution);
     setRejectModalOpen(true);
   };
 
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
+  // Handle contribution rejection
+  const handleReject = async (id: number | undefined, reason: string) => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      await AdminService.rejectRouteContribution(id, reason);
+      
+      // Close the modal and reload contributions
+      setRejectModalOpen(false);
+      setSelectedContribution(null);
+      await loadContributions();
+    } catch (err) {
+      setError('Failed to reject contribution. Please try again.');
+      console.error('Error rejecting contribution:', err);
+      setLoading(false);
+    }
+  };
+
+  // Handle contribution deletion
+  const handleDelete = async (id: number | undefined) => {
+    if (!id) return;
+    if (window.confirm(t('admin.contributions.deleteConfirm', 'Are you sure you want to delete this contribution? This action cannot be undone.'))) {
+      try {
+        setLoading(true);
+        await AdminService.deleteRouteContribution(id);
+        
+        // Reload contributions to get updated list
+        await loadContributions();
+      } catch (err) {
+        setError('Failed to delete contribution. Please try again.');
+        console.error('Error deleting contribution:', err);
+        setLoading(false);
+      }
+    }
+  };
+
+  // Close the reject modal
+  const handleCloseRejectModal = () => {
+    setRejectModalOpen(false);
+    setSelectedContribution(null);
+  };
+
+  // Get appropriate CSS class for status
+  const getStatusClass = (status?: ContributionStatus) => {
+    if (!status) return 'status-badge';
+    switch (status) {
+      case ContributionStatus.PENDING:
+        return 'status-badge pending';
+      case ContributionStatus.APPROVED:
+        return 'status-badge approved';
+      case ContributionStatus.REJECTED:
+        return 'status-badge rejected';
+      default:
+        return 'status-badge';
+    }
+  };
+
+  // Get row class for styling
+  const getRowClass = (status?: ContributionStatus) => {
+    if (!status) return '';
+    switch (status) {
+      case ContributionStatus.PENDING:
+        return 'status-pending';
+      case ContributionStatus.APPROVED:
+        return 'status-approved';
+      case ContributionStatus.REJECTED:
+        return 'status-rejected';
+      default:
+        return '';
+    }
+  };
 
   return (
-    <div>
+    <div className="route-contribution-list">
       <div className="filter-controls">
         <div className="filter-group">
-          <span className="filter-label">{t('admin.filter.status', 'Status')}:</span>
+          <span className="filter-label">{t('admin.contributions.filterBy', 'Filter by:')}</span>
           <select 
-            className="filter-select" 
-            value={filter} 
-            onChange={(e) => setFilter(e.target.value as ContributionStatus | 'ALL')}
+            className="filter-select"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="ALL">{t('admin.filter.all', 'All')}</option>
-            <option value="PENDING">{t('admin.filter.pending', 'Pending')}</option>
-            <option value="APPROVED">{t('admin.filter.approved', 'Approved')}</option>
-            <option value="REJECTED">{t('admin.filter.rejected', 'Rejected')}</option>
+            <option value="all">{t('admin.contributions.statusAll', 'All')}</option>
+            <option value="pending">{t('admin.contributions.statusPending', 'Pending')}</option>
+            <option value="approved">{t('admin.contributions.statusApproved', 'Approved')}</option>
+            <option value="rejected">{t('admin.contributions.statusRejected', 'Rejected')}</option>
           </select>
         </div>
       </div>
 
-      {contributions.length === 0 ? (
-        <div className="empty-state">
-          {t('admin.noContributions', 'No contributions found')}
-        </div>
-      ) : (
-        <table className="contribution-list">
+      {error && <div className="error-message">{error}</div>}
+      
+      {loading ? (
+        <div className="loading">{t('admin.contributions.loading', 'Loading contributions...')}</div>
+      ) : contributions.length > 0 ? (
+        <table className="contribution-table">
           <thead>
             <tr>
-              <th>{t('admin.table.id', 'ID')}</th>
-              <th>{t('admin.table.busNumber', 'Bus Number')}</th>
-              <th>{t('admin.table.route', 'Route')}</th>
-              <th>{t('admin.table.submissionDate', 'Submitted')}</th>
-              <th>{t('admin.table.status', 'Status')}</th>
-              <th>{t('admin.table.actions', 'Actions')}</th>
+              <th>{t('admin.contributions.id', 'ID')}</th>
+              <th>{t('admin.contributions.busNumber', 'Bus Number')}</th>
+              <th>{t('admin.contributions.fromLocation', 'From')}</th>
+              <th>{t('admin.contributions.toLocation', 'To')}</th>
+              <th>{t('admin.contributions.submittedBy', 'Submitted By')}</th>
+              <th>{t('admin.contributions.submissionDate', 'Date')}</th>
+              <th>{t('admin.contributions.status', 'Status')}</th>
+              <th>{t('admin.contributions.actions', 'Actions')}</th>
             </tr>
           </thead>
           <tbody>
-            {contributions.map((contribution) => (
-              <tr key={contribution.id}>
+            {contributions.map(contribution => (
+              <tr key={contribution.id} className={getRowClass(contribution.status)}>
                 <td>{contribution.id}</td>
                 <td>{contribution.busNumber}</td>
-                <td>{contribution.fromLocationName} to {contribution.toLocationName}</td>
+                <td>{contribution.fromLocationName}</td>
+                <td>{contribution.toLocationName}</td>
+                <td>{contribution.submittedBy || 'Anonymous'}</td>
                 <td>{contribution.submissionDate ? new Date(contribution.submissionDate).toLocaleDateString() : 'N/A'}</td>
                 <td>
-                  {contribution.status && (
-                    <span className={`status-badge ${contribution.status.toLowerCase()}`}>
-                      {contribution.status}
-                    </span>
-                  )}
+                  <span className={getStatusClass(contribution.status)}>
+                    {contribution.status}
+                  </span>
                 </td>
                 <td>
                   <div className="action-buttons">
-                    {contribution.status === 'PENDING' && (
+                    {contribution.status === ContributionStatus.PENDING && (
                       <>
                         <button 
-                          className="btn btn-approve" 
-                          onClick={() => handleApprove(contribution.id)}
+                          className="btn btn-approve"
+                          onClick={() => contribution.id && handleApprove(contribution.id)}
                         >
-                          {t('admin.button.approve', 'Approve')}
+                          {t('admin.contributions.approve', 'Approve')}
                         </button>
                         <button 
                           className="btn btn-reject"
-                          onClick={() => openRejectModal(contribution)}
+                          onClick={() => handleOpenRejectModal(contribution)}
                         >
-                          {t('admin.button.reject', 'Reject')}
+                          {t('admin.contributions.reject', 'Reject')}
                         </button>
                       </>
                     )}
                     <button 
-                      className="btn btn-delete"
-                      onClick={() => handleDelete(contribution.id)}
+                      className="btn btn-view"
+                      onClick={() => alert('View details - To be implemented')}
                     >
-                      {t('admin.button.delete', 'Delete')}
+                      {t('admin.contributions.view', 'View')}
+                    </button>
+                    <button 
+                      className="btn btn-delete"
+                      onClick={() => contribution.id && handleDelete(contribution.id)}
+                    >
+                      {t('admin.contributions.delete', 'Delete')}
                     </button>
                   </div>
                 </td>
@@ -156,15 +273,17 @@ const RouteContributionList: React.FC = () => {
             ))}
           </tbody>
         </table>
+      ) : (
+        <div className="empty-state">
+          {t('admin.contributions.noContributions', 'No route contributions found.')}
+        </div>
       )}
 
       {rejectModalOpen && selectedContribution && (
         <RejectModal
-          onClose={() => {
-            setRejectModalOpen(false);
-            setSelectedContribution(null);
-          }}
+          contribution={selectedContribution}
           onReject={handleReject}
+          onClose={handleCloseRejectModal}
         />
       )}
     </div>

@@ -1,116 +1,110 @@
-// Jest setup file
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
-// Mock for process.env to be used by modules that read from import.meta.env
-process.env.VITE_API_URL = 'http://localhost:8080';
-process.env.VITE_API_BASE_URL = 'http://localhost:8080';
-process.env.VITE_ANALYTICS_API_URL = 'http://localhost:8081/api/v1';
-process.env.NODE_ENV = 'test';
-process.env.VITE_FEATURE_TRACKING = 'true';
-process.env.VITE_FEATURE_REWARDS = 'true';
-process.env.VITE_FEATURE_ANALYTICS = 'true';
-
-// Mock window.matchMedia which is not available in Jest environment
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+// Mock import.meta.env for Vitest
+Object.defineProperty(import.meta, 'env', {
+  value: {
+    VITE_API_URL: 'http://localhost:8080',
+    VITE_API_KEY: 'test-key',
+    VITE_APP_VERSION: '1.0.0'
+  },
+  writable: true
 });
 
-// Mock ResizeObserver which is not available in Jest environment
-globalThis.ResizeObserver = class ResizeObserver {
-  observe = jest.fn();
-  unobserve = jest.fn();
-  disconnect = jest.fn();
-};
+// Mock localStorage and other browser APIs
+Object.defineProperty(window, 'localStorage', {
+  value: {
+    getItem: vi.fn(),
+    setItem: vi.fn(),
+    removeItem: vi.fn(),
+    clear: vi.fn(),
+    length: 0,
+    key: vi.fn(),
+  },
+  writable: true,
+});
 
-// Mock Intersection Observer properly with required properties
-globalThis.IntersectionObserver = class IntersectionObserver {
-  root = null;
-  rootMargin = '0px';
-  thresholds = [0];
-  observe = jest.fn();
-  unobserve = jest.fn();
-  disconnect = jest.fn();
-  takeRecords = jest.fn().mockReturnValue([]);
-  constructor(_callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
-    // Store options if needed
-    if (options) {
-      if (options.rootMargin) this.rootMargin = options.rootMargin;
-      if (options.threshold) this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold];
-      // Don't assign root as it causes type issues
-    }
-  }
-};
-
-// Suppress specific console errors during tests
-const originalError = console.error;
-console.error = (...args) => {
-  // Filter out specific React-related warnings that are safe to ignore in tests
-  if (
-    /Warning.*not wrapped in act/.test(args[0]) ||
-    /Warning: An update to .* inside a test was not wrapped in act/.test(args[0]) ||
-    /Warning: Can't perform a React state update on an unmounted component/.test(args[0])
-  ) {
-    return;
-  }
-  originalError(...args);
-};
-
-// Suppress prop type warnings during tests
-const originalWarn = console.warn;
-console.warn = (...args) => {
-  if (args[0]?.includes?.('Failed prop type:')) {
-    return;
-  }
-  originalWarn(...args);
-}
+Object.defineProperty(window, 'performance', {
+  value: {
+    now: vi.fn(() => Date.now()),
+    mark: vi.fn(),
+    measure: vi.fn(),
+  },
+  writable: true,
+});
 
 // Set up global mocks for Google Maps
-Object.defineProperty(global, 'google', {
+Object.defineProperty(window, 'google', {
   value: {
     maps: {
-      Map: jest.fn(),
-      Marker: jest.fn(),
-      InfoWindow: jest.fn(),
-      LatLngBounds: jest.fn(() => ({
-        extend: jest.fn(),
+      Map: vi.fn(),
+      Marker: vi.fn(),
+      InfoWindow: vi.fn(),
+      LatLngBounds: vi.fn(() => ({
+        extend: vi.fn(),
       })),
-      LatLng: jest.fn((lat, lng) => ({
+      LatLng: vi.fn((lat, lng) => ({
         lat: () => lat,
         lng: () => lng,
       })),
       event: {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
       },
-      DirectionsService: jest.fn(() => ({
-        route: jest.fn((_, callback) => {
-          callback({ 
-            status: 'OK', 
-            routes: [{ 
-              legs: [{}] 
-            }] 
-          });
+      DirectionsService: vi.fn(() => ({
+        route: vi.fn((_, callback) => {
+          // Simulate successful directions response
+          const result = {
+            routes: [{
+              legs: [{
+                start_address: 'Start Location',
+                end_address: 'End Location',
+                distance: { text: '100 km', value: 100000 },
+                duration: { text: '2 hours', value: 7200 }
+              }]
+            }]
+          };
+          callback(result, 'OK');
         }),
       })),
-      DirectionsRenderer: jest.fn(),
+      DirectionsRenderer: vi.fn(() => ({
+        setDirections: vi.fn(),
+        setMap: vi.fn(),
+      })),
+      DirectionsStatus: {
+        OK: 'OK',
+        NOT_FOUND: 'NOT_FOUND',
+        ZERO_RESULTS: 'ZERO_RESULTS',
+        MAX_WAYPOINTS_EXCEEDED: 'MAX_WAYPOINTS_EXCEEDED',
+        INVALID_REQUEST: 'INVALID_REQUEST',
+        OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
+        REQUEST_DENIED: 'REQUEST_DENIED',
+        UNKNOWN_ERROR: 'UNKNOWN_ERROR'
+      },
       Libraries: ['places', 'geometry', 'drawing', 'visualization'],
+      SymbolPath: {
+        CIRCLE: 0,
+        FORWARD_CLOSED_ARROW: 1,
+        FORWARD_OPEN_ARROW: 2,
+        BACKWARD_CLOSED_ARROW: 3,
+        BACKWARD_OPEN_ARROW: 4
+      },
+      TravelMode: {
+        DRIVING: 'DRIVING',
+        WALKING: 'WALKING',
+        TRANSIT: 'TRANSIT',
+        BICYCLING: 'BICYCLING'
+      }
     },
   },
   writable: true,
 });
 
 // Mock react-i18next
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
@@ -148,6 +142,9 @@ jest.mock('react-i18next', () => ({
           'map.title': 'Route Map',
           'common.loading': 'Loading...',
           'common.error': 'No routes found for this selection. Please try different locations.',
+          'common.bothLocationsRequired': 'Both locations are required',
+          'common.whereLeavingFrom': 'Where are you leaving from?',
+          'common.whereGoingTo': 'Where are you going to?',
           'language.english': 'English',
           'language.tamil': 'தமிழ்',
           'footer.copyright': 'Tamil Nadu Bus Scheduler',
@@ -171,7 +168,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 // Mock i18next
-jest.mock('i18next', () => ({
+vi.mock('i18next', () => ({
   use: () => ({
     use: () => ({
       init: () => {},
@@ -182,49 +179,18 @@ jest.mock('i18next', () => ({
 }));
 
 // Mock the offlineService
-jest.mock('./services/offlineService');
+vi.mock('./services/offlineService');
 
 // Mock axios for API tests
-jest.mock('axios', () => ({
-  create: jest.fn().mockReturnValue({
-    get: jest.fn().mockResolvedValue({ data: [] }),
-    post: jest.fn().mockResolvedValue({ data: {} }),
-    interceptors: {
-      request: { use: jest.fn(), eject: jest.fn() },
-      response: { use: jest.fn(), eject: jest.fn() }
-    }
-  })
-}));
-
-// Mock apiClient to fix import.meta issues
-jest.mock('./services/apiClient', () => ({
-  apiClient: {
-    get: jest.fn().mockResolvedValue({ data: {} }),
-    post: jest.fn().mockResolvedValue({ data: {} }),
-    put: jest.fn().mockResolvedValue({ data: {} }),
-    delete: jest.fn().mockResolvedValue({ data: {} }),
-    interceptors: {
-      request: { use: jest.fn(), eject: jest.fn() },
-      response: { use: jest.fn(), eject: jest.fn() }
-    }
-  }
-}), { virtual: true });
-
-// Mock import.meta.env helper function used in apiClient.ts
-jest.mock('./utils/environment', () => ({
-  getEnv: (key: string, defaultValue: string = '') => {
-    if (process.env[key]) {
-      return process.env[key];
-    }
-    return defaultValue;
-  },
-  getFeatureFlag: (key: string, defaultValue: boolean = false) => {
-    if (process.env[key] === 'true') {
-      return true;
-    }
-    if (process.env[key] === 'false') {
-      return false;
-    }
-    return defaultValue;
+vi.mock('axios', () => ({
+  default: {
+    create: vi.fn().mockReturnValue({
+      get: vi.fn().mockResolvedValue({ data: [] }),
+      post: vi.fn().mockResolvedValue({ data: {} }),
+      interceptors: {
+        request: { use: vi.fn(), eject: vi.fn() },
+        response: { use: vi.fn(), eject: vi.fn() }
+      }
+    })
   }
 }));

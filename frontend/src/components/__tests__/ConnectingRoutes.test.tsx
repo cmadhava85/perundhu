@@ -1,10 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, expect, vi, beforeEach } from 'vitest';
 import ConnectingRoutes from '../ConnectingRoutes';
 import * as apiService from '../../services/api';
 
 // Mock the API service
-jest.mock('../../services/api', () => ({
-  getStops: jest.fn()
+vi.mock('../../services/api', () => ({
+  getStops: vi.fn()
 }));
 
 // react-i18next is automatically mocked via jest.config.ts
@@ -70,8 +71,8 @@ describe('ConnectingRoutes Component', () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    (apiService.getStops as jest.Mock).mockResolvedValue(mockStops);
+    vi.clearAllMocks();
+    (apiService.getStops as any).mockResolvedValue(mockStops);
   });
 
   test('renders connecting routes title when routes exist', () => {

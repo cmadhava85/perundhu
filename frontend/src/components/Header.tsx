@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import '../styles/Header.css';
@@ -15,36 +15,87 @@ const Header: React.FC<HeaderProps> = ({
   isAdmin = false
 }) => {
   const { t } = useTranslation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   return (
     <header className="app-header">
       <div className="header-content">
-        <h1>
-          {isAdmin 
-            ? t('header.adminTitle', 'Admin Dashboard') 
-            : t('header.title', 'Tamil Nadu Bus Schedule')
-          }
-        </h1>
-        <div className="header-actions">
+        <div className="header-main">
+          <h1>
+            {isAdmin 
+              ? t('header.adminTitle', 'Admin Dashboard') 
+              : t('header.title', 'Tamil Nadu Bus Schedule')
+            }
+          </h1>
+          
+          {/* Mobile menu toggle */}
+          <button 
+            className="mobile-menu-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={t('header.toggleMenu', 'Toggle menu')}
+          >
+            <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+        
+        <div className={`header-actions ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
           {!isAdmin && onToggleAutoLocation && (
-            <div className="location-toggle">
-              <label className="toggle-switch" title={t('header.autoDetectLocationHint', 'Enable to automatically detect your current location')}>
-                <input 
-                  type="checkbox" 
-                  checked={autoLocationEnabled}
-                  onChange={onToggleAutoLocation}
-                  aria-label={t('header.autoDetectLocation', 'Auto-detect location')}
-                />
-                <span className="toggle-slider"></span>
-              </label>
-              <span className="toggle-label">{t('header.autoDetectLocation', 'Auto-detect location')}</span>
+            <div className="auto-location-toggle">
+              <div className="location-card">
+                <div className="location-icon-wrapper">
+                  <div className={`location-icon-container ${autoLocationEnabled ? 'active' : ''}`}>
+                    <div className="location-icon">📍</div>
+                    {autoLocationEnabled && (
+                      <>
+                        <div className="pulse-ring"></div>
+                        <div className="pulse-ring delay-1"></div>
+                        <div className="pulse-ring delay-2"></div>
+                      </>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="location-content">
+                  <div className="location-title">
+                    {t('header.autoDetectLocation', 'Auto-detect location')}
+                  </div>
+                  <div className="location-subtitle">
+                    {autoLocationEnabled 
+                      ? t('header.locationEnabled', 'Location detection active') 
+                      : t('header.locationDisabled', 'Enable for better results')
+                    }
+                  </div>
+                </div>
+                
+                <button 
+                  className={`modern-toggle ${autoLocationEnabled ? 'active' : ''}`}
+                  onClick={onToggleAutoLocation}
+                  aria-pressed={autoLocationEnabled}
+                  aria-label={t('header.autoDetectLocationHint', 'Toggle automatic location detection')}
+                >
+                  <div className="toggle-track">
+                    <div className="toggle-thumb">
+                      <div className="thumb-icon">
+                        {autoLocationEnabled ? '✓' : '○'}
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
             </div>
           )}
+          
           {isAdmin && (
-            <a href="/" className="home-link">
-              {t('header.backToHome', 'Back to Home')}
+            <a href="/" className="home-link modern-button">
+              <span className="button-icon">🏠</span>
+              <span className="button-text">{t('header.backToHome', 'Back to Home')}</span>
             </a>
           )}
+          
           <div className="language-switcher-wrapper">
             <LanguageSwitcher />
           </div>

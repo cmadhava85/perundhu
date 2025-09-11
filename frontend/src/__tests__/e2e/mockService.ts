@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RewardActivity } from '../../types/index';
 
 // Sample data for testing
@@ -134,21 +135,21 @@ export const mockApiService = {
   isOfflineMode: false,
   
   // Mock functions for API calls
-  getLocations: jest.fn().mockImplementation(async () => {
+  getLocations: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.reject(new Error('Network error'));
     }
     return mockData.locations;
   }),
   
-  searchBuses: jest.fn().mockImplementation(async () => {
+  searchBuses: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.reject(new Error('Network error'));
     }
     return mockData.buses;
   }),
   
-  getStops: jest.fn().mockImplementation(async (busId: number) => {
+  getStops: vi.fn().mockImplementation(async (busId: number) => {
     if (mockApiService.isOfflineMode) {
       return Promise.reject(new Error('Network error'));
     }
@@ -158,35 +159,35 @@ export const mockApiService = {
     return mockData.stops;
   }),
   
-  getConnectingRoutes: jest.fn().mockImplementation(async () => {
+  getConnectingRoutes: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.reject(new Error('Network error'));
     }
     return mockData.connectingRoutes;
   }),
   
-  reportBusLocation: jest.fn().mockImplementation(async () => {
+  reportBusLocation: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.resolve(false);
     }
     return Promise.resolve(true);
   }),
   
-  disembarkBus: jest.fn().mockImplementation(async () => {
+  disembarkBus: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.resolve(false);
     }
     return Promise.resolve(true);
   }),
   
-  getLiveBusLocations: jest.fn().mockImplementation(async () => {
+  getLiveBusLocations: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.reject(new Error('Network error'));
     }
     return mockData.busLocations;
   }),
   
-  getUserRewardPoints: jest.fn().mockImplementation(async () => {
+  getUserRewardPoints: vi.fn().mockImplementation(async () => {
     if (mockApiService.isOfflineMode) {
       return Promise.resolve({
         userId: 'offline',
@@ -215,25 +216,25 @@ export const mockApiService = {
   },
 
   // API check status functions
-  checkOnlineStatus: jest.fn().mockImplementation(async () => {
+  checkOnlineStatus: vi.fn().mockImplementation(async () => {
     return !mockApiService.isOfflineMode;
   }),
 
-  getOfflineMode: jest.fn().mockImplementation(() => {
+  getOfflineMode: vi.fn().mockImplementation(() => {
     return mockApiService.isOfflineMode;
   }),
 
-  getOfflineDataAge: jest.fn().mockImplementation(() => {
+  getOfflineDataAge: vi.fn().mockImplementation(() => {
     return Promise.resolve(1); // Return 1 day as default
   }),
 
-  cleanupOldOfflineData: jest.fn().mockImplementation(() => {
+  cleanupOldOfflineData: vi.fn().mockImplementation(() => {
     return Promise.resolve();
   })
 };
 
 // Mock environment utilities
-jest.mock('../../utils/environment', () => ({
+vi.mock('../../utils/environment', () => ({
   getEnv: (key: string) => {
     if (key === 'VITE_API_URL') return 'http://localhost:8080/api/v1';
     return '';

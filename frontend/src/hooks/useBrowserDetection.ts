@@ -14,7 +14,6 @@ interface BrowserInfo {
   browserName: string;
   deviceType: 'mobile' | 'tablet' | 'desktop';
   isLandscape: boolean;
-  browser: string; // Added the missing browser property
 }
 
 export const useBrowserDetection = (): BrowserInfo => {
@@ -31,8 +30,7 @@ export const useBrowserDetection = (): BrowserInfo => {
     isUCBrowser: false,
     browserName: 'unknown',
     deviceType: 'desktop',
-    isLandscape: false,
-    browser: 'unknown' // Initialize the browser property
+    isLandscape: false
   });
 
   useEffect(() => {
@@ -44,8 +42,7 @@ export const useBrowserDetection = (): BrowserInfo => {
       const isMobile = mobileRegex.test(userAgent);
       
       // Detect specific platforms
-      // Check for iOS but handle MSStream safely for TypeScript
-      const isIOS = /iPhone|iPad|iPod/i.test(userAgent) && !('MSStream' in window);
+      const isIOS = /iPhone|iPad|iPod/i.test(userAgent) && !(window as any).MSStream;
       const isAndroid = /Android/i.test(userAgent);
       
       // Detect specific browsers
@@ -56,6 +53,11 @@ export const useBrowserDetection = (): BrowserInfo => {
       const isEdgeMobile = /EdgiOS|Edge/i.test(userAgent) && isMobile;
       const isOperaMobile = /OPiOS|OPR|Opera/i.test(userAgent) && isMobile;
       const isUCBrowser = /UCBrowser/i.test(userAgent);
+      
+      // Remove unused variables
+      // const isIE = userAgent.indexOf('MSIE') !== -1 || userAgent.indexOf('Trident/') !== -1;
+      // const isEdge = userAgent.indexOf('Edge/') !== -1 || userAgent.indexOf('Edg/') !== -1;
+      // const isIEAlternative = !!(window as any).MSInputMethodContext && !!(document as any).documentMode;
       
       // Get browser name
       let browserName = 'unknown';
@@ -96,8 +98,7 @@ export const useBrowserDetection = (): BrowserInfo => {
         isUCBrowser,
         browserName,
         deviceType,
-        isLandscape,
-        browser: browserName // Set the browser property to browserName for compatibility
+        isLandscape
       });
     };
     

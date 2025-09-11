@@ -55,3 +55,40 @@ export const getCurrentPosition = (): Promise<GeolocationPosition> => {
     });
   });
 };
+
+/**
+ * Check if geolocation is supported by the browser
+ * @returns boolean indicating if geolocation is supported
+ */
+export const getGeolocationSupport = (): boolean => {
+  return 'geolocation' in navigator;
+};
+
+/**
+ * Watch position changes using the Geolocation API
+ * @param callback Function to call when position changes
+ * @returns Watch ID that can be used to clear the watch
+ */
+export const watchPosition = (callback: (position: GeolocationPosition) => void): number => {
+  if (!navigator.geolocation) {
+    throw new Error('Geolocation is not supported by your browser');
+  }
+  
+  return navigator.geolocation.watchPosition(callback, (error) => {
+    console.error('Geolocation error:', error);
+  }, {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 60000 // Cache position for 1 minute
+  });
+};
+
+/**
+ * Clear a position watch
+ * @param watchId The watch ID returned by watchPosition
+ */
+export const clearWatch = (watchId: number): void => {
+  if (navigator.geolocation) {
+    navigator.geolocation.clearWatch(watchId);
+  }
+};

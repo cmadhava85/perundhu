@@ -416,33 +416,312 @@
     @apply pb-5;
   }
 
-  /* Language Switcher Component */
-  .language-tabs-container {
-    @apply relative;
+  /* Modern Language Switcher Component */
+  .modern-language-switcher {
+    @apply flex flex-col items-center gap-2;
   }
 
-  .language-tabs {
-    @apply flex overflow-hidden rounded-lg border border-gray-200 bg-white
-    dark:bg-gray-800 dark:border-gray-700;
+  .language-selector-wrapper {
+    @apply relative bg-white rounded-2xl p-1.5 shadow-lg border border-gray-100
+    dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 hover:shadow-xl
+    backdrop-blur-md bg-white/90 dark:bg-gray-800/90;
   }
 
-  .language-tab {
-    @apply border-0 bg-transparent px-3 py-2 text-sm font-medium text-gray-600 flex items-center gap-1.5
-    transition-all duration-200 hover:bg-gray-50 hover:text-gray-800
-    dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200;
+  .language-selector {
+    @apply relative flex z-20;
   }
 
-  .language-tab.active {
-    @apply bg-blue-50 text-blue-700 font-medium
-    dark:bg-blue-900/30 dark:text-blue-300;
+  .lang-option {
+    @apply relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300
+    text-gray-600 hover:text-gray-800 bg-transparent border-none cursor-pointer
+    dark:text-gray-400 dark:hover:text-gray-200 min-w-[110px] justify-start
+    transform-gpu will-change-transform;
   }
 
-  .language-flag {
-    @apply text-base;
+  .lang-option:hover:not(.active) {
+    @apply bg-gray-50/80 dark:bg-gray-700/50 scale-[1.02];
   }
 
-  .language-name {
-    @apply hidden sm:inline;
+  .lang-option.active {
+    @apply text-white font-semibold transform scale-105 z-30 relative;
+    color: white !important;
+  }
+
+  .lang-option.animating {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Language icon styling */
+  .lang-icon-container {
+    @apply relative flex items-center justify-center w-8 h-8;
+  }
+
+  .lang-icon {
+    @apply text-xl filter drop-shadow-sm transition-all duration-300 relative z-10;
+  }
+
+  .icon-glow {
+    @apply absolute inset-0 rounded-full opacity-0 transition-all duration-300
+    bg-gradient-to-br from-blue-400/20 to-purple-500/20 blur-sm;
+  }
+
+  .lang-option.active .icon-glow {
+    @apply opacity-100 scale-150;
+  }
+
+  .lang-option.active .lang-icon {
+    @apply transform scale-110 filter drop-shadow-lg;
+  }
+
+  /* Language text styling */
+  .lang-text-container {
+    @apply flex flex-col leading-tight;
+  }
+
+  .lang-name {
+    @apply text-sm font-semibold tracking-wide;
+  }
+
+  .lang-code {
+    @apply text-xs opacity-70 font-medium;
+  }
+
+  .lang-option.active .lang-code {
+    @apply opacity-90 font-bold;
+  }
+
+  /* Active indicator */
+  .active-indicator {
+    @apply absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center justify-center;
+  }
+
+  .indicator-dot {
+    @apply w-2 h-2 rounded-full bg-current opacity-0 transition-all duration-300 relative z-10;
+  }
+
+  .indicator-ripple {
+    @apply absolute inset-0 rounded-full opacity-0 transition-all duration-500
+    bg-current animate-ping;
+  }
+
+  .lang-option.active .indicator-dot {
+    @apply opacity-100 scale-125;
+  }
+
+  .lang-option.active .indicator-ripple {
+    @apply opacity-30;
+  }
+
+  /* Animated background slider */
+  .bg-slider {
+    @apply absolute top-1.5 bottom-1.5 w-[calc(50% - 6px)] rounded-xl transition-all duration-500 ease-out
+    z-10 overflow-hidden;
+  }
+
+  .slider-gradient {
+    @apply w-full h-full bg-gradient-to-br opacity-95 transition-all duration-500;
+  }
+
+  .bg-slider.slide-english {
+    @apply left-1.5;
+  }
+
+  .bg-slider.slide-english .slider-gradient {
+    @apply from-blue-500 via-blue-600 to-indigo-600
+    shadow-lg shadow-blue-500/30;
+  }
+
+  .bg-slider.slide-tamil {
+    @apply right-1.5 left-auto;
+  }
+
+  .bg-slider.slide-tamil .slider-gradient {
+    @apply from-red-500 via-red-600 to-rose-600
+    shadow-lg shadow-red-500/30;
+  }
+
+  /* Language status indicator */
+  .language-status {
+    @apply flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-full text-xs font-medium
+    text-gray-600 border border-gray-200 transition-all duration-300
+    dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600;
+  }
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full bg-green-500 animate-pulse;
+  }
+
+  .status-text {
+    @apply font-medium tracking-wide;
+  }
+
+  /* Tamil font optimization */
+  .lang-option[aria-label*="தமிழ்"] .lang-name {
+    @apply font-['Noto_Sans_Tamil','Latha',sans-serif] leading-relaxed text-base;
+  }
+
+  .status-text {
+    @apply font-['Noto_Sans_Tamil','Latha',sans-serif] when-tamil;
+  }
+
+  /* Mobile responsive design */
+  @media (max-width: 640px) {
+    .language-selector-wrapper {
+      @apply w-full max-w-xs mx-auto;
+    }
+
+    .lang-option {
+      @apply flex-1 min-w-0 px-3 py-2.5;
+    }
+
+    .lang-text-container {
+      @apply items-center;
+    }
+
+    .lang-name {
+      @apply text-xs;
+    }
+
+    .lang-code {
+      @apply text-[10px];
+    }
+
+    .language-status {
+      @apply px-2 py-1 text-xs;
+    }
+
+    .status-dot {
+      @apply w-1.5 h-1.5;
+    }
+  }
+
+  /* Tablet adjustments */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .lang-option {
+      @apply px-3 py-2.5 min-w-[100px];
+    }
+
+    .lang-name {
+      @apply text-sm;
+    }
+  }
+
+  /* Desktop hover effects */
+  @media (hover: hover) {
+    .language-selector-wrapper:hover {
+      @apply shadow-2xl border-blue-200 dark:border-blue-700;
+    }
+
+    .lang-option:hover:not(.active) .lang-icon {
+      @apply transform scale-105;
+    }
+
+    .lang-option:hover:not(.active) .icon-glow {
+      @apply opacity-50 scale-125;
+    }
+  }
+
+  /* Focus states for accessibility */
+  .lang-option:focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white
+    dark:ring-blue-400 dark:ring-offset-gray-800 z-40;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .language-selector-wrapper {
+      @apply border-2 border-gray-800 dark:border-gray-200;
+    }
+
+    .bg-slider.slide-english .slider-gradient {
+      @apply from-blue-700 to-blue-800;
+    }
+
+    .bg-slider.slide-tamil .slider-gradient {
+      @apply from-red-700 to-red-800;
+    }
+
+    .lang-option.active {
+      @apply text-white font-bold;
+    }
+
+    .language-status {
+      @apply border-2 border-gray-800 dark:border-gray-200;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .bg-slider,
+    .lang-option,
+    .icon-glow,
+    .indicator-ripple,
+    .status-dot {
+      @apply transition-none animate-none;
+    }
+
+    .lang-option.active {
+      @apply transform-none;
+    }
+
+    .status-dot {
+      @apply animate-none;
+    }
+  }
+
+  /* Dark mode enhancements */
+  @media (prefers-color-scheme: dark) {
+    .language-selector-wrapper {
+      @apply bg-gray-800/95 border-gray-600;
+    }
+
+    .lang-option {
+      @apply text-gray-300;
+    }
+
+    .lang-option:hover:not(.active) {
+      @apply bg-gray-700/60 text-gray-100;
+    }
+
+    .language-status {
+      @apply bg-gray-700/80 text-gray-200 border-gray-500;
+    }
+  }
+
+  /* Glass morphism effect */
+  .language-selector-wrapper {
+    @apply backdrop-blur-xl bg-white/80 dark:bg-gray-800/80
+    border border-white/20 dark:border-gray-600/30;
+  }
+
+  /* Smooth entrance animation */
+  .modern-language-switcher {
+    @apply animate-[fadeInUp_0.5s_ease-out];
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Pulse animation for active state */
+  .lang-option.active {
+    @apply animate-[subtlePulse_2s_ease-in-out_infinite];
+  }
+
+  @keyframes subtlePulse {
+    0%, 100% {
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(1.08);
+    }
   }
 }
 

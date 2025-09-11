@@ -1,29 +1,34 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': './src'
+    }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          maps: ['@react-google-maps/api'],
+        }
+      }
     }
   },
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    port: 3000,
+    open: true,
   },
-  // Define process.env to make it available in the client-side code
+  // Define environment variables to make them available in the client-side code
   define: {
-    'process.env': {
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      VITE_API_URL: JSON.stringify(process.env.VITE_API_URL)
-    }
+    'process.env.NODE_ENV': JSON.stringify('development'),
+    'process.env.VITE_API_URL': JSON.stringify('http://localhost:8080'),
+    'process.env.VITE_API_BASE_URL': JSON.stringify('http://localhost:8080')
   }
 })

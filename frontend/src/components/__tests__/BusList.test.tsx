@@ -1,25 +1,26 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { vi } from 'vitest';
 import BusList from '../BusList';
 import type { Bus } from '../../types';
 
 // Mock the BusItem component to simplify testing
-jest.mock('../BusItem', () => {
-  // Remove unused parameter completely
-  return function MockBusItem({ bus, onSelectBus }: { 
+vi.mock('../BusItem', () => ({
+  default: function MockBusItem({ bus, onSelectBus }: { 
     bus: Bus; 
-    onSelectBus: (id: number) => void 
+    onSelectBus: (busId: number) => void 
   }) {
     return (
-      <div data-testid={`bus-item-${bus.id}`} className="bus-item">
-        <div>Bus: {bus.busName} {bus.busNumber}</div>
-        <div>From: {bus.from} to {bus.to}</div>
-        <button onClick={() => onSelectBus(bus.id)}>Select</button>
+      <div 
+        data-testid={`bus-item-${bus.id}`} 
+        onClick={() => onSelectBus(bus.id)}
+      >
+        {bus.busName} - {bus.from} to {bus.to}
       </div>
     );
-  };
-});
+  }
+}));
 
-// react-i18next is automatically mocked by Jest
+// react-i18next is automatically mocked by Vitest
 describe('BusList Component', () => {
   const mockBuses: Bus[] = [
     {
@@ -42,10 +43,10 @@ describe('BusList Component', () => {
     }
   ];
   
-  const mockSelectBus = jest.fn();
+  const mockSelectBus = vi.fn();
   
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   
   test('renders heading and bus items', () => {
@@ -53,7 +54,7 @@ describe('BusList Component', () => {
       <BusList 
         buses={mockBuses}
         selectedBusId={null}
-        stops={[]}
+        stopsMap={{}}
         onSelectBus={mockSelectBus}
       />
     );
@@ -72,7 +73,7 @@ describe('BusList Component', () => {
       <BusList 
         buses={[]}
         selectedBusId={null}
-        stops={[]}
+        stopsMap={{}}
         onSelectBus={mockSelectBus}
       />
     );
@@ -86,7 +87,7 @@ describe('BusList Component', () => {
       <BusList 
         buses={mockBuses}
         selectedBusId={1}
-        stops={[{ id: 1, name: 'Test Stop', arrivalTime: '10:00 AM', departureTime: '10:05 AM', order: 1 }]}
+        stopsMap={{ 1: [{ id: 1, name: 'Test Stop', arrivalTime: '10:00 AM', departureTime: '10:05 AM', order: 1 }] }}
         onSelectBus={mockSelectBus}
       />
     );
@@ -96,9 +97,25 @@ describe('BusList Component', () => {
     expect(busItems).toHaveLength(2);
     
     // Check bus specific details are rendered correctly
-    expect(screen.getByText('Bus: SETC Express TN-01-1234')).toBeInTheDocument();
-    expect(screen.getByText('From: Chennai to Coimbatore')).toBeInTheDocument();
-    expect(screen.getByText('Bus: TNSTC TN-02-5678')).toBeInTheDocument();
-    expect(screen.getByText('From: Chennai to Madurai')).toBeInTheDocument();
+    expect(screen.getByText('SETC Express - Chennai to Coimbatore')).toBeInTheDocument();
+    expect(screen.getByText('TNSTC - Chennai to Madurai')).toBeInTheDocument();
+  });
+  
+  it('calls onSelectBus when bus item is clicked', () => {
+    render(
+      <BusList 
+        buses={mockBuses} 
+        onSelectBus={mockSelectBus}
+        selectedBusId={null}
+        stopsMap={{}}
+      />
+    );
+    
+    // Click on the first bus item using the test ID
+    const firstBusItem = screen.getByTestId('bus-item-1');
+    fireEvent.click(firstBusItem);
+    
+    // The BusItem component calls onSelectBus with busId, which BusList then converts to the full bus object
+    expect(mockSelectBus).toHaveBeenCalledWith(mockBuses[0]);
   });
 });

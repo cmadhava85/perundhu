@@ -28,7 +28,11 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
               <div 
                 className={`stop-marker ${
                   index === 0 ? 'origin' : 
+<<<<<<< HEAD
                   index === stops.length - 1 ? 'destination' : ''
+=======
+                  index === stops.length - 1 ? 'destination' : 'intermediate'
+>>>>>>> 75c2859 (production ready code need to test)
                 }`}
               ></div>
               
@@ -46,6 +50,7 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
                 </div>
                 
                 <div className="stop-meta">
+<<<<<<< HEAD
                   {stop.order && (
                     <div className="stop-attribute">
                       {t('stopsList.stopOrder', 'Stop')}: {stop.order}
@@ -61,6 +66,20 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
                       {t(`stopsList.status.${stop.status}`, stop.status)}
                     </div>
                   )}
+=======
+                  {stop.stopOrder && (
+                    <div className="stop-attribute">
+                      <span className="attribute-icon">📍</span>
+                      {t('stopsList.stopOrder', 'Stop')}: {stop.stopOrder}
+                    </div>
+                  )}
+                  {stop.order && !stop.stopOrder && (
+                    <div className="stop-attribute">
+                      <span className="attribute-icon">📍</span>
+                      {t('stopsList.stopOrder', 'Stop')}: {stop.order}
+                    </div>
+                  )}
+>>>>>>> 75c2859 (production ready code need to test)
                 </div>
               </div>
             </div>
@@ -75,4 +94,5 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
   );
 };
 
-export default StopsList;
+// Apply React.memo to prevent unnecessary re-renders when props haven't changed
+export default React.memo(StopsList);

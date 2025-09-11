@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,20 +37,62 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
     console.error('Error caught by ErrorBoundary:', error, errorInfo);
     
     // Call onError callback if provided
+=======
+import React from 'react';
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+  errorInfo?: React.ErrorInfo;
+}
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+  fallback?: React.ComponentType<{ error?: Error; retry?: () => void }>;
+  onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    
+    this.setState({
+      error,
+      errorInfo
+    });
+
+    // Call optional error handler
+>>>>>>> 75c2859 (production ready code need to test)
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
   }
+<<<<<<< HEAD
   
   reset = () => {
     this.setState({
       hasError: false,
       error: null
     });
+=======
+
+  handleRetry = () => {
+    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+>>>>>>> 75c2859 (production ready code need to test)
   };
 
   render() {
     if (this.state.hasError) {
+<<<<<<< HEAD
       // Show custom fallback UI if provided, otherwise show default error UI
       if (this.props.fallback) {
         return this.props.fallback;
@@ -58,6 +101,34 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
       return (
         <div className="error-boundary-fallback">
           <ErrorFallback error={this.state.error} reset={this.reset} />
+=======
+      // Use custom fallback component if provided
+      if (this.props.fallback) {
+        const FallbackComponent = this.props.fallback;
+        return <FallbackComponent error={this.state.error} retry={this.handleRetry} />;
+      }
+
+      // Default error UI
+      return (
+        <div className="error-boundary">
+          <div className="error-boundary-content">
+            <h2>🚫 Something went wrong</h2>
+            <p>We're sorry, but something unexpected happened.</p>
+            <details className="error-details">
+              <summary>Error Details</summary>
+              <pre>{this.state.error?.message}</pre>
+              {import.meta.env.MODE === 'development' && (
+                <pre>{this.state.error?.stack}</pre>
+              )}
+            </details>
+            <button 
+              onClick={this.handleRetry}
+              className="retry-button"
+            >
+              Try Again
+            </button>
+          </div>
+>>>>>>> 75c2859 (production ready code need to test)
         </div>
       );
     }
@@ -66,6 +137,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
   }
 }
 
+<<<<<<< HEAD
 // Default error fallback UI component
 interface ErrorFallbackProps {
   error: Error | null;
@@ -119,4 +191,6 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = (props) => {
   return <ErrorBoundaryClass {...props} />;
 };
 
+=======
+>>>>>>> 75c2859 (production ready code need to test)
 export default ErrorBoundary;

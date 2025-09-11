@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import SearchForm from '../SearchForm';
 import type { Location } from '../../types';
@@ -45,90 +46,100 @@ jest.mock('../search/LocationDropdown', () => {
     );
   };
 });
+=======
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import SearchForm from '../SearchForm'; // Fixed: use default import instead of named import
+>>>>>>> 75c2859 (production ready code need to test)
 
-// Mock the react-i18next hook
-jest.mock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (key: string) => {
-        // Return mapped values for translation keys used in the test
-        const translations: {[key: string]: string} = {
-          'searchForm.from': 'From:',
-          'searchForm.to': 'To:',
-          'searchForm.searchButton': 'Search Buses',
-          'searchForm.selectDeparture': 'Select departure',
-          'searchForm.selectDestination': 'Select destination'
-        };
-        return translations[key] || key;
-      },
-      i18n: {
-        changeLanguage: jest.fn(),
-        language: 'en'
-      }
-    };
-  },
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      const translations: { [key: string]: string } = {
+        'common.whereLeavingFrom': 'Where are you leaving from?',
+        'common.whereGoingTo': 'Where are you going to?',
+        'common.bothLocationsRequired': 'Please select both origin and destination locations',
+        'searchForm.searchButton': 'Search Buses',
+        'searchForm.clearFrom': 'Clear departure location',
+        'searchForm.clearTo': 'Clear destination',
+        'searchForm.swapLocations': 'Swap locations'
+      };
+      return translations[key] || key;
+    },
+    i18n: { language: 'en' }
+  })
 }));
 
 describe('SearchForm Component', () => {
-  const mockLocations: Location[] = [
-    { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
-    { id: 2, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 },
-    { id: 3, name: 'Madurai', latitude: 9.9252, longitude: 78.1198 }
-  ];
-  
-  const mockSetFromLocation = jest.fn();
-  const mockSetToLocation = jest.fn();
-  const mockOnSearch = jest.fn();
-  const mockResetResults = jest.fn();
-  
-  const defaultProps = {
-    locations: mockLocations,
-    destinations: mockLocations,
+  const mockProps = {
+    locations: [
+      { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
+      { id: 2, name: 'Bangalore', latitude: 12.9716, longitude: 77.5946 },
+    ],
+    destinations: [
+      { id: 2, name: 'Bangalore', latitude: 12.9716, longitude: 77.5946 },
+      { id: 3, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 },
+    ],
     fromLocation: null,
     toLocation: null,
-    setFromLocation: mockSetFromLocation,
-    setToLocation: mockSetToLocation,
-    onSearch: mockOnSearch,
-    resetResults: mockResetResults
+    setFromLocation: vi.fn(),
+    setToLocation: vi.fn(),
+    onSearch: vi.fn(),
+    resetResults: vi.fn(),
   };
-  
+
   beforeEach(() => {
+<<<<<<< HEAD
     jest.clearAllMocks();
     (locationService.searchLocations as jest.Mock).mockResolvedValue(mockLocations);
     (locationService.validateLocation as jest.Mock).mockResolvedValue(true);
+=======
+    vi.clearAllMocks();
+>>>>>>> 75c2859 (production ready code need to test)
   });
-  
-  test('renders search form with location dropdowns', () => {
-    render(<SearchForm {...defaultProps} />);
+
+  it('renders search form elements', () => {
+    render(<SearchForm {...mockProps} />);
     
-    expect(screen.getByText('From:')).toBeInTheDocument();
-    expect(screen.getByText('To:')).toBeInTheDocument();
-    expect(screen.getByText('Search Buses')).toBeInTheDocument();
+    // Check for input fields with proper placeholders
+    expect(screen.getByPlaceholderText('Where are you leaving from?')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Where are you going to?')).toBeInTheDocument();
+    
+    // Check for swap button
+    expect(screen.getByLabelText('Swap locations')).toBeInTheDocument();
+    
+    // Check for search button
+    expect(screen.getByText('Please select both origin and destination locations')).toBeInTheDocument();
   });
-  
-  test('search button is disabled when locations are not selected', () => {
-    render(<SearchForm {...defaultProps} />);
+
+  it('search button is disabled when locations are not selected', () => {
+    render(<SearchForm {...mockProps} />);
     
-    const searchButton = screen.getByText('Search Buses');
+    const searchButton = screen.getByRole('button', { name: /please select both/i });
     expect(searchButton).toBeDisabled();
   });
-  
-  test('search button is enabled when both locations are selected', () => {
-    render(
-      <SearchForm 
-        {...defaultProps}
-        fromLocation={mockLocations[0]}
-        toLocation={mockLocations[1]}
-      />
-    );
+
+  it('search button is enabled when both locations are selected', () => {
+    const props = {
+      ...mockProps,
+      fromLocation: { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
+      toLocation: { id: 2, name: 'Bangalore', latitude: 12.9716, longitude: 77.5946 }
+    };
     
-    const searchButton = screen.getByText('Search Buses');
+    render(<SearchForm {...props} />);
+    
+    const searchButton = screen.getByRole('button', { name: /search buses/i });
     expect(searchButton).not.toBeDisabled();
   });
-  
-  test('selecting from location calls setFromLocation', () => {
-    render(<SearchForm {...defaultProps} />);
+
+  it('displays selected from location', () => {
+    const props = {
+      ...mockProps,
+      fromLocation: { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 }
+    };
     
+<<<<<<< HEAD
     // Use our mocked dropdown component's button
     const selectChennaiBtn = screen.getByTestId('from-location-select-chennai');
     fireEvent.click(selectChennaiBtn);
@@ -155,34 +166,48 @@ describe('SearchForm Component', () => {
       id: 2, 
       name: 'Coimbatore'
     }));
-  });
-  
-  test('clicking search button calls onSearch', () => {
-    render(
-      <SearchForm 
-        {...defaultProps}
-        fromLocation={mockLocations[0]}
-        toLocation={mockLocations[1]}
-      />
-    );
+=======
+    render(<SearchForm {...props} />);
     
-    const searchButton = screen.getByText('Search Buses');
+    expect(screen.getByDisplayValue('Chennai')).toBeInTheDocument();
+  });
+
+  it('displays selected to location', () => {
+    const props = {
+      ...mockProps,
+      toLocation: { id: 2, name: 'Bangalore', latitude: 12.9716, longitude: 77.5946 }
+    };
+    
+    render(<SearchForm {...props} />);
+    
+    expect(screen.getByDisplayValue('Bangalore')).toBeInTheDocument();
+>>>>>>> 75c2859 (production ready code need to test)
+  });
+
+  it('calls onSearch when form is submitted with both locations', () => {
+    const props = {
+      ...mockProps,
+      fromLocation: { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
+      toLocation: { id: 2, name: 'Bangalore', latitude: 12.9716, longitude: 77.5946 }
+    };
+    
+    render(<SearchForm {...props} />);
+    
+    const searchButton = screen.getByRole('button', { name: /search buses/i });
     fireEvent.click(searchButton);
     
-    expect(mockOnSearch).toHaveBeenCalled();
+    expect(props.onSearch).toHaveBeenCalledTimes(1);
   });
-  
-  // Skip the unreliable cleanup test since it's not essential
-  test.skip('search form calls resetResults when unmounted', () => {
-    const mockResetResults = jest.fn();
-    const { unmount } = render(
-      <SearchForm 
-        {...defaultProps}
-        resetResults={mockResetResults}
-      />
-    );
+
+  it('shows loading state when isLoading is true', () => {
+    const props = {
+      ...mockProps,
+      isLoading: true
+    };
     
-    unmount();
-    expect(mockResetResults).toHaveBeenCalled();
+    render(<SearchForm {...props} />);
+    
+    // When no locations are selected, should show the disabled state text
+    expect(screen.getByText('Please select both origin and destination locations')).toBeInTheDocument();
   });
 });

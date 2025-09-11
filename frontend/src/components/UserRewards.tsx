@@ -4,6 +4,7 @@ import { apiService } from '../services/apiService';
 import '../styles/UserRewards.css';
 
 interface UserRewardsProps {
+<<<<<<< HEAD
   userId: string;
 }
 
@@ -21,6 +22,15 @@ interface UserRewardData {
 }
 
 const UserRewards: React.FC<UserRewardsProps> = ({ userId }) => {
+=======
+  userId?: string; // Add optional userId prop
+}
+
+/**
+ * Component to display user rewards and achievements for contributing to bus tracking
+ */
+const UserRewards: React.FC<UserRewardsProps> = ({ userId: propUserId }) => {
+>>>>>>> 75c2859 (production ready code need to test)
   const { t } = useTranslation();
   const [rewards, setRewards] = useState<UserRewardData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -30,6 +40,12 @@ const UserRewards: React.FC<UserRewardsProps> = ({ userId }) => {
     const fetchRewards = async () => {
       try {
         setLoading(true);
+<<<<<<< HEAD
+=======
+        const userId = propUserId || localStorage.getItem('userId') || 'demo';
+        const data = await getUserRewards(userId);
+        setRewards(data);
+>>>>>>> 75c2859 (production ready code need to test)
         setError(null);
         const data = await apiService.getUserRewardPoints(userId);
         setRewards(data);
@@ -41,8 +57,68 @@ const UserRewards: React.FC<UserRewardsProps> = ({ userId }) => {
       }
     };
 
+<<<<<<< HEAD
     fetchRewards();
   }, [userId, t]);
+=======
+    loadRewards();
+  }, [t, rewardsEnabled, propUserId]);
+
+  if (!rewardsEnabled) {
+    return null;
+  }
+
+  // Format the date for display
+  const formatDate = (timestamp: string) => {
+    try {
+      const date = new Date(timestamp);
+      return date.toLocaleString(undefined, { 
+        day: 'numeric', 
+        month: 'short',
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+    } catch (e) {
+      return timestamp;
+    }
+  };
+
+  // Find the badge character based on user rank
+  const getBadgeCharacter = (rank: string): string => {
+    switch (rank) {
+      case 'Beginner':
+        return '🔰';
+      case 'Regular Traveler':
+        return '🌟';
+      case 'Frequent Commuter':
+        return '🚌';
+      case 'Bus Expert':
+        return '🏆';
+      case 'Master Navigator':
+        return '👑';
+      default:
+        return '🔰';
+    }
+  };
+
+  // Get rank description based on user rank
+  const getRankDescription = (rank: string): string => {
+    switch (rank) {
+      case 'Beginner':
+        return t('rewards.beginnerDesc', 'You\'re just getting started. Keep tracking buses to level up!');
+      case 'Regular Traveler':
+        return t('rewards.regularDesc', 'You\'re becoming a valuable contributor to the bus tracking community.');
+      case 'Frequent Commuter':
+        return t('rewards.frequentDesc', 'Your tracking data is helping many others plan their journey better.');
+      case 'Bus Expert':
+        return t('rewards.expertDesc', 'You\'re one of our top contributors. Thank you for your dedication!');
+      case 'Master Navigator':
+        return t('rewards.masterDesc', 'Legendary status! Your contributions have helped countless travelers.');
+      default:
+        return t('rewards.defaultDesc', 'Start tracking bus locations to earn points and rewards.');
+    }
+  };
+>>>>>>> 75c2859 (production ready code need to test)
 
   if (loading) {
     return (

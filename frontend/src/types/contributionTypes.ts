@@ -1,36 +1,55 @@
-// Type definitions for route and image contributions
+/**
+ * Types for user contributions
+ */
 
 export type ContributionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
-export interface BaseContribution {
-  id: string | number; // Allow both string and number types for id
-  status: ContributionStatus;
-  submissionDate: string;
-  userId?: string;
+export interface StopContribution {
+  stopOrder: number;
+  name: string;
+  latitude?: number;
+  longitude?: number;
+  arrivalTime?: string;
+  departureTime?: string;
 }
 
-export interface RouteContribution extends BaseContribution {
-  busNumber: string;
+export interface RouteContribution {
+  id?: number;
+  userId?: string;
   busName?: string;
+  busNumber: string;
   fromLocationName: string;
+  fromLatitude?: number;
+  fromLongitude?: number;
   toLocationName: string;
+  toLatitude?: number;
+  toLongitude?: number;
   departureTime?: string;
   arrivalTime?: string;
-  stops?: Array<{
-    name: string;
-    arrivalTime?: string;
-    departureTime?: string;
-  }>;
-  rejectionReason?: string;
+  scheduleInfo?: string;
+  submissionDate?: string;
+  status?: ContributionStatus;
+  validationMessage?: string;
+  processedDate?: string;
+  additionalNotes?: string;
+  submittedBy?: string;
+  stops?: StopContribution[];
+  // Legacy fields kept for backward compatibility with frontend forms
+  route?: string;
+  origin?: string;
+  destination?: string;
 }
 
-export interface ImageContribution extends BaseContribution {
-  busNumber: string;
-  busName?: string;
-  fromLocationName?: string;
-  toLocationName?: string;
-  imageUrl: string;
-  imageDescription?: string; // Added missing field
-  notes?: string;
-  rejectionReason?: string;
+export interface ImageContribution {
+  id?: number;
+  userId?: string;
+  busNumber?: string;
+  imageUrl?: string;
+  description?: string;
+  submissionDate?: string;
+  status?: ContributionStatus;
+  validationMessage?: string;
+  processedDate?: string;
+  extractedData?: string;
+  submittedBy?: string;
 }

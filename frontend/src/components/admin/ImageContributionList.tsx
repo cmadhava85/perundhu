@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import './ImageContributionList.css';
 import AdminService from '../../services/adminService';
 import RejectModal from './RejectModal';
 import type { ContributionStatus, ImageContribution } from '../../types/contributionTypes';
@@ -141,7 +142,7 @@ const ImageContributionList: React.FC = () => {
                   </div>
                 </td>
                 <td>{contribution.busNumber || '-'}</td>
-                <td>{contribution.imageDescription || '-'}</td>
+                <td>{contribution.description || '-'}</td>
                 <td>{contribution.submissionDate ? new Date(contribution.submissionDate).toLocaleDateString() : 'N/A'}</td>
                 <td>
                   {contribution.status && (
@@ -184,11 +185,19 @@ const ImageContributionList: React.FC = () => {
 
       {rejectModalOpen && selectedContribution && (
         <RejectModal
+          contribution={{
+            id: selectedContribution.id,
+            busNumber: selectedContribution.busNumber || '',
+            fromLocationName: '',
+            toLocationName: ''
+          }}
+          onReject={(id, reason) => {
+            if (id) handleReject(reason);
+          }}
           onClose={() => {
             setRejectModalOpen(false);
             setSelectedContribution(null);
           }}
-          onReject={handleReject}
         />
       )}
 

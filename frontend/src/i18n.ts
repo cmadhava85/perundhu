@@ -4,36 +4,6 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import enTranslation from './locales/en/translation.json';
 import taTranslation from './locales/ta/translation.json';
-import taAdditionalTranslation from './locales/ta.json';
-
-// Helper function to perform deep merge of objects
-function deepMerge(target: any, source: any): any {
-  const output = { ...target };
-  
-  if (isObject(target) && isObject(source)) {
-    Object.keys(source).forEach(key => {
-      if (isObject(source[key])) {
-        if (!(key in target)) {
-          Object.assign(output, { [key]: source[key] });
-        } else {
-          output[key] = deepMerge(target[key], source[key]);
-        }
-      } else {
-        Object.assign(output, { [key]: source[key] });
-      }
-    });
-  }
-  
-  return output;
-}
-
-// Helper to check if value is an object
-function isObject(item: any): boolean {
-  return (item && typeof item === 'object' && !Array.isArray(item));
-}
-
-// Deep merge both Tamil translation files to preserve all keys
-const mergedTaTranslations = deepMerge(taTranslation, taAdditionalTranslation);
 
 // Get saved language preference or detect from browser
 const savedLanguage = localStorage.getItem('perundhu-language');
@@ -52,7 +22,7 @@ i18n
         translation: enTranslation
       },
       ta: {
-        translation: mergedTaTranslations
+        translation: taTranslation
       }
     },
     lng: defaultLanguage,
@@ -65,7 +35,7 @@ i18n
       lookupLocalStorage: 'perundhu-language',
       caches: ['localStorage']
     },
-    debug: true // Temporarily enable debug to see what's happening
+    debug: false // Disable debug in production
   });
 
 // Handle language changes and store in localStorage

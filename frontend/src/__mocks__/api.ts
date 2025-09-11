@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ApiError } from '../services/api';
 import type { PaginatedResponse, PaginationParams } from '../services/api';
 import type { Bus, Location, Stop, BusLocation } from '../types';
@@ -127,3 +128,81 @@ export class APIService {
     } : mockBuses;
   }
 }
+=======
+import { vi } from 'vitest';
+
+// Mock error class for API errors
+export class ApiError extends Error {
+  public readonly status?: number;
+  
+  constructor(message: string, status?: number) {
+    super(message);
+    this.status = status;
+    this.name = 'ApiError';
+  }
+}
+
+export const getLocations = vi.fn().mockResolvedValue([
+  { id: 1, name: 'Chennai', state: 'Tamil Nadu' },
+  { id: 2, name: 'Coimbatore', state: 'Tamil Nadu' },
+  { id: 3, name: 'Madurai', state: 'Tamil Nadu' }
+]);
+
+export const getDestinations = vi.fn().mockResolvedValue([
+  { id: 1, name: 'Chennai', state: 'Tamil Nadu' },
+  { id: 2, name: 'Coimbatore', state: 'Tamil Nadu' },
+  { id: 3, name: 'Madurai', state: 'Tamil Nadu' }
+]);
+
+export const getBuses = vi.fn().mockResolvedValue([{
+  id: 1,
+  from: 'Chennai',
+  to: 'Coimbatore',
+  busName: 'SETC Express',
+  busNumber: 'TN-01-1234',
+  departureTime: '06:00 AM',
+  arrivalTime: '12:30 PM'
+}]);
+
+export const getBusStops = vi.fn().mockResolvedValue([
+  { id: 1, name: 'Chennai', arrivalTime: '06:00 AM', departureTime: '06:00 AM', order: 1 },
+  { id: 2, name: 'Vellore', arrivalTime: '07:30 AM', departureTime: '07:35 AM', order: 2 },
+  { id: 3, name: 'Coimbatore', arrivalTime: '12:30 PM', departureTime: '12:30 PM', order: 3 }
+]);
+
+export const getConnectingRoutes = vi.fn().mockResolvedValue([{
+  id: 1,
+  isDirectRoute: false,
+  firstLeg: { id: 1, from: 'Chennai', to: 'Trichy' },
+  connectionPoint: 'Trichy',
+  secondLeg: { id: 2, from: 'Trichy', to: 'Madurai' },
+  waitTime: '00:30',
+  totalDuration: '05:00'
+}]);
+
+export const searchBuses = vi.fn().mockResolvedValue({
+  buses: [],
+  connectingRoutes: [],
+  error: null
+});
+
+export const reportBusLocation = vi.fn().mockResolvedValue({ success: true });
+export const getBusLocations = vi.fn().mockResolvedValue([]);
+export const getRecommendations = vi.fn().mockResolvedValue([]);
+
+// Default export for compatibility
+const api = {
+  getLocations,
+  getDestinations,
+  getBuses,
+  getBusStops,
+  getConnectingRoutes,
+  searchBuses,
+  reportBusLocation,
+  getBusLocations,
+  getRecommendations,
+  ApiError
+};
+
+export default api;
+>>>>>>> 75c2859 (production ready code need to test)

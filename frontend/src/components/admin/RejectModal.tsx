@@ -1,64 +1,78 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import './RejectModal.css';
+import type { RouteContribution } from '../../types/contributionTypes';
 
 interface RejectModalProps {
+  contribution: RouteContribution;
+  onReject: (id: number | undefined, reason: string) => void;
   onClose: () => void;
-  onReject: (reason: string) => void;
 }
 
-const RejectModal: React.FC<RejectModalProps> = ({ onClose, onReject }) => {
+/**
+ * Modal for rejecting a route contribution with a reason
+ */
+const RejectModal: React.FC<RejectModalProps> = ({ contribution, onReject, onClose }) => {
   const { t } = useTranslation();
-  const [reason, setReason] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const [reason, setReason] = useState('');
+  const [error, setError] = useState('');
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!reason.trim()) {
-      setError(t('admin.error.reasonRequired', 'Rejection reason is required'));
+      setError(t('admin.reject.reasonRequired', 'Please provide a reason for rejection.'));
       return;
     }
-    onReject(reason);
+    
+    if (contribution.id) {
+      onReject(contribution.id, reason);
+    }
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="reject-modal">
         <div className="modal-header">
-          <h2>{t('admin.modal.rejectTitle', 'Reject Contribution')}</h2>
+          <h2>{t('admin.reject.title', 'Reject Route Contribution')}</h2>
+          <button className="close-button" onClick={onClose}>&times;</button>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="modal-body">
+        
+        <div className="modal-content">
+          <div className="contribution-info">
+            <p><strong>{t('admin.contributions.busNumber', 'Bus Number')}:</strong> {contribution.busNumber}</p>
+            <p>
+              <strong>{t('admin.contributions.route', 'Route')}:</strong> {contribution.fromLocationName} to {contribution.toLocationName}
+            </p>
+          </div>
+          
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="reason" className="form-label">
-                {t('admin.modal.reasonLabel', 'Reason for rejection')}:
+              <label htmlFor="rejection-reason">
+                {t('admin.reject.reasonLabel', 'Reason for Rejection')}:
               </label>
               <textarea
-                id="reason"
-                className="form-textarea"
+                id="rejection-reason"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                placeholder={t('admin.modal.reasonPlaceholder', 'Please provide a reason for rejecting this contribution...')}
-                rows={4}
+                placeholder={t('admin.reject.reasonPlaceholder', 'Please provide a clear reason for rejecting this contribution...')}
+                rows={5}
+                className={error ? 'error' : ''}
               />
-              {error && <div className="form-error">{error}</div>}
+              {error && <div className="error-message">{error}</div>}
             </div>
-          </div>
-          <div className="modal-footer">
-            <button 
-              type="button" 
-              className="btn" 
-              onClick={onClose}
-            >
-              {t('admin.button.cancel', 'Cancel')}
-            </button>
-            <button 
-              type="submit" 
-              className="btn btn-reject"
-            >
-              {t('admin.button.reject', 'Reject')}
-            </button>
-          </div>
-        </form>
+            
+            <div className="modal-actions">
+              <button type="button" className="btn btn-secondary" onClick={onClose}>
+                {t('admin.reject.cancel', 'Cancel')}
+              </button>
+              <button type="submit" className="btn btn-primary">
+                {t('admin.reject.confirm', 'Confirm Rejection')}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

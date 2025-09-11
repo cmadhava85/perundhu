@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 /**
  * Mock implementation of offline service for testing
  */
@@ -40,19 +42,19 @@ const mockConnectingRoutes = [
 ];
 
 // Mock implementations of all methods used in api.ts
-export const isOnline = jest.fn().mockResolvedValue(true);
-export const saveLocationsOffline = jest.fn().mockResolvedValue(undefined);
-export const getLocationsOffline = jest.fn().mockResolvedValue(mockLocations);
-export const saveBusesOffline = jest.fn().mockResolvedValue(undefined);
-export const getBusesOffline = jest.fn().mockResolvedValue(mockBuses);
-export const saveStopsOffline = jest.fn().mockResolvedValue(undefined);
-export const getStopsOffline = jest.fn().mockResolvedValue(mockStops);
-export const saveConnectingRoutesOffline = jest.fn().mockResolvedValue(undefined);
-export const getConnectingRoutesOffline = jest.fn().mockResolvedValue(mockConnectingRoutes);
-export const saveBusLocationsOffline = jest.fn().mockResolvedValue(undefined);
-export const getBusLocationsOffline = jest.fn().mockResolvedValue([]);
-export const getDataAgeDays = jest.fn().mockResolvedValue(1);
-export const cleanupOldBusLocationData = jest.fn().mockResolvedValue(undefined);
+export const isOnline = vi.fn().mockResolvedValue(true);
+export const saveLocationsOffline = vi.fn().mockResolvedValue(undefined);
+export const getLocationsOffline = vi.fn().mockResolvedValue(mockLocations);
+export const saveBusesOffline = vi.fn().mockResolvedValue(undefined);
+export const getBusesOffline = vi.fn().mockResolvedValue(mockBuses);
+export const saveStopsOffline = vi.fn().mockResolvedValue(undefined);
+export const getStopsOffline = vi.fn().mockResolvedValue(mockStops);
+export const saveConnectingRoutesOffline = vi.fn().mockResolvedValue(undefined);
+export const getConnectingRoutesOffline = vi.fn().mockResolvedValue(mockConnectingRoutes);
+export const saveBusLocationsOffline = vi.fn().mockResolvedValue(undefined);
+export const getBusLocationsOffline = vi.fn().mockResolvedValue([]);
+export const getDataAgeDays = vi.fn().mockResolvedValue(1);
+export const cleanupOldBusLocationData = vi.fn().mockResolvedValue(undefined);
 
 // Default export for compatibility
 const offlineService = {

@@ -1,21 +1,11 @@
+import { vi } from 'vitest';
+
 // Mock implementation of the useBusSearch hook
-export const useBusSearch = jest.fn().mockImplementation(() => {
-  return {
-    buses: [],
-    selectedBusId: null,
-    stopsMap: {},
-    loading: false,
-    isLoading: false,
-    error: null,
-    connectingRoutes: [],
-    
-    searchBuses: jest.fn().mockResolvedValue([]),
-    selectBus: jest.fn().mockImplementation((_busId) => {
-      return Promise.resolve([]);
-    }),
-    resetResults: jest.fn(),
-    clearError: jest.fn()
-  };
+export const useBusSearch = vi.fn().mockReturnValue({
+  buses: [],
+  loading: false,
+  error: null,
+  searchBuses: vi.fn(),
 });
 
 // Default export for flexibility

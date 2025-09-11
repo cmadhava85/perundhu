@@ -1,299 +1,379 @@
-/* Modern reset and base styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Import the new modular CSS architecture */
+@import './styles/index.css';
 
-:root {
-  /* Modern color palette */
-  --primary-color: #3b82f6;
-  --secondary-color: #2563eb;
-  --accent-color: #f59e0b;
-  --success-color: #10b981;
-  --error-color: #ef4444;
-  --text-color: #1f2937;
-  --light-text: #4b5563;
-  --lighter-text: #6b7280;
-  --border-color: #e5e7eb;
-  --light-bg: #f3f4f6;
-  
-  /* Shadows */
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  
-  /* Animations */
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Spacing */
-  --container-padding-desktop: 24px;
-  --container-padding-tablet: 20px;
-  --container-padding-mobile: 16px;
-  
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+/* Legacy styles that still need to be migrated or are component-specific */
 
-  /* Fix for primary color RGB use in styles */
-  --primary-color-rgb: 59, 130, 246;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: #f8fafc;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+/* Enhanced Search Layout - Component specific styles */
+.enhanced-search-layout {
   display: flex;
   flex-direction: column;
-}
-
-/* Main Layout */
-.app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--container-padding-desktop);
+  gap: var(--space-md);
   width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
-.app-main {
-  flex: 1;
-  width: 100%;
-  padding: 24px 0;
+/* Tracker Panel Specific Styles */
+.tracker-panel {
+  min-height: 300px;
 }
 
-/* Search Section */
-.search-section {
-  background-color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--card-shadow);
-  margin-bottom: 30px;
-  width: 100%;
-  overflow: hidden;
+.tracker-section {
+  margin-bottom: var(--space-md);
 }
 
-.search-container {
-  padding: 24px;
-}
-
-.search-title {
-  color: var(--primary-color);
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-/* Form elements */
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
+.tracker-section label {
   display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-xs);
+  font-weight: var(--font-weight-medium);
   color: var(--text-color);
 }
 
-select, 
-input,
-.form-control {
+.tracker-select {
   width: 100%;
-  padding: 12px 16px;
+  padding: var(--space-sm);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  font-size: 1rem;
-  background-color: white;
+  background-color: var(--bg-primary);
   color: var(--text-color);
-  appearance: auto; /* Allow native styling */
 }
 
-select:focus, 
-input:focus,
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+/* Search Results Specific Styles */
+.search-results-container {
+  width: 100%;
 }
 
-/* Select dropdown styling */
-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px;
+.search-results-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
 }
 
-/* Button styling */
-.btn,
-.search-button {
-  display: inline-block;
-  padding: 12px 20px;
+.search-results-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin-bottom: var(--space-sm);
+}
+
+.search-results-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.bus-list-section {
+  flex: 1;
+}
+
+.view-connecting-routes-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md) var(--space-lg);
   background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--transition);
+  color: var(--bg-primary);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-semibold);
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-md);
+}
+
+.view-connecting-routes-button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Connecting Routes Specific Styles */
+.connecting-routes {
+  width: 100%;
+}
+
+.connecting-routes-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin-bottom: var(--space-sm);
   text-align: center;
 }
 
-.btn:hover,
-.search-button:hover {
-  background-color: var(--secondary-color);
+.connecting-routes-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--space-lg);
 }
 
-.btn-secondary {
-  background-color: #f3f4f6;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
+/* Legacy iOS and Android specific styles that may still be needed */
+@supports (padding: max(0px)) {
+  .app-header {
+    padding-top: max(var(--space-sm), env(safe-area-inset-top));
+  }
+  
+  .bottom-navigation {
+    padding-bottom: max(var(--space-xs), env(safe-area-inset-bottom));
+  }
 }
 
-.btn-secondary:hover {
-  background-color: #e5e7eb;
+/* Device-specific overrides that may still be necessary */
+.ios .form-input,
+.ios .form-select {
+  border-radius: var(--space-sm);
 }
 
-/* Action buttons container */
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-top: 24px;
+.android .feature-card {
+  box-shadow: var(--shadow-lg);
 }
 
-/* Search tips section */
-.search-tips {
-  margin-top: 24px;
-  padding: 16px;
-  background-color: #f0f9ff;
+/* Legacy animation keyframes that might still be referenced */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progressFlow {
+  0% { width: 0%; }
+  50% { width: 60%; }
+  100% { width: 100%; }
+}
+
+/* Search Options Styles */
+.search-options {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  background-color: var(--bg-secondary, #f8f9fa);
   border-radius: var(--radius-md);
-  border-left: 4px solid var(--primary-color);
+  border: 1px solid var(--border-color, #e0e0e0);
 }
 
-.search-tips h3 {
-  font-size: 1.1rem;
-  color: var(--text-color);
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-.search-tips ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.search-tips li {
-  margin-bottom: 8px;
-  color: var(--light-text);
-}
-
-.search-tips li:last-child {
-  margin-bottom: 0;
-}
-
-/* Language selector */
-.language-switcher {
-  display: flex;
-  background-color: #f3f4f6;
-  border-radius: 24px;
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
-}
-
-.language-option {
-  padding: 8px 16px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--light-text);
+.toggle-container {
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+  gap: var(--space-sm);
+  cursor: pointer;
+  user-select: none;
 }
 
-.language-option:hover {
-  background-color: #e5e7eb;
+.toggle-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
-.language-option.active {
-  background-color: var(--primary-color);
-  color: white;
+.toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 992px) {
-  .search-title {
-    font-size: 1.5rem;
-  }
-  
-  .app-container {
-    padding: 0 var(--container-padding-tablet);
-  }
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  top: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.toggle-checkbox:checked + .toggle-slider {
+  background-color: var(--primary-color, #007bff);
+}
+
+.toggle-checkbox:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.toggle-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+.toggle-description {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.3;
+  opacity: 0.8;
+}
+
+/* Mobile-specific adjustments for search options */
 @media (max-width: 768px) {
-  .search-container {
-    padding: 20px;
+  .search-options {
+    margin: var(--space-sm) 0;
+    padding: var(--space-sm);
   }
   
-  .form-actions {
-    flex-direction: column;
+  .toggle-label {
+    font-size: var(--font-size-xs);
   }
   
-  .form-actions .btn,
-  .form-actions .search-button {
-    width: 100%;
-  }
-  
-  .app-container {
-    padding: 0 var(--container-padding-tablet);
+  .toggle-description {
+    font-size: 11px;
   }
 }
 
-@media (max-width: 640px) {
-  .search-container {
-    padding: 16px;
+/* Error Boundary Styles */
+.error-boundary {
+  padding: 2rem;
+  margin: 1rem 0;
+  border: 1px solid #ff6b6b;
+  border-radius: 8px;
+  background-color: #fff5f5;
+  text-align: center;
+}
+
+.error-boundary-content h2 {
+  color: #d63031;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.error-boundary-content p {
+  color: #636e72;
+  margin-bottom: 1.5rem;
+}
+
+.error-details {
+  text-align: left;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.error-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.error-details pre {
+  font-size: 0.875rem;
+  color: #dc3545;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.retry-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.retry-button:hover {
+  background-color: #0056b3;
+}
+
+.retry-button.secondary {
+  background-color: #6c757d;
+  margin-left: 0.5rem;
+}
+
+.retry-button.secondary:hover {
+  background-color: #545b62;
+}
+
+/* Map Error Fallback Styles */
+.map-error-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 2px dashed #dee2e6;
+}
+
+.map-error-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.map-error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.map-error-content h3 {
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.map-error-content p {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.map-error-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.map-error-help .help-text {
+  font-size: 0.875rem;
+  color: #868e96;
+  font-style: italic;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .error-boundary {
+    padding: 1rem;
+    margin: 0.5rem;
   }
   
-  .search-title {
-    font-size: 1.4rem;
+  .map-error-fallback {
+    min-height: 300px;
+    padding: 1rem;
   }
   
-  select, 
-  input,
-  .form-control {
-    padding: 10px 12px;
+  .map-error-actions {
+    flex-direction: column;
+    align-items: center;
   }
   
-  .app-container {
-    padding: 0 var(--container-padding-mobile);
-  }
-  
-  .language-option span {
-    display: none; /* Hide text on small screens */
-  }
-  
-  .language-option {
-    padding: 8px 12px;
+  .retry-button.secondary {
+    margin-left: 0;
+    margin-top: 0.5rem;
   }
 }
