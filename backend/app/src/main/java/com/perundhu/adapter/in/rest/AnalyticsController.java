@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.perundhu.application.dto.HistoricalAnalyticsDTO;
 import com.perundhu.application.service.BusAnalyticsService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller for analytics-related operations
@@ -26,18 +29,13 @@ import com.perundhu.application.service.BusAnalyticsService;
 @RestController
 @RequestMapping("/api/v1/analytics")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
+@Slf4j
 public class AnalyticsController {
 
     private static final Logger log = LoggerFactory.getLogger(AnalyticsController.class);
-    private final BusAnalyticsService analyticsService;
 
-    /**
-     * Constructor for dependency injection
-     * Replaces Lombok's @RequiredArgsConstructor
-     */
-    public AnalyticsController(BusAnalyticsService analyticsService) {
-        this.analyticsService = analyticsService;
-    }
+    private final BusAnalyticsService analyticsService;
 
     // Request records for better type safety and immutability
     private record HistoricalRequest(
@@ -309,51 +307,5 @@ public class AnalyticsController {
             return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Invalid request: " + e.getMessage()));
         }
-    }
-
-    /**
-     * Get recommended departure times based on historical data
-     */
-    @GetMapping("/recommended-times")
-    public ResponseEntity<?> getRecommendedTimes(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId,
-            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-
-        log.info("Getting recommended departure times for route from {} to {}", fromLocationId, toLocationId);
-
-        LocalDateTime dateTime = (date != null) ? date.atStartOfDay() : LocalDateTime.now();
-
-        var recommendations = analyticsService.getRecommendedDepartureTimes(
-                fromLocationId,
-                toLocationId,
-                dateTime);
-
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                .body(recommendations);
-    }
-
-    /**
-     * Get real-time bus occupancy information
-     */
-    @GetMapping("/occupancy/current")
-    public ResponseEntity<?> getRealTimeOccupancy(
-            @RequestParam("busId") Long busId) {
-
-        log.info("Getting real-time occupancy for bus {}", busId);
-
-        // Mock response for now - in real implementation would call analytics service
-        Map<String, Object> occupancyData = Map.of(
-                "busId", busId,
-                "routeName", "Chennai - Bangalore Express",
-                "currentOccupancy", 42,
-                "totalCapacity", 60,
-                "occupancyPercentage", 70.0,
-                "lastUpdated", LocalDateTime.now().toString());
-
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.noCache())
-                .body(occupancyData);
     }
 }

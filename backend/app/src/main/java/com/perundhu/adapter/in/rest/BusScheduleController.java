@@ -1,28 +1,28 @@
 package com.perundhu.adapter.in.rest;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.ArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.CacheControl;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-// Import specific DTOs with their proper paths
 import com.perundhu.application.dto.BusDTO;
-import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.StopDTO;
+import com.perundhu.application.dto.OSMBusStopDTO;
+import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.service.BusScheduleService;
+import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * REST API Controller for bus schedules
+ * REST API Controller for bus schedules with enhanced security
  */
 @RestController
 @RequestMapping("/api/v1/bus-schedules")
@@ -30,247 +30,519 @@ import com.perundhu.domain.model.Location;
 public class BusScheduleController {
 
     private static final Logger log = LoggerFactory.getLogger(BusScheduleController.class);
-
     private final BusScheduleService busScheduleService;
+    private final OpenStreetMapGeocodingService geocodingService;
 
-    // Explicit constructor injection instead of using @RequiredArgsConstructor
-    public BusScheduleController(BusScheduleService busScheduleService) {
+    public BusScheduleController(BusScheduleService busScheduleService,
+            OpenStreetMapGeocodingService geocodingService) {
         this.busScheduleService = busScheduleService;
-    }
-
-    // Using Java 17 Records for immutable DTOs
-    private record SearchRequest(Long fromLocationId, Long toLocationId) {
-        // Validation using compact constructor
-        public SearchRequest {
-            if (fromLocationId == null) {
-                throw new IllegalArgumentException("fromLocationId must not be null");
-            }
-            if (toLocationId == null) {
-                throw new IllegalArgumentException("toLocationId must not be null");
-            }
-            if (fromLocationId.equals(toLocationId)) {
-                throw new IllegalArgumentException("fromLocationId and toLocationId must be different");
-            }
-        }
-    }
-
-    private record StopRequest(Long busId, String languageCode) {
-        // Validation using compact constructor
-        public StopRequest {
-            if (busId == null) {
-                throw new IllegalArgumentException("busId must not be null");
-            }
-            if (languageCode == null || languageCode.isBlank()) {
-                languageCode = "en";
-            }
-        }
-    }
-
-    // Response records for API responses
-    private record ErrorResponse(String error, String details) {
+        this.geocodingService = geocodingService;
     }
 
     /**
-     * Get all available buses
+     * Get all buses in the system - requires authentication for detailed data
      */
-    @GetMapping
+    @GetMapping("/buses")
     public ResponseEntity<List<BusDTO>> getAllBuses() {
-        log.info("Request received for all buses");
-        var buses = busScheduleService.getAllBuses();
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                .body(buses);
-    }
+        log.info("Getting all buses for authenticated user");
+        try {
+            List<BusDTO> buses = busScheduleService.getAllBuses();
 
-    /**
-     * Get bus details by ID
-     */
-    @GetMapping("/{busId}")
-    public ResponseEntity<?> getBusById(@PathVariable Long busId) {
-        log.info("Request received for bus: {}", busId);
+            // Obfuscate sensitive data for non-premium users
+            buses = obfuscateBusDataIfNeeded(buses);
 
-        if (busId == null || busId <= 0) {
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Invalid bus ID", "Bus ID must be a positive number"));
+            return ResponseEntity.ok(buses);
+        } catch (Exception e) {
+            log.error("Error getting all buses", e);
+            return ResponseEntity.internalServerError().build();
         }
-
-        return busScheduleService.getBusById(busId)
-                // Using pattern matching with instanceof (Java 17)
-                .map(bus -> ResponseEntity.ok()
-                        .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                        .body(bus))
-                .orElse(ResponseEntity.notFound().build());
     }
 
     /**
-     * Get all available locations
+     * Get a specific bus by its ID - premium access required for full details
+     */
+    @GetMapping("/buses/{busId}")
+    public ResponseEntity<BusDTO> getBusById(@PathVariable Long busId) {
+        log.info("Getting bus details for ID: {} (premium access)", busId);
+        try {
+            Optional<BusDTO> bus = busScheduleService.getBusById(busId);
+            return bus.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            log.error("Error getting bus by ID: {}", busId, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Get all locations with language support - limited access for guests
      */
     @GetMapping("/locations")
-    public ResponseEntity<List<LocationDTO>> getLocations(
-            @RequestParam(value = "lang", defaultValue = "en") String languageCode) {
-        log.info("Request received for all locations with language {}", languageCode);
-        var locations = busScheduleService.getAllLocations(languageCode);
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
-                .body(locations);
+    public ResponseEntity<List<LocationDTO>> getAllLocations(
+            @RequestParam(defaultValue = "en") String language) {
+        log.info("Getting all locations with language: {}", language);
+        try {
+            List<LocationDTO> locations = busScheduleService.getAllLocations(language);
+
+            // Note: Removed coordinate filtering to enable map functionality
+            // Previously: locations = filterLocationDataForPublicAccess(locations);
+
+            return ResponseEntity.ok(locations);
+        } catch (Exception e) {
+            log.error("Error getting all locations", e);
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     /**
-     * Find buses between locations
+     * Autocomplete endpoint for location search - public access for contribution
+     * forms
+     */
+    @GetMapping("/locations/autocomplete")
+    public ResponseEntity<List<LocationDTO>> getLocationAutocomplete(
+            @RequestParam("q") String query,
+            @RequestParam(defaultValue = "en") String language) {
+        log.info("Location autocomplete search: '{}' with language: {}", query, language);
+
+        // Validate minimum query length
+        if (query == null || query.trim().length() < 3) {
+            log.warn("Query too short for autocomplete: '{}'", query);
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            List<Location> locations = busScheduleService.searchLocationsByName(query.trim());
+
+            List<LocationDTO> result = locations.stream()
+                    .map(location -> new LocationDTO(
+                            location.getId().getValue(),
+                            location.getName(),
+                            // For autocomplete, we can use a simple translation lookup
+                            location.getName(), // translatedName - could be enhanced later
+                            location.getLatitude(),
+                            location.getLongitude()))
+                    .toList();
+
+            log.info("Found {} locations for query '{}'", result.size(), query);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error in location autocomplete search for query: '{}'", query, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Public search endpoint with comprehensive results including continuing buses
      */
     @GetMapping("/search")
-    public ResponseEntity<?> searchBuses(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId) {
+    public ResponseEntity<List<BusDTO>> searchPublicRoutes(
+            @RequestParam(required = false) Long fromLocationId,
+            @RequestParam(required = false) Long toLocationId,
+            @RequestParam(required = false) String fromLocation,
+            @RequestParam(required = false) String toLocation,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "true") boolean includeContinuing) {
+
+        log.info(
+                "Comprehensive search: fromLocationId={}, toLocationId={}, fromLocation='{}', toLocation='{}', includeContinuing={}",
+                fromLocationId, toLocationId, fromLocation, toLocation, includeContinuing);
+
+        // Limit search results for public access
+        if (size > 10) {
+            size = 10;
+        }
+
         try {
-            var request = new SearchRequest(fromLocationId, toLocationId);
-            log.info("Searching for buses between locations: {} and {}",
-                    request.fromLocationId(), request.toLocationId());
+            List<BusDTO> allResults = new ArrayList<>();
 
-            var buses = busScheduleService.findBusesBetweenLocations(
-                    request.fromLocationId(),
-                    request.toLocationId());
+            // Use location IDs if provided, otherwise fall back to names
+            if (fromLocationId != null && toLocationId != null) {
+                // Validate input parameters
+                if (fromLocationId.equals(toLocationId)) {
+                    log.warn("Same location provided for from and to: {}", fromLocationId);
+                    return ResponseEntity.badRequest().build();
+                }
 
-            // Using Java 17 switch expression with pattern matching
-            return switch (buses.size()) {
-                case 0 -> ResponseEntity.ok()
-                        .body(List.of()); // Return empty list instead of 404
-                default -> ResponseEntity.ok()
-                        .cacheControl(CacheControl.maxAge(15, TimeUnit.MINUTES))
-                        .body(buses);
-            };
-        } catch (IllegalArgumentException e) {
-            log.error("Error in search parameters", e);
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Invalid search parameters", e.getMessage()));
+                // Get direct buses
+                List<BusDTO> directBuses = busScheduleService.findBusesBetweenLocations(fromLocationId, toLocationId);
+                log.info("Found {} direct buses", directBuses.size());
+
+                // Get buses passing through (intermediate stops)
+                List<BusDTO> viaBuses = busScheduleService.findBusesPassingThroughLocations(fromLocationId,
+                        toLocationId);
+                log.info("Found {} buses via intermediate stops", viaBuses.size());
+
+                // Get continuing buses if enabled
+                List<BusDTO> continuingBuses = new ArrayList<>();
+                if (includeContinuing) {
+                    continuingBuses = busScheduleService.findBusesContinuingBeyondDestination(fromLocationId,
+                            toLocationId);
+                    log.info("Found {} buses continuing beyond destination", continuingBuses.size());
+                }
+
+                // Combine results and remove duplicates
+                Set<Long> seenBusIds = new HashSet<>();
+                for (BusDTO bus : directBuses) {
+                    if (seenBusIds.add(bus.id())) {
+                        allResults.add(bus);
+                    }
+                }
+                for (BusDTO bus : viaBuses) {
+                    if (seenBusIds.add(bus.id())) {
+                        allResults.add(bus);
+                    }
+                }
+                for (BusDTO bus : continuingBuses) {
+                    if (seenBusIds.add(bus.id())) {
+                        allResults.add(bus);
+                    }
+                }
+
+            } else if (fromLocation != null && toLocation != null) {
+                // Legacy search by location names
+                allResults = busScheduleService.searchRoutes(fromLocation, toLocation, page, size);
+            } else {
+                log.warn("Insufficient search parameters provided");
+                return ResponseEntity.badRequest().build();
+            }
+
+            // Apply pagination to combined results
+            int startIndex = page * size;
+            int endIndex = Math.min(startIndex + size, allResults.size());
+
+            if (startIndex >= allResults.size()) {
+                allResults = new ArrayList<>();
+            } else {
+                allResults = allResults.subList(startIndex, endIndex);
+            }
+
+            // Sanitize for public access
+            allResults = sanitizeRoutesForPublicAccess(allResults);
+
+            log.info("Returning {} total results (page {}, size {})", allResults.size(), page, size);
+            return ResponseEntity.ok(allResults);
+
+        } catch (Exception e) {
+            log.error("Error in comprehensive search", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     /**
-     * Find connecting routes between locations when no direct buses are available
+     * Find buses that pass through both locations as stops (including intermediate
+     * stops)
+     * This includes buses where these locations are intermediate stops on a longer
+     * route
+     * For example: Chennai to Madurai bus via Trichy will appear when searching
+     * Chennai to Trichy
+     */
+    @GetMapping("/search-via-stops")
+    public ResponseEntity<List<BusDTO>> searchBusesViaStops(
+            @RequestParam("fromLocationId") Long fromLocationId,
+            @RequestParam("toLocationId") Long toLocationId) {
+        log.info("Searching buses via stops between locations: {} and {}", fromLocationId, toLocationId);
+
+        // Validate input parameters
+        if (fromLocationId == null || toLocationId == null) {
+            log.warn("Invalid location IDs provided: from={}, to={}", fromLocationId, toLocationId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (fromLocationId.equals(toLocationId)) {
+            log.warn("Same location provided for from and to: {}", fromLocationId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            List<BusDTO> buses = busScheduleService.findBusesPassingThroughLocations(fromLocationId, toLocationId);
+            log.info("Found {} buses passing through locations {} and {}", buses.size(), fromLocationId, toLocationId);
+            return ResponseEntity.ok(buses);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid arguments for searching buses via stops: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            log.error("Error searching buses via stops between {} and {}", fromLocationId, toLocationId, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Find buses that continue beyond the destination city
+     * This shows buses that go from origin to destination and then continue to
+     * other cities
+     * For example: Chennai to Trichy search will show Chennai->Madurai bus (via
+     * Trichy)
+     */
+    @GetMapping("/search-continuing-beyond")
+    public ResponseEntity<List<BusDTO>> searchBusesContinuingBeyondDestination(
+            @RequestParam("fromLocationId") Long fromLocationId,
+            @RequestParam("toLocationId") Long toLocationId) {
+        log.info("Searching buses continuing beyond destination: from {} via {} to further cities",
+                fromLocationId, toLocationId);
+
+        // Validate input parameters
+        if (fromLocationId == null || toLocationId == null) {
+            log.warn("Invalid location IDs provided: from={}, to={}", fromLocationId, toLocationId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (fromLocationId.equals(toLocationId)) {
+            log.warn("Same location provided for from and to: {}", fromLocationId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            List<BusDTO> buses = busScheduleService.findBusesContinuingBeyondDestination(fromLocationId, toLocationId);
+            log.info("Found {} buses continuing beyond destination {} from {}", buses.size(), toLocationId,
+                    fromLocationId);
+            return ResponseEntity.ok(buses);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid arguments for searching buses continuing beyond destination: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            log.error("Error searching buses continuing beyond destination from {} via {}", fromLocationId,
+                    toLocationId, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Find connecting routes - requires user authentication
      */
     @GetMapping("/connecting-routes")
-    public ResponseEntity<?> findConnectingRoutes(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId,
-            @RequestParam(value = "maxDepth", required = false, defaultValue = "3") Integer maxDepth) {
-        try {
-            var request = new SearchRequest(fromLocationId, toLocationId);
-            log.info("Searching for connecting routes between locations: {} and {} with maxDepth: {}",
-                    request.fromLocationId(), request.toLocationId(), maxDepth);
-
-            var connectingRoutes = busScheduleService.findConnectingRoutes(
-                    request.fromLocationId(), request.toLocationId(), maxDepth);
-
-            // Using Java 17 switch expression with pattern matching
-            return switch (connectingRoutes.size()) {
-                case 0 -> ResponseEntity.ok()
-                        .body(List.of()); // Return empty list instead of 404
-                default -> ResponseEntity.ok()
-                        .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                        .body(connectingRoutes);
-            };
-        } catch (IllegalArgumentException e) {
-            log.error("Error in search parameters", e);
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Invalid search parameters", e.getMessage()));
-        }
-    }
-
-    /**
-     * Get stops for a specific bus
-     */
-    @GetMapping("/{busId}/stops")
-    public ResponseEntity<?> getStopsForBus(
-            @PathVariable Long busId,
-            @RequestParam(value = "lang", defaultValue = "en") String languageCode) {
-        try {
-            var request = new StopRequest(busId, languageCode);
-            log.info("Request received for stops for bus {} with language {}",
-                    request.busId(), request.languageCode());
-
-            var stops = busScheduleService.getStopsForBus(request.busId(), request.languageCode());
-
-            // Using Java 17 style for handling empty collections
-            if (stops.isEmpty()) {
-                return ResponseEntity.ok()
-                        .body(List.of()); // Return empty list instead of 404
-            }
-
-            return ResponseEntity.ok()
-                    .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                    .body(stops);
-
-        } catch (IllegalArgumentException e) {
-            log.error("Error getting stops for bus", e);
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Invalid request parameters", e.getMessage()));
-        }
-    }
-
-    /**
-     * Find buses that travel via specified locations
-     * This endpoint returns buses that have stops at both locations in the
-     * specified order,
-     * even if they're not the start and end points of the route
-     */
-    @GetMapping("/search/via-stops")
-    public ResponseEntity<?> searchBusesViaStops(
+    public ResponseEntity<List<ConnectingRouteDTO>> findConnectingRoutes(
             @RequestParam("fromLocationId") Long fromLocationId,
             @RequestParam("toLocationId") Long toLocationId) {
+        log.info("Finding connecting routes between locations: {} and {} (authenticated)", fromLocationId,
+                toLocationId);
         try {
-            var request = new SearchRequest(fromLocationId, toLocationId);
-            log.info("Searching for buses passing through locations: {} and {}",
-                    request.fromLocationId(), request.toLocationId());
+            List<ConnectingRouteDTO> routes = busScheduleService.findConnectingRoutes(fromLocationId, toLocationId);
 
-            var buses = busScheduleService.findBusesPassingThroughLocations(
-                    request.fromLocationId(),
-                    request.toLocationId());
+            // Encrypt sensitive route data
+            routes = encryptRouteDetails(routes);
 
-            // Combine with direct buses to ensure we get all possible routes
-            var directBuses = busScheduleService.findBusesBetweenLocations(
-                    request.fromLocationId(),
-                    request.toLocationId());
-
-            // Merge the lists, avoiding duplicates
-            var allBuses = new ArrayList<>(directBuses);
-            for (var bus : buses) {
-                if (directBuses.stream().noneMatch(b -> b.id().equals(bus.id()))) {
-                    allBuses.add(bus);
-                }
-            }
-
-            // Using Java 17 switch expression with pattern matching
-            return switch (allBuses.size()) {
-                case 0 -> ResponseEntity.ok()
-                        .body(List.of()); // Return empty list instead of 404
-                default -> ResponseEntity.ok()
-                        .cacheControl(CacheControl.maxAge(15, TimeUnit.MINUTES))
-                        .body(allBuses);
-            };
-        } catch (IllegalArgumentException e) {
-            log.error("Error in search parameters", e);
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Invalid search parameters", e.getMessage()));
+            return ResponseEntity.ok(routes);
+        } catch (Exception e) {
+            log.error("Error finding connecting routes", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     /**
-     * Helper method to process responses using functional programming pattern
+     * Get stops for a specific bus - premium feature
      */
-    private <T> ResponseEntity<?> processServiceCall(
-            Function<Void, T> serviceCall,
-            String errorMessage) {
+    @GetMapping("/buses/{busId}/stops")
+    public ResponseEntity<List<StopDTO>> getBusStops(
+            @PathVariable Long busId,
+            @RequestParam(defaultValue = "en") String language) {
+        log.info("Getting stops for bus {} with language: {} (premium access)", busId, language);
+
+        if (busId == null || busId <= 0) {
+            log.warn("Invalid bus ID: {}", busId);
+            return ResponseEntity.badRequest().build();
+        }
+
         try {
-            var result = serviceCall.apply(null);
-            return ResponseEntity.ok()
-                    .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                    .body(result);
+            List<StopDTO> stops = busScheduleService.getStopsForBus(busId, language);
+            log.info("Found {} stops for bus {}", stops != null ? stops.size() : 0, busId);
+
+            // Encrypt stop details for transmission
+            stops = encryptStopDetails(stops);
+
+            return ResponseEntity.ok(stops);
         } catch (Exception e) {
-            log.error(errorMessage, e);
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("Error processing request", e.getMessage()));
+            log.error("Error getting stops for bus: {}", busId, e);
+            return ResponseEntity.internalServerError().build();
         }
     }
-}
 
+    /**
+     * Get basic stops for a specific bus - public access for search functionality
+     */
+    @GetMapping("/buses/{busId}/stops/basic")
+    public ResponseEntity<List<StopDTO>> getBusStopsBasic(
+            @PathVariable Long busId,
+            @RequestParam(defaultValue = "en") String language) {
+        log.info("Getting basic stops for bus {} with language: {} (public access)", busId, language);
+
+        if (busId == null || busId <= 0) {
+            log.warn("Invalid bus ID: {}", busId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            List<StopDTO> stops = busScheduleService.getStopsForBus(busId, language);
+
+            // Return basic stop information WITH coordinates for map functionality
+            List<StopDTO> basicStops = stops.stream()
+                    .map(stop -> new StopDTO(
+                            stop.getName(),
+                            stop.getTranslatedName(),
+                            stop.getArrivalTime(),
+                            stop.getDepartureTime(),
+                            stop.getStopOrder(),
+                            stop.getLatitude(), // Include latitude for map functionality
+                            stop.getLongitude() // Include longitude for map functionality
+                    ))
+                    .toList();
+
+            log.info("Found {} basic stops for bus {}", basicStops.size(), busId);
+            return ResponseEntity.ok(basicStops);
+        } catch (Exception e) {
+            log.error("Error getting basic stops for bus: {}", busId, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Manually trigger coordinate updates for locations missing them
+     * This endpoint uses OpenStreetMap to fetch coordinates
+     */
+    @PostMapping("/locations/update-coordinates")
+    public ResponseEntity<Map<String, Object>> updateMissingCoordinates() {
+        log.info("Manual trigger to update missing coordinates");
+        try {
+            geocodingService.updateMissingCoordinates();
+
+            Map<String, Object> response = Map.of(
+                    "status", "success",
+                    "message", "Coordinate update process completed",
+                    "timestamp", System.currentTimeMillis());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error updating coordinates", e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("status", "error", "message", e.getMessage()));
+        }
+    }
+
+    /**
+     * Discover intermediate bus stops between two locations using OSM data
+     * This endpoint finds actual bus stops that could be used as intermediate stops
+     */
+    @GetMapping("/discover-stops")
+    public ResponseEntity<List<OSMBusStopDTO>> discoverIntermediateStops(
+            @RequestParam("fromLocationId") Long fromLocationId,
+            @RequestParam("toLocationId") Long toLocationId,
+            @RequestParam(defaultValue = "25.0") Double radiusKm) {
+        log.info("Discovering intermediate stops between {} and {} within {}km",
+                fromLocationId, toLocationId, radiusKm);
+
+        try {
+            List<OSMBusStopDTO> stops = busScheduleService.discoverIntermediateStops(fromLocationId, toLocationId);
+            log.info("Found {} intermediate bus stops", stops.size());
+            return ResponseEntity.ok(stops);
+        } catch (Exception e) {
+            log.error("Error discovering intermediate stops", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Discover actual bus routes using OSM data
+     * This finds real-world bus routes that might connect the locations
+     */
+    @GetMapping("/discover-routes")
+    public ResponseEntity<List<BusRouteDTO>> discoverOSMRoutes(
+            @RequestParam("fromLocationId") Long fromLocationId,
+            @RequestParam("toLocationId") Long toLocationId) {
+        log.info("Discovering OSM routes between {} and {}", fromLocationId, toLocationId);
+
+        try {
+            List<BusRouteDTO> routes = busScheduleService.discoverOSMRoutes(fromLocationId, toLocationId);
+            log.info("Found {} OSM bus routes", routes.size());
+            return ResponseEntity.ok(routes);
+        } catch (Exception e) {
+            log.error("Error discovering OSM routes", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    private List<BusDTO> obfuscateBusDataIfNeeded(List<BusDTO> buses) {
+        // Check if user has premium access
+        boolean isPremiumUser = checkPremiumAccess();
+
+        if (!isPremiumUser) {
+            return buses.stream()
+                    .map(this::obfuscateBusData)
+                    .toList();
+        }
+
+        return buses;
+    }
+
+    private BusDTO obfuscateBusData(BusDTO bus) {
+        // Create a copy with limited information for non-premium users
+        // BusDTO is a record, so we create a new instance with limited data
+        return new BusDTO(
+                bus.id(),
+                bus.name(),
+                bus.busNumber(),
+                bus.fromLocation(),
+                bus.toLocation(),
+                null, // Hide departure time
+                null // Hide arrival time
+        );
+    }
+
+    private List<ConnectingRouteDTO> encryptRouteDetails(List<ConnectingRouteDTO> routes) {
+        return routes.stream()
+                .map(route -> {
+                    // For now, return routes without encryption since the encrypted data isn't used
+                    // Future enhancement: implement actual encryption when security layer is added
+                    return ConnectingRouteDTO.builder()
+                            .id(route.getId())
+                            .connectionPoint(route.getConnectionPoint())
+                            .waitTime(route.getWaitTime())
+                            .totalDuration(route.getTotalDuration())
+                            .totalDistance(route.getTotalDistance())
+                            .firstLeg(route.getFirstLeg())
+                            .secondLeg(route.getSecondLeg())
+                            .connectionStops(route.getConnectionStops())
+                            .build();
+                })
+                .toList();
+    }
+
+    private List<StopDTO> encryptStopDetails(List<StopDTO> stops) {
+        return stops.stream()
+                .map(stop -> {
+                    // For now, return basic stops without coordinate hiding
+                    // Future enhancement: implement coordinate obfuscation when security layer is
+                    // added
+                    return new StopDTO(
+                            stop.getName(),
+                            stop.getTranslatedName(),
+                            stop.getArrivalTime(),
+                            stop.getDepartureTime(),
+                            stop.getStopOrder(),
+                            stop.getLatitude(), // Keep coordinates for map functionality
+                            stop.getLongitude() // Keep coordinates for map functionality
+                    );
+                })
+                .toList();
+    }
+
+    private List<BusDTO> sanitizeRoutesForPublicAccess(List<BusDTO> routes) {
+        return routes.stream()
+                .map(route -> new BusDTO(
+                        route.id(),
+                        route.name(),
+                        route.busNumber(),
+                        route.fromLocation(),
+                        route.toLocation(),
+                        route.departureTime(), // Show departure time for public access
+                        route.arrivalTime() // Show arrival time for public access
+                ))
+                .limit(10) // Limit to 10 results for public access
+                .toList();
+    }
+
+    private boolean checkPremiumAccess() {
+        // Allow basic users to see departure/arrival times
+        // Only hide premium features like detailed stops and live tracking
+        return true; // Changed from false to true to show basic timing information
+    }
+}

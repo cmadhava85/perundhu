@@ -1,361 +1,265 @@
 package com.perundhu.adapter.in.rest;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.perundhu.application.service.ContributionAdminService;
+import com.perundhu.application.port.in.AdminUseCase;
+import com.perundhu.application.service.ImageContributionProcessingService;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.ImageContribution;
+import com.perundhu.domain.port.ImageContributionOutputPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
- * REST API Controller for admin operations on user contributions
+ * REST controller for admin operations
  */
 @RestController
-@RequestMapping("/api/admin/contributions")
+@RequestMapping("/api/admin")
+@RequiredArgsConstructor
+@Slf4j
+@CrossOrigin(origins = "*")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
-    private final ContributionAdminService contributionAdminService;
+
+    private final AdminUseCase adminUseCase;
+    private final ImageContributionProcessingService imageProcessingService;
+    private final ImageContributionOutputPort imageContributionOutputPort;
 
     /**
-     * Constructor for dependency injection
-     * Replaces Lombok's @RequiredArgsConstructor
+     * Get all route contributions
+     * 
+     * @return List of all route contributions
      */
-    public AdminController(ContributionAdminService contributionAdminService) {
-        this.contributionAdminService = contributionAdminService;
-    }
-
-    // Constants to avoid duplication
-    private static final String INVALID_ID_MESSAGE = "Invalid contribution ID";
-    private static final String NOTES_KEY = "notes";
-    private static final String REASON_KEY = "reason";
-
-    // Using Java 17 records for request/response DTOs
-    public record ContributionAction(String action, String notes) {
-        // Validation with compact constructor
-        public ContributionAction {
-            if (action == null || action.isBlank()) {
-                throw new IllegalArgumentException("Action must not be empty");
-            }
-        }
-    }
-    
-    public record AdminResponse(boolean success, String message) {}
-
-    // Using sealed interface for contribution status with exhaustive pattern matching
-    private sealed interface ContributionStatus permits ApprovedStatus, RejectedStatus, PendingStatus {
-        String getValue();
-    }
-    
-    private record ApprovedStatus() implements ContributionStatus {
-        @Override
-        public String getValue() { return "APPROVED"; }
-    }
-    
-    private record RejectedStatus() implements ContributionStatus {
-        @Override
-        public String getValue() { return "REJECTED"; }
-    }
-    
-    private record PendingStatus() implements ContributionStatus {
-        @Override
-        public String getValue() { return "PENDING"; }
+    @GetMapping("/contributions/routes")
+    public ResponseEntity<List<RouteContribution>> getAllRouteContributions() {
+        log.info("Request to get all route contributions");
+        return ResponseEntity.ok(adminUseCase.getAllRouteContributions());
     }
 
     /**
-     * Response DTO for route contributions in admin view
+     * Get pending route contributions
+     * 
+     * @return List of pending route contributions
      */
-    public record RouteContributionAdminResponse(
-        Long id,
-        String userId,
-        String busNumber,
-        String busName,
-        String fromLocationName,
-        String toLocationName,
-        String status,
-        String submissionDate,
-        String processedDate,
-        String additionalNotes,
-        String validationMessage
-    ) {
-        /**
-         * Factory method to create from domain model
-         */
-        public static RouteContributionAdminResponse fromDomain(RouteContribution contribution) {
-            return new RouteContributionAdminResponse(
-                contribution.id() != null ? Long.parseLong(contribution.id().value()) : null,
-                contribution.userId(),
-                contribution.busNumber(),
-                contribution.busName(),
-                contribution.fromLocationName(),
-                contribution.toLocationName(),
-                contribution.status() != null ? contribution.status().name() : null,
-                contribution.submissionDate() != null ? contribution.submissionDate().toString() : null,
-                contribution.processedDate() != null ? contribution.processedDate().toString() : null,
-                contribution.additionalNotes(),
-                contribution.validationMessage()
-            );
-        }
-    }
-
-    /**
-     * Response DTO for image contributions in admin view
-     */
-    public record ImageContributionAdminResponse(
-        Long id,
-        String userId,
-        String imageUrl,
-        String locationName,
-        String busNumber,
-        String routeName,
-        String status,
-        String submissionDate,
-        String processedDate,
-        String description,
-        String validationMessage
-    ) {
-        /**
-         * Factory method to create from domain model
-         */
-        public static ImageContributionAdminResponse fromDomain(ImageContribution contribution) {
-            return new ImageContributionAdminResponse(
-                contribution.id() != null ? Long.parseLong(contribution.id().value()) : null,
-                contribution.userId(),
-                contribution.imageUrl(),
-                contribution.locationName(),
-                contribution.busNumber(),
-                contribution.routeName(),
-                contribution.status() != null ? contribution.status().name() : null,
-                contribution.submissionDate() != null ? contribution.submissionDate().toString() : null,
-                contribution.processedDate() != null ? contribution.processedDate().toString() : null,
-                contribution.description(),
-                contribution.validationMessage()
-            );
-        }
-    }
-
-    /**
-     * Get all pending route contributions
-     */
-    @GetMapping("/routes/pending")
-    public ResponseEntity<List<RouteContributionAdminResponse>> getPendingRouteContributions() {
-        log.info("Admin request for pending route contributions");
-        var pendingContributions = contributionAdminService.getPendingRouteContributions();
-
-        var responseList = pendingContributions.stream()
-            .map(RouteContributionAdminResponse::fromDomain)
-            .toList(); // Using Java 17's toList() for immutable list
-
-        return ResponseEntity.ok(responseList);
-    }
-
-    /**
-     * Get all pending image contributions
-     */
-    @GetMapping("/images/pending")
-    public ResponseEntity<List<ImageContributionAdminResponse>> getPendingImageContributions() {
-        log.info("Admin request for pending image contributions");
-        var pendingContributions = contributionAdminService.getPendingImageContributions();
-
-        var responseList = pendingContributions.stream()
-            .map(ImageContributionAdminResponse::fromDomain)
-            .toList(); // Using Java 17's toList() for immutable list
-
-        return ResponseEntity.ok(responseList);
+    @GetMapping("/contributions/routes/pending")
+    public ResponseEntity<List<RouteContribution>> getPendingRouteContributions() {
+        log.info("Request to get pending route contributions");
+        return ResponseEntity.ok(adminUseCase.getPendingRouteContributions());
     }
 
     /**
      * Approve a route contribution
+     * 
+     * @param id The ID of the contribution to approve
+     * @return The approved route contribution
      */
-    @PostMapping("/routes/{id}/approve")
-    public ResponseEntity<Object> approveRouteContribution(
-            @PathVariable Long id,
-            @RequestBody(required = false) Map<String, String> notes) {
-        log.info("Admin request to approve route contribution: {}", id);
-        
-        if (id == null || id <= 0) {
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, INVALID_ID_MESSAGE));
-        }
-        
-        // Using Optional for nullable values
-        var notesText = Optional.ofNullable(notes)
-            .map(n -> n.get(NOTES_KEY))
-            .orElse(null);
-        
-        try {
-            var contribution = contributionAdminService.updateRouteContributionStatus(
-                id,
-                new ApprovedStatus().getValue(),
-                notesText
-            );
-            
-            // Convert domain model to response DTO
-            var response = RouteContributionAdminResponse.fromDomain(contribution);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error approving route contribution: {}", id, e);
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, "Failed to approve: " + e.getMessage()));
-        }
+    @PostMapping("/contributions/routes/{id}/approve")
+    public ResponseEntity<RouteContribution> approveRouteContribution(@PathVariable String id) {
+        log.info("Request to approve route contribution with id: {}", id);
+        return ResponseEntity.ok(adminUseCase.approveRouteContribution(id));
     }
 
     /**
      * Reject a route contribution
+     * 
+     * @param id          The ID of the contribution to reject
+     * @param requestBody The rejection reason
+     * @return The rejected route contribution
      */
-    @PostMapping("/routes/{id}/reject")
-    public ResponseEntity<Object> rejectRouteContribution(
-            @PathVariable Long id,
-            @RequestBody(required = false) Map<String, String> notes) {
-        log.info("Admin request to reject route contribution: {}", id);
-        
-        if (id == null || id <= 0) {
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, INVALID_ID_MESSAGE));
+    @PostMapping("/contributions/routes/{id}/reject")
+    public ResponseEntity<RouteContribution> rejectRouteContribution(
+            @PathVariable String id,
+            @RequestBody Map<String, String> requestBody) {
+        String reason = requestBody.get("reason");
+        if (reason == null || reason.isBlank()) {
+            reason = "No reason provided";
         }
-        
-        // Using Optional for nullable values
-        var notesText = Optional.ofNullable(notes)
-            .map(n -> n.get(NOTES_KEY))
-            .orElse(null);
-        
-        try {
-            var contribution = contributionAdminService.updateRouteContributionStatus(
-                id,
-                new RejectedStatus().getValue(),
-                notesText
-            );
-            
-            // Convert domain model to response DTO
-            var response = RouteContributionAdminResponse.fromDomain(contribution);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error rejecting route contribution: {}", id, e);
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, "Failed to reject: " + e.getMessage()));
-        }
+
+        log.info("Request to reject route contribution with id: {}, reason: {}", id, reason);
+        return ResponseEntity.ok(adminUseCase.rejectRouteContribution(id, reason));
     }
-    
+
     /**
-     * Approve an image contribution
+     * Delete a route contribution
+     * 
+     * @param id The ID of the contribution to delete
+     * @return No content response
      */
-    @PostMapping("/images/{id}/approve")
-    public ResponseEntity<Object> approveImageContribution(
-            @PathVariable Long id,
-            @RequestBody(required = false) Map<String, String> notes) {
-        log.info("Admin request to approve image contribution: {}", id);
+    @DeleteMapping("/contributions/routes/{id}")
+    public ResponseEntity<Void> deleteRouteContribution(@PathVariable String id) {
+        log.info("Request to delete route contribution with id: {}", id);
+        adminUseCase.deleteRouteContribution(id);
+        return ResponseEntity.noContent().build();
+    }
 
-        if (id == null || id <= 0) {
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, INVALID_ID_MESSAGE));
-        }
+    /**
+     * Get all image contributions
+     * 
+     * @return List of all image contributions
+     */
+    @GetMapping("/contributions/images")
+    public ResponseEntity<List<?>> getAllImageContributions() {
+        log.info("Request to get all image contributions");
+        return ResponseEntity.ok(adminUseCase.getAllImageContributions());
+    }
 
-        // Using Optional for nullable values
-        var notesText = Optional.ofNullable(notes)
-            .map(n -> n.get(NOTES_KEY))
-            .orElse(null);
+    /**
+     * Get pending image contributions
+     * 
+     * @return List of pending image contributions
+     */
+    @GetMapping("/contributions/images/pending")
+    public ResponseEntity<List<?>> getPendingImageContributions() {
+        log.info("Request to get pending image contributions");
+        return ResponseEntity.ok(adminUseCase.getPendingImageContributions());
+    }
 
+    /**
+     * Approve an image contribution with enhanced OCR processing
+     * 
+     * @param id          The ID of the contribution to approve
+     * @param requestBody The approval request containing notes and options
+     * @return The approved contribution with created route data
+     */
+    @PostMapping("/contributions/images/{id}/approve")
+    public ResponseEntity<Map<String, Object>> approveImageContributionEnhanced(@PathVariable String id,
+            @RequestBody Map<String, Object> requestBody) {
         try {
-            var contribution = contributionAdminService.updateImageContributionStatus(
-                id,
-                new ApprovedStatus().getValue(),
-                notesText
-            );
+            log.info("Request to approve image contribution with id: {}", id);
 
-            // Convert domain model to response DTO
-            var response = ImageContributionAdminResponse.fromDomain(contribution);
-            return ResponseEntity.ok(response);
+            String approvalNotes = (String) requestBody.get("approvalNotes");
+            Boolean extractOCRData = (Boolean) requestBody.getOrDefault("extractOCRData", false);
+
+            // Get the image contribution
+            ImageContribution contribution = imageContributionOutputPort.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Image contribution not found: " + id));
+
+            Map<String, Object> result = new HashMap<>();
+
+            if (extractOCRData) {
+                // Extract OCR data and create route entries
+                Map<String, Object> extractedData = imageProcessingService.extractOCRData(contribution);
+                List<RouteContribution> createdRoutes = imageProcessingService.createRouteDataFromOCR(
+                        contribution, extractedData);
+
+                // Update contribution
+                contribution.setExtractedData(extractedData.toString());
+                contribution.setStatus("APPROVED");
+                contribution.setProcessedDate(LocalDateTime.now());
+                contribution.setValidationMessage("Approved with OCR extraction. Created " +
+                        createdRoutes.size() + " route entries.");
+                if (approvalNotes != null && !approvalNotes.isBlank()) {
+                    contribution.setAdditionalNotes(approvalNotes);
+                }
+
+                ImageContribution savedContribution = imageContributionOutputPort.save(contribution);
+
+                result.put("contribution", savedContribution);
+                result.put("extractedData", extractedData);
+                result.put("createdRoutes", createdRoutes.size());
+                result.put("routeIds", createdRoutes.stream().map(RouteContribution::getId).toList());
+
+                log.info("Successfully approved image contribution {} and created {} route entries",
+                        id, createdRoutes.size());
+            } else {
+                // Simple approval without OCR
+                ImageContribution approved = adminUseCase.approveImageContribution(id);
+                if (approvalNotes != null && !approvalNotes.isBlank()) {
+                    approved.setAdditionalNotes(approvalNotes);
+                    approved = imageContributionOutputPort.save(approved);
+                }
+                result.put("contribution", approved);
+            }
+
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
-            log.error("Error approving image contribution: {}", id, e);
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, "Failed to approve: " + e.getMessage()));
+            log.error("Error approving image contribution {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to approve contribution: " + e.getMessage()));
         }
     }
 
     /**
      * Reject an image contribution
+     * 
+     * @param id          The ID of the contribution to reject
+     * @param requestBody The rejection request containing the reason
+     * @return The rejected contribution
      */
-    @PostMapping("/images/{id}/reject")
-    public ResponseEntity<Object> rejectImageContribution(
-            @PathVariable Long id,
-            @RequestBody(required = false) Map<String, String> body) {
-        log.info("Admin request to reject image contribution: {}", id);
-
-        if (id == null || id <= 0) {
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, INVALID_ID_MESSAGE));
+    @PostMapping("/contributions/images/{id}/reject")
+    public ResponseEntity<ImageContribution> rejectImageContribution(@PathVariable String id,
+            @RequestBody Map<String, String> requestBody) {
+        String reason = requestBody.get("reason");
+        if (reason == null || reason.isBlank()) {
+            reason = "No reason provided";
         }
 
-        // Process the rejection reason from the request body
-        var reason = Optional.ofNullable(body)
-            .map(b -> b.get(REASON_KEY))
-            .orElse(null);
+        log.info("Request to reject image contribution with id: {} for reason: {}", id, reason);
+        ImageContribution rejected = adminUseCase.rejectImageContribution(id, reason);
+        return ResponseEntity.ok(rejected);
+    }
 
+    /**
+     * Delete an image contribution
+     * 
+     * @param id The ID of the contribution to delete
+     * @return No content response
+     */
+    @DeleteMapping("/contributions/images/{id}")
+    public ResponseEntity<Void> deleteImageContribution(@PathVariable String id) {
+        log.info("Request to delete image contribution with id: {}", id);
+        adminUseCase.deleteImageContribution(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Extract OCR data from an image contribution
+     * 
+     * @param id The ID of the contribution to process
+     * @return The extracted OCR data
+     */
+    @PostMapping("/contributions/images/{id}/extract-ocr")
+    public ResponseEntity<Map<String, Object>> extractOCRFromContribution(@PathVariable String id) {
         try {
-            var contribution = contributionAdminService.updateImageContributionStatus(
-                id,
-                new RejectedStatus().getValue(),
-                reason
-            );
+            log.info("Request to extract OCR from image contribution with id: {}", id);
 
-            // Convert domain model to response DTO
-            var response = ImageContributionAdminResponse.fromDomain(contribution);
-            return ResponseEntity.ok(response);
+            // Get the image contribution
+            ImageContribution contribution = imageContributionOutputPort.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Image contribution not found: " + id));
+
+            // Extract OCR data
+            Map<String, Object> extractedData = imageProcessingService.extractOCRData(contribution);
+
+            // Update the contribution with extracted data
+            contribution.setExtractedData(extractedData.toString());
+            contribution.setStatus("MANUAL_REVIEW_NEEDED");
+            contribution.setProcessedDate(LocalDateTime.now());
+            imageContributionOutputPort.save(contribution);
+
+            return ResponseEntity.ok(extractedData);
         } catch (Exception e) {
-            log.error("Error rejecting image contribution: {}", id, e);
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, "Failed to reject: " + e.getMessage()));
+            log.error("Error extracting OCR from contribution {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to extract OCR data: " + e.getMessage()));
         }
     }
 
     /**
-     * Update status for an image contribution
+     * Request class for rejection operations
      */
-    @PostMapping("/images/{id}/status")
-    public ResponseEntity<Object> updateImageContributionStatus(
-            @PathVariable Long id,
-            @RequestBody ContributionAction action) {
-        
-        log.info("Admin request to update image contribution: {} with action: {}", 
-            id, action.action());
-        
-        // Using pattern matching with instanceof and Java 17 switch expression
-        ContributionStatus status = switch (action.action().toUpperCase()) {
-            case "APPROVE" -> new ApprovedStatus();
-            case "REJECT" -> new RejectedStatus();
-            default -> throw new IllegalArgumentException("Invalid action: " + action.action());
-        };
-        
-        try {
-            var contribution = contributionAdminService.updateImageContributionStatus(
-                id,
-                status.getValue(),
-                action.notes()
-            );
-            
-            // Convert domain model to response DTO
-            var response = ImageContributionAdminResponse.fromDomain(contribution);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error updating image contribution: {}", id, e);
-            return ResponseEntity.badRequest()
-                .body(new AdminResponse(false, "Failed to update status: " + e.getMessage()));
-        }
-    }
-
-    /**
-     * Get admin dashboard statistics
-     */
-    @GetMapping("/stats")
-    public ResponseEntity<Map<String, Object>> getAdminStats() {
-        log.info("Admin request for dashboard statistics");
-        var stats = contributionAdminService.getAdminDashboardStats();
-        return ResponseEntity.ok(stats);
+    @Data
+    public static class RejectContributionRequest {
+        private String reason;
     }
 }

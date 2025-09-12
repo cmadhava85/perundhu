@@ -17,14 +17,14 @@ public class FlywayMigrationConfig {
             try {
                 // First try to repair the schema history table
                 flyway.repair();
-                
+
                 // Then try to migrate
                 flyway.migrate();
             } catch (Exception e) {
-                // If migration fails, clean and start fresh
-                System.out.println("Migration failed, attempting clean and migrate: " + e.getMessage());
-                flyway.clean();
-                flyway.migrate();
+                // Log the error but don't try to clean in production/dev
+                System.err.println("Migration failed: " + e.getMessage());
+                System.err.println("Please check the migration scripts and database state manually.");
+                throw new RuntimeException("Database migration failed. Manual intervention required.", e);
             }
         };
     }

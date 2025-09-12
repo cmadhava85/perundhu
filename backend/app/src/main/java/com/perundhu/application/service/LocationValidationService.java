@@ -1,115 +1,56 @@
 package com.perundhu.application.service;
 
-import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service for validating location data
  */
 @Service("applicationLocationValidationService")
+@Slf4j
 public class LocationValidationService {
 
-    private static final Logger log = LoggerFactory.getLogger(LocationValidationService.class);
-
-    // Patterns for basic validation
-    private static final Pattern COORDINATE_PATTERN = Pattern.compile("^-?\\d{1,3}\\.\\d{1,15}$");
-    private static final double MIN_LATITUDE = -90.0;
-    private static final double MAX_LATITUDE = 90.0;
-    private static final double MIN_LONGITUDE = -180.0;
-    private static final double MAX_LONGITUDE = 180.0;
-
     /**
-     * Validates a location based on its name and coordinates
-     *
-     * @param name      The name of the location
-     * @param latitude  The latitude coordinate
-     * @param longitude The longitude coordinate
-     * @return true if the location is valid, false otherwise
+     * Validate location coordinates and name
      */
-    public boolean validateLocation(String name, Double latitude, Double longitude) {
-        boolean nameValid = isValidLocationName(name);
-        boolean coordinatesValid = latitude != null && longitude != null &&
-                isValidCoordinates(latitude, longitude);
+    public boolean validateLocation(String locationName, Double latitude, Double longitude) {
+        log.debug("Validating location: {} at ({}, {})", locationName, latitude, longitude);
 
-        log.debug("Validating location: name='{}', lat={}, lng={} - nameValid={}, coordinatesValid={}",
-                name, latitude, longitude, nameValid, coordinatesValid);
-
-        return nameValid && coordinatesValid;
-    }
-
-    /**
-     * Validates if the given latitude is valid
-     * 
-     * @param latitude The latitude to validate
-     * @return true if valid, false otherwise
-     */
-    public boolean isValidLatitude(String latitude) {
-        if (latitude == null || !COORDINATE_PATTERN.matcher(latitude).matches()) {
+        // Basic validation
+        if (locationName == null || locationName.trim().isEmpty()) {
+            log.warn("Location name is null or empty");
             return false;
         }
 
-        try {
-            double lat = Double.parseDouble(latitude);
-            return lat >= MIN_LATITUDE && lat <= MAX_LATITUDE;
-        } catch (NumberFormatException e) {
-            log.warn("Invalid latitude format: {}", latitude);
-            return false;
-        }
-    }
-
-    /**
-     * Validates if the given longitude is valid
-     * 
-     * @param longitude The longitude to validate
-     * @return true if valid, false otherwise
-     */
-    public boolean isValidLongitude(String longitude) {
-        if (longitude == null || !COORDINATE_PATTERN.matcher(longitude).matches()) {
+        // Validate coordinates if provided
+        if (latitude != null && (latitude < -90 || latitude > 90)) {
+            log.warn("Invalid latitude: {}", latitude);
             return false;
         }
 
-        try {
-            double lon = Double.parseDouble(longitude);
-            return lon >= MIN_LONGITUDE && lon <= MAX_LONGITUDE;
-        } catch (NumberFormatException e) {
-            log.warn("Invalid longitude format: {}", longitude);
+        if (longitude != null && (longitude < -180 || longitude > 180)) {
+            log.warn("Invalid longitude: {}", longitude);
             return false;
         }
+
+        // Check for reasonable location name length
+        if (locationName.trim().length() < 2) {
+            log.warn("Location name too short: {}", locationName);
+            return false;
+        }
+
+        log.debug("Location validation passed for: {}", locationName);
+        return true;
     }
 
     /**
-     * Validates both latitude and longitude coordinates
-     * 
-     * @param latitude  The latitude to validate
-     * @param longitude The longitude to validate
-     * @return true if both are valid, false otherwise
+     * Validate if two locations are different
      */
-    public boolean isValidCoordinates(String latitude, String longitude) {
-        return isValidLatitude(latitude) && isValidLongitude(longitude);
-    }
+    public boolean validateLocationsDifferent(String location1, String location2) {
+        if (location1 == null || location2 == null) {
+            return false;
+        }
 
-    /**
-     * Validates both latitude and longitude coordinates as double values
-     * 
-     * @param latitude  The latitude to validate
-     * @param longitude The longitude to validate
-     * @return true if both are valid, false otherwise
-     */
-    public boolean isValidCoordinates(double latitude, double longitude) {
-        return latitude >= MIN_LATITUDE && latitude <= MAX_LATITUDE &&
-                longitude >= MIN_LONGITUDE && longitude <= MAX_LONGITUDE;
-    }
-
-    /**
-     * Validates that a location name is not empty and meets minimum requirements
-     * 
-     * @param locationName The location name to validate
-     * @return true if valid, false otherwise
-     */
-    public boolean isValidLocationName(String locationName) {
-        return locationName != null && !locationName.trim().isEmpty() && locationName.trim().length() >= 3;
+        return !location1.trim().equalsIgnoreCase(location2.trim());
     }
 }

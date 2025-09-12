@@ -3,27 +3,31 @@ package com.perundhu.infrastructure.persistence.adapter;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
-import com.perundhu.infrastructure.persistence.repository.LocationJpaRepository;
+import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
 
 @Repository
 public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     private final LocationJpaRepository jpaRepository;
 
-    public LocationJpaRepositoryAdapter(
-            @Qualifier("repositoryPackageLocationJpaRepository") LocationJpaRepository jpaRepository) {
+    public LocationJpaRepositoryAdapter(LocationJpaRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 
     @Override
     public Optional<Location> findById(Location.LocationId id) {
-        return jpaRepository.findById(id.value())
+        return jpaRepository.findById(id.getValue())
+                .map(LocationJpaEntity::toDomainModel);
+    }
+
+    @Override
+    public Optional<Location> findById(Long id) {
+        return jpaRepository.findById(id)
                 .map(LocationJpaEntity::toDomainModel);
     }
 
@@ -36,7 +40,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     @Override
     public List<Location> findAllExcept(Location.LocationId id) {
-        return jpaRepository.findByIdNot(id.value()).stream()
+        return jpaRepository.findByIdNot(id.getValue()).stream()
                 .map(LocationJpaEntity::toDomainModel)
                 .toList();
     }
@@ -49,103 +53,78 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
-    public Optional<Location> findSingleByName(String name) {
+    public Optional<Location> findByExactName(String name) {
         return jpaRepository.findByNameEquals(name)
                 .map(LocationJpaEntity::toDomainModel);
     }
 
     @Override
+    public Optional<Location> findNearbyLocation(Double latitude, Double longitude, double radiusDegrees) {
+        // This would typically involve a spatial query
+        // For now, returning empty as this may require a separate implementation
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Location> findCommonConnections(Long fromLocationId, Long toLocationId) {
+        return jpaRepository.findCommonConnections(fromLocationId, toLocationId).stream()
+                .map(LocationJpaEntity::toDomainModel)
+                .toList();
+    }
+
+    @Override
     public Location save(Location location) {
+        // Validate coordinates before saving
+        if (location.getLatitude() != null && location.getLongitude() != null) {
+            if (!location.hasValidCoordinates()) {
+                throw new IllegalArgumentException(
+                        String.format("Invalid coordinates for location '%s': lat=%f, lng=%f",
+                                location.getName(), location.getLatitude(), location.getLongitude()));
+            }
+        }
+
         LocationJpaEntity entity = LocationJpaEntity.fromDomainModel(location);
         return jpaRepository.save(entity).toDomainModel();
     }
 
-    @Override
-    public void delete(Location.LocationId id) {
-        jpaRepository.deleteById(id.value());
+    /**
+     * Save a location with explicit coordinate validation
+     */
+    public Location saveWithCoordinates(String name, Double latitude, Double longitude) {
+        if (latitude == null || longitude == null) {
+            throw new IllegalArgumentException(
+                    "Latitude and longitude cannot be null when explicitly saving with coordinates");
+        }
+
+        Location location = Location.withCoordinates(null, name, latitude, longitude);
+        return save(location);
+    }
+
+    /**
+     * Find locations that have valid coordinates
+     */
+    public List<Location> findLocationsWithValidCoordinates() {
+        return jpaRepository.findAll().stream()
+                .map(LocationJpaEntity::toDomainModel)
+                .filter(Location::hasValidCoordinates)
+                .toList();
     }
 
     @Override
     public List<Location> findByNameContaining(String namePattern) {
-        if (namePattern == null || namePattern.trim().isEmpty()) {
+        if (namePattern == null || namePattern.trim().length() < 3) {
             return List.of();
         }
-        return jpaRepository.findByNameContainingIgnoreCase(namePattern.trim()).stream()
+
+        return jpaRepository.findByNameContainingIgnoreCase(namePattern.trim())
+                .stream()
+                .limit(10) // Limit to 10 suggestions
                 .map(LocationJpaEntity::toDomainModel)
                 .toList();
     }
 
     @Override
-    public List<Location> findNear(double latitude, double longitude, double radiusKm) {
-        // Convert radius from kilometers to degrees (approximate conversion)
-        // 1 degree ≈ 111 km at the equator
-        double radiusDegrees = radiusKm / 111.0;
-
-        return jpaRepository.findByLatitudeBetweenAndLongitudeBetween(
-                latitude - radiusDegrees,
-                latitude + radiusDegrees,
-                longitude - radiusDegrees,
-                longitude + radiusDegrees).stream()
-                .map(LocationJpaEntity::toDomainModel)
-                .filter(location -> calculateDistance(latitude, longitude,
-                        location.latitude(), location.longitude()) <= radiusKm)
-                .toList();
-    }
-
-    @Override
-    public List<Location> findByCoordinatesWithinRange(double latitude, double longitude, double tolerance) {
-        return jpaRepository.findByLatitudeBetweenAndLongitudeBetween(
-                latitude - tolerance,
-                latitude + tolerance,
-                longitude - tolerance,
-                longitude + tolerance).stream()
-                .map(LocationJpaEntity::toDomainModel)
-                .toList();
-    }
-
-    @Override
-    public boolean existsByName(String name) {
-        return jpaRepository.existsByName(name);
-    }
-
-    @Override
-    public Optional<Location> findByCoordinates(double latitude, double longitude, double tolerance) {
-        List<Location> nearbyLocations = findByCoordinatesWithinRange(latitude, longitude, tolerance);
-
-        // Return the closest location within tolerance
-        return nearbyLocations.stream()
-                .filter(location -> Math.abs(location.latitude() - latitude) <= tolerance &&
-                        Math.abs(location.longitude() - longitude) <= tolerance)
-                .findFirst();
-    }
-
-    @Override
-    public long count() {
-        return jpaRepository.count();
-    }
-
-    /**
-     * Calculate distance between two coordinates using Haversine formula
-     * 
-     * @param lat1 Latitude of first point
-     * @param lon1 Longitude of first point
-     * @param lat2 Latitude of second point
-     * @param lon2 Longitude of second point
-     * @return Distance in kilometers
-     */
-    // Changed from private to package-private (default) for testing
-    double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        final int EARTH_RADIUS_KM = 6371;
-
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                        * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return EARTH_RADIUS_KM * c;
+    public void delete(Location.LocationId id) {
+        jpaRepository.deleteById(id.getValue());
     }
 }

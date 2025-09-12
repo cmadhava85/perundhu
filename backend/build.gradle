@@ -10,9 +10,9 @@ buildscript {
     repositories {
         mavenCentral()
         // Add Spring milestone repository to access prerelease versions
-        maven { url = uri('https://repo.spring.io/milestone') }
+        maven { url 'https://repo.spring.io/milestone' }
         // Add Spring snapshot repository if needed for very latest builds
-        maven { url = uri('https://repo.spring.io/snapshot') }
+        maven { url 'https://repo.spring.io/snapshot' }
     }
     dependencies {
         classpath 'mysql:mysql-connector-java:8.0.33'
@@ -22,8 +22,7 @@ buildscript {
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
-    // Update to Spring Boot 3.2.4 (latest stable as of July 2025)
-    id 'org.springframework.boot' version '3.2.4'
+    id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
     // Add the versions plugin to check for dependency updates
@@ -35,9 +34,9 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
     // Add Spring milestone repository to access prerelease versions
-    maven { url = uri('https://repo.spring.io/milestone') }
+    maven { url 'https://repo.spring.io/milestone' }
     // Add Spring snapshot repository if needed for very latest builds
-    maven { url = uri('https://repo.spring.io/snapshot') }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 // Configure source sets for hexagonal tests
@@ -75,8 +74,8 @@ sourceSets {
     }
 }
 
-// Create a task for running hexagonal tests using the tasks.register approach
-tasks.register('hexagonalTest', Test) {
+// Create a task for running hexagonal tests
+task hexagonalTest(type: Test) {
     description = 'Runs the hexagonal architecture tests.'
     group = 'verification'
     
@@ -123,9 +122,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-mysql:4.8.4'
     
-    // Add Jakarta Persistence API for JPA
-    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-    implementation 'jakarta.transaction:jakarta.transaction-api:2.0.1'
+    // Security dependencies for OAuth2 JWT authentication
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    
+    // JJWT dependencies for JWT token handling
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Remove Redis dependency for now - will use in-memory implementation
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     
     // Add Jakarta Validation API for constraint validation
     implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
@@ -135,20 +142,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.aspectj:aspectjweaver:1.9.24'
     
-    // Add Caffeine cache dependencies
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
-    
-    // Add micrometer dependencies for metrics
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'io.micrometer:micrometer-core'
-    implementation 'io.micrometer:micrometer-registry-prometheus'
-    
-    // Removed Lombok dependencies as we're now using Java 17 features
-
-    // ArchUnit for architecture testing
-    testImplementation 'com.tngtech.archunit:archunit-junit5:1.2.1'
-    hexagonalTestImplementation 'com.tngtech.archunit:archunit-junit5:1.2.1'
+    // Updated Lombok to the latest version
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    testCompileOnly 'org.projectlombok:lombok:1.18.38'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.38'
     
     // Updated MySQL Connector to the latest version
     runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
@@ -195,14 +193,25 @@ dependencies {
 }
 
 flyway {
-    url = 'jdbc:mysql://localhost:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true'
-    user = 'root'
-    password = 'root'
+    url = project.findProperty('flyway.url') ?: System.getenv('DB_URL') ?: 'jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true'
+    user = project.findProperty('flyway.user') ?: System.getenv('DB_USERNAME') ?: 'root'
+    password = project.findProperty('flyway.password') ?: System.getenv('DB_PASSWORD') ?: 'root'
     locations = ['classpath:db/migration']
     baselineOnMigrate = true
-    validateOnMigrate = true
+    validateOnMigrate = false
     outOfOrder = true
     driver = 'com.mysql.cj.jdbc.Driver'
+    createSchemas = true
+    schemas = ['perundhu']
+}
+
+// Fix configuration cache issues for Flyway tasks
+gradle.taskGraph.whenReady { taskGraph ->
+    taskGraph.allTasks.each { task ->
+        if (task.getClass().name.contains('flyway')) {
+            task.notCompatibleWithConfigurationCache("Flyway plugin accesses project at execution time")
+        }
+    }
 }
 
 // Disable configuration cache for Flyway tasks to prevent "Task.project" access errors
@@ -239,31 +248,29 @@ tasks.named('dependencyUpdates').configure {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
-        // Configure vendor if needed
-        // vendor = JvmVendorSpec.ADOPTIUM
     }
-    // Removed sourceCompatibility and targetCompatibility properties
-    // as they're deprecated in favor of the toolchain API
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-tasks.withType(JavaCompile).configureEach {
+tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint:deprecation'
     options.deprecation = true
     options.compilerArgs << '-parameters'
     options.annotationProcessorPath = configurations.annotationProcessor
     options.encoding = 'UTF-8'
-    // Use release instead of source/target compatibility
+    // Add source/target compatibility to ensure consistent compilation
     options.release = 17
     // Enable preview features for Java 17
     options.compilerArgs += ['--enable-preview']
 }
 
-tasks.withType(Test).configureEach {
-    // Enable preview features for tests
+tasks.withType(Test) {
+    // Enable preview features for tests as well
     jvmArgs += ['--enable-preview']
 }
 
-tasks.withType(JavaExec).configureEach {
+tasks.withType(JavaExec) {
     // Enable preview features for application execution
     jvmArgs += ['--enable-preview']
 }

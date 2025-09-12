@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +18,9 @@ import com.perundhu.application.dto.BusLocationReportDTO;
 import com.perundhu.application.dto.RewardPointsDTO;
 import com.perundhu.application.service.BusTrackingService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Controller for handling bus tracking features using crowd-sourced data
  */
@@ -31,15 +32,15 @@ public class BusTrackingController {
     private static final Logger log = LoggerFactory.getLogger(BusTrackingController.class);
     private final BusTrackingService busTrackingService;
 
-    /**
-     * Constructor for dependency injection
-     */
     public BusTrackingController(BusTrackingService busTrackingService) {
         this.busTrackingService = busTrackingService;
     }
 
     // Response records
-    private record ErrorResponse(String error) {
+    public record ErrorResponse(String error) {
+    }
+
+    public record DisembarkationRequest(Long busId, String userId, LocalDateTime timestamp) {
     }
 
     /**
@@ -50,8 +51,26 @@ public class BusTrackingController {
         log.info("Received bus location report from user: {} for bus: {}",
                 report.getUserId(), report.getBusId());
 
-        var points = busTrackingService.processLocationReport(report);
+        RewardPointsDTO points = busTrackingService.processLocationReport(report);
         return ResponseEntity.ok(points);
+    }
+
+    /**
+     * Report bus location with simplified auto-detection
+     */
+    @PostMapping("/report-simple")
+    public ResponseEntity<BusLocationDTO> reportBusLocationSimple(
+            @RequestBody BusTrackingService.BusLocationRequest request) {
+        log.info("Received simplified bus location report for bus: {} from user: {}",
+                request.getBusId(), request.getUserId());
+
+        try {
+            BusLocationDTO result = busTrackingService.reportBusLocation(request);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error processing simplified bus location report", e);
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     /**
@@ -61,7 +80,7 @@ public class BusTrackingController {
     public ResponseEntity<Map<Long, BusLocationDTO>> getActiveBusLocations() {
         log.info("Request received for active bus locations");
 
-        var locations = busTrackingService.getActiveBusLocations();
+        Map<Long, BusLocationDTO> locations = busTrackingService.getActiveBusLocations();
         return ResponseEntity.ok(locations);
     }
 
@@ -72,7 +91,7 @@ public class BusTrackingController {
     public ResponseEntity<List<BusLocationDTO>> getBusLocationHistory(@PathVariable Long busId) {
         log.info("Request received for location history of bus: {}", busId);
 
-        var history = busTrackingService.getBusLocationHistory(
+        List<BusLocationDTO> history = busTrackingService.getBusLocationHistory(
                 busId, LocalDateTime.now().minusHours(12));
 
         return ResponseEntity.ok(history);
@@ -89,17 +108,49 @@ public class BusTrackingController {
 
         try {
             Map<String, Object> result = busTrackingService.getEstimatedArrival(busId, stopId);
-            if (result == null || result.isEmpty()) {
+            if (result == null || result.isEmpty() || result.containsKey("error")) {
                 return ResponseEntity.notFound().build();
-            }
-            if (result.containsKey("error")) {
-                return ResponseEntity.badRequest().body(
-                        new ErrorResponse(result.get("error").toString()));
             }
             return ResponseEntity.ok(result);
         } catch (IllegalArgumentException e) {
             log.warn("Could not calculate ETA: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
+    }
+
+    /**
+     * Get bus locations for a specific route
+     */
+    @GetMapping("/route/{fromLocationId}/{toLocationId}")
+    public ResponseEntity<List<BusLocationDTO>> getBusLocationsOnRoute(
+            @PathVariable Long fromLocationId,
+            @PathVariable Long toLocationId) {
+        log.info("Request received for bus locations on route: {} to {}", fromLocationId, toLocationId);
+
+        List<BusLocationDTO> locations = busTrackingService.getBusLocationsOnRoute(fromLocationId, toLocationId);
+        return ResponseEntity.ok(locations);
+    }
+
+    /**
+     * Get user reward points
+     */
+    @GetMapping("/rewards/{userId}")
+    public ResponseEntity<RewardPointsDTO> getUserRewardPoints(@PathVariable String userId) {
+        log.info("Request received for reward points of user: {}", userId);
+
+        RewardPointsDTO rewards = busTrackingService.getUserRewardPoints(userId);
+        return ResponseEntity.ok(rewards);
+    }
+
+    /**
+     * Report user disembarkation (when they get off the bus)
+     */
+    @PostMapping("/disembark")
+    public ResponseEntity<Void> reportDisembarkation(@RequestBody DisembarkationRequest request) {
+        log.info("Received disembarkation report from user: {} for bus: {}",
+                request.userId(), request.busId());
+
+        busTrackingService.processDisembarkation(request.busId(), request.timestamp());
+        return ResponseEntity.ok().build();
     }
 }
