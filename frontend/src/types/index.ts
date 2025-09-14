@@ -1,12 +1,20 @@
+/**
+ * Generic API response wrapper
+ */
+export interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message?: string;
+  timestamp?: string;
+}
+
 export interface Location {
   id: number;
   name: string;
   latitude: number;  // No longer optional
   longitude: number; // No longer optional
-  state?: string; // Add state property for test compatibility
   translatedName?: string; // Simple translated name for the current language
   taName?: string; // Tamil name specifically
-  source?: 'database' | 'nominatim' | 'map' | 'api' | 'offline' | 'local' | 'google'; // Added 'google' to fix geocoding service
   translations?: {
     [key: string]: {
       name: string;
@@ -16,10 +24,7 @@ export interface Location {
   translatedNames?: {
     [key: string]: string;
   };
-  coordinates?: { // Add coordinates property for backward compatibility
-    lat: number;
-    lng: number;
-  };
+  source?: 'database' | 'map' | 'local' | 'offline'; // Added source property
 }
 
 export interface Bus {
@@ -30,59 +35,30 @@ export interface Bus {
   busNumber: string;
   departureTime: string;
   arrivalTime: string;
-  // Add missing properties that are expected by components
-  name?: string;
-  status?: 'active' | 'inactive';
-  routeName?: string;
-  estimatedArrival?: string;
-  capacity?: string;
-  active?: boolean;
+  // Adding missing properties referenced in BusItem component
+  status?: string;
   category?: string;
-  // Add properties used in EnhancedBusList
-  isLive?: boolean;
-  seatsAvailable?: number;
-  totalSeats?: number;
-  busType?: string;
-  availability?: 'available' | 'filling-fast' | 'full';
-  operatorName?: string;
-  rating?: number;
-  route?: string[];
-  duration?: string;
-  fare?: number;
-  amenities?: string[];
-  // Add missing properties used in MapComponent
-  fromLocation?: {
-    latitude: number;
-    longitude: number;
-  };
-  toLocation?: {
-    latitude: number;
-    longitude: number;
-  };
+  capacity?: number;
+  // Add properties to match apiTypes.ts structure
+  name?: string;
+  fromLocationId?: number;
+  toLocationId?: number;
+  fromLocation?: Location;
+  toLocation?: Location;
 }
 
 export interface Stop {
-  id?: number;
+  id: number; // Make id required to match apiTypes.ts
   name: string;
   translatedName?: string;
   arrivalTime: string;
   departureTime: string;
   order?: number;     // Keep for backward compatibility
   stopOrder?: number; // Added to match the API response
-  // Add location coordinates for map markers
-  latitude?: number;
-  longitude?: number;
-  // Alternative coordinate properties that might come from API
-  stopLat?: number;
-  stopLng?: number;
-  lat?: number;
-  lng?: number;
-  // Location object alternative
-  location?: {
-    latitude: number;
-    longitude: number;
-  };
-  taName?: string; // Tamil name specifically
+  busId: number;      // Make busId required to match apiTypes.ts
+  platform?: string;  // Adding missing platform property
+  status?: string;    // Adding missing status property
+  taName?: string;    // Tamil name specifically
   translations?: {
     [key: string]: {
       name: string;
@@ -92,10 +68,18 @@ export interface Stop {
   translatedNames?: {
     [key: string]: string;
   };
-  // Add missing properties used in components
-  busId?: number;
-  platform?: string;
-  status?: string;
+  // Added properties for test compatibility
+  latitude?: number;
+  longitude?: number;
+  lat?: number;
+  lng?: number;
+  stopLat?: number; // For tests
+  stopLng?: number; // For tests
+  location?: {
+    latitude: number;
+    longitude: number;
+  };
+  locationId?: number; // Adding missing locationId property
 }
 
 export interface BusLeg extends Bus {
@@ -144,7 +128,6 @@ export interface ApiErrorResponse {
  * Real-time bus location interface from crowd-sourced tracking
  */
 export interface BusLocation {
-  id: number; // Add missing id property
   busId: number;
   busName: string;
   busNumber: string;
@@ -154,12 +137,15 @@ export interface BusLocation {
   longitude: number;
   speed: number;
   heading: number;
+  direction?: string; // Added for test compatibility
   timestamp: string;
-  lastReportedStopName?: string; // Make optional to match service
-  nextStopName?: string;
-  estimatedArrivalTime?: string;
+  lastUpdated?: string; // Added for test compatibility
+  lastReportedStopName: string;
+  nextStopName: string;
+  estimatedArrivalTime: string;
   reportCount: number;
   confidenceScore: number;
+  routeId?: number; // Added for test compatibility
 }
 
 /**
@@ -204,37 +190,32 @@ export interface RewardActivity {
 export interface RouteContribution {
   id?: number;
   userId?: string;
-  busName?: string;
+  busName: string;
   busNumber: string;
+  
+  // Primary language fields (as entered by user)
   fromLocationName: string;
+  toLocationName: string;
+  
+  // Secondary language fields (translated)
+  busName_secondary?: string;
+  fromLocationName_secondary?: string;
+  toLocationName_secondary?: string;
+  
+  // Language tracking
+  sourceLanguage?: string; // 'en' for English, 'ta' for Tamil
+  
   fromLatitude?: number;
   fromLongitude?: number;
-  toLocationName: string;
   toLatitude?: number;
   toLongitude?: number;
-  departureTime?: string;
-  arrivalTime?: string;
-  scheduleInfo?: string;
+  departureTime: string;
+  arrivalTime: string;
   submissionDate?: string;
   status?: string;
   validationMessage?: string;
   processedDate?: string;
-  additionalNotes?: string;
-  submittedBy?: string;
-  stops?: StopContribution[];
-  // Legacy fields kept for backward compatibility with frontend forms
-  route?: string;
-  origin?: string;
-  destination?: string;
-  detailedStops?: Array<{
-    id?: string;
-    name: string;
-    latitude?: number;
-    longitude?: number;
-    arrivalTime?: string;
-    departureTime?: string;
-    order?: number;
-  }>;
+  stops: StopContribution[];
 }
 
 /**
@@ -243,6 +224,7 @@ export interface RouteContribution {
 export interface StopContribution {
   id?: number;
   name: string;
+  name_secondary?: string; // Secondary language name (translated)
   latitude?: number;
   longitude?: number;
   arrivalTime: string;
@@ -256,6 +238,11 @@ export interface StopContribution {
 export interface ImageContribution {
   id?: number;
   userId?: string;
+  busName: string;
+  busNumber: string;
+  fromLocationName: string;
+  toLocationName: string;
+  notes: string;
   imageUrl?: string;
   description?: string;
   submissionDate?: string;
@@ -263,19 +250,7 @@ export interface ImageContribution {
   validationMessage?: string;
   processedDate?: string;
   extractedData?: string;
-}
-
-/**
- * Search filters interface for enhanced search functionality
- */
-export interface SearchFilters {
-  from: string | Location | null;
-  to: string | Location | null;
-  date: string;
-  busType: string;
-  sortBy: string;
-  includeIntermediateStops?: boolean;
-  includeContinuingBuses?: boolean;
-  showOSMData?: boolean;
+  // Add missing field needed by tests
+  imageData?: string;
 }
 

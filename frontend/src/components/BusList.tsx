@@ -48,4 +48,5 @@ const BusList: React.FC<BusListProps> = ({
   );
 };
 
-export default BusList;
+// Use React.memo to prevent unnecessary re-renders
+export default React.memo(BusList);

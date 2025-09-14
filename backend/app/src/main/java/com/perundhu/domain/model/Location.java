@@ -1,62 +1,23 @@
 package com.perundhu.domain.model;
 
+import java.util.Objects;
+
 /**
- * Location domain model using Java 17 record for immutability and reduced
- * boilerplate
- * Converted from Lombok @Value to native Java 17 features
+ * Domain entity representing a location (city or town)
  */
-public record Location(
-        LocationId id,
-        String name,
-        Double latitude,
-        Double longitude) implements Translatable<Location> {
+public class Location {
+    private final LocationId id;
+    private String name;
+    private String nameLocalLanguage;
+    private double latitude;
+    private double longitude;
 
-    /**
-     * Compact constructor for validation
-     */
-    public Location {
-        if (latitude != null && (latitude < -90.0 || latitude > 90.0)) {
-            throw new IllegalArgumentException("Latitude must be between -90 and 90");
-        }
-        if (longitude != null && (longitude < -180.0 || longitude > 180.0)) {
-            throw new IllegalArgumentException("Longitude must be between -180 and 180");
-        }
-    }
-
-    /**
-     * Factory method to create a Location reference with just an ID
-     * Used for creating references without full location data
-     */
-    public static Location reference(Long locationId) {
-        return new Location(new LocationId(locationId), null, null, null);
-    }
-
-    /**
-     * Factory method to create a Location with coordinates
-     */
-    public static Location withCoordinates(Long locationId, String name, Double latitude, Double longitude) {
-        LocationId id = locationId != null ? new LocationId(locationId) : null;
-        return new Location(id, name, latitude, longitude);
-    }
-
-    /**
-     * Check if this location has valid coordinates
-     */
-    public boolean hasValidCoordinates() {
-        return latitude != null && longitude != null
-                && latitude >= -90.0 && latitude <= 90.0
-                && longitude >= -180.0 && longitude <= 180.0;
-    }
-
-    /**
-     * Convenience getter methods for compatibility
-     */
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
+    public Location(LocationId id, String name, String nameLocalLanguage, double latitude, double longitude) {
+        this.id = id;
+        this.name = name;
+        this.nameLocalLanguage = nameLocalLanguage;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public LocationId getId() {
@@ -67,91 +28,69 @@ public record Location(
         return name;
     }
 
-    /**
-     * Value object for Location ID using Java 17 record
-     */
-    public record LocationId(Long value) {
-        public LocationId {
-            if (value == null) {
-                throw new IllegalArgumentException("LocationId value cannot be null");
-            }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameLocalLanguage() {
+        return nameLocalLanguage;
+    }
+
+    public void setNameLocalLanguage(String nameLocalLanguage) {
+        this.nameLocalLanguage = nameLocalLanguage;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Location location = (Location) o;
+        return Objects.equals(id, location.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameLocalLanguage='" + nameLocalLanguage + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    public static class LocationId {
+        private final Long value;
+
+        public LocationId(Long value) {
+            this.value = value;
         }
 
-        public Long getValue() {
+        public Long value() {
             return value;
-        }
-    }
-
-    // Translatable implementation
-    @Override
-    public String getEntityType() {
-        return "location";
-    }
-
-    @Override
-    public Long getEntityId() {
-        return id.getValue();
-    }
-
-    @Override
-    public String getDefaultValue(String fieldName) {
-        if ("name".equals(fieldName)) {
-            return name;
-        }
-        return null;
-    }
-
-    /**
-     * Add translation for a field - required by Translatable interface
-     */
-    @Override
-    public Translation addTranslation(String fieldName, String languageCode, String value) {
-        return new Translation(
-                getEntityType(),
-                getEntityId(),
-                fieldName,
-                languageCode,
-                value);
-    }
-
-    /**
-     * Factory method for backward compatibility with builder pattern
-     */
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    /**
-     * Builder class for backward compatibility
-     */
-    public static class Builder {
-        private LocationId id;
-        private String name;
-        private Double latitude;
-        private Double longitude;
-
-        public Builder id(LocationId id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder latitude(Double latitude) {
-            this.latitude = latitude;
-            return this;
-        }
-
-        public Builder longitude(Double longitude) {
-            this.longitude = longitude;
-            return this;
-        }
-
-        public Location build() {
-            return new Location(id, name, latitude, longitude);
         }
     }
 }

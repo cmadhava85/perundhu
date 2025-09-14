@@ -2,8 +2,10 @@ package com.perundhu.infrastructure.persistence.entity;
 
 import java.time.LocalTime;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.perundhu.domain.model.Stop;
+import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 
 import jakarta.persistence.Entity;
@@ -18,26 +20,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
+/**
+ * JPA entity for stops with manual implementation (no Lombok)
+ */
 @Entity
-@Table(name = "stops") // Updated to match the correct database table name
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = { "bus", "location" })
+@Table(name = "stops")
 public class StopJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
 
     @NotBlank(message = "Name must not be blank")
@@ -72,64 +63,290 @@ public class StopJpaEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // Default constructor
+    public StopJpaEntity() {
+    }
+
+    // All-args constructor
+    public StopJpaEntity(Long id, String name, LocalTime arrivalTime, LocalTime departureTime,
+            Integer stopOrder, BusJpaEntity bus, LocationJpaEntity location,
+            LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.stopOrder = stopOrder;
+        this.bus = bus;
+        this.location = location;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public LocalTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public Integer getStopOrder() {
+        return stopOrder;
+    }
+
+    public BusJpaEntity getBus() {
+        return bus;
+    }
+
+    public LocationJpaEntity getLocation() {
+        return location;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArrivalTime(LocalTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public void setDepartureTime(LocalTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public void setStopOrder(Integer stopOrder) {
+        this.stopOrder = stopOrder;
+    }
+
+    public void setBus(BusJpaEntity bus) {
+        this.bus = bus;
+    }
+
+    public void setLocation(LocationJpaEntity location) {
+        this.location = location;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    // equals and hashCode (based on id only as per original
+    // @EqualsAndHashCode.Include)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        StopJpaEntity that = (StopJpaEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    // toString (excluding bus and location to avoid circular references)
+    @Override
+    public String toString() {
+        return "StopJpaEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", arrivalTime=" + arrivalTime +
+                ", departureTime=" + departureTime +
+                ", stopOrder=" + stopOrder +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+    // Builder pattern implementation
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return new Builder()
+                .id(this.id)
+                .name(this.name)
+                .arrivalTime(this.arrivalTime)
+                .departureTime(this.departureTime)
+                .stopOrder(this.stopOrder)
+                .bus(this.bus)
+                .location(this.location)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt);
+    }
+
+    public static class Builder {
+        private Long id;
+        private String name;
+        private LocalTime arrivalTime;
+        private LocalTime departureTime;
+        private Integer stopOrder;
+        private BusJpaEntity bus;
+        private LocationJpaEntity location;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+
+        private Builder() {
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder arrivalTime(LocalTime arrivalTime) {
+            this.arrivalTime = arrivalTime;
+            return this;
+        }
+
+        public Builder departureTime(LocalTime departureTime) {
+            this.departureTime = departureTime;
+            return this;
+        }
+
+        public Builder stopOrder(Integer stopOrder) {
+            this.stopOrder = stopOrder;
+            return this;
+        }
+
+        public Builder bus(BusJpaEntity bus) {
+            this.bus = bus;
+            return this;
+        }
+
+        public Builder location(LocationJpaEntity location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder updatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public StopJpaEntity build() {
+            return new StopJpaEntity(id, name, arrivalTime, departureTime, stopOrder,
+                    bus, location, createdAt, updatedAt);
+        }
+    }
+
     public static StopJpaEntity fromDomainModel(Stop stop) {
         if (stop == null)
             return null;
 
-        return StopJpaEntity.builder()
-                .id(stop.getId().getValue())
-                .name(stop.getName())
-                .arrivalTime(stop.getArrivalTime())
-                .departureTime(stop.getDepartureTime())
-                .stopOrder(stop.getStopOrder())
-                .bus(BusJpaEntity.builder()
-                        .id(stop.getBus().getId().getValue())
-                        .build())
-                .location(LocationJpaEntity.builder()
-                        .id(stop.getLocation().getId().getValue())
-                        .build())
-                .build();
+        StopJpaEntity entity = new StopJpaEntity();
+        if (stop.getId() != null) {
+            entity.setId(stop.getId().value());
+        }
+        entity.setName(stop.getName());
+        entity.setArrivalTime(stop.getArrivalTime());
+        entity.setDepartureTime(stop.getDepartureTime());
+        entity.setStopOrder(stop.getStopOrder());
+
+        if (stop.getBus() != null && stop.getBus().getId() != null) {
+            BusJpaEntity busEntity = new BusJpaEntity();
+            busEntity.setId(stop.getBus().getId().value());
+            entity.setBus(busEntity);
+        }
+
+        if (stop.getLocation() != null && stop.getLocation().getId() != null) {
+            LocationJpaEntity locationEntity = new LocationJpaEntity();
+            locationEntity.setId(stop.getLocation().getId().value());
+            entity.setLocation(locationEntity);
+        }
+
+        return entity;
     }
 
     public Stop toDomainModel() {
         try {
-            // Only create domain model if we have a valid location with coordinates
-            Location stopLocation = null;
-            if (location != null && location.getLatitude() != null && location.getLongitude() != null) {
-                stopLocation = location.toDomainModel();
-            } else if (location != null) {
-                // Create a reference location that indicates missing coordinates
-                stopLocation = Location.builder()
-                        .id(new Location.LocationId(location.getId()))
-                        .name(location.getName() != null ? location.getName() : "Unknown Location")
-                        .latitude(null)
-                        .longitude(null)
-                        .build();
+            // First check if we have a valid location
+            Location locationModel = null;
+            if (location != null) {
+                try {
+                    if (location.getId() != null) {
+                        locationModel = location.toDomainModel();
+                    } else {
+                        // Create a minimal valid location if ID is missing
+                        Double lat = location.getLatitude();
+                        Double lng = location.getLongitude();
+                        // Create a minimal valid location
+                        locationModel = new Location(
+                                null,
+                                location.getName() != null ? location.getName() : "Unknown Location",
+                                lat != null ? lat : 0.0,
+                                lng != null ? lng : 0.0);
+                    }
+                } catch (Exception e) {
+                    // Log the error but don't fail the entire conversion
+                    System.err.println("Error converting location: " + e.getMessage());
+                    // Create a default location
+                    locationModel = new Location(null, "Unknown Location", 0.0, 0.0);
+                }
             }
 
-            return new Stop(
-                    new Stop.StopId(id),
-                    name,
-                    bus != null ? bus.toDomainModel() : null,
-                    stopLocation, // Can be null if no location is available
-                    arrivalTime,
-                    departureTime,
-                    stopOrder);
-        } catch (Exception e) {
-            // Log the exception details to help with debugging
-            System.err.println("Error converting StopJpaEntity to Stop domain model: " + e.getMessage());
-            e.printStackTrace();
+            // Create Bus domain model with careful null handling
+            Bus busModel = null;
+            if (bus != null) {
+                try {
+                    busModel = bus.toDomainModel();
+                } catch (Exception e) {
+                    // Log the error but don't fail the entire conversion
+                    System.err.println("Error converting bus: " + e.getMessage());
+                }
+            }
 
-            // Create a default Stop with minimal information to avoid NPE
-            Stop.resetStopOrders(); // Reset order tracking to avoid duplicate order exception
+            Integer stopOrderValue = stopOrder;
             return new Stop(
-                    new Stop.StopId(id != null ? id : 0L),
+                    id != null ? new Stop.StopId(id) : null,
                     name != null ? name : "Unknown Stop",
-                    bus != null ? bus.toDomainModel() : null,
-                    null, // No location rather than invalid coordinates
+                    busModel,
+                    locationModel,
                     arrivalTime,
                     departureTime,
-                    stopOrder != null ? stopOrder : 0);
+                    stopOrderValue != null ? stopOrderValue : 0);
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting StopJpaEntity to domain model", e);
         }
     }
 }

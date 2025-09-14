@@ -28,7 +28,7 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
               <div 
                 className={`stop-marker ${
                   index === 0 ? 'origin' : 
-                  index === stops.length - 1 ? 'destination' : 'intermediate'
+                  index === stops.length - 1 ? 'destination' : ''
                 }`}
               ></div>
               
@@ -46,10 +46,9 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
                 </div>
                 
                 <div className="stop-meta">
-                  {(stop.order || stop.stopOrder) && (
+                  {stop.order && (
                     <div className="stop-attribute">
-                      <span className="attribute-icon">📍</span>
-                      {t('stopsList.stopOrder', 'Stop')}: {stop.stopOrder || stop.order}
+                      {t('stopsList.stopOrder', 'Stop')}: {stop.order}
                     </div>
                   )}
                   {stop.platform && (
@@ -76,4 +75,5 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
   );
 };
 
+// Apply React.memo to prevent unnecessary re-renders when props haven't changed
 export default React.memo(StopsList);

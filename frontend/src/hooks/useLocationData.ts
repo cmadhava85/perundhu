@@ -53,6 +53,14 @@ const useLocationData = (language?: string) => {
     setAutoLocationEnabled(prev => !prev);
   }, []);
 
+  // Get destinations for a specific fromLocationId
+  const getDestinations = useCallback((fromLocationId: number) => {
+    // Filter out the source location from destinations
+    const filtered = locations.filter(location => location.id !== fromLocationId);
+    setDestinations(filtered);
+    return filtered;
+  }, [locations]);
+
   return {
     // Data
     locations,
@@ -70,7 +78,8 @@ const useLocationData = (language?: string) => {
     setFromLocation,
     setToLocation,
     clearError,
-    toggleAutoLocation
+    toggleAutoLocation,
+    getDestinations
   };
 };
 
