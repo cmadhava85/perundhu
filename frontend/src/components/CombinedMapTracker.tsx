@@ -37,7 +37,7 @@ const CombinedMapTracker: React.FC<CombinedMapTrackerProps> = ({
 }) => {
   const { t } = useTranslation();
   const mapRef = useRef<google.maps.Map | null>(null);
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isUnmountedRef = useRef(false);
 
   // State management

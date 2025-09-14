@@ -1,16 +1,16 @@
-import React from 'react';
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import LocationDropdown from '../../../components/search/LocationDropdown';
 import { searchLocations, validateLocation } from '../../../services/locationService';
 
 // Mock the location service
-jest.mock('../../../services/locationService', () => ({
-  searchLocations: jest.fn(),
-  validateLocation: jest.fn()
+vi.mock('../../../services/locationService', () => ({
+  searchLocations: vi.fn(),
+  validateLocation: vi.fn()
 }));
 
-// Mock i18next
-jest.mock('react-i18next', () => ({
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, params: any) => {
       if (key === 'locationDropdown.invalidLocation') {
@@ -20,13 +20,13 @@ jest.mock('react-i18next', () => ({
     },
     i18n: {
       language: 'en',
-      changeLanguage: jest.fn(),
+      changeLanguage: vi.fn(),
     },
   }),
 }));
 
 describe('LocationDropdown Component', () => {
-  const mockOnSelect = jest.fn();
+  const mockOnSelect = vi.fn();
   const mockLocation = {
     id: 1,
     name: 'Chennai',
@@ -36,9 +36,9 @@ describe('LocationDropdown Component', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    (searchLocations as jest.Mock).mockResolvedValue([]);
-    (validateLocation as jest.Mock).mockResolvedValue(true);
+    vi.clearAllMocks();
+    (searchLocations as vi.Mock).mockResolvedValue([]);
+    (validateLocation as vi.Mock).mockResolvedValue(true);
   });
 
   it('renders correctly with required props', () => {
@@ -77,7 +77,7 @@ describe('LocationDropdown Component', () => {
       { id: 2, name: 'Chengalpattu', translatedName: null, latitude: 12.6819, longitude: 79.9732 },
     ];
     
-    (searchLocations as jest.Mock).mockResolvedValue(mockResults);
+    (searchLocations as vi.Mock).mockResolvedValue(mockResults);
 
     render(
       <LocationDropdown
@@ -108,7 +108,7 @@ describe('LocationDropdown Component', () => {
       { id: 2, name: 'Chengalpattu', translatedName: null, latitude: 12.6819, longitude: 79.9732 },
     ];
     
-    (searchLocations as jest.Mock).mockResolvedValue(mockResults);
+    (searchLocations as vi.Mock).mockResolvedValue(mockResults);
 
     const { container } = render(
       <LocationDropdown
@@ -151,7 +151,7 @@ describe('LocationDropdown Component', () => {
   });
 
   it('validates manually entered location on blur', async () => {
-    (validateLocation as jest.Mock).mockImplementation((locationName) => {
+    (validateLocation as vi.Mock).mockImplementation((locationName) => {
       // Mock validation logic for manual text entry
       return Promise.resolve(locationName === 'New Location');
     });
@@ -187,7 +187,7 @@ describe('LocationDropdown Component', () => {
 
   it('shows validation error for invalid location', async () => {
     // Mock the validateLocation to return false for "Invalid Location"
-    (validateLocation as jest.Mock).mockImplementation((locationName) => {
+    (validateLocation as vi.Mock).mockImplementation((locationName) => {
       return Promise.resolve(locationName !== 'Invalid Location');
     });
 
@@ -225,7 +225,7 @@ describe('LocationDropdown Component', () => {
     });
     
     // Mock the search function to return our controlled promise
-    (searchLocations as jest.Mock).mockImplementation(() => searchPromise);
+    (searchLocations as vi.Mock).mockImplementation(() => searchPromise);
 
     render(
       <LocationDropdown

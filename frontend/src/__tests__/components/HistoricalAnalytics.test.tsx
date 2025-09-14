@@ -1,16 +1,16 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import HistoricalAnalytics from '../../components/HistoricalAnalytics';
 import { getHistoricalData } from '../../services/analyticsService';
 
 // Mock the analytics service
-jest.mock('../../services/analyticsService', () => ({
-  getHistoricalData: jest.fn()
+vi.mock('../../services/analyticsService', () => ({
+  getHistoricalData: vi.fn()
 }));
 
 // Mock the child components to simplify testing
-jest.mock('../../components/analytics/AnalyticsFilterControls', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/AnalyticsFilterControls', () => ({
   default: (props: any) => (
     <div data-testid="filter-controls">
       <button 
@@ -21,7 +21,7 @@ jest.mock('../../components/analytics/AnalyticsFilterControls', () => ({
       </button>
       <button 
         data-testid="data-type-selector" 
-        onClick={() => props.onDataTypeChange('punctuality')}
+        onClick={() => props.onDataTypeChange('crowdLevels')}
       >
         Change Data Type
       </button>
@@ -29,23 +29,19 @@ jest.mock('../../components/analytics/AnalyticsFilterControls', () => ({
   )
 }));
 
-jest.mock('../../components/analytics/PunctualityChart', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/PunctualityChart', () => ({
   default: () => <div data-testid="punctuality-chart">Punctuality Chart</div>
 }));
 
-jest.mock('../../components/analytics/CrowdLevelsChart', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/CrowdLevelsChart', () => ({
   default: () => <div data-testid="crowd-levels-chart">Crowd Levels Chart</div>
 }));
 
-jest.mock('../../components/analytics/BusUtilizationChart', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/BusUtilizationChart', () => ({
   default: () => <div data-testid="bus-utilization-chart">Bus Utilization Chart</div>
 }));
 
-jest.mock('../../components/analytics/ContinueIteration', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/ContinueIteration', () => ({
   default: (props: any) => (
     <div data-testid="continue-iteration">
       <button 
@@ -59,8 +55,7 @@ jest.mock('../../components/analytics/ContinueIteration', () => ({
   )
 }));
 
-jest.mock('../../components/analytics/ExportSection', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/ExportSection', () => ({
   default: (props: any) => (
     <div data-testid="export-section">
       <button 
@@ -73,13 +68,11 @@ jest.mock('../../components/analytics/ExportSection', () => ({
   )
 }));
 
-jest.mock('../../components/analytics/AnalyticsLoading', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/AnalyticsLoading', () => ({
   default: () => <div data-testid="analytics-loading">Loading...</div>
 }));
 
-jest.mock('../../components/analytics/AnalyticsError', () => ({
-  __esModule: true,
+vi.mock('../../components/analytics/AnalyticsError', () => ({
   default: (props: any) => (
     <div data-testid="analytics-error">
       <p>Error: {props.error}</p>
@@ -90,7 +83,7 @@ jest.mock('../../components/analytics/AnalyticsError', () => ({
 
 // Sample data for tests
 const mockLocation = {
-  id: 123, // Changed from string to number to match Location interface
+  id: 123,
   name: 'Test Location',
   latitude: 10.0,
   longitude: 12.0
@@ -123,11 +116,39 @@ const mockAnalyticsData = {
   ]
 };
 
+const mockCrowdLevelsData = {
+  data: [
+    { date: '2025-06-01', lowCrowd: 20, mediumCrowd: 60, highCrowd: 20, totalPassengers: 100 },
+    { date: '2025-06-02', lowCrowd: 15, mediumCrowd: 70, highCrowd: 15, totalPassengers: 120 }
+  ],
+  pieData: [
+    { name: 'Low', value: 17.5 },
+    { name: 'Medium', value: 65 },
+    { name: 'High', value: 17.5 }
+  ],
+  summary: {
+    title: 'Crowd Levels Analysis',
+    description: 'Analysis of bus crowd levels',
+    totalTrips: 100,
+    totalPassengers: 1500,
+    averageCrowdLevel: 2.5,
+    dataPoints: 50,
+    peakHours: ['08:00', '17:00'],
+    quietHours: ['02:00', '04:00']
+  },
+  bestDays: [
+    { date: '2025-06-02', lowCrowdPercentage: 85 }
+  ],
+  worstDays: [
+    { date: '2025-06-01', highCrowdPercentage: 20 }
+  ]
+};
+
 describe('HistoricalAnalytics Component', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     // Mock a successful API response
-    (getHistoricalData as jest.Mock).mockResolvedValue(mockAnalyticsData);
+    (getHistoricalData as any).mockResolvedValue(mockAnalyticsData);
   });
 
   it('should show loading state initially', async () => {
@@ -156,13 +177,16 @@ describe('HistoricalAnalytics Component', () => {
     });
   });
 
-  it.skip('should render the crowd levels chart when data type is crowdLevels', async () => {
-    // Mock API to return data with different data type
-    (getHistoricalData as jest.Mock).mockResolvedValue({
-      ...mockAnalyticsData
-    });
+  it('should render the crowd levels chart when data type is crowdLevels', async () => {
+    // Clear previous mock calls
+    vi.clearAllMocks();
+    
+    // Mock different API responses for different calls
+    (getHistoricalData as any)
+      .mockResolvedValueOnce(mockAnalyticsData) // First call for punctuality
+      .mockResolvedValueOnce(mockCrowdLevelsData); // Second call for crowd levels
 
-    const { rerender } = render(<HistoricalAnalytics 
+    render(<HistoricalAnalytics 
       fromLocation={mockLocation}
       toLocation={mockLocation}
     />);
@@ -170,22 +194,53 @@ describe('HistoricalAnalytics Component', () => {
     // Wait for initial render to complete
     await waitFor(() => {
       expect(screen.queryByTestId('analytics-loading')).not.toBeInTheDocument();
+      expect(screen.getByTestId('punctuality-chart')).toBeInTheDocument();
     });
 
-    // Update data type from the filter control mock
+    // Get initial call count
+    const initialCallCount = (getHistoricalData as any).mock.calls.length;
+
+    // Click data type selector to change to crowd levels
     fireEvent.click(screen.getByTestId('data-type-selector'));
     
-    rerender(<HistoricalAnalytics 
-      fromLocation={mockLocation}
-      toLocation={mockLocation}
-    />);
-
+    // Wait for the crowd levels chart to appear
     await waitFor(() => {
-      expect(getHistoricalData).toHaveBeenCalledTimes(2);
+      expect(screen.getByTestId('crowd-levels-chart')).toBeInTheDocument();
+      expect(screen.queryByTestId('punctuality-chart')).not.toBeInTheDocument();
     });
+
+    // Verify API was called at least one more time after the initial load
+    expect((getHistoricalData as any).mock.calls.length).toBeGreaterThan(initialCallCount);
   });
 
-  it.skip('should handle loading more data when load more is clicked', async () => {
+  it('should handle loading more data when load more is clicked', async () => {
+    // Clear previous mock calls
+    vi.clearAllMocks();
+    
+    // Mock initial data with exactly 10 items to simulate hasMore = true
+    const initialData = {
+      ...mockAnalyticsData,
+      data: Array(10).fill(0).map((_, i) => ({
+        date: `2025-06-${String(i + 1).padStart(2, '0')}`,
+        early: 10,
+        onTime: 80,
+        delayed: 5,
+        veryDelayed: 5
+      }))
+    };
+    
+    // Mock additional data for load more
+    const additionalData = {
+      ...mockAnalyticsData,
+      data: [
+        { date: '2025-06-11', early: 12, onTime: 78, delayed: 7, veryDelayed: 3 }
+      ]
+    };
+
+    (getHistoricalData as any)
+      .mockResolvedValueOnce(initialData)
+      .mockResolvedValueOnce(additionalData);
+
     render(<HistoricalAnalytics 
       fromLocation={mockLocation}
       toLocation={mockLocation}
@@ -196,33 +251,64 @@ describe('HistoricalAnalytics Component', () => {
       expect(screen.queryByTestId('analytics-loading')).not.toBeInTheDocument();
     });
 
-    // Click load more
+    // Clear call history after initial load to focus on load more behavior
+    vi.clearAllMocks();
+    (getHistoricalData as any).mockResolvedValueOnce(additionalData);
+
+    // Click load more button
     fireEvent.click(screen.getByTestId('load-more'));
 
+    // Verify API was called for load more
     await waitFor(() => {
-      // It should call the API again with a different page
-      expect(getHistoricalData).toHaveBeenCalledTimes(2);
+      expect((getHistoricalData as any).mock.calls.length).toBeGreaterThan(0);
     });
+
+    // Verify the call was made with page 2 - correct parameter indices
+    const calls = (getHistoricalData as any).mock.calls;
+    const lastCall = calls[calls.length - 1];
+    expect(lastCall[6]).toBe(2); // page parameter is at index 6
+    expect(lastCall[7]).toBe(10); // pageSize parameter is at index 7
   });
 
   it.skip('should show error state when API call fails', async () => {
-    // Mock API failure
-    (getHistoricalData as jest.Mock).mockRejectedValue(new Error('API Error'));
+    // This test is skipped due to complex interaction between React state updates,
+    // async error handling, and the test environment. The error is being caught
+    // (as shown in stderr) but the component state isn't updating properly in tests.
+    
+    // Clear previous mock calls and set up for error scenario
+    vi.clearAllMocks();
+    
+    // Mock API failure for the first call
+    (getHistoricalData as any).mockRejectedValueOnce(new Error('API Error'));
 
     render(<HistoricalAnalytics 
       fromLocation={mockLocation}
       toLocation={mockLocation}
     />);
 
-    // Wait for error to show
+    // First, the loading state should appear
+    expect(screen.getByTestId('analytics-loading')).toBeInTheDocument();
+
+    // Wait for error to show (the API call will fail and trigger error state)
     await waitFor(() => {
       expect(screen.getByTestId('analytics-error')).toBeInTheDocument();
-    });
+      expect(screen.queryByTestId('analytics-loading')).not.toBeInTheDocument();
+    }, { timeout: 5000 });
 
-    // Click retry
+    // Clear call history and setup success response for retry
+    vi.clearAllMocks();
+    (getHistoricalData as any).mockResolvedValueOnce(mockAnalyticsData);
+
+    // Click retry button
     fireEvent.click(screen.getByTestId('retry-button'));
 
-    // It should try to load data again
-    expect(getHistoricalData).toHaveBeenCalledTimes(2);
+    // Wait for successful load after retry
+    await waitFor(() => {
+      expect(screen.queryByTestId('analytics-error')).not.toBeInTheDocument();
+      expect(screen.getByTestId('punctuality-chart')).toBeInTheDocument();
+    }, { timeout: 5000 });
+
+    // Verify the retry call was made
+    expect((getHistoricalData as any).mock.calls.length).toBe(1);
   });
 });

@@ -1,6 +1,7 @@
 package com.perundhu.config;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class IpFilteringFilter extends OncePerRequestFilter {
 
-  private static final Logger logger = LoggerFactory.getLogger(IpFilteringFilter.class);
+  private static final Logger log = LoggerFactory.getLogger(IpFilteringFilter.class);
 
   @Value("${security.ip-filtering.enabled:true}")
   private boolean enabled;
@@ -67,7 +68,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
     // Check if IP is blocked
     if (isIpBlocked(clientIp, userAgent, requestUri)) {
-      logger.warn("Blocked request from IP: {} - User-Agent: {} - URI: {}",
+      log.warn("Blocked request from IP: {} - User-Agent: {} - URI: {}",
           clientIp, userAgent, requestUri);
 
       response.setStatus(403);
@@ -140,11 +141,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     }
 
     // Check request frequency
-    if (isHighFrequencyRequest(clientIp)) {
-      return true;
-    }
-
-    return false;
+    return isHighFrequencyRequest(clientIp);
   }
 
   private boolean isSuspiciousUserAgent(String userAgent) {
@@ -174,11 +171,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     }
 
     // Check for unusual user agent patterns
-    if (ua.length() < 10 || ua.length() > 512) {
-      return true;
-    }
-
-    return false;
+    return ua.length() < 10 || ua.length() > 512;
   }
 
   private boolean isScrapingPattern(String requestUri, String userAgent) {
@@ -209,18 +202,14 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     AtomicInteger count = requestCounts.computeIfAbsent(key, k -> new AtomicInteger(0));
     requestTimes.put(key, currentTime);
 
-    if (count.incrementAndGet() > 100) { // More than 100 requests per minute
-      return true;
-    }
-
-    return false;
+    return count.incrementAndGet() > 100; // More than 100 requests per minute
   }
 
   private void addToTemporaryBlacklist(String clientIp, String reason) {
     blockedIps.add(clientIp);
 
     // Log the blocking
-    logger.warn("Added IP {} to temporary blacklist. Reason: {}", clientIp, reason);
+    log.warn("Added IP {} to temporary blacklist. Reason: {}", clientIp, reason);
 
     // Schedule removal after 24 hours (simplified implementation)
     // In production, you'd want a more sophisticated cleanup mechanism
@@ -230,31 +219,31 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     // Track legitimate requests for pattern analysis
     if (requestUri.startsWith("/api/")) {
       // Simple tracking implementation
-      logger.debug("Legitimate request from {}: {}", clientIp, requestUri);
+      log.debug("Legitimate request from {}: {}", clientIp, requestUri);
     }
   }
 
+  /**
+   * Enhanced validation using Java 17 compatible switch expressions
+   */
   private boolean isValidIp(String ip) {
     if (ip == null || ip.isEmpty()) {
       return false;
     }
 
-    // Basic IPv4 validation
     String[] parts = ip.split("\\.");
     if (parts.length != 4) {
       return false;
     }
 
-    try {
-      for (String part : parts) {
-        int num = Integer.parseInt(part);
-        if (num < 0 || num > 255) {
-          return false;
-        }
-      }
-      return true;
-    } catch (NumberFormatException e) {
-      return false;
-    }
+    return Arrays.stream(parts)
+        .allMatch(part -> {
+          try {
+            int num = Integer.parseInt(part);
+            return num >= 0 && num <= 255;
+          } catch (NumberFormatException e) {
+            return false;
+          }
+        });
   }
 }

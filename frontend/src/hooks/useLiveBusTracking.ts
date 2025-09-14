@@ -30,7 +30,7 @@ export const useLiveBusTracking = ({
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isTracking, setIsTracking] = useState(false);
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchBusLocations = async () => {
     if (!isEnabled) return;

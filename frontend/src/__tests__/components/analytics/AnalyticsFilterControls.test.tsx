@@ -1,26 +1,31 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import AnalyticsFilterControls from '../../../components/analytics/AnalyticsFilterControls';
 
 // Mock i18n
-jest.mock('../../../i18n', () => ({
+vi.mock('../../../i18n', () => ({
   useTranslation: () => ({
     t: (key: string) => key, // Return the key as-is for testing
-    i18n: {
-      language: 'en',
-      changeLanguage: jest.fn(),
-    },
-  }),
+    i18n: { language: 'en' }
+  })
+}));
+
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: 'en' }
+  })
 }));
 
 describe('AnalyticsFilterControls Component', () => {
-  const mockOnTimeRangeChange = jest.fn();
-  const mockOnDataTypeChange = jest.fn();
-  const mockOnStartDateChange = jest.fn();
-  const mockOnEndDateChange = jest.fn();
+  const mockOnTimeRangeChange = vi.fn();
+  const mockOnDataTypeChange = vi.fn();
+  const mockOnStartDateChange = vi.fn();
+  const mockOnEndDateChange = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders with default values', () => {

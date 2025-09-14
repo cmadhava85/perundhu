@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Location;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Bus;
@@ -16,7 +15,7 @@ import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.BusLocationHistoryJpaEntity;
 import com.perundhu.infrastructure.persistence.repository.BusLocationHistoryJpaRepository;
 
-@Component
+// Remove @Component annotation - managed by HexagonalConfig
 public class BusLocationHistoryRepositoryAdapter implements BusLocationHistoryRepository {
 
     private final BusLocationHistoryJpaRepository repository;

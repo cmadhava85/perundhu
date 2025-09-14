@@ -13,7 +13,7 @@ import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.port.RouteContributionRepository;
-import com.perundhu.domain.port.ImageContributionOutputPort;
+import com.perundhu.application.port.output.ImageContributionOutputPort;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.StopRepository;
@@ -212,18 +212,15 @@ public class ContributionProcessingService {
                 contribution.getToLongitude());
 
         // 4. Create new bus
-        var newBus = new Bus(
-                null, // ID will be assigned by database
+        var newBus = Bus.create(
+                new Bus.BusId(0L), // Temporary ID, will be replaced by database
                 contribution.getBusName(),
                 contribution.getBusNumber(),
                 fromLocation,
                 toLocation,
                 // Convert String time (HH:MM) to LocalTime
                 LocalTime.parse(contribution.getDepartureTime()),
-                LocalTime.parse(contribution.getArrivalTime()),
-                50 // Setting a default capacity value, could be extracted from contribution if
-                   // available
-        );
+                LocalTime.parse(contribution.getArrivalTime()));
 
         var savedBus = busRepository.save(newBus);
 
@@ -742,17 +739,15 @@ public class ContributionProcessingService {
                     contribution.getToLongitude());
 
             // 2. Create new bus entry
-            var newBus = new Bus(
-                    null, // ID will be assigned by database
+            var newBus = Bus.create(
+                    new Bus.BusId(0L), // Temporary ID, will be replaced by database
                     contribution.getBusName(),
                     contribution.getBusNumber(),
                     fromLocation,
                     toLocation,
                     // Convert String time (HH:MM) to LocalTime
                     LocalTime.parse(contribution.getDepartureTime()),
-                    LocalTime.parse(contribution.getArrivalTime()),
-                    50 // Setting a default capacity value
-            );
+                    LocalTime.parse(contribution.getArrivalTime()));
 
             var savedBus = busRepository.save(newBus);
 

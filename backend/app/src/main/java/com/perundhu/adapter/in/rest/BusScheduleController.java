@@ -1,5 +1,23 @@
 package com.perundhu.adapter.in.rest;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
@@ -9,17 +27,6 @@ import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * REST API Controller for bus schedules with enhanced security
@@ -80,13 +87,10 @@ public class BusScheduleController {
     @GetMapping("/locations")
     public ResponseEntity<List<LocationDTO>> getAllLocations(
             @RequestParam(defaultValue = "en") String language) {
-        log.info("Getting all locations with language: {}", language);
+        log.info("Getting all locations with language: {} (public access)", language);
         try {
             List<LocationDTO> locations = busScheduleService.getAllLocations(language);
-
-            // Note: Removed coordinate filtering to enable map functionality
-            // Previously: locations = filterLocationDataForPublicAccess(locations);
-
+            log.info("Found {} locations", locations != null ? locations.size() : 0);
             return ResponseEntity.ok(locations);
         } catch (Exception e) {
             log.error("Error getting all locations", e);
@@ -377,13 +381,13 @@ public class BusScheduleController {
             // Return basic stop information WITH coordinates for map functionality
             List<StopDTO> basicStops = stops.stream()
                     .map(stop -> new StopDTO(
-                            stop.getName(),
-                            stop.getTranslatedName(),
-                            stop.getArrivalTime(),
-                            stop.getDepartureTime(),
-                            stop.getStopOrder(),
-                            stop.getLatitude(), // Include latitude for map functionality
-                            stop.getLongitude() // Include longitude for map functionality
+                            stop.name(),
+                            stop.translatedName(),
+                            stop.arrivalTime(),
+                            stop.departureTime(),
+                            stop.stopOrder(),
+                            stop.latitude(), // Include latitude for map functionality
+                            stop.longitude() // Include longitude for map functionality
                     ))
                     .toList();
 
@@ -476,15 +480,12 @@ public class BusScheduleController {
     private BusDTO obfuscateBusData(BusDTO bus) {
         // Create a copy with limited information for non-premium users
         // BusDTO is a record, so we create a new instance with limited data
-        return new BusDTO(
+        return BusDTO.of(
                 bus.id(),
                 bus.name(),
                 bus.busNumber(),
-                bus.fromLocation(),
-                bus.toLocation(),
-                null, // Hide departure time
-                null // Hide arrival time
-        );
+                bus.fromLocationName(),
+                bus.toLocationName());
     }
 
     private List<ConnectingRouteDTO> encryptRouteDetails(List<ConnectingRouteDTO> routes) {
@@ -492,16 +493,13 @@ public class BusScheduleController {
                 .map(route -> {
                     // For now, return routes without encryption since the encrypted data isn't used
                     // Future enhancement: implement actual encryption when security layer is added
-                    return ConnectingRouteDTO.builder()
-                            .id(route.getId())
-                            .connectionPoint(route.getConnectionPoint())
-                            .waitTime(route.getWaitTime())
-                            .totalDuration(route.getTotalDuration())
-                            .totalDistance(route.getTotalDistance())
-                            .firstLeg(route.getFirstLeg())
-                            .secondLeg(route.getSecondLeg())
-                            .connectionStops(route.getConnectionStops())
-                            .build();
+                    return ConnectingRouteDTO.of(
+                            route.id(),
+                            route.connectionPoint(),
+                            route.firstLeg(),
+                            route.secondLeg())
+                            .withTiming(route.waitTime(), route.totalDuration(), route.totalDistance())
+                            .withConnectionStops(route.connectionStops());
                 })
                 .toList();
     }
@@ -513,13 +511,13 @@ public class BusScheduleController {
                     // Future enhancement: implement coordinate obfuscation when security layer is
                     // added
                     return new StopDTO(
-                            stop.getName(),
-                            stop.getTranslatedName(),
-                            stop.getArrivalTime(),
-                            stop.getDepartureTime(),
-                            stop.getStopOrder(),
-                            stop.getLatitude(), // Keep coordinates for map functionality
-                            stop.getLongitude() // Keep coordinates for map functionality
+                            stop.name(),
+                            stop.translatedName(),
+                            stop.arrivalTime(),
+                            stop.departureTime(),
+                            stop.stopOrder(),
+                            stop.latitude(), // Keep coordinates for map functionality
+                            stop.longitude() // Keep coordinates for map functionality
                     );
                 })
                 .toList();
@@ -527,15 +525,17 @@ public class BusScheduleController {
 
     private List<BusDTO> sanitizeRoutesForPublicAccess(List<BusDTO> routes) {
         return routes.stream()
-                .map(route -> new BusDTO(
+                .map(route -> BusDTO.withTimes(
                         route.id(),
                         route.name(),
                         route.busNumber(),
-                        route.fromLocation(),
-                        route.toLocation(),
+                        route.fromLocationName(),
+                        route.toLocationName(),
                         route.departureTime(), // Show departure time for public access
-                        route.arrivalTime() // Show arrival time for public access
-                ))
+                        route.arrivalTime(), // Show arrival time for public access
+                        route.capacity(),
+                        route.category(),
+                        route.active()))
                 .limit(10) // Limit to 10 results for public access
                 .toList();
     }

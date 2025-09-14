@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Location;
@@ -20,7 +19,7 @@ import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
 import com.perundhu.infrastructure.config.TranslationProperties;
 
-@Service
+// Remove @Service annotation - managed by HexagonalConfig
 public class TranslationServiceImpl implements TranslationService {
 
     private static final Logger log = LoggerFactory.getLogger(TranslationServiceImpl.class);
@@ -363,6 +362,7 @@ public class TranslationServiceImpl implements TranslationService {
 
         log.debug("Detecting language for text: {}", text.length() > 50 ? text.substring(0, 50) + "..." : text);
 
+        // Java 17 compatible approach with traditional if-else for Unicode detection
         if (text.matches(".*[\\u0B80-\\u0BFF].*")) {
             log.debug("Detected Tamil characters");
             return "ta";

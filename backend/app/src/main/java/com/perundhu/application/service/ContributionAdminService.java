@@ -146,13 +146,19 @@ public class ContributionAdminService {
     public RouteContribution updateRouteContributionStatus(String id, String status, String notes) {
         var contributionStatus = ContributionStatus.fromString(status);
 
-        return switch (contributionStatus) {
-            case ApprovedStatus s -> approveRouteContribution(id, notes)
+        // Convert pattern matching switch to traditional switch for Java 17
+        // compatibility
+        if (contributionStatus instanceof ApprovedStatus) {
+            return approveRouteContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Route contribution not found with id: " + id));
-            case RejectedStatus s -> rejectRouteContribution(id, notes)
+        } else if (contributionStatus instanceof RejectedStatus) {
+            return rejectRouteContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Route contribution not found with id: " + id));
-            case PendingStatus s -> throw new IllegalArgumentException("Cannot set status back to PENDING");
-        };
+        } else if (contributionStatus instanceof PendingStatus) {
+            throw new IllegalArgumentException("Cannot set status back to PENDING");
+        } else {
+            throw new IllegalArgumentException("Unknown status: " + status);
+        }
     }
 
     /**
@@ -167,13 +173,19 @@ public class ContributionAdminService {
     public ImageContribution updateImageContributionStatus(String id, String status, String notes) {
         var contributionStatus = ContributionStatus.fromString(status);
 
-        return switch (contributionStatus) {
-            case ApprovedStatus s -> approveImageContribution(id, notes)
+        // Convert pattern matching switch to traditional if-else for Java 17
+        // compatibility
+        if (contributionStatus instanceof ApprovedStatus) {
+            return approveImageContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Image contribution not found with id: " + id));
-            case RejectedStatus s -> rejectImageContribution(id, notes)
+        } else if (contributionStatus instanceof RejectedStatus) {
+            return rejectImageContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Image contribution not found with id: " + id));
-            case PendingStatus s -> throw new IllegalArgumentException("Cannot set status back to PENDING");
-        };
+        } else if (contributionStatus instanceof PendingStatus) {
+            throw new IllegalArgumentException("Cannot set status back to PENDING");
+        } else {
+            throw new IllegalArgumentException("Unknown status: " + status);
+        }
     }
 
     /**

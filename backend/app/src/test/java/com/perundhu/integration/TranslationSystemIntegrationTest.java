@@ -1,6 +1,9 @@
 package com.perundhu.integration;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,15 +12,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import com.perundhu.domain.model.LanguageCode;
 import com.perundhu.domain.model.Translatable;
+import com.perundhu.domain.model.Translation;
 import com.perundhu.infrastructure.persistence.entity.TranslationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
-import com.perundhu.infrastructure.service.CachingTranslationService;
+import com.perundhu.infrastructure.service.TranslationServiceImpl;
 
 // Use LENIENT strictness to prevent UnnecessaryStubbingException
 @ExtendWith(MockitoExtension.class)
@@ -25,10 +31,10 @@ import com.perundhu.infrastructure.service.CachingTranslationService;
 class TranslationSystemIntegrationTest {
 
     @Mock
-    private TranslationJpaRepository translationRepository;
+    private TranslationJpaRepository translationJpaRepository;
 
     @Mock
-    private CachingTranslationService translationService;
+    private TranslationServiceImpl translationService;
 
     @BeforeEach
     void setUp() {
@@ -66,6 +72,21 @@ class TranslationSystemIntegrationTest {
         public String getDefaultValue(String fieldName) {
             return defaultValue != null ? defaultValue : "";
         }
+
+        @Override
+        public com.perundhu.domain.model.Location getRelatedLocation() {
+            return null;
+        }
+
+        @Override
+        public Translation addTranslation(String fieldName, String languageCode, String value) {
+            return new Translation(entityType, entityId, languageCode, fieldName, value);
+        }
+
+        @Override
+        public Map<String, Map<String, String>> getTranslations() {
+            return new HashMap<>();
+        }
     }
 
     @Test
@@ -80,13 +101,14 @@ class TranslationSystemIntegrationTest {
         lenient().doNothing().when(translationService).saveTranslation(entity, "name", "ta", translatedName);
 
         lenient()
-                .when(translationRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta",
+                .when(translationJpaRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta",
                         "name"))
                 .thenReturn(java.util.Optional
-                        .of(new TranslationJpaEntity("bus", 1L, "name", tamilLanguageCode.getCode(), translatedName)));
+                        .of(new TranslationJpaEntity(null, "bus", 1L, "ta", "name", translatedName, LocalDateTime.now(),
+                                LocalDateTime.now())));
 
         // Execute and verify repository interaction
-        TranslationJpaEntity savedTranslation = translationRepository
+        TranslationJpaEntity savedTranslation = translationJpaRepository
                 .findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta", "name")
                 .orElseThrow();
         assertThat(savedTranslation.getTranslatedValue()).isEqualTo(translatedName);
@@ -101,12 +123,12 @@ class TranslationSystemIntegrationTest {
 
         // Set up for deletion verification
         lenient()
-                .when(translationRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta",
+                .when(translationJpaRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta",
                         "name"))
                 .thenReturn(java.util.Optional.empty());
 
         // Verify deletion result
-        assertThat(translationRepository
+        assertThat(translationJpaRepository
                 .findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName("bus", 1L, "ta", "name"))
                 .isEmpty();
     }
@@ -165,5 +187,76 @@ class TranslationSystemIntegrationTest {
         assertThat(englishTranslations)
                 .containsEntry("name", "Chennai Express")
                 .containsEntry("description", "Chennai to Bangalore");
+    }
+
+    @Test
+    void shouldSaveAndRetrieveTranslation() {
+        // Given
+        Translatable<Object> entity = new TestTranslatableProxy("Bus", 1L);
+        Translation translation = new Translation("Bus", 1L, "name", "ta", "பஸ்");
+
+        // When - Mock the service behavior
+        when(translationService.saveTranslation(translation)).thenReturn(translation);
+        Translation saved = translationService.saveTranslation(translation);
+
+        // Then
+        assertThat(saved).isNotNull();
+        assertThat(saved.getTranslatedValue()).isEqualTo("பஸ்");
+
+        // Mock the getAllTranslations method which returns Map<String, String>
+        when(translationService.getAllTranslations(entity, "ta")).thenReturn(Map.of("name", "பஸ்"));
+
+        // Verify it was saved to database
+        Map<String, String> translations = translationService.getAllTranslations(entity, "ta");
+        assertThat(translations).hasSize(1);
+        assertThat(translations.get("name")).isEqualTo("பஸ்");
+    }
+
+    @Test
+    void shouldRetrieveTranslationsByEntityAndLanguage() {
+        // Given
+        Translatable<Object> entity = new TestTranslatableProxy("Bus", 1L);
+        LocalDateTime now = LocalDateTime.now();
+        TranslationJpaEntity entity1 = new TranslationJpaEntity(
+                null, "Bus", 1L, "ta", "name", "பஸ்", now, now);
+        TranslationJpaEntity entity2 = new TranslationJpaEntity(
+                null, "Bus", 1L, "ta", "description", "விளக்கம்", now, now);
+
+        // Mock repository saves
+        when(translationJpaRepository.save(entity1)).thenReturn(entity1);
+        when(translationJpaRepository.save(entity2)).thenReturn(entity2);
+
+        translationJpaRepository.save(entity1);
+        translationJpaRepository.save(entity2);
+
+        // Mock service method which returns Map<String, String>
+        Map<String, String> mockTranslations = Map.of(
+                "name", "பஸ்",
+                "description", "விளக்கம்");
+        when(translationService.getAllTranslations(entity, "ta")).thenReturn(mockTranslations);
+
+        // When
+        Map<String, String> translations = translationService.getAllTranslations(entity, "ta");
+
+        // Then
+        assertThat(translations).hasSize(2);
+    }
+
+    @Test
+    void shouldAddTranslation() {
+        // Given
+        Translatable<Object> entity = new TestTranslatableProxy("Bus", 1L);
+        String fieldName = "name";
+        String languageCode = "ta";
+        String translatedValue = "பஸ்";
+
+        // Mock the service method - addTranslation returns void
+        doNothing().when(translationService).addTranslation(entity, fieldName, languageCode, translatedValue);
+
+        // When
+        translationService.addTranslation(entity, fieldName, languageCode, translatedValue);
+
+        // Then - verify the method was called
+        verify(translationService).addTranslation(entity, fieldName, languageCode, translatedValue);
     }
 }

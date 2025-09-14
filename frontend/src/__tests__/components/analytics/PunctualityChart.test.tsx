@@ -1,22 +1,22 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import PunctualityChart from '../../../components/analytics/PunctualityChart';
 
 // Mock i18n
-jest.mock('../../../i18n', () => ({
+vi.mock('../../../i18n', () => ({
   useTranslation: () => ({
     t: (key: string) => key, // Return the key as-is for testing
     i18n: {
       language: 'en',
-      changeLanguage: jest.fn(),
+      changeLanguage: vi.fn(),
     },
   }),
 }));
 
 // Mock recharts components
-jest.mock('recharts', () => {
-  const OriginalModule = jest.requireActual('recharts');
+vi.mock('recharts', () => {
+  const OriginalModule = vi.importActual('recharts');
   return {
     ...OriginalModule,
     ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
@@ -42,8 +42,7 @@ jest.mock('recharts', () => {
 });
 
 // Mock CustomTooltip component
-jest.mock('../../../components/analytics/CustomTooltip', () => ({
-  __esModule: true,
+vi.mock('../../../components/analytics/CustomTooltip', () => ({
   default: () => <div data-testid="custom-tooltip">Custom Tooltip</div>
 }));
 
@@ -71,8 +70,8 @@ describe('PunctualityChart Component', () => {
     ]
   };
 
-  const formatDate = jest.fn((date) => `Formatted: ${date}`);
-  const formatTime = jest.fn((time) => `Formatted: ${time}`);
+  const formatDate = vi.fn((date) => `Formatted: ${date}`);
+  const formatTime = vi.fn((time) => `Formatted: ${time}`);
 
   it('renders the chart components correctly', () => {
     render(<PunctualityChart 

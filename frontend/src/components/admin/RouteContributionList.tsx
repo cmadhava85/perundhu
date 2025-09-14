@@ -2,13 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './RouteContributionList.css';
 import RejectModal from './RejectModal';
-<<<<<<< HEAD
-import type { ContributionStatus, RouteContribution } from '../../types/contributionTypes';
-=======
-import AdminService from '../../services/adminService';
 import type { RouteContribution } from '../../types/contributionTypes';
-import { ContributionStatus } from '../../types/admin';
->>>>>>> 75c2859 (production ready code need to test)
+import AdminService from '../../services/adminService';
 
 /**
  * Component for displaying and managing route contributions
@@ -53,45 +48,6 @@ const RouteContributionList: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
-  const handleApprove = async (id: string | number | undefined) => {
-    if (id === undefined) return;
-    try {
-      await AdminService.approveRouteContribution(Number(id));
-      fetchContributions(); // Refresh the list
-    } catch (error) {
-      console.error('Error approving contribution:', error);
-    }
-  };
-
-  const handleReject = async (reason: string) => {
-    if (!selectedContribution || selectedContribution.id === undefined) return;
-    
-    try {
-      await AdminService.rejectRouteContribution(Number(selectedContribution.id), reason);
-      setRejectModalOpen(false);
-      setSelectedContribution(null);
-      fetchContributions(); // Refresh the list
-    } catch (error) {
-      console.error('Error rejecting contribution:', error);
-    }
-  };
-
-  const handleDelete = async (id: string | number | undefined) => {
-    if (id === undefined) return;
-    
-    if (window.confirm(t('admin.confirm.deleteContribution', 'Are you sure you want to delete this contribution?'))) {
-      try {
-        await AdminService.deleteRouteContribution(Number(id));
-        fetchContributions(); // Refresh the list
-      } catch (error) {
-        console.error('Error deleting contribution:', error);
-      }
-    }
-  };
-
-  const openRejectModal = (contribution: RouteContribution) => {
-=======
   // Handle contribution approval
   const handleApprove = async (id: number | undefined) => {
     if (!id) return;
@@ -110,17 +66,16 @@ const RouteContributionList: React.FC = () => {
 
   // Open reject modal with selected contribution
   const handleOpenRejectModal = (contribution: RouteContribution) => {
->>>>>>> 75c2859 (production ready code need to test)
     setSelectedContribution(contribution);
     setRejectModalOpen(true);
   };
 
   // Handle contribution rejection
-  const handleReject = async (id: number | undefined, reason: string) => {
-    if (!id) return;
+  const handleReject = async (reason: string) => {
+    if (!selectedContribution?.id) return;
     try {
       setLoading(true);
-      await AdminService.rejectRouteContribution(id, reason);
+      await AdminService.rejectRouteContribution(selectedContribution.id, reason);
       
       // Close the modal and reload contributions
       setRejectModalOpen(false);
@@ -158,14 +113,14 @@ const RouteContributionList: React.FC = () => {
   };
 
   // Get appropriate CSS class for status
-  const getStatusClass = (status?: ContributionStatus) => {
+  const getStatusClass = (status?: string) => {
     if (!status) return 'status-badge';
-    switch (status) {
-      case ContributionStatus.PENDING:
+    switch (status.toLowerCase()) {
+      case 'pending':
         return 'status-badge pending';
-      case ContributionStatus.APPROVED:
+      case 'approved':
         return 'status-badge approved';
-      case ContributionStatus.REJECTED:
+      case 'rejected':
         return 'status-badge rejected';
       default:
         return 'status-badge';
@@ -173,14 +128,14 @@ const RouteContributionList: React.FC = () => {
   };
 
   // Get row class for styling
-  const getRowClass = (status?: ContributionStatus) => {
+  const getRowClass = (status?: string) => {
     if (!status) return '';
-    switch (status) {
-      case ContributionStatus.PENDING:
+    switch (status.toLowerCase()) {
+      case 'pending':
         return 'status-pending';
-      case ContributionStatus.APPROVED:
+      case 'approved':
         return 'status-approved';
-      case ContributionStatus.REJECTED:
+      case 'rejected':
         return 'status-rejected';
       default:
         return '';
@@ -239,7 +194,7 @@ const RouteContributionList: React.FC = () => {
                 </td>
                 <td>
                   <div className="action-buttons">
-                    {contribution.status === ContributionStatus.PENDING && (
+                    {contribution.status?.toLowerCase() === 'pending' && (
                       <>
                         <button 
                           className="btn btn-approve"

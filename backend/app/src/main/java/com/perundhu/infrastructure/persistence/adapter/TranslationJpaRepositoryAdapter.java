@@ -5,12 +5,11 @@ import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.infrastructure.persistence.entity.TranslationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+// Remove @Component annotation - managed by HexagonalConfig
 public class TranslationJpaRepositoryAdapter implements TranslationRepository {
 
     private final TranslationJpaRepository jpaRepository;

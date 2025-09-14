@@ -38,7 +38,7 @@ class BusScheduleControllerContinuingBusesTest {
   @BeforeEach
   void setUp() {
     mockMvc = MockMvcBuilders.standaloneSetup(busScheduleController).build();
-    
+
     mockContinuingBuses = Arrays.asList(
         new BusDTO(
             1L,
@@ -47,7 +47,8 @@ class BusScheduleControllerContinuingBusesTest {
             "Chennai",
             "Madurai",
             LocalTime.of(8, 0),
-            LocalTime.of(14, 0)),
+            LocalTime.of(14, 0),
+            50, "Express", true),
         new BusDTO(
             2L,
             "Super Deluxe 202 (via Trichy)",
@@ -55,7 +56,8 @@ class BusScheduleControllerContinuingBusesTest {
             "Chennai",
             "Virudhunagar",
             LocalTime.of(10, 30),
-            LocalTime.of(17, 30)));
+            LocalTime.of(17, 30),
+            45, "Deluxe", true));
   }
 
   @Test

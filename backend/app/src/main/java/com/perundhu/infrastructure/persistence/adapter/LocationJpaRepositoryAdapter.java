@@ -3,14 +3,12 @@ package com.perundhu.infrastructure.persistence.adapter;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
 
-@Repository
+// Remove @Repository annotation - managed by HexagonalConfig
 public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     private final LocationJpaRepository jpaRepository;
@@ -40,36 +38,46 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     @Override
     public List<Location> findAllExcept(Location.LocationId id) {
-        return jpaRepository.findByIdNot(id.getValue()).stream()
+        return jpaRepository.findAll().stream()
+                .filter(entity -> !entity.getId().equals(id.getValue()))
                 .map(LocationJpaEntity::toDomainModel)
                 .toList();
     }
 
     @Override
     public List<Location> findByName(String name) {
-        return jpaRepository.findByName(name).stream()
+        return jpaRepository.findByNameContainingIgnoreCase(name).stream()
                 .map(LocationJpaEntity::toDomainModel)
                 .toList();
     }
 
     @Override
     public Optional<Location> findByExactName(String name) {
-        return jpaRepository.findByNameEquals(name)
+        return jpaRepository.findByNameIgnoreCase(name)
                 .map(LocationJpaEntity::toDomainModel);
     }
 
     @Override
     public Optional<Location> findNearbyLocation(Double latitude, Double longitude, double radiusDegrees) {
-        // This would typically involve a spatial query
-        // For now, returning empty as this may require a separate implementation
-        return Optional.empty();
+        // Calculate bounds for approximate search
+        double latMin = latitude - radiusDegrees;
+        double latMax = latitude + radiusDegrees;
+        double lonMin = longitude - radiusDegrees;
+        double lonMax = longitude + radiusDegrees;
+
+        return jpaRepository.findWithinBounds(latMin, latMax, lonMin, lonMax)
+                .stream()
+                .map(LocationJpaEntity::toDomainModel)
+                .findFirst();
     }
 
     @Override
     public List<Location> findCommonConnections(Long fromLocationId, Long toLocationId) {
-        return jpaRepository.findCommonConnections(fromLocationId, toLocationId).stream()
-                .map(LocationJpaEntity::toDomainModel)
-                .toList();
+        // This is a complex query - for now return empty list until proper
+        // implementation
+        // TODO: Implement proper query to find locations that connect fromLocationId
+        // and toLocationId
+        return List.of();
     }
 
     @Override

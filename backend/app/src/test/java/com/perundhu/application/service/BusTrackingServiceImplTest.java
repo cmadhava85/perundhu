@@ -48,8 +48,8 @@ class BusTrackingServiceImplTest {
             Bus bus,
             Stop stop,
             BusLocationReportDTO validReport,
-            BusLocationReportDTO invalidReport
-    ) {}
+            BusLocationReportDTO invalidReport) {
+    }
 
     private TestData testData;
 
@@ -94,24 +94,20 @@ class BusTrackingServiceImplTest {
                     LocalTime.of(14, 0),
                     50,
                     "AC",
-                    List.of(),
-                    List.of()
-            );
+                    true);
         } catch (Exception e) {
             // Fallback with minimal required parameters
             return new Bus(
-                new Bus.BusId(id != null ? id : 0L),
-                name != null ? name : "",
-                busNumber != null ? busNumber : "",
-                from != null ? from : createLocation(0L, "Default", 0.0, 0.0),
-                to != null ? to : createLocation(0L, "Default", 0.0, 0.0),
-                null,
-                null,
-                0,
-                "",
-                List.of(),
-                List.of()
-            );
+                    new Bus.BusId(id != null ? id : 0L),
+                    name != null ? name : "",
+                    busNumber != null ? busNumber : "",
+                    from != null ? from : createLocation(0L, "Default", 0.0, 0.0),
+                    to != null ? to : createLocation(0L, "Default", 0.0, 0.0),
+                    LocalTime.of(8, 30),
+                    LocalTime.of(14, 0),
+                    50,
+                    "AC",
+                    true);
         }
     }
 
@@ -119,55 +115,55 @@ class BusTrackingServiceImplTest {
         try {
             // Create a proper Stop object with all required parameters
             return new Stop(
-                new Stop.StopId(id),
-                name,
-                bus,
-                location,
-                LocalTime.of(8, 30),  // arrivalTime
-                LocalTime.of(8, 35),  // departureTime
-                sequence              // stopOrder
+                    new Stop.StopId(id),
+                    name,
+                    bus,
+                    location,
+                    LocalTime.of(8, 30), // arrivalTime
+                    LocalTime.of(8, 35), // departureTime
+                    sequence // stopOrder
             );
         } catch (Exception e) {
             // Fallback using Stop.builder() for more flexibility
             return Stop.builder()
-                .id(new Stop.StopId(id))
-                .name(name)
-                .location(location)
-                .bus(bus)
-                .stopOrder(sequence)
-                .arrivalTime(LocalTime.of(8, 30))
-                .departureTime(LocalTime.of(8, 35))
-                .build();
+                    .id(new Stop.StopId(id))
+                    .name(name)
+                    .location(location)
+                    .bus(bus)
+                    .stopOrder(sequence)
+                    .arrivalTime(LocalTime.of(8, 30))
+                    .departureTime(LocalTime.of(8, 35))
+                    .build();
         }
     }
 
     private BusLocationReportDTO createValidReport() {
         return new BusLocationReportDTO(
-                1L,                         // busId
-                null,                       // stopId (null means en-route)
-                "user123",                  // userId
+                1L, // busId
+                null, // stopId (null means en-route)
+                "user123", // userId
                 LocalDateTime.now().toString(), // timestamp as string
-                13.0827,                    // latitude
-                80.2707,                    // longitude
-                10.0,                       // accuracy in meters
-                45.0,                       // speed in meters per second
-                90.0,                       // heading in degrees
-                "Android Test Device"       // deviceInfo
+                13.0827, // latitude
+                80.2707, // longitude
+                10.0, // accuracy in meters
+                45.0, // speed in meters per second
+                90.0, // heading in degrees
+                "Android Test Device" // deviceInfo
         );
     }
 
     private BusLocationReportDTO createInvalidReport() {
         return new BusLocationReportDTO(
-                999L,                       // busId (invalid)
-                null,                       // stopId
-                "user123",                  // userId
+                999L, // busId (invalid)
+                null, // stopId
+                "user123", // userId
                 LocalDateTime.now().toString(), // timestamp as string
-                13.0827,                    // latitude
-                80.2707,                    // longitude
-                10.0,                       // accuracy in meters
-                45.0,                       // speed in meters per second
-                90.0,                       // heading in degrees
-                "Android Test Device"       // deviceInfo
+                13.0827, // latitude
+                80.2707, // longitude
+                10.0, // accuracy in meters
+                45.0, // speed in meters per second
+                90.0, // heading in degrees
+                "Android Test Device" // deviceInfo
         );
     }
 
@@ -177,4 +173,3 @@ class BusTrackingServiceImplTest {
         // ...existing code...
     }
 }
-

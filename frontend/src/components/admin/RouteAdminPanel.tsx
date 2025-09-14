@@ -95,11 +95,11 @@ const RouteAdminPanel: React.FC = () => {
   };
 
   // Handle route rejection
-  const handleReject = async (id: number | undefined, reason: string) => {
-    if (!id) return;
+  const handleReject = async (reason: string) => {
+    if (!selectedRoute?.id) return;
     try {
       setLoading(true);
-      await AdminService.rejectRouteContribution(id, reason);
+      await AdminService.rejectRouteContribution(selectedRoute.id, reason);
       
       // Close the modal and reload routes
       setRejectModalOpen(false);

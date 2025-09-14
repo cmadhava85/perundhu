@@ -51,12 +51,15 @@ public class BusRepositoryJpaImplTest {
         // Create test bus
         testBus = new Bus(
                 new Bus.BusId(1L),
-                "Express 101",
-                "TN-01-1234",
+                "Test Bus",
+                "TEST-001",
                 fromLocation,
                 toLocation,
-                LocalTime.of(8, 0),
-                LocalTime.of(14, 0));
+                LocalTime.of(9, 0),
+                LocalTime.of(15, 0),
+                50,
+                "Express",
+                true);
 
         // Create JPA entities
         fromLocationEntity = new LocationJpaEntity();

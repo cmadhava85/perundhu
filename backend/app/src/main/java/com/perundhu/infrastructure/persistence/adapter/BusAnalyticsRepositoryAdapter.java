@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.BusAnalytics;
@@ -21,7 +20,7 @@ import com.perundhu.infrastructure.persistence.entity.BusAnalyticsJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.BusAnalyticsJpaRepository;
 
-@Repository
+// Remove @Repository annotation - managed by HexagonalConfig
 public class BusAnalyticsRepositoryAdapter implements BusAnalyticsRepository {
 
     private final BusAnalyticsJpaRepository jpaRepository;

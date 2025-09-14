@@ -10,12 +10,13 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.BusLocationDTO;
 import com.perundhu.application.dto.BusLocationReportDTO;
 import com.perundhu.application.dto.RewardPointsDTO;
-import com.perundhu.application.dto.RewardPointsDTO.RewardActivityDTO;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.Stop;
@@ -24,34 +25,29 @@ import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.service.RouteValidationService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implementation of the BusTrackingService for crowd-sourced bus tracking
  */
 @Service
 @RequiredArgsConstructor
-@Slf4j
-public class BusTrackingServiceImpl implements BusTrackingService {
+public class BusTrackingServiceImpl {
 
     private final BusRepository busRepository;
     private final StopRepository stopRepository;
     private final RouteValidationService routeValidationService;
 
+    private static final Logger log = LoggerFactory.getLogger(BusTrackingServiceImpl.class);
+
     // Cache for holding the current bus locations
-    // In a production environment, this would be in a distributed cache or database
     private final Map<Long, BusLocationDTO> currentBusLocations = new ConcurrentHashMap<>();
-    private final Map<Long, BusLocationDTO> activeLocations = new ConcurrentHashMap<>();
 
     // Cache for user tracking data and rewards
-    // In a production environment, this would be in a distributed cache or database
     private final Map<String, RewardPointsDTO> userRewards = new ConcurrentHashMap<>();
 
     // Track active users per bus
     private final Map<Long, Map<String, LocalDateTime>> activeBusTrackers = new ConcurrentHashMap<>();
-    private final Map<Long, List<String>> busTrackers = new ConcurrentHashMap<>();
 
-    @Override
     public RewardPointsDTO processLocationReport(BusLocationReportDTO report) {
         log.info("Processing location report for bus {}: lat={}, lng={}",
                 report.getBusId(), report.getLatitude(), report.getLongitude());
@@ -82,9 +78,9 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         updateBusLocation(report, bus.get());
 
         // Update the active tracker record for this user
-        Map<String, LocalDateTime> busTrackers = activeBusTrackers.computeIfAbsent(
+        Map<String, LocalDateTime> trackersForBus = activeBusTrackers.computeIfAbsent(
                 report.getBusId(), k -> new ConcurrentHashMap<>());
-        busTrackers.put(report.getUserId(), LocalDateTime.now());
+        trackersForBus.put(report.getUserId(), LocalDateTime.now());
 
         // Calculate and update user rewards
         RewardPointsDTO rewards = calculateRewards(report);
@@ -92,7 +88,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return rewards;
     }
 
-    @Override
     public void processDisembarkation(Long busId, LocalDateTime timestamp) {
         log.info("Processing disembarkation for bus {}", busId);
 
@@ -114,12 +109,10 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         }
     }
 
-    @Override
     public BusLocationDTO getCurrentBusLocation(Long busId) {
         return currentBusLocations.getOrDefault(busId, createEmptyLocationResponse(busId));
     }
 
-    @Override
     public List<BusLocationDTO> getBusLocationsOnRoute(Long fromLocationId, Long toLocationId) {
         log.info("Getting bus locations for route: {} to {}", fromLocationId, toLocationId);
 
@@ -142,12 +135,10 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return result;
     }
 
-    @Override
     public RewardPointsDTO getUserRewardPoints(String userId) {
         return userRewards.getOrDefault(userId, createEmptyRewardResponse(userId));
     }
 
-    @Override
     public Map<Long, BusLocationDTO> getActiveBusLocations() {
         log.info("Getting all active bus locations");
 
@@ -155,7 +146,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return new HashMap<>(currentBusLocations);
     }
 
-    @Override
     public List<BusLocationDTO> getBusLocationHistory(Long busId, LocalDateTime since) {
         log.info("Getting location history for bus {} since {}", busId, since);
 
@@ -171,7 +161,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return history;
     }
 
-    @Override
     public Map<String, Object> getEstimatedArrival(Long busId, Long stopId) {
         log.info("Getting estimated arrival for bus {} at stop {}", busId, stopId);
 
@@ -179,13 +168,13 @@ public class BusTrackingServiceImpl implements BusTrackingService {
 
         // Get current bus location
         BusLocationDTO location = getCurrentBusLocation(busId);
-        if (location == null || location.getTimestamp() == null) { // Using timestamp instead of lastUpdated
+        if (location == null || location.getTimestamp() == null) {
             result.put("error", "Bus location not available");
             return result;
         }
 
         // Get stop info
-        Optional<Stop> stopOpt = stopRepository.findById(new Stop.StopId(stopId)); // Using Stop.StopId constructor
+        Optional<Stop> stopOpt = stopRepository.findById(new Stop.StopId(stopId));
         if (stopOpt.isEmpty()) {
             result.put("error", "Stop not found");
             return result;
@@ -210,7 +199,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         return result;
     }
 
-    @Override
     public com.perundhu.domain.model.Stop predictNextStop(Long busId) {
         log.info("Predicting next stop for bus {}", busId);
 
@@ -240,61 +228,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         }
 
         return null;
-    }
-
-    @Override
-    public BusLocationDTO reportBusLocation(BusLocationRequest request) {
-        log.info("Processing location report for bus {}: lat={}, lng={}",
-                request.getBusId(), request.getLatitude(), request.getLongitude());
-
-        try {
-            // Get bus details
-            Optional<Bus> busOpt = busRepository.findById(new Bus.BusId(request.getBusId()));
-            if (busOpt.isEmpty()) {
-                throw new IllegalArgumentException("Bus not found: " + request.getBusId());
-            }
-
-            Bus bus = busOpt.get();
-
-            // Auto-detect nearest stop if not provided
-            Long detectedStopId = request.getStopId();
-            if (detectedStopId == null) {
-                detectedStopId = autoDetectNearestStop(bus, request.getLatitude(), request.getLongitude());
-                log.info("Auto-detected nearest stop: {} for user at {}, {}", detectedStopId, request.getLatitude(),
-                        request.getLongitude());
-            }
-
-            // Create bus location record with proper coordinates
-            BusLocationDTO location = BusLocationDTO.builder()
-                    .busId(request.getBusId())
-                    .busName(bus.getName())
-                    .busNumber(bus.getBusNumber())
-                    .fromLocation(bus.getFromLocation().getName())
-                    .toLocation(bus.getToLocation().getName())
-                    .latitude(request.getLatitude()) // Ensure coordinates are included
-                    .longitude(request.getLongitude()) // Ensure coordinates are included
-                    .accuracy(request.getAccuracy())
-                    .speed(request.getSpeed())
-                    .heading(request.getHeading())
-                    .timestamp(request.getTimestamp())
-                    .userId(request.getUserId())
-                    .reportCount(1)
-                    .confidenceScore(calculateConfidenceScore(request.getAccuracy(), 1))
-                    .build();
-
-            // Store the location in memory for real-time tracking
-            currentBusLocations.put(request.getBusId(), location);
-
-            log.info("Stored bus location: busId={}, lat={}, lng={}, confidence={}",
-                    request.getBusId(), request.getLatitude(), request.getLongitude(),
-                    location.getConfidenceScore());
-
-            return location;
-
-        } catch (Exception e) {
-            log.error("Error processing location report for bus: {}", request.getBusId(), e);
-            throw new RuntimeException("Failed to process location report", e);
-        }
     }
 
     /**
@@ -381,32 +314,50 @@ public class BusTrackingServiceImpl implements BusTrackingService {
      * Update the current location of a bus with a new report
      */
     private void updateBusLocation(BusLocationReportDTO report, Bus bus) {
-        // Get or create the current location record
-        BusLocationDTO location = currentBusLocations.computeIfAbsent(
-                report.getBusId(), k -> new BusLocationDTO());
-
-        // Update the location data
-        location.setBusId(report.getBusId());
-        location.setBusName(bus.getName());
-        location.setBusNumber(bus.getBusNumber());
-        location.setFromLocation(bus.getFromLocation().getName());
-        location.setToLocation(bus.getToLocation().getName());
-        location.setLatitude(report.getLatitude());
-        location.setLongitude(report.getLongitude());
-        location.setSpeed(report.getSpeed());
-        location.setHeading(report.getHeading());
-        location.setTimestamp(report.getTimestamp());
-
-        // Update tracker count
-        Map<String, LocalDateTime> busTrackers = activeBusTrackers.get(report.getBusId());
-        location.setReportCount(busTrackers != null ? busTrackers.size() : 1);
+        // Get tracker count
+        Map<String, LocalDateTime> trackersForBus = activeBusTrackers.get(report.getBusId());
+        int reportCount = trackersForBus != null ? trackersForBus.size() : 1;
 
         // Calculate confidence score based on number of trackers and accuracy
-        int confidenceScore = calculateConfidenceScore(report, busTrackers != null ? busTrackers.size() : 1);
-        location.setConfidenceScore(confidenceScore);
+        int confidenceScore = calculateConfidenceScore(report, reportCount);
 
-        // Update next stop information (simplified implementation)
-        updateNextStopInfo(location, bus);
+        // Get next stop information
+        String lastReportedStopName = null;
+        String nextStopName = null;
+        String estimatedArrivalTime = null;
+
+        List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
+        if (!stops.isEmpty()) {
+            Optional<Stop> nearestStop = findNearestStop(report.getLatitude(), report.getLongitude(), stops);
+            if (nearestStop.isPresent()) {
+                Stop stop = nearestStop.get();
+                lastReportedStopName = stop.getName();
+
+                Optional<Stop> nextStop = findNextStop(stop, stops);
+                if (nextStop.isPresent()) {
+                    nextStopName = nextStop.get().getName();
+                    estimatedArrivalTime = "15 min"; // Simplified estimation
+                }
+            }
+        }
+
+        // Create new immutable location using factory method instead of constructor
+        BusLocationDTO location = BusLocationDTO.withMovement(
+                report.getBusId(),
+                bus.getName(),
+                bus.getBusNumber(),
+                bus.getFromLocation().getName(),
+                bus.getToLocation().getName(),
+                report.getLatitude(),
+                report.getLongitude(),
+                report.getAccuracy(),
+                report.getSpeed(),
+                report.getHeading(),
+                report.getTimestamp(),
+                report.getUserId());
+
+        // Store the updated location
+        currentBusLocations.put(report.getBusId(), location);
     }
 
     /**
@@ -439,31 +390,15 @@ public class BusTrackingServiceImpl implements BusTrackingService {
     }
 
     /**
-     * Calculate confidence score based on accuracy and number of reporters
-     */
-    private int calculateConfidenceScore(double accuracy, int reporterCount) {
-        // Base score depends on the number of people reporting the same bus
-        int baseScore = Math.min(reporterCount * 20, 60);
-
-        // Accuracy adjustment (higher accuracy = higher score)
-        // accuracy is in meters, lower is better
-        int accuracyScore = (int) Math.max(0, 30 - (accuracy / 10));
-
-        // Default speed score for simplified method
-        int speedScore = 10;
-
-        return Math.min(100, baseScore + accuracyScore + speedScore);
-    }
-
-    /**
      * Update the next stop information for a bus location
+     * Returns a new BusLocationDTO with updated stop information
      */
-    private void updateNextStopInfo(BusLocationDTO location, Bus bus) {
+    private BusLocationDTO updateNextStopInfo(BusLocationDTO location, Bus bus) {
         // Get stops for this bus
         List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
 
         if (stops.isEmpty()) {
-            return;
+            return location;
         }
 
         // Find the nearest stop
@@ -473,20 +408,27 @@ public class BusTrackingServiceImpl implements BusTrackingService {
 
         if (nearestStop.isPresent()) {
             Stop stop = nearestStop.get();
-            location.setLastReportedStopName(stop.getName());
+            String lastReportedStopName = stop.getName();
 
             // Find the next stop after this one
             Optional<Stop> nextStop = findNextStop(stop, stops);
 
             if (nextStop.isPresent()) {
-                location.setNextStopName(nextStop.get().getName());
+                String nextStopName = nextStop.get().getName();
 
                 // Estimate arrival time (simplified)
                 String estimatedArrival = estimateArrivalTime(
                         location, nextStop.get(), stop);
-                location.setEstimatedArrivalTime(estimatedArrival);
+
+                // Return new record with updated stop information
+                return location.withStopInfo(lastReportedStopName, nextStopName, estimatedArrival);
+            } else {
+                // Return with only last reported stop
+                return location.withStopInfo(lastReportedStopName, null, null);
             }
         }
+
+        return location;
     }
 
     /**
@@ -500,8 +442,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
             if (stop.getLocation() != null) {
                 double distance = routeValidationService.calculateDistance(
                         latitude, longitude,
-                        stop.getLocation().getLatitude(),
-                        stop.getLocation().getLongitude());
+                        stop.getLocation().getLatitude(), stop.getLocation().getLongitude());
 
                 if (distance < shortestDistance) {
                     shortestDistance = distance;
@@ -545,27 +486,26 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         }
 
         // Calculate distance to next stop
-        double distanceKm = 0;
         if (nextStop.getLocation() != null && currentStop.getLocation() != null) {
-            distanceKm = routeValidationService.calculateDistance(
+            double distanceKm = routeValidationService.calculateDistance(
                     location.getLatitude(), location.getLongitude(),
                     nextStop.getLocation().getLatitude(), nextStop.getLocation().getLongitude());
+
+            // Calculate estimated time in hours
+            double timeHours = distanceKm / speedKmh;
+
+            // Convert to minutes
+            int minutes = (int) Math.ceil(timeHours * 60);
+
+            // Get current time and add minutes
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime estimatedTime = now.plusMinutes(minutes);
+
+            return estimatedTime.format(DateTimeFormatter.ofPattern("HH:mm"));
         } else {
             // Default to scheduled time if we can't calculate
             return nextStop.getArrivalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
         }
-
-        // Calculate estimated time in hours
-        double timeHours = distanceKm / speedKmh;
-
-        // Convert to minutes
-        int minutes = (int) Math.ceil(timeHours * 60);
-
-        // Get current time and add minutes
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime estimatedTime = now.plusMinutes(minutes);
-
-        return estimatedTime.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     /**
@@ -573,10 +513,6 @@ public class BusTrackingServiceImpl implements BusTrackingService {
      */
     private RewardPointsDTO calculateRewards(BusLocationReportDTO report) {
         String userId = report.getUserId();
-
-        // Get or create the user's reward record
-        RewardPointsDTO rewards = userRewards.computeIfAbsent(
-                userId, k -> createEmptyRewardResponse(userId));
 
         // Calculate points for this report
         int pointsForReport = 5;
@@ -591,109 +527,83 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         // In a real implementation, you would check the last reported location
 
         // Update reward totals
-        rewards.setCurrentTripPoints(rewards.getCurrentTripPoints() + pointsForReport);
-        rewards.setTotalPoints(rewards.getTotalPoints() + pointsForReport);
-        rewards.setLifetimePoints(rewards.getLifetimePoints() + pointsForReport);
-
-        // Update user rank
-        updateUserRank(rewards);
-
-        // Add this activity to recent activities
-        RewardActivityDTO activity = new RewardActivityDTO();
-        activity.setActivityType("BUS_TRACKING");
-        activity.setPointsEarned(pointsForReport);
-        activity.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-        activity.setDescription("Location report for bus " + report.getBusId());
-
-        // Add to recent activities (keep only last 10)
-        List<RewardActivityDTO> activities = rewards.getRecentActivities();
-        if (activities == null) {
-            activities = new ArrayList<>();
-            rewards.setRecentActivities(activities);
-        }
-
-        activities.add(0, activity);
-        if (activities.size() > 10) {
-            activities.remove(activities.size() - 1);
-        }
+        RewardPointsDTO rewards = updateUserPoints(userId, pointsForReport);
 
         return rewards;
     }
 
-    /**
-     * Update a user's rank based on their total points
-     */
-    private void updateUserRank(RewardPointsDTO rewards) {
-        int points = rewards.getTotalPoints();
-
-        if (points < 100) {
-            rewards.setUserRank("Beginner");
-        } else if (points < 500) {
-            rewards.setUserRank("Regular Traveler");
-        } else if (points < 2000) {
-            rewards.setUserRank("Frequent Commuter");
-        } else if (points < 5000) {
-            rewards.setUserRank("Bus Expert");
-        } else {
-            rewards.setUserRank("Master Navigator");
+    private RewardPointsDTO updateUserPoints(String userId, int pointsForReport) {
+        // Get existing rewards or create default
+        RewardPointsDTO existingRewards = userRewards.get(userId);
+        if (existingRewards == null) {
+            // Create default rewards using direct constructor
+            existingRewards = new RewardPointsDTO(userId, 0, 0, 0, "BEGINNER", 0, List.of());
         }
+
+        // Create updated rewards with new points - access record fields directly
+        int currentTotal = existingRewards.totalPoints();
+        int currentLifetime = existingRewards.lifetimePoints();
+
+        // Create new activity using proper record constructor
+        List<RewardPointsDTO.RewardActivityDTO> activities = new ArrayList<>();
+        activities.add(new RewardPointsDTO.RewardActivityDTO(
+                "BUS_REPORT",
+                pointsForReport,
+                LocalDateTime.now().toString(),
+                "Bus location report submitted"));
+
+        // Create updated rewards DTO using direct constructor
+        RewardPointsDTO updatedRewards = new RewardPointsDTO(
+                userId,
+                currentTotal + pointsForReport,
+                pointsForReport,
+                currentLifetime + pointsForReport,
+                existingRewards.userRank(),
+                existingRewards.leaderboardPosition(),
+                activities);
+
+        // Store updated rewards in the cache
+        userRewards.put(userId, updatedRewards);
+
+        return updatedRewards;
     }
 
     /**
-     * Create an empty bus location response
+     * Get user points with proper error handling
+     */
+    private RewardPointsDTO getUserPointsInternal(String userId) {
+        return userRewards.getOrDefault(userId,
+                new RewardPointsDTO(userId, 0, 0, 0, "BEGINNER", 0, List.of()));
+    }
+
+    /**
+     * Create an empty bus location response using proper record constructor
      */
     private BusLocationDTO createEmptyLocationResponse(Long busId) {
-        Optional<Bus> busOpt = busRepository.findById(new Bus.BusId(busId));
-
-        BusLocationDTO dto = new BusLocationDTO();
-        dto.setBusId(busId);
-
-        if (busOpt.isPresent()) {
-            Bus bus = busOpt.get();
-            dto.setBusName(bus.getName());
-            dto.setBusNumber(bus.getBusNumber());
-            dto.setFromLocation(bus.getFromLocation().getName());
-            dto.setToLocation(bus.getToLocation().getName());
-        }
-
-        dto.setConfidenceScore(0);
-        dto.setReportCount(0);
-
-        return dto;
+        return new BusLocationDTO(busId, "Unknown Bus", "N/A", "Unknown", "Unknown",
+                0.0, 0.0, 0.0, 0.0, 0.0, LocalDateTime.now().toString(),
+                null, null, null, 0, 50, null);
     }
 
     /**
-     * Create an empty reward points response
+     * Create an empty reward points response using direct constructor
      */
     private RewardPointsDTO createEmptyRewardResponse(String userId) {
-        RewardPointsDTO dto = new RewardPointsDTO();
-        dto.setUserId(userId);
-        dto.setTotalPoints(0);
-        dto.setCurrentTripPoints(0);
-        dto.setLifetimePoints(0);
-        dto.setUserRank("Beginner");
-        dto.setLeaderboardPosition(0);
-        dto.setRecentActivities(new ArrayList<>());
-        return dto;
+        return new RewardPointsDTO(userId, 0, 0, 0, "BEGINNER", 0, List.of());
     }
 
     /**
-     * Create an error reward response
+     * Create an error reward response using direct constructor
      */
     private RewardPointsDTO createErrorRewardResponse(String userId, String errorMessage) {
-        RewardPointsDTO dto = createEmptyRewardResponse(userId);
+        List<RewardPointsDTO.RewardActivityDTO> activities = new ArrayList<>();
+        activities.add(new RewardPointsDTO.RewardActivityDTO(
+                "ERROR",
+                0,
+                LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+                errorMessage));
 
-        RewardActivityDTO activity = new RewardActivityDTO();
-        activity.setActivityType("ERROR");
-        activity.setPointsEarned(0);
-        activity.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-        activity.setDescription(errorMessage);
-
-        List<RewardActivityDTO> activities = new ArrayList<>();
-        activities.add(activity);
-        dto.setRecentActivities(activities);
-
-        return dto;
+        return new RewardPointsDTO(userId, 0, 0, 0, "BEGINNER", 0, activities);
     }
 
     /**

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.time.LocalTime;
 
-import org.springframework.stereotype.Repository;
-
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.port.BusRepository;
@@ -13,7 +11,7 @@ import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 
-@Repository
+// Remove @Repository annotation - managed by HexagonalConfig
 public class BusJpaRepositoryAdapter implements BusRepository {
 
     private final BusJpaRepository jpaRepository;

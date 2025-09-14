@@ -4,11 +4,13 @@ import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.infrastructure.persistence.entity.ImageContributionJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.ImageContributionJpaRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class ImageContributionPersistenceAdapter implements ImageContributionOutputPort {
 
   private final ImageContributionJpaRepository repository;

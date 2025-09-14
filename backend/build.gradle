@@ -131,6 +131,10 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
+    // Caffeine cache dependency (required by CacheConfig.java)
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
     // Remove Redis dependency for now - will use in-memory implementation
     // implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     
@@ -261,18 +265,18 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     // Add source/target compatibility to ensure consistent compilation
     options.release = 17
-    // Enable preview features for Java 17
-    options.compilerArgs += ['--enable-preview']
+    // Remove preview features - Java 17 records are stable features
+    // options.compilerArgs += ['--enable-preview']
 }
 
 tasks.withType(Test) {
-    // Enable preview features for tests as well
-    jvmArgs += ['--enable-preview']
+    // Remove preview features for tests as well
+    // jvmArgs += ['--enable-preview']
 }
 
 tasks.withType(JavaExec) {
-    // Enable preview features for application execution
-    jvmArgs += ['--enable-preview']
+    // Remove preview features for application execution
+    // jvmArgs += ['--enable-preview']
 }
 
 // Enable annotation processing

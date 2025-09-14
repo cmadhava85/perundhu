@@ -201,7 +201,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
   // Validate that stops are in a logical sequence
   const validateStopsSequence = () => {
     // Skip if there are no stops or just one stop
-    if (!formData.stops.length || formData.stops.length < 2) return true;
+    if (!formData.stops || !formData.stops.length || formData.stops.length < 2) return true;
     
     // If both arrival and departure times are provided for all stops, check sequence
     const stopsWithTimes = formData.stops.filter(stop => stop.arrivalTime && stop.departureTime);
@@ -288,7 +288,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     }
     
     // Check for duplicate stop names
-    const stopNames = formData.stops.map(s => s.name.trim().toLowerCase());
+    const stopNames = (formData.stops || []).map(s => s.name.trim().toLowerCase());
     if (stopNames.includes(stopName)) {
       setErrors({
         ...errors,
@@ -303,10 +303,10 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     setErrors({ ...errors, stopTimeRequired: undefined });
     
     // Add the stop to the route with the next order number
-    const newStop = { ...currentStop, stopOrder: formData.stops.length + 1 };
+    const newStop = { ...currentStop, stopOrder: (formData.stops || []).length + 1 };
     setFormData({
       ...formData,
-      stops: [...formData.stops, newStop]
+      stops: [...(formData.stops || []), newStop]
     });
     
     // Reset the stop form
@@ -314,7 +314,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
   };
   
   const removeStop = (index: number) => {
-    const updatedStops = [...formData.stops];
+    const updatedStops = [...(formData.stops || [])];
     updatedStops.splice(index, 1);
     
     // Update stop orders
@@ -338,7 +338,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     setAttemptedSubmit(true);
     
     // Validate that at least one bus identifier is provided
-    const hasBusName = !!formData.busName.trim();
+    const hasBusName = !!(formData.busName || '').trim();
     const hasBusNumber = !!formData.busNumber.trim();
     
     // Validate that from/to locations are provided
@@ -383,7 +383,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     if (Object.keys(newErrors).length === 0) {
       const isLocationsValid = validateLocationLogic();
       const isTimesValid = hasDepartureTime && hasArrivalTime ? 
-        validateTimesLogic(formData.departureTime, formData.arrivalTime) : true;
+        validateTimesLogic(formData.departureTime || '', formData.arrivalTime || '') : true;
       const isStopsValid = validateStopsSequence();
       
       if (!isLocationsValid || !isTimesValid || !isStopsValid) {
@@ -412,7 +412,7 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
       
       {/* Bus Details Form component */}
       <BusDetailsForm 
-        busName={formData.busName}
+        busName={formData.busName || ''}
         busNumber={formData.busNumber}
         onChange={handleChange}
         hasError={!!errors.busIdentifier && attemptedSubmit}
@@ -429,9 +429,9 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
         <RouteVisualization 
           fromLocation={formData.fromLocationName}
           toLocation={formData.toLocationName}
-          departureTime={formData.departureTime}
-          arrivalTime={formData.arrivalTime}
-          stops={formData.stops}
+          departureTime={formData.departureTime || ''}
+          arrivalTime={formData.arrivalTime || ''}
+          stops={formData.stops || []}
           onChangeFrom={handleChange}
           onChangeTo={handleChange}
           onChangeTimes={handleChange}
@@ -462,9 +462,9 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
           error={errors.stopTimeRequired}
         />
         
-        {formData.stops.length > 0 && (
+        {(formData.stops || []).length > 0 && (
           <div className="stops-summary">
-            <h4>{t('contribution.stopsAdded', 'Stops Added')}: {formData.stops.length}</h4>
+            <h4>{t('contribution.stopsAdded', 'Stops Added')}: {(formData.stops || []).length}</h4>
           </div>
         )}
       </div>

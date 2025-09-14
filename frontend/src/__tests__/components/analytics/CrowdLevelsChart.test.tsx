@@ -1,55 +1,29 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import CrowdLevelsChart, { type CrowdLevelsData } from '../../../components/analytics/CrowdLevelsChart';
 
 // Mock the recharts components
-jest.mock('recharts', () => {
-  const OriginalModule = jest.requireActual('recharts');
+vi.mock('recharts', () => {
+  const OriginalModule = vi.importActual('recharts');
   return {
     ...OriginalModule,
-    ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="responsive-container">{children}</div>
-    ),
-    AreaChart: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="area-chart">{children}</div>
-    ),
-    BarChart: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="bar-chart">{children}</div>
-    ),
+    ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+    BarChart: ({ children }: any) => <div data-testid="bar-chart">{children}</div>,
+    Bar: () => <div data-testid="bar" />,
+    XAxis: () => <div data-testid="x-axis" />,
+    YAxis: () => <div data-testid="y-axis" />,
     CartesianGrid: () => <div data-testid="cartesian-grid" />,
-    XAxis: ({ tickFormatter }: any) => {
-      // Call the formatter at least once if provided
-      if (tickFormatter && typeof tickFormatter === 'function') {
-        if (typeof tickFormatter === 'function') {
-          // Call with a time value
-          tickFormatter('06:00');
-        }
-      }
-      return <div data-testid="xaxis" />;
-    },
-    YAxis: () => <div data-testid="yaxis" />,
     Tooltip: () => <div data-testid="tooltip" />,
-    Legend: () => <div data-testid="legend" />,
-    Area: ({ dataKey, name }: { dataKey: string; name: string }) => (
-      <div data-testid={`area-${dataKey}`}>{name}</div>
-    ),
-    Bar: ({ dataKey, name }: { dataKey: string; name: string }) => (
-      <div data-testid={`bar-${dataKey}`}>{name}</div>
-    ),
+    Legend: () => <div data-testid="legend" />
   };
 });
 
-// Mock the i18n hook
-jest.mock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (key: string) => key, // Return the key as translation
-      i18n: {
-        changeLanguage: jest.fn()
-      }
-    };
-  }
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: 'en' }
+  })
 }));
 
 describe('CrowdLevelsChart Component', () => {
@@ -81,7 +55,7 @@ describe('CrowdLevelsChart Component', () => {
     formatTime: (time: string) => `Formatted Time: ${time}`
   };
 
-  test('renders the chart components correctly', () => {
+  it('renders the chart components correctly', () => {
     render(<CrowdLevelsChart 
       data={mockData} 
       formatDate={formatters.formatDate}
@@ -105,7 +79,7 @@ describe('CrowdLevelsChart Component', () => {
     expect(screen.getAllByTestId('yaxis').length).toBe(2);
   });
 
-  test('displays summary statistics correctly', () => {
+  it('displays summary statistics correctly', () => {
     render(<CrowdLevelsChart 
       data={mockData} 
       formatDate={formatters.formatDate}
@@ -128,9 +102,9 @@ describe('CrowdLevelsChart Component', () => {
     });
   });
 
-  test('applies formatters correctly', () => {
-    const mockTimeFormatter = jest.fn(time => `Time: ${time}`);
-    const mockDateFormatter = jest.fn(date => `Date: ${date}`);
+  it('applies formatters correctly', () => {
+    const mockTimeFormatter = vi.fn(time => `Time: ${time}`);
+    const mockDateFormatter = vi.fn(date => `Date: ${date}`);
     
     render(<CrowdLevelsChart 
       data={mockData} 
@@ -143,7 +117,7 @@ describe('CrowdLevelsChart Component', () => {
     expect(mockDateFormatter).toHaveBeenCalled();
   });
 
-  test('handles empty data gracefully', () => {
+  it('handles empty data gracefully', () => {
     const emptyData: CrowdLevelsData = {
       hourly: [],
       daily: [],

@@ -44,10 +44,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   }, [selectedBusId, stops]);
   
   // Handle bus selection
-  const handleSelectBus = useCallback((busId: number) => {
-    // If the user clicks the same bus again, toggle the selection
-    setSelectedBusId(prevId => prevId === busId ? null : busId);
-  }, []);
+  const handleSelectBus = (bus: Bus) => {
+    setSelectedBusId(bus.id);
+  };
 
   // If there's an error, display it
   if (error) {

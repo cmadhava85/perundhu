@@ -107,7 +107,10 @@ public class BusRepositoryIntegrationTest {
                 chennai,
                 bangalore,
                 LocalTime.of(8, 0),
-                LocalTime.of(14, 0));
+                LocalTime.of(14, 0),
+                50,
+                "Express",
+                true);
 
         localBus = new Bus(
                 new Bus.BusId(localBusEntity.getId()),
@@ -116,7 +119,10 @@ public class BusRepositoryIntegrationTest {
                 chennai,
                 vellore,
                 LocalTime.of(9, 0),
-                LocalTime.of(12, 30));
+                LocalTime.of(12, 30),
+                40,
+                "Regular",
+                true);
     }
 
     @Test

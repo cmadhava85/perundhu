@@ -1,17 +1,15 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
+import { vi, beforeEach, describe, it, expect, afterEach } from 'vitest';
 import { useBusLocationData } from '../useBusLocationData';
 import type { Location } from '../../types';
 
 // Mock the API calls
-jest.mock('../../services/api', () => ({
-  getCurrentBusLocations: jest.fn().mockResolvedValue([])
+vi.mock('../../services/api', () => ({
+  getCurrentBusLocations: vi.fn().mockResolvedValue([])
 }));
 
-// Force the NODE_ENV to be 'test' to help with detecting test environment
-process.env.NODE_ENV = 'test';
-
 // Mock the react-i18next hook
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   useTranslation: () => {
     return {
       t: (key: string, fallback?: string) => fallback || key,
@@ -40,13 +38,13 @@ describe('useBusLocationData Hook', () => {
   
   beforeEach(() => {
     // Create spies for interval methods
-    jest.spyOn(globalThis, 'setInterval').mockImplementation(() => 123 as any);
-    jest.spyOn(globalThis, 'clearInterval').mockImplementation(() => {});
+    vi.spyOn(globalThis, 'setInterval').mockImplementation(() => 123 as any);
+    vi.spyOn(globalThis, 'clearInterval').mockImplementation(() => {});
   });
   
   afterEach(() => {
     // Restore original implementations
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   
   it('initializes with default values when tracking disabled', () => {

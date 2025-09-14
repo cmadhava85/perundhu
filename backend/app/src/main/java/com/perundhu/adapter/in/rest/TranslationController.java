@@ -39,10 +39,10 @@ public class TranslationController {
     }
 
     // Using records for immutable data classes
-    record TranslationSuccess(Map<String, Object> data, String status) implements ApiResponse {
-        // Compact constructor
+    record TranslationSuccess(String status, Map<String, Object> data) implements ApiResponse {
+        // Compact constructor with single parameter
         TranslationSuccess(Map<String, Object> data) {
-            this(data, "success");
+            this("success", data);
         }
 
         @Override
@@ -51,10 +51,10 @@ public class TranslationController {
         }
     }
 
-    record TranslationError(String message, String status) implements ApiResponse {
-        // Compact constructor with default value
+    record TranslationError(String status, String message) implements ApiResponse {
+        // Compact constructor with single parameter
         TranslationError(String message) {
-            this(message, "error");
+            this("error", message);
         }
 
         @Override
@@ -63,11 +63,11 @@ public class TranslationController {
         }
     }
 
-    record TranslationIterationResponse(boolean continueIteration, String message, String status)
+    record TranslationIterationResponse(String status, boolean continueIteration, String message)
             implements ApiResponse {
-        // Compact constructor with default values
+        // Compact constructor with single parameter
         TranslationIterationResponse(boolean continueIteration) {
-            this(continueIteration, continueIteration ? "Continuing iteration" : "Stopping iteration", "iteration");
+            this("iteration", continueIteration, continueIteration ? "Continuing iteration" : "Stopping iteration");
         }
 
         @Override

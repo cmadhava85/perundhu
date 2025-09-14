@@ -34,279 +34,288 @@ import com.perundhu.domain.port.StopRepository;
 @Tag("hexagonal")
 public class BusScheduleIntegrationTest {
 
-    @Mock
-    private BusRepository busRepository;
+        @Mock
+        private BusRepository busRepository;
 
-    @Mock
-    private StopRepository stopRepository;
+        @Mock
+        private StopRepository stopRepository;
 
-    @Mock
-    private BusScheduleService busScheduleService;
+        @Mock
+        private BusScheduleService busScheduleService;
 
-    private Bus testBus;
-    private Location chennai;
-    private Location vellore;
+        private Bus testBus;
+        private Location chennai;
+        private Location vellore;
 
-    @BeforeEach
-    void setUp() {
-        // Create test locations
-        chennai = new Location(new Location.LocationId(1L), "Chennai", 13.0827, 80.2707);
-        chennai.addTranslation("name", "ta", "சென்னை");
+        @BeforeEach
+        void setUp() {
+                // Create test locations
+                chennai = new Location(new Location.LocationId(1L), "Chennai", 13.0827, 80.2707);
+                chennai.addTranslation("name", "ta", "சென்னை");
 
-        vellore = new Location(new Location.LocationId(2L), "Vellore", 12.9165, 79.1325);
-        vellore.addTranslation("name", "ta", "வேலூர்");
+                vellore = new Location(new Location.LocationId(2L), "Vellore", 12.9165, 79.1325);
+                vellore.addTranslation("name", "ta", "வேலூர்");
 
-        // Create test bus with all required parameters
-        testBus = new Bus(
-                new Bus.BusId(1L),
-                "Express 101",
-                "TN-01-1234",
-                chennai,
-                vellore,
-                LocalTime.of(6, 0),
-                LocalTime.of(8, 30));
-        testBus.addTranslation("name", "ta", "எக்ஸ்பிரஸ் 101");
-    }
-
-    @Test
-    void shouldReturnBusScheduleInEnglish() throws Exception {
-        Location fromLocation = Location.reference(1L);
-        Location toLocation = Location.reference(2L);
-
-        // Create BusScheduleDTO with all required fields
-        BusScheduleDTO mockSchedule = new BusScheduleDTO(
-                1L, // id
-                "Express 101", // name
-                null, // translatedName (not needed for English)
-                "TN-01-1234", // busNumber
-                "Chennai", // fromLocationName
-                null, // fromLocationTranslatedName
-                "Vellore", // toLocationName
-                null, // toLocationTranslatedName
-                LocalTime.of(6, 0), // departureTime
-                LocalTime.of(8, 30) // arrivalTime
-        );
-
-        when(busScheduleService.findBusSchedules(fromLocation, toLocation, "en"))
-                .thenReturn(List.of(mockSchedule));
-
-        List<BusScheduleDTO> busSchedules = busScheduleService.findBusSchedules(fromLocation, toLocation, "en");
-
-        assertNotNull(busSchedules);
-        assertEquals(1, busSchedules.size());
-        assertEquals("Express 101", busSchedules.get(0).getName());
-    }
-
-    @Test
-    void shouldReturnBusScheduleInTamil() throws Exception {
-        Location fromLocation = Location.reference(1L);
-        Location toLocation = Location.reference(2L);
-
-        // Create BusScheduleDTO with all required fields including translations
-        BusScheduleDTO mockSchedule = new BusScheduleDTO(
-                1L, // id
-                "Express 101", // name
-                "எக்ஸ்பிரஸ் 101", // translatedName
-                "TN-01-1234", // busNumber
-                "Chennai", // fromLocationName
-                "சென்னை", // fromLocationTranslatedName
-                "Vellore", // toLocationName
-                "வேலூர்", // toLocationTranslatedName
-                LocalTime.of(6, 0), // departureTime
-                LocalTime.of(8, 30) // arrivalTime
-        );
-
-        when(busScheduleService.findBusSchedules(fromLocation, toLocation, "ta"))
-                .thenReturn(List.of(mockSchedule));
-
-        List<BusScheduleDTO> busSchedules = busScheduleService.findBusSchedules(fromLocation, toLocation, "ta");
-
-        assertNotNull(busSchedules);
-        assertEquals(1, busSchedules.size());
-        assertEquals("எக்ஸ்பிரஸ் 101", busSchedules.get(0).getTranslatedName());
-    }
-
-    @Test
-    void shouldReturnBusStopsInTamil() throws Exception {
-        Long busId = 1L;
-
-        // Create StopDTO objects with all required fields including coordinates
-        StopDTO chennaiStop = new StopDTO(
-                "Chennai Central", // name
-                "சென்னை மத்திய", // translatedName
-                LocalTime.of(6, 0), // arrivalTime
-                LocalTime.of(6, 5), // departureTime
-                1, // stopOrder
-                13.0827, // latitude
-                80.2707 // longitude
-        );
-
-        StopDTO velloreStop = new StopDTO(
-                "Vellore Bus Stand", // name
-                "வேலூர் பேருந்து நிலையம்", // translatedName
-                LocalTime.of(8, 25), // arrivalTime
-                LocalTime.of(8, 30), // departureTime
-                2, // stopOrder
-                12.9165, // latitude
-                79.1325 // longitude
-        );
-
-        List<StopDTO> mockStops = new ArrayList<>();
-        mockStops.add(chennaiStop);
-        mockStops.add(velloreStop);
-
-        when(busScheduleService.findBusStops(busId, "ta"))
-                .thenReturn(mockStops);
-
-        List<StopDTO> stops = busScheduleService.findBusStops(busId, "ta");
-
-        assertNotNull(stops);
-        assertEquals(2, stops.size());
-        assertEquals("சென்னை மத்திய", stops.get(0).getTranslatedName());
-        assertEquals("வேலூர் பேருந்து நிலையம்", stops.get(1).getTranslatedName());
-    }
-
-    @Test
-    void testFindBusSchedules() {
-        Location fromLocation = Location.reference(1L);
-        Location toLocation = Location.reference(2L);
-
-        BusScheduleDTO mockSchedule = new BusScheduleDTO(
-                1L, // id
-                "Express 101", // name
-                null, // translatedName
-                "TN-01-1234", // busNumber
-                "Chennai", // fromLocationName
-                null, // fromLocationTranslatedName
-                "Vellore", // toLocationName
-                null, // toLocationTranslatedName
-                LocalTime.of(6, 0), // departureTime
-                LocalTime.of(8, 30) // arrivalTime
-        );
-
-        when(busScheduleService.findBusSchedules(fromLocation, toLocation, "en"))
-                .thenReturn(List.of(mockSchedule));
-
-        List<BusScheduleDTO> busSchedules = busScheduleService.findBusSchedules(fromLocation, toLocation, "en");
-
-        assertNotNull(busSchedules);
-        if (!busSchedules.isEmpty()) {
-            BusScheduleDTO dto = busSchedules.get(0);
-            assertValidBusScheduleDTO(dto);
+                // Create test bus with all required parameters
+                testBus = new Bus(
+                                new Bus.BusId(1L),
+                                "Express 101",
+                                "TN-01-1234",
+                                chennai,
+                                vellore,
+                                LocalTime.of(6, 0),
+                                LocalTime.of(8, 30),
+                                50, // capacity
+                                "Express", // category
+                                true // active
+                );
+                testBus.addTranslation("name", "ta", "எக்ஸ்பிரஸ் 101");
         }
-    }
 
-    @Test
-    void testFindConnectingRoutes() {
-        Location fromLocation = Location.reference(1L);
-        Location toLocation = Location.reference(3L);
+        @Test
+        void shouldReturnBusScheduleInEnglish() throws Exception {
+                Location fromLocation = Location.reference(1L);
+                Location toLocation = Location.reference(2L);
 
-        // Create route segments for the connecting route
-        BusRouteSegmentDTO firstLeg = BusRouteSegmentDTO.builder()
-                .busId(1L)
-                .busName("Express 101")
-                .busNumber("TN-01-1234")
-                .departureTime(LocalTime.of(6, 0).toString())
-                .from("Chennai")
-                .to("Vellore")
-                .duration(150)
-                .distance(130.0)
-                .build();
+                // Create BusScheduleDTO with all required fields
+                BusScheduleDTO mockSchedule = new BusScheduleDTO(
+                                1L, // id
+                                "Express 101", // name
+                                null, // translatedName (not needed for English)
+                                "TN-01-1234", // busNumber
+                                "Chennai", // fromLocationName
+                                null, // fromLocationTranslatedName
+                                "Vellore", // toLocationName
+                                null, // toLocationTranslatedName
+                                LocalTime.of(6, 0), // departureTime
+                                LocalTime.of(8, 30) // arrivalTime
+                );
 
-        BusRouteSegmentDTO secondLeg = BusRouteSegmentDTO.builder()
-                .busId(2L)
-                .busName("Express 102")
-                .busNumber("TN-01-5678")
-                .departureTime(LocalTime.of(9, 0).toString())
-                .from("Vellore")
-                .to("Bangalore")
-                .arrivalTime(LocalTime.of(12, 0).toString())
-                .duration(180)
-                .distance(210.0)
-                .build();
+                when(busScheduleService.findBusSchedules(fromLocation, toLocation, "en"))
+                                .thenReturn(List.of(mockSchedule));
 
-        ConnectingRouteDTO mockRoute = ConnectingRouteDTO.builder()
-                .id(1L)
-                .connectionPoint("Vellore")
-                .waitTime(30)
-                .totalDuration(330)
-                .totalDistance(340.0)
-                .firstLeg(firstLeg)
-                .secondLeg(secondLeg)
-                .connectionStops(new ArrayList<>())
-                .build();
+                List<BusScheduleDTO> busSchedules = busScheduleService.findBusSchedules(fromLocation, toLocation, "en");
 
-        when(busScheduleService.findConnectingRoutes(fromLocation, toLocation, "en"))
-                .thenReturn(List.of(mockRoute));
-
-        List<ConnectingRouteDTO> connectingRoutes = busScheduleService.findConnectingRoutes(fromLocation, toLocation,
-                "en");
-
-        assertNotNull(connectingRoutes);
-        if (!connectingRoutes.isEmpty()) {
-            ConnectingRouteDTO dto = connectingRoutes.get(0);
-            assertValidConnectingRouteDTO(dto);
+                assertNotNull(busSchedules);
+                assertEquals(1, busSchedules.size());
+                assertEquals("Express 101", busSchedules.get(0).name());
         }
-    }
 
-    private void assertValidConnectingRouteDTO(ConnectingRouteDTO dto) {
-        assertNotNull(dto);
-        assertNotNull(dto.getId());
-        assertNotNull(dto.getConnectionPoint());
-        assertNotNull(dto.getFirstLeg());
-        assertNotNull(dto.getSecondLeg());
+        @Test
+        void shouldReturnBusScheduleInTamil() throws Exception {
+                Location fromLocation = Location.reference(1L);
+                Location toLocation = Location.reference(2L);
 
-        BusRouteSegmentDTO firstLeg = dto.getFirstLeg();
-        assertNotNull(firstLeg.getBusId());
-        assertNotNull(firstLeg.getBusName());
-        assertNotNull(firstLeg.getBusNumber());
-        assertNotNull(firstLeg.getFrom());
-        assertNotNull(firstLeg.getTo());
-        assertNotNull(firstLeg.getDepartureTime());
+                // Create BusScheduleDTO with all required fields including translations
+                BusScheduleDTO mockSchedule = new BusScheduleDTO(
+                                1L, // id
+                                "Express 101", // name
+                                "எக்ஸ்பிரஸ் 101", // translatedName
+                                "TN-01-1234", // busNumber
+                                "Chennai", // fromLocationName
+                                "சென்னை", // fromLocationTranslatedName
+                                "Vellore", // toLocationName
+                                "வேலூர்", // toLocationTranslatedName
+                                LocalTime.of(6, 0), // departureTime
+                                LocalTime.of(8, 30) // arrivalTime
+                );
 
-        BusRouteSegmentDTO secondLeg = dto.getSecondLeg();
-        assertNotNull(secondLeg.getBusId());
-        assertNotNull(secondLeg.getBusName());
-        assertNotNull(secondLeg.getBusNumber());
-        assertNotNull(secondLeg.getFrom());
-        assertNotNull(secondLeg.getTo());
-    }
+                when(busScheduleService.findBusSchedules(fromLocation, toLocation, "ta"))
+                                .thenReturn(List.of(mockSchedule));
 
-    @Test
-    void testFindBusStops() {
-        Long busId = 1L;
+                List<BusScheduleDTO> busSchedules = busScheduleService.findBusSchedules(fromLocation, toLocation, "ta");
 
-        StopDTO mockStop = new StopDTO(
-                "Chennai Central", // name
-                null, // translatedName
-                LocalTime.of(6, 0), // arrivalTime
-                LocalTime.of(6, 5), // departureTime
-                1, // stopOrder
-                13.0827, // latitude
-                80.2707 // longitude
-        );
-
-        when(busScheduleService.findBusStops(busId, "en"))
-                .thenReturn(List.of(mockStop));
-
-        List<StopDTO> stops = busScheduleService.findBusStops(busId, "en");
-
-        assertNotNull(stops);
-        if (!stops.isEmpty()) {
-            StopDTO stop = stops.get(0);
-            assertNotNull(stop.getName());
-            assertTrue(stop.getStopOrder() >= 0);
+                assertNotNull(busSchedules);
+                assertEquals(1, busSchedules.size());
+                assertEquals("எக்ஸ்பிரஸ் 101", busSchedules.get(0).translatedName());
         }
-    }
 
-    private void assertValidBusScheduleDTO(BusScheduleDTO dto) {
-        assertNotNull(dto);
-        assertNotNull(dto.getId());
-        assertNotNull(dto.getName());
-        assertNotNull(dto.getBusNumber());
-        assertNotNull(dto.getFromLocationName());
-        assertNotNull(dto.getToLocationName());
-        assertNotNull(dto.getDepartureTime());
-        assertNotNull(dto.getArrivalTime());
-    }
+        @Test
+        void shouldReturnBusStopsInTamil() throws Exception {
+                Long busId = 1L;
+
+                // Create StopDTO objects with all required fields including coordinates
+                StopDTO chennaiStop = new StopDTO(
+                                "Chennai Central", // name
+                                "சென்னை மத்திய", // translatedName
+                                LocalTime.of(6, 0), // arrivalTime
+                                LocalTime.of(6, 5), // departureTime
+                                1, // stopOrder
+                                13.0827, // latitude
+                                80.2707 // longitude
+                );
+
+                StopDTO velloreStop = new StopDTO(
+                                "Vellore Bus Stand", // name
+                                "வேலூர் பேருந்து நிலையம்", // translatedName
+                                LocalTime.of(8, 25), // arrivalTime
+                                LocalTime.of(8, 30), // departureTime
+                                2, // stopOrder
+                                12.9165, // latitude
+                                79.1325 // longitude
+                );
+
+                List<StopDTO> mockStops = new ArrayList<>();
+                mockStops.add(chennaiStop);
+                mockStops.add(velloreStop);
+
+                when(busScheduleService.findBusStops(busId, "ta"))
+                                .thenReturn(mockStops);
+
+                List<StopDTO> stops = busScheduleService.findBusStops(busId, "ta");
+
+                assertNotNull(stops);
+                assertEquals(2, stops.size());
+                assertEquals("சென்னை மத்திய", stops.get(0).translatedName());
+                assertEquals("வேலூர் பேருந்து நிலையம்", stops.get(1).translatedName());
+        }
+
+        @Test
+        void testFindBusSchedules() {
+                Location fromLocation = Location.reference(1L);
+                Location toLocation = Location.reference(2L);
+
+                BusScheduleDTO mockSchedule = new BusScheduleDTO(
+                                1L, // id
+                                "Express 101", // name
+                                null, // translatedName
+                                "TN-01-1234", // busNumber
+                                "Chennai", // fromLocationName
+                                null, // fromLocationTranslatedName
+                                "Vellore", // toLocationName
+                                null, // toLocationTranslatedName
+                                LocalTime.of(6, 0), // departureTime
+                                LocalTime.of(8, 30) // arrivalTime
+                );
+
+                when(busScheduleService.findBusSchedules(fromLocation, toLocation, "en"))
+                                .thenReturn(List.of(mockSchedule));
+
+                List<BusScheduleDTO> busSchedules = busScheduleService.findBusSchedules(fromLocation, toLocation, "en");
+
+                assertNotNull(busSchedules);
+                if (!busSchedules.isEmpty()) {
+                        BusScheduleDTO dto = busSchedules.get(0);
+                        assertValidBusScheduleDTO(dto);
+                }
+        }
+
+        @Test
+        void testFindConnectingRoutes() {
+                Location fromLocation = Location.reference(1L);
+                Location toLocation = Location.reference(3L);
+
+                // Create route segments for the connecting route
+                BusRouteSegmentDTO firstLeg = new BusRouteSegmentDTO(
+                                1L, // busId
+                                "Express 101", // busName
+                                "TN-01-1234", // busNumber
+                                "Chennai", // from
+                                "Vellore", // to
+                                LocalTime.of(6, 0).toString(), // departureTime
+                                LocalTime.of(8, 30).toString(), // arrivalTime
+                                150, // duration
+                                130.0, // distance
+                                null, // estimatedArrival
+                                null, // actualArrival
+                                null // status
+                );
+
+                BusRouteSegmentDTO secondLeg = new BusRouteSegmentDTO(
+                                2L, // busId
+                                "Express 102", // busName
+                                "TN-01-5678", // busNumber
+                                "Vellore", // from
+                                "Bangalore", // to
+                                LocalTime.of(9, 0).toString(), // departureTime
+                                LocalTime.of(12, 0).toString(), // arrivalTime
+                                180, // duration
+                                210.0, // distance
+                                null, // estimatedArrival
+                                null, // actualArrival
+                                null // status
+                );
+
+                ConnectingRouteDTO mockRoute = ConnectingRouteDTO.withTiming(
+                                1L, // id
+                                "Vellore", // connectionPoint
+                                30, // waitTime
+                                330, // totalDuration
+                                firstLeg,
+                                secondLeg);
+
+                when(busScheduleService.findConnectingRoutes(fromLocation, toLocation, "en"))
+                                .thenReturn(List.of(mockRoute));
+
+                List<ConnectingRouteDTO> connectingRoutes = busScheduleService.findConnectingRoutes(fromLocation,
+                                toLocation,
+                                "en");
+
+                assertNotNull(connectingRoutes);
+                if (!connectingRoutes.isEmpty()) {
+                        ConnectingRouteDTO dto = connectingRoutes.get(0);
+                        assertValidConnectingRouteDTO(dto);
+                }
+        }
+
+        private void assertValidConnectingRouteDTO(ConnectingRouteDTO dto) {
+                assertNotNull(dto);
+                assertNotNull(dto.id());
+                assertNotNull(dto.connectionPoint());
+                assertNotNull(dto.firstLeg());
+                assertNotNull(dto.secondLeg());
+
+                BusRouteSegmentDTO firstLeg = dto.firstLeg();
+                assertNotNull(firstLeg.busId());
+                assertNotNull(firstLeg.busName());
+                assertNotNull(firstLeg.busNumber());
+                assertNotNull(firstLeg.from());
+                assertNotNull(firstLeg.to());
+                assertNotNull(firstLeg.departureTime());
+
+                BusRouteSegmentDTO secondLeg = dto.secondLeg();
+                assertNotNull(secondLeg.busId());
+                assertNotNull(secondLeg.busName());
+                assertNotNull(secondLeg.busNumber());
+                assertNotNull(secondLeg.from());
+                assertNotNull(secondLeg.to());
+        }
+
+        @Test
+        void testFindBusStops() {
+                Long busId = 1L;
+
+                StopDTO mockStop = new StopDTO(
+                                "Chennai Central", // name
+                                null, // translatedName
+                                LocalTime.of(6, 0), // arrivalTime
+                                LocalTime.of(6, 5), // departureTime
+                                1, // stopOrder
+                                13.0827, // latitude
+                                80.2707 // longitude
+                );
+
+                when(busScheduleService.findBusStops(busId, "en"))
+                                .thenReturn(List.of(mockStop));
+
+                List<StopDTO> stops = busScheduleService.findBusStops(busId, "en");
+
+                assertNotNull(stops);
+                if (!stops.isEmpty()) {
+                        StopDTO stop = stops.get(0);
+                        assertNotNull(stop.name());
+                        assertTrue(stop.stopOrder() >= 0);
+                }
+        }
+
+        private void assertValidBusScheduleDTO(BusScheduleDTO dto) {
+                assertNotNull(dto);
+                assertNotNull(dto.id());
+                assertNotNull(dto.name());
+                assertNotNull(dto.busNumber());
+                assertNotNull(dto.fromLocationName());
+                assertNotNull(dto.toLocationName());
+                assertNotNull(dto.departureTime());
+                assertNotNull(dto.arrivalTime());
+        }
 }

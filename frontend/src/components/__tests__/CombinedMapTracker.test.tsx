@@ -1,16 +1,13 @@
-<<<<<<< HEAD
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CombinedMapTracker from '../CombinedMapTracker';
 import type { Location, Bus, Stop, BusLocation } from '../../types';
 import { getCurrentBusLocations } from '../../services/api';
-=======
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import CombinedMapTracker from '../CombinedMapTracker';
 import * as api from '../../services/api';
->>>>>>> 75c2859 (production ready code need to test)
 
 // Mock the API functions
 vi.mock('../../services/api', () => ({
@@ -59,7 +56,6 @@ vi.mock('@react-google-maps/api', () => ({
   })),
 }));
 
-<<<<<<< HEAD
 // Mock leaflet
 jest.mock('leaflet', () => {
   return {
@@ -138,7 +134,6 @@ const mockToLocation: Location = {
 
 const mockBuses: Bus[] = [
   {
-=======
 // Mock react-i18next
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -158,7 +153,6 @@ vi.mock('react-i18next', () => ({
 // Temporarily skip these tests due to memory leak issues
 describe.skip('CombinedMapTracker Component', () => {
   const mockFromLocation = {
->>>>>>> 75c2859 (production ready code need to test)
     id: 1,
     name: 'Chennai',
     latitude: 13.0827,
@@ -172,7 +166,6 @@ describe.skip('CombinedMapTracker Component', () => {
     longitude: 76.9558
   };
 
-<<<<<<< HEAD
 const mockBusLocations: BusLocation[] = [
   { 
     busId: 1,
@@ -234,7 +227,6 @@ jest.mock('../MapComponent', () => {
 });
 
 describe('CombinedMapTracker Component', () => {
-=======
   const mockBuses = [
     {
       id: 1,
@@ -292,7 +284,6 @@ describe('CombinedMapTracker Component', () => {
     onStopSelect: vi.fn()
   };
 
->>>>>>> 75c2859 (production ready code need to test)
   beforeEach(() => {
     vi.clearAllMocks();
     // Reset API mocks with proper resolved values
@@ -308,15 +299,12 @@ describe('CombinedMapTracker Component', () => {
       />
     );
 
-<<<<<<< HEAD
     expect(screen.getByTestId('map-container')).toBeInTheDocument();
     
     await waitFor(() => {
       expect(getCurrentBusLocations).toHaveBeenCalled();
     });
-=======
     expect(screen.getByTestId('google-map')).toBeInTheDocument();
->>>>>>> 75c2859 (production ready code need to test)
   });
 
   it('renders the map without live tracking when showLiveTracking is false', async () => {
@@ -327,14 +315,11 @@ describe('CombinedMapTracker Component', () => {
       />
     );
 
-<<<<<<< HEAD
     expect(screen.getByTestId('map-container')).toBeInTheDocument();
     
     // getCurrentBusLocations should not be called
     expect(getCurrentBusLocations).not.toHaveBeenCalled();
-=======
     expect(screen.getByTestId('google-map')).toBeInTheDocument();
->>>>>>> 75c2859 (production ready code need to test)
   });
 
   it('does not call getCurrentBusLocations when no buses are selected', async () => {
@@ -380,7 +365,6 @@ describe('CombinedMapTracker Component', () => {
       />
     );
 
-<<<<<<< HEAD
     expect(screen.getByTestId('map-container')).toBeInTheDocument();
     
     // getCurrentBusLocations should not be called when no buses
@@ -389,7 +373,6 @@ describe('CombinedMapTracker Component', () => {
 
   test('shows info window when a marker is clicked', async () => {
     const { container } = render(
-=======
     expect(screen.getByTestId('google-map')).toBeInTheDocument();
   });
 
@@ -410,7 +393,6 @@ describe('CombinedMapTracker Component', () => {
 
   it('updates bus locations when selectedBuses changes', async () => {
     const { rerender } = render(
->>>>>>> 75c2859 (production ready code need to test)
       <CombinedMapTracker 
         {...defaultProps}
         selectedBuses={[1]}
@@ -418,7 +400,6 @@ describe('CombinedMapTracker Component', () => {
       />
     );
 
-<<<<<<< HEAD
     await waitFor(() => {
       expect(getCurrentBusLocations).toHaveBeenCalled();
     });
@@ -430,7 +411,6 @@ describe('CombinedMapTracker Component', () => {
     await waitFor(() => {
       expect(screen.getByTestId('map-container')).toBeInTheDocument();
     });
-=======
     // Change selected buses
     rerender(
       <CombinedMapTracker 
@@ -457,6 +437,5 @@ describe('CombinedMapTracker Component', () => {
     // Check for map markers (locations and potentially bus locations)
     const markers = screen.getAllByTestId('map-marker');
     expect(markers.length).toBeGreaterThan(0);
->>>>>>> 75c2859 (production ready code need to test)
   });
 });

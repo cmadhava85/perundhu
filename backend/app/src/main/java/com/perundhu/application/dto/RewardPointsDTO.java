@@ -1,6 +1,5 @@
 package com.perundhu.application.dto;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,22 +7,21 @@ import java.util.List;
  * Implemented as an immutable record for Java 17 compatibility
  */
 public record RewardPointsDTO(
-    String userId,
-    int totalPoints,
-    int currentTripPoints,
-    int lifetimePoints,
-    String userRank,
-    int leaderboardPosition,
-    List<RewardActivityDTO> recentActivities
-) {
+        String userId,
+        int totalPoints,
+        int currentTripPoints,
+        int lifetimePoints,
+        String userRank,
+        int leaderboardPosition,
+        List<RewardActivityDTO> recentActivities) {
     /**
      * Custom constructor with validation and defensive copying
      */
     public RewardPointsDTO {
         // Defensive copying of the mutable list to ensure immutability
         recentActivities = recentActivities != null
-            ? List.copyOf(recentActivities)
-            : List.of();
+                ? List.copyOf(recentActivities)
+                : List.of();
     }
 
     /**
@@ -47,9 +45,8 @@ public record RewardPointsDTO(
      */
     public RewardPointsDTO withTotalPoints(int newTotalPoints) {
         return new RewardPointsDTO(
-            userId, newTotalPoints, currentTripPoints,
-            lifetimePoints, userRank, leaderboardPosition, recentActivities
-        );
+                userId, newTotalPoints, currentTripPoints,
+                lifetimePoints, userRank, leaderboardPosition, recentActivities);
     }
 
     /**
@@ -57,9 +54,8 @@ public record RewardPointsDTO(
      */
     public RewardPointsDTO withCurrentTripPoints(int newCurrentTripPoints) {
         return new RewardPointsDTO(
-            userId, totalPoints, newCurrentTripPoints,
-            lifetimePoints, userRank, leaderboardPosition, recentActivities
-        );
+                userId, totalPoints, newCurrentTripPoints,
+                lifetimePoints, userRank, leaderboardPosition, recentActivities);
     }
 
     /**
@@ -67,9 +63,8 @@ public record RewardPointsDTO(
      */
     public RewardPointsDTO withLifetimePoints(int newLifetimePoints) {
         return new RewardPointsDTO(
-            userId, totalPoints, currentTripPoints,
-            newLifetimePoints, userRank, leaderboardPosition, recentActivities
-        );
+                userId, totalPoints, currentTripPoints,
+                newLifetimePoints, userRank, leaderboardPosition, recentActivities);
     }
 
     /**
@@ -77,9 +72,8 @@ public record RewardPointsDTO(
      */
     public RewardPointsDTO withUserRank(String newUserRank) {
         return new RewardPointsDTO(
-            userId, totalPoints, currentTripPoints,
-            lifetimePoints, newUserRank, leaderboardPosition, recentActivities
-        );
+                userId, totalPoints, currentTripPoints,
+                lifetimePoints, newUserRank, leaderboardPosition, recentActivities);
     }
 
     /**
@@ -87,20 +81,27 @@ public record RewardPointsDTO(
      */
     public RewardPointsDTO withRecentActivities(List<RewardActivityDTO> newRecentActivities) {
         return new RewardPointsDTO(
-            userId, totalPoints, currentTripPoints,
-            lifetimePoints, userRank, leaderboardPosition, newRecentActivities
-        );
+                userId, totalPoints, currentTripPoints,
+                lifetimePoints, userRank, leaderboardPosition, newRecentActivities);
+    }
+
+    /**
+     * Returns a new instance with updated userId
+     */
+    public RewardPointsDTO withUserId(String newUserId) {
+        return new RewardPointsDTO(
+                newUserId, totalPoints, currentTripPoints,
+                lifetimePoints, userRank, leaderboardPosition, recentActivities);
     }
 
     /**
      * Inner DTO record for reward activities
      */
     public record RewardActivityDTO(
-        String activityType,
-        int pointsEarned,
-        String timestamp,
-        String description
-    ) {
+            String activityType,
+            int pointsEarned,
+            String timestamp,
+            String description) {
         /**
          * Factory method for creating a default instance
          */

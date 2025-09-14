@@ -203,18 +203,24 @@ public class OCRService {
      * Generate sample schedule text for demonstration purposes
      */
     private String generateSampleScheduleText() {
-        return "TAMIL NADU STATE TRANSPORT CORPORATION\n" +
-                "BUS SCHEDULE\n\n" +
-                "Bus Number: TN-01-1234\n" +
-                "Bus Name: Chennai Express\n\n" +
-                "From: Chennai\n" +
-                "To: Coimbatore\n\n" +
-                "Departure: 08:30 AM\n" +
-                "Arrival: 03:45 PM\n\n" +
-                "STOPS:\n" +
-                "Stop 1: Kanchipuram    Arr: 09:30 AM    Dep: 09:35 AM\n" +
-                "Stop 2: Vellore        Arr: 11:00 AM    Dep: 11:10 AM\n" +
-                "Stop 3: Salem          Arr: 01:15 PM    Dep: 01:30 PM\n";
+        return """
+                TAMIL NADU STATE TRANSPORT CORPORATION
+                BUS SCHEDULE
+
+                Bus Number: TN-01-1234
+                Bus Name: Chennai Express
+
+                From: Chennai
+                To: Coimbatore
+
+                Departure: 08:30 AM
+                Arrival: 03:45 PM
+
+                STOPS:
+                Stop 1: Kanchipuram    Arr: 09:30 AM    Dep: 09:35 AM
+                Stop 2: Vellore        Arr: 11:00 AM    Dep: 11:10 AM
+                Stop 3: Salem          Arr: 01:15 PM    Dep: 01:30 PM
+                """;
     }
 
     /**

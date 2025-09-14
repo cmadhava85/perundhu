@@ -191,9 +191,7 @@ const ImageContributionList: React.FC = () => {
             fromLocationName: '',
             toLocationName: ''
           }}
-          onReject={(id, reason) => {
-            if (id) handleReject(reason);
-          }}
+          onReject={(reason) => handleReject(reason)}
           onClose={() => {
             setRejectModalOpen(false);
             setSelectedContribution(null);

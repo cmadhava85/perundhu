@@ -5,7 +5,7 @@ import type { RouteContribution } from '../../types/contributionTypes';
 
 interface RejectModalProps {
   contribution: RouteContribution;
-  onReject: (id: number | undefined, reason: string) => void;
+  onReject: (reason: string) => void;
   onClose: () => void;
 }
 
@@ -27,7 +27,7 @@ const RejectModal: React.FC<RejectModalProps> = ({ contribution, onReject, onClo
     }
     
     if (contribution.id) {
-      onReject(contribution.id, reason);
+      onReject(reason);
     }
   };
 

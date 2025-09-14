@@ -9,12 +9,14 @@ import SecurityService from './securityService';
 export class ApiError extends Error {
   status?: number;
   code?: string;
+  errorCode?: string;
   
   constructor(message: string, status?: number, code?: string) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.code = code;
+    this.errorCode = code; // Add errorCode as alias for code
     
     // This is needed for instanceof to work correctly in TypeScript
     Object.setPrototypeOf(this, ApiError.prototype);

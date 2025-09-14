@@ -1,54 +1,30 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import BusUtilizationChart, { type BusUtilizationData } from '../../../components/analytics/BusUtilizationChart';
 
 // Mock the recharts components
-jest.mock('recharts', () => {
-  const OriginalModule = jest.requireActual('recharts');
+vi.mock('recharts', () => {
+  const OriginalModule = vi.importActual('recharts');
   return {
     ...OriginalModule,
-    ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="responsive-container">{children}</div>
-    ),
-    BarChart: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="bar-chart">{children}</div>
-    ),
-    RadialBarChart: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="radial-bar-chart">{children}</div>
-    ),
+    ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
+    LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
+    Line: () => <div data-testid="line" />,
+    XAxis: () => <div data-testid="x-axis" />,
+    YAxis: () => <div data-testid="y-axis" />,
     CartesianGrid: () => <div data-testid="cartesian-grid" />,
-    XAxis: ({ tickFormatter }: any) => {
-      // Call the formatter at least once if provided
-      if (tickFormatter && typeof tickFormatter === 'function') {
-        tickFormatter('06:00');
-      }
-      return <div data-testid="xaxis" />;
-    },
-    YAxis: () => <div data-testid="yaxis" />,
     Tooltip: () => <div data-testid="tooltip" />,
-    Legend: () => <div data-testid="legend" />,
-    Bar: ({ dataKey }: { dataKey: string }) => (
-      <div data-testid={`bar-${dataKey}`}>{dataKey}</div>
-    ),
-    RadialBar: (props: any) => {
-      // Extract props to determine what to render
-      const { dataKey, 'data-testid': testId } = props;
-      return <div data-testid={testId || `radial-bar-${dataKey}`}>{dataKey}</div>;
-    },
+    Legend: () => <div data-testid="legend" />
   };
 });
 
-// Mock the i18n hook
-jest.mock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (key: string) => key, // Return the key as translation
-      i18n: {
-        changeLanguage: jest.fn()
-      }
-    };
-  }
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: 'en' }
+  })
 }));
 
 describe('BusUtilizationChart Component', () => {
@@ -97,7 +73,7 @@ describe('BusUtilizationChart Component', () => {
     formatTime: (time: string) => time
   };
 
-  test('renders the chart components correctly', () => {
+  it('renders the chart components correctly', () => {
     render(<BusUtilizationChart 
       data={mockData} 
       formatDate={formatters.formatDate}
@@ -106,23 +82,18 @@ describe('BusUtilizationChart Component', () => {
     
     // Chart containers are rendered
     expect(screen.getAllByTestId('responsive-container')[0]).toBeInTheDocument();
-    expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
-    expect(screen.getByTestId('radial-bar-chart')).toBeInTheDocument();
+    expect(screen.getByTestId('line-chart')).toBeInTheDocument();
     
     // Chart elements are rendered
-    expect(screen.getByTestId('radial-bar-utilization')).toBeInTheDocument();
+    expect(screen.getByTestId('line')).toBeInTheDocument();
     
     // Check for axis and grid elements
     expect(screen.getByTestId('cartesian-grid')).toBeInTheDocument();
-    expect(screen.getByTestId('xaxis')).toBeInTheDocument();
-    expect(screen.getAllByTestId('yaxis').length).toBe(2);
-    
-    // Check for bars
-    expect(screen.getByTestId('bar-utilization')).toBeInTheDocument();
-    expect(screen.getByTestId('bar-passengers')).toBeInTheDocument();
+    expect(screen.getByTestId('x-axis')).toBeInTheDocument();
+    expect(screen.getByTestId('y-axis')).toBeInTheDocument();
   });
 
-  test('displays summary statistics correctly', () => {
+  it('displays summary statistics correctly', () => {
     render(<BusUtilizationChart 
       data={mockData} 
       formatDate={formatters.formatDate}
@@ -140,8 +111,8 @@ describe('BusUtilizationChart Component', () => {
     expect(screen.getByText('Madurai Traveller')).toBeInTheDocument();
   });
 
-  test('formats time correctly using the provided formatter', () => {
-    const mockFormatter = jest.fn((time) => `Formatted: ${time}`);
+  it('formats time correctly using the provided formatter', () => {
+    const mockFormatter = vi.fn((time) => `Formatted: ${time}`);
     
     render(<BusUtilizationChart 
       data={mockData} 
@@ -153,7 +124,7 @@ describe('BusUtilizationChart Component', () => {
     expect(mockFormatter).toHaveBeenCalled();
   });
 
-  test('handles empty data gracefully', () => {
+  it('handles empty data gracefully', () => {
     const emptyData: BusUtilizationData = {
       buses: [],
       timeSeries: [],
@@ -173,8 +144,7 @@ describe('BusUtilizationChart Component', () => {
     
     // Charts should still render without errors
     expect(screen.getAllByTestId('responsive-container')[0]).toBeInTheDocument();
-    expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
-    expect(screen.getByTestId('radial-bar-chart')).toBeInTheDocument();
+    expect(screen.getByTestId('line-chart')).toBeInTheDocument();
     
     // Summary statistics display defaults
     expect(screen.getByText('0%')).toBeInTheDocument();

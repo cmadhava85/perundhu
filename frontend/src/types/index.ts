@@ -50,6 +50,15 @@ export interface Bus {
   duration?: string;
   fare?: number;
   amenities?: string[];
+  // Add missing properties used in MapComponent
+  fromLocation?: {
+    latitude: number;
+    longitude: number;
+  };
+  toLocation?: {
+    latitude: number;
+    longitude: number;
+  };
 }
 
 export interface Stop {
@@ -83,6 +92,10 @@ export interface Stop {
   translatedNames?: {
     [key: string]: string;
   };
+  // Add missing properties used in components
+  busId?: number;
+  platform?: string;
+  status?: string;
 }
 
 export interface BusLeg extends Bus {

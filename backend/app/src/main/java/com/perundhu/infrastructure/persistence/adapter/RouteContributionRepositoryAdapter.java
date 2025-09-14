@@ -1,7 +1,6 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,7 @@ import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepositor
  * Implementation of RouteContributionRepository that delegates to Spring Data
  * JPA
  */
-@Repository
+// Remove @Repository annotation - managed by HexagonalConfig
 @Transactional
 public class RouteContributionRepositoryAdapter implements RouteContributionRepository {
 
@@ -146,8 +145,8 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
         return RouteContribution.builder()
                 .id(entity.getId())
                 .userId(entity.getUserId())
-                .busNumber(entity.getBusNumber())
                 .busName(entity.getBusName())
+                .busNumber(entity.getBusNumber())
                 .fromLocationName(entity.getFromLocationName())
                 .toLocationName(entity.getToLocationName())
                 .fromLatitude(entity.getFromLatitude())
@@ -163,6 +162,7 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
                 .additionalNotes(entity.getAdditionalNotes())
                 .validationMessage(entity.getValidationMessage())
                 .submittedBy(entity.getSubmittedBy())
+                .stops(new java.util.ArrayList<>()) // Initialize empty stops list
                 .build();
     }
 }

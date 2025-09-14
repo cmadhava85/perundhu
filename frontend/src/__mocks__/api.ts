@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { ApiError } from '../services/api';
 import type { PaginatedResponse, PaginationParams } from '../services/api';
 import type { Bus, Location, Stop, BusLocation } from '../types';
@@ -128,7 +127,6 @@ export class APIService {
     } : mockBuses;
   }
 }
-=======
 import { vi } from 'vitest';
 
 // Mock error class for API errors
@@ -205,4 +203,3 @@ const api = {
 };
 
 export default api;
->>>>>>> 75c2859 (production ready code need to test)

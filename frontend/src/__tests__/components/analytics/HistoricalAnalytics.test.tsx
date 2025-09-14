@@ -1,19 +1,19 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import HistoricalAnalytics from '../../../components/analytics/HistoricalAnalytics';
 import * as analyticsService from '../../../services/analyticsService';
 import { act } from 'react';
 
 // Mock the api service to avoid import.meta errors
-jest.mock('../../../services/api');
+vi.mock('../../../services/api');
 
 // Mock the analytics service
-jest.mock('../../../services/analyticsService', () => ({
-  getHistoricalData: jest.fn()
+vi.mock('../../../services/analyticsService', () => ({
+  getHistoricalData: vi.fn()
 }));
 
 // Mock the translation hook
-jest.mock('react-i18next', () => ({
+vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => {
       // Map common translation keys
@@ -29,14 +29,14 @@ jest.mock('react-i18next', () => ({
       return translations[key] || key;
     },
     i18n: {
-      changeLanguage: jest.fn(),
+      changeLanguage: vi.fn(),
       language: 'en'
     }
   })
 }));
 
 // Mock chart components to avoid rendering errors
-jest.mock('recharts', () => ({
+vi.mock('recharts', () => ({
   ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
   PieChart: ({ children }: any) => <div data-testid="pie-chart">{children}</div>,
   Pie: ({ children }: any) => <div data-testid="pie">{children}</div>,
@@ -122,13 +122,13 @@ describe('HistoricalAnalytics Component', () => {
   };
   
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     // Setup mock implementation for getHistoricalData
-    (analyticsService.getHistoricalData as jest.Mock).mockResolvedValue(mockData);
+    (analyticsService.getHistoricalData as vi.Mock).mockResolvedValue(mockData);
   });
 
   // This test checks for the initial loading state of the component
-  test('renders initial state', async () => {
+  it('renders initial state', async () => {
     render(<HistoricalAnalytics />);
     
     // Test for the translated heading
@@ -136,9 +136,9 @@ describe('HistoricalAnalytics Component', () => {
   });
 
   // Tests that API is called with default filters on mount
-  test('fetches data with default filters on mount', () => {
+  it('fetches data with default filters on mount', () => {
     // Make sure the mock starts clean
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     
     // Simply use the existing mock that we set up in beforeEach
     // No need to try to override it with a new function
@@ -152,9 +152,9 @@ describe('HistoricalAnalytics Component', () => {
   });
 
   // Test behavior when API call fails
-  test('should show error state when API call fails', async () => {
+  it('should show error state when API call fails', async () => {
     // Mock the API to reject the next call
-    (analyticsService.getHistoricalData as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
+    (analyticsService.getHistoricalData as vi.Mock).mockRejectedValueOnce(new Error('API Error'));
     
     render(<HistoricalAnalytics />);
     
@@ -163,7 +163,7 @@ describe('HistoricalAnalytics Component', () => {
   });
 
   // Add skip for tests that might be wired differently in your component
-  test.skip('should render charts when data is available', async () => {
+  it.skip('should render charts when data is available', async () => {
     render(<HistoricalAnalytics />);
     
     // Wait for the API call to complete

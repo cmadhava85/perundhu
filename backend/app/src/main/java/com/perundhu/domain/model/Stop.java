@@ -29,6 +29,10 @@ public record Stop(
                 throw new IllegalArgumentException("StopId value must be positive");
             }
         }
+
+        public Long getValue() {
+            return value;
+        }
     }
 
     // Compact constructor for validation using Java 17 features

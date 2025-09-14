@@ -69,7 +69,10 @@ class BusScheduleServiceContinuingBusesTest {
         chennaiLocation,
         maduraiLocation, // Final destination
         LocalTime.of(8, 0),
-        LocalTime.of(14, 0));
+        LocalTime.of(14, 0),
+        50,
+        "Express",
+        true);
 
     continuingBus2 = new Bus(
         new Bus.BusId(2L),
@@ -78,7 +81,10 @@ class BusScheduleServiceContinuingBusesTest {
         chennaiLocation,
         new Location(new Location.LocationId(4L), "Virudhunagar", 9.5810, 77.9624), // Final destination
         LocalTime.of(10, 30),
-        LocalTime.of(17, 30));
+        LocalTime.of(17, 30),
+        45,
+        "Deluxe",
+        true);
   }
 
   @Test
@@ -100,19 +106,20 @@ class BusScheduleServiceContinuingBusesTest {
     BusDTO firstBus = result.get(0);
     assertEquals(1L, firstBus.id());
     assertTrue(firstBus.name().contains("(via Trichy)"));
-    assertEquals("Chennai", firstBus.fromLocation());
-    assertEquals("Madurai", firstBus.toLocation());
+    assertEquals("Chennai", firstBus.fromLocationName());
+    assertEquals("Madurai", firstBus.toLocationName());
     assertEquals(LocalTime.of(8, 0), firstBus.departureTime());
     assertEquals(LocalTime.of(14, 0), firstBus.arrivalTime());
 
     BusDTO secondBus = result.get(1);
     assertEquals(2L, secondBus.id());
     assertTrue(secondBus.name().contains("(via Trichy)"));
-    assertEquals("Chennai", secondBus.fromLocation());
-    assertEquals("Virudhunagar", secondBus.toLocation());
+    assertEquals("Chennai", secondBus.fromLocationName());
+    assertEquals("Virudhunagar", secondBus.toLocationName());
 
     verify(busRepository).findBusesContinuingBeyondDestination(1L, 2L);
-    // The method calls findById multiple times (once for each bus result to get location name)
+    // The method calls findById multiple times (once for each bus result to get
+    // location name)
     verify(locationRepository, atLeast(1)).findById(new Location.LocationId(2L));
   }
 
@@ -204,7 +211,10 @@ class BusScheduleServiceContinuingBusesTest {
         chennaiLocation,
         maduraiLocation,
         LocalTime.of(8, 0),
-        LocalTime.of(14, 0));
+        LocalTime.of(14, 0),
+        50,
+        "Express",
+        true);
 
     when(busRepository.findBusesContinuingBeyondDestination(1L, 2L))
         .thenReturn(Arrays.asList(testBus));
@@ -218,6 +228,6 @@ class BusScheduleServiceContinuingBusesTest {
     assertEquals(1, result.size());
     BusDTO resultBus = result.get(0);
     assertEquals("Original Bus Name (via Trichy)", resultBus.name());
-    assertEquals("Madurai", resultBus.toLocation()); // Should show final destination
+    assertEquals("Madurai", resultBus.toLocationName()); // Should show final destination
   }
 }

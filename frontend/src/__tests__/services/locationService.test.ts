@@ -1,26 +1,27 @@
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import { searchLocations, validateLocation } from '../../services/locationService';
 import * as apiModule from '../../services/api';
 import * as offlineModule from '../../services/offlineService';
 import type { Location } from '../../types';
 
 // Mock i18n
-jest.mock('../../i18n', () => ({
+vi.mock('../../i18n', () => ({
   language: 'en',
 }));
 
 // Properly mock the modules with correct TypeScript typing
-jest.mock('../../services/api', () => {
+vi.mock('../../services/api', () => {
   return {
     api: {
-      get: jest.fn(),
-      post: jest.fn()
+      get: vi.fn(),
+      post: vi.fn()
     }
   };
 });
 
-jest.mock('../../services/offlineService', () => ({
-  getLocationsOffline: jest.fn(),
-  saveLocationsOffline: jest.fn()
+vi.mock('../../services/offlineService', () => ({
+  getLocationsOffline: vi.fn(),
+  saveLocationsOffline: vi.fn()
 }));
 
 describe('Location Service', () => {
@@ -29,19 +30,19 @@ describe('Location Service', () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     
     // Set up API mocks properly using type assertions to help TypeScript
-    const mockGet = jest.fn().mockResolvedValue({ data: mockOfflineLocations });
-    const mockPost = jest.fn().mockResolvedValue({ data: { valid: true } });
+    const mockGet = vi.fn().mockResolvedValue({ data: mockOfflineLocations });
+    const mockPost = vi.fn().mockResolvedValue({ data: { valid: true } });
     
     // Use type assertions to help TypeScript recognize mock functions
-    (apiModule.api.get as jest.Mock).mockImplementation(mockGet);
-    (apiModule.api.post as jest.Mock).mockImplementation(mockPost);
+    (apiModule.api.get as any).mockImplementation(mockGet);
+    (apiModule.api.post as any).mockImplementation(mockPost);
     
     // Default implementations for offline module
-    (offlineModule.getLocationsOffline as jest.Mock).mockResolvedValue(mockOfflineLocations);
-    (offlineModule.saveLocationsOffline as jest.Mock).mockResolvedValue(true);
+    (offlineModule.getLocationsOffline as any).mockResolvedValue(mockOfflineLocations);
+    (offlineModule.saveLocationsOffline as any).mockResolvedValue(true);
   });
 
   describe('searchLocations', () => {
@@ -52,7 +53,7 @@ describe('Location Service', () => {
       const mapResults = [{ ...mockOfflineLocations[0], name: 'Chennai Maps', id: 2, source: 'map' }];
       
       // Set up sequential responses for database and map API calls
-      (apiModule.api.get as jest.Mock)
+      (apiModule.api.get as any)
         .mockResolvedValueOnce({ data: mockOfflineLocations }) // Database call
         .mockResolvedValueOnce({ data: [{ name: 'Chennai Maps', id: 2 }] }); // Map API call
       
@@ -79,8 +80,8 @@ describe('Location Service', () => {
     it('should fallback to offline locations when API fails', async () => {
       // Arrange
       const query = 'Chennai';
-      (apiModule.api.get as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
-      (offlineModule.getLocationsOffline as jest.Mock).mockResolvedValueOnce(mockOfflineLocations);
+      (apiModule.api.get as any).mockRejectedValueOnce(new Error('API Error'));
+      (offlineModule.getLocationsOffline as any).mockResolvedValueOnce(mockOfflineLocations);
 
       // Act
       const result = await searchLocations(query);
@@ -100,7 +101,7 @@ describe('Location Service', () => {
       ];
       
       // Override the mock behavior for this specific test - Return 2 items for database, but make sure map returns empty array
-      (apiModule.api.get as jest.Mock)
+      (apiModule.api.get as any)
         .mockResolvedValueOnce({ data: mockResponse }) // Database call
         .mockResolvedValueOnce({ data: [] }); // Map API call - returns empty array
       
@@ -138,7 +139,7 @@ describe('Location Service', () => {
   describe('validateLocation', () => {
     it('should validate a location correctly', async () => {
       // Explicitly make sure this mock returns { data: { valid: true }}
-      (apiModule.api.post as jest.Mock).mockResolvedValueOnce({ data: { valid: true } });
+      (apiModule.api.post as any).mockResolvedValueOnce({ data: { valid: true } });
       
       // Arrange
       const locationName = 'Chennai';
@@ -162,9 +163,9 @@ describe('Location Service', () => {
       const locationName = 'Chennai Central';
       const latitude = 13.0827;
       const longitude = 80.2707;
-      (apiModule.api.post as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
+      (apiModule.api.post as any).mockRejectedValueOnce(new Error('API Error'));
       // Make sure the offline check returns true
-      (offlineModule.getLocationsOffline as jest.Mock).mockResolvedValueOnce([
+      (offlineModule.getLocationsOffline as any).mockResolvedValueOnce([
         { id: 1, name: 'Chennai Central', latitude: 13.0827, longitude: 80.2707 }
       ]);
 
@@ -180,8 +181,8 @@ describe('Location Service', () => {
       const locationName = 'Unknown Location';
       const latitude = 0;
       const longitude = 0;
-      (apiModule.api.post as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
-      (offlineModule.getLocationsOffline as jest.Mock).mockRejectedValueOnce(new Error('Storage error'));
+      (apiModule.api.post as any).mockRejectedValueOnce(new Error('API Error'));
+      (offlineModule.getLocationsOffline as any).mockRejectedValueOnce(new Error('Storage error'));
 
       // Act
       const result = await validateLocation(locationName, latitude, longitude);

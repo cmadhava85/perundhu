@@ -18,7 +18,7 @@ export class LocationAutocompleteService {
   private static readonly DEBOUNCE_DELAY = 100; // Reduced from 200ms to 100ms
   private static readonly INSTANT_DEBOUNCE = 50; // Ultra-fast for instant suggestions
   
-  private debounceTimeout: number | null = null;
+  private debounceTimeout: NodeJS.Timeout | null = null;
 
   /**
    * Get ultra-fast location suggestions with instant responses

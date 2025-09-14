@@ -226,40 +226,31 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
                 results.addAll(busSchedules.stream()
                                 .map(bus -> {
-                                        BusRouteSegmentDTO firstLeg = BusRouteSegmentDTO.builder()
-                                                        .busId(bus.getId())
-                                                        .busName(bus.getName())
-                                                        .busNumber(bus.getBusNumber())
-                                                        .departureTime(bus.getDepartureTime().toString())
-                                                        .from(bus.getFromLocationName())
-                                                        .to("Connection Point")
-                                                        .duration(60)
-                                                        .distance(15.5)
-                                                        .build();
+                                        BusRouteSegmentDTO firstLeg = new BusRouteSegmentDTO(
+                                                        bus.id(),
+                                                        bus.name(),
+                                                        bus.busNumber(),
+                                                        bus.fromLocationName(),
+                                                        "Connection Point",
+                                                        bus.departureTime().toString(),
+                                                        null, null, null, null, null, null);
 
-                                        BusRouteSegmentDTO secondLeg = BusRouteSegmentDTO.builder()
-                                                        .busId(bus.getId())
-                                                        .busName(bus.getName())
-                                                        .busNumber(bus.getBusNumber())
-                                                        .departureTime(bus.getDepartureTime().toString())
-                                                        .from("Connection Point")
-                                                        .to(bus.getToLocationName())
-                                                        .arrivalTime(bus.getArrivalTime().toString())
-                                                        .duration(60)
-                                                        .distance(15.5)
-                                                        .build();
+                                        BusRouteSegmentDTO secondLeg = new BusRouteSegmentDTO(
+                                                        bus.id(),
+                                                        bus.name(),
+                                                        bus.busNumber(),
+                                                        "Connection Point",
+                                                        bus.toLocationName(),
+                                                        bus.departureTime().toString(),
+                                                        bus.arrivalTime().toString(),
+                                                        null, null, null, null, null);
 
-                                        return ConnectingRouteDTO.builder()
-                                                        .id(bus.getId())
-                                                        .connectionPoint("Transfer Station")
-                                                        .waitTime(15)
-                                                        .totalDuration(120)
-                                                        .totalDistance(31.0)
-                                                        .firstLeg(firstLeg)
-                                                        .secondLeg(secondLeg)
-                                                        .connectionStops(new ArrayList<>())
-                                                        .isOSMDiscovered(false)
-                                                        .build();
+                                        return ConnectingRouteDTO.of(
+                                                        bus.id(),
+                                                        "Transfer Station",
+                                                        firstLeg,
+                                                        secondLeg).withTiming(15, 120, 31.0)
+                                                        .withConnectionStops(new ArrayList<>());
                                 })
                                 .collect(Collectors.toList()));
 
@@ -335,40 +326,32 @@ public class BusScheduleServiceImpl implements BusScheduleService {
          */
         private ConnectingRouteDTO convertOSMRouteToConnecting(BusRouteDTO osmRoute, Location from, Location to) {
                 try {
-                        BusRouteSegmentDTO osmLeg = BusRouteSegmentDTO.builder()
-                                        .busId(-osmRoute.getOsmId()) // Use negative ID for OSM routes
-                                        .busName(osmRoute.getRouteName())
-                                        .busNumber(osmRoute.getRouteRef())
-                                        .from(osmRoute.getFromLocation() != null ? osmRoute.getFromLocation()
-                                                        : from.getName())
-                                        .to(osmRoute.getToLocation() != null ? osmRoute.getToLocation()
-                                                        : to.getName())
-                                        .duration(osmRoute.getEstimatedDuration() != null
-                                                        ? osmRoute.getEstimatedDuration().intValue()
-                                                        : 90)
-                                        .distance(osmRoute.getEstimatedDistance() != null
-                                                        ? osmRoute.getEstimatedDistance()
-                                                        : 25.0)
-                                        .build();
+                        BusRouteSegmentDTO osmLeg = new BusRouteSegmentDTO(
+                                        -osmRoute.osmId(), // Use negative ID for OSM routes
+                                        osmRoute.routeName(),
+                                        osmRoute.routeRef(),
+                                        osmRoute.fromLocation() != null ? osmRoute.fromLocation()
+                                                        : from.getName(),
+                                        osmRoute.toLocation() != null ? osmRoute.toLocation()
+                                                        : to.getName(),
+                                        null, null, null, null, null, null, null);
 
-                        return ConnectingRouteDTO.builder()
-                                        .id(-osmRoute.getOsmId())
-                                        .connectionPoint("OSM Discovered Route")
-                                        .waitTime(0) // Direct route
-                                        .totalDuration(osmRoute.getEstimatedDuration() != null
-                                                        ? osmRoute.getEstimatedDuration().intValue()
-                                                        : 90)
-                                        .totalDistance(osmRoute.getEstimatedDistance() != null
-                                                        ? osmRoute.getEstimatedDistance()
-                                                        : 25.0)
-                                        .firstLeg(osmLeg)
-                                        .secondLeg(null) // Direct route, no second leg
-                                        .connectionStops(convertOSMStopsToConnection(osmRoute.getStops()))
-                                        .isOSMDiscovered(true)
-                                        .osmRouteRef(osmRoute.getRouteRef())
-                                        .osmNetwork(osmRoute.getNetwork())
-                                        .osmOperator(osmRoute.getOperator())
-                                        .build();
+                        return ConnectingRouteDTO.fromOSM(
+                                        -osmRoute.osmId(),
+                                        "OSM Discovered Route",
+                                        osmLeg,
+                                        null,
+                                        osmRoute.routeRef(),
+                                        osmRoute.network(),
+                                        osmRoute.operator())
+                                        .withTiming(0,
+                                                        osmRoute.estimatedDuration() != null
+                                                                        ? osmRoute.estimatedDuration().intValue()
+                                                                        : 90,
+                                                        osmRoute.estimatedDistance() != null
+                                                                        ? osmRoute.estimatedDistance()
+                                                                        : 25.0)
+                                        .withConnectionStops(convertOSMStopsToConnection(osmRoute.stops()));
 
                 } catch (Exception e) {
                         log.error("Error converting OSM route to connecting route", e);
@@ -385,13 +368,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
                 return osmStops.stream()
                                 .map(osmStop -> new StopDTO(
-                                                osmStop.getName(),
-                                                osmStop.getName(),
+                                                osmStop.name(),
+                                                osmStop.name(),
                                                 null, // No timing information from OSM
                                                 null,
                                                 0,
-                                                osmStop.getLatitude(),
-                                                osmStop.getLongitude()))
+                                                osmStop.latitude(),
+                                                osmStop.longitude()))
                                 .collect(Collectors.toList());
         }
 
@@ -603,14 +586,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
                 List<BusDTO> result = new ArrayList<>();
                 for (BusScheduleDTO route : routes) {
-                        result.add(new BusDTO(
-                                        route.getId(),
-                                        route.getName(),
-                                        route.getBusNumber(),
-                                        route.getFromLocationName(),
-                                        route.getToLocationName(),
-                                        route.getDepartureTime(),
-                                        route.getArrivalTime()));
+                        result.add(BusDTO.withTimes(
+                                        route.id(),
+                                        route.name(),
+                                        route.busNumber(),
+                                        route.fromLocationName(),
+                                        route.toLocationName(),
+                                        route.departureTime(),
+                                        route.arrivalTime(),
+                                        null, // capacity - not available in BusScheduleDTO
+                                        "Regular", // category - default
+                                        true // active - default
+                        ));
                 }
                 return result;
         }
@@ -624,14 +611,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
                 List<BusDTO> result = new ArrayList<>();
                 for (Bus bus : buses) {
-                        result.add(new BusDTO(
+                        result.add(BusDTO.withTimes(
                                         bus.getId().getValue(),
                                         bus.getName(),
                                         bus.getBusNumber(),
                                         bus.getFromLocation().getName(),
                                         bus.getToLocation().getName(),
                                         bus.getDepartureTime(),
-                                        bus.getArrivalTime()));
+                                        bus.getArrivalTime(),
+                                        null, // capacity - not available in Bus domain model
+                                        "Regular", // category - default
+                                        true // active - default
+                        ));
                 }
                 return result;
         }
@@ -660,14 +651,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 for (Bus bus : buses) {
                         // Create BusDTO showing the full route (origin to final destination)
                         // but mark it as passing through the search destination
-                        result.add(new BusDTO(
+                        result.add(BusDTO.withTimes(
                                         bus.getId().getValue(),
                                         bus.getName() + " (via " + getLocationName(toLocationId) + ")",
                                         bus.getBusNumber(),
                                         bus.getFromLocation().getName(),
                                         bus.getToLocation().getName(), // This shows the final destination
                                         bus.getDepartureTime(),
-                                        bus.getArrivalTime()));
+                                        bus.getArrivalTime(),
+                                        null, // capacity - not available in Bus domain model
+                                        "Regular", // category - default
+                                        true // active - default
+                        ));
                 }
 
                 log.info("Found {} buses continuing beyond destination", result.size());
@@ -688,14 +683,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 log.info("Getting all buses");
 
                 return busRepository.findAllBuses().stream()
-                                .map(bus -> new BusDTO(
+                                .map(bus -> BusDTO.withTimes(
                                                 bus.getId().getValue(),
                                                 bus.getName(),
                                                 bus.getBusNumber(),
                                                 bus.getFromLocation().getName(),
                                                 bus.getToLocation().getName(),
                                                 bus.getDepartureTime(),
-                                                bus.getArrivalTime()))
+                                                bus.getArrivalTime(),
+                                                null, // capacity - not available in Bus domain model
+                                                "Regular", // category - default
+                                                true // active - default
+                                ))
                                 .collect(Collectors.toList());
         }
 
@@ -704,14 +703,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 log.info("Getting bus by ID: {}", busId);
 
                 return busRepository.findById(busId)
-                                .map(bus -> new BusDTO(
+                                .map(bus -> BusDTO.withTimes(
                                                 bus.getId().getValue(),
                                                 bus.getName(),
                                                 bus.getBusNumber(),
                                                 bus.getFromLocation().getName(),
                                                 bus.getToLocation().getName(),
                                                 bus.getDepartureTime(),
-                                                bus.getArrivalTime()));
+                                                bus.getArrivalTime(),
+                                                null, // capacity - not available in Bus domain model
+                                                "Regular", // category - default
+                                                true // active - default
+                                ));
         }
 
         /**
@@ -992,14 +995,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                         }
 
                         return buses.subList(startIndex, endIndex).stream()
-                                        .map(bus -> new BusDTO(
+                                        .map(bus -> BusDTO.withTimes(
                                                         bus.getId().getValue(),
                                                         bus.getName(),
                                                         bus.getBusNumber(),
                                                         bus.getFromLocation().getName(),
                                                         bus.getToLocation().getName(),
                                                         bus.getDepartureTime(),
-                                                        bus.getArrivalTime()))
+                                                        bus.getArrivalTime(),
+                                                        null, // capacity
+                                                        "Regular", // category
+                                                        true // active
+                                        ))
                                         .toList();
                 }
 

@@ -3,7 +3,7 @@ package com.perundhu.application.service;
 import com.perundhu.application.port.in.AdminUseCase;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.port.ImageContributionOutputPort;
+import com.perundhu.application.port.output.ImageContributionOutputPort;
 import com.perundhu.domain.port.RouteContributionPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

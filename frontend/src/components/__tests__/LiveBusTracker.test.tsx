@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { LiveBusTracker } from '../LiveBusTracker';
@@ -329,7 +328,6 @@ describe('LiveBusTracker Component', () => {
 
     // Check that setInterval was called with the correct interval (15000ms)
     expect(mockSetInterval).toHaveBeenCalledWith(expect.any(Function), 15000);
-=======
 import { render, screen } from '@testing-library/react';
 import { vi, beforeEach } from 'vitest';
 import LiveBusTracker from '../LiveBusTracker';
@@ -510,6 +508,5 @@ describe('LiveBusTracker Component', () => {
 
     expect(screen.getByText('Bus locations automatically update every 15 seconds')).toBeInTheDocument();
     expect(screen.getByText('⟳')).toBeInTheDocument();
->>>>>>> 75c2859 (production ready code need to test)
   });
 });

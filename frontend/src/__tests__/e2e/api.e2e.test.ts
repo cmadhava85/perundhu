@@ -18,12 +18,9 @@ vi.mock('../../utils/environment', () => ({
   }),
 }));
 
-<<<<<<< HEAD
 // Import the API module after mocking environment
 // Removed unused import
 
-=======
->>>>>>> 75c2859 (production ready code need to test)
 // Skip actual e2e tests when running in CI/CD pipeline
 describe('API E2E Tests', () => {
   beforeEach(() => {

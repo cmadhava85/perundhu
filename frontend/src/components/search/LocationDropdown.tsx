@@ -2,10 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location } from '../../types';
 import { searchLocations } from '../../services/locationService';
-<<<<<<< HEAD
-=======
 import { formatLocationNameUniversal } from '../../services/geocodingService';
->>>>>>> 75c2859 (production ready code need to test)
 import debounce from 'lodash/debounce';
 import '../../styles/LocationDropdown.css';
 
@@ -18,12 +15,11 @@ interface LocationDropdownProps {
   disabled?: boolean;
   showValidationFeedback?: boolean;
   excludeLocations?: Location[];
-  locations?: Location[]; // Add locations prop since it's used in SearchForm
+  locations?: Location[];
 }
 
 /**
  * Location dropdown component with autocomplete functionality
- * First retrieves data from database, then fallbacks to map API if needed
  */
 const LocationDropdown: React.FC<LocationDropdownProps> = ({
   id,
@@ -46,14 +42,6 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   
   const dropdownRef = useRef<HTMLDivElement>(null);
   
-<<<<<<< HEAD
-  // Get display name based on current language
-  const getDisplayName = useCallback((location: Location): string => {
-    if (i18n.language === 'ta' && location.translatedName) {
-      return location.translatedName;
-    }
-    return location.name;
-=======
   // Get display name based on current language with consistent city-first formatting
   const getDisplayName = useCallback((location: Location): string => {
     let displayName = location.name;
@@ -65,15 +53,11 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     
     // Apply universal formatting to ensure city name appears first
     return formatLocationNameUniversal(displayName);
->>>>>>> 75c2859 (production ready code need to test)
   }, [i18n.language]);
 
   // Filter out excluded locations
   const filterExcludedLocations = (locations: Location[]): Location[] => {
     if (!excludeLocations || excludeLocations.length === 0) return locations;
-    
-    // Add debug logging to help diagnose filtering issues
-    console.log(`Filtering ${locations.length} locations against ${excludeLocations.length} excluded locations`);
     
     const filtered = locations.filter(location => {
       if (!location || !location.name) return false;
@@ -82,18 +66,14 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
       const shouldExclude = excludeLocations.some(excluded => {
         if (!excluded || !excluded.name) return false;
         
-        // For map API results that contain full addresses, we need to be more lenient
-        // Only exclude if the exact IDs match or if the base names (not full addresses) are identical
-        
         const exactIdMatch = excluded.id && location.id && excluded.id === location.id;
         
-        // Extract the main location name without address details (before the first comma)
+        // Extract the main location name without address details
         const excludedBaseName = excluded.name.split(',')[0].toLowerCase().trim();
         const locationBaseName = location.name.split(',')[0].toLowerCase().trim();
         
         const exactBaseNameMatch = 
           excludedBaseName === locationBaseName && 
-          // Don't exclude map results that have the same base name but different full addresses
           !(location.source === 'map' && excluded.name !== location.name);
         
         return exactIdMatch || exactBaseNameMatch;
@@ -101,12 +81,6 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
       
       return !shouldExclude;
     });
-    
-    // More debugging to show what happened after filtering
-    const removedCount = locations.length - filtered.length;
-    if (removedCount > 0) {
-      console.log(`Filtered out ${removedCount} locations, ${filtered.length} remain`);
-    }
     
     return filtered;
   };
@@ -116,11 +90,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     const fetchAllLocations = async () => {
       // If locations prop is provided, use it directly
       if (locations && locations.length > 0) {
-<<<<<<< HEAD
-        const filteredLocations = filterExcludedLocations(locations);
-=======
         const filteredLocations = filterExcludedLocations(locations as Location[]);
->>>>>>> 75c2859 (production ready code need to test)
         setAllLocations(filteredLocations);
         return;
       }
@@ -128,12 +98,8 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
       // Otherwise, fetch all locations from the API
       try {
         setIsLoading(true);
-        const allLocationsData = await searchLocations(''); // Fetch all locations
-<<<<<<< HEAD
-        const filteredLocations = filterExcludedLocations(allLocationsData);
-=======
+        const allLocationsData = await searchLocations('');
         const filteredLocations = filterExcludedLocations(allLocationsData as Location[]);
->>>>>>> 75c2859 (production ready code need to test)
         setAllLocations(filteredLocations);
       } catch (err) {
         console.error('Error fetching all locations:', err);
@@ -145,16 +111,10 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     fetchAllLocations();
   }, [locations, excludeLocations]);
 
-<<<<<<< HEAD
-  // Create a debounced search function
-=======
   // Create a debounced search function with reduced delay for better performance
->>>>>>> 75c2859 (production ready code need to test)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce(async (query: string) => {
       if (!query) {
-        // When query is empty, show all locations
         setResults(allLocations);
         setIsLoading(false);
         return;
@@ -164,47 +124,30 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
       setError(null);
       
       try {
-        console.log(`Searching locations for: "${query}"`);
-        
         let searchResults: Location[] = [];
         
-        // If locations prop is provided, use it for filtering instead of making API call
+        // If locations prop is provided, use it for filtering
         if (locations && locations.length > 0) {
           searchResults = locations.filter(loc => 
             loc.name.toLowerCase().includes(query.toLowerCase())
           );
         } else {
-<<<<<<< HEAD
-          // This API call will first check database, then fall back to map API
-          searchResults = await searchLocations(query);
-=======
           // Use smart search for better performance
-          if (query.length >= 2) { // Reduced from 3 to 2
+          if (query.length >= 2) {
             searchResults = await searchLocations(query);
           }
->>>>>>> 75c2859 (production ready code need to test)
         }
         
         // Filter out any excluded locations
         const filteredResults = filterExcludedLocations(searchResults);
         setResults(filteredResults);
-        
-        if (filteredResults.length === 0) {
-          console.log(`No results found for: "${query}"`);
-        } else {
-          console.log(`Found ${filteredResults.length} locations for: "${query}"`);
-        }
       } catch (err) {
         console.error('Error searching locations:', err);
         setError(t('error.searchFailed', 'Failed to search locations'));
       } finally {
         setIsLoading(false);
       }
-<<<<<<< HEAD
-    }, 300),
-=======
-    }, 100), // Reduced from 200ms to 100ms for faster response
->>>>>>> 75c2859 (production ready code need to test)
+    }, 100),
     [t, excludeLocations, locations, allLocations]
   );
 
@@ -219,7 +162,6 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   // Handle focus on input
   const handleInputFocus = () => {
     setIsOpen(true);
-    // Show all locations when focused if no query is entered or if already selected
     setResults(allLocations);
   };
 
@@ -258,7 +200,6 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
       <div 
         className="dropdown-input-wrapper" 
         onClick={() => {
-          // When clicking on the input wrapper, show all locations
           setIsOpen(true);
           setResults(allLocations);
         }}
@@ -304,15 +245,9 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
               ))}
             </ul>
           ) : isLoading ? (
-<<<<<<< HEAD
-            <div className="dropdown-message">{t('search.searching', 'Searching...')}</div>
-          ) : (
-            <div className="dropdown-message">{t('search.noResults', 'No locations found')}</div>
-=======
             <div className="dropdown-message">{t('common.loading', 'Loading...')}</div>
           ) : (
             <div className="dropdown-message">{t('common.noLocationsFound', 'No locations found matching your search')}</div>
->>>>>>> 75c2859 (production ready code need to test)
           )}
         </div>
       )}

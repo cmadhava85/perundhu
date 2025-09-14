@@ -1,9 +1,8 @@
 package com.perundhu.adapter.in.rest;
 
 import com.perundhu.application.dto.ApiResponse;
-import com.perundhu.domain.model.TranslatableProxy;
-import com.perundhu.domain.model.Translation;
-import com.perundhu.domain.service.TranslationService;
+import com.perundhu.domain.model.Translatable;
+import com.perundhu.domain.port.TranslationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * REST API Controller for translation operations
@@ -29,7 +28,7 @@ public class TranslationV1Controller {
      * 
      * @param translationService The translation service
      */
-    public TranslationV1Controller(@Qualifier("domainTranslationService") TranslationService translationService) {
+    public TranslationV1Controller(TranslationService translationService) {
         this.translationService = translationService;
     }
 
@@ -38,25 +37,24 @@ public class TranslationV1Controller {
      * 
      * @param entityType Entity type
      * @param entityId   Entity ID
-     * @param fieldName  Field name
      * @return API response with translatable entity
      */
-    @GetMapping("/{entityType}/{entityId}/{fieldName}")
+    @GetMapping("/{entityType}/{entityId}")
     public ResponseEntity<ApiResponse> getTranslatable(
             @PathVariable String entityType,
-            @PathVariable Long entityId,
-            @PathVariable String fieldName) {
+            @PathVariable Long entityId) {
 
-        log.info("Get translatable entity request for {}/{}/{}", entityType, entityId, fieldName);
+        log.info("Get translatable entity request for {}/{}", entityType, entityId);
 
         try {
-            TranslatableProxy translatable = translationService.getTranslatable(entityType, entityId, fieldName);
+            Optional<Translatable> translatable = translationService.getTranslatable(entityType, entityId);
             Map<String, Object> data = new HashMap<>();
-            data.put("translatable", translatable);
+            data.put("translatable", translatable.orElse(null));
             return ResponseEntity.ok(new ApiResponse("success", "Translatable entity retrieved successfully", data));
         } catch (Exception e) {
             log.error("Error retrieving translatable entity", e);
-            return ResponseEntity.status(500).body(new ApiResponse("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(new ApiResponse("error", "Error retrieving translatable entity: " + e.getMessage()));
         }
     }
 
@@ -65,71 +63,101 @@ public class TranslationV1Controller {
      * 
      * @param entityType Entity type
      * @param entityId   Entity ID
-     * @param fieldName  Field name
      * @return API response with translations
      */
-    @GetMapping("/{entityType}/{entityId}/{fieldName}/translations")
-    public ResponseEntity<ApiResponse> getTranslations(
+    @GetMapping("/{entityType}/{entityId}/translations")
+    public ResponseEntity<ApiResponse> getEntityTranslations(
             @PathVariable String entityType,
-            @PathVariable Long entityId,
-            @PathVariable String fieldName) {
+            @PathVariable Long entityId) {
 
-        log.info("Get translations request for {}/{}/{}", entityType, entityId, fieldName);
+        log.info("Get translations request for {}/{}", entityType, entityId);
 
         try {
-            List<Translation> translations = translationService.getTranslations(entityType, entityId, fieldName);
-            Map<String, Object> data = new HashMap<>();
-            data.put("translations", translations);
-            return ResponseEntity.ok(new ApiResponse("success", "Translations retrieved successfully", data));
+            Map<String, Object> translations = translationService.getEntityTranslations(entityType, entityId);
+            return ResponseEntity.ok(new ApiResponse("success", "Translations retrieved successfully", translations));
         } catch (Exception e) {
             log.error("Error retrieving translations", e);
-            return ResponseEntity.status(500).body(new ApiResponse("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(new ApiResponse("error", "Error retrieving translations: " + e.getMessage()));
         }
     }
 
     /**
      * Add a new translation
      * 
-     * @param translation The translation to add
-     * @return API response with saved translation
+     * @param entityType   Entity type
+     * @param entityId     Entity ID
+     * @param fieldName    Field name
+     * @param languageCode Language code
+     * @param value        Translation value
+     * @return API response with result
      */
-    @PostMapping
-    public ResponseEntity<ApiResponse> addTranslation(@RequestBody Translation translation) {
-        log.info("Add translation request for {}/{}/{} in language {}",
-                translation.getEntityType(), translation.getEntityId(),
-                translation.getFieldName(), translation.getLanguageCode());
+    @PostMapping("/{entityType}/{entityId}/{fieldName}/{languageCode}")
+    public ResponseEntity<ApiResponse> addTranslation(
+            @PathVariable String entityType,
+            @PathVariable Long entityId,
+            @PathVariable String fieldName,
+            @PathVariable String languageCode,
+            @RequestBody String value) {
+
+        log.info("Add translation request for {}/{}/{} in language {}", entityType, entityId, fieldName, languageCode);
 
         try {
-            Translation saved = translationService.addTranslation(translation);
-            Map<String, Object> data = new HashMap<>();
-            data.put("translation", saved);
-            return ResponseEntity.ok(new ApiResponse("success", "Translation added successfully", data));
+            Optional<Translatable> translatableOpt = translationService.getTranslatable(entityType, entityId);
+            if (translatableOpt.isPresent()) {
+                translationService.addTranslation(translatableOpt.get(), fieldName, languageCode, value);
+                Map<String, Object> data = new HashMap<>();
+                data.put("entityType", entityType);
+                data.put("entityId", entityId);
+                data.put("fieldName", fieldName);
+                data.put("languageCode", languageCode);
+                data.put("value", value);
+                return ResponseEntity.ok(new ApiResponse("success", "Translation added successfully", data));
+            } else {
+                return ResponseEntity.status(404).body(new ApiResponse("error", "Entity not found"));
+            }
         } catch (Exception e) {
             log.error("Error adding translation", e);
-            return ResponseEntity.status(500).body(new ApiResponse("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(new ApiResponse("error", "Error adding translation: " + e.getMessage()));
         }
     }
 
     /**
      * Delete a translation
      * 
-     * @param id The translation ID
+     * @param entityType   Entity type
+     * @param entityId     Entity ID
+     * @param fieldName    Field name
+     * @param languageCode Language code
      * @return API response with result
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteTranslation(@PathVariable Long id) {
-        log.info("Delete translation request for ID {}", id);
+    @DeleteMapping("/{entityType}/{entityId}/{fieldName}/{languageCode}")
+    public ResponseEntity<ApiResponse> deleteTranslation(
+            @PathVariable String entityType,
+            @PathVariable Long entityId,
+            @PathVariable String fieldName,
+            @PathVariable String languageCode) {
+
+        log.info("Delete translation request for {}/{}/{} in language {}", entityType, entityId, fieldName,
+                languageCode);
 
         try {
-            boolean deleted = translationService.deleteTranslation(id);
-            if (deleted) {
-                return ResponseEntity.ok(new ApiResponse("success", "Translation deleted successfully"));
+            Optional<Translatable> translatableOpt = translationService.getTranslatable(entityType, entityId);
+            if (translatableOpt.isPresent()) {
+                boolean deleted = translationService.deleteTranslation(translatableOpt.get(), fieldName, languageCode);
+                if (deleted) {
+                    return ResponseEntity.ok(new ApiResponse("success", "Translation deleted successfully"));
+                } else {
+                    return ResponseEntity.status(404).body(new ApiResponse("error", "Translation not found"));
+                }
             } else {
-                return ResponseEntity.status(404).body(new ApiResponse("error", "Translation not found"));
+                return ResponseEntity.status(404).body(new ApiResponse("error", "Entity not found"));
             }
         } catch (Exception e) {
             log.error("Error deleting translation", e);
-            return ResponseEntity.status(500).body(new ApiResponse("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(new ApiResponse("error", "Error deleting translation: " + e.getMessage()));
         }
     }
 }

@@ -7,6 +7,7 @@ interface BusListProps {
   buses: Bus[];
   selectedBusId?: number | null;
   stopsMap?: Record<number, Stop[]>;
+  stops?: Stop[]; // Add stops prop to match SearchResults usage
   onSelectBus?: (bus: Bus) => void;
   showTitle?: boolean;
 }

@@ -60,8 +60,8 @@ class EnhancedSearchIntegrationTest {
       for (BusDTO bus : buses) {
         assertNotNull(bus.id());
         assertNotNull(bus.name());
-        assertNotNull(bus.fromLocation());
-        assertNotNull(bus.toLocation());
+        assertNotNull(bus.fromLocationName());
+        assertNotNull(bus.toLocationName());
 
         // Continuing buses should have "(via ...)" in their name
         if (bus.name().contains("(via")) {

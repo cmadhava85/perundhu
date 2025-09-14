@@ -4,7 +4,6 @@ import com.perundhu.domain.port.SecurityMonitoringPort;
 import org.springframework.stereotype.Service;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.beans.factory.annotation.Value;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,14 +18,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Handles real-time threat detection and automated security responses
  */
 @Service
-@Slf4j
 public class SecurityMonitoringService implements SecurityMonitoringPort {
 
   private static final Logger log = LoggerFactory.getLogger(SecurityMonitoringService.class);
   private static final Logger auditLogger = LoggerFactory.getLogger("SECURITY_AUDIT");
 
   private final boolean monitoringEnabled;
-  private final int alertThreshold;
   private final int blockAfterViolations;
 
   // Threat tracking
@@ -37,15 +34,13 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
 
   public SecurityMonitoringService(
       @Value("${security.monitoring.enabled:true}") boolean monitoringEnabled,
-      @Value("${security.monitoring.alert-threshold:100}") int alertThreshold,
       @Value("${security.monitoring.block-after-violations:5}") int blockAfterViolations) {
 
     this.monitoringEnabled = monitoringEnabled;
-    this.alertThreshold = alertThreshold;
     this.blockAfterViolations = blockAfterViolations;
 
-    log.info("Security monitoring initialized: enabled={}, alertThreshold={}, blockAfterViolations={}",
-        monitoringEnabled, alertThreshold, blockAfterViolations);
+    log.info("Security monitoring initialized: enabled={}, blockAfterViolations={}",
+        monitoringEnabled, blockAfterViolations);
   }
 
   @Override
@@ -97,8 +92,8 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
   }
 
   @Override
-  public SecurityMonitoringPort.SecurityStats getSecurityStats() {
-    return new SecurityStats(
+  public SecurityStats getSecurityStats() {
+    return new SecurityStatsImpl(
         threatProfiles.size(),
         blockedIps.size(),
         (int) threatProfiles.values().stream().filter(ThreatProfile::isActive).count(),
@@ -171,12 +166,15 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
     }
   }
 
+  /**
+   * Enhanced null-safe user agent validation using Java 17 features
+   */
   public boolean isSuspiciousUserAgent(String userAgent) {
-    if (userAgent == null)
-      return true;
-
-    String ua = userAgent.toLowerCase();
-    return suspiciousUserAgents.stream().anyMatch(ua::contains);
+    return Optional.ofNullable(userAgent)
+        .filter(ua -> !ua.trim().isEmpty())
+        .map(String::toLowerCase)
+        .map(ua -> suspiciousUserAgents.stream().anyMatch(ua::contains))
+        .orElse(true); // Block null or empty user agents
   }
 
   @Async
@@ -235,6 +233,9 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
   }
 
   // Supporting inner classes
+  /**
+   * Simplified SecurityEvent for Java 17 compatibility
+   */
   public static class SecurityEvent {
     private final String clientId;
     private final SecurityEventType eventType;
@@ -260,8 +261,8 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
       return clientId;
     }
 
-    public SecurityEventType getEventType() {
-      return eventType;
+    public String getEventType() {
+      return eventType.name();
     }
 
     public SecurityEventSeverity getSeverity() {
@@ -304,13 +305,12 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
   }
 
   private static class ThreatProfile {
-    private final String clientId;
     private int violationCount = 0;
     private long lastActivity = System.currentTimeMillis();
     private long highSeverityEvents = 0;
 
     public ThreatProfile(String clientId) {
-      this.clientId = clientId;
+      // Constructor for client ID tracking
     }
 
     public void recordEvent(SecurityEvent event) {
@@ -340,9 +340,9 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
   }
 
   /**
-   * Security statistics data class
+   * Security statistics implementation
    */
-  public static class SecurityStats implements SecurityMonitoringPort.SecurityStats {
+  public static class SecurityStatsImpl implements SecurityStats {
     private final int activeThreatProfiles;
     private final int blockedIps;
     private final int activeThreats;
@@ -350,7 +350,7 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
     private final long highSeverityEvents;
     private final LocalDateTime lastUpdated;
 
-    public SecurityStats(int activeThreatProfiles, int blockedIps, int activeThreats,
+    public SecurityStatsImpl(int activeThreatProfiles, int blockedIps, int activeThreats,
         int suspiciousUserAgents, long highSeverityEvents, LocalDateTime lastUpdated) {
       this.activeThreatProfiles = activeThreatProfiles;
       this.blockedIps = blockedIps;

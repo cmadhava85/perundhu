@@ -1,7 +1,6 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,15 +12,17 @@ import com.perundhu.infrastructure.persistence.entity.UserTrackingSessionEntity;
 import com.perundhu.infrastructure.persistence.repository.UserTrackingSessionJpaRepository;
 
 /**
- * Implementation of UserTrackingSessionRepository that delegates to Spring Data JPA
+ * Implementation of UserTrackingSessionRepository that delegates to Spring Data
+ * JPA
  */
-@Repository
+// Remove @Repository annotation - managed by HexagonalConfig
 @Transactional
 public class UserTrackingSessionRepositoryAdapter implements UserTrackingSessionRepository {
 
     private final UserTrackingSessionJpaRepository repository;
 
-    public UserTrackingSessionRepositoryAdapter(@Qualifier("repositoryPackageUserTrackingSessionJpaRepository") UserTrackingSessionJpaRepository repository) {
+    public UserTrackingSessionRepositoryAdapter(
+            @Qualifier("repositoryPackageUserTrackingSessionJpaRepository") UserTrackingSessionJpaRepository repository) {
         this.repository = repository;
     }
 
@@ -50,7 +51,7 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
                 .map(UserTrackingSessionEntity::toDomainModel)
                 .toList();
     }
-    
+
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
