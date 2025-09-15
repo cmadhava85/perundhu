@@ -15,39 +15,39 @@ import com.perundhu.domain.model.Location;
  * Updated to use proper Java 17 record-based ID types
  */
 public interface BusAnalyticsRepository {
-    BusAnalytics save(BusAnalytics analytics);
+        BusAnalytics save(BusAnalytics analytics);
 
-    Optional<BusAnalytics> findById(BusAnalytics.BusAnalyticsId id);
+        Optional<BusAnalytics> findById(BusAnalytics.BusAnalyticsId id);
 
-    List<BusAnalytics> findByBus(Bus bus);
+        List<BusAnalytics> findByBus(Bus bus);
 
-    List<BusAnalytics> findByBusId(BusId busId);
+        List<BusAnalytics> findByBusId(BusId busId);
 
-    List<BusAnalytics> findByDateRange(LocalDate start, LocalDate end);
+        List<BusAnalytics> findByDateRange(LocalDate start, LocalDate end);
 
-    Optional<BusAnalytics> findByBusAndDate(Bus bus, LocalDate date);
+        Optional<BusAnalytics> findByBusAndDate(Bus bus, LocalDate date);
 
-    void deleteOlderThan(LocalDateTime dateTime);
-    
-    // Enhanced analytics methods using Java 17 features
-    List<BusAnalytics> findByFromAndToLocationAndBusIdAndDateTimeBetween(
-            Location fromLocation, Location toLocation, BusId busId,
-            LocalDateTime startDateTime, LocalDateTime endDateTime, int offset, int limit);
+        void deleteOlderThan(LocalDateTime dateTime);
 
-    List<BusAnalytics> findByFromAndToLocationAndDateTimeBetween(
-            Location fromLocation, Location toLocation,
-            LocalDateTime startDateTime, LocalDateTime endDateTime);
+        // Enhanced analytics methods using Java 17 features
+        List<BusAnalytics> findByFromAndToLocationAndBusIdAndDateTimeBetween(
+                        Location fromLocation, Location toLocation, BusId busId,
+                        LocalDateTime startDateTime, LocalDateTime endDateTime, int offset, int limit);
 
-    int countByFromAndToLocationAndBusIdAndDateTimeBetween(
-            Location fromLocation, Location toLocation, BusId busId,
-            LocalDateTime startDateTime, LocalDateTime endDateTime);
+        List<BusAnalytics> findByFromAndToLocationAndDateTimeBetween(
+                        Location fromLocation, Location toLocation,
+                        LocalDateTime startDateTime, LocalDateTime endDateTime);
 
-    // New enhanced methods
-    List<BusAnalytics> findTopPerformingBuses(LocalDate date, int limit);
+        int countByFromAndToLocationAndBusIdAndDateTimeBetween(
+                        Location fromLocation, Location toLocation, BusId busId,
+                        LocalDateTime startDateTime, LocalDateTime endDateTime);
 
-    Optional<BusAnalytics> findBestPerformanceByRoute(Location fromLocation, Location toLocation, LocalDate date);
+        // New enhanced methods
+        List<BusAnalytics> findTopPerformingBuses(LocalDate date, int limit);
 
-    List<BusAnalytics> findByOccupancyGreaterThan(double occupancyThreshold);
+        Optional<BusAnalytics> findBestPerformanceByRoute(Location fromLocation, Location toLocation, LocalDate date);
 
-    List<BusAnalytics> findByOnTimePerformanceLessThan(double performanceThreshold);
+        List<BusAnalytics> findByOccupancyGreaterThan(double occupancyThreshold);
+
+        List<BusAnalytics> findByOnTimePerformanceLessThan(double performanceThreshold);
 }
