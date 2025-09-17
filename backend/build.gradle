@@ -168,6 +168,9 @@ dependencies {
     // Add additional Spring Boot test slices for repository and web tests
     testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
     
+    // ArchUnit for architecture testing
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.2.1'
+    
     // JUnit Platform Suite dependencies with aligned versions
     testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.2'
     testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.2'

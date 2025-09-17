@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { 
-  searchBuses as apiSearchBuses
+  searchBuses as apiSearchBuses,
+  getStops
 } from '../services/api';
 import { OSMDiscoveryService, type OSMBusStop, type OSMBusRoute } from '../services/osmDiscoveryService';
 import type { Bus, Location, Stop, ConnectingRoute } from '../types';
@@ -48,6 +49,23 @@ const useBusSearch = () => {
     try {
       const result = await apiSearchBuses(fromLocation, toLocation, includeContinuing);
       setBuses(result);
+      
+      // Fetch real stops data for each bus
+      const newStopsMap: Record<number, Stop[]> = {};
+      
+      for (const bus of result) {
+        try {
+          const stops = await getStops(bus.id);
+          newStopsMap[bus.id] = stops;
+        } catch (stopsError) {
+          console.warn(`Failed to fetch stops for bus ${bus.id}:`, stopsError);
+          // Continue without stops for this bus
+          newStopsMap[bus.id] = [];
+        }
+      }
+      
+      setStopsMap(newStopsMap);
+      
     } catch (err) {
       setError(err as Error);
     } finally {

@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,155 +34,151 @@ import com.perundhu.application.service.BusScheduleService;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class BusScheduleControllerEnhancedSearchTest {
 
-    private MockMvc mockMvc;
+        private MockMvc mockMvc;
 
-    @Mock
-    private BusScheduleService busScheduleService;
+        @Mock
+        private BusScheduleService busScheduleService;
 
-    @InjectMocks
-    private BusScheduleController controller;
+        @InjectMocks
+        private BusScheduleController controller;
 
-    private List<BusDTO> testDirectBuses;
-    private List<BusDTO> testViaBuses;
-    private List<BusDTO> testContinuingBuses;
+        private List<BusDTO> testDirectBuses;
+        private List<BusDTO> testViaBuses;
+        private List<BusDTO> testContinuingBuses;
 
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        @BeforeEach
+        void setUp() {
+                mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-        testDirectBuses = Arrays.asList(
-                new BusDTO(
-                        1L, "Express Bus", "EXP001",
-                        "Chennai", "Bangalore",
-                        LocalTime.of(8, 0), LocalTime.of(14, 0),
-                        50, "Express", true),
-                new BusDTO(
-                        2L, "Regular Bus", "REG002",
-                        "Chennai", "Bangalore",
-                        LocalTime.of(10, 0), LocalTime.of(16, 0),
-                        45, "Regular", true));
+                testDirectBuses = Arrays.asList(
+                                new BusDTO(
+                                                1L, "EXP001", "Express Bus",
+                                                "Express Operator", "Express",
+                                                Map.of("type", "express")),
+                                new BusDTO(
+                                                2L, "REG002", "Regular Bus",
+                                                "Regular Operator", "Regular",
+                                                Map.of("type", "regular")));
 
-        testViaBuses = Arrays.asList(
-                new BusDTO(
-                        3L, "Via Bus", "VIA003",
-                        "Chennai", "Madurai",
-                        LocalTime.of(9, 0), LocalTime.of(17, 0),
-                        40, "Regular", true));
+                testViaBuses = Arrays.asList(
+                                new BusDTO(
+                                                3L, "VIA003", "Via Bus",
+                                                "Via Operator", "Regular",
+                                                Map.of("type", "via")));
 
-        testContinuingBuses = Arrays.asList(
-                new BusDTO(
-                        4L, "Continuing Bus (via Bangalore)", "CONT004",
-                        "Chennai", "Mysore",
-                        LocalTime.of(7, 0), LocalTime.of(18, 0),
-                        55, "Express", true));
-    }
+                testContinuingBuses = Arrays.asList(
+                                new BusDTO(
+                                                4L, "CONT004", "Continuing Bus (via Bangalore)",
+                                                "Continuing Operator", "Express",
+                                                Map.of("type", "continuing")));
+        }
 
-    @Test
-    void testEnhancedSearch_WithContinuingBuses_Success() throws Exception {
-        // Mock the three service methods that the enhanced search endpoint calls
-        when(busScheduleService.findBusesBetweenLocations(1L, 2L))
-                .thenReturn(testDirectBuses);
-        when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
-                .thenReturn(testViaBuses);
-        when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
-                .thenReturn(testContinuingBuses);
+        @Test
+        void testEnhancedSearch_WithContinuingBuses_Success() throws Exception {
+                // Mock the three service methods that the enhanced search endpoint calls
+                when(busScheduleService.findBusesBetweenLocations(1L, 2L))
+                                .thenReturn(testDirectBuses);
+                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
+                                .thenReturn(testViaBuses);
+                when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
+                                .thenReturn(testContinuingBuses);
 
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocationId", "1")
-                .param("toLocationId", "2")
-                .param("includeContinuing", "true")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(4))) // All buses combined
-                .andExpect(jsonPath("$[0].name", is("Express Bus")))
-                .andExpect(jsonPath("$[0].busNumber", is("EXP001")));
-    }
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocationId", "1")
+                                .param("toLocationId", "2")
+                                .param("includeContinuing", "true")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$", hasSize(4))) // All buses combined
+                                .andExpect(jsonPath("$[0].name", is("Express Bus")))
+                                .andExpect(jsonPath("$[0].number", is("EXP001"))); // Changed from busNumber to number
+        }
 
-    @Test
-    void testEnhancedSearch_WithoutContinuingBuses_Success() throws Exception {
-        when(busScheduleService.findBusesBetweenLocations(1L, 2L))
-                .thenReturn(testDirectBuses);
-        when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
-                .thenReturn(testViaBuses);
+        @Test
+        void testEnhancedSearch_WithoutContinuingBuses_Success() throws Exception {
+                when(busScheduleService.findBusesBetweenLocations(1L, 2L))
+                                .thenReturn(testDirectBuses);
+                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
+                                .thenReturn(testViaBuses);
 
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocationId", "1")
-                .param("toLocationId", "2")
-                .param("includeContinuing", "false")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3))) // Direct + via buses only
-                .andExpect(jsonPath("$[0].name", is("Express Bus")));
-    }
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocationId", "1")
+                                .param("toLocationId", "2")
+                                .param("includeContinuing", "false")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$", hasSize(3))) // Direct + via buses only
+                                .andExpect(jsonPath("$[0].name", is("Express Bus")));
+        }
 
-    @Test
-    void testEnhancedSearch_SameFromAndToLocation_BadRequest() throws Exception {
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocationId", "1")
-                .param("toLocationId", "1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
+        @Test
+        void testEnhancedSearch_SameFromAndToLocation_BadRequest() throws Exception {
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocationId", "1")
+                                .param("toLocationId", "1")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isBadRequest());
+        }
 
-    @Test
-    void testEnhancedSearch_EmptyResults_Success() throws Exception {
-        when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong()))
-                .thenReturn(Collections.emptyList());
-        when(busScheduleService.findBusesPassingThroughLocations(anyLong(), anyLong()))
-                .thenReturn(Collections.emptyList());
-        when(busScheduleService.findBusesContinuingBeyondDestination(anyLong(), anyLong()))
-                .thenReturn(Collections.emptyList());
+        @Test
+        void testEnhancedSearch_EmptyResults_Success() throws Exception {
+                when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong()))
+                                .thenReturn(Collections.emptyList());
+                when(busScheduleService.findBusesPassingThroughLocations(anyLong(), anyLong()))
+                                .thenReturn(Collections.emptyList());
+                when(busScheduleService.findBusesContinuingBeyondDestination(anyLong(), anyLong()))
+                                .thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocationId", "999")
-                .param("toLocationId", "998")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
-    }
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocationId", "999")
+                                .param("toLocationId", "998")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$", hasSize(0)));
+        }
 
-    @Test
-    void testEnhancedSearch_ServiceException_InternalServerError() throws Exception {
-        when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong()))
-                .thenThrow(new RuntimeException("Database error"));
+        @Test
+        void testEnhancedSearch_ServiceException_InternalServerError() throws Exception {
+                when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong()))
+                                .thenThrow(new RuntimeException("Database error"));
 
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocationId", "1")
-                .param("toLocationId", "2")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-    }
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocationId", "1")
+                                .param("toLocationId", "2")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isInternalServerError());
+        }
 
-    @Test
-    void testEnhancedSearch_LegacyStringParameters_Success() throws Exception {
-        when(busScheduleService.searchRoutes("Chennai", "Bangalore", 0, 10))
-                .thenReturn(testDirectBuses);
+        @Test
+        void testEnhancedSearch_LegacyStringParameters_Success() throws Exception {
+                when(busScheduleService.searchRoutes("Chennai", "Bangalore", 0, 10))
+                                .thenReturn(testDirectBuses);
 
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocation", "Chennai")
-                .param("toLocation", "Bangalore")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].name", is("Express Bus")));
-    }
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocation", "Chennai")
+                                .param("toLocation", "Bangalore")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$", hasSize(2)))
+                                .andExpect(jsonPath("$[0].name", is("Express Bus")));
+        }
 
-    @Test
-    void testEnhancedSearch_PaginationLimit_Success() throws Exception {
-        when(busScheduleService.findBusesBetweenLocations(1L, 2L))
-                .thenReturn(testDirectBuses.subList(0, 1));
-        when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
-                .thenReturn(Collections.emptyList());
-        when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
-                .thenReturn(Collections.emptyList());
+        @Test
+        void testEnhancedSearch_PaginationLimit_Success() throws Exception {
+                when(busScheduleService.findBusesBetweenLocations(1L, 2L))
+                                .thenReturn(testDirectBuses.subList(0, 1));
+                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
+                                .thenReturn(Collections.emptyList());
+                when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
+                                .thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/bus-schedules/search")
-                .param("fromLocationId", "1")
-                .param("toLocationId", "2")
-                .param("size", "1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is("Express Bus")));
-    }
+                mockMvc.perform(get("/api/v1/bus-schedules/search")
+                                .param("fromLocationId", "1")
+                                .param("toLocationId", "2")
+                                .param("size", "1")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$", hasSize(1)))
+                                .andExpect(jsonPath("$[0].name", is("Express Bus")));
+        }
 }

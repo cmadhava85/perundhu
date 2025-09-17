@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 import AnalyticsFilterControls from '../../../components/analytics/AnalyticsFilterControls';
 

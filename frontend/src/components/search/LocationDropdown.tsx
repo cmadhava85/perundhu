@@ -4,7 +4,7 @@ import type { Location } from '../../types';
 import { searchLocations } from '../../services/locationService';
 import { formatLocationNameUniversal } from '../../services/geocodingService';
 import debounce from 'lodash/debounce';
-import '../../styles/LocationDropdown.css';
+import '../LocationAutocompleteInput.css';
 
 interface LocationDropdownProps {
   id: string;
@@ -194,7 +194,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   }, [selectedLocation, i18n.language, getDisplayName]);
 
   return (
-    <div className="location-dropdown-container" ref={dropdownRef}>
+    <div className={`location-dropdown-container ${isOpen ? 'open' : ''}`} ref={dropdownRef}>
       {label && <label htmlFor={id}>{label}</label>}
       
       <div 

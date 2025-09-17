@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "ms-java.java-extension-pack",
+    "vscjava.vscode-spring-initializr",
+    "vscjava.vscode-spring-boot-dashboard",
+    "redhat.java",
+    "sonarsource.sonarlint-vscode"
+  ]
+}

@@ -9,13 +9,32 @@ import com.perundhu.domain.model.Location;
 public interface RouteValidationService {
 
     /**
-     * Validates a route between two locations.
+     * Validates if a route between two locations is valid.
      * 
-     * @param from The origin location
-     * @param to   The destination location
-     * @throws IllegalArgumentException if the route is invalid
+     * @param fromLocation The origin location
+     * @param toLocation   The destination location
+     * @return true if the route is valid, false otherwise
      */
-    void validateRoute(Location from, Location to);
+    boolean isValidRoute(Location fromLocation, Location toLocation);
+
+    /**
+     * Validates if the distance between two locations is reasonable for a bus
+     * route.
+     * 
+     * @param fromLocation The origin location
+     * @param toLocation   The destination location
+     * @return true if the distance is valid, false otherwise
+     */
+    boolean isValidRouteDistance(Location fromLocation, Location toLocation);
+
+    /**
+     * Validates the locations used in a route.
+     * 
+     * @param fromLocation The origin location
+     * @param toLocation   The destination location
+     * @return true if the locations are valid, false otherwise
+     */
+    boolean validateRouteLocations(Location fromLocation, Location toLocation);
 
     /**
      * Calculates the distance between two points on Earth using the Haversine

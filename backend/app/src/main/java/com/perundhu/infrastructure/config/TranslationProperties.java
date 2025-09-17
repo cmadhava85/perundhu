@@ -1,5 +1,7 @@
 package com.perundhu.infrastructure.config;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,10 @@ public class TranslationProperties {
   private boolean enableCaching = true;
   private int cacheExpirationMinutes = 60;
   private boolean enableAutoTranslation = false;
+  private List<String> supportedLanguages = List.of("en", "ta", "hi", "ml", "te", "kn");
+  private double completionThreshold = 0.8;
+  private double errorThreshold = 0.1;
+  private double qualityThreshold = 0.8;
 
   public String getDefaultLanguage() {
     return defaultLanguage;
@@ -54,5 +60,37 @@ public class TranslationProperties {
 
   public void setEnableAutoTranslation(boolean enableAutoTranslation) {
     this.enableAutoTranslation = enableAutoTranslation;
+  }
+
+  public List<String> getSupportedLanguages() {
+    return supportedLanguages;
+  }
+
+  public void setSupportedLanguages(List<String> supportedLanguages) {
+    this.supportedLanguages = supportedLanguages;
+  }
+
+  public double getCompletionThreshold() {
+    return completionThreshold;
+  }
+
+  public void setCompletionThreshold(double completionThreshold) {
+    this.completionThreshold = completionThreshold;
+  }
+
+  public double getErrorThreshold() {
+    return errorThreshold;
+  }
+
+  public void setErrorThreshold(double errorThreshold) {
+    this.errorThreshold = errorThreshold;
+  }
+
+  public double getQualityThreshold() {
+    return qualityThreshold;
+  }
+
+  public void setQualityThreshold(double qualityThreshold) {
+    this.qualityThreshold = qualityThreshold;
   }
 }

@@ -106,6 +106,37 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
 
   return (
     <div className="route-visualization">
+      {/* Enhanced Timing Section */}
+      <div className="timing-section">
+        <div className="timing-group">
+          <label className="timing-label">{t('contribution.departureTime', 'Departure Time')}</label>
+          <input
+            type="time"
+            id="departureTime"
+            name="departureTime"
+            value={departureTime}
+            onChange={onChangeTimes}
+            className={`timing-input ${timeError ? 'field-error' : ''}`}
+            placeholder="HH:MM"
+          />
+          <small className="field-hint">{t('contribution.whenBusLeaves', 'When bus leaves origin')}</small>
+        </div>
+        
+        <div className="timing-group">
+          <label className="timing-label">{t('contribution.arrivalTime', 'Arrival Time')}</label>
+          <input
+            type="time"
+            id="arrivalTime"
+            name="arrivalTime"
+            value={arrivalTime}
+            onChange={onChangeTimes}
+            className={`timing-input ${timeError ? 'field-error' : ''}`}
+            placeholder="HH:MM"
+          />
+          <small className="field-hint">{t('contribution.whenBusArrives', 'When bus reaches destination')}</small>
+        </div>
+      </div>
+
       <div className="visualization-container">
         <div className="route-start-point">
           <div className="location-marker origin-marker"></div>
@@ -120,14 +151,12 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
               showValidationFeedback={fromError}
             />
           </div>
-          <input
-            type="time"
-            id="departureTime"
-            name="departureTime"
-            value={departureTime}
-            onChange={onChangeTimes}
-            className={`time-input ${timeError ? 'field-error' : ''}`}
-          />
+          {departureTime && (
+            <div className="route-time-display">
+              <span className="time-label">{t('contribution.departs', 'Departs')}</span>
+              <span className="time-value">{departureTime}</span>
+            </div>
+          )}
         </div>
         
         {stops.length > 0 && (
@@ -138,9 +167,24 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
                 <div className="stop-info">
                   <div className="stop-name">{stop.name}</div>
                   <div className="stop-times">
-                    {stop.arrivalTime && <span className="arrival-time">{stop.arrivalTime}</span>}
-                    {stop.arrivalTime && stop.departureTime && <span> - </span>}
-                    {stop.departureTime && <span className="departure-time">{stop.departureTime}</span>}
+                    {stop.arrivalTime && (
+                      <span className="arrival-time">
+                        ↓ {stop.arrivalTime}
+                      </span>
+                    )}
+                    {stop.arrivalTime && stop.departureTime && <span className="time-separator">|</span>}
+                    {stop.departureTime && (
+                      <span className="departure-time">
+                        ↑ {stop.departureTime}
+                      </span>
+                    )}
+                  </div>
+                  <div className="stop-duration">
+                    {stop.arrivalTime && stop.departureTime && (
+                      <span className="duration-info">
+                        {t('contribution.stopDuration', 'Stop duration')}: {calculateStopDuration(stop.arrivalTime, stop.departureTime)}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <button 
@@ -148,6 +192,7 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
                   className="remove-stop-btn"
                   onClick={() => onRemoveStop(index)}
                   aria-label="Remove stop"
+                  title={t('contribution.removeStop', 'Remove this stop')}
                 >
                   ×
                 </button>
@@ -169,18 +214,70 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
               showValidationFeedback={toError}
             />
           </div>
-          <input
-            type="time"
-            id="arrivalTime"
-            name="arrivalTime"
-            value={arrivalTime}
-            onChange={onChangeTimes}
-            className={`time-input ${timeError ? 'field-error' : ''}`}
-          />
+          {arrivalTime && (
+            <div className="route-time-display">
+              <span className="time-label">{t('contribution.arrives', 'Arrives')}</span>
+              <span className="time-value">{arrivalTime}</span>
+            </div>
+          )}
         </div>
       </div>
+      
+      {/* Journey Summary */}
+      {departureTime && arrivalTime && (
+        <div className="journey-summary">
+          <div className="summary-item">
+            <span className="summary-label">{t('contribution.totalJourneyTime', 'Total Journey Time')}</span>
+            <span className="summary-value">{calculateJourneyDuration(departureTime, arrivalTime)}</span>
+          </div>
+          {stops.length > 0 && (
+            <div className="summary-item">
+              <span className="summary-label">{t('contribution.totalStops', 'Total Stops')}</span>
+              <span className="summary-value">{stops.length}</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
+
+  // Helper function to calculate stop duration
+  function calculateStopDuration(arrivalTime: string, departureTime: string): string {
+    const arrival = new Date(`2000-01-01T${arrivalTime}`);
+    const departure = new Date(`2000-01-01T${departureTime}`);
+    const diffMs = departure.getTime() - arrival.getTime();
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+    
+    if (diffMins < 60) {
+      return `${diffMins} ${t('contribution.minutes', 'mins')}`;
+    } else {
+      const hours = Math.floor(diffMins / 60);
+      const mins = diffMins % 60;
+      return `${hours}h ${mins}m`;
+    }
+  }
+
+  // Helper function to calculate total journey duration
+  function calculateJourneyDuration(departureTime: string, arrivalTime: string): string {
+    const departure = new Date(`2000-01-01T${departureTime}`);
+    const arrival = new Date(`2000-01-01T${arrivalTime}`);
+    let diffMs = arrival.getTime() - departure.getTime();
+    
+    // Handle overnight journeys
+    if (diffMs < 0) {
+      diffMs += 24 * 60 * 60 * 1000; // Add 24 hours
+    }
+    
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+    const hours = Math.floor(diffMins / 60);
+    const mins = diffMins % 60;
+    
+    if (hours === 0) {
+      return `${mins} ${t('contribution.minutes', 'mins')}`;
+    } else {
+      return `${hours}h ${mins}m`;
+    }
+  }
 };
 
 export default RouteVisualization;

@@ -16,7 +16,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 
 /**
- * JPA entity for bus location history converted to use Java 17 features instead of Lombok
+ * JPA entity for bus location history converted to use Java 17 features instead
+ * of Lombok
  */
 @Entity
 @Table(name = "bus_location_history")
@@ -55,7 +56,7 @@ public class BusLocationHistoryJpaEntity {
 
     // Constructor with all fields
     public BusLocationHistoryJpaEntity(UUID id, BusJpaEntity bus, double latitude, double longitude,
-                                     LocalDateTime timestamp, double speed, double heading) {
+            LocalDateTime timestamp, double speed, double heading) {
         this.id = id;
         this.bus = bus;
         this.latitude = latitude;
@@ -123,11 +124,12 @@ public class BusLocationHistoryJpaEntity {
     }
 
     public static BusLocationHistoryJpaEntity fromDomainModel(BusLocationHistory history) {
-        if (history == null) return null;
+        if (history == null)
+            return null;
 
         BusJpaEntity busEntity = BusJpaEntity.builder()
-            .id(history.bus().id().value())
-            .build();
+                .id(history.bus().id().value())
+                .build();
 
         BusLocationHistoryJpaEntity entity = new BusLocationHistoryJpaEntity();
         entity.setId(history.id().value());
@@ -143,19 +145,17 @@ public class BusLocationHistoryJpaEntity {
 
     public BusLocationHistory toDomainModel() {
         Location location = new Location(
-            null, // id
-            "Recorded Location", // name
-            latitude,
-            longitude
-        );
+                null, // id
+                "Recorded Location", // name
+                null, // nameLocalLanguage
+                latitude,
+                longitude);
         return new BusLocationHistory(
-            new BusLocationHistory.BusLocationHistoryId(id),
-            bus.toDomainModel(),
-            location,
-            timestamp,
-            speed,
-            heading
-        );
+                new BusLocationHistory.BusLocationHistoryId(id),
+                bus.toDomainModel(),
+                location,
+                timestamp,
+                speed,
+                heading);
     }
 }
-

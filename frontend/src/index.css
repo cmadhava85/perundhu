@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Essential base styles to prevent layout collapse */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure containers have proper dimensions */
+.app-container {
+  min-height: 100vh !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 /* Custom styles that extend Tailwind */
 @layer components {
   /* Connecting Routes Component */

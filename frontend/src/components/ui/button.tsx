@@ -1,46 +1,66 @@
 import React from 'react';
+import './button.css';
 
 interface ButtonProps {
   children: React.ReactNode;
-  onClick?: () => void;
-  variant?: 'default' | 'outline' | 'ghost';
-  size?: 'default' | 'sm' | 'lg';
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
   disabled?: boolean;
+  loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  fullWidth?: boolean;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
 }
 
 export const Button: React.FC<ButtonProps> = ({ 
   children, 
   onClick, 
-  variant = 'default', 
-  size = 'default', 
+  variant = 'primary', 
+  size = 'md', 
   className = '',
   disabled = false,
-  type = 'button'
+  loading = false,
+  type = 'button',
+  fullWidth = false,
+  icon,
+  iconPosition = 'left'
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
-  
-  const variantClasses = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700',
-    outline: 'border border-gray-300 bg-transparent hover:bg-gray-50',
-    ghost: 'hover:bg-gray-100'
-  };
-  
-  const sizeClasses = {
-    default: 'h-10 py-2 px-4',
-    sm: 'h-9 px-3 text-sm',
-    lg: 'h-11 px-8'
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled && !loading && onClick) {
+      onClick(e);
+    }
   };
 
   return (
     <button
       type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      onClick={handleClick}
+      disabled={disabled || loading}
+      className={`
+        btn 
+        btn-${variant} 
+        btn-${size} 
+        ${fullWidth ? 'btn-full-width' : ''} 
+        ${loading ? 'btn-loading' : ''} 
+        ${className}
+      `.trim()}
     >
-      {children}
+      {loading && <span className="btn-spinner" />}
+      
+      {icon && iconPosition === 'left' && !loading && (
+        <span className="btn-icon btn-icon-left">{icon}</span>
+      )}
+      
+      <span className={loading ? 'btn-content-hidden' : ''}>
+        {children}
+      </span>
+      
+      {icon && iconPosition === 'right' && !loading && (
+        <span className="btn-icon btn-icon-right">{icon}</span>
+      )}
     </button>
   );
 };

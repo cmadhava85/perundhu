@@ -21,4 +21,13 @@ public record LocationId(Long value) {
       throw new IllegalArgumentException("Invalid Location ID format: " + value, e);
     }
   }
+
+  public static LocationId from(String value) {
+    return new LocationId(Long.parseLong(value));
+  }
+
+  // For backward compatibility
+  public Long getValue() {
+    return value;
+  }
 }

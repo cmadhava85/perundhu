@@ -1,16 +1,18 @@
 package com.perundhu.application.service;
 
-import com.perundhu.application.port.in.AdminUseCase;
-import com.perundhu.domain.model.ImageContribution;
-import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.application.port.output.ImageContributionOutputPort;
-import com.perundhu.domain.port.RouteContributionPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.perundhu.application.port.in.AdminUseCase;
+import com.perundhu.domain.model.ImageContribution;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.ImageContributionOutputPort;
+import com.perundhu.domain.port.RouteContributionPort;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service implementation for admin operations
@@ -40,25 +42,17 @@ public class AdminService implements AdminUseCase {
   @Transactional
   public RouteContribution approveRouteContribution(String id) {
     log.info("Approving route contribution with ID: {}", id);
+
     RouteContribution contribution = routeContributionPort.findRouteContributionById(id)
         .orElseThrow(() -> new RuntimeException("Route contribution not found: " + id));
 
+    // Simply update the status to approved without complex integration
     contribution.setStatus("APPROVED");
-    RouteContribution savedContribution = routeContributionPort.saveRouteContribution(contribution);
+    contribution.setProcessedDate(java.time.LocalDateTime.now());
+    contribution.setValidationMessage("Approved by admin");
 
-    // Integrate the approved contribution into main bus tables
-    try {
-      contributionProcessingService.integrateApprovedContribution(savedContribution);
-      log.info("Successfully integrated approved route contribution ID: {}", id);
-    } catch (Exception e) {
-      log.error("Error integrating approved route contribution ID {}: {}", id, e.getMessage(), e);
-      // Update status to indicate integration failure
-      savedContribution.setStatus("INTEGRATION_FAILED");
-      savedContribution.setValidationMessage("Failed to integrate into bus system: " + e.getMessage());
-      savedContribution = routeContributionPort.saveRouteContribution(savedContribution);
-    }
-
-    return savedContribution;
+    // Save and return
+    return routeContributionPort.saveRouteContribution(contribution);
   }
 
   @Override

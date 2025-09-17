@@ -1,27 +1,12 @@
 package com.perundhu.application.dto;
 
 /**
- * DTO for standardized API responses
+ * DTO for standardized API responses using Java 17 record
  */
-public class ApiResponse {
-
-    private final String status;
-    private final String message;
-    private final Object data;
-
-    /**
-     * Constructor with status, message, and data
-     * 
-     * @param status  The response status (success/error)
-     * @param message The response message
-     * @param data    The response payload data
-     */
-    public ApiResponse(String status, String message, Object data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-
+public record ApiResponse(
+        String status,
+        String message,
+        Object data) {
     /**
      * Constructor with status and message, without data
      * 
@@ -33,29 +18,23 @@ public class ApiResponse {
     }
 
     /**
-     * Get the response status
-     * 
-     * @return The status
+     * Factory method for success responses with data
      */
-    public String getStatus() {
-        return status;
+    public static ApiResponse success(String message, Object data) {
+        return new ApiResponse("success", message, data);
     }
 
     /**
-     * Get the response message
-     * 
-     * @return The message
+     * Factory method for success responses without data
      */
-    public String getMessage() {
-        return message;
+    public static ApiResponse success(String message) {
+        return new ApiResponse("success", message, null);
     }
 
     /**
-     * Get the response data
-     * 
-     * @return The data
+     * Factory method for error responses
      */
-    public Object getData() {
-        return data;
+    public static ApiResponse error(String message) {
+        return new ApiResponse("error", message, null);
     }
 }

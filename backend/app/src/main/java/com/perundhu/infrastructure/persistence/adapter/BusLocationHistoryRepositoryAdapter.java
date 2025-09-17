@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import com.perundhu.domain.model.BusId;
-import com.perundhu.domain.model.Location;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.BusLocationHistory;
+import com.perundhu.domain.model.Location;
 import com.perundhu.domain.port.BusLocationHistoryRepository;
 import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.BusLocationHistoryJpaEntity;
-import com.perundhu.infrastructure.persistence.repository.BusLocationHistoryJpaRepository;
+import com.perundhu.infrastructure.persistence.jpa.BusLocationHistoryJpaRepository;
 
 // Remove @Component annotation - managed by HexagonalConfig
 public class BusLocationHistoryRepositoryAdapter implements BusLocationHistoryRepository {
@@ -150,7 +150,7 @@ public class BusLocationHistoryRepositoryAdapter implements BusLocationHistoryRe
     public List<BusLocationHistory> findLatestLocationsByBuses(List<Bus> buses) {
         // Convert buses to JPA entities and extract IDs
         List<Long> busIds = buses.stream()
-                .map(bus -> bus.getId().value())
+                .map(bus -> bus.id().value())
                 .toList();
 
         // Using Java 17 toList() instead of Collectors.toList()

@@ -4,18 +4,21 @@ package com.perundhu.application.dto;
  * DTO for bus location reports submitted by users
  */
 public record BusLocationReportDTO(
-    Long busId,
-    Long stopId, // Optional, null if reporting en-route
-    String userId, // Anonymous ID to track user contributions
-    String timestamp,
-    double latitude,
-    double longitude,
-    double accuracy, // Location accuracy in meters
-    double speed, // Speed in meters per second
-    double heading, // Direction in degrees
-    String deviceInfo // Information about the reporting device
+        Long busId,
+        Long stopId, // Optional, null if reporting en-route
+        String userId, // Anonymous ID to track user contributions
+        String timestamp,
+        double latitude,
+        double longitude,
+        double accuracy, // Location accuracy in meters
+        double speed, // Speed in meters per second
+        double heading, // Direction in degrees
+        String deviceInfo // Information about the reporting device
 ) {
-    // Getter methods for backward compatibility
+    // Records automatically provide accessor methods named after the fields:
+    // busId(), stopId(), userId(), timestamp(), latitude(), longitude(), etc.
+
+    // Adding traditional getter methods for compatibility
     public Long getBusId() {
         return busId;
     }
@@ -64,7 +67,7 @@ public record BusLocationReportDTO(
             double latitude, double longitude, double accuracy,
             double speed, double heading, String deviceInfo) {
         return new BusLocationReportDTO(
-            busId, stopId, userId, timestamp, latitude, longitude,
-            accuracy, speed, heading, deviceInfo);
+                busId, stopId, userId, timestamp, latitude, longitude,
+                accuracy, speed, heading, deviceInfo);
     }
 }

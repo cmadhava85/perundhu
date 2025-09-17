@@ -1,0 +1,263 @@
+/* Enhanced Route Form Styles */
+@import '../../styles/design-system.css';
+
+.enhanced-route-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: 4xl;
+  margin: 0 auto;
+}
+
+/* Stop Management Styles */
+.stop-item {
+  position: relative;
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-md);
+  transition: var(--transition-default);
+}
+
+.stop-item:hover {
+  border-color: var(--color-gray-300);
+  box-shadow: var(--shadow-medium);
+}
+
+.stop-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+/* Drag and Drop Styles */
+.drag-handle {
+  cursor: move;
+  color: var(--color-gray-400);
+  transition: var(--transition-default);
+}
+
+.drag-handle:hover {
+  color: var(--color-gray-600);
+}
+
+/* Stop Number Badge */
+.stop-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary-500);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Time Input Styles */
+.time-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.time-input-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.time-input {
+  width: 100%;
+  padding: var(--space-sm);
+  border: var(--border-default);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-default);
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+/* Journey Progress Indicator */
+.journey-indicator {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-sm);
+}
+
+.journey-arrow {
+  color: var(--color-gray-400);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Empty State */
+.empty-stops-state {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-lg);
+  background: var(--color-gray-50);
+  border: 2px dashed var(--color-gray-300);
+  border-radius: var(--border-radius-xl);
+}
+
+.empty-stops-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-gray-400);
+  margin: 0 auto var(--space-md);
+}
+
+/* Auto-fill Button */
+.auto-fill-button {
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  border: 1px solid var(--color-blue-200);
+}
+
+.auto-fill-button:hover {
+  background: var(--color-blue-200);
+  border-color: var(--color-blue-300);
+}
+
+/* Wait Time Input */
+.wait-time-input {
+  width: 80px;
+  text-align: center;
+}
+
+/* Remove Button */
+.remove-stop-button {
+  color: var(--color-red-600);
+  border-color: var(--color-red-200);
+}
+
+.remove-stop-button:hover {
+  background: var(--color-red-50);
+  border-color: var(--color-red-300);
+}
+
+/* Journey Summary */
+.journey-summary {
+  background: var(--color-blue-50);
+  border: 1px solid var(--color-blue-200);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-md);
+}
+
+.journey-summary-content {
+  display: flex;
+  align-items: center;
+  justify-content: between;
+  gap: var(--space-sm);
+}
+
+.journey-summary-icon {
+  color: var(--color-blue-600);
+}
+
+.journey-summary-text {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-blue-900);
+}
+
+.journey-summary-time {
+  color: var(--color-blue-700);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.section-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.section-icon.bus {
+  background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-600));
+}
+
+.section-icon.stops {
+  background: linear-gradient(135deg, var(--color-green-500), var(--color-green-600));
+}
+
+.section-icon.info {
+  background: linear-gradient(135deg, var(--color-purple-500), var(--color-purple-600));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .enhanced-route-form {
+    gap: var(--space-lg);
+  }
+  
+  .stop-item {
+    padding: var(--space-sm);
+  }
+  
+  .stop-item .flex {
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: stretch;
+  }
+  
+  .time-input-group {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  
+  .time-input-label {
+    min-width: 60px;
+    margin-bottom: 0;
+  }
+  
+  .wait-time-input {
+    width: 100%;
+  }
+  
+  .empty-stops-state {
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+
+/* Touch-friendly interactions for mobile */
+@media (max-width: 768px) {
+  .time-input,
+  .wait-time-input {
+    min-height: 44px; /* Touch-friendly minimum */
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .drag-handle {
+    padding: var(--space-sm);
+    margin: calc(-1 * var(--space-sm));
+  }
+}

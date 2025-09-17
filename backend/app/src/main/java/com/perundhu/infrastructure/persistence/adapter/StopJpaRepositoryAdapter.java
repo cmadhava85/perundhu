@@ -3,8 +3,6 @@ package com.perundhu.infrastructure.persistence.adapter;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.port.StopRepository;
@@ -16,19 +14,19 @@ public class StopJpaRepositoryAdapter implements StopRepository {
 
     private final StopJpaRepository jpaRepository;
 
-    public StopJpaRepositoryAdapter(@Qualifier("jpaPackageStopJpaRepository") StopJpaRepository jpaRepository) {
+    public StopJpaRepositoryAdapter(StopJpaRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 
     @Override
-    public Optional<Stop> findById(Stop.StopId id) {
+    public Optional<Stop> findById(com.perundhu.domain.model.StopId id) {
         return jpaRepository.findById(id.value())
                 .map(StopJpaEntity::toDomainModel);
     }
 
     @Override
     public List<Stop> findByBusOrderByStopOrder(Bus bus) {
-        return jpaRepository.findByBusIdOrderByStopOrder(bus.getId().value()).stream()
+        return jpaRepository.findByBusIdOrderByStopOrder(bus.id().value()).stream()
                 .map(StopJpaEntity::toDomainModel)
                 .toList();
     }
@@ -40,7 +38,7 @@ public class StopJpaRepositoryAdapter implements StopRepository {
     }
 
     @Override
-    public void delete(Stop.StopId id) {
+    public void delete(com.perundhu.domain.model.StopId id) {
         jpaRepository.deleteById(id.value());
     }
 
@@ -59,7 +57,7 @@ public class StopJpaRepositoryAdapter implements StopRepository {
     }
 
     @Override
-    public List<Stop> findByBusId(Bus.BusId busId) {
+    public List<Stop> findByBusId(com.perundhu.domain.model.BusId busId) {
         return jpaRepository.findByBusId(busId.value()).stream()
                 .map(StopJpaEntity::toDomainModel)
                 .toList();

@@ -7,7 +7,8 @@ interface MapMarkersProps {
   toLocation: Location;
   stops?: Stop[];
   onStopLocation?: (stop: any) => { lat: number; lng: number } | null;
-  onStopSelect?: (stop: Stop) => void; // Add missing onStopSelect prop
+  onStopSelect?: (stop: Stop) => void;
+  highlightedStopIndex?: number | null;
 }
 
 const MapMarkers: React.FC<MapMarkersProps> = ({
@@ -15,11 +16,27 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
   toLocation,
   stops = [],
   onStopLocation,
-  onStopSelect
+  onStopSelect,
+  highlightedStopIndex = null
 }) => {
+  // Listen for stop highlight events from the bus list
+  React.useEffect(() => {
+    const handleHighlightStop = (event: CustomEvent) => {
+      const { stop, index } = event.detail;
+      if (onStopSelect) {
+        onStopSelect(stop);
+      }
+    };
+
+    window.addEventListener('highlightStop', handleHighlightStop as EventListener);
+    return () => {
+      window.removeEventListener('highlightStop', handleHighlightStop as EventListener);
+    };
+  }, [onStopSelect]);
+
   return (
     <>
-      {/* From location marker */}
+      {/* From location marker - Enhanced with better styling */}
       <MarkerF
         position={{ 
           lat: fromLocation.latitude, 
@@ -28,19 +45,22 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
         label={{
           text: "A",
           color: "#FFFFFF",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          fontSize: "16px"
         }}
         icon={{
           path: window.google.maps.SymbolPath.CIRCLE,
-          fillColor: "#1a73e8",
+          fillColor: "#22c55e",
           fillOpacity: 1,
-          strokeWeight: 0,
-          scale: 14
+          strokeColor: "#16a34a",
+          strokeWeight: 2,
+          scale: 16
         }}
-        title={fromLocation.name}
+        title={`${fromLocation.name} (Origin)`}
+        zIndex={1000}
       />
       
-      {/* To location marker */}
+      {/* To location marker - Enhanced with better styling */}
       <MarkerF
         position={{ 
           lat: toLocation.latitude, 
@@ -49,47 +69,56 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
         label={{
           text: "B",
           color: "#FFFFFF",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          fontSize: "16px"
         }}
         icon={{
           path: window.google.maps.SymbolPath.CIRCLE,
-          fillColor: "#1a73e8",
+          fillColor: "#ef4444",
           fillOpacity: 1,
-          strokeWeight: 0,
-          scale: 14
+          strokeColor: "#dc2626",
+          strokeWeight: 2,
+          scale: 16
         }}
-        title={toLocation.name}
+        title={`${toLocation.name} (Destination)`}
+        zIndex={1000}
       />
       
-      {/* Stop markers */}
+      {/* Stop markers with enhanced numbering and highlighting */}
       {stops.length > 0 && onStopLocation && (
         <>
           {stops
             .map((stop: any, index) => ({ stop, location: onStopLocation(stop), originalIndex: index }))
             .filter(item => item.location !== null)
-            .map((item) => (
-              <MarkerF
-                key={`stop-${item.stop.id || item.originalIndex}`}
-                position={item.location!}
-                label={{
-                  text: `${item.originalIndex + 1}`,
-                  color: "#FFFFFF",
-                  fontWeight: "bold",
-                  fontSize: "14px"
-                }}
-                icon={{
-                  path: google.maps.SymbolPath.CIRCLE,
-                  fillColor: "#34A853",
-                  fillOpacity: 1,
-                  strokeColor: "#FFFFFF",
-                  strokeWeight: 2,
-                  scale: 16
-                }}
-                title={item.stop.translatedName || item.stop.name}
-                zIndex={1000 + item.originalIndex}
-                onClick={() => onStopSelect?.(item.stop)}
-              />
-            ))}
+            .map((item) => {
+              const isHighlighted = highlightedStopIndex === item.originalIndex + 1;
+              const stopNumber = item.originalIndex + 1;
+              
+              return (
+                <MarkerF
+                  key={`stop-${item.stop.id || item.originalIndex}`}
+                  position={item.location!}
+                  label={{
+                    text: `${stopNumber}`,
+                    color: "#FFFFFF",
+                    fontWeight: "bold",
+                    fontSize: isHighlighted ? "16px" : "14px"
+                  }}
+                  icon={{
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: isHighlighted ? "#f59e0b" : "#3b82f6",
+                    fillOpacity: isHighlighted ? 1 : 0.9,
+                    strokeColor: isHighlighted ? "#d97706" : "#1e40af",
+                    strokeWeight: isHighlighted ? 3 : 2,
+                    scale: isHighlighted ? 20 : 16
+                  }}
+                  title={`Stop ${stopNumber}: ${item.stop.translatedName || item.stop.name}${item.stop.arrivalTime ? ` (${item.stop.arrivalTime})` : ''}`}
+                  zIndex={isHighlighted ? 2000 : (1000 + item.originalIndex)}
+                  onClick={() => onStopSelect?.(item.stop)}
+                  animation={isHighlighted ? google.maps.Animation.BOUNCE : undefined}
+                />
+              );
+            })}
         </>
       )}
     </>

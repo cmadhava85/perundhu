@@ -24,7 +24,21 @@ export interface Location {
   translatedNames?: {
     [key: string]: string;
   };
-  source?: 'database' | 'map' | 'local' | 'offline'; // Added source property
+  source?: 'database' | 'map' | 'local' | 'offline' | 'nominatim' | 'google'; // Added google to fix geocoding service
+  state?: string; // Added state property
+}
+
+export interface SearchFilters {
+  from?: string | Location;
+  to?: string | Location;
+  departureDate?: string;
+  date?: string;
+  departureTime?: string;
+  busType?: string;
+  maxTransfers?: number;
+  accessibilityFriendly?: boolean;
+  realTimeOnly?: boolean;
+  sortBy?: 'price' | 'duration' | 'rating' | 'departure' | 'departure-time' | 'price-low' | 'price-high';
 }
 
 export interface Bus {
@@ -45,6 +59,15 @@ export interface Bus {
   toLocationId?: number;
   fromLocation?: Location;
   toLocation?: Location;
+  // Adding missing properties referenced in other components
+  routeName?: string;
+  estimatedArrival?: string;
+  fare?: number;
+  isLive?: boolean;
+  availability?: 'available' | 'filling-fast' | 'full';
+  busType?: string;
+  duration?: string;
+  rating?: number;
 }
 
 export interface Stop {

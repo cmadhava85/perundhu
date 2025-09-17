@@ -1,11 +1,12 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalTime;
 
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
@@ -21,8 +22,8 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
-    public Optional<Bus> findById(Bus.BusId id) {
-        return jpaRepository.findById(id.getValue())
+    public Optional<Bus> findById(com.perundhu.domain.model.BusId id) {
+        return jpaRepository.findById(id.value())
                 .map(BusJpaEntity::toDomainModel);
     }
 
@@ -47,7 +48,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
 
     @Override
     public List<Bus> findByFromLocation(Location fromLocation) {
-        return jpaRepository.findByFromLocationId(fromLocation.getId().getValue())
+        return jpaRepository.findByFromLocationId(fromLocation.id().getValue())
                 .stream()
                 .map(BusJpaEntity::toDomainModel)
                 .toList();
@@ -78,8 +79,8 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
-    public void delete(Bus.BusId id) {
-        jpaRepository.deleteById(id.getValue());
+    public void delete(com.perundhu.domain.model.BusId id) {
+        jpaRepository.deleteById(id.value());
     }
 
     @Override
@@ -142,9 +143,8 @@ public class BusJpaRepositoryAdapter implements BusRepository {
                 .toList();
     }
 
-    @Override
-    public Optional<Bus> findByBusNumberAndRoute(String busNumber, Location.LocationId fromLocationId,
-            Location.LocationId toLocationId) {
+    public Optional<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
+            LocationId toLocationId) {
         return jpaRepository.findByBusNumberAndFromLocationIdAndToLocationId(
                 busNumber, fromLocationId.getValue(), toLocationId.getValue())
                 .map(BusJpaEntity::toDomainModel);

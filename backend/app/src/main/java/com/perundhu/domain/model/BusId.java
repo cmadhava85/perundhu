@@ -21,4 +21,9 @@ public record BusId(Long value) {
       throw new IllegalArgumentException("Invalid Bus ID format: " + value, e);
     }
   }
+
+  // Traditional getter method for backward compatibility
+  public Long getValue() {
+    return value;
+  }
 }

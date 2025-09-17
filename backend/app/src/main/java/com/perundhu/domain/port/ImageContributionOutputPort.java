@@ -1,8 +1,9 @@
 package com.perundhu.domain.port;
 
-import com.perundhu.domain.model.ImageContribution;
 import java.util.List;
 import java.util.Optional;
+
+import com.perundhu.domain.model.ImageContribution;
 
 /**
  * Output port for image contribution persistence operations.
@@ -49,4 +50,18 @@ public interface ImageContributionOutputPort {
    * Count image contributions by status
    */
   long countByStatus(String status);
+
+  /**
+   * Find all image contributions with pagination
+   */
+  default List<ImageContribution> findAll(int page, int size) {
+    return findAll(); // Default implementation for backward compatibility
+  }
+
+  /**
+   * Find image contributions by status with pagination
+   */
+  default List<ImageContribution> findByStatus(String status, int page, int size) {
+    return findByStatus(status); // Default implementation for backward compatibility
+  }
 }

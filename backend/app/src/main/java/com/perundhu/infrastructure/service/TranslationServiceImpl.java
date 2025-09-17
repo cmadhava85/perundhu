@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.Location;
@@ -19,7 +21,8 @@ import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
 import com.perundhu.infrastructure.config.TranslationProperties;
 
-// Remove @Service annotation - managed by HexagonalConfig
+@Service
+@Profile("!dev")
 public class TranslationServiceImpl implements TranslationService {
 
     private static final Logger log = LoggerFactory.getLogger(TranslationServiceImpl.class);
@@ -51,11 +54,11 @@ public class TranslationServiceImpl implements TranslationService {
         return translationRepository.findTranslation(entityType, entityId, languageCode, fieldName)
                 .map(Translation::getTranslatedValue)
                 .or(() -> {
-                    Location location = getRelatedLocation(entity);
+                    Location location = entity.getRelatedLocation();
                     if (location != null) {
                         return translationRepository.findTranslation(
-                                location.getEntityType(),
-                                location.getEntityId(),
+                                "Location",
+                                location.getId().getValue(),
                                 languageCode,
                                 fieldName)
                                 .map(Translation::getTranslatedValue);
@@ -67,10 +70,7 @@ public class TranslationServiceImpl implements TranslationService {
 
     private <T> Location getRelatedLocation(Translatable<T> entity) {
         try {
-            if (entity instanceof Location) {
-                return (Location) entity;
-            }
-            return null;
+            return entity.getRelatedLocation();
         } catch (Exception e) {
             log.warn("Error getting related location for entity: {}", e.getMessage());
             return null;
@@ -146,7 +146,8 @@ public class TranslationServiceImpl implements TranslationService {
                     entityType, location.getEntityId());
 
             List<Translation> locationTranslations = translationRepository
-                    .findByEntityAndLanguage(location.getEntityType(), location.getEntityId(), languageCode);
+                    .findByEntityAndLanguage(location.getEntityType(), Long.parseLong(location.getEntityId()),
+                            languageCode);
 
             locationTranslations.forEach(t -> {
                 if (!translationMap.containsKey(t.getFieldName())) {

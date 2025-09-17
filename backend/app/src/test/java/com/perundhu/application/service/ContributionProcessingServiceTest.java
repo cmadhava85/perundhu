@@ -1,14 +1,17 @@
 package com.perundhu.application.service;
 
-import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.port.RouteContributionRepository;
-import com.perundhu.domain.port.ImageContributionRepository;
-import com.perundhu.application.service.LocationValidationService;
-import com.perundhu.application.service.NotificationService;
-import com.perundhu.domain.service.OCRService;
-import com.perundhu.domain.port.BusRepository;
-import com.perundhu.domain.port.LocationRepository;
-import com.perundhu.domain.port.StopRepository;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,13 +19,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.BusRepository;
+import com.perundhu.domain.port.ImageContributionRepository;
+import com.perundhu.domain.port.LocationRepository;
+import com.perundhu.domain.port.LocationValidationService;
+import com.perundhu.domain.port.RouteContributionRepository;
+import com.perundhu.domain.port.StopRepository;
+import com.perundhu.domain.port.OCRService;
 
 @ExtendWith(MockitoExtension.class)
 class ContributionProcessingServiceTest {
@@ -153,7 +157,7 @@ class ContributionProcessingServiceTest {
                                 .build();
 
                 // Mock location validation to return true so we get past location validation
-                when(locationValidationService.validateLocation(anyString(), anyDouble(), anyDouble()))
+                when(locationValidationService.isValidLocationCoordinates(anyDouble(), anyDouble()))
                                 .thenReturn(true);
 
                 when(routeContributionRepository.findByStatus("PENDING"))

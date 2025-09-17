@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { vi, beforeEach, describe, it, expect } from 'vitest';
 import MapComponent from '../MapComponent';
 import mapService from '../../services/mapService';
 
-// Mock the i18n
-jest.mock('../../i18n', () => ({
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, defaultValue: string) => defaultValue || key,
     i18n: {
@@ -14,19 +15,18 @@ jest.mock('../../i18n', () => ({
 }));
 
 // Mock the map service
-jest.mock('../../services/mapService', () => ({
-  __esModule: true,
+vi.mock('../../services/mapService', () => ({
   default: {
-    init: jest.fn().mockImplementation(() => Promise.resolve()),
-    createMap: jest.fn(),
-    drawRoute: jest.fn(),
-    addMarker: jest.fn(),
-    clearMarkers: jest.fn(),
-    clearRoutes: jest.fn(),
-    cleanup: jest.fn(),
-    fitBounds: jest.fn(),
-    setView: jest.fn(),
-    getProvider: jest.fn().mockReturnValue('leaflet')
+    init: vi.fn().mockImplementation(() => Promise.resolve()),
+    createMap: vi.fn(),
+    drawRoute: vi.fn(),
+    addMarker: vi.fn(),
+    clearMarkers: vi.fn(),
+    clearRoutes: vi.fn(),
+    cleanup: vi.fn(),
+    fitBounds: vi.fn(),
+    setView: vi.fn(),
+    getProvider: vi.fn().mockReturnValue('leaflet')
   },
   MapProvider: {
     LEAFLET: 'leaflet',
@@ -41,25 +41,25 @@ describe('MapComponent', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  test('renders the map container', () => {
+  it('renders the map container', () => {
     render(<MapComponent {...mockProps} />);
     expect(screen.getByTestId('map-container')).toBeInTheDocument();
   });
   
-  test('renders loading state initially', () => {
+  it('renders loading state initially', () => {
     render(<MapComponent {...mockProps} />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   
-  test('initializes the map service', () => {
+  it('initializes the map service', () => {
     render(<MapComponent {...mockProps} />);
     expect(mapService.init).toHaveBeenCalled();
   });
   
-  test('applies custom styles when provided', () => {
+  it('applies custom styles when provided', () => {
     const customStyle = { height: '300px', width: '500px' };
     render(<MapComponent {...mockProps} style={customStyle} />);
     const mapContainer = screen.getByTestId('map-container');
@@ -67,7 +67,7 @@ describe('MapComponent', () => {
     expect(mapContainer).toHaveStyle('width: 500px');
   });
   
-  test('applies custom className when provided', () => {
+  it('applies custom className when provided', () => {
     render(<MapComponent {...mockProps} className="custom-map-class" />);
     expect(screen.getByTestId('map-container')).toHaveClass('custom-map-class');
   });

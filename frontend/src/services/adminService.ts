@@ -2,8 +2,8 @@ import axios from 'axios';
 import type { RouteContribution, ImageContribution } from '../types/contributionTypes';
 import AuthService from './authService';
 
-// Use empty base URL since Vite proxy handles /api routing
-const API_URL = '';
+// Direct API URL configuration
+const API_URL = 'http://localhost:8080';
 
 /**
  * Service to handle admin operations with development admin authentication

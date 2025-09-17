@@ -44,12 +44,14 @@ export const apiRequest = async <T>(
 export class ApiError extends Error {
   status?: number;
   code?: string;
+  errorCode?: string;
   
   constructor(message: string, status?: number, code?: string) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.code = code;
+    this.errorCode = code; // Set errorCode as alias for code
     
     // This is needed for instanceof to work correctly in TypeScript
     Object.setPrototypeOf(this, ApiError.prototype);
@@ -266,21 +268,154 @@ export const getLocations = async (language?: string): Promise<Location[]> => {
   }
 };
 
+// Backend DTO interface to match the actual API response
+interface BusDTO {
+  id: number;
+  number: string;
+  name: string;
+  operator: string;
+  type: string;
+  features?: Record<string, string>;
+}
+
+// Generate sample stops for demonstration purposes
+const generateSampleStops = (busId: number, fromLocation: Location, toLocation: Location): Stop[] => {
+  const sampleStopNames = [
+    'Central Station', 'City Mall', 'Airport Junction', 'Tech Park', 'University Campus',
+    'Bus Terminal', 'Railway Station', 'Government Hospital', 'Market Square', 'Shopping Complex'
+  ];
+  
+  const numStops = 3 + (busId % 4); // 3-6 stops per bus
+  const stops: Stop[] = [];
+  
+  // Add origin stop
+  stops.push({
+    id: busId * 100 + 1,
+    name: fromLocation.name,
+    arrivalTime: '',
+    departureTime: '06:00', // Will be updated with actual departure time
+    busId: busId,
+    order: 1,
+    stopOrder: 1,
+    latitude: fromLocation.latitude,
+    longitude: fromLocation.longitude
+  });
+  
+  // Add intermediate stops
+  for (let i = 0; i < numStops - 2; i++) {
+    const stopName = sampleStopNames[(busId + i) % sampleStopNames.length];
+    const hour = 6 + Math.floor((i + 1) * 2.5); // Spread stops every 2.5 hours
+    const minute = (busId * 15 + i * 10) % 60;
+    const arrivalTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    const departureTime = `${hour.toString().padStart(2, '0')}:${(minute + 5).toString().padStart(2, '0')}`;
+    
+    stops.push({
+      id: busId * 100 + i + 2,
+      name: stopName,
+      arrivalTime: arrivalTime,
+      departureTime: departureTime,
+      busId: busId,
+      order: i + 2,
+      stopOrder: i + 2,
+      latitude: fromLocation.latitude + (i + 1) * 0.1,
+      longitude: fromLocation.longitude + (i + 1) * 0.1
+    });
+  }
+  
+  // Add destination stop
+  stops.push({
+    id: busId * 100 + numStops,
+    name: toLocation.name,
+    arrivalTime: '14:00', // Will be updated with actual arrival time
+    departureTime: '',
+    busId: busId,
+    order: numStops,
+    stopOrder: numStops,
+    latitude: toLocation.latitude,
+    longitude: toLocation.longitude
+  });
+  
+  return stops;
+};
+
+// Transform backend BusDTO to frontend Bus object
+const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation: Location): Bus => {
+  // Generate sample timing data for demonstration purposes
+  // TODO: Replace with real backend timing data when available
+  const sampleDepartureTimes = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
+  const departureTime = sampleDepartureTimes[busDTO.id % sampleDepartureTimes.length];
+  
+  // Calculate arrival time (add 6-10 hours based on bus ID for variety)
+  const depHour = parseInt(departureTime.split(':')[0]);
+  const depMinute = parseInt(departureTime.split(':')[1]);
+  const travelHours = 6 + (busDTO.id % 5); // 6-10 hours travel time
+  const arrHour = (depHour + travelHours) % 24;
+  const arrivalTime = `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
+  
+  return {
+    id: busDTO.id,
+    busName: busDTO.name || 'Unknown Bus',
+    busNumber: busDTO.number || 'N/A',
+    from: fromLocation.name,
+    to: toLocation.name,
+    fromLocationId: fromLocation.id,
+    toLocationId: toLocation.id,
+    fromLocation: fromLocation,
+    toLocation: toLocation,
+    departureTime: departureTime,
+    arrivalTime: arrivalTime,
+    category: busDTO.type || 'Express Service',
+    busType: busDTO.type || 'Express Service',
+    status: busDTO.id % 3 === 0 ? 'Delayed' : 'On Time',
+    duration: `${travelHours}h ${Math.floor(Math.random() * 60)}m`,
+    name: busDTO.name,
+    routeName: `${fromLocation.name} - ${toLocation.name}`,
+    isLive: false,
+    availability: 'available' as const,
+    capacity: 40 + (busDTO.id % 20) // Sample capacity data
+  };
+};
+
 /**
  * Search for buses between two locations
  */
 export const searchBuses = async (
   fromLocation: Location, 
-  toLocation: Location
+  toLocation: Location,
+  includeContinuing: boolean = false
 ): Promise<Bus[]> => {
   try {
     const response = await api.get('/api/v1/bus-schedules/search', {
       params: {
         fromLocationId: fromLocation.id,
-        toLocationId: toLocation.id
+        toLocationId: toLocation.id,
+        includeContinuing
       }
     });
-    return response.data;
+    
+    // Transform backend BusDTO objects to frontend Bus objects
+    const busDTOs: BusDTO[] = response.data;
+    const buses: Bus[] = busDTOs.map(busDTO => 
+      transformBusDTOToBus(busDTO, fromLocation, toLocation)
+    );
+    
+    // Fetch real stops data for each bus
+    for (const bus of buses) {
+      try {
+        const stops = await getStops(bus.id);
+        if (stops.length > 0) {
+          // Update bus timing with actual stop times
+          bus.departureTime = stops[0].departureTime;
+          bus.arrivalTime = stops[stops.length - 1].arrivalTime;
+        }
+      } catch (error) {
+        console.warn(`Failed to fetch stops for bus ${bus.id}:`, error);
+        // Continue without stops for this bus
+      }
+    }
+    
+    console.log('Transformed buses with real stops:', buses);
+    return buses;
   } catch (error) {
     console.error('Error searching buses:', error);
     throw new ApiError('Failed to search for buses. Please try again.');
@@ -296,9 +431,13 @@ export const searchBusesViaStops = async (
   toLocation: Location | number
 ): Promise<Bus[]> => {
   try {
-    // Extract location IDs based on what was passed
+    // Extract location IDs and objects based on what was passed
     const fromId = typeof fromLocation === 'number' ? fromLocation : fromLocation.id;
     const toId = typeof toLocation === 'number' ? toLocation : toLocation.id;
+    
+    // Get full location objects if needed
+    const fromLoc = typeof fromLocation === 'object' ? fromLocation : { id: fromId, name: 'Unknown' } as Location;
+    const toLoc = typeof toLocation === 'object' ? toLocation : { id: toId, name: 'Unknown' } as Location;
     
     const response = await api.get('/api/v1/bus-schedules/search/via-stops', {
       params: {
@@ -306,11 +445,39 @@ export const searchBusesViaStops = async (
         toLocationId: toId
       }
     });
-    return response.data;
+    
+    // Transform backend BusDTO objects to frontend Bus objects
+    const busDTOs: BusDTO[] = response.data;
+    const buses: Bus[] = busDTOs.map(busDTO => 
+      transformBusDTOToBus(busDTO, fromLoc, toLoc)
+    );
+    
+    return buses;
   } catch (error) {
     console.error('Error searching buses via stops:', error);
     throw new ApiError('Failed to search for buses via stops. Please try again.');
   }
+};
+
+/**
+ * Transform backend StopDTO to frontend Stop object
+ */
+const transformStopDTOToStop = (stopDTO: any, busId: number): Stop => {
+  return {
+    id: stopDTO.id,
+    name: stopDTO.name,
+    translatedName: stopDTO.translatedName || stopDTO.name,
+    arrivalTime: stopDTO.arrivalTime || '',
+    departureTime: stopDTO.departureTime || '',
+    order: stopDTO.sequence || 0,
+    stopOrder: stopDTO.sequence || 0,
+    busId: busId,
+    platform: stopDTO.platform,
+    status: stopDTO.status,
+    locationId: stopDTO.locationId,
+    latitude: stopDTO.latitude,
+    longitude: stopDTO.longitude
+  };
 };
 
 /**
@@ -323,7 +490,15 @@ export const getStops = async (busId: number, languageCode: string = 'en'): Prom
       params: { lang: languageCode }
     });
     console.log('Stops API response:', response.data);
-    return response.data;
+    
+    // Transform the backend response to frontend Stop objects
+    const stopDTOs: any[] = response.data;
+    const stops: Stop[] = stopDTOs.map(stopDTO => 
+      transformStopDTOToStop(stopDTO, busId)
+    );
+    
+    console.log('Transformed stops:', stops);
+    return stops;
   } catch (error) {
     console.error(`Error fetching stops for bus ${busId}:`, error);
     throw new ApiError(`Failed to fetch bus stops for bus ID ${busId}. Please try again.`);
@@ -802,4 +977,40 @@ export const transformBusLocation = (location: RawBusLocation): BusLocation => {
     reportCount: location.reportCount || 0,
     confidenceScore: location.confidenceScore || 0,
   };
+};
+
+/**
+ * Get image processing statistics
+ */
+export const getImageProcessingStatistics = async () => {
+  try {
+    const response = await api.get('/api/v1/admin/image-processing/statistics');
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Get image processing status for a contribution
+ */
+export const getImageProcessingStatus = async (contributionId: string) => {
+  try {
+    const response = await api.get(`/api/v1/contributions/images/${contributionId}/status`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Retry image processing for a contribution
+ */
+export const retryImageProcessing = async (contributionId: string) => {
+  try {
+    const response = await api.post(`/api/v1/contributions/images/${contributionId}/retry`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
 };

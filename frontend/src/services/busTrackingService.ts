@@ -14,7 +14,7 @@ export interface BusLocationReport {
 }
 
 export interface BusLocation {
-  id: number; // Add missing id property to match main types
+  id?: number; // Add missing id property to match main types  
   busId: number;
   busName: string;
   busNumber: string;
@@ -25,9 +25,9 @@ export interface BusLocation {
   speed: number;
   heading: number;
   timestamp: string;
-  lastReportedStopName?: string;
-  nextStopName?: string;
-  estimatedArrivalTime?: string;
+  lastReportedStopName: string; // Make required to match main types
+  nextStopName: string; // Make required to match main types
+  estimatedArrivalTime: string; // Make required to match main types
   reportCount: number;
   confidenceScore: number;
 }

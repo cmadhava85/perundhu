@@ -1,13 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import type { SearchFilters } from '../../types';
 
 interface ViewModeControlsProps {
   viewMode: 'list' | 'map' | 'split';
   onViewModeChange: (mode: 'list' | 'map' | 'split') => void;
   showFilters: boolean;
   onToggleFilters: () => void;
-  sortBy: string;
-  onSortChange: (sortBy: string) => void;
+  sortBy: SearchFilters['sortBy'];
+  onSortChange: (sortBy: SearchFilters['sortBy']) => void;
 }
 
 const ViewModeControls: React.FC<ViewModeControlsProps> = ({
@@ -45,7 +46,7 @@ const ViewModeControls: React.FC<ViewModeControlsProps> = ({
       <div className="sort-selector">
         <select 
           value={sortBy}
-          onChange={(e) => onSortChange(e.target.value)}
+          onChange={(e) => onSortChange(e.target.value as SearchFilters['sortBy'])}
           className="premium-select"
         >
           <option value="departure-time">{t('search.sort.departureTime', 'Departure Time')}</option>

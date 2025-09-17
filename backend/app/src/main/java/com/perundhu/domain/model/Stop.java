@@ -4,78 +4,80 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * Domain entity representing a bus stop
+ * Domain entity representing a bus stop using Java 17 record
  */
-public class Stop {
-    private final StopId id;
-    private final String name;
-    private final Location location;
-    private final LocalTime arrivalTime;
-    private final LocalTime departureTime;
-    private final int sequence;
-    private final List<String> features;
-
+public record Stop(
+        StopId id,
+        String name,
+        Location location,
+        LocalTime arrivalTime,
+        LocalTime departureTime,
+        int sequence,
+        List<String> features) {
     /**
-     * Constructor for Stop entity
+     * Constructor with validation
      */
-    public Stop(StopId id, String name, Location location, LocalTime arrivalTime,
-            LocalTime departureTime, int sequence, List<String> features) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
-        this.sequence = sequence;
-        this.features = features;
+    public Stop {
+        // Allow null id for new stops that haven't been persisted yet
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Stop name cannot be null or empty");
+        }
+        if (sequence < 0) {
+            throw new IllegalArgumentException("Stop sequence cannot be negative");
+        }
+        if (features == null) {
+            features = List.of();
+        }
     }
 
-    /**
-     * Get the stop identifier
-     */
-    public StopId id() {
+    // Traditional getter methods for compatibility
+    public StopId getId() {
         return id;
     }
 
-    /**
-     * Get the stop name
-     */
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    /**
-     * Get the location of this stop
-     */
-    public Location location() {
+    public Location getLocation() {
         return location;
     }
 
-    /**
-     * Get the scheduled arrival time at this stop
-     */
-    public LocalTime arrivalTime() {
+    public LocalTime getArrivalTime() {
         return arrivalTime;
     }
 
-    /**
-     * Get the scheduled departure time from this stop
-     */
-    public LocalTime departureTime() {
+    public LocalTime getDepartureTime() {
         return departureTime;
     }
 
-    /**
-     * Get the sequence number of this stop in the route
-     */
-    public int sequence() {
+    public int getSequence() {
         return sequence;
     }
 
-    /**
-     * Get the features of this stop (e.g., "Shelter", "Bench")
-     */
-    public List<String> features() {
+    public List<String> getFeatures() {
         return features;
     }
 
-    
+    /**
+     * Factory method to create a stop with minimal information
+     */
+    public static Stop create(StopId id, String name, Location location) {
+        return new Stop(id, name, location, null, null, 0, List.of());
+    }
+
+    /**
+     * Factory method to create a stop with timing information
+     */
+    public static Stop create(StopId id, String name, Location location, LocalTime arrivalTime, LocalTime departureTime,
+            int sequence) {
+        return new Stop(id, name, location, arrivalTime, departureTime, sequence, List.of());
+    }
+
+    /**
+     * Get stop order (alias for sequence for backward compatibility)
+     */
+    public int getStopOrder() {
+        return sequence;
+    }
+}

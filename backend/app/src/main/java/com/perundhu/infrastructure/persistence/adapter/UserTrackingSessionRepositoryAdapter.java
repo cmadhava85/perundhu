@@ -1,28 +1,27 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.UserTrackingSession;
 import com.perundhu.domain.port.UserTrackingSessionRepository;
 import com.perundhu.infrastructure.persistence.entity.UserTrackingSessionEntity;
-import com.perundhu.infrastructure.persistence.repository.UserTrackingSessionJpaRepository;
+import com.perundhu.infrastructure.persistence.jpa.UserTrackingSessionJpaRepository;
 
 /**
  * Implementation of UserTrackingSessionRepository that delegates to Spring Data
  * JPA
  */
-// Remove @Repository annotation - managed by HexagonalConfig
+@Repository
 @Transactional
 public class UserTrackingSessionRepositoryAdapter implements UserTrackingSessionRepository {
 
     private final UserTrackingSessionJpaRepository repository;
 
-    public UserTrackingSessionRepositoryAdapter(
-            @Qualifier("repositoryPackageUserTrackingSessionJpaRepository") UserTrackingSessionJpaRepository repository) {
+    public UserTrackingSessionRepositoryAdapter(UserTrackingSessionJpaRepository repository) {
         this.repository = repository;
     }
 

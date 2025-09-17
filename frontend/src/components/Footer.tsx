@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
             <a href="#" className="footer-link">{t('footer.privacyPolicy', 'Privacy Policy')}</a>
             <a href="#" className="footer-link">{t('footer.termsOfService', 'Terms of Service')}</a>
           </div>
-          <p className="footer-copyright">© {year} {t('footer.copyright', 'Tamil Nadu Bus Scheduler')}. {t('footer.allRightsReserved', 'All Rights Reserved.')}</p>
+          <p className="footer-copyright">{t('footer.copyright', 'Tamil Nadu Bus Scheduler')}. {t('footer.allRightsReserved', 'All Rights Reserved.')}</p>
         </div>
       </div>
     </footer>

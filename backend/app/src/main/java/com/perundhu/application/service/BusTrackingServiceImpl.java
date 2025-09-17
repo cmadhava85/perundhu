@@ -18,8 +18,10 @@ import com.perundhu.application.dto.BusLocationDTO;
 import com.perundhu.application.dto.BusLocationReportDTO;
 import com.perundhu.application.dto.RewardPointsDTO;
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.Stop;
+import com.perundhu.domain.model.StopId;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.service.RouteValidationService;
@@ -31,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor
-public class BusTrackingServiceImpl {
+public class BusTrackingServiceImpl implements BusTrackingService {
 
     private final BusRepository busRepository;
     private final StopRepository stopRepository;
@@ -50,10 +52,10 @@ public class BusTrackingServiceImpl {
 
     public RewardPointsDTO processLocationReport(BusLocationReportDTO report) {
         log.info("Processing location report for bus {}: lat={}, lng={}",
-                report.getBusId(), report.getLatitude(), report.getLongitude());
+                report.busId(), report.latitude(), report.longitude());
 
         // Validate the report first to ensure it's on the correct route
-        Optional<Bus> bus = busRepository.findById(new Bus.BusId(report.getBusId()));
+        Optional<Bus> bus = busRepository.findById(new BusId(report.busId()));
 
         if (bus.isEmpty()) {
             log.warn("Report for unknown bus ID: {}", report.getBusId());
@@ -174,7 +176,7 @@ public class BusTrackingServiceImpl {
         }
 
         // Get stop info
-        Optional<Stop> stopOpt = stopRepository.findById(new Stop.StopId(stopId));
+        Optional<Stop> stopOpt = stopRepository.findById(StopId.of(stopId));
         if (stopOpt.isEmpty()) {
             result.put("error", "Stop not found");
             return result;
@@ -207,7 +209,7 @@ public class BusTrackingServiceImpl {
             return null;
         }
 
-        Optional<Bus> busOpt = busRepository.findById(new Bus.BusId(busId));
+        Optional<Bus> busOpt = busRepository.findById(new BusId(busId));
         if (busOpt.isEmpty()) {
             return null;
         }
@@ -759,5 +761,55 @@ public class BusTrackingServiceImpl {
                 stop2.getLocation().getLatitude(), stop2.getLocation().getLongitude());
 
         return Math.min(distanceToStop1, distanceToStop2) <= bufferKm;
+    }
+
+    @Override
+    public BusLocationDTO reportBusLocation(BusLocationRequest request) {
+        log.info("Processing bus location report for bus {} from user {}",
+                request.getBusId(), request.getUserId());
+
+        // Convert the request to a BusLocationReportDTO for processing
+        BusLocationReportDTO report = convertToLocationReport(request);
+
+        // Process the location report to validate and update tracking
+        RewardPointsDTO rewards = processLocationReport(report);
+
+        // Create and return a BusLocationDTO with the updated information
+        BusLocationDTO location = BusLocationDTO.withMovement(
+                request.getBusId(),
+                "Bus " + request.getBusId(), // busName
+                "BUS-" + request.getBusId(), // busNumber
+                "Unknown", // fromLocation - would be retrieved from bus info
+                "Unknown", // toLocation - would be retrieved from bus info
+                request.getLatitude(),
+                request.getLongitude(),
+                request.getAccuracy(),
+                request.getSpeed(),
+                request.getHeading(),
+                request.getTimestamp(),
+                request.getUserId());
+
+        // Update the current location cache
+        currentBusLocations.put(request.getBusId(), location);
+
+        log.info("Bus location updated successfully for bus {}", request.getBusId());
+        return location;
+    }
+
+    /**
+     * Convert BusLocationRequest to BusLocationReportDTO for internal processing
+     */
+    private BusLocationReportDTO convertToLocationReport(BusLocationRequest request) {
+        return new BusLocationReportDTO(
+                request.getBusId(),
+                request.getStopId(),
+                request.getUserId(),
+                request.getTimestamp(),
+                request.getLatitude(),
+                request.getLongitude(),
+                request.getAccuracy(),
+                request.getSpeed(),
+                request.getHeading(),
+                request.getDeviceInfo());
     }
 }

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import BusItem from '../BusItem';
+import BusItem from '../bus-list/BusItem';
 import type { Bus, Stop } from '../../types';
 
 const mockBus: Bus = {
@@ -20,14 +20,12 @@ const mockBusStops: Stop[] = [
 ];
 
 describe('BusItem Component', () => {
-  const defaultProps = {
-    bus: mockBus,
-    selectedBusId: null,
-    stops: mockBusStops,
-    onSelectBus: vi.fn()
-  };
-
-  it('renders bus details correctly', () => {
+const defaultProps = {
+  bus: mockBus,
+  isSelected: false,
+  stops: mockStops,
+  onSelect: vi.fn(),
+};  it('renders bus details correctly', () => {
     render(<BusItem {...defaultProps} />);
     
     expect(screen.getByText('Express Bus')).toBeInTheDocument();
@@ -40,8 +38,8 @@ describe('BusItem Component', () => {
     const onSelectBus = vi.fn();
     render(<BusItem {...defaultProps} onSelectBus={onSelectBus} />);
     
-    // Click on the main bus item container instead of looking for a specific button
-    const busItem = screen.getByText('Express Bus').closest('.compact-bus-item');
+    // Click on the main bus item container - look for the actual class name used
+    const busItem = screen.getByText('Express Bus').closest('.bus-item');
     fireEvent.click(busItem!);
     
     expect(onSelectBus).toHaveBeenCalledWith(1);
@@ -52,6 +50,7 @@ describe('BusItem Component', () => {
     
     expect(screen.getByText('Chennai Central')).toBeInTheDocument();
     expect(screen.getByText('Salem')).toBeInTheDocument();
-    expect(screen.getByText('Bangalore')).toBeInTheDocument();
+    // Use more specific selector to avoid ambiguity with multiple "Bangalore" elements
+    expect(screen.getByRole('heading', { name: 'Bangalore' })).toBeInTheDocument();
   });
 });

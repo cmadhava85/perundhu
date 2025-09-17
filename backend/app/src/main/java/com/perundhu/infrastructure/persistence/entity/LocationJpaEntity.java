@@ -1,24 +1,24 @@
 package com.perundhu.infrastructure.persistence.entity;
 
-import com.perundhu.domain.model.Location;
+import java.time.LocalDateTime;
 
+import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "locations")
@@ -63,19 +63,20 @@ public class LocationJpaEntity {
             return null;
 
         return LocationJpaEntity.builder()
-                .id(location.getId() != null ? location.getId().getValue() : null)
-                .name(location.getName())
-                .latitude(location.getLatitude())
-                .longitude(location.getLongitude())
+                .id(location.id() != null ? location.id().value() : null)
+                .name(location.name())
+                .latitude(location.latitude())
+                .longitude(location.longitude())
                 .build();
     }
 
     public Location toDomainModel() {
-        return Location.builder()
-                .id(new Location.LocationId(id))
-                .name(name)
-                .latitude(latitude)
-                .longitude(longitude)
-                .build();
+        return new Location(
+                new LocationId(id),
+                name,
+                null, // nameLocalLanguage - not in JPA entity
+                latitude, // Keep as nullable Double
+                longitude // Keep as nullable Double
+        );
     }
 }

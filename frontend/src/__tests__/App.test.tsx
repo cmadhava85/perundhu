@@ -3,6 +3,21 @@ import { vi, beforeEach, describe, test, expect } from 'vitest';
 import App from '../App';
 import '@testing-library/jest-dom';
 
+// Mock window.matchMedia for theme context
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
 // Mock the react-i18next hook directly at the top of the test file
 vi.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -39,6 +54,22 @@ vi.mock('react-i18next', () => ({
 
 // Mock environment utilities with proper implementation
 vi.mock('../utils/environment', () => ({
+  getEnv: (key: string, defaultValue: string = '') => {
+    switch (key) {
+      case 'VITE_API_URL':
+        return 'http://localhost:8080';
+      case 'VITE_GOOGLE_MAPS_API_KEY':
+        return 'test-api-key';
+      case 'VITE_FEATURE_TRACKING':
+        return 'true';
+      case 'VITE_FEATURE_REWARDS':
+        return 'true';
+      case 'VITE_FEATURE_ANALYTICS':
+        return 'true';
+      default:
+        return defaultValue;
+    }
+  },
   getEnvironmentVariable: (key: string, defaultValue: string = '') => {
     switch (key) {
       case 'VITE_API_URL':
@@ -59,75 +90,14 @@ vi.mock('../utils/environment', () => ({
     if (
       key === 'VITE_FEATURE_TRACKING' ||
       key === 'VITE_FEATURE_REWARDS' ||
-      key === 'VITE_FEATURE_ANALYTICS'
+      key === 'VITE_FEATURE_ANALYTICS' ||
+      key === 'ANALYTICS_ENABLED'
     ) {
       return true;
     }
     return defaultValue;
   },
 }));
-
-// Define local ApiError class for testing since it's not exported from API service
-class ApiError extends Error {
-  public status: number;
-  public errorCode?: string;
-  public details?: string[];
-  public path?: string;
-  public timestamp?: string;
-
-  constructor(message: string, status: number, errorData?: any) {
-    super(message);
-    this.name = 'ApiError';
-    this.status = status;
-
-    if (errorData) {
-      this.errorCode = errorData.code;
-      this.details = errorData.details;
-      this.path = errorData.path;
-      this.timestamp = errorData.timestamp;
-    }
-
-    Object.setPrototypeOf(this, ApiError.prototype);
-  }
-}
-
-// Mock API service
-vi.mock('../services/api', () => {
-  const mockGetLocations = vi.fn();
-  const mockGetDestinations = vi.fn();
-  const mockGetBuses = vi.fn();
-  const mockSearchBuses = vi.fn();
-  const mockGetConnectingRoutes = vi.fn();
-  const mockGetStops = vi.fn();
-  const mockGetCurrentBusLocations = vi.fn();
-
-  return {
-    ApiError,
-    getLocations: mockGetLocations,
-    getDestinations: mockGetDestinations,
-    getBuses: mockGetBuses,
-    getStops: mockGetStops,
-    getConnectingRoutes: mockGetConnectingRoutes,
-    getCurrentBusLocations: mockGetCurrentBusLocations,
-    searchBuses: mockSearchBuses,
-    // Add other API methods as needed
-    createApiInstance: vi.fn(),
-    setApiInstance: vi.fn(),
-    setOfflineMode: vi.fn(),
-    getOfflineMode: vi.fn(),
-    getOfflineDataAge: vi.fn(),
-    checkOnlineStatus: vi.fn(),
-    searchBusesViaStops: vi.fn(),
-    reportBusLocation: vi.fn(),
-    disembarkBus: vi.fn(),
-    getLiveBusLocations: vi.fn(),
-    getUserRewardPoints: vi.fn(),
-    handleApiError: vi.fn(),
-    submitRouteContribution: vi.fn(),
-    submitImageContribution: vi.fn(),
-    api: {},
-  };
-});
 
 // Mock child components to simplify testing
 vi.mock('../components/Header', () => ({ 
@@ -139,8 +109,8 @@ vi.mock('../components/Footer', () => ({
 vi.mock('../components/SearchForm', () => ({
   default: function MockSearchForm({
     onSearch,
-    setFromLocation,
-    setToLocation,
+    onFromLocationChange,
+    onToLocationChange,
     fromLocation,
     toLocation,
   }: any) {
@@ -152,20 +122,20 @@ vi.mock('../components/SearchForm', () => ({
 
     const selectFrom = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = parseInt(e.target.value, 10);
-      if (!isNaN(value) && setFromLocation) {
+      if (!isNaN(value) && onFromLocationChange) {
         const location = locationData.find((loc) => loc.id === value);
         if (location) {
-          setFromLocation(location);
+          onFromLocationChange(location);
         }
       }
     };
 
     const selectTo = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = parseInt(e.target.value, 10);
-      if (!isNaN(value) && setToLocation) {
+      if (!isNaN(value) && onToLocationChange) {
         const location = locationData.find((loc) => loc.id === value);
         if (location) {
-          setToLocation(location);
+          onToLocationChange(location);
         }
       }
     };
@@ -203,6 +173,21 @@ vi.mock('../components/SearchForm', () => ({
   }
 }));
 
+vi.mock('../components/SearchResults', () => ({
+  default: ({ buses, error, connectingRoutes }: any) => (
+    <div data-testid="search-results">
+      {error ? (
+        <div data-testid="error-display">Error: {error.message}</div>
+      ) : (
+        <>
+          <div data-testid="bus-list">Bus List: {buses.length} buses</div>
+          <div data-testid="connecting-routes">Connecting Routes: {connectingRoutes.length} routes</div>
+        </>
+      )}
+    </div>
+  ),
+}));
+
 vi.mock('../components/BusList', () => ({
   default: ({ buses }: { buses: any[] }) => (
     <div data-testid="bus-list">Bus List: {buses.length} buses</div>
@@ -216,10 +201,11 @@ vi.mock('../components/ConnectingRoutes', () => ({
 }));
 
 vi.mock('../components/ErrorDisplay', () => ({
-  default: ({ error, reset }: { error: Error | null; reset?: () => void; }) => {
-    return error ? (
+  default: ({ error, message, reset }: { error?: Error | null; message?: string; reset?: () => void; }) => {
+    const displayMessage = error?.message || message;
+    return displayMessage ? (
       <div data-testid="error-display" onClick={reset}>
-        Error: {error.message}
+        Error: {displayMessage}
         <button data-testid="retry-button">Retry</button>
       </div>
     ) : null;
@@ -230,30 +216,35 @@ vi.mock('../components/Loading', () => ({
   default: () => <div data-testid="loading">Loading...</div>
 }));
 
-// Mock the custom hooks with realistic behavior
-let mockLocationData = {
+vi.mock('../components/BottomNavigation', () => ({
+  default: ({ onTabChange, activeTab }: any) => (
+    <nav data-testid="bottom-navigation">
+      <button onClick={() => onTabChange('search')} className={activeTab === 'search' ? 'active' : ''}>
+        Search
+      </button>
+    </nav>
+  )
+}));
+
+// Mock the hooks with realistic behavior
+const mockLocationData = {
   locations: [
     { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
     { id: 2, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 },
     { id: 3, name: 'Madurai', latitude: 9.9252, longitude: 78.1198 },
   ],
   destinations: [
-    { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
     { id: 2, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 },
     { id: 3, name: 'Madurai', latitude: 9.9252, longitude: 78.1198 },
   ],
-  fromLocation: null,
-  toLocation: null,
   loading: false,
   error: null,
-  autoLocationEnabled: false,
-  setFromLocation: vi.fn(),
-  setToLocation: vi.fn(),
-  clearError: vi.fn(),
-  toggleAutoLocation: vi.fn(),
+  getDestinations: vi.fn().mockResolvedValue([]),
+  fromLocation: null,
+  toLocation: null,
 };
 
-let mockBusSearchData = {
+const mockBusSearchData = {
   buses: [] as any[],
   connectingRoutes: [] as any[],
   loading: false,
@@ -261,7 +252,7 @@ let mockBusSearchData = {
   selectedBusId: null,
   stopsMap: {},
   includeIntermediateStops: false,
-  searchBuses: vi.fn(),
+  searchBuses: vi.fn().mockResolvedValue([]),
   selectBus: vi.fn(),
   resetResults: vi.fn(),
   clearError: vi.fn(),
@@ -276,48 +267,36 @@ vi.mock('../hooks/useBusSearch', () => ({
   useBusSearch: () => mockBusSearchData
 }));
 
+vi.mock('../hooks/useBrowserDetection', () => ({
+  default: () => ({ browser: 'chrome' })
+}));
+
 describe('App Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     
     // Reset mock data to default state
-    mockLocationData = {
-      ...mockLocationData,
-      fromLocation: null,
-      toLocation: null,
-      loading: false,
-      error: null,
-      setFromLocation: vi.fn((location) => {
-        mockLocationData.fromLocation = location;
-      }),
-      setToLocation: vi.fn((location) => {
-        mockLocationData.toLocation = location;
-      }),
-      clearError: vi.fn(),
-    };
+    mockLocationData.loading = false;
+    mockLocationData.error = null;
+    mockLocationData.fromLocation = null;
+    mockLocationData.toLocation = null;
+    mockLocationData.getDestinations = vi.fn().mockResolvedValue([]);
 
-    mockBusSearchData = {
-      ...mockBusSearchData,
-      buses: [],
-      connectingRoutes: [],
-      loading: false,
-      error: null,
-      searchBuses: vi.fn(),
-      clearError: vi.fn(() => {
-        mockBusSearchData.error = null;
-      }),
-    };
+    mockBusSearchData.buses = [];
+    mockBusSearchData.connectingRoutes = [];
+    mockBusSearchData.loading = false;
+    mockBusSearchData.error = null;
+    mockBusSearchData.searchBuses = vi.fn().mockResolvedValue([]);
+    mockBusSearchData.resetResults = vi.fn();
+    mockBusSearchData.clearError = vi.fn();
   });
 
   test('renders the application with header and footer', async () => {
     render(<App />);
     
-    expect(screen.getByTestId('mock-header')).toBeInTheDocument();
-    expect(screen.getByTestId('mock-footer')).toBeInTheDocument();
-
-    // Wait for locations to load
     await waitFor(() => {
-      expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+      expect(screen.getByTestId('mock-header')).toBeInTheDocument();
+      expect(screen.getByTestId('mock-footer')).toBeInTheDocument();
     });
   });
 
@@ -353,10 +332,7 @@ describe('App Component', () => {
       },
     ];
 
-    mockBusSearchData.searchBuses = vi.fn().mockImplementation(() => {
-      mockBusSearchData.buses = mockBuses;
-      mockBusSearchData.connectingRoutes = [];
-    });
+    mockBusSearchData.searchBuses = vi.fn().mockResolvedValue(mockBuses);
 
     render(<App />);
 

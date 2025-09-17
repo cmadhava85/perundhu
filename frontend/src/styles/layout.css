@@ -1,5 +1,20 @@
 /* Layout Components */
 
+/* Ensure root elements have proper dimensions */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 /* Main App Container */
 .app-container {
   max-width: var(--container-xl);
@@ -9,6 +24,36 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Force critical layout styles */
+.min-h-screen {
+  min-height: 100vh !important;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @media (min-width: 640px) {

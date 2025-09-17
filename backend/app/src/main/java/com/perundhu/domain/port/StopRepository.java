@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Stop;
+import com.perundhu.domain.model.StopId;
 
 public interface StopRepository {
-    Optional<Stop> findById(Stop.StopId id);
+    Optional<Stop> findById(StopId id);
 
     /**
      * Find stops by bus entity ordered by stop order
@@ -18,12 +20,12 @@ public interface StopRepository {
     List<Stop> findByBusOrderByStopOrder(Bus bus);
 
     /**
-     * Find stops by bus ID (using Bus.BusId value object)
+     * Find stops by bus ID (using BusId value object)
      * 
      * @param busId The bus ID value object
      * @return List of stops for the bus
      */
-    List<Stop> findByBusId(Bus.BusId busId);
+    List<Stop> findByBusId(BusId busId);
 
     /**
      * Find stops by bus ID (using Long)
@@ -34,13 +36,13 @@ public interface StopRepository {
     List<Stop> findByBusId(Long busId);
 
     /**
-     * Find stops ordered by stop order (using Bus.BusId value object)
+     * Find stops ordered by stop order (using BusId value object)
      * 
      * @param busId The bus ID value object
      * @return List of stops ordered by stop order
      */
-    default List<Stop> findByBusIdOrderByStopOrder(Bus.BusId busId) {
-        // Use the more specific method that takes Bus.BusId directly
+    default List<Stop> findByBusIdOrderByStopOrder(BusId busId) {
+        // Use the more specific method that takes BusId directly
         return findByBusId(busId);
     }
 
@@ -64,5 +66,5 @@ public interface StopRepository {
 
     Stop save(Stop stop);
 
-    void delete(Stop.StopId id);
+    void delete(StopId id);
 }

@@ -1,25 +1,33 @@
 package com.perundhu.infrastructure.adapter.service.impl;
 
-import com.perundhu.domain.service.OCRService;
-import com.perundhu.domain.model.RouteContribution;
-import org.springframework.web.multipart.MultipartFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import com.perundhu.domain.model.FileUpload;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.OCRService;
 
 /**
  * Implementation of OCR service for extracting text and data from images
  */
+@Service
 public class OCRServiceImpl implements OCRService {
 
   private static final Logger log = LoggerFactory.getLogger(OCRServiceImpl.class);
 
   @Override
-  public String extractTextFromImage(MultipartFile imageFile) {
+  public String extractTextFromImage(FileUpload imageFile) {
     try {
       log.info("Extracting text from image file: {}", imageFile.getOriginalFilename());
       // TODO: Implement actual OCR logic using Tesseract or cloud OCR service
@@ -63,7 +71,7 @@ public class OCRServiceImpl implements OCRService {
   }
 
   @Override
-  public boolean isValidBusScheduleImage(MultipartFile imageFile) {
+  public boolean isValidBusScheduleImage(FileUpload imageFile) {
     try {
       log.info("Validating bus schedule image: {}", imageFile.getOriginalFilename());
 
@@ -90,7 +98,7 @@ public class OCRServiceImpl implements OCRService {
   }
 
   @Override
-  public double getExtractionConfidence(MultipartFile imageFile) {
+  public double getExtractionConfidence(FileUpload imageFile) {
     try {
       if (imageFile != null) {
         log.info("Calculating extraction confidence for: {}", imageFile.getOriginalFilename());

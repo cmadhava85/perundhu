@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
-import BusList from '../BusList';
+import ModernBusList from '../ModernBusList';
 import type { Bus } from '../../types';
 
-// Mock the BusItem component to simplify testing
-vi.mock('../BusItem', () => ({
+// Mock the ModernBusItem component to simplify testing
+vi.mock('../ModernBusItem', () => ({
   default: function MockBusItem({ bus, onSelectBus }: { 
     bus: Bus; 
     onSelectBus: (busId: number) => void 

@@ -1,27 +1,31 @@
 package com.perundhu.application.service;
 
-import com.perundhu.domain.model.ImageContribution;
-import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.application.port.input.ImageContributionInputPort;
-import com.perundhu.domain.port.ImageContributionOutputPort;
-import com.perundhu.infrastructure.adapter.output.RouteContributionOutputPort;
-import com.perundhu.domain.service.OCRService;
-import com.perundhu.infrastructure.adapter.service.FileStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.scheduling.annotation.Async;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import lombok.RequiredArgsConstructor;
-
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.perundhu.application.port.input.ImageContributionInputPort;
+import com.perundhu.domain.model.FileUpload;
+import com.perundhu.domain.model.ImageContribution;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.FileStorageService;
+import com.perundhu.domain.port.ImageContributionOutputPort;
+import com.perundhu.domain.port.OCRService;
+import com.perundhu.domain.port.RouteContributionOutputPort;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +54,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         try {
             // 1. Validate and store the image file
-            String imageUrl = fileStorageService.storeImageFile(imageFile, userId);
+            FileUpload fileUpload = convertToFileUpload(imageFile);
+            String imageUrl = fileStorageService.storeImageFile(fileUpload, userId);
 
             // 2. Create initial image contribution record
             ImageContribution contribution = createInitialContribution(imageFile, metadata, userId, imageUrl);
@@ -95,19 +100,19 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         try {
             // 1. Validate if image contains bus schedule
-            if (!ocrService.isValidBusScheduleImage(imageFile)) {
+            if (!ocrService.isValidBusScheduleImage(convertToFileUpload(imageFile))) {
                 markProcessingFailed(contribution, "Image does not appear to contain bus schedule information");
                 return;
             }
 
             // 2. Extract text using OCR
-            String extractedText = ocrService.extractTextFromImage(imageFile);
+            String extractedText = ocrService.extractTextFromImage(convertToFileUpload(imageFile));
             if (extractedText == null || extractedText.trim().isEmpty()) {
                 markProcessingFailed(contribution, "Unable to extract text from image");
                 return;
             }
 
-            double confidence = ocrService.getExtractionConfidence(imageFile);
+            double confidence = ocrService.getExtractionConfidence(convertToFileUpload(imageFile));
             logger.info("OCR extraction confidence: {} for contribution: {}", confidence, contribution.getId());
 
             // 3. Update contribution with extracted text
@@ -549,5 +554,20 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         }
 
         return Math.min(confidence, 1.0); // Cap at 1.0
+    }
+
+    /**
+     * Converts a Spring MultipartFile to domain FileUpload
+     */
+    private FileUpload convertToFileUpload(MultipartFile multipartFile) {
+        try {
+            return new FileUpload(
+                    multipartFile.getOriginalFilename(),
+                    multipartFile.getContentType(),
+                    multipartFile.getSize(),
+                    multipartFile.getInputStream());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to convert MultipartFile to FileUpload", e);
+        }
     }
 }

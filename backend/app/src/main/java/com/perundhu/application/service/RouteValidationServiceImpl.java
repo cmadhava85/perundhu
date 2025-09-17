@@ -1,11 +1,13 @@
 package com.perundhu.application.service;
 
+import org.springframework.stereotype.Service;
+
 import com.perundhu.domain.model.Location;
-import com.perundhu.domain.service.LocationValidationService;
+import com.perundhu.domain.port.LocationValidationService;
 import com.perundhu.domain.service.RouteValidationService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 /**
  * Implementation of route validation service

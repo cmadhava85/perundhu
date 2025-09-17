@@ -119,12 +119,12 @@ public class BusScheduleController {
 
             List<LocationDTO> result = locations.stream()
                     .map(location -> new LocationDTO(
-                            location.getId().getValue(),
-                            location.getName(),
+                            location.id().value(),
+                            location.name(),
                             // For autocomplete, we can use a simple translation lookup
-                            location.getName(), // translatedName - could be enhanced later
-                            location.getLatitude(),
-                            location.getLongitude()))
+                            location.name(), // translatedName - could be enhanced later
+                            location.latitude(),
+                            location.longitude()))
                     .toList();
 
             log.info("Found {} locations for query '{}'", result.size(), query);
@@ -378,18 +378,8 @@ public class BusScheduleController {
         try {
             List<StopDTO> stops = busScheduleService.getStopsForBus(busId, language);
 
-            // Return basic stop information WITH coordinates for map functionality
-            List<StopDTO> basicStops = stops.stream()
-                    .map(stop -> new StopDTO(
-                            stop.name(),
-                            stop.translatedName(),
-                            stop.arrivalTime(),
-                            stop.departureTime(),
-                            stop.stopOrder(),
-                            stop.latitude(), // Include latitude for map functionality
-                            stop.longitude() // Include longitude for map functionality
-                    ))
-                    .toList();
+            // Return the stops directly since they're already StopDTO objects
+            List<StopDTO> basicStops = stops;
 
             log.info("Found {} basic stops for bus {}", basicStops.size(), busId);
             return ResponseEntity.ok(basicStops);
@@ -482,10 +472,10 @@ public class BusScheduleController {
         // BusDTO is a record, so we create a new instance with limited data
         return BusDTO.of(
                 bus.id(),
+                bus.number(), // Use number() field which exists in BusDTO
                 bus.name(),
-                bus.busNumber(),
-                bus.fromLocationName(),
-                bus.toLocationName());
+                "Unknown", // operator - not available in current BusDTO
+                "Unknown"); // type - not available in current BusDTO
     }
 
     private List<ConnectingRouteDTO> encryptRouteDetails(List<ConnectingRouteDTO> routes) {
@@ -510,32 +500,21 @@ public class BusScheduleController {
                     // For now, return basic stops without coordinate hiding
                     // Future enhancement: implement coordinate obfuscation when security layer is
                     // added
-                    return new StopDTO(
-                            stop.name(),
-                            stop.translatedName(),
-                            stop.arrivalTime(),
-                            stop.departureTime(),
-                            stop.stopOrder(),
-                            stop.latitude(), // Keep coordinates for map functionality
-                            stop.longitude() // Keep coordinates for map functionality
-                    );
+                    return stop; // Return as-is for now
                 })
                 .toList();
     }
 
     private List<BusDTO> sanitizeRoutesForPublicAccess(List<BusDTO> routes) {
         return routes.stream()
-                .map(route -> BusDTO.withTimes(
+                .map(route -> new BusDTO(
                         route.id(),
+                        route.number(), // Use number field
                         route.name(),
-                        route.busNumber(),
-                        route.fromLocationName(),
-                        route.toLocationName(),
-                        route.departureTime(), // Show departure time for public access
-                        route.arrivalTime(), // Show arrival time for public access
-                        route.capacity(),
-                        route.category(),
-                        route.active()))
+                        "Unknown", // operator - not available
+                        "Unknown", // type - not available
+                        Map.of() // features as empty map
+                ))
                 .limit(10) // Limit to 10 results for public access
                 .toList();
     }

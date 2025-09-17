@@ -3,8 +3,10 @@ package com.perundhu.infrastructure.persistence.entity;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.List;
 
 import com.perundhu.domain.model.Stop;
+import com.perundhu.domain.model.StopId;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 
@@ -275,23 +277,20 @@ public class StopJpaEntity {
             return null;
 
         StopJpaEntity entity = new StopJpaEntity();
-        if (stop.getId() != null) {
-            entity.setId(stop.getId().value());
+        if (stop.id() != null) {
+            entity.setId(stop.id().value());
         }
-        entity.setName(stop.getName());
-        entity.setArrivalTime(stop.getArrivalTime());
-        entity.setDepartureTime(stop.getDepartureTime());
-        entity.setStopOrder(stop.getStopOrder());
+        entity.setName(stop.name());
+        entity.setArrivalTime(stop.arrivalTime());
+        entity.setDepartureTime(stop.departureTime());
+        entity.setStopOrder(stop.sequence());
 
-        if (stop.getBus() != null && stop.getBus().getId() != null) {
-            BusJpaEntity busEntity = new BusJpaEntity();
-            busEntity.setId(stop.getBus().getId().value());
-            entity.setBus(busEntity);
-        }
+        // Note: Stop domain model doesn't have bus field anymore
+        // entity.setBus would need to be set separately
 
-        if (stop.getLocation() != null && stop.getLocation().getId() != null) {
+        if (stop.location() != null && stop.location().id() != null) {
             LocationJpaEntity locationEntity = new LocationJpaEntity();
-            locationEntity.setId(stop.getLocation().getId().value());
+            locationEntity.setId(stop.location().id().value());
             entity.setLocation(locationEntity);
         }
 
@@ -314,6 +313,7 @@ public class StopJpaEntity {
                         locationModel = new Location(
                                 null,
                                 location.getName() != null ? location.getName() : "Unknown Location",
+                                null, // nameLocalLanguage
                                 lat != null ? lat : 0.0,
                                 lng != null ? lng : 0.0);
                     }
@@ -321,7 +321,7 @@ public class StopJpaEntity {
                     // Log the error but don't fail the entire conversion
                     System.err.println("Error converting location: " + e.getMessage());
                     // Create a default location
-                    locationModel = new Location(null, "Unknown Location", 0.0, 0.0);
+                    locationModel = new Location(null, "Unknown Location", null, 0.0, 0.0);
                 }
             }
 
@@ -338,13 +338,14 @@ public class StopJpaEntity {
 
             Integer stopOrderValue = stopOrder;
             return new Stop(
-                    id != null ? new Stop.StopId(id) : null,
+                    id != null ? new StopId(id) : null,
                     name != null ? name : "Unknown Stop",
-                    busModel,
                     locationModel,
                     arrivalTime,
                     departureTime,
-                    stopOrderValue != null ? stopOrderValue : 0);
+                    stopOrderValue != null ? stopOrderValue : 0,
+                    List.of() // features - not stored in JPA entity
+            );
         } catch (Exception e) {
             throw new RuntimeException("Error converting StopJpaEntity to domain model", e);
         }

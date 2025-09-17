@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -74,10 +75,10 @@ class BusTrackingServiceImplTest {
     // Helper methods to create objects safely
     private Location createLocation(Long id, String name, double latitude, double longitude) {
         try {
-            return new Location(new Location.LocationId(id), name, latitude, longitude);
+            return new Location(new LocationId(id), name, null, latitude, longitude);
         } catch (Exception e) {
             // Fallback if constructor fails
-            Location location = new Location(null, name, latitude, longitude);
+            Location location = new Location(null, name, null, latitude, longitude);
             return location;
         }
     }
@@ -85,29 +86,31 @@ class BusTrackingServiceImplTest {
     private Bus createBus(Long id, String name, String busNumber, Location from, Location to) {
         try {
             return new Bus(
-                    new Bus.BusId(id),
-                    name,
-                    busNumber,
+                    BusId.of(id),
+                    busNumber != null ? busNumber : "",
+                    name != null ? name : "",
+                    "Test Operator",
+                    "Express",
                     from,
                     to,
                     LocalTime.of(8, 30),
                     LocalTime.of(14, 0),
                     50,
-                    "AC",
-                    true);
+                    Arrays.asList("AC"));
         } catch (Exception e) {
             // Fallback with minimal required parameters
             return new Bus(
-                    new Bus.BusId(id != null ? id : 0L),
-                    name != null ? name : "",
+                    BusId.of(id != null ? id : 0L),
                     busNumber != null ? busNumber : "",
+                    name != null ? name : "",
+                    "Default Operator",
+                    "Local",
                     from != null ? from : createLocation(0L, "Default", 0.0, 0.0),
                     to != null ? to : createLocation(0L, "Default", 0.0, 0.0),
                     LocalTime.of(8, 30),
                     LocalTime.of(14, 0),
                     50,
-                    "AC",
-                    true);
+                    Arrays.asList("Basic"));
         }
     }
 
@@ -115,25 +118,23 @@ class BusTrackingServiceImplTest {
         try {
             // Create a proper Stop object with all required parameters
             return new Stop(
-                    new Stop.StopId(id),
+                    new StopId(id),
                     name,
-                    bus,
                     location,
                     LocalTime.of(8, 30), // arrivalTime
                     LocalTime.of(8, 35), // departureTime
-                    sequence // stopOrder
+                    sequence, // stopOrder
+                    Arrays.asList("Standard") // features
             );
         } catch (Exception e) {
-            // Fallback using Stop.builder() for more flexibility
-            return Stop.builder()
-                    .id(new Stop.StopId(id))
-                    .name(name)
-                    .location(location)
-                    .bus(bus)
-                    .stopOrder(sequence)
-                    .arrivalTime(LocalTime.of(8, 30))
-                    .departureTime(LocalTime.of(8, 35))
-                    .build();
+            // Use Stop.create() factory method for record-based Stop
+            return Stop.create(
+                    new StopId(id),
+                    name,
+                    location,
+                    LocalTime.of(8, 30),
+                    LocalTime.of(8, 35),
+                    sequence);
         }
     }
 

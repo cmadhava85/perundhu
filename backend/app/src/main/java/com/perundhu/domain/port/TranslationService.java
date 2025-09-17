@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.perundhu.domain.model.Translatable;
+import com.perundhu.domain.model.Translation;
 
 /**
  * Port for translation services in the hexagonal architecture
@@ -88,6 +89,14 @@ public interface TranslationService {
      * @param value        The translated value
      */
     <T> void saveTranslation(Translatable<T> entity, String fieldName, String languageCode, String value);
+
+    /**
+     * Save a translation object
+     * 
+     * @param translation The translation object to save
+     * @return The saved translation object
+     */
+    Translation saveTranslation(Translation translation);
 
     /**
      * Save multiple translations for an entity

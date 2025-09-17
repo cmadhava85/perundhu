@@ -49,7 +49,7 @@ public class BusTrackingController {
     @PostMapping("/report")
     public ResponseEntity<RewardPointsDTO> reportBusLocation(@RequestBody BusLocationReportDTO report) {
         log.info("Received bus location report from user: {} for bus: {}",
-                report.getUserId(), report.getBusId());
+                report.userId(), report.busId());
 
         RewardPointsDTO points = busTrackingService.processLocationReport(report);
         return ResponseEntity.ok(points);

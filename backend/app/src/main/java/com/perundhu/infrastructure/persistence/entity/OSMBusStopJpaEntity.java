@@ -33,12 +33,15 @@ public class OSMBusStopJpaEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "stop_type")
+  @Builder.Default
   private StopType stopType = StopType.BUS_STOP;
 
   @Column(name = "has_shelter")
+  @Builder.Default
   private Boolean hasShelter = false;
 
   @Column(name = "has_bench")
+  @Builder.Default
   private Boolean hasBench = false;
 
   private String network;

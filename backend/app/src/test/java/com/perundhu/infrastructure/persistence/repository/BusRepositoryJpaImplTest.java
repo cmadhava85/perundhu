@@ -1,8 +1,11 @@
 package com.perundhu.infrastructure.persistence.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -16,7 +19,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
@@ -45,21 +50,22 @@ public class BusRepositoryJpaImplTest {
         busRepository = new BusJpaRepositoryAdapter(busJpaRepository);
 
         // Create test locations
-        fromLocation = new Location(new Location.LocationId(1L), "Chennai", 13.0827, 80.2707);
-        toLocation = new Location(new Location.LocationId(2L), "Bangalore", 12.9716, 77.5946);
+        fromLocation = new Location(new LocationId(1L), "Chennai", "சென்னை", 13.0827, 80.2707);
+        toLocation = new Location(new LocationId(2L), "Bangalore", "ಬೆಂಗಳೂರು", 12.9716, 77.5946);
 
         // Create test bus
         testBus = new Bus(
-                new Bus.BusId(1L),
-                "Test Bus",
-                "TEST-001",
+                BusId.of(1L),
+                "TN-01-1234",
+                "Express 101",
+                "Test Operator",
+                "Express",
                 fromLocation,
                 toLocation,
                 LocalTime.of(9, 0),
                 LocalTime.of(15, 0),
                 50,
-                "Express",
-                true);
+                Arrays.asList("AC", "WiFi"));
 
         // Create JPA entities
         fromLocationEntity = new LocationJpaEntity();
@@ -90,7 +96,7 @@ public class BusRepositoryJpaImplTest {
         when(busJpaRepository.findById(1L)).thenReturn(Optional.of(testBusEntity));
 
         // Execute
-        Optional<Bus> result = busRepository.findById(new Bus.BusId(1L));
+        Optional<Bus> result = busRepository.findById(BusId.of(1L));
 
         // Verify
         assertTrue(result.isPresent());
@@ -159,7 +165,7 @@ public class BusRepositoryJpaImplTest {
     @Test
     void testDelete() {
         // Execute
-        busRepository.delete(new Bus.BusId(1L));
+        busRepository.delete(BusId.of(1L));
 
         // Verify
         verify(busJpaRepository).deleteById(1L);

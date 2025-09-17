@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
@@ -18,7 +19,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
-    public Optional<Location> findById(Location.LocationId id) {
+    public Optional<Location> findById(LocationId id) {
         return jpaRepository.findById(id.getValue())
                 .map(LocationJpaEntity::toDomainModel);
     }
@@ -37,7 +38,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
-    public List<Location> findAllExcept(Location.LocationId id) {
+    public List<Location> findAllExcept(LocationId id) {
         return jpaRepository.findAll().stream()
                 .filter(entity -> !entity.getId().equals(id.getValue()))
                 .map(LocationJpaEntity::toDomainModel)
@@ -53,7 +54,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     @Override
     public Optional<Location> findByExactName(String name) {
-        return jpaRepository.findByNameIgnoreCase(name)
+        return jpaRepository.findByNameEquals(name)
                 .map(LocationJpaEntity::toDomainModel);
     }
 
@@ -65,7 +66,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
         double lonMin = longitude - radiusDegrees;
         double lonMax = longitude + radiusDegrees;
 
-        return jpaRepository.findWithinBounds(latMin, latMax, lonMin, lonMax)
+        return jpaRepository.findByLatitudeBetweenAndLongitudeBetween(latMin, latMax, lonMin, lonMax)
                 .stream()
                 .map(LocationJpaEntity::toDomainModel)
                 .findFirst();
@@ -82,15 +83,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     @Override
     public Location save(Location location) {
-        // Validate coordinates before saving
-        if (location.getLatitude() != null && location.getLongitude() != null) {
-            if (!location.hasValidCoordinates()) {
-                throw new IllegalArgumentException(
-                        String.format("Invalid coordinates for location '%s': lat=%f, lng=%f",
-                                location.getName(), location.getLatitude(), location.getLongitude()));
-            }
-        }
-
+        // Create entity from domain model
         LocationJpaEntity entity = LocationJpaEntity.fromDomainModel(location);
         return jpaRepository.save(entity).toDomainModel();
     }
@@ -132,7 +125,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
-    public void delete(Location.LocationId id) {
+    public void delete(LocationId id) {
         jpaRepository.deleteById(id.getValue());
     }
 }

@@ -38,6 +38,7 @@ public class OSMBusRouteJpaEntity {
   private String toLocation;
 
   @Column(name = "route_type")
+  @Builder.Default
   private String routeType = "bus";
 
   private String frequency;
@@ -52,6 +53,7 @@ public class OSMBusRouteJpaEntity {
   private Double estimatedDistance; // in km
 
   @Column(name = "relevance_score")
+  @Builder.Default
   private Double relevanceScore = 0.0;
 
   @Column(name = "last_updated")

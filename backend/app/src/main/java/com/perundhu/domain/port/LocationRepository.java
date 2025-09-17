@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 
 public interface LocationRepository {
-    Optional<Location> findById(Location.LocationId id);
+    Optional<Location> findById(LocationId id);
 
     List<Location> findAll();
 
-    List<Location> findAllExcept(Location.LocationId id);
+    List<Location> findAllExcept(LocationId id);
 
     /**
      * Find locations by exact name match
@@ -66,5 +67,5 @@ public interface LocationRepository {
 
     Location save(Location location);
 
-    void delete(Location.LocationId id);
+    void delete(LocationId id);
 }

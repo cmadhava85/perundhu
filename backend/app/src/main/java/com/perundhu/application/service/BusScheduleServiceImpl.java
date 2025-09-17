@@ -1,16 +1,21 @@
 package com.perundhu.application.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.BusDTO;
+import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.dto.BusRouteSegmentDTO;
 import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
+import com.perundhu.application.dto.OSMBusStopDTO;
+import com.perundhu.application.dto.RouteDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.BusId;
@@ -102,7 +107,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         LocationId fromId = new LocationId(fromLocationId);
         LocationId toId = new LocationId(toLocationId);
 
-        List<Bus> buses = busRepository.findBusesBetweenLocations(fromId, toId);
+        List<Bus> buses = busRepository.findBusesBetweenLocations(fromId.value(), toId.value());
 
         return buses.stream()
                 .map(BusDTO::fromDomain)
@@ -112,8 +117,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     @Override
     public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId) {
         // Get the location entities using domain IDs
-        Optional<Location> fromLocationOptional = locationRepository.findById(new Location.LocationId(fromLocationId));
-        Optional<Location> toLocationOptional = locationRepository.findById(new Location.LocationId(toLocationId));
+        Optional<Location> fromLocationOptional = locationRepository.findById(new LocationId(fromLocationId));
+        Optional<Location> toLocationOptional = locationRepository.findById(new LocationId(toLocationId));
 
         if (fromLocationOptional.isEmpty() || toLocationOptional.isEmpty()) {
             return new ArrayList<>();
@@ -133,11 +138,10 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         return convertToDTOs(domainRoutes, null);
     }
 
-    @Override
     public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId, Integer maxDepth) {
         // Get the location entities using domain IDs
-        Optional<Location> fromLocationOptional = locationRepository.findById(new Location.LocationId(fromLocationId));
-        Optional<Location> toLocationOptional = locationRepository.findById(new Location.LocationId(toLocationId));
+        Optional<Location> fromLocationOptional = locationRepository.findById(new LocationId(fromLocationId));
+        Optional<Location> toLocationOptional = locationRepository.findById(new LocationId(toLocationId));
 
         if (fromLocationOptional.isEmpty() || toLocationOptional.isEmpty()) {
             return new ArrayList<>();
@@ -183,16 +187,16 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
 
         return stops.stream().map(stop -> {
-            // Create a final copy of the name for use in lambda - using Lombok getter
-            final String stopName = stop.getName();
+            // Create a final copy of the name for use in lambda - using record accessor
+            final String stopName = stop.name();
             final String[] translatedNameHolder = { stopName };
 
             // If language code is provided, try to get translation
             if (languageCode != null && !languageCode.isEmpty()) {
-                // Get translation for the stop name if available - using Lombok getter
+                // Get translation for the stop name if available - using record accessor
                 translationRepository
                         .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
-                                ENTITY_TYPE_STOP, stop.getId().value(), FIELD_NAME, languageCode)
+                                ENTITY_TYPE_STOP, stop.id().value(), FIELD_NAME, languageCode)
                         .ifPresent(translation -> {
                             // Using var for local variable type inference (Java 10+)
                             var translatedValue = translation.getTranslatedValue();
@@ -203,11 +207,14 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
 
             return new StopDTO(
-                    translatedNameHolder[0],
-                    stop.getName(),
-                    stop.getArrivalTime(),
-                    stop.getDepartureTime(),
-                    stop.getStopOrder());
+                    stop.id().value(), // Long id
+                    translatedNameHolder[0], // String name (translated)
+                    stop.location() != null ? stop.location().id().value() : null, // Long locationId
+                    stop.arrivalTime(), // LocalTime arrivalTime
+                    stop.departureTime(), // LocalTime departureTime
+                    stop.sequence(), // int sequence
+                    Map.of() // Map<String, String> features - empty for now
+            );
         }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
     }
 
@@ -262,7 +269,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                     bus.id().value(), // 1. Long id
                     bus.name(), // 2. String name
                     translatedName, // 3. String translatedName
-                    bus.busNumber(), // 4. String busNumber
+                    bus.number(), // 4. String busNumber
                     fromLocation.name(), // 5. String fromLocation
                     fromLocationTranslatedName, // 6. String fromLocationTranslated
                     toLocation.name(), // 7. String toLocation
@@ -286,11 +293,11 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
             for (Stop stop : stops) {
                 // First check if the location itself is not null before accessing its id
-                if (stop.getLocation() != null) {
+                if (stop.location() != null) {
                     // Compare the Long value from the LocationId with fromLocationId
-                    if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(fromLocationId)) {
+                    if (stop.location().id() != null && stop.location().id().value().equals(fromLocationId)) {
                         hasFromLocation = true;
-                    } else if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(toLocationId)
+                    } else if (stop.location().id() != null && stop.location().id().value().equals(toLocationId)
                             && hasFromLocation) {
                         hasToLocation = true;
                         break;
@@ -324,11 +331,11 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
             for (Stop stop : stops) {
                 // First check if the location itself is not null before accessing its id
-                if (stop.getLocation() != null) {
+                if (stop.location() != null) {
                     // Compare the Long value from the LocationId with fromLocationId
-                    if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(fromLocationId)) {
+                    if (stop.location().id() != null && stop.location().id().value().equals(fromLocationId)) {
                         hasFromLocation = true;
-                    } else if (stop.getLocation().id() != null && stop.getLocation().id().value().equals(toLocationId)
+                    } else if (stop.location().id() != null && stop.location().id().value().equals(toLocationId)
                             && hasFromLocation) {
                         hasToLocation = true;
                         break;
@@ -366,28 +373,98 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 BusRouteSegmentDTO segment = new BusRouteSegmentDTO(
                         bus.id().value(),
                         bus.name(),
-                        bus.busNumber(),
+                        bus.number(),
                         fromName,
                         toName,
-                        bus.departureTime(),
-                        bus.arrivalTime());
+                        bus.departureTime() != null ? bus.departureTime().toString() : null,
+                        bus.arrivalTime() != null ? bus.arrivalTime().toString() : null,
+                        null, null, null, null, null);
 
                 segments.add(segment);
             }
 
-            // Build the DTO
-            ConnectingRouteDTO dto = ConnectingRouteDTO.builder()
-                    .from(route.getFrom().name())
-                    .to(route.getTo().name())
-                    .departureTime(route.getDepartureTime())
-                    .arrivalTime(route.getArrivalTime())
-                    .transfers(route.getTransfers())
-                    .segments(segments)
-                    .build();
+            // Build the DTO using factory method
+            ConnectingRouteDTO dto = ConnectingRouteDTO.of(
+                    null, // Generated ID
+                    "Connection Point", // Connection point between routes
+                    null, // firstLeg - will be set appropriately
+                    null // secondLeg - will be set appropriately
+            );
 
             dtos.add(dto);
         }
 
         return dtos;
+    }
+
+    // Missing method implementations
+    @Override
+    public List<BusDTO> findBusesContinuingBeyondDestination(Long fromLocationId, Long toLocationId) {
+        // Validate input parameters
+        if (fromLocationId == null) {
+            throw new IllegalArgumentException("From location ID cannot be null");
+        }
+        if (toLocationId == null) {
+            throw new IllegalArgumentException("To location ID cannot be null");
+        }
+        if (fromLocationId.equals(toLocationId)) {
+            throw new IllegalArgumentException("From and to location IDs cannot be the same");
+        }
+
+        // Call repository to find buses continuing beyond destination
+        List<Bus> buses = busRepository.findBusesContinuingBeyondDestination(fromLocationId, toLocationId);
+
+        // Convert to DTOs and return
+        return buses.stream()
+                .map(BusDTO::fromDomain)
+                .toList();
+    }
+
+    @Override
+    public List<BusRouteDTO> discoverOSMRoutes(Long fromLocationId, Long toLocationId) {
+        // TODO: Implement actual logic to discover OSM routes
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<OSMBusStopDTO> discoverIntermediateStops(Long fromLocationId, Long toLocationId) {
+        // TODO: Implement actual logic to discover intermediate stops
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Location> searchLocationsByName(String query) {
+        // TODO: Implement actual logic to search locations by name
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<BusDTO> searchRoutes(String fromLocation, String toLocation, int page, int size) {
+        // TODO: Implement actual logic to search routes
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<BusScheduleDTO> searchBuses(String fromLocation, String toLocation, LocalDate date) {
+        // TODO: Implement actual logic to search buses by date
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<RouteDTO> getAllRoutes() {
+        // TODO: Implement actual logic to get all routes
+        return new ArrayList<>();
+    }
+
+    @Override
+    public BusScheduleDTO getBusSchedule(Long busId, LocalDate date) {
+        // TODO: Implement actual logic to get bus schedule
+        return null;
+    }
+
+    @Override
+    public List<StopDTO> getStopsForRoute(Long routeId) {
+        // TODO: Implement actual logic to get stops for route
+        return new ArrayList<>();
     }
 }

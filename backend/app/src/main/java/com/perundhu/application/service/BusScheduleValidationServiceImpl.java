@@ -1,16 +1,18 @@
 package com.perundhu.application.service;
 
-import com.perundhu.domain.model.BusSchedule;
-import com.perundhu.domain.model.Location;
-import com.perundhu.domain.service.BusScheduleValidationService;
-import com.perundhu.domain.service.LocationValidationService;
-import com.perundhu.domain.service.RouteValidationService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalTime;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.perundhu.domain.model.BusSchedule;
+import com.perundhu.domain.model.Location;
+import com.perundhu.domain.port.LocationValidationService;
+import com.perundhu.domain.service.BusScheduleValidationService;
+import com.perundhu.domain.service.RouteValidationService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implementation of bus schedule validation service

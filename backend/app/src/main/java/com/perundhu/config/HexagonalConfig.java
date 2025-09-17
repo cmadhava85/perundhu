@@ -1,29 +1,35 @@
 package com.perundhu.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import com.perundhu.domain.service.OCRService;
-import com.perundhu.infrastructure.adapter.service.impl.OCRServiceImpl;
 
-import com.perundhu.domain.service.RouteValidationService;
-import com.perundhu.domain.service.LocationValidationService;
-import com.perundhu.domain.port.RouteContributionRepository;
+import com.perundhu.domain.port.BusAnalyticsRepository;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
+import com.perundhu.domain.port.LocationValidationService;
+import com.perundhu.domain.port.OCRService;
+import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.StopRepository;
-import com.perundhu.domain.port.BusAnalyticsRepository;
-import com.perundhu.infrastructure.persistence.adapter.RouteContributionRepositoryAdapter;
+import com.perundhu.domain.port.TranslationRepository;
+import com.perundhu.domain.service.RouteValidationService;
+import com.perundhu.infrastructure.adapter.out.persistence.InMemoryStopRepositoryAdapter;
+import com.perundhu.infrastructure.adapter.out.persistence.InMemoryTranslationRepositoryAdapter;
+import com.perundhu.infrastructure.adapter.service.impl.OCRServiceImpl;
+import com.perundhu.infrastructure.persistence.adapter.BusAnalyticsRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
+import com.perundhu.infrastructure.persistence.adapter.RouteContributionRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.StopJpaRepositoryAdapter;
-import com.perundhu.infrastructure.persistence.adapter.BusAnalyticsRepositoryAdapter;
-import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
+import com.perundhu.infrastructure.persistence.adapter.TranslationJpaRepositoryAdapter;
+import com.perundhu.infrastructure.persistence.jpa.BusAnalyticsJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
+import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.StopJpaRepository;
-import com.perundhu.infrastructure.persistence.jpa.BusAnalyticsJpaRepository;
+import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
 
 /**
  * Hexagonal Architecture Configuration
@@ -45,13 +51,23 @@ public class HexagonalConfig {
   }
 
   @Bean
-  public LocationRepository locationRepository(LocationJpaRepository locationJpaRepository) {
+  public LocationRepository locationRepository(
+      @Qualifier("repositoryPackageLocationJpaRepository") LocationJpaRepository locationJpaRepository) {
     return new LocationJpaRepositoryAdapter(locationJpaRepository);
   }
 
   @Bean
-  public StopRepository stopRepository(@Qualifier("jpaPackageStopJpaRepository") StopJpaRepository stopJpaRepository) {
+  @Primary
+  public StopRepository stopRepository(
+      @Qualifier("jpaPackageStopJpaRepository") StopJpaRepository stopJpaRepository) {
     return new StopJpaRepositoryAdapter(stopJpaRepository);
+  }
+
+  @Bean
+  @Primary
+  public TranslationRepository translationRepository(
+      @Qualifier("jpaPackageTranslationJpaRepository") TranslationJpaRepository translationJpaRepository) {
+    return new TranslationJpaRepositoryAdapter(translationJpaRepository);
   }
 
   @Bean
@@ -61,54 +77,14 @@ public class HexagonalConfig {
   }
 
   @Bean
-  public RouteValidationService routeValidationService() {
-    return new RouteValidationService() {
-      @Override
-      public void validateRoute(com.perundhu.domain.model.Location from, com.perundhu.domain.model.Location to) {
-        if (from == null || to == null) {
-          throw new IllegalArgumentException("From and to locations cannot be null");
-        }
-        if (from.equals(to)) {
-          throw new IllegalArgumentException("From and to locations cannot be the same");
-        }
-      }
-
-      @Override
-      public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        final double R = 6371; // Earth radius in km
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-      }
-    };
+  public RouteValidationService routeValidationService(LocationValidationService locationValidationService) {
+    return new com.perundhu.application.service.RouteValidationServiceImpl(locationValidationService);
   }
 
   @Bean("domainLocationValidationService")
-  public LocationValidationService domainLocationValidationService() {
-    return new LocationValidationService() {
-      @Override
-      public void validateLocation(com.perundhu.domain.model.Location location) {
-        if (location == null) {
-          throw new IllegalArgumentException("Location cannot be null");
-        }
-        if (location.getName() == null || location.getName().trim().isEmpty()) {
-          throw new IllegalArgumentException("Location name cannot be null or empty");
-        }
-        if (location.getLatitude() == null || location.getLongitude() == null) {
-          throw new IllegalArgumentException("Location coordinates cannot be null");
-        }
-        if (location.getLatitude() < -90 || location.getLatitude() > 90) {
-          throw new IllegalArgumentException("Invalid latitude: " + location.getLatitude());
-        }
-        if (location.getLongitude() < -180 || location.getLongitude() > 180) {
-          throw new IllegalArgumentException("Invalid longitude: " + location.getLongitude());
-        }
-      }
-    };
+  @Primary
+  public LocationValidationService domainLocationValidationService(LocationRepository locationRepository) {
+    return new com.perundhu.application.service.LocationValidationServiceImpl(locationRepository);
   }
 
   @Bean

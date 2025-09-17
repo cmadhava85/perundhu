@@ -21,4 +21,9 @@ public record StopId(Long value) {
       throw new IllegalArgumentException("Invalid Stop ID format: " + value, e);
     }
   }
+
+  // Traditional getter method for backward compatibility
+  public Long getValue() {
+    return value;
+  }
 }

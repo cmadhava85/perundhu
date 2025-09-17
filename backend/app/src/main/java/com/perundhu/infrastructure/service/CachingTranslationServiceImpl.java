@@ -411,7 +411,6 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
         return false;
     }
 
-    @Override
     public void clearCache() {
         log.debug("Clearing all translation caches");
         if (isTestMode) {
@@ -422,7 +421,6 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
         // is handled by the @CacheEvict annotations
     }
 
-    @Override
     public <T> void clearCacheForEntity(Translatable<T> entity) {
         log.debug("Clearing cache for entity: {}", entity.getEntityType());
         if (isTestMode) {
@@ -433,7 +431,6 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
         // In production, this would clear specific Spring cache entries
     }
 
-    @Override
     public void clearCacheForLanguage(String languageCode) {
         log.debug("Clearing cache for language: {}", languageCode);
         if (isTestMode) {

@@ -1,11 +1,12 @@
 package com.perundhu.infrastructure.adapter.out.persistence;
 
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.port.RouteContributionOutputPort;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
  * Implements the RouteContributionOutputPort using JPA.
  */
 @Component
+@Primary
 @Transactional
 @RequiredArgsConstructor
 public class RouteContributionPersistenceAdapter implements RouteContributionOutputPort {

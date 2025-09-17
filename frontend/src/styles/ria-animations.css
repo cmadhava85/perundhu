@@ -1,0 +1,474 @@
+/**
+ * Enhanced Animation Utilities for RIA
+ * Smooth transitions for data updates and user interactions
+ */
+
+/* ===== DATA UPDATE ANIMATIONS ===== */
+
+/* Staggered List Animation */
+.ria-stagger-children > * {
+  animation: ria-fade-in-up 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.ria-stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.ria-stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.ria-stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.ria-stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.ria-stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.ria-stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.ria-stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.ria-stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes ria-fade-in-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth Content Update */
+.ria-content-update {
+  animation: ria-content-refresh 0.6s ease-out;
+}
+
+@keyframes ria-content-refresh {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Loading State Animations */
+.ria-loading-pulse {
+  animation: ria-loading-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ria-loading-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.ria-loading-dots::after {
+  content: '';
+  animation: ria-dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes ria-dots {
+  0%, 20% {
+    content: '';
+  }
+  40% {
+    content: '.';
+  }
+  60% {
+    content: '..';
+  }
+  80%, 100% {
+    content: '...';
+  }
+}
+
+/* Progress Animations */
+.ria-progress-bar {
+  position: relative;
+  background: var(--ria-gray-200);
+  border-radius: var(--ria-radius-full);
+  height: 4px;
+  overflow: hidden;
+}
+
+.ria-progress-fill {
+  height: 100%;
+  background: var(--ria-gradient-primary);
+  border-radius: var(--ria-radius-full);
+  transition: width 0.5s ease-out;
+  position: relative;
+}
+
+.ria-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: ria-progress-shine 2s ease-in-out infinite;
+}
+
+@keyframes ria-progress-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ===== INTERACTIVE ANIMATIONS ===== */
+
+/* Button Press Animation */
+.ria-button-press {
+  transform: scale(0.95);
+  transition: transform 0.1s ease-out;
+}
+
+/* Hover Lift Effect */
+.ria-hover-lift {
+  transition: all var(--ria-transition-normal);
+}
+
+.ria-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ria-shadow-lg);
+}
+
+@media (min-width: 1024px) {
+  .ria-hover-lift:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Ripple Effect */
+.ria-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ria-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ria-ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Floating Animation */
+.ria-float {
+  animation: ria-float 3s ease-in-out infinite;
+}
+
+@keyframes ria-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Bounce Animation */
+.ria-bounce {
+  animation: ria-bounce 2s infinite;
+}
+
+@keyframes ria-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ===== TRANSITION UTILITIES ===== */
+
+/* Smooth Transitions */
+.ria-transition-all {
+  transition: all var(--ria-transition-normal);
+}
+
+.ria-transition-fast {
+  transition: all var(--ria-transition-fast);
+}
+
+.ria-transition-slow {
+  transition: all var(--ria-transition-slow);
+}
+
+/* Transform Utilities */
+.ria-scale-105 {
+  transform: scale(1.05);
+}
+
+.ria-scale-110 {
+  transform: scale(1.1);
+}
+
+.ria-rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* ===== ENTRANCE ANIMATIONS ===== */
+
+/* Slide In Directions */
+.ria-slide-in-top {
+  animation: ria-slide-in-top 0.5s ease-out;
+}
+
+@keyframes ria-slide-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ria-slide-in-bottom {
+  animation: ria-slide-in-bottom 0.5s ease-out;
+}
+
+@keyframes ria-slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ria-slide-in-right {
+  animation: ria-slide-in-right 0.5s ease-out;
+}
+
+@keyframes ria-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Zoom In Animation */
+.ria-zoom-in {
+  animation: ria-zoom-in 0.3s ease-out;
+}
+
+@keyframes ria-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Flip Animation */
+.ria-flip-in {
+  animation: ria-flip-in 0.6s ease-out;
+}
+
+@keyframes ria-flip-in {
+  from {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0);
+  }
+}
+
+/* ===== SUCCESS/ERROR ANIMATIONS ===== */
+
+/* Success Checkmark */
+.ria-success-check {
+  animation: ria-success-check 0.6s ease-out;
+}
+
+@keyframes ria-success-check {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Error Shake */
+.ria-error-shake {
+  animation: ria-error-shake 0.5s ease-out;
+}
+
+@keyframes ria-error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Warning Pulse */
+.ria-warning-pulse {
+  animation: ria-warning-pulse 1s ease-in-out infinite;
+}
+
+@keyframes ria-warning-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+  }
+}
+
+/* ===== NOTIFICATION ANIMATIONS ===== */
+
+/* Slide Down Notification */
+.ria-notification-enter {
+  animation: ria-notification-enter 0.3s ease-out;
+}
+
+@keyframes ria-notification-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide Up Exit */
+.ria-notification-exit {
+  animation: ria-notification-exit 0.3s ease-in forwards;
+}
+
+@keyframes ria-notification-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+/* ===== RESPONSIVE ANIMATIONS ===== */
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .ria-stagger-children > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .ria-hover-lift:hover {
+    transform: none;
+  }
+  
+  .ria-float,
+  .ria-bounce,
+  .ria-loading-pulse {
+    animation: none;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .ria-hover-lift:hover {
+    transform: none;
+  }
+  
+  .ria-ripple:active::before {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* High performance mode for lower-end devices */
+@media (max-width: 768px) {
+  .ria-stagger-children > * {
+    animation-delay: 0.05s;
+  }
+  
+  .ria-stagger-children > *:nth-child(n+6) {
+    animation-delay: 0.3s;
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+/* Animation Controls */
+.ria-animate-none {
+  animation: none !important;
+}
+
+.ria-animate-pause {
+  animation-play-state: paused !important;
+}
+
+.ria-animate-infinite {
+  animation-iteration-count: infinite;
+}
+
+/* Timing Function Utilities */
+.ria-ease-bounce {
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.ria-ease-spring {
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ria-ease-smooth {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}

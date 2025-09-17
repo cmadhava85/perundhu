@@ -26,11 +26,17 @@ const BusDetailsForm: React.FC<BusDetailsFormProps> = ({
         {t('contribution.busDetails', 'Bus Details')}
       </h3>
       
+      <p className="section-description">
+        {t('contribution.busDetailsDescription', 'Provide at least one way to identify the bus - either its name or number.')}
+      </p>
+      
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="busName">
             {t('contribution.busName', 'Bus Name')}
-            <span className="field-hint"> {t('contribution.eitherRequired', '(Either name or number required)')}</span>
+            <span className="field-hint">
+              {t('contribution.optional', '(Optional)')} - {t('contribution.busNameExample', 'e.g., SETC Express')}
+            </span>
           </label>
           <input
             type="text"
@@ -46,7 +52,9 @@ const BusDetailsForm: React.FC<BusDetailsFormProps> = ({
         <div className="form-group">
           <label htmlFor="busNumber">
             {t('contribution.busNumber', 'Bus Number')}
-            <span className="field-hint"> {t('contribution.eitherRequired', '(Either name or number required)')}</span>
+            <span className="field-hint">
+              {t('contribution.optional', '(Optional)')} - {t('contribution.busNumberExample', 'e.g., TN-01-1234')}
+            </span>
           </label>
           <input
             type="text"
@@ -59,6 +67,12 @@ const BusDetailsForm: React.FC<BusDetailsFormProps> = ({
           />
         </div>
       </div>
+      
+      {hasError && (
+        <div className="field-error-message">
+          {t('contribution.busIdentifierRequired', 'Please provide either a bus name or bus number')}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { RouteContribution as RouteContributionType, StopContribution } from '../../types';
+import '../../styles/contribution.css';
 
 // Import our new smaller components
 import BusDetailsForm from './BusDetailsForm';

@@ -3,17 +3,21 @@
 /* Import CSS Variables and Base Styles */
 @import './variables.css';
 @import './base.css';
-
-/* Import Layout Styles */
 @import './layout.css';
+@import './components.css';
 
-/* Import Component Styles */
-@import './components/header.css';
-@import './components/forms.css';
-@import './components/bus-list.css';
-
-/* Import existing component-specific styles */
+/* Component-specific styles */
+@import './Header.css';
+@import './Footer.css';
+@import './SearchForm.css';
+@import './ModernBusList.css';
+@import './MobileBusCard.css';
+@import './MapComponent.css';
+@import './BusTracker.css';
+@import './ErrorDisplay.css';
 @import './StopsList.css';
+@import './LiveBusTracker.css';
+@import './design-system.css';
 
 /* Import the Live Bus Tracker styles */
 @import './LiveBusTracker.css';
@@ -463,21 +467,6 @@
 .action-btn.save:hover {
   transform: scale(1.1);
   background: #f3f4f6;
-}
-
-/* Footer Component */
-.app-footer {
-  margin-top: auto;
-  padding: var(--space-lg) var(--space-lg);
-  border-top: 1px solid var(--border-color);
-  text-align: center;
-  background-color: var(--bg-primary);
-}
-
-.app-footer p {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
 }
 
 /* Responsive hiding for mobile navigation */

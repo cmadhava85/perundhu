@@ -1,14 +1,16 @@
 package com.perundhu.application.service;
 
-import com.perundhu.domain.model.Location;
-import com.perundhu.domain.port.LocationRepository;
-import com.perundhu.domain.service.LocationValidationService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.perundhu.domain.model.Location;
+import com.perundhu.domain.port.LocationRepository;
+import com.perundhu.domain.port.LocationValidationService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implementation of location validation service

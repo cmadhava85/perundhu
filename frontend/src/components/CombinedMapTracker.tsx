@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location, Bus, Stop, BusLocation } from '../types';
 import type { Stop as ApiStop } from '../types/apiTypes';
 import MapComponent from './MapComponent';
-
-// Import our new components and hook
-import BusInfoPanel from './map/BusInfoPanel';
+import MapContainer from './map/MapContainer';
+import MapMarkers from './map/MapMarkers';
+import LiveBusMarkers from './map/LiveBusMarkers';
 import MapLegend from './map/MapLegend';
+import BusInfoPanel from './map/BusInfoPanel';
 import TrackerStatus from './map/TrackerStatus';
 import useBusLocationData from '../hooks/useBusLocationData';
 
@@ -18,6 +19,10 @@ interface CombinedMapTrackerProps {
   showLiveTracking?: boolean;
   isMobile?: boolean;
   browserName?: string; // Added for test compatibility
+  selectedBuses?: number[];
+  userLocation?: { latitude: number; longitude: number } | null;
+  onBusSelect?: (busId: number) => void;
+  onStopSelect?: (stop: Stop) => void;
 }
 
 /**
@@ -44,8 +49,7 @@ const adaptStops = (stops: Stop[] | undefined): ApiStop[] | undefined => {
 
 /**
  * Combined component that shows both static route map and live bus tracking
- * Now using the universal MapComponent that supports both Leaflet and Google Maps
- * Broken down into smaller, more manageable components
+ * Enhanced with proper stop numbering and highlighting
  */
 const CombinedMapTracker = ({
   fromLocation,
@@ -53,11 +57,16 @@ const CombinedMapTracker = ({
   selectedStops,
   buses,
   showLiveTracking,
-  isMobile
+  isMobile,
+  selectedBuses = [],
+  userLocation,
+  onBusSelect,
+  onStopSelect
 }: CombinedMapTrackerProps) => {
   const { t } = useTranslation();
   const [selectedBus, setSelectedBus] = useState<BusLocation | null>(null);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+  const [highlightedStopIndex, setHighlightedStopIndex] = useState<number | null>(null);
   
   // Use our custom hook for bus location data with guaranteed boolean and pass buses array
   const { busLocations, isLoading, error } = useBusLocationData(
@@ -96,6 +105,49 @@ const CombinedMapTracker = ({
     };
   };
 
+  // Listen for stop highlight events from bus list
+  useEffect(() => {
+    const handleHighlightStop = (event: CustomEvent) => {
+      const { index } = event.detail;
+      setHighlightedStopIndex(index);
+      
+      // Auto-hide highlight after 3 seconds
+      setTimeout(() => {
+        setHighlightedStopIndex(null);
+      }, 3000);
+    };
+
+    window.addEventListener('highlightStop', handleHighlightStop as EventListener);
+    return () => {
+      window.removeEventListener('highlightStop', handleHighlightStop as EventListener);
+    };
+  }, []);
+
+  // Enhanced stop location function with proper error handling
+  const getStopLocation = useCallback((stop: Stop): { lat: number; lng: number } | null => {
+    if (stop.latitude !== null && stop.longitude !== null && 
+        stop.latitude !== undefined && stop.longitude !== undefined) {
+      return { lat: stop.latitude, lng: stop.longitude };
+    }
+    if (stop.location && stop.location.latitude !== null && stop.location.longitude !== null) {
+      return { lat: stop.location.latitude, lng: stop.location.longitude };
+    }
+    return null;
+  }, []);
+
+  // Enhanced stop selection handler
+  const handleStopSelect = useCallback((stop: Stop) => {
+    console.log('Stop selected:', stop.name);
+    onStopSelect?.(stop);
+    
+    // Highlight the stop temporarily
+    const stopIndex = selectedStops?.findIndex(s => s.id === stop.id);
+    if (stopIndex !== undefined && stopIndex !== -1) {
+      setHighlightedStopIndex(stopIndex + 1);
+      setTimeout(() => setHighlightedStopIndex(null), 2000);
+    }
+  }, [selectedStops, onStopSelect]);
+
   return (
     <div className="combined-map-section">
       <h2>{t('combinedMap.title', 'Route Map & Live Tracking')}</h2>
@@ -118,6 +170,19 @@ const CombinedMapTracker = ({
         style={getContainerStyle()}
         mapId="combined-map-tracker"
       />
+      
+      {/* Enhanced stop count display */}
+      {selectedStops && selectedStops.length > 0 && (
+        <div className="stops-info">
+          <span className="stops-icon">🚏</span>
+          <span>{t('map.stopsCount', '{{count}} stops on route', { count: selectedStops.length })}</span>
+          {highlightedStopIndex && (
+            <span className="highlighted-stop">
+              {t('map.highlightedStop', 'Stop {{number}} highlighted', { number: highlightedStopIndex })}
+            </span>
+          )}
+        </div>
+      )}
       
       {/* Bus info panel */}
       {selectedBus && (

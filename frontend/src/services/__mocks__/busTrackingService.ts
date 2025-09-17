@@ -4,7 +4,6 @@ import type { BusLocation } from '../../types';
 // Mock data for testing
 const mockBusLocations: BusLocation[] = [
   {
-    id: 1,
     busId: 1,
     busName: 'Express 101',
     busNumber: 'TN-01-1234',

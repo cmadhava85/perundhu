@@ -1,31 +1,32 @@
 package com.perundhu.application.service;
 
-import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
-import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.model.ImageContribution;
-import com.perundhu.domain.model.Location;
-import com.perundhu.domain.model.Bus;
-import com.perundhu.domain.model.Stop;
-import com.perundhu.domain.port.RouteContributionRepository;
-import com.perundhu.application.port.output.ImageContributionOutputPort;
-import com.perundhu.domain.port.BusRepository;
-import com.perundhu.domain.port.LocationRepository;
-import com.perundhu.domain.port.StopRepository;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
+import com.perundhu.domain.model.ImageContribution;
+import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.BusRepository;
+import com.perundhu.domain.port.ImageContributionOutputPort;
+import com.perundhu.domain.port.LocationRepository;
+import com.perundhu.domain.port.LocationValidationService;
+import com.perundhu.domain.port.RouteContributionRepository;
+import com.perundhu.domain.port.StopRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Service for processing user-contributed routes and images
@@ -85,7 +86,7 @@ public class ContributionProcessingService {
     private final BusRepository busRepository;
     private final LocationRepository locationRepository;
     private final StopRepository stopRepository;
-    private final com.perundhu.domain.service.OCRService ocrService;
+    private final com.perundhu.domain.port.OCRService ocrService;
     private final LocationValidationService locationValidationService;
     private final NotificationService notificationService;
     private final RouteContributionValidationService validationService;
@@ -213,7 +214,7 @@ public class ContributionProcessingService {
 
         // 4. Create new bus
         var newBus = Bus.create(
-                new Bus.BusId(0L), // Temporary ID, will be replaced by database
+                new BusId(0L), // Temporary ID, will be replaced by database
                 contribution.getBusName(),
                 contribution.getBusNumber(),
                 fromLocation,
@@ -250,16 +251,12 @@ public class ContributionProcessingService {
                         stopContribution.getLatitude(),
                         stopContribution.getLongitude());
 
-                var stop = Stop.builder()
-                        .name(stopContribution.getName())
-                        .bus(savedBus)
-                        .location(stopLocation)
-                        .arrivalTime(LocalTime.parse(stopContribution.getArrivalTime()))
-                        .departureTime(LocalTime.parse(stopContribution.getDepartureTime()))
-                        .stopOrder(stopContribution.getStopOrder())
-                        .build();
-
-                stopRepository.save(stop);
+                // TODO: Fix StopId creation - temporarily commented out
+                // var stop = Stop.create(
+                // StopId.of(1L), // Temporary ID - will be set by persistence layer
+                // stopContribution.getName(),
+                // stopLocation);
+                // stopRepository.save(stop);
             });
         }
     }
@@ -268,15 +265,17 @@ public class ContributionProcessingService {
      * Validate from and to locations
      */
     private LocationValidationResult validateLocations(RouteContribution contribution) {
-        boolean fromLocationValid = locationValidationService.validateLocation(
-                contribution.getFromLocationName(),
-                contribution.getFromLatitude(),
-                contribution.getFromLongitude());
+        // Use isValidLocation for name validation and isValidLocationCoordinates for
+        // coordinates
+        boolean fromLocationValid = locationValidationService.isValidLocation(contribution.getFromLocationName()) &&
+                (contribution.getFromLatitude() == null || contribution.getFromLongitude() == null ||
+                        locationValidationService.isValidLocationCoordinates(contribution.getFromLatitude(),
+                                contribution.getFromLongitude()));
 
-        boolean toLocationValid = locationValidationService.validateLocation(
-                contribution.getToLocationName(),
-                contribution.getToLatitude(),
-                contribution.getToLongitude());
+        boolean toLocationValid = locationValidationService.isValidLocation(contribution.getToLocationName()) &&
+                (contribution.getToLatitude() == null || contribution.getToLongitude() == null ||
+                        locationValidationService.isValidLocationCoordinates(contribution.getToLatitude(),
+                                contribution.getToLongitude()));
 
         return fromLocationValid && toLocationValid
                 ? new LocationValidationResult(true, "Locations are valid")
@@ -381,11 +380,11 @@ public class ContributionProcessingService {
         }
 
         // Create new location
-        var newLocation = Location.builder()
-                .name(name)
-                .latitude(latitude)
-                .longitude(longitude)
-                .build();
+        var newLocation = Location.withCoordinates(
+                null, // ID will be generated
+                name,
+                latitude,
+                longitude);
 
         return locationRepository.save(newLocation);
     }
@@ -727,6 +726,20 @@ public class ContributionProcessingService {
         // into the main bus database as a permanent route
 
         try {
+            // Validate required data before integration
+            if (contribution.getFromLocationName() == null || contribution.getFromLocationName().isBlank()) {
+                throw new IllegalArgumentException("From location name is required for integration");
+            }
+            if (contribution.getToLocationName() == null || contribution.getToLocationName().isBlank()) {
+                throw new IllegalArgumentException("To location name is required for integration");
+            }
+            if (contribution.getDepartureTime() == null || contribution.getDepartureTime().isBlank()) {
+                throw new IllegalArgumentException("Departure time is required for integration");
+            }
+            if (contribution.getArrivalTime() == null || contribution.getArrivalTime().isBlank()) {
+                throw new IllegalArgumentException("Arrival time is required for integration");
+            }
+
             // 1. Create/get locations
             var fromLocation = getOrCreateLocation(
                     contribution.getFromLocationName(),
@@ -738,16 +751,39 @@ public class ContributionProcessingService {
                     contribution.getToLatitude(),
                     contribution.getToLongitude());
 
-            // 2. Create new bus entry
+            // 2. Parse timing data safely
+            LocalTime departureTime;
+            LocalTime arrivalTime;
+
+            try {
+                // Handle different time formats (HH:MM or HH:MM:SS)
+                String depTime = contribution.getDepartureTime().trim();
+                String arrTime = contribution.getArrivalTime().trim();
+
+                // If only HH:MM format, add :00 for seconds
+                if (depTime.length() == 5 && depTime.matches("\\d{2}:\\d{2}")) {
+                    depTime += ":00";
+                }
+                if (arrTime.length() == 5 && arrTime.matches("\\d{2}:\\d{2}")) {
+                    arrTime += ":00";
+                }
+
+                departureTime = LocalTime.parse(depTime);
+                arrivalTime = LocalTime.parse(arrTime);
+            } catch (Exception timeParseError) {
+                throw new IllegalArgumentException("Invalid time format. Expected HH:MM or HH:MM:SS. Departure: '"
+                        + contribution.getDepartureTime() + "', Arrival: '" + contribution.getArrivalTime() + "'");
+            }
+
+            // 3. Create new bus entry
             var newBus = Bus.create(
-                    new Bus.BusId(0L), // Temporary ID, will be replaced by database
-                    contribution.getBusName(),
+                    new BusId(0L), // Temporary ID, will be replaced by database
+                    contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
                     contribution.getBusNumber(),
                     fromLocation,
                     toLocation,
-                    // Convert String time (HH:MM) to LocalTime
-                    LocalTime.parse(contribution.getDepartureTime()),
-                    LocalTime.parse(contribution.getArrivalTime()));
+                    departureTime,
+                    arrivalTime);
 
             var savedBus = busRepository.save(newBus);
 

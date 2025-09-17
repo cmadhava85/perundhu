@@ -1,8 +1,12 @@
 package com.perundhu.infrastructure.persistence.entity;
 
 import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
+import com.perundhu.domain.model.Location;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -69,40 +73,33 @@ public class BusJpaEntity {
         if (bus == null)
             return null;
 
-        LocationJpaEntity fromLocation = LocationJpaEntity.builder()
-                .id(bus.getFromLocation().getId().getValue())
-                .build();
-
-        LocationJpaEntity toLocation = LocationJpaEntity.builder()
-                .id(bus.getToLocation().getId().getValue())
-                .build();
-
         return BusJpaEntity.builder()
-                .id(bus.getId().getValue())
-                .name(bus.getName())
-                .busNumber(bus.getBusNumber())
-                .departureTime(bus.getDepartureTime())
-                .arrivalTime(bus.getArrivalTime())
-                .fromLocation(fromLocation)
-                .toLocation(toLocation)
-                .capacity(bus.getCapacity())
-                .category(bus.getCategory())
-                .active(bus.getActive())
+                .id(bus.id().value())
+                .name(bus.name())
+                .busNumber(bus.number())
+                .departureTime(bus.departureTime())
+                .arrivalTime(bus.arrivalTime())
+                .fromLocation(bus.fromLocation() != null ? LocationJpaEntity.fromDomainModel(bus.fromLocation()) : null)
+                .toLocation(bus.toLocation() != null ? LocationJpaEntity.fromDomainModel(bus.toLocation()) : null)
+                .capacity(bus.capacity())
+                .category(bus.type())
+                .active(true)
                 .build();
     }
 
     public Bus toDomainModel() {
-        return Bus.builder()
-                .id(new Bus.BusId(id))
-                .name(name)
-                .busNumber(busNumber)
-                .fromLocation(fromLocation.toDomainModel())
-                .toLocation(toLocation.toDomainModel())
-                .departureTime(departureTime)
-                .arrivalTime(arrivalTime)
-                .capacity(capacity)
-                .category(category)
-                .active(active)
-                .build();
+        return new Bus(
+                new BusId(id),
+                busNumber,
+                name,
+                "Unknown", // operator - not in JPA entity
+                category != null ? category : "Unknown", // type
+                fromLocation != null ? fromLocation.toDomainModel() : null, // fromLocation
+                toLocation != null ? toLocation.toDomainModel() : null, // toLocation
+                departureTime != null ? departureTime : LocalTime.of(9, 0), // departureTime
+                arrivalTime != null ? arrivalTime : LocalTime.of(17, 0), // arrivalTime
+                capacity != null ? capacity : 50, // capacity
+                List.of() // features - not in JPA entity
+        );
     }
 }

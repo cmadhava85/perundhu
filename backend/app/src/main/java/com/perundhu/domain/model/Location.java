@@ -1,25 +1,24 @@
 package com.perundhu.domain.model;
 
-import java.util.Objects;
-
 /**
- * Domain entity representing a location (city or town)
+ * Domain entity representing a location (city or town) using Java 17 record
  */
-public class Location {
-    private final LocationId id;
-    private String name;
-    private String nameLocalLanguage;
-    private double latitude;
-    private double longitude;
-
-    public Location(LocationId id, String name, String nameLocalLanguage, double latitude, double longitude) {
-        this.id = id;
-        this.name = name;
-        this.nameLocalLanguage = nameLocalLanguage;
-        this.latitude = latitude;
-        this.longitude = longitude;
+public record Location(
+        LocationId id,
+        String name,
+        String nameLocalLanguage,
+        Double latitude,
+        Double longitude) {
+    /**
+     * Constructor with validation
+     */
+    public Location {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Location name cannot be null or empty");
+        }
     }
 
+    // Traditional getter methods for compatibility
     public LocationId getId() {
         return id;
     }
@@ -28,69 +27,53 @@ public class Location {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getNameLocalLanguage() {
         return nameLocalLanguage;
     }
 
-    public void setNameLocalLanguage(String nameLocalLanguage) {
-        this.nameLocalLanguage = nameLocalLanguage;
-    }
-
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    /**
+     * Factory method to create a location reference by ID
+     */
+    public static Location reference(Long id) {
+        return new Location(new LocationId(id), "Reference", null, null, null);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Location location = (Location) o;
-        return Objects.equals(id, location.id);
+    /**
+     * Factory method to create a location with coordinates
+     */
+    public static Location withCoordinates(LocationId id, String name, Double latitude, Double longitude) {
+        return new Location(id, name, null, latitude, longitude);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    /**
+     * Check if location has valid coordinates
+     */
+    public boolean hasValidCoordinates() {
+        return latitude != null && longitude != null &&
+                latitude >= -90.0 && latitude <= 90.0 &&
+                longitude >= -180.0 && longitude <= 180.0;
     }
 
-    @Override
-    public String toString() {
-        return "Location{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", nameLocalLanguage='" + nameLocalLanguage + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+    /**
+     * Get entity ID for translation purposes
+     */
+    public String getEntityId() {
+        return id != null ? id.value().toString() : null;
     }
 
-    public static class LocationId {
-        private final Long value;
-
-        public LocationId(Long value) {
-            this.value = value;
-        }
-
-        public Long value() {
-            return value;
-        }
+    /**
+     * Get entity type for translation purposes
+     */
+    public String getEntityType() {
+        return "LOCATION";
     }
+
 }

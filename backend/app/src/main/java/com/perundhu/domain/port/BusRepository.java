@@ -6,9 +6,10 @@ import java.util.Optional;
 
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 
 public interface BusRepository {
-        Optional<Bus> findById(Bus.BusId id);
+        Optional<Bus> findById(com.perundhu.domain.model.BusId id);
 
         List<Bus> findByFromAndToLocation(Location from, Location to);
 
@@ -16,7 +17,7 @@ public interface BusRepository {
 
         Bus save(Bus bus);
 
-        void delete(Bus.BusId id);
+        void delete(com.perundhu.domain.model.BusId id);
 
         /**
          * Check if a bus with the given number and route already exists
@@ -104,8 +105,8 @@ public interface BusRepository {
 
         List<Bus> findByCategory(String category);
 
-        Optional<Bus> findByBusNumberAndRoute(String busNumber, Location.LocationId fromLocationId,
-                        Location.LocationId toLocationId);
+        Optional<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
+                        LocationId toLocationId);
 
         List<Bus> findInService();
 

@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw } from 'lucide-react';
+import React, { useState, useCallback, useMemo } from 'react';
+import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw, Filter, Search, Grid, List, Trash2, Eye } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing } from '../services/api';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,19 @@ interface UploadedImage {
   status?: string;
   processing?: boolean;
   error?: string;
+  id: string;
+  timestamp: Date;
 }
+
+interface FilterOptions {
+  status: string[];
+  fileType: string[];
+  uploadDate: string;
+  searchQuery: string;
+}
+
+type SortOption = 'name' | 'size' | 'date' | 'status';
+type ViewMode = 'grid' | 'list' | 'compact';
 
 const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuccess, onError }) => {
   const { t } = useTranslation();
@@ -25,6 +37,18 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [routeName, setRouteName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
+  
+  // RIA Enhancement State
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [sortBy, setSortBy] = useState<SortOption>('date');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState<FilterOptions>({
+    status: [],
+    fileType: [],
+    uploadDate: '',
+    searchQuery: ''
+  });
 
   const handleFileSelect = useCallback((files: FileList | null) => {
     if (!files) return;
@@ -35,14 +59,103 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       return isImage && isValidSize;
     });
 
-    const newImages = acceptedFiles.map(file => ({
+    const newImages: UploadedImage[] = acceptedFiles.map(file => ({
       file,
       preview: URL.createObjectURL(file),
-      processing: false
+      processing: false,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      timestamp: new Date()
     }));
     
     setUploadedImages(prev => [...prev, ...newImages]);
   }, []);
+
+  const filteredAndSortedImages = useMemo(() => {
+    let filtered = uploadedImages.filter(image => {
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const fileName = image.file.name.toLowerCase();
+        if (!fileName.includes(query)) return false;
+      }
+
+      if (filters.status.length > 0) {
+        const status = image.status || 'pending';
+        if (!filters.status.includes(status)) return false;
+      }
+
+      if (filters.fileType.length > 0) {
+        const fileType = image.file.type.split('/')[1];
+        if (!filters.fileType.includes(fileType)) return false;
+      }
+
+      return true;
+    });
+
+    filtered.sort((a, b) => {
+      let result = 0;
+      
+      switch (sortBy) {
+        case 'name':
+          result = a.file.name.localeCompare(b.file.name);
+          break;
+        case 'size':
+          result = a.file.size - b.file.size;
+          break;
+        case 'date':
+          result = a.timestamp.getTime() - b.timestamp.getTime();
+          break;
+        case 'status':
+          const statusA = a.status || 'pending';
+          const statusB = b.status || 'pending';
+          result = statusA.localeCompare(statusB);
+          break;
+      }
+      
+      return sortOrder === 'desc' ? -result : result;
+    });
+
+    return filtered;
+  }, [uploadedImages, filters, sortBy, sortOrder]);
+
+  const availableFileTypes = useMemo(() => {
+    const types = [...new Set(uploadedImages.map(img => img.file.type.split('/')[1]))];
+    return types;
+  }, [uploadedImages]);
+
+  const availableStatuses = useMemo(() => {
+    const statuses = [...new Set(uploadedImages.map(img => img.status || 'pending'))];
+    return statuses;
+  }, [uploadedImages]);
+
+  const handleSortChange = (newSortBy: SortOption) => {
+    if (sortBy === newSortBy) {
+      setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(newSortBy);
+      setSortOrder('asc');
+    }
+  };
+
+  const getSortIcon = (option: SortOption) => {
+    if (sortBy !== option) return '↕️';
+    return sortOrder === 'asc' ? '↑' : '↓';
+  };
+
+  const handleFilterChange = (filterType: keyof FilterOptions, value: any) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      status: [],
+      fileType: [],
+      uploadDate: '',
+      searchQuery: ''
+    });
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -64,38 +177,41 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     handleFileSelect(e.target.files);
   };
 
-  const removeImage = (index: number) => {
+  const removeImageById = (id: string) => {
     setUploadedImages(prev => {
-      const newImages = [...prev];
-      URL.revokeObjectURL(newImages[index].preview);
-      newImages.splice(index, 1);
-      return newImages;
+      const imageToRemove = prev.find(img => img.id === id);
+      if (imageToRemove) {
+        URL.revokeObjectURL(imageToRemove.preview);
+      }
+      return prev.filter(img => img.id !== id);
     });
   };
 
-  const submitImage = async (imageIndex: number) => {
-    const image = uploadedImages[imageIndex];
-    if (!image.file) return;
+  const submitImage = async (imageId: string) => {
+    const image = uploadedImages.find(img => img.id === imageId);
+    if (!image?.file) return;
 
     setUploadedImages(prev => 
-      prev.map((img, idx) => 
-        idx === imageIndex ? { ...img, processing: true, error: undefined } : img
+      prev.map(img => 
+        img.id === imageId ? { ...img, processing: true, error: undefined } : img
       )
     );
 
     try {
-      const formData = new FormData();
-      formData.append('image', image.file);
-      formData.append('description', description || 'Bus schedule image');
-      formData.append('location', location);
-      formData.append('routeName', routeName);
+      const contributionData = {
+        busName: routeName || 'Unknown Bus',
+        busNumber: 'N/A',
+        fromLocationName: location || 'Unknown',
+        toLocationName: 'Unknown',
+        notes: description || 'Bus schedule image'
+      };
 
-      const response = await submitImageContribution(formData);
+      const response = await submitImageContribution(contributionData, image.file);
 
       if (response.success) {
         setUploadedImages(prev =>
-          prev.map((img, idx) =>
-            idx === imageIndex
+          prev.map(img =>
+            img.id === imageId
               ? {
                   ...img,
                   processing: false,
@@ -106,9 +222,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           )
         );
 
-        // Start polling for processing status
-        pollProcessingStatus(response.contributionId, imageIndex);
-        
+        pollProcessingStatus(response.contributionId, imageId);
         onSuccess?.(response.contributionId);
       } else {
         throw new Error(response.message || 'Upload failed');
@@ -117,8 +231,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       const errorMessage = error instanceof Error ? error.message : 'Upload failed';
       
       setUploadedImages(prev =>
-        prev.map((img, idx) =>
-          idx === imageIndex
+        prev.map(img =>
+          img.id === imageId
             ? { ...img, processing: false, error: errorMessage }
             : img
         )
@@ -128,20 +242,19 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     }
   };
 
-  const pollProcessingStatus = async (contributionId: string, imageIndex: number) => {
+  const pollProcessingStatus = async (contributionId: string, imageId: string) => {
     const pollInterval = setInterval(async () => {
       try {
         const statusResponse = await getImageProcessingStatus(contributionId);
         
         setUploadedImages(prev =>
-          prev.map((img, idx) =>
-            idx === imageIndex
+          prev.map(img =>
+            img.id === imageId
               ? { ...img, status: statusResponse.status }
               : img
           )
         );
 
-        // Stop polling when processing is complete
         if (statusResponse.status && !['PROCESSING', 'PENDING'].includes(statusResponse.status)) {
           clearInterval(pollInterval);
         }
@@ -149,27 +262,25 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         console.error('Error polling status:', error);
         clearInterval(pollInterval);
       }
-    }, 3000); // Poll every 3 seconds
+    }, 3000);
 
-    // Stop polling after 10 minutes
     setTimeout(() => {
       clearInterval(pollInterval);
     }, 600000);
   };
 
-  const retryProcessing = async (contributionId: string, imageIndex: number) => {
+  const retryProcessing = async (contributionId: string, imageId: string) => {
     try {
       setUploadedImages(prev =>
-        prev.map((img, idx) =>
-          idx === imageIndex ? { ...img, processing: true, error: undefined } : img
+        prev.map(img =>
+          img.id === imageId ? { ...img, processing: true, error: undefined } : img
         )
       );
 
       const response = await retryImageProcessing(contributionId);
       
       if (response.success) {
-        // Restart polling
-        pollProcessingStatus(contributionId, imageIndex);
+        pollProcessingStatus(contributionId, imageId);
       } else {
         throw new Error(response.message || 'Retry failed');
       }
@@ -177,8 +288,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       const errorMessage = error instanceof Error ? error.message : 'Retry failed';
       
       setUploadedImages(prev =>
-        prev.map((img, idx) =>
-          idx === imageIndex
+        prev.map(img =>
+          img.id === imageId
             ? { ...img, processing: false, error: errorMessage }
             : img
         )
@@ -190,18 +301,23 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     setIsSubmitting(true);
     
     try {
-      const pendingImages = uploadedImages
-        .map((img, index) => ({ img, index }))
-        .filter(({ img }) => !img.contributionId && !img.processing);
+      const pendingImages = uploadedImages.filter(img => !img.contributionId && !img.processing);
 
-      for (const { index } of pendingImages) {
-        await submitImage(index);
-        // Small delay between uploads to avoid overwhelming the server
+      for (const image of pendingImages) {
+        await submitImage(image.id);
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
   const getStatusIcon = (status?: string, processing?: boolean, error?: string) => {
@@ -243,22 +359,45 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-          <Camera className="w-6 h-6 mr-2" />
-          {t('contribution.imageUpload.title', 'Upload Bus Schedule Images')}
-        </h2>
-
-        <div className="mb-6">
-          <p className="text-gray-600 mb-4">
+    <div className="max-w-7xl mx-auto p-6">
+      {/* Enhanced Header */}
+      <div className="enhanced-header">
+        <div className="header-content">
+          <div className="flex items-center justify-center mb-6">
+            <h2 className="text-3xl font-bold text-gray-900 flex items-center">
+              <Camera className="w-8 h-8 mr-3 text-blue-600" />
+              {t('contribution.imageUpload.title', 'AI-Powered Image Upload')}
+            </h2>
+          </div>
+          <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
             {t('contribution.imageUpload.description', 
               'Upload clear photos of bus schedules, timetables, or route information. Our AI will extract the schedule data automatically.')}
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+          {/* Stats */}
+          <div className="header-stats">
+            <div className="stat-card">
+              <div className="stat-value text-blue-600">{uploadedImages.length}</div>
+              <div className="stat-label">Total Images</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value text-green-600">
+                {uploadedImages.filter(img => img.status === 'PROCESSED').length}
+              </div>
+              <div className="stat-label">Processed</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value text-yellow-600">
+                {uploadedImages.filter(img => img.processing).length}
+              </div>
+              <div className="stat-label">Processing</div>
+            </div>
+          </div>
+          
+          {/* Form Fields */}
+          <div className="form-fields-container">
+            <div className="form-field">
+              <label>
                 {t('contribution.imageUpload.description', 'Description')}
               </label>
               <input
@@ -266,12 +405,11 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g., Bus schedule at Kochi bus stand"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="form-field">
+              <label>
                 {t('contribution.imageUpload.location', 'Location')}
               </label>
               <input
@@ -279,12 +417,11 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="e.g., Kochi, Ernakulam"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="form-field">
+              <label>
                 {t('contribution.imageUpload.routeName', 'Route Name (Optional)')}
               </label>
               <input
@@ -292,20 +429,23 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                 value={routeName}
                 onChange={(e) => setRouteName(e.target.value)}
                 placeholder="e.g., Kochi-Alappuzha"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Upload Area */}
+      {/* Enhanced Upload Area */}
+      <div className="mb-8">
         <div
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={() => document.getElementById('file-input')?.click()}
-          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-            isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+          className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${
+            isDragActive 
+              ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' 
+              : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
           }`}
         >
           <input
@@ -316,13 +456,21 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             onChange={handleInputChange}
             className="hidden"
           />
-          <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <Upload className={`w-16 h-16 mx-auto mb-4 transition-colors ${
+            isDragActive ? 'text-blue-600' : 'text-gray-400'
+          }`} />
           {isDragActive ? (
-            <p className="text-blue-600">Drop the images here...</p>
+            <div>
+              <p className="text-blue-600 text-xl font-semibold mb-2">Drop the images here!</p>
+              <p className="text-blue-500">Release to upload your files</p>
+            </div>
           ) : (
             <div>
-              <p className="text-gray-600 mb-2">
-                Drag & drop bus schedule images here, or click to select files
+              <p className="text-gray-700 text-xl font-semibold mb-2">
+                Drag & drop bus schedule images here
+              </p>
+              <p className="text-gray-600 mb-4">
+                or click to select files from your device
               </p>
               <p className="text-sm text-gray-500">
                 Supports JPEG, PNG, WebP, GIF up to 10MB each
@@ -330,89 +478,42 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             </div>
           )}
         </div>
+      </div>
 
-        {/* Uploaded Images */}
-        {uploadedImages.length > 0 && (
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Uploaded Images</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {uploadedImages.map((image, index) => (
-                <div key={index} className="border rounded-lg overflow-hidden">
-                  <div className="relative">
-                    <img
-                      src={image.preview}
-                      alt={`Upload ${index + 1}`}
-                      className="w-full h-48 object-cover"
-                    />
-                    <button
-                      onClick={() => removeImage(index)}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
-                      disabled={image.processing}
-                    >
-                      ×
-                    </button>
-                  </div>
-                  
-                  <div className="p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700">
-                        {image.file.name}
-                      </span>
-                      {getStatusIcon(image.status, image.processing, image.error)}
-                    </div>
-                    
-                    <p className="text-sm text-gray-600 mb-3">
-                      {getStatusText(image.status, image.processing, image.error)}
-                    </p>
-                    
-                    <div className="flex space-x-2">
-                      {!image.contributionId && !image.processing && (
-                        <button
-                          onClick={() => submitImage(index)}
-                          className="flex-1 bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
-                        >
-                          Upload
-                        </button>
-                      )}
-                      
-                      {image.status === 'PROCESSING_FAILED' && image.contributionId && (
-                        <button
-                          onClick={() => retryProcessing(image.contributionId!, index)}
-                          className="flex-1 bg-orange-500 text-white px-3 py-1 rounded text-sm hover:bg-orange-600"
-                          disabled={image.processing}
-                        >
-                          Retry
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {uploadedImages.some(img => !img.contributionId && !img.processing) && (
-              <div className="mt-4 text-center">
-                <button
-                  onClick={submitAllImages}
-                  disabled={isSubmitting}
-                  className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50"
-                >
-                  {isSubmitting ? 'Uploading All...' : 'Upload All Images'}
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Processing Information */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="font-semibold text-blue-900 mb-2">AI Processing Information</h4>
-          <ul className="text-sm text-blue-800 space-y-1">
-            <li>• Our AI will automatically extract bus numbers, routes, and timing information</li>
-            <li>• High-confidence extractions are processed automatically</li>
-            <li>• Medium/low confidence extractions are marked for manual review</li>
-            <li>• Processing typically takes 2-4 hours depending on image quality</li>
-            <li>• You'll be notified when processing is complete</li>
+      {/* Processing Information */}
+      <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-100 border border-blue-200 rounded-xl p-6">
+        <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+          <AlertCircle className="w-5 h-5 mr-2" />
+          AI Processing Information
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ul className="text-sm text-blue-800 space-y-2">
+            <li className="flex items-start">
+              <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
+              Automatic extraction of bus numbers, routes, and timing information
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
+              High-confidence extractions are processed automatically
+            </li>
+            <li className="flex items-start">
+              <Clock className="w-4 h-4 mr-2 mt-0.5 text-yellow-600" />
+              Medium/low confidence extractions are marked for manual review
+            </li>
+          </ul>
+          <ul className="text-sm text-blue-800 space-y-2">
+            <li className="flex items-start">
+              <Clock className="w-4 h-4 mr-2 mt-0.5 text-yellow-600" />
+              Processing typically takes 2-4 hours depending on image quality
+            </li>
+            <li className="flex items-start">
+              <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
+              You'll be notified when processing is complete
+            </li>
+            <li className="flex items-start">
+              <AlertCircle className="w-4 h-4 mr-2 mt-0.5 text-blue-600" />
+              Clear, well-lit images produce the best results
+            </li>
           </ul>
         </div>
       </div>

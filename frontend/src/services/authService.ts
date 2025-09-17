@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 import SecurityService from './securityService';
-import { getEnvironmentVariable } from '../utils/environment';
+import { getEnv } from '../utils/environment';
 
 export interface User {
   id: string;
@@ -48,7 +48,7 @@ class AuthService {
 
   constructor() {
     this.api = axios.create({
-      baseURL: getEnvironmentVariable('VITE_API_URL', ''),
+      baseURL: getEnv('VITE_API_URL', ''),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -67,7 +67,7 @@ class AuthService {
         }
 
         // Add security headers for authenticated requests
-        config.headers['X-Client-Version'] = getEnvironmentVariable('VITE_APP_VERSION', '1.0.0');
+        config.headers['X-Client-Version'] = getEnv('VITE_APP_VERSION', '1.0.0');
         config.headers['X-Request-ID'] = this.generateRequestId();
         
         // Add CSRF protection for state-changing operations
