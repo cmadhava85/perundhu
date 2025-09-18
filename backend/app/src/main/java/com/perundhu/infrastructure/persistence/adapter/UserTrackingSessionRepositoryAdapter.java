@@ -3,6 +3,7 @@ package com.perundhu.infrastructure.persistence.adapter;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import com.perundhu.infrastructure.persistence.jpa.UserTrackingSessionJpaReposit
  */
 @Repository
 @Transactional
+@Profile("!test")
 public class UserTrackingSessionRepositoryAdapter implements UserTrackingSessionRepository {
 
     private final UserTrackingSessionJpaRepository repository;

@@ -1,4 +1,4 @@
-package com.perundhu.config;
+package com.perundhu.infrastructure.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +14,13 @@ import com.perundhu.domain.port.OCRService;
 import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.port.TranslationRepository;
+import com.perundhu.domain.port.TranslationService;
 import com.perundhu.domain.service.RouteValidationService;
 import com.perundhu.infrastructure.adapter.out.persistence.InMemoryStopRepositoryAdapter;
 import com.perundhu.infrastructure.adapter.out.persistence.InMemoryTranslationRepositoryAdapter;
 import com.perundhu.infrastructure.adapter.service.impl.OCRServiceImpl;
+import com.perundhu.infrastructure.service.TranslationServiceImpl;
+import com.perundhu.infrastructure.config.TranslationProperties;
 import com.perundhu.infrastructure.persistence.adapter.BusAnalyticsRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
@@ -90,5 +93,11 @@ public class HexagonalConfig {
   @Bean
   public OCRService ocrService() {
     return new OCRServiceImpl();
+  }
+
+  @Bean
+  public TranslationService translationService(TranslationRepository translationRepository,
+      TranslationProperties translationProperties) {
+    return new TranslationServiceImpl(translationRepository, translationProperties);
   }
 }

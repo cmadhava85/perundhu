@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.domain.model.Translatable;
@@ -17,6 +18,7 @@ import com.perundhu.domain.port.TranslationService;
  * This is a temporary implementation to allow tests to pass
  */
 @Service
+@Profile("test")
 public class StubTranslationServiceImpl implements TranslationService {
 
   @Override

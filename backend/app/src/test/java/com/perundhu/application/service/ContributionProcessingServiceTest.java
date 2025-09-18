@@ -55,9 +55,11 @@ class ContributionProcessingServiceTest {
         @Mock
         private NotificationService notificationService;
 
+        @Mock
+        private RouteContributionValidationService routeContributionValidationService;
+
         @InjectMocks
         private ContributionProcessingService contributionProcessingService;
-
         private RouteContribution pendingContribution;
         private RouteContribution approvedContribution;
 
@@ -157,6 +159,8 @@ class ContributionProcessingServiceTest {
                                 .build();
 
                 // Mock location validation to return true so we get past location validation
+                when(locationValidationService.isValidLocation(any(String.class)))
+                                .thenReturn(true);
                 when(locationValidationService.isValidLocationCoordinates(anyDouble(), anyDouble()))
                                 .thenReturn(true);
 

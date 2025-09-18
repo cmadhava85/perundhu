@@ -19,7 +19,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perundhu.application.dto.BusDTO;
 
-@Disabled("Integration test disabled due to ApplicationContext loading issues - requires full dependency setup")
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional

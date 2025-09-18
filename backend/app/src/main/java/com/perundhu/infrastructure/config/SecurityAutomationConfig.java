@@ -1,4 +1,4 @@
-package com.perundhu.config;
+package com.perundhu.infrastructure.config;
 
 import com.perundhu.application.service.SecurityMonitoringService;
 import com.perundhu.application.service.InputValidationService;

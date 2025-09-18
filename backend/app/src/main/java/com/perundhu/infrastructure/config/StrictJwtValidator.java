@@ -1,4 +1,4 @@
-package com.perundhu.config;
+package com.perundhu.infrastructure.config;
 
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;

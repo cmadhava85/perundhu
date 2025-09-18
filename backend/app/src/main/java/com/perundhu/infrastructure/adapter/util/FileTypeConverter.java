@@ -12,9 +12,9 @@ import com.perundhu.domain.model.FileUpload;
 /**
  * Utility class for converting between Spring Framework types and domain models
  */
-public final class FileTypeAdapter {
+public final class FileTypeConverter {
 
-  private FileTypeAdapter() {
+  private FileTypeConverter() {
     // Utility class
   }
 

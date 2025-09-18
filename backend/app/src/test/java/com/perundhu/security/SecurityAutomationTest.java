@@ -14,7 +14,6 @@ import org.springframework.test.context.TestPropertySource;
 /**
  * Security automation and monitoring tests
  */
-@Disabled("Integration test disabled due to ApplicationContext loading issues - requires full dependency setup")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ActiveProfiles("test")
 @TestPropertySource(properties = {

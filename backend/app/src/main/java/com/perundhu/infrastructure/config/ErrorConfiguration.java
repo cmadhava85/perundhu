@@ -1,4 +1,4 @@
-package com.perundhu.config;
+package com.perundhu.infrastructure.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

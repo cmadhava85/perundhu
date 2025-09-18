@@ -212,23 +212,43 @@ public class ContributionProcessingService {
                 contribution.getToLatitude(),
                 contribution.getToLongitude());
 
-        // 4. Create new bus
+        // 4. Validate and parse time fields
+        LocalTime departureTime;
+        LocalTime arrivalTime;
+        try {
+            if (contribution.getDepartureTime() == null || contribution.getDepartureTime().trim().isEmpty()) {
+                throw new IllegalArgumentException("Departure time is required");
+            }
+            if (contribution.getArrivalTime() == null || contribution.getArrivalTime().trim().isEmpty()) {
+                throw new IllegalArgumentException("Arrival time is required");
+            }
+
+            departureTime = LocalTime.parse(contribution.getDepartureTime());
+            arrivalTime = LocalTime.parse(contribution.getArrivalTime());
+        } catch (Exception e) {
+            updateContributionStatus(
+                    contribution,
+                    new FailedStatus(),
+                    "Processing error: " + e.getMessage());
+            return;
+        }
+
+        // 5. Create new bus
         var newBus = Bus.create(
-                new BusId(0L), // Temporary ID, will be replaced by database
+                new BusId(1L), // Temporary ID, will be replaced by database
                 contribution.getBusName(),
                 contribution.getBusNumber(),
                 fromLocation,
                 toLocation,
-                // Convert String time (HH:MM) to LocalTime
-                LocalTime.parse(contribution.getDepartureTime()),
-                LocalTime.parse(contribution.getArrivalTime()));
+                departureTime,
+                arrivalTime);
 
         var savedBus = busRepository.save(newBus);
 
-        // 5. Create stops if provided
+        // 6. Create stops if provided
         processStops(contribution, savedBus);
 
-        // 6. Mark contribution as approved
+        // 7. Mark contribution as approved
         updateContributionStatus(
                 contribution,
                 new ApprovedStatus(),
@@ -777,7 +797,7 @@ public class ContributionProcessingService {
 
             // 3. Create new bus entry
             var newBus = Bus.create(
-                    new BusId(0L), // Temporary ID, will be replaced by database
+                    new BusId(1L), // Temporary ID, will be replaced by database
                     contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
                     contribution.getBusNumber(),
                     fromLocation,

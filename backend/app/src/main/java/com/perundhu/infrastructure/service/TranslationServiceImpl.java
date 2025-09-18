@@ -21,8 +21,8 @@ import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
 import com.perundhu.infrastructure.config.TranslationProperties;
 
-@Service
-@Profile("!dev")
+// @Service annotation removed - now managed as bean in HexagonalConfig
+// @Profile("!test & !dev") annotation removed - now available for all profiles when created as bean
 public class TranslationServiceImpl implements TranslationService {
 
     private static final Logger log = LoggerFactory.getLogger(TranslationServiceImpl.class);
