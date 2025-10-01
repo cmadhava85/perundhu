@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import ModernBusList from './ModernBusList';
+import TransitBusList from './TransitBusList';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import { ApiError } from '../services/api';
 import { Link } from 'react-router-dom';
-// Using ModernBusList and OpenStreetMapComponent/FallbackMapComponent which have their own styles
+import '../styles/transit-design-system.css';
+// Using TransitBusList with new Transit design system
 
 interface SearchResultsProps {
   buses: Bus[];
@@ -52,22 +53,30 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 
   if (error) {
     return (
-      <div className="search-results error-state">
-        <div className="error-container">
-          <div className="error-icon">⚠️</div>
-          <h2>{t('searchResults.error.title', 'Search Error')}</h2>
-          <p>{error.message}</p>
-          <Link to="/">{t('searchResults.error.home', 'Back to Search')}</Link>
+      <div className="transit-app">
+        <div className="container-sm" style={{ paddingTop: 'var(--space-8)' }}>
+          <div className="transit-card elevated" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
+            <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>⚠️</div>
+            <h2 className="text-title-2" style={{ marginBottom: 'var(--space-2)' }}>
+              {t('searchResults.error.title', 'Search Error')}
+            </h2>
+            <p className="text-body" style={{ color: 'var(--transit-text-secondary)', marginBottom: 'var(--space-4)' }}>
+              {error.message}
+            </p>
+            <Link to="/" className="transit-button primary">
+              {t('searchResults.error.home', 'Back to Search')}
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="search-results">
+    <div className="transit-app">
       <div className="search-results-content">
         <div className="bus-list-section">
-          <ModernBusList 
+          <TransitBusList 
             buses={buses} 
             selectedBusId={selectedBusId} 
             stops={allStops}

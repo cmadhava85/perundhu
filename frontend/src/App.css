@@ -1,12 +1,10 @@
+/* Import the new Transit Design System */
+@import './styles/transit-design-system.css';
+@import './styles/transit-bus-card.css';
+@import './styles/transit-realtime.css';
+
 /* Import the new modular CSS architecture */
 @import './styles/index.css';
-
-/* Import Modern RIA Design System */
-@import './styles/modern-ria-system.css';
-@import './styles/ModernSearchForm.css';
-@import './styles/ModernBusListRIA.css';
-@import './styles/RIAHeader.css';
-@import './styles/ria-animations.css';
 
 /* Legacy styles that still need to be migrated or are component-specific */
 

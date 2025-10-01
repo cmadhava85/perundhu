@@ -1,0 +1,159 @@
+/* Flexible Responsive Overrides - Prevents forced mobile layouts */
+
+/* Allow view controls to be visible at all screen sizes when needed */
+@media (max-width: 480px) {
+  .view-controls,
+  .view-controls.ria-enhanced,
+  .controls-section .view-controls,
+  .controls-section .view-controls.ria-enhanced,
+  .header-content .controls-section .view-controls,
+  .bus-list-header .view-controls {
+    display: flex !important;
+    visibility: visible !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+  
+  .view-controls .view-btn,
+  .view-controls .view-button {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+    min-width: auto !important;
+  }
+  
+  /* Make header more flexible */
+  .bus-list-header,
+  .header-content {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  
+  /* Ensure containers can resize properly */
+  .buses-container,
+  .modern-bus-list {
+    width: 100% !important;
+    max-width: none !important;
+    overflow-x: auto !important;
+  }
+}
+
+/* Allow flexible sizing at all breakpoints */
+.responsive-flex-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+.responsive-flex-item {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Prevent forced hiding of elements */
+.force-visible {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.force-flex {
+  display: flex !important;
+  visibility: visible !important;
+}
+
+/* Responsive text sizing */
+.responsive-text {
+  font-size: clamp(12px, 2.5vw, 16px) !important;
+}
+
+.responsive-title {
+  font-size: clamp(14px, 3vw, 20px) !important;
+}
+
+/* Flexible grid system */
+.flex-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .flex-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Override strict width constraints */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+  
+  .desktop-only {
+    display: block !important;
+  }
+  
+  /* But allow mobile view if explicitly requested */
+  .force-mobile-view .mobile-only {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: block !important;
+  }
+  
+  /* But allow desktop view if explicitly requested */
+  .force-desktop-view .desktop-only {
+    display: block !important;
+  }
+  
+  .force-desktop-view .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Flexible container sizing */
+.flexible-container {
+  width: 100% !important;
+  max-width: 100vw !important;
+  min-width: 280px !important;
+  margin: 0 auto !important;
+  padding: 8px !important;
+  box-sizing: border-box !important;
+}
+
+@media (min-width: 640px) {
+  .flexible-container {
+    max-width: 640px !important;
+    padding: 12px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .flexible-container {
+    max-width: 768px !important;
+    padding: 16px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flexible-container {
+    max-width: 1024px !important;
+    padding: 20px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .flexible-container {
+    max-width: 1200px !important;
+    padding: 24px !important;
+  }
+}

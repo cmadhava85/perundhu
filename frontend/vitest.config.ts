@@ -9,7 +9,7 @@ export default defineConfig({
     globals: true,
     css: true,
     include: ['**/__tests__/**/*.{test,spec}.{ts,tsx}', '**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['node_modules', 'build', 'dist'],
+    exclude: ['node_modules', 'build', 'dist', '**/e2e/**', 'tests/e2e/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

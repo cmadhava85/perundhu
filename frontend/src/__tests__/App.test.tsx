@@ -106,11 +106,10 @@ vi.mock('../components/Header', () => ({
 vi.mock('../components/Footer', () => ({ 
   default: () => <footer data-testid="mock-footer">Footer</footer> 
 }));
-vi.mock('../components/SearchForm', () => ({
-  default: function MockSearchForm({
+vi.mock('../components/TransitSearchForm', () => ({
+  default: function MockTransitSearchForm({
     onSearch,
-    onFromLocationChange,
-    onToLocationChange,
+    onLocationChange,
     fromLocation,
     toLocation,
   }: any) {
@@ -122,26 +121,26 @@ vi.mock('../components/SearchForm', () => ({
 
     const selectFrom = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = parseInt(e.target.value, 10);
-      if (!isNaN(value) && onFromLocationChange) {
+      if (!isNaN(value) && onLocationChange) {
         const location = locationData.find((loc) => loc.id === value);
         if (location) {
-          onFromLocationChange(location);
+          onLocationChange(location, toLocation);
         }
       }
     };
 
     const selectTo = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const value = parseInt(e.target.value, 10);
-      if (!isNaN(value) && onToLocationChange) {
+      if (!isNaN(value) && onLocationChange) {
         const location = locationData.find((loc) => loc.id === value);
         if (location) {
-          onToLocationChange(location);
+          onLocationChange(fromLocation, location);
         }
       }
     };
 
     return (
-      <div data-testid="search-form">
+      <div data-testid="transit-search-form">
         <select
           data-testid="from-select"
           aria-label="From"
@@ -165,7 +164,7 @@ vi.mock('../components/SearchForm', () => ({
           <option value="3">Madurai</option>
         </select>
 
-        <button data-testid="search-button" onClick={onSearch}>
+        <button data-testid="search-button" onClick={() => onSearch && onSearch(fromLocation, toLocation, {})}>
           Search
         </button>
       </div>
@@ -305,7 +304,7 @@ describe('App Component', () => {
 
     // Check that search form is rendered with locations
     await waitFor(() => {
-      expect(screen.getByTestId('search-form')).toBeInTheDocument();
+      expect(screen.getByTestId('transit-search-form')).toBeInTheDocument();
       
       // Use getAllByText to handle multiple instances of the same text
       const chennaiOptions = screen.getAllByText('Chennai');

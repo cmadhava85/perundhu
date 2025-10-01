@@ -1,0 +1,84 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Tamil Nadu Bus Schedule" [level=1] [ref=e7]
+      - generic [ref=e10]:
+        - generic [ref=e12]:
+          - button "Switch to English" [pressed] [ref=e14] [cursor=pointer]:
+            - generic [ref=e15] [cursor=pointer]: 🇮🇳
+            - generic [ref=e16] [cursor=pointer]: EN
+          - button "Switch to தமிழ்" [ref=e18] [cursor=pointer]:
+            - generic [ref=e19] [cursor=pointer]: 🇮🇳
+            - generic [ref=e20] [cursor=pointer]: TA
+        - generic [ref=e24]: English
+  - generic [ref=e26]:
+    - generic [ref=e28]:
+      - button "Switch to search for bus routes" [pressed] [ref=e29] [cursor=pointer]:
+        - generic [ref=e30] [cursor=pointer]:
+          - generic [ref=e31] [cursor=pointer]: 🔍
+          - generic [ref=e32] [cursor=pointer]:
+            - generic [ref=e33] [cursor=pointer]: Search
+            - generic [ref=e34] [cursor=pointer]: Find Routes
+      - button "Switch to contribute route data" [ref=e36] [cursor=pointer]:
+        - generic [ref=e37] [cursor=pointer]:
+          - img [ref=e38] [cursor=pointer]
+          - generic [ref=e41] [cursor=pointer]:
+            - generic [ref=e42] [cursor=pointer]: Contribute
+            - generic [ref=e43] [cursor=pointer]: Share Routes
+    - paragraph [ref=e47]: Discover bus routes across Tamil Nadu
+  - main [ref=e48]:
+    - generic [ref=e50]:
+      - generic [ref=e51]:
+        - heading "🚌 Plan Your Journey" [level=2] [ref=e52]
+        - paragraph [ref=e53]: Find the best buses for your route
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - generic [ref=e57]: 🟢 From
+            - textbox "Enter departure location" [ref=e58]: Chennai
+            - button "Chennai 📍 13.0827, 80.2707" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61] [cursor=pointer]: Chennai
+              - generic [ref=e62] [cursor=pointer]: 📍 13.0827, 80.2707
+          - button "⇅" [ref=e64] [cursor=pointer]
+          - generic [ref=e65]:
+            - generic [ref=e66]: 🔴 To
+            - textbox "Enter destination" [active] [ref=e67]: Bangalore
+        - button "🔍 Find Buses" [ref=e68] [cursor=pointer]
+        - generic [ref=e69]:
+          - button "🗺️ View on Map" [ref=e70] [cursor=pointer]
+          - button "🕐 Schedule View" [ref=e71] [cursor=pointer]
+          - button "💡 Suggestions" [ref=e72] [cursor=pointer]
+  - contentinfo [ref=e74]:
+    - generic [ref=e76]:
+      - heading "Tamil Nadu Bus Scheduler" [level=2] [ref=e77]
+      - generic [ref=e78]:
+        - link "About Us" [ref=e79]:
+          - /url: "#"
+        - link "Contact Us" [ref=e80]:
+          - /url: "#"
+        - link "Privacy Policy" [ref=e81]:
+          - /url: "#"
+        - link "Terms of Service" [ref=e82]:
+          - /url: "#"
+      - paragraph [ref=e83]: © 2025 Perundhu Bus Services. All Rights Reserved.
+  - navigation "Bottom navigation" [ref=e84]:
+    - generic [ref=e85]:
+      - button "Search" [ref=e86]:
+        - generic [ref=e87]: 🔍
+        - generic [ref=e88]: Search
+      - button "Routes" [disabled] [ref=e89]:
+        - generic [ref=e90]: 🚌
+        - generic [ref=e91]: Routes
+      - button "Map" [disabled] [ref=e92]:
+        - generic [ref=e93]: 🗺️
+        - generic [ref=e94]: Map
+      - button "Track" [disabled] [ref=e95]:
+        - generic [ref=e96]: 📍
+        - generic [ref=e97]: Track
+      - button "Contribute" [ref=e98]:
+        - generic [ref=e99]: ➕
+        - generic [ref=e100]: Contribute
+```

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import type { Location, Stop } from '../types/index';
+import { getStopCoordinates, getCoordinateSource } from '../utils/cityCoordinates';
 import '../styles/OpenStreetMapComponent.css';
 
 interface OpenStreetMapComponentProps {
@@ -102,35 +103,54 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
               </div>
             `);
 
-            // Add intermediate stops
+            // Add intermediate stops with coordinate fallback
+            console.log('OpenStreetMapComponent: Selected stops:', selectedStops.length);
+            
+            const stopsWithCoordinates: Array<{stop: Stop, coords: {latitude: number, longitude: number}, source: string}> = [];
+            
             selectedStops.forEach((stop, index) => {
-              if (stop.latitude && stop.longitude) {
-                const stopMarker = L.marker([stop.latitude, stop.longitude], {
-                  icon: L.divIcon({
-                    html: `<div class="stop-marker">${index + 1}</div>`,
-                    className: 'custom-stop-marker',
-                    iconSize: [25, 25],
-                    iconAnchor: [12, 12]
-                  })
-                }).addTo(map);
-
-                stopMarker.bindPopup(`
-                  <div class="map-popup">
-                    <h4>Stop ${index + 1}</h4>
-                    <p><strong>${stop.name}</strong></p>
-                    ${stop.arrivalTime ? `<p>Arrival: ${stop.arrivalTime}</p>` : ''}
-                    <small>${stop.latitude.toFixed(4)}, ${stop.longitude.toFixed(4)}</small>
-                  </div>
-                `);
+              const coords = getStopCoordinates(stop);
+              if (coords) {
+                const source = getCoordinateSource(stop, coords);
+                stopsWithCoordinates.push({ stop, coords, source });
+                console.log(`OpenStreetMapComponent: Stop ${index + 1} "${stop.name}": ${source} at (${coords.latitude}, ${coords.longitude})`);
+              } else {
+                console.warn(`OpenStreetMapComponent: No coordinates found for stop "${stop.name}"`);
               }
             });
+            
+            console.log(`OpenStreetMapComponent: ${stopsWithCoordinates.length}/${selectedStops.length} stops have coordinates`);
+            
+            stopsWithCoordinates.forEach((stopData, index) => {
+              const { stop, coords, source } = stopData;
+              const isApproximate = source !== 'Exact stop location';
+              
+              const stopMarker = L.marker([coords.latitude, coords.longitude], {
+                icon: L.divIcon({
+                  html: `<div class="stop-marker ${isApproximate ? 'approximate' : ''}">${index + 1}</div>`,
+                  className: 'custom-stop-marker',
+                  iconSize: [25, 25],
+                  iconAnchor: [12, 12]
+                })
+              }).addTo(map);
 
-            // Draw route line
+              stopMarker.bindPopup(`
+                <div class="map-popup">
+                  <h4>Stop ${index + 1}</h4>
+                  <p><strong>${stop.name}</strong></p>
+                  ${stop.arrivalTime ? `<p>Arrival: ${stop.arrivalTime}</p>` : ''}
+                  <small>${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}</small>
+                  <div style="margin-top: 8px; font-size: 11px; color: #666;">
+                    📍 ${source}
+                  </div>
+                </div>
+              `);
+            });
+
+            // Draw route line with fallback coordinates
             const routePoints = [
               [fromLocation.latitude, fromLocation.longitude],
-              ...selectedStops
-                .filter(stop => stop.latitude && stop.longitude)
-                .map(stop => [stop.latitude!, stop.longitude!]),
+              ...stopsWithCoordinates.map(stopData => [stopData.coords.latitude, stopData.coords.longitude]),
               [toLocation.latitude, toLocation.longitude]
             ];
 

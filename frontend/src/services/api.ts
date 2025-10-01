@@ -439,7 +439,7 @@ export const searchBusesViaStops = async (
     const fromLoc = typeof fromLocation === 'object' ? fromLocation : { id: fromId, name: 'Unknown' } as Location;
     const toLoc = typeof toLocation === 'object' ? toLocation : { id: toId, name: 'Unknown' } as Location;
     
-    const response = await api.get('/api/v1/bus-schedules/search/via-stops', {
+    const response = await api.get('/api/v1/bus-schedules/search-via-stops', {
       params: {
         fromLocationId: fromId,
         toLocationId: toId
@@ -486,8 +486,8 @@ const transformStopDTOToStop = (stopDTO: any, busId: number): Stop => {
 export const getStops = async (busId: number, languageCode: string = 'en'): Promise<Stop[]> => {
   try {
     console.log(`Fetching stops for bus ${busId} with language ${languageCode}`);
-    const response = await api.get(`/api/v1/bus-schedules/${busId}/stops`, {
-      params: { lang: languageCode }
+    const response = await api.get(`/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
+      params: { language: languageCode }
     });
     console.log('Stops API response:', response.data);
     

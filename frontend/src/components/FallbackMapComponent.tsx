@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Location, Bus, Stop, BusLocation } from '../types/index';
+import { getStopCoordinates, getCoordinateSource } from '../utils/cityCoordinates';
 import '../styles/FallbackMapComponent.css';
 
 interface FallbackMapComponentProps {
@@ -115,7 +116,7 @@ const FallbackMapComponent: React.FC<FallbackMapComponentProps> = ({
           </div>
         </div>
 
-        {/* Stops Information */}
+        {/* Stops Information with Coordinate Fallback */}
         {selectedStops.length > 0 && (
           <div className="stops-section">
             <h4 className="stops-title">
@@ -123,17 +124,29 @@ const FallbackMapComponent: React.FC<FallbackMapComponentProps> = ({
               Route Stops ({selectedStops.length})
             </h4>
             <div className="stops-grid">
-              {selectedStops.slice(0, 6).map((stop, index) => (
-                <div key={index} className="stop-card">
-                  <div className="stop-number">{index + 1}</div>
-                  <div className="stop-details">
-                    <div className="stop-name">{stop.name}</div>
-                    {stop.arrivalTime && (
-                      <div className="stop-time">🕐 {stop.arrivalTime}</div>
-                    )}
+              {selectedStops.slice(0, 6).map((stop, index) => {
+                const coords = getStopCoordinates(stop);
+                const source = coords ? getCoordinateSource(stop, coords) : 'No coordinates available';
+                const isApproximate = source !== 'Exact stop location';
+                
+                return (
+                  <div key={stop.id || index} className={`stop-card ${isApproximate ? 'approximate' : ''}`}>
+                    <div className="stop-number">{index + 1}</div>
+                    <div className="stop-details">
+                      <div className="stop-name">{stop.name}</div>
+                      {stop.arrivalTime && (
+                        <div className="stop-time">🕐 {stop.arrivalTime}</div>
+                      )}
+                      {coords && (
+                        <div className="stop-coordinates">
+                          📍 {coords.latitude.toFixed(3)}, {coords.longitude.toFixed(3)}
+                          {isApproximate && <span className="approximate-label">(approx)</span>}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               {selectedStops.length > 6 && (
                 <div className="stop-card more-stops">
                   <div className="more-count">+{selectedStops.length - 6}</div>

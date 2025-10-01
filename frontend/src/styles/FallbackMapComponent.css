@@ -236,19 +236,28 @@
 }
 
 .stop-card {
-  background: white;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid #e0f2fe;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
   transition: all 0.2s ease;
 }
 
 .stop-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.stop-card.approximate {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.stop-card.approximate:hover {
+  background: #fef3c7;
 }
 
 .stop-number {
@@ -284,6 +293,19 @@
   font-size: 0.625rem;
   color: #0369a1;
   font-weight: 500;
+}
+
+.stop-coordinates {
+  font-size: 10px;
+  color: #9ca3af;
+  font-family: monospace;
+  margin-top: 2px;
+}
+
+.approximate-label {
+  color: #f59e0b;
+  font-weight: 600;
+  margin-left: 4px;
 }
 
 .more-stops {

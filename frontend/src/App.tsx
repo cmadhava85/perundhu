@@ -1,4 +1,7 @@
 import './App.css';
+import './styles/transit-design-system.css';
+import './styles/transit-bus-card.css';
+import './styles/transit-realtime.css';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
@@ -6,8 +9,8 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from
 // Components
 import Header from './components/Header';
 import Footer from './components/Footer';
-import SearchForm from './components/SearchForm';
-import ModernBusList from './components/ModernBusList';
+import TransitSearchForm from './components/TransitSearchForm';
+import TransitBusList from './components/TransitBusList';
 import CombinedMapTracker from './components/CombinedMapTracker';
 import ConnectingRoutes from './components/ConnectingRoutes';
 import ErrorDisplay from './components/ErrorDisplay';
@@ -22,7 +25,7 @@ import FeatureSettings from './components/FeatureSettings';
 import ErrorBoundary from './components/ErrorBoundary';
 import SearchResults from './components/SearchResults';
 import BottomNavigation from './components/BottomNavigation';
-import { EnhancedRouteForm } from './components/forms/EnhancedRouteForm';
+import TransitBusCardTest from './components/TransitBusCardTest';
 
 // Services
 import { submitRouteContribution } from './services/api';
@@ -269,7 +272,7 @@ function AppContent() {
   const stops = selectedBusId && stopsMap[selectedBusId] ? stopsMap[selectedBusId] : [];
 
   return (
-    <div className="app-container min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
+    <div className="transit-app app-container min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
       <Header />
       
       {/* Enhanced Main Tab Navigation - Search vs Contribute */}
@@ -340,15 +343,19 @@ function AppContent() {
           <Route path="/" element={
             <ErrorBoundary>
               {fromLocation && toLocation ? (
-                <SearchForm 
+                <TransitSearchForm 
                   locations={locations}
-                  destinations={destinations}
                   fromLocation={fromLocation}
                   toLocation={toLocation}
-                  onFromLocationChange={setFromLocation}
-                  onToLocationChange={setToLocation}
-                  onSearch={handleSearch}
-                  isLoading={isSearching || locationsLoading}
+                  onLocationChange={(from, to) => {
+                    setFromLocation(from);
+                    setToLocation(to);
+                  }}
+                  onSearch={(from, to, options) => {
+                    setFromLocation(from);
+                    setToLocation(to);
+                    handleSearch();
+                  }}
                 />
               ) : (
                 <Loading message={t('loading.locations', 'Loading locations...')} />
@@ -358,15 +365,19 @@ function AppContent() {
           <Route path="/search" element={
             <ErrorBoundary>
               {fromLocation && toLocation ? (
-                <SearchForm 
+                <TransitSearchForm 
                   locations={locations}
-                  destinations={destinations}
                   fromLocation={fromLocation}
                   toLocation={toLocation}
-                  onFromLocationChange={setFromLocation}
-                  onToLocationChange={setToLocation}
-                  onSearch={handleSearch}
-                  isLoading={isSearching || locationsLoading}
+                  onLocationChange={(from, to) => {
+                    setFromLocation(from);
+                    setToLocation(to);
+                  }}
+                  onSearch={(from, to, options) => {
+                    setFromLocation(from);
+                    setToLocation(to);
+                    handleSearch();
+                  }}
                 />
               ) : (
                 <Loading message={t('loading.locations', 'Loading locations...')} />
@@ -451,6 +462,11 @@ function AppContent() {
                 {...featureSettings}
                 onSettingsChange={() => {}}
               />
+            </ErrorBoundary>
+          } />
+          <Route path="/test-bus-card" element={
+            <ErrorBoundary>
+              <TransitBusCardTest />
             </ErrorBoundary>
           } />
           <Route path="*" element={

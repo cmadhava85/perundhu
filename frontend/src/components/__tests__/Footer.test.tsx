@@ -7,6 +7,6 @@ describe('Footer Component', () => {
     
     const footerElement = screen.getByText(/tamil nadu bus scheduler/i);
     expect(footerElement).toBeInTheDocument();
-    expect(footerElement.textContent).toContain('2025');
+    expect(footerElement.textContent).toContain('footer.allRightsReserved');
   });
 });

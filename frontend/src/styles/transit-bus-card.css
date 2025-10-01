@@ -1,0 +1,980 @@
+/* Modern Transit Bus Card - Inspired by Transit & Moovit */
+
+.transit-bus-card {
+  background: var(--transit-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--transit-divider);
+  overflow: hidden;
+  transition: var(--transition-base);
+  margin-bottom: var(--space-3);
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  padding: 0;
+  outline: none;
+}
+
+.transit-bus-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+  border-color: var(--transit-primary-light);
+}
+
+.transit-bus-card.selected {
+  border-color: var(--transit-primary);
+  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.1);
+}
+
+/* Click feedback */
+.transit-bus-card:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* Card Header */
+.transit-card-header {
+  padding: var(--space-4) var(--space-4) var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--transit-divider);
+  background: linear-gradient(135deg, #F8FAFF 0%, #FFFFFF 100%);
+}
+
+/* Mobile-First Bus Info Row */
+.bus-info-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  width: 100%;
+}
+
+.bus-number-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 60px;
+  height: 36px;
+  padding: 0 var(--space-3);
+  background: var(--transit-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  text-align: center;
+}
+
+.bus-type-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.bus-name-display {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 36px;
+  padding: 0 var(--space-3);
+  background: var(--transit-surface-elevated);
+  border: 1px solid var(--transit-divider);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--transit-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Journey Layout - Screenshot Design */
+.journey-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+/* Cities and Progress Bar Row */
+.cities-progress-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.city-name {
+  flex: 0 0 auto;
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--transit-text-primary);
+  text-align: center;
+  min-width: 80px;
+}
+
+.city-name.start-city {
+  text-align: left;
+}
+
+.city-name.end-city {
+  text-align: right;
+}
+
+.progress-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0 var(--space-2);
+}
+
+/* Time Duration Row */
+.time-duration-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.departure-time,
+.arrival-time {
+  flex: 0 0 auto;
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--transit-text-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 80px;
+}
+
+.departure-time {
+  text-align: left;
+}
+
+.arrival-time {
+  text-align: right;
+}
+
+.journey-duration-center {
+  flex: 1;
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--transit-text-secondary);
+  padding: var(--space-1) var(--space-3);
+  background: var(--transit-surface-elevated);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--transit-divider);
+}
+
+/* Stops Row */
+.stops-row {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.stops-info {
+  font-size: var(--text-sm);
+  color: var(--transit-text-secondary);
+  font-weight: var(--font-medium);
+}
+
+/* Progress Bar Updates */
+.progress-container .progress-bar {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: var(--transit-divider);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--transit-primary) 0%, var(--transit-primary-light) 100%);
+  border-radius: 2px;
+  animation: progressAnimation 3s ease-in-out infinite;
+}
+
+.bus-moving-icon {
+  position: absolute;
+  top: -8px;
+  font-size: 16px;
+  animation: busMovement 3s ease-in-out infinite;
+  z-index: 2;
+}
+
+.progress-dots {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.progress-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--transit-primary);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.progress-dot.start {
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.progress-dot.end {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.journey-duration-mobile {
+  padding: var(--space-1) var(--space-3);
+  background: var(--transit-surface-elevated);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--transit-text-secondary);
+  border: 1px solid var(--transit-divider);
+}
+
+/* Animation Keyframes */
+@keyframes progressAnimation {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+@keyframes busMovement {
+  0% {
+    left: -16px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% + 16px);
+    opacity: 0;
+  }
+}
+
+/* Journey Timeline */
+.journey-timeline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  position: relative;
+}
+
+.journey-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  text-align: center;
+}
+
+.journey-time {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--transit-text-primary);
+  margin-bottom: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.journey-location {
+  font-size: var(--text-sm);
+  color: var(--transit-text-secondary);
+  font-weight: var(--font-medium);
+  line-height: 1.2;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.journey-connection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 var(--space-2);
+}
+
+.route-line {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--transit-primary) 0%, var(--transit-primary-light) 100%);
+  border-radius: 2px;
+  position: relative;
+}
+
+.route-line::before,
+.route-line::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--transit-primary);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.route-line::before { left: 0; }
+.route-line::after { right: 0; }
+
+.journey-duration {
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--transit-surface-elevated);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--transit-text-secondary);
+  border: 1px solid var(--transit-divider);
+}
+
+/* Card Body */
+.transit-card-body {
+  padding: var(--space-4);
+}
+
+.card-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-2);
+  background: var(--transit-surface-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--transit-divider);
+}
+
+.info-icon {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.info-label {
+  font-size: var(--text-xs);
+  color: var(--transit-text-secondary);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: var(--text-sm);
+  color: var(--transit-text-primary);
+  font-weight: var(--font-semibold);
+  margin-top: var(--space-1);
+}
+
+/* Status Bar */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
+  border-top: 1px solid var(--transit-divider);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.on-time { background: var(--status-on-time); }
+.status-dot.delayed { background: var(--status-delayed); }
+.status-dot.cancelled { background: var(--status-cancelled); }
+
+.status-text {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.status-text.on-time { color: var(--status-on-time); }
+.status-text.delayed { color: var(--status-delayed); }
+.status-text.cancelled { color: var(--status-cancelled); }
+
+.price-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  background: var(--transit-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.price-currency {
+  font-size: var(--text-xs);
+  opacity: 0.8;
+}
+
+/* Expandable Content */
+.expandable-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-base);
+}
+
+.expandable-content.expanded {
+  max-height: 800px;
+}
+
+.route-details {
+  padding: var(--space-4);
+  background: linear-gradient(135deg, #FAFBFF 0%, #F5F7FF 100%);
+  border-top: 1px solid var(--transit-divider);
+}
+
+.stops-simple-list {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.stop-simple-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--transit-divider);
+  font-size: var(--text-sm);
+  align-items: center;
+}
+
+.stop-simple-item:last-child {
+  border-bottom: none;
+}
+
+.stop-simple-item:hover {
+  background: rgba(0, 102, 255, 0.02);
+}
+
+.stop-simple-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--transit-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  flex-shrink: 0;
+}
+
+.stop-simple-name {
+  color: var(--transit-text-primary);
+  font-weight: var(--font-medium);
+  text-align: left;
+}
+
+.stop-simple-time {
+  color: var(--transit-text-secondary);
+  font-family: var(--font-family-mono);
+  text-align: right;
+  min-width: 60px;
+}
+
+.stop-simple-departure {
+  color: var(--transit-text-tertiary);
+  font-family: var(--font-family-mono);
+  text-align: right;
+  min-width: 60px;
+  font-size: var(--text-xs);
+}
+
+.stop-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--transit-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.stop-info {
+  flex: 1;
+}
+
+.stop-name {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--transit-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.stop-time {
+  font-size: var(--text-sm);
+  color: var(--transit-text-secondary);
+  font-family: var(--font-family-mono);
+}
+
+/* Live Tracking */
+.live-tracking {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(0, 200, 83, 0.1);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-3);
+}
+
+.tracking-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--status-on-time);
+  animation: pulse 1.5s infinite;
+}
+
+.tracking-text {
+  font-size: var(--text-sm);
+  color: var(--status-on-time);
+  font-weight: var(--font-medium);
+}
+
+/* Accessibility Features */
+.accessibility-info {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.accessibility-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 102, 255, 0.1);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--transit-primary);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .transit-card-header {
+    padding: var(--space-3);
+  }
+  
+  /* Mobile Bus Info Row Adjustments */
+  .bus-info-row {
+    gap: var(--space-2);
+  }
+  
+  .bus-number-display {
+    min-width: 50px;
+    height: 32px;
+    font-size: var(--text-xs);
+    padding: 0 var(--space-2);
+  }
+  
+  .bus-type-display {
+    height: 32px;
+    padding: 0 var(--space-2);
+    font-size: 10px;
+  }
+  
+  .bus-name-display {
+    height: 32px;
+    font-size: var(--text-xs);
+    padding: 0 var(--space-2);
+  }
+  
+  /* Mobile Journey Layout Adjustments */
+  .cities-progress-row {
+    gap: var(--space-2);
+  }
+  
+  .city-name {
+    font-size: var(--text-sm);
+    min-width: 60px;
+  }
+  
+  .time-duration-row {
+    gap: var(--space-2);
+  }
+  
+  .departure-time,
+  .arrival-time {
+    font-size: var(--text-base);
+    min-width: 60px;
+  }
+  
+  .journey-duration-center {
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-2);
+  }
+  
+  .stops-info {
+    font-size: var(--text-xs);
+  }
+  
+  .progress-container .progress-bar {
+    height: 3px;
+  }
+  
+  .bus-moving-icon {
+    font-size: 14px;
+    top: -7px;
+  }
+  
+  .progress-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .card-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+  
+  .transit-card-body {
+    padding: var(--space-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .transit-card-header {
+    padding: var(--space-2);
+  }
+  
+  /* Extra small mobile adjustments */
+  .bus-info-row {
+    gap: var(--space-1);
+  }
+  
+  .bus-number-display {
+    min-width: 45px;
+    height: 28px;
+    font-size: 10px;
+    padding: 0 var(--space-1);
+  }
+  
+  .bus-type-display {
+    height: 28px;
+    padding: 0 var(--space-1);
+    font-size: 9px;
+  }
+  
+  .bus-name-display {
+    height: 28px;
+    font-size: 10px;
+    padding: 0 var(--space-1);
+  }
+  
+  /* Extra small journey layout */
+  .cities-progress-row {
+    gap: var(--space-1);
+  }
+  
+  .city-name {
+    font-size: var(--text-xs);
+    min-width: 50px;
+  }
+  
+  .time-duration-row {
+    gap: var(--space-1);
+  }
+  
+  .departure-time,
+  .arrival-time {
+    font-size: var(--text-sm);
+    min-width: 50px;
+  }
+  
+  .journey-duration-center {
+    font-size: 10px;
+    padding: var(--space-1);
+  }
+  
+  .stops-info {
+    font-size: 10px;
+  }
+  
+  .bus-moving-icon {
+    font-size: 12px;
+    top: -6px;
+  }
+  
+  .card-info-grid.compact {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-1);
+  }
+  
+  .card-info-grid.compact .info-item {
+    padding: var(--space-1);
+  }
+
+  .stop-simple-item {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .stop-simple-number {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .stop-simple-time {
+    min-width: 45px;
+    font-size: 11px;
+  }
+}
+
+/* Compact View - Mobile optimized */
+.transit-bus-card.compact {
+  margin-bottom: var(--space-2);
+}
+
+.transit-bus-card.compact .transit-card-header {
+  padding: var(--space-2) var(--space-3);
+}
+
+.transit-bus-card.compact .bus-info-row {
+  margin-bottom: var(--space-2);
+}
+
+.transit-bus-card.compact .journey-timeline-mobile {
+  gap: var(--space-2);
+}
+
+/* Compact Info Grid - Always visible in compact form */
+.compact-info {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--transit-divider);
+}
+
+.card-info-grid.compact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.card-info-grid.compact .info-item {
+  text-align: center;
+  padding: var(--space-2);
+  max-width: 120px;
+  margin: 0 auto;
+}
+
+.card-info-grid.compact .info-icon {
+  font-size: var(--text-base);
+  margin-bottom: var(--space-1);
+}
+
+.card-info-grid.compact .info-label {
+  font-size: var(--text-xs);
+  margin-bottom: var(--space-1);
+}
+
+.card-info-grid.compact .info-value {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+.expanded-features {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--transit-divider);
+  background: var(--transit-surface-elevated);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Responsive Compact Grid */
+@media (max-width: 640px) {
+  .card-info-grid.compact {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+  
+  .compact-info {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .expanded-features {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .stop-simple-item {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+  }
+
+  .stop-simple-departure {
+    display: none;
+  }
+
+  .stop-simple-time {
+    min-width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-info-grid.compact {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-1);
+  }
+  
+  .card-info-grid.compact .info-item {
+    padding: var(--space-1);
+  }
+
+  .stop-simple-item {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .stop-simple-number {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  .stop-simple-time {
+    min-width: 45px;
+    font-size: 11px;
+  }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+  .transit-card-header {
+    background: linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 100%);
+  }
+  
+  .bus-name-display {
+    background: var(--transit-surface);
+    border-color: var(--transit-divider);
+  }
+  
+  .route-details {
+    background: linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 100%);
+  }
+  
+  .status-bar {
+    background: linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 100%);
+  }
+  
+  .stop-item {
+    background: var(--transit-surface);
+  }
+  
+  .stop-item:hover {
+    background: var(--transit-surface-elevated);
+  }
+}
+
+/* Accessibility and Focus States */
+.bus-number-display:focus,
+.bus-type-display:focus,
+.bus-name-display:focus {
+  outline: 2px solid var(--transit-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .progress-line {
+    animation: none;
+    width: 50%;
+  }
+  
+  .bus-moving-icon {
+    animation: none;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .transit-bus-card {
+    transition: none;
+  }
+  
+  .expandable-content {
+    transition: none;
+  }
+}

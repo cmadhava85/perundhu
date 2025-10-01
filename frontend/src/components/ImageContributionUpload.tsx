@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw, Filter, Search, Grid, List, Trash2, Eye } from 'lucide-react';
+import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing } from '../services/api';
 import { useTranslation } from 'react-i18next';
+import './ImageContributionUpload.css';
 
 interface ImageContributionUploadProps {
   onSuccess?: (contributionId: string) => void;
@@ -63,7 +64,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       file,
       preview: URL.createObjectURL(file),
       processing: false,
-      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       timestamp: new Date()
     }));
     
@@ -366,12 +367,12 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           <div className="flex items-center justify-center mb-6">
             <h2 className="text-3xl font-bold text-gray-900 flex items-center">
               <Camera className="w-8 h-8 mr-3 text-blue-600" />
-              {t('contribution.imageUpload.title', 'AI-Powered Image Upload')}
+              {t('contribution.imageUpload.title', 'Image Upload')}
             </h2>
           </div>
           <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
             {t('contribution.imageUpload.description', 
-              'Upload clear photos of bus schedules, timetables, or route information. Our AI will extract the schedule data automatically.')}
+              'Upload clear photos of bus schedules, timetables, or route information. We will process and extract the schedule data for you.')}
           </p>
           
           {/* Stats */}

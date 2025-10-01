@@ -1,0 +1,411 @@
+/* Mobile-First Global Enhancements for Bus Search */
+
+/* Base mobile styles - all devices start here */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px; /* Prevent zoom on iOS input focus */
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch-friendly base styles */
+button, 
+input, 
+select, 
+textarea {
+  min-height: 44px; /* iOS Human Interface Guidelines */
+  touch-action: manipulation; /* Disable double-tap zoom */
+}
+
+/* Enhanced focus styles for mobile accessibility */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Prevent text selection on interactive elements */
+button,
+.clickable,
+.bus-card,
+.filter-chip,
+.sort-btn {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile-specific improvements for existing components */
+@media (max-width: 480px) {
+  /* Global container adjustments */
+  .app-container,
+  .main-content {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Modern bus list mobile enhancements */
+  .modern-bus-list {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: #f8fafc;
+    min-height: 100vh;
+  }
+  
+  .modern-bus-list.ria-enhanced {
+    border-radius: 0;
+    background: #f8fafc;
+  }
+  
+  /* Mobile sticky header */
+  .bus-list-header.ria-enhanced {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 16px;
+  }
+  
+  /* Ensure header content layout */
+  .header-content.ria-enhanced {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .title-section.ria-enhanced {
+    flex: 1;
+    text-align: left;
+    min-width: 0;
+  }
+  
+  .list-title.ria-enhanced {
+    font-size: 18px !important;
+    margin: 0 0 4px 0 !important;
+    color: #1e293b;
+    font-weight: 700;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .bus-count.ria-enhanced {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+    border-radius: 12px !important;
+    background: #3b82f6 !important;
+    color: white !important;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 0 !important;
+  }
+  
+  .route-text {
+    font-size: 12px !important;
+    padding: 2px 0 !important;
+    color: #64748b !important;
+    font-weight: 500;
+    text-align: left !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  
+  .controls-section.ria-enhanced {
+    flex-shrink: 0;
+  }
+  
+  .filter-toggle {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    border-radius: 20px !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25) !important;
+    min-width: 120px;
+    white-space: nowrap;
+  }
+  
+  /* Mobile search improvements */
+  .search-section {
+    padding: 0;
+  }
+  
+  .search-container {
+    margin: 0;
+  }
+  
+  .search-input {
+    font-size: 16px; /* Prevent zoom */
+    border-radius: 8px;
+    padding: 12px 40px 12px 16px;
+  }
+  
+  /* Mobile sort controls */
+  .sort-controls {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .sort-controls::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Mobile sort controls */
+  .sort-controls {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .sort-controls::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .sort-buttons {
+    display: flex !important;
+    gap: 8px;
+    padding-bottom: 8px;
+    min-width: max-content;
+    grid-template-columns: none !important;
+  }
+  
+  .sort-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-width: 100px;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+  }
+  
+  /* Hide desktop filters on mobile */
+  .filters-panel {
+    display: none !important;
+  }
+  
+  /* Hide desktop view controls on mobile */
+  .view-controls,
+  .view-controls.ria-enhanced,
+  .controls-section .view-controls,
+  .controls-section .view-controls.ria-enhanced,
+  .header-content .controls-section .view-controls,
+  .bus-list-header .view-controls,
+  .view-button,
+  .view-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Mobile bus container */
+  .buses-container {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  /* Force single column on mobile */
+  .buses-container.grid-view {
+    display: flex !important;
+    flex-direction: column;
+  }
+  
+  /* Mobile footer */
+  .bus-list-footer {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  
+  /* Mobile-specific loading states */
+  .loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  /* Mobile empty state */
+  .empty-state {
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .empty-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .empty-message {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Tablet optimizations */
+  .buses-container.grid-view {
+    grid-template-columns: 1fr;
+  }
+  
+  .sort-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 769px) {
+  /* Desktop - ensure mobile filter panel doesn't show */
+  .mobile-filter-overlay {
+    display: none !important;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  /* Optimize animations for mobile performance */
+  .modern-bus-item {
+    will-change: transform;
+  }
+  
+  .bus-card:active {
+    will-change: transform;
+  }
+  
+  /* Disable expensive effects on mobile */
+  .journey-path::after {
+    animation: none;
+  }
+  
+  /* Reduce shadow complexity */
+  .modern-bus-item {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modern-bus-item:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  @media (max-width: 480px) {
+    .bus-list-header {
+      padding-top: max(env(safe-area-inset-top), 12px);
+      padding-left: max(env(safe-area-inset-left), 16px);
+      padding-right: max(env(safe-area-inset-right), 16px);
+    }
+    
+    .buses-container {
+      padding-left: max(env(safe-area-inset-left), 12px);
+      padding-right: max(env(safe-area-inset-right), 12px);
+    }
+    
+    .mobile-filter-panel {
+      padding-bottom: max(env(safe-area-inset-bottom), 20px);
+    }
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .loading-skeleton {
+    animation: none;
+  }
+  
+  .modern-bus-item,
+  .bus-card,
+  .expand-indicator,
+  .filter-chip,
+  .sort-btn {
+    transition: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .modern-bus-item {
+    border: 2px solid #000;
+  }
+  
+  .bus-card:focus {
+    outline: 3px solid #000;
+  }
+  
+  .filter-chip.active,
+  .sort-btn.active {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+}
+
+/* Dark mode mobile optimizations */
+@media (prefers-color-scheme: dark) and (max-width: 480px) {
+  .modern-bus-list {
+    background: #0f172a;
+  }
+  
+  .bus-list-header.ria-enhanced {
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom-color: #334155;
+  }
+  
+  .search-input {
+    background: #334155;
+    border-color: #475569;
+    color: #f1f5f9;
+  }
+  
+  .sort-btn {
+    background: #334155;
+    border-color: #475569;
+    color: #f1f5f9;
+  }
+  
+  .sort-btn.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+  }
+}
