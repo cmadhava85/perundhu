@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing } from '../services/api';
 import { useTranslation } from 'react-i18next';
@@ -39,6 +39,9 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
   
+  // Use stable counter for image IDs to prevent re-renders
+  const imageIdCounterRef = useRef(1);
+  
   // RIA Enhancement State
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('date');
@@ -64,7 +67,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       file,
       preview: URL.createObjectURL(file),
       processing: false,
-      id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+      id: `img-upload-${imageIdCounterRef.current++}`,
       timestamp: new Date()
     }));
     

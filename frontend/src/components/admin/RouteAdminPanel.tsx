@@ -23,6 +23,11 @@ const RouteAdminPanel: React.FC = () => {
   const [selectedView, setSelectedView] = useState<'grid' | 'list'>('grid');
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedRouteForDetails, setSelectedRouteForDetails] = useState<RouteContribution | null>(null);
+  
+  // Integration state
+  const [integrationLoading, setIntegrationLoading] = useState(false);
+  const [integrationError, setIntegrationError] = useState<string>('');
+  const [integrationSuccess, setIntegrationSuccess] = useState<string>('');
 
   // Load routes on component mount and when filter changes
   useEffect(() => {
@@ -35,12 +40,27 @@ const RouteAdminPanel: React.FC = () => {
       setFilteredRoutes(routes);
     } else {
       const lowerQuery = searchQuery.toLowerCase();
-      const filtered = routes.filter(
-        route =>
-          route.busNumber.toLowerCase().includes(lowerQuery) ||
-          (route.fromLocationName && route.fromLocationName.toLowerCase().includes(lowerQuery)) ||
-          (route.toLocationName && route.toLocationName.toLowerCase().includes(lowerQuery))
-      );
+      
+      // Helper function to check if text matches query
+      const textMatches = (text?: string) => text?.toLowerCase().includes(lowerQuery) || false;
+      
+      const filtered = routes.filter(route => {
+        // Search in bus number, location names, stops, and submitter
+        return textMatches(route.busNumber) ||
+               textMatches(route.fromLocationName) ||
+               textMatches(route.fromLocationTranslatedName) ||
+               textMatches(route.fromLocationTaName) ||
+               textMatches(route.toLocationName) ||
+               textMatches(route.toLocationTranslatedName) ||
+               textMatches(route.toLocationTaName) ||
+               textMatches(route.submittedBy) ||
+               route.stops?.some(stop => 
+                 textMatches(stop.name) ||
+                 textMatches(stop.translatedName) ||
+                 textMatches(stop.taName)
+               );
+      });
+      
       setFilteredRoutes(filtered);
     }
   }, [searchQuery, routes]);
@@ -166,6 +186,82 @@ const RouteAdminPanel: React.FC = () => {
     handleCloseDetailsModal();
   };
 
+  // Handle integration of approved routes
+    const handleIntegrateApprovedRoutes = async () => {
+    try {
+      setIntegrationLoading(true);
+      const result = await AdminService.integrateApprovedRoutes();
+      
+      if (result.manualIntegrationRequired) {
+        // Show manual integration instructions
+        setIntegrationError('');
+        setIntegrationSuccess('');
+        
+        // Create a detailed modal or alert with manual instructions
+        const message = `
+${result.message}
+
+Manual Integration Steps:
+${result.instructions.join('\n')}
+
+SQL Example:
+${result.sqlExample}`;
+        
+        alert(message);
+        
+        // Also set a helpful UI message
+        setIntegrationError(
+          'Integration endpoint not available. Please run manual integration script. Check console for details.'
+        );
+        console.log('Manual Integration Required:', result);
+        
+      } else if (result.error) {
+        setIntegrationError(result.error);
+        setIntegrationSuccess('');
+      } else {
+        setIntegrationSuccess(
+          `Integration completed! ${result.successCount || 0} routes integrated successfully.`
+        );
+        setIntegrationError('');
+        // Refresh the contributions list
+        await loadRoutes();
+      }
+    } catch (error: any) {
+      console.error('Integration failed:', error);
+      setIntegrationError(
+        error.message || 'Failed to integrate approved routes. Check browser console for manual integration instructions.'
+      );
+      setIntegrationSuccess('');
+    } finally {
+      setIntegrationLoading(false);
+    }
+  };
+
+  // Handle integration of a specific route
+  const handleIntegrateSpecificRoute = async (route: RouteContribution) => {
+    if (route.status !== 'APPROVED') {
+      alert('Only approved routes can be integrated.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const result = await AdminService.integrateSpecificRoute(route.id || 0);
+      
+      if (result.error) {
+        setError(`Integration failed: ${result.error}`);
+      } else {
+        alert(`Successfully integrated route: ${route.busNumber} (${route.fromLocationName} → ${route.toLocationName})`);
+        await loadRoutes();
+      }
+    } catch (error: any) {
+      console.error('Error integrating specific route:', error);
+      setError(`Integration failed: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Get appropriate CSS class for status
   const getStatusClass = (status?: ContributionStatus) => {
     if (!status) return 'status-badge';
@@ -210,12 +306,28 @@ const RouteAdminPanel: React.FC = () => {
         <div className="route-path">
           <div className="location from">
             <span className="location-icon">📍</span>
-            <span className="location-name">{route.fromLocationName}</span>
+            <div className="location-names">
+              <span className="location-name primary">{route.fromLocationName}</span>
+              {route.fromLocationTranslatedName && route.fromLocationTranslatedName !== route.fromLocationName && (
+                <span className="location-name translated">{route.fromLocationTranslatedName}</span>
+              )}
+              {route.fromLocationTaName && route.fromLocationTaName !== route.fromLocationName && route.fromLocationTaName !== route.fromLocationTranslatedName && (
+                <span className="location-name tamil">{route.fromLocationTaName}</span>
+              )}
+            </div>
           </div>
           <div className="path-arrow">→</div>
           <div className="location to">
             <span className="location-icon">🎯</span>
-            <span className="location-name">{route.toLocationName}</span>
+            <div className="location-names">
+              <span className="location-name primary">{route.toLocationName}</span>
+              {route.toLocationTranslatedName && route.toLocationTranslatedName !== route.toLocationName && (
+                <span className="location-name translated">{route.toLocationTranslatedName}</span>
+              )}
+              {route.toLocationTaName && route.toLocationTaName !== route.toLocationName && route.toLocationTaName !== route.toLocationTranslatedName && (
+                <span className="location-name tamil">{route.toLocationTaName}</span>
+              )}
+            </div>
           </div>
         </div>
         
@@ -261,6 +373,20 @@ const RouteAdminPanel: React.FC = () => {
               <span className="btn-text">{t('admin.routes.reject')}</span>
             </button>
           </>
+        )}
+        {route.status === 'APPROVED' && (
+          <button 
+            className="action-btn integrate"
+            onClick={() => handleIntegrateSpecificRoute(route)}
+            title="Integrate this route into search database"
+            style={{
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: 'white'
+            }}
+          >
+            <span className="btn-icon">🔗</span>
+            <span className="btn-text">Sync</span>
+          </button>
         )}
         <button 
           className="action-btn view"
@@ -359,30 +485,130 @@ const RouteAdminPanel: React.FC = () => {
             <span className="btn-icon">🔄</span>
             <span className="btn-text">{t('admin.routes.refresh')}</span>
           </button>
+          
+          <button 
+            className="integrate-btn" 
+            onClick={handleIntegrateApprovedRoutes} 
+            disabled={loading}
+            title="Integrate approved routes into search database"
+            style={{
+              marginLeft: '1rem',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: 'white',
+              border: 'none',
+              borderRadius: 'var(--radius-md)',
+              padding: '0.5rem 1rem',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.6 : 1,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '500'
+            }}
+          >
+            <span className="btn-icon">🔗</span>
+            <span className="btn-text">Sync to Search</span>
+          </button>
         </div>
       </div>
 
       {error && <div className="error-message">{error}</div>}
+      
+      {/* Show integration notice if there are approved routes */}
+      {filteredRoutes.filter(r => r.status === 'APPROVED').length > 0 && (
+        <div className="integration-notice" style={{
+          background: 'linear-gradient(135deg, #fef3c7, #fbbf24)',
+          border: '1px solid #f59e0b',
+          borderRadius: 'var(--radius-lg)',
+          padding: '1rem',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem'
+        }}>
+          <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+          <div>
+            <h4 style={{ margin: 0, color: '#92400e', fontSize: '0.95rem', fontWeight: '600' }}>
+              Approved Routes Need Integration
+            </h4>
+            <p style={{ margin: '0.25rem 0 0 0', color: '#92400e', fontSize: '0.85rem' }}>
+              You have {filteredRoutes.filter(r => r.status === 'APPROVED').length} approved route(s) that aren't showing in search results. 
+              Click "Sync to Search" to integrate them into the main bus database.
+            </p>
+          </div>
+        </div>
+      )}
+      
+      {/* Integration status messages */}
+      {integrationError && (
+        <div className="integration-error" style={{
+          background: 'linear-gradient(135deg, #fecaca, #f87171)',
+          border: '1px solid #ef4444',
+          borderRadius: 'var(--radius-lg)',
+          padding: '1rem',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem'
+        }}>
+          <span style={{ fontSize: '1.5rem' }}>❌</span>
+          <div>
+            <h4 style={{ margin: 0, color: '#7f1d1d', fontSize: '0.95rem', fontWeight: '600' }}>
+              Integration Error
+            </h4>
+            <p style={{ margin: '0.25rem 0 0 0', color: '#7f1d1d', fontSize: '0.85rem' }}>
+              {integrationError}
+            </p>
+          </div>
+        </div>
+      )}
+      
+      {integrationSuccess && (
+        <div className="integration-success" style={{
+          background: 'linear-gradient(135deg, #bbf7d0, #4ade80)',
+          border: '1px solid #22c55e',
+          borderRadius: 'var(--radius-lg)',
+          padding: '1rem',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem'
+        }}>
+          <span style={{ fontSize: '1.5rem' }}>✅</span>
+          <div>
+            <h4 style={{ margin: 0, color: '#14532d', fontSize: '0.95rem', fontWeight: '600' }}>
+              Integration Successful
+            </h4>
+            <p style={{ margin: '0.25rem 0 0 0', color: '#14532d', fontSize: '0.85rem' }}>
+              {integrationSuccess}
+            </p>
+          </div>
+        </div>
+      )}
       
       {loading ? (
         <div className="loading">
           <div className="loading-spinner"></div>
           <p>{t('admin.routes.loading', 'Loading routes...')}</p>
         </div>
-      ) : filteredRoutes.length > 0 ? (
-        <>
-          {selectedView === 'grid' ? (
-            <div className="routes-grid">
-              {filteredRoutes.map(route => renderRouteCard(route))}
-            </div>
-          ) : (
-            <table className="routes-table">
+      ) : (
+        <div className="routes-content">
+          {filteredRoutes.length > 0 ? (
+            <>
+              {selectedView === 'grid' ? (
+                <div className="routes-grid">
+                  {filteredRoutes.map(route => renderRouteCard(route))}
+                </div>
+              ) : (
+                <table className="routes-table">
               <thead>
                 <tr>
                   <th>{t('admin.routes.id')}</th>
                   <th>{t('admin.routes.busNumber')}</th>
                   <th>{t('admin.routes.fromLocation')}</th>
                   <th>{t('admin.routes.toLocation')}</th>
+                  <th>{t('admin.routes.stops')}</th>
                   <th>{t('admin.routes.submittedBy')}</th>
                   <th>{t('admin.routes.date')}</th>
                   <th>{t('admin.routes.status')}</th>
@@ -393,9 +619,51 @@ const RouteAdminPanel: React.FC = () => {
                 {filteredRoutes.map(route => (
                   <tr key={route.id} className={getRowClass(route.status)}>
                     <td>{route.id}</td>
-                    <td>{route.busNumber}</td>
-                    <td>{route.fromLocationName}</td>
-                    <td>{route.toLocationName}</td>
+                    <td className="bus-number-cell">{route.busNumber}</td>
+                    <td className="location-cell">
+                      <div className="location-names-list">
+                        <div className="primary-name">{route.fromLocationName}</div>
+                        {route.fromLocationTranslatedName && route.fromLocationTranslatedName !== route.fromLocationName && (
+                          <div className="translated-name">{route.fromLocationTranslatedName}</div>
+                        )}
+                        {route.fromLocationTaName && route.fromLocationTaName !== route.fromLocationName && route.fromLocationTaName !== route.fromLocationTranslatedName && (
+                          <div className="tamil-name">{route.fromLocationTaName}</div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="location-cell">
+                      <div className="location-names-list">
+                        <div className="primary-name">{route.toLocationName}</div>
+                        {route.toLocationTranslatedName && route.toLocationTranslatedName !== route.toLocationName && (
+                          <div className="translated-name">{route.toLocationTranslatedName}</div>
+                        )}
+                        {route.toLocationTaName && route.toLocationTaName !== route.toLocationName && route.toLocationTaName !== route.toLocationTranslatedName && (
+                          <div className="tamil-name">{route.toLocationTaName}</div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="stops-cell">
+                      {route.stops && route.stops.length > 0 ? (
+                        <div className="stops-info">
+                          <span className="stops-count">{route.stops.length}</span>
+                          <div className="stops-preview">
+                            {route.stops.slice(0, 2).map((stop, idx) => (
+                              <div key={`${stop.name}-${idx}`} className="stop-name">
+                                {stop.name}
+                                {stop.translatedName && stop.translatedName !== stop.name && (
+                                  <span className="stop-translated"> ({stop.translatedName})</span>
+                                )}
+                              </div>
+                            ))}
+                            {route.stops.length > 2 && (
+                              <div className="stops-more">+{route.stops.length - 2} more</div>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="no-stops">-</span>
+                      )}
+                    </td>
                     <td>{route.submittedBy || 'Anonymous'}</td>
                     <td>{route.submissionDate ? new Date(route.submissionDate).toLocaleDateString() : 'N/A'}</td>
                     <td>
@@ -422,6 +690,19 @@ const RouteAdminPanel: React.FC = () => {
                               ✕
                             </button>
                           </>
+                        )}
+                        {route.status === 'APPROVED' && (
+                          <button 
+                            className="btn btn-integrate"
+                            onClick={() => handleIntegrateSpecificRoute(route)}
+                            title="Integrate into search"
+                            style={{
+                              background: '#10b981',
+                              color: 'white'
+                            }}
+                          >
+                            🔗
+                          </button>
                         )}
                         <button 
                           className="btn btn-view"
@@ -450,6 +731,8 @@ const RouteAdminPanel: React.FC = () => {
           <div className="empty-icon">🚏</div>
           <h3>{t('admin.routes.noRoutes', 'No routes found')}</h3>
           <p>{t('admin.routes.noRoutesDesc', 'No route contributions match your current filter')}</p>
+        </div>
+      )}
         </div>
       )}
 

@@ -54,11 +54,6 @@ export const useBrowserDetection = (): BrowserInfo => {
       const isOperaMobile = /OPiOS|OPR|Opera/i.test(userAgent) && isMobile;
       const isUCBrowser = /UCBrowser/i.test(userAgent);
       
-      // Remove unused variables
-      // const isIE = userAgent.indexOf('MSIE') !== -1 || userAgent.indexOf('Trident/') !== -1;
-      // const isEdge = userAgent.indexOf('Edge/') !== -1 || userAgent.indexOf('Edg/') !== -1;
-      // const isIEAlternative = !!(window as any).MSInputMethodContext && !!(document as any).documentMode;
-      
       // Get browser name
       let browserName = 'unknown';
       if (isSafariiOS) browserName = 'Safari';
@@ -85,7 +80,7 @@ export const useBrowserDetection = (): BrowserInfo => {
       // Detect orientation
       const isLandscape = window.innerWidth > window.innerHeight;
       
-      setBrowserInfo({
+      const newBrowserInfo = {
         isMobile,
         isIOS,
         isAndroid,
@@ -99,17 +94,33 @@ export const useBrowserDetection = (): BrowserInfo => {
         browserName,
         deviceType,
         isLandscape
+      };
+      
+      // Only update state if something actually changed to prevent unnecessary re-renders
+      setBrowserInfo(prev => {
+        if (JSON.stringify(prev) !== JSON.stringify(newBrowserInfo)) {
+          return newBrowserInfo;
+        }
+        return prev;
       });
     };
     
     // Initial detection
     detectBrowser();
     
+    // Debounce resize events to prevent excessive re-renders
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedDetectBrowser = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(detectBrowser, 300);
+    };
+    
     // Re-detect on resize (for orientation changes)
-    window.addEventListener('resize', detectBrowser);
+    window.addEventListener('resize', debouncedDetectBrowser);
     
     return () => {
-      window.removeEventListener('resize', detectBrowser);
+      window.removeEventListener('resize', debouncedDetectBrowser);
+      clearTimeout(resizeTimeout);
     };
   }, []);
 

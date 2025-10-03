@@ -1,0 +1,249 @@
+/* Enhanced Bus Sorting - Conflict Resolution Styles */
+/* This file provides fallback styles and ensures no conflicts with existing styles */
+
+/* Reset any conflicting styles from other CSS files */
+.bus-sort-controls {
+  /* Reset container styles */
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.bus-sort-controls * {
+  /* Prevent inheritance issues */
+  box-sizing: border-box;
+}
+
+/* Ensure sort buttons have consistent styling regardless of other CSS */
+.sort-option-btn {
+  /* Use important declarations to override conflicts */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.25rem !important;
+  padding: 0.5rem 0.875rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  border: 1px solid !important;
+  border-radius: 0.375rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+  background-clip: padding-box !important;
+  position: relative !important;
+  min-width: 75px !important;
+  min-height: 38px !important;
+  flex-shrink: 0 !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  box-sizing: border-box !important;
+}
+
+/* Extra small screens - ultra compact */
+@media (max-width: 480px) {
+  .sort-option-btn {
+    padding: 0.375rem 0.5rem !important;
+    font-size: 0.6875rem !important;
+    min-width: 46px !important;
+    min-height: 34px !important;
+    gap: 0.125rem !important;
+  }
+}
+
+/* Small screens */
+@media (min-width: 481px) and (max-width: 639px) {
+  .sort-option-btn {
+    padding: 0.4375rem 0.625rem !important;
+    font-size: 0.75rem !important;
+    min-width: 48px !important;
+    min-height: 36px !important;
+    gap: 0.1875rem !important;
+  }
+}
+
+/* Medium screens and up */
+@media (min-width: 640px) {
+  .sort-option-btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    gap: 0.5rem !important;
+    min-width: auto !important;
+    min-height: 40px !important;
+  }
+}
+
+/* Large screens */
+@media (min-width: 768px) {
+  .sort-option-btn {
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.875rem !important;
+    min-height: 42px !important;
+  }
+}
+
+/* Text content spacing and overflow handling */
+.sort-option-btn .sort-icon {
+  flex-shrink: 0 !important;
+  font-size: 0.875rem !important;
+}
+
+.sort-option-btn .sort-text-mobile {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.sort-option-btn .sort-text-desktop {
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Hover states */
+.sort-option-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.sort-option-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* Focus states for accessibility */
+.sort-option-btn:focus {
+  outline: 2px solid #3B82F6 !important;
+  outline-offset: 2px !important;
+}
+
+.sort-option-btn:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+/* Active sort button styling */
+.sort-option-btn.sort-active {
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Direction toggle button */
+.bus-sort-controls .sort-direction-toggle {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  color: #6B7280 !important;
+  background: transparent !important;
+  border: 1px solid #D1D5DB !important;
+  border-radius: 0.375rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+  flex-shrink: 0 !important;
+  margin-left: 0.25rem !important;
+}
+
+@media (min-width: 640px) {
+  .bus-sort-controls .sort-direction-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    margin-left: 0.5rem !important;
+  }
+}
+
+.bus-sort-controls .sort-direction-toggle:hover {
+  color: #374151 !important;
+  background-color: #F3F4F6 !important;
+  border-color: #9CA3AF !important;
+}
+
+/* Direction arrow animation */
+.sort-direction-arrow {
+  display: inline-block !important;
+  transition: transform 0.2s ease-in-out !important;
+  font-size: 0.875rem !important;
+  line-height: 1 !important;
+}
+
+.sort-direction-arrow.direction-desc {
+  transform: rotate(180deg) !important;
+}
+
+/* Smart badge positioning */
+.sort-smart-badge {
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  width: 8px !important;
+  height: 8px !important;
+  background: #10B981 !important;
+  border: 1px solid white !important;
+  border-radius: 50% !important;
+  animation: smart-sort-pulse 2s ease-in-out infinite !important;
+}
+
+/* Container overflow handling */
+.bus-sort-controls .sort-buttons-container {
+  display: flex !important;
+  gap: 0.25rem !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  padding-bottom: 2px !important;
+}
+
+.bus-sort-controls .sort-buttons-container::-webkit-scrollbar {
+  display: none !important;
+}
+
+@media (min-width: 640px) {
+  .bus-sort-controls .sort-buttons-container {
+    gap: 0.5rem !important;
+    overflow-x: visible !important;
+  }
+}
+
+/* Override any container constraints */
+.transit-bus-list .bus-list-controls-section {
+  overflow: visible !important;
+}
+
+.transit-bus-list .bus-list-controls-section .overflow-x-auto {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Ensure tooltips appear above other content */
+.sort-option-btn .tooltip-content {
+  z-index: 50 !important;
+  max-width: 120px !important;
+  word-wrap: break-word !important;
+}
+
+/* Sort label styling */
+.sort-label {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #374151 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+@media (min-width: 640px) {
+  .sort-label {
+    font-size: 0.875rem !important;
+    margin-right: 0.75rem !important;
+  }
+}

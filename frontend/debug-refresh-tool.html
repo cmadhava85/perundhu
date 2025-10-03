@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Debug Refresh Issue - Perundhu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .status-good { color: #16a085; font-weight: bold; }
+        .status-warning { color: #f39c12; font-weight: bold; }
+        .status-error { color: #e74c3c; font-weight: bold; }
+        .debug-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 8px;
+            font-size: 16px;
+        }
+        .debug-btn:hover {
+            background: #2980b9;
+        }
+        .console-output {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .test-area {
+            border: 2px dashed #3498db;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            background: #f8f9fa;
+        }
+        .location-input {
+            width: 300px;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .location-input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .suggestions {
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            background: white;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 10px;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔍 Debug Tool: Page Refresh Issue</h1>
+        <p>This tool monitors your application for refresh issues, excessive API calls, and component re-render problems.</p>
+        
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-value" id="vite-pings">0</div>
+                <div>Vite Pings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="react-renders">0</div>
+                <div>React Renders</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="focus-changes">0</div>
+                <div>Focus Changes</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="errors">0</div>
+                <div>Console Errors</div>
+            </div>
+        </div>
+
+        <div>
+            <button class="debug-btn" onclick="testLocationAutocomplete()">🧪 Test Location Autocomplete</button>
+            <button class="debug-btn" onclick="getDebugStatus()">📊 Get Status Report</button>
+            <button class="debug-btn" onclick="resetDebugCounters()">🔄 Reset Counters</button>
+            <button class="debug-btn" onclick="openMainApp()">🚀 Open Main App</button>
+        </div>
+    </div>
+
+    <div class="debug-container">
+        <h2>🧪 Test Area</h2>
+        <div class="test-area">
+            <h3>Location Autocomplete Test</h3>
+            <p>Type "Arup" below to test the autocomplete functionality:</p>
+            <input 
+                type="text" 
+                id="test-location-input" 
+                class="location-input" 
+                placeholder="Type location name (try 'Arup')"
+                autocomplete="off"
+            >
+            <div id="test-suggestions" class="suggestions"></div>
+            <p><small>This simulates the actual location input behavior</small></p>
+        </div>
+    </div>
+
+    <div class="debug-container">
+        <h2>📊 Live Status</h2>
+        <div id="status-display" class="status-good">Initializing debug tool...</div>
+        
+        <h3>📜 Console Output</h3>
+        <div id="console-output" class="console-output">Debug tool starting...\n</div>
+    </div>
+
+    <script>
+        // Global debug variables
+        let viteRequests = 0;
+        let totalRequests = 0;
+        let renderCount = 0;
+        let focusChanges = 0;
+        let errorCount = 0;
+        let warnCount = 0;
+        const startTime = Date.now();
+
+        // Enhanced console logging
+        function addToConsole(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '🚨' : type === 'warn' ? '⚠️' : '📝';
+            const output = document.getElementById('console-output');
+            output.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Monitor requests
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+            totalRequests++;
+            const url = args[0];
+            
+            if (typeof url === 'string') {
+                if (url.includes('/_vite/ping')) {
+                    viteRequests++;
+                    addToConsole(`Vite ping #${viteRequests}`);
+                    updateMetric('vite-pings', viteRequests);
+                    
+                    if (viteRequests > 10) {
+                        updateStatus('🔴 EXCESSIVE VITE PINGS DETECTED!', 'error');
+                    }
+                } else if (url.includes('nominatim') || url.includes('geocod')) {
+                    addToConsole(`Geocoding request: ${url.split('?')[0]}`);
+                }
+            }
+            
+            return originalFetch.apply(this, args);
+        };
+
+        // Monitor React renders (simplified)
+        let lastRenderTime = Date.now();
+        setInterval(() => {
+            const now = Date.now();
+            if (now - lastRenderTime > 100) { // Detect frequent renders
+                renderCount++;
+                updateMetric('react-renders', renderCount);
+                
+                if (renderCount > 50) {
+                    updateStatus('🟡 High render count detected', 'warning');
+                }
+            }
+            lastRenderTime = now;
+        }, 50);
+
+        // Monitor focus changes
+        document.addEventListener('focusin', (e) => {
+            focusChanges++;
+            updateMetric('focus-changes', focusChanges);
+            addToConsole(`Focus: ${e.target.tagName}${e.target.id ? '#' + e.target.id : ''}`);
+        });
+
+        // Monitor errors
+        const originalConsoleError = console.error;
+        console.error = function(...args) {
+            errorCount++;
+            updateMetric('errors', errorCount);
+            addToConsole(`Error: ${args.join(' ')}`, 'error');
+            updateStatus('🔴 Console errors detected', 'error');
+            originalConsoleError.apply(this, args);
+        };
+
+        // Update functions
+        function updateMetric(metricId, value) {
+            const element = document.getElementById(metricId);
+            if (element) {
+                element.textContent = value;
+                
+                // Color coding
+                if (metricId === 'vite-pings' && value > 10) {
+                    element.style.color = '#e74c3c';
+                } else if (metricId === 'react-renders' && value > 50) {
+                    element.style.color = '#f39c12';
+                } else if (metricId === 'errors' && value > 0) {
+                    element.style.color = '#e74c3c';
+                } else {
+                    element.style.color = '#2c3e50';
+                }
+            }
+        }
+
+        function updateStatus(message, type = 'good') {
+            const statusEl = document.getElementById('status-display');
+            statusEl.textContent = message;
+            statusEl.className = `status-${type}`;
+        }
+
+        // Test functions
+        function testLocationAutocomplete() {
+            addToConsole('🧪 Testing location autocomplete...');
+            
+            const input = document.getElementById('test-location-input');
+            input.focus();
+            
+            // Simulate typing "Arup"
+            const text = 'Arup';
+            let i = 0;
+            
+            function typeNext() {
+                if (i <= text.length) {
+                    input.value = text.substring(0, i);
+                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    addToConsole(`Typed: "${input.value}"`);
+                    i++;
+                    setTimeout(typeNext, 200);
+                }
+            }
+            
+            typeNext();
+        }
+
+        function getDebugStatus() {
+            const uptime = ((Date.now() - startTime) / 1000).toFixed(1);
+            addToConsole('📊 DEBUG STATUS REPORT');
+            addToConsole(`⏱️ Uptime: ${uptime}s`);
+            addToConsole(`🔄 Vite pings: ${viteRequests}`);
+            addToConsole(`🌐 Total requests: ${totalRequests}`);
+            addToConsole(`⚛️ React renders: ${renderCount}`);
+            addToConsole(`👁️ Focus changes: ${focusChanges}`);
+            addToConsole(`🚨 Errors: ${errorCount}`);
+            
+            if (viteRequests > 20) {
+                updateStatus('🔴 HIGH VITE PING COUNT - Refresh issues detected', 'error');
+            } else if (viteRequests > 10) {
+                updateStatus('🟡 MODERATE VITE PINGS - Monitor for issues', 'warning');
+            } else {
+                updateStatus('🟢 NORMAL OPERATION - No issues detected', 'good');
+            }
+        }
+
+        function resetDebugCounters() {
+            viteRequests = 0;
+            totalRequests = 0;
+            renderCount = 0;
+            focusChanges = 0;
+            errorCount = 0;
+            warnCount = 0;
+            
+            updateMetric('vite-pings', 0);
+            updateMetric('react-renders', 0);
+            updateMetric('focus-changes', 0);
+            updateMetric('errors', 0);
+            
+            updateStatus('🔄 Debug counters reset', 'good');
+            addToConsole('🔄 All counters reset');
+        }
+
+        function openMainApp() {
+            window.open('http://localhost:3002', '_blank');
+            addToConsole('🚀 Opened main application in new tab');
+        }
+
+        // Initialize
+        addToConsole('🎯 Debug tool initialized');
+        addToConsole('👀 Monitoring for refresh issues...');
+        updateStatus('🟢 Debug tool ready - monitoring...', 'good');
+
+        // Auto-status reporting
+        setInterval(getDebugStatus, 30000);
+    </script>
+</body>
+</html>

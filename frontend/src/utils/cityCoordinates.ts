@@ -132,6 +132,54 @@ export const CITY_BUS_STANDS: Record<string, CityCoordinates> = {
     longitude: 79.3788,
     busStandName: 'Kumbakonam Bus Stand'
   },
+  'villupuram': {
+    name: 'Villupuram',
+    latitude: 11.9401,
+    longitude: 79.4861,
+    busStandName: 'Villupuram Bus Stand'
+  },
+  'pondicherry': {
+    name: 'Pondicherry',
+    latitude: 11.9416,
+    longitude: 79.8083,
+    busStandName: 'Pondicherry Bus Stand'
+  },
+  'puducherry': {
+    name: 'Pondicherry',
+    latitude: 11.9416,
+    longitude: 79.8083,
+    busStandName: 'Pondicherry Bus Stand'
+  },
+  'chidambaram': {
+    name: 'Chidambaram',
+    latitude: 11.3996,
+    longitude: 79.6914,
+    busStandName: 'Chidambaram Bus Stand'
+  },
+  'nagapattinam': {
+    name: 'Nagapattinam',
+    latitude: 10.7667,
+    longitude: 79.8420,
+    busStandName: 'Nagapattinam Bus Stand'
+  },
+  'mayiladuthurai': {
+    name: 'Mayiladuthurai',
+    latitude: 11.1021,
+    longitude: 79.6530,
+    busStandName: 'Mayiladuthurai Bus Stand'
+  },
+  'mayiladuturai': {
+    name: 'Mayiladuthurai',
+    latitude: 11.1021,
+    longitude: 79.6530,
+    busStandName: 'Mayiladuthurai Bus Stand'
+  },
+  'sirkazhi': {
+    name: 'Sirkazhi',
+    latitude: 11.2379,
+    longitude: 79.7373,
+    busStandName: 'Sirkazhi Bus Stand'
+  },
 
   // Other South Indian Cities
   'bangalore': {
@@ -308,6 +356,49 @@ export function extractCityFromStopName(stopName: string): string {
 }
 
 /**
+ * Geocode a city name using Nominatim OpenStreetMap API
+ * @param cityName - Name of the city to geocode
+ * @returns Promise with coordinates or null if not found
+ */
+export async function geocodeCity(cityName: string): Promise<{ latitude: number; longitude: number; busStandName: string } | null> {
+  if (!cityName) return null;
+  
+  try {
+    // Use Nominatim API for geocoding
+    const searchQuery = encodeURIComponent(`${cityName}, Tamil Nadu, India`);
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}&limit=1&countrycodes=in`,
+      {
+        headers: {
+          'User-Agent': 'Perundhu Bus Tracker (contact: admin@perundhu.com)'
+        }
+      }
+    );
+    
+    if (!response.ok) {
+      console.warn('Geocoding API request failed:', response.status);
+      return null;
+    }
+    
+    const data = await response.json();
+    
+    if (data && data.length > 0) {
+      const result = data[0];
+      return {
+        latitude: parseFloat(result.lat),
+        longitude: parseFloat(result.lon),
+        busStandName: `${cityName} (Geocoded Location)`
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error geocoding city:', cityName, error);
+    return null;
+  }
+}
+
+/**
  * Get coordinates for a stop, with fallback to city coordinates if stop coordinates are null
  * @param stop - Stop object that might have null coordinates
  * @returns Coordinates object with latitude and longitude, or null if not found
@@ -322,6 +413,45 @@ export function getStopCoordinates(stop: { name: string; latitude?: number | nul
   const cityCoords = getCityCoordinates(stop.name);
   if (cityCoords) {
     return { latitude: cityCoords.latitude, longitude: cityCoords.longitude };
+  }
+  
+  return null;
+}
+
+/**
+ * Get coordinates for a stop with async geocoding fallback
+ * @param stop - Stop object that might have null coordinates
+ * @returns Promise with coordinates object or null if not found
+ */
+export async function getStopCoordinatesAsync(stop: { name: string; latitude?: number | null; longitude?: number | null }): Promise<{ latitude: number; longitude: number; source: string } | null> {
+  // Use stop coordinates if available
+  if (stop.latitude && stop.longitude) {
+    return { 
+      latitude: stop.latitude, 
+      longitude: stop.longitude, 
+      source: 'Exact stop location' 
+    };
+  }
+  
+  // Fall back to city coordinates
+  const cityCoords = getCityCoordinates(stop.name);
+  if (cityCoords) {
+    return { 
+      latitude: cityCoords.latitude, 
+      longitude: cityCoords.longitude, 
+      source: cityCoords.busStandName 
+    };
+  }
+  
+  // Final fallback: try geocoding
+  console.log(`Attempting to geocode unknown location: "${stop.name}"`);
+  const geocodedCoords = await geocodeCity(stop.name);
+  if (geocodedCoords) {
+    return {
+      latitude: geocodedCoords.latitude,
+      longitude: geocodedCoords.longitude,
+      source: geocodedCoords.busStandName
+    };
   }
   
   return null;

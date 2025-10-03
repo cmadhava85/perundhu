@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transit Bus Card - New Layout Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --text-xs: 12px;
+            --text-sm: 14px;
+            --text-base: 16px;
+            --text-lg: 18px;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transit-surface: #ffffff;
+            --transit-surface-elevated: #f8f9fa;
+            --transit-divider: #e1e5e9;
+            --transit-primary: #007AFF;
+            --transit-primary-light: #5AC8FA;
+            --transit-text-primary: #1d1d1f;
+            --transit-text-secondary: #86868b;
+            --status-on-time: #00c752;
+            --transition-base: all 0.2s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .demo-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: var(--transit-primary);
+            color: white;
+            padding: var(--space-4);
+            text-align: center;
+            font-weight: var(--font-bold);
+        }
+
+        .demo-content {
+            padding: var(--space-4);
+        }
+
+        /* Mock Transit Bus Card Styles */
+        .transit-bus-card {
+            background: var(--transit-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--transit-divider);
+            overflow: hidden;
+            margin-bottom: var(--space-3);
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            padding: 0;
+        }
+
+        .transit-bus-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .transit-card-header {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--transit-divider);
+            background: linear-gradient(135deg, #F8FAFF 0%, #FFFFFF 100%);
+        }
+
+        .bus-info-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+            width: 100%;
+        }
+
+        .bus-number-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            height: 36px;
+            padding: 0 var(--space-3);
+            background: var(--transit-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-bold);
+        }
+
+        .bus-type-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            padding: 0 var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: var(--text-xs);
+            font-weight: var(--font-semibold);
+            background: rgba(255, 149, 0, 0.2);
+            color: #FF9500;
+        }
+
+        .bus-name-display {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            height: 36px;
+            padding: 0 var(--space-3);
+            background: var(--transit-surface-elevated);
+            border: 1px solid var(--transit-divider);
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            color: var(--transit-text-primary);
+        }
+
+        /* Journey Layout - Screenshot Design */
+        .journey-layout {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            width: 100%;
+        }
+
+        /* Cities and Progress Bar Row */
+        .cities-progress-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            width: 100%;
+        }
+
+        .city-name {
+            flex: 0 0 auto;
+            font-size: var(--text-base);
+            font-weight: var(--font-bold);
+            color: var(--transit-text-primary);
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .city-name.start-city {
+            text-align: left;
+        }
+
+        .city-name.end-city {
+            text-align: right;
+        }
+
+        .progress-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            margin: 0 var(--space-2);
+        }
+
+        .progress-bar {
+            position: relative;
+            width: 100%;
+            height: 4px;
+            background: var(--transit-divider);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--transit-primary) 0%, var(--transit-primary-light) 100%);
+            border-radius: 2px;
+            animation: progressAnimation 3s ease-in-out infinite;
+        }
+
+        .bus-moving-icon {
+            position: absolute;
+            top: -8px;
+            font-size: 16px;
+            animation: busMovement 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .progress-dots {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .progress-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--transit-primary);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-dot.start {
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        .progress-dot.end {
+            right: 0;
+            transform: translate(50%, -50%);
+        }
+
+        /* Time Duration Row */
+        .time-duration-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-3);
+            width: 100%;
+        }
+
+        .departure-time,
+        .arrival-time {
+            flex: 0 0 auto;
+            font-size: var(--text-lg);
+            font-weight: var(--font-bold);
+            color: var(--transit-text-primary);
+            font-variant-numeric: tabular-nums;
+            min-width: 80px;
+        }
+
+        .departure-time {
+            text-align: left;
+        }
+
+        .arrival-time {
+            text-align: right;
+        }
+
+        .journey-duration-center {
+            flex: 1;
+            text-align: center;
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--transit-text-secondary);
+            padding: var(--space-1) var(--space-3);
+            background: var(--transit-surface-elevated);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--transit-divider);
+        }
+
+        /* Stops Row */
+        .stops-row {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .stops-info {
+            font-size: var(--text-sm);
+            color: var(--transit-text-secondary);
+            font-weight: var(--font-medium);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-3) var(--space-4);
+            background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
+            border-top: 1px solid var(--transit-divider);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--status-on-time);
+            animation: pulse 2s infinite;
+        }
+
+        .status-text {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--status-on-time);
+        }
+
+        .price-display {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-2) var(--space-4);
+            background: var(--transit-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-bold);
+        }
+
+        .price-currency {
+            font-size: var(--text-xs);
+            opacity: 0.8;
+        }
+
+        .expand-indicator {
+            color: var(--transit-text-secondary);
+            font-size: var(--text-sm);
+        }
+
+        /* Animations */
+        @keyframes progressAnimation {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        @keyframes busMovement {
+            0% { left: -16px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: calc(100% + 16px); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.95); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .demo-container {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .city-name {
+                font-size: var(--text-sm);
+                min-width: 60px;
+            }
+
+            .departure-time,
+            .arrival-time {
+                font-size: var(--text-base);
+                min-width: 60px;
+            }
+
+            .journey-duration-center {
+                font-size: var(--text-xs);
+                padding: var(--space-1) var(--space-2);
+            }
+
+            .stops-info {
+                font-size: var(--text-xs);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            New Transit Bus Card Layout
+        </div>
+        
+        <div class="demo-content">
+            <button class="transit-bus-card">
+                <!-- Card Header -->
+                <div class="transit-card-header">
+                    <!-- Bus Info Row -->
+                    <div class="bus-info-row">
+                        <div class="bus-number-display">142</div>
+                        <div class="bus-type-display">⚡ Express</div>
+                        <div class="bus-name-display">Deluxe Express Service</div>
+                    </div>
+
+                    <!-- Journey Layout -->
+                    <div class="journey-layout">
+                        <!-- Cities and Progress Bar Row -->
+                        <div class="cities-progress-row">
+                            <div class="city-name start-city">Chennai</div>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-line"></div>
+                                    <div class="bus-moving-icon">🚌</div>
+                                    <div class="progress-dots">
+                                        <div class="progress-dot start"></div>
+                                        <div class="progress-dot end"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="city-name end-city">Coimbatore</div>
+                        </div>
+
+                        <!-- Time Duration Row -->
+                        <div class="time-duration-row">
+                            <div class="departure-time">06:30</div>
+                            <div class="journey-duration-center">7h 30m</div>
+                            <div class="arrival-time">14:00</div>
+                        </div>
+
+                        <!-- Stops Row -->
+                        <div class="stops-row">
+                            <div class="stops-info">🛑 12 stops</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">On Time</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                        <div class="price-display">
+                            <span class="price-currency">₹</span>
+                            <span>450</span>
+                        </div>
+                        <div class="expand-indicator">▼</div>
+                    </div>
+                </div>
+            </button>
+
+            <!-- Second Example -->
+            <button class="transit-bus-card">
+                <!-- Card Header -->
+                <div class="transit-card-header">
+                    <!-- Bus Info Row -->
+                    <div class="bus-info-row">
+                        <div class="bus-number-display">89A</div>
+                        <div class="bus-type-display" style="background: rgba(86, 86, 214, 0.2); color: #5856D6;">✨ Deluxe</div>
+                        <div class="bus-name-display">City Connect</div>
+                    </div>
+
+                    <!-- Journey Layout -->
+                    <div class="journey-layout">
+                        <!-- Cities and Progress Bar Row -->
+                        <div class="cities-progress-row">
+                            <div class="city-name start-city">Bangalore</div>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-line"></div>
+                                    <div class="bus-moving-icon">🚌</div>
+                                    <div class="progress-dots">
+                                        <div class="progress-dot start"></div>
+                                        <div class="progress-dot end"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="city-name end-city">Mysore</div>
+                        </div>
+
+                        <!-- Time Duration Row -->
+                        <div class="time-duration-row">
+                            <div class="departure-time">09:15</div>
+                            <div class="journey-duration-center">3h 45m</div>
+                            <div class="arrival-time">13:00</div>
+                        </div>
+
+                        <!-- Stops Row -->
+                        <div class="stops-row">
+                            <div class="stops-info">🛑 8 stops</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">On Time</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                        <div class="price-display">
+                            <span class="price-currency">₹</span>
+                            <span>180</span>
+                        </div>
+                        <div class="expand-indicator">▼</div>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Add click handlers for demo
+        document.querySelectorAll('.transit-bus-card').forEach(card => {
+            card.addEventListener('click', function() {
+                console.log('Bus card clicked!');
+                // Toggle some visual feedback
+                this.style.transform = this.style.transform === 'scale(0.98)' ? 'scale(1)' : 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

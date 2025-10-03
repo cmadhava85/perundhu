@@ -36,6 +36,125 @@
   margin: 0;
 }
 
+/* Location Names Styling */
+.location-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.location-name {
+  display: block;
+  line-height: 1.3;
+}
+
+.location-name.primary {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.location-name.translated {
+  font-weight: 500;
+  color: #4b5563;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.location-name.tamil {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-family: 'Noto Sans Tamil', 'Latha', 'Tamil Sangam MN', sans-serif;
+}
+
+/* Table specific location styling */
+.location-names-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 150px;
+}
+
+.primary-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.translated-name {
+  font-weight: 500;
+  color: #4b5563;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.tamil-name {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-family: 'Noto Sans Tamil', 'Latha', 'Tamil Sangam MN', sans-serif;
+}
+
+/* Bus number cell styling */
+.bus-number-cell {
+  font-weight: 700;
+  color: #1d4ed8;
+  font-size: 0.95rem;
+}
+
+/* Location cell styling */
+.location-cell {
+  max-width: 200px;
+  vertical-align: top;
+}
+
+/* Stops cell styling */
+.stops-cell {
+  max-width: 180px;
+  vertical-align: top;
+}
+
+.stops-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.stops-count {
+  font-weight: 600;
+  color: #059669;
+  font-size: 0.9rem;
+}
+
+.stops-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stop-name {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.2;
+}
+
+.stop-translated {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.stops-more {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.no-stops {
+  color: #d1d5db;
+  font-style: italic;
+}
+
 /* Panel Controls */
 .panel-controls {
   background: rgba(255, 255, 255, 0.95);

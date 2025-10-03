@@ -150,7 +150,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     >
                       <div className="text-body">{location.name}</div>
                       <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)' }}>
-                        📍 {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}
+                        📍 {location.latitude?.toFixed(4) || 'N/A'}, {location.longitude?.toFixed(4) || 'N/A'}
                       </div>
                     </button>
                   ))}
@@ -232,7 +232,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     >
                       <div className="text-body">{location.name}</div>
                       <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)' }}>
-                        📍 {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}
+                        📍 {location.latitude?.toFixed(4) || 'N/A'}, {location.longitude?.toFixed(4) || 'N/A'}
                       </div>
                     </button>
                   ))}

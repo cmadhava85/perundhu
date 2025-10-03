@@ -51,11 +51,17 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ];
 
   return (
-    <nav className="bottom-navigation" role="navigation" aria-label={t('nav.bottomNavigation', 'Bottom navigation')}>
+    <nav 
+      className="bottom-navigation" 
+      role="navigation" 
+      aria-label={t('nav.bottomNavigation', 'Bottom navigation')}
+      data-testid="bottom-navigation"
+    >
       <div className="bottom-nav-container">
         {tabs.map((tab) => (
           <button
             key={tab.id}
+            data-testid={`bottom-nav-${tab.id}`}
             className={`bottom-nav-item ${activeTab === tab.id ? 'active' : ''} ${tab.disabled ? 'disabled' : ''}`}
             onClick={() => !tab.disabled && onTabChange(tab.id)}
             disabled={tab.disabled}

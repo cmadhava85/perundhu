@@ -17,37 +17,48 @@ const useLocationData = (language?: string) => {
   const [toLocation, setToLocation] = useState<Location | null>(null);
   const [autoLocationEnabled, setAutoLocationEnabled] = useState<boolean>(false);
   const [destinations, setDestinations] = useState<Location[]>([]);
+  const [lastFetchLanguage, setLastFetchLanguage] = useState<string | null>(null);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        setIsLoading(true);
-        setError(null);
         // Use provided language parameter or fall back to i18n.language
         const currentLanguage = language || i18n.language;
+        
+        // Prevent excessive API calls - only fetch if language actually changed and not currently fetching
+        if (currentLanguage === lastFetchLanguage || isFetching) {
+          return;
+        }
+
+        setIsFetching(true);
+        setIsLoading(true);
+        setError(null);
+        
         // Pass the current language to the API
         const data = await getLocations(currentLanguage);
-        console.log('useLocationData: Received data from API:', data);
-        console.log('useLocationData: Data length:', data?.length);
-        setLocations(data);
-        console.log('useLocationData: State should be updated with locations');
         
-        // If we have locations data, set the destinations too
-        if (data && data.length > 0) {
-          setDestinations(data);
-          console.log('useLocationData: Destinations also set');
+        // Only update state if we're still on the same language request
+        if (currentLanguage === (language || i18n.language)) {
+          setLocations(data);
+          setLastFetchLanguage(currentLanguage);
+          
+          // If we have locations data, set the destinations too
+          if (data && data.length > 0) {
+            setDestinations(data);
+          }
         }
       } catch (err) {
         console.error('useLocationData: Error in fetchLocations:', err);
         setError(err instanceof Error ? err : new Error('Failed to fetch location data'));
       } finally {
-        console.log('useLocationData: Setting loading to false');
         setIsLoading(false);
+        setIsFetching(false);
       }
     };
 
     fetchLocations();
-  }, [i18n.language, language]); // Use both i18n.language and language as dependencies
+  }, [i18n.language, language]); // Only language changes should trigger fetch
 
   // Clear error state
   const clearError = useCallback(() => {

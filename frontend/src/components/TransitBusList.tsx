@@ -4,9 +4,14 @@ import TransitBusCard from './TransitBusCard';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-list-responsive.css';
+import '../styles/enhanced-bus-sorting.css';
+import '../styles/bus-sorting-fallback.css';
+import '../styles/sort-text-fixes.css';
+import '../styles/sort-overlap-fix.css';
 
 // Filter and sort types
 type SortOption = 'departure' | 'arrival' | 'duration' | 'price' | 'rating';
+type SortDirection = 'asc' | 'desc';
 
 interface FilterOptions {
   busTypes: string[];
@@ -45,6 +50,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   
   // State management
   const [sortBy, setSortBy] = useState<SortOption>('departure');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -61,6 +67,121 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     const types = [...new Set(buses.map(bus => bus.category || 'Regular').filter(Boolean))];
     return types;
   }, [buses]);
+
+  // Utility functions for sorting
+  const getTimeInMinutes = (time: string): number => {
+    const [hours, minutes] = time.split(':').map(Number);
+    return (hours || 0) * 60 + (minutes || 0);
+  };
+
+  const getDurationInMinutes = (bus: Bus): number => {
+    if (!bus.departureTime || !bus.arrivalTime) return 480; // Default 8 hours
+    const [depH, depM] = bus.departureTime.split(':').map(Number);
+    const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
+    
+    let totalMinutes = (arrH * 60 + arrM) - (depH * 60 + depM);
+    
+    // Handle overnight journeys
+    if (totalMinutes < 0) {
+      totalMinutes += 24 * 60; // Add 24 hours
+    }
+    
+    return totalMinutes;
+  };
+
+  const getBusQualityScore = (category: string): number => {
+    const cat = category.toLowerCase();
+    if (cat.includes('deluxe') || cat.includes('luxury')) return 5;
+    if (cat.includes('express') || cat.includes('superfast')) return 4;
+    if (cat.includes('semi') || cat.includes('sleeper')) return 3;
+    if (cat.includes('ac')) return 2;
+    return 1;
+  };
+
+  const sortByDeparture = (a: Bus, b: Bus): number => {
+    const timeA = a.departureTime || '00:00';
+    const timeB = b.departureTime || '00:00';
+    
+    const minutesA = getTimeInMinutes(timeA);
+    const minutesB = getTimeInMinutes(timeB);
+    
+    // If times are very close (within 15 minutes), sort by bus quality/rating
+    if (Math.abs(minutesA - minutesB) <= 15) {
+      const ratingA = a.rating || 4.0;
+      const ratingB = b.rating || 4.0;
+      return ratingB - ratingA; // Higher rating first
+    }
+    
+    return sortDirection === 'asc' ? minutesA - minutesB : minutesB - minutesA;
+  };
+
+  const sortByArrival = (a: Bus, b: Bus): number => {
+    const timeA = a.arrivalTime || '23:59';
+    const timeB = b.arrivalTime || '23:59';
+    
+    const minutesA = getTimeInMinutes(timeA);
+    const minutesB = getTimeInMinutes(timeB);
+    
+    // If arrival times are close, prefer shorter duration
+    if (Math.abs(minutesA - minutesB) <= 15) {
+      const durationA = getDurationInMinutes(a);
+      const durationB = getDurationInMinutes(b);
+      return durationA - durationB;
+    }
+    
+    return sortDirection === 'asc' ? minutesA - minutesB : minutesB - minutesA;
+  };
+
+  const sortByPrice = (a: Bus, b: Bus): number => {
+    const fareA = a.fare || Number.MAX_SAFE_INTEGER;
+    const fareB = b.fare || Number.MAX_SAFE_INTEGER;
+    
+    // If prices are very similar (within ₹50), prefer better ratings
+    if (Math.abs(fareA - fareB) <= 50) {
+      const ratingA = a.rating || 4.0;
+      const ratingB = b.rating || 4.0;
+      return ratingB - ratingA;
+    }
+    
+    return sortDirection === 'asc' ? fareA - fareB : fareB - fareA;
+  };
+
+  const sortByDuration = (a: Bus, b: Bus): number => {
+    const durationA = getDurationInMinutes(a);
+    const durationB = getDurationInMinutes(b);
+    
+    // If durations are similar (within 30 minutes), prefer better amenities
+    if (Math.abs(durationA - durationB) <= 30) {
+      const categoryA = a.category || '';
+      const categoryB = b.category || '';
+      
+      const scoreA = getBusQualityScore(categoryA);
+      const scoreB = getBusQualityScore(categoryB);
+      
+      if (scoreA !== scoreB) {
+        return scoreB - scoreA; // Higher quality first
+      }
+    }
+    
+    return sortDirection === 'asc' ? durationA - durationB : durationB - durationA;
+  };
+
+  const sortByRating = (a: Bus, b: Bus): number => {
+    const ratingA = a.rating || 4.0;
+    const ratingB = b.rating || 4.0;
+    
+    // If ratings are similar, prefer more reasonable price
+    if (Math.abs(ratingA - ratingB) <= 0.2) {
+      const fareA = a.fare || 0;
+      const fareB = b.fare || 0;
+      
+      if (fareA > 0 && fareB > 0) {
+        return fareA - fareB; // Lower price among similar ratings
+      }
+    }
+    
+    return sortDirection === 'asc' ? ratingA - ratingB : ratingB - ratingA;
+  };
 
   // Calculate price range
   const priceRange = useMemo(() => {
@@ -106,33 +227,26 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
       return true;
     });
 
-    // Sort buses
+    // Sort buses with improved logic using helper functions
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'departure':
-          return (a.departureTime || '00:00').localeCompare(b.departureTime || '00:00');
+          return sortByDeparture(a, b);
         case 'arrival':
-          return (a.arrivalTime || '00:00').localeCompare(b.arrivalTime || '00:00');
+          return sortByArrival(a, b);
         case 'price':
-          return (a.fare || 0) - (b.fare || 0);
-        case 'duration': {
-          const getDuration = (bus: Bus) => {
-            if (!bus.departureTime || !bus.arrivalTime) return 0;
-            const [depH, depM] = bus.departureTime.split(':').map(Number);
-            const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
-            return (arrH * 60 + arrM) - (depH * 60 + depM);
-          };
-          return getDuration(a) - getDuration(b);
-        }
+          return sortByPrice(a, b);
+        case 'duration':
+          return sortByDuration(a, b);
         case 'rating':
-          return 4.5 - 4.2; // Mock ratings
+          return sortByRating(a, b);
         default:
           return 0;
       }
     });
 
     return filtered;
-  }, [buses, searchQuery, filters, sortBy]);
+  }, [buses, searchQuery, filters, sortBy, sortDirection]);
 
   // Handle filter changes
   const handleBusTypeToggle = (type: string) => {
@@ -146,7 +260,20 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
 
   // Handle sorting
   const handleSort = (option: SortOption) => {
-    setSortBy(option);
+    if (sortBy === option) {
+      // Toggle direction if same option is clicked
+      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set new sort option with appropriate default direction
+      setSortBy(option);
+      // Set sensible defaults for each sort type
+      const defaultDirection = ['rating'].includes(option) ? 'desc' : 'asc';
+      setSortDirection(defaultDirection);
+    }
+  };
+
+  const toggleSortDirection = () => {
+    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
   };
 
   if (buses.length === 0) {
@@ -174,7 +301,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   }
 
   return (
-    <div className="transit-app">
+    <div className="transit-app transit-bus-list">
       <div className="container px-2 sm:px-4">
         {/* Unified Header + Controls Container */}
         {showTitle && (
@@ -187,7 +314,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 <h1 className="text-lg sm:text-2xl font-bold text-gray-900 m-0">
                   {t('busList.title', 'Available Buses')}
                 </h1>
-                <div className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold rounded-md whitespace-nowrap self-start sm:self-auto">
+                <div className="bus-count-badge-enhanced inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold rounded-md whitespace-nowrap self-start sm:self-auto">
                   {filteredAndSortedBuses.length} {filteredAndSortedBuses.length === 1 ? 'bus' : 'buses'}
                 </div>
               </div>
@@ -216,7 +343,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                     placeholder="Search buses..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-8 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 hover:border-gray-400"
+                    className="bus-search-input-enhanced w-full pl-8 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 hover:border-gray-400"
                     style={{ fontSize: '16px' }} // Prevents zoom on iOS
                   />
                   <div className="absolute inset-y-0 left-0 pl-2.5 sm:pl-4 flex items-center pointer-events-none">
@@ -236,37 +363,53 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 </button>
               </div>
 
-              {/* Sort Controls Row - Mobile-Optimized Design with Text Labels */}
-              <div className="flex items-center gap-1.5 sm:gap-3 pt-2.5 sm:pt-4 border-t border-gray-200 overflow-x-auto">
-                <span className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap flex-shrink-0">
+              {/* Sort Controls Row - Enhanced Mobile-Optimized Design */}
+              <div className="bus-sort-controls flex items-center gap-1.5 sm:gap-3 pt-2.5 sm:pt-4 border-t border-gray-200 overflow-x-auto">
+                <span className="sort-label">
                   Sort:
                 </span>
-                <div className="flex gap-1 sm:gap-2 min-w-0">
+                <div className="sort-buttons-container">
                   {[
-                    { key: 'departure', label: 'Departure', shortLabel: 'Dep', icon: '🕐' },
-                    { key: 'arrival', label: 'Arrival', shortLabel: 'Arr', icon: '🏁' },
-                    { key: 'duration', label: 'Duration', shortLabel: 'Time', icon: '⏱️' }
-                  ].map(({ key, label, shortLabel, icon }) => (
+                    { key: 'departure', label: 'Departure', shortLabel: 'Dep', icon: '🕐', description: 'Earliest first' },
+                    { key: 'arrival', label: 'Arrival', shortLabel: 'Arr', icon: '🏁', description: 'Shortest journey' },
+                    { key: 'duration', label: 'Duration', shortLabel: 'Time', icon: '⏱️', description: 'Fastest route' },
+                    { key: 'price', label: 'Price', shortLabel: '₹', icon: '💰', description: 'Best value' },
+                    { key: 'rating', label: 'Rating', shortLabel: '⭐', icon: '⭐', description: 'Top rated' }
+                  ].map(({ key, label, shortLabel, icon, description }) => (
                     <button
                       key={key}
-                      className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap flex-shrink-0 border min-w-[44px] sm:min-w-auto
-                        ${sortBy === key 
-                          ? 'bg-blue-500 text-white border-blue-500' 
-                          : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 hover:border-gray-400'
-                        }`}
+                      className={`sort-option-btn group ${sortBy === key ? 'sort-active' : ''}`}
                       onClick={() => handleSort(key as SortOption)}
+                      title={`Sort by ${label.toLowerCase()} - ${description}`}
                     >
-                      <span className="hidden md:inline text-sm">{icon}</span>
-                      <span className="inline sm:hidden text-xs font-semibold">{shortLabel}</span>
-                      <span className="hidden sm:inline text-sm font-medium">{label}</span>
+                      {/* Show icon on desktop, text on all sizes */}
+                      <span className="sort-icon hidden md:inline">{icon}</span>
+                      <span className="sort-text-mobile inline sm:hidden">{shortLabel}</span>
+                      <span className="sort-text-desktop hidden sm:inline">{label}</span>
+                      
+                      {/* Tooltip for mobile - simplified */}
+                      <div className="tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 sm:hidden">
+                        {description}
+                      </div>
                     </button>
                   ))}
                 </div>
+                
+                {/* Sort order toggle */}
+                <button
+                  className="sort-direction-toggle"
+                  onClick={toggleSortDirection}
+                  title={`Sort ${sortDirection === 'asc' ? 'descending' : 'ascending'}`}
+                >
+                  <span className={`sort-direction-arrow ${sortDirection === 'desc' ? 'direction-desc' : ''}`}>
+                    ↑
+                  </span>
+                </button>
               </div>
 
               {/* Filters Panel - Inside unified container */}
               {showFilters && (
-                <div className="filters-panel" style={{ 
+                <div className="bus-filters-panel-enhanced" style={{ 
                   marginTop: 'var(--space-4)',
                   paddingTop: 'var(--space-4)',
                   borderTop: '1px solid var(--transit-divider)',

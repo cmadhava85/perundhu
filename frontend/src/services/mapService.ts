@@ -62,21 +62,128 @@ class LeafletMapService implements IMapService {
   }
   
   createMap(elementId: string, options: MapOptions = {}): void {
-    // Create map instance
-    this.map = L.map(elementId, {
-      center: options.center || [13.0827, 80.2707], // Default to Chennai
-      zoom: options.zoom || 10,
-      minZoom: options.minZoom || 5,
-      maxZoom: options.maxZoom || 18
+    try {
+      // Get the element and validate it exists
+      const element = document.getElementById(elementId);
+      if (!element) {
+        throw new Error(`Element with ID '${elementId}' not found.`);
+      }
+      
+      // Check if element has dimensions
+      const rect = element.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) {
+        throw new Error(`Element with ID '${elementId}' has no dimensions (${rect.width}x${rect.height}). Ensure the container has explicit width and height.`);
+      }
+      
+      // Ensure element is properly positioned and stable
+      const computedStyle = window.getComputedStyle(element);
+      if (computedStyle.position === 'static') {
+        element.style.position = 'relative';
+      }
+      
+      // Add a small delay to ensure DOM stability
+      if (element.offsetParent === null && element !== document.body) {
+        console.warn('Map container may not be properly attached to DOM');
+      }
+      
+      // Clean up any existing map with better error handling
+      if (this.map) {
+        try {
+          this.cleanup();
+        } catch (cleanupError) {
+          console.warn('Error during cleanup before creating new map:', cleanupError);
+        }
+      }
+      
+      // Wait for any pending DOM updates
+      requestAnimationFrame(() => {
+        // Double-check that element still exists after async operation
+        const elementCheck = document.getElementById(elementId);
+        if (elementCheck) {
+          this.initializeLeafletMap(elementCheck, options);
+        } else {
+          console.error('Element disappeared during map initialization');
+        }
+      });
+      
+    } catch (error) {
+      console.error('Error creating Leaflet map:', error);
+      throw error;
+    }
+  }
+  
+  private initializeLeafletMap(element: HTMLElement, options: MapOptions): void {
+    try {
+      // Additional DOM stability checks
+      if (!element.isConnected) {
+        throw new Error('Element is not connected to DOM');
+      }
+      
+      // Check if element is visible
+      const isVisible = element.offsetWidth > 0 && element.offsetHeight > 0;
+      if (!isVisible) {
+        throw new Error('Element is not visible');
+      }
+      
+      // Create map instance with better error handling
+      this.map = L.map(element, {
+        center: options.center || [13.0827, 80.2707], // Default to Chennai
+        zoom: options.zoom || 10,
+        minZoom: options.minZoom || 5,
+        maxZoom: options.maxZoom || 18,
+        // Add these options to prevent positioning issues
+        preferCanvas: false,
+        attributionControl: true,
+        zoomControl: true,
+        // Additional options to prevent _leaflet_pos errors
+        trackResize: true,
+        boxZoom: true,
+        doubleClickZoom: true,
+        dragging: true
+      });
+      
+      // Add tile layer (OpenStreetMap by default)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+      }).addTo(this.map);
+      
+      // Add scale control
+      L.control.scale().addTo(this.map);
+      
+      // Add error handling for map events
+      this.map.on('error', (e: any) => {
+        console.error('Leaflet map error:', e);
+      });
+      
+      // Ensure proper sizing with multiple attempts
+      this.ensureMapSizing();
+      
+    } catch (error) {
+      console.error('Error initializing Leaflet map instance:', error);
+      this.map = null;
+      throw error;
+    }
+  }
+  
+  private ensureMapSizing(): void {
+    if (!this.map) return;
+    
+    // Multiple resize attempts with increasing delays
+    const resizeAttempts = [50, 100, 200, 500];
+    
+    resizeAttempts.forEach((delay, index) => {
+      setTimeout(() => {
+        if (this.map) {
+          try {
+            this.map.invalidateSize();
+            console.log(`Map resize attempt ${index + 1} completed`);
+          } catch (error) {
+            console.warn(`Map resize attempt ${index + 1} failed:`, error);
+          }
+        }
+      }, delay);
     });
-    
-    // Add tile layer (OpenStreetMap by default)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
-    
-    // Add scale control
-    L.control.scale().addTo(this.map);
   }
   
   drawRoute(points: [number, number][], options: RouteOptions = {}): L.Polyline {
@@ -127,12 +234,28 @@ class LeafletMapService implements IMapService {
   }
   
   cleanup(): void {
+    console.log('Cleaning up Leaflet map...');
+    
+    // Clear markers
     this.clearMarkers();
+    
+    // Clear routes
     this.clearRoutes();
     
+    // Remove map instance
     if (this.map) {
-      this.map.remove();
-      this.map = null;
+      try {
+        // Remove all event listeners
+        this.map.off();
+        
+        // Remove the map
+        this.map.remove();
+        this.map = null;
+        console.log('Leaflet map cleaned up successfully');
+      } catch (error) {
+        console.error('Error during Leaflet cleanup:', error);
+        this.map = null; // Force cleanup even if error occurs
+      }
     }
   }
   

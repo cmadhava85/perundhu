@@ -136,5 +136,40 @@
     "step5": "Tap \"I've reached my destination\" when you get off",
     "privacyNote": "Your location is only shared while you're on the bus. Battery usage is optimized.",
     "unknown": "Unknown"
+  },
+  "admin": {
+    "routes": {
+      "title": "Route Management",
+      "subtitle": "Manage bus routes and review pending requests",
+      "searchPlaceholder": "Search routes...",
+      "filterBy": "Filter by",
+      "statusAll": "All",
+      "statusPending": "Pending",
+      "statusApproved": "Approved",
+      "statusRejected": "Rejected",
+      "gridView": "Grid View",
+      "listView": "List View",
+      "pendingCount": "Pending",
+      "approvedCount": "Approved",
+      "rejectedCount": "Rejected",
+      "refresh": "Refresh",
+      "loading": "Loading routes...",
+      "noRoutes": "No routes found",
+      "noRoutesDesc": "No route contributions match your current filter",
+      "id": "ID",
+      "busNumber": "Bus Number",
+      "fromLocation": "From Location",
+      "toLocation": "To Location",
+      "stops": "Stops",
+      "submittedBy": "Submitted By",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions",
+      "approve": "Approve",
+      "reject": "Reject",
+      "view": "View",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete this route? This action cannot be undone."
+    }
   }
 }

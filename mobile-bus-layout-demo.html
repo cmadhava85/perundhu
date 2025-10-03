@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Bus List Layout Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .demo-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .demo-header {
+            background: #3b82f6;
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .demo-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .demo-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .layout-toggle {
+            display: flex;
+            gap: 8px;
+            margin: 12px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            color: #64748b;
+        }
+
+        .toggle-btn.active {
+            background: white;
+            color: #3b82f6;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* ===== COMPACT TABLE LAYOUT ===== */
+        .compact-bus-list {
+            padding: 12px;
+            background: #f8fafc;
+        }
+
+        .compact-header {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .compact-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .route-info {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .bus-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header-row {
+            display: grid;
+            grid-template-columns: 1fr 50px 50px 40px 30px;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .bus-row {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+
+        .bus-row:hover {
+            background-color: #f8fafc;
+        }
+
+        .bus-row:last-child {
+            border-bottom: none;
+        }
+
+        .bus-row.expanded {
+            background-color: #f0f9ff;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .row-content {
+            display: grid;
+            grid-template-columns: 1fr 50px 50px 40px 30px;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .bus-name-cell {
+            min-width: 0;
+        }
+
+        .bus-name {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 13px;
+            line-height: 1.2;
+            margin-bottom: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bus-type {
+            font-size: 10px;
+            color: #6b7280;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .time-cell, .duration-cell {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .duration-cell {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        .expand-cell {
+            text-align: center;
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            font-size: 12px;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .expand-btn.expanded {
+            transform: rotate(180deg);
+            color: #3b82f6;
+        }
+
+        .fare-badge {
+            position: absolute;
+            top: 6px;
+            right: 12px;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .expanded-details {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #374151;
+        }
+
+        .stops-info {
+            margin-top: 8px;
+            padding: 8px;
+            background: #f8fafc;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        /* ===== TRADITIONAL CARD LAYOUT (for comparison) ===== */
+        .card-bus-list {
+            padding: 12px;
+            background: #f8fafc;
+        }
+
+        .bus-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-bus-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .card-bus-type {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .card-timing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .time-block {
+            text-align: center;
+        }
+
+        .time-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .time-label {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        .journey-line {
+            flex: 1;
+            height: 2px;
+            background: #e5e7eb;
+            margin: 0 16px;
+            position: relative;
+        }
+
+        .journey-line::before,
+        .journey-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3b82f6;
+            top: -3px;
+        }
+
+        .journey-line::before {
+            left: -4px;
+        }
+
+        .journey-line::after {
+            right: -4px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Stats comparison */
+        .stats-comparison {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px 8px 0 0;
+            font-size: 11px;
+            z-index: 100;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Ultra-compact toggle */
+        .density-toggle {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .density-btn {
+            background: #f1f5f9;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #374151;
+        }
+
+        .density-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .ultra-compact .bus-type {
+            display: none;
+        }
+
+        .ultra-compact .bus-row {
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <div class="demo-title">Bus List Layout Demo</div>
+            <div class="demo-subtitle">Mobile-First Design Comparison</div>
+        </div>
+
+        <div class="layout-toggle">
+            <button class="toggle-btn active" onclick="showLayout('compact')">
+                📊 Compact Table
+            </button>
+            <button class="toggle-btn" onclick="showLayout('cards')">
+                🎴 Traditional Cards
+            </button>
+        </div>
+
+        <!-- Compact Table Layout -->
+        <div id="compact-layout" class="compact-bus-list">
+            <div class="density-toggle">
+                <button class="density-btn" onclick="toggleDensity()" id="density-btn">
+                    Ultra Compact Mode
+                </button>
+            </div>
+
+            <div class="compact-header">
+                <div class="compact-title">12 Buses Available</div>
+                <div class="route-info">Chennai → Coimbatore</div>
+            </div>
+
+            <div class="bus-table" id="bus-table">
+                <div class="table-header">
+                    <div class="header-row">
+                        <div>Bus</div>
+                        <div>Dept</div>
+                        <div>Arr</div>
+                        <div>Time</div>
+                        <div>▼</div>
+                    </div>
+                </div>
+
+                <!-- Sample Bus Rows -->
+                <div class="bus-row" onclick="toggleExpand(this)">
+                    <div class="fare-badge">₹280</div>
+                    <div class="row-content">
+                        <div class="bus-name-cell">
+                            <div class="bus-name">KPN Express #2156</div>
+                            <div class="bus-type">AC Seater</div>
+                        </div>
+                        <div class="time-cell">06:30</div>
+                        <div class="time-cell">12:45</div>
+                        <div class="duration-cell">6h15m</div>
+                        <div class="expand-cell">
+                            <button class="expand-btn">▼</button>
+                        </div>
+                    </div>
+                    <div class="expanded-details hidden">
+                        <div class="details-grid">
+                            <div class="detail-item">🚌 AC Seater</div>
+                            <div class="detail-item">🛑 8 stops</div>
+                            <div class="detail-item">💰 ₹280</div>
+                            <div class="detail-item">⏱️ 6h 15m</div>
+                            <div class="detail-item">📊 On Time</div>
+                            <div class="detail-item">📍 Track Live</div>
+                        </div>
+                        <div class="stops-info">
+                            Route: Chennai Central → Salem → Erode → Coimbatore
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bus-row" onclick="toggleExpand(this)">
+                    <div class="fare-badge">₹220</div>
+                    <div class="row-content">
+                        <div class="bus-name-cell">
+                            <div class="bus-name">Parveen Travels #1245</div>
+                            <div class="bus-type">Non-AC</div>
+                        </div>
+                        <div class="time-cell">07:15</div>
+                        <div class="time-cell">14:30</div>
+                        <div class="duration-cell">7h15m</div>
+                        <div class="expand-cell">
+                            <button class="expand-btn">▼</button>
+                        </div>
+                    </div>
+                    <div class="expanded-details hidden">
+                        <div class="details-grid">
+                            <div class="detail-item">🚌 Non-AC</div>
+                            <div class="detail-item">🛑 12 stops</div>
+                            <div class="detail-item">💰 ₹220</div>
+                            <div class="detail-item">⏱️ 7h 15m</div>
+                            <div class="detail-item">📊 On Time</div>
+                            <div class="detail-item">📍 Track Live</div>
+                        </div>
+                        <div class="stops-info">
+                            Route: Chennai → Tindivanam → Villupuram → Salem → Erode → Coimbatore
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bus-row" onclick="toggleExpand(this)">
+                    <div class="fare-badge">₹350</div>
+                    <div class="row-content">
+                        <div class="bus-name-cell">
+                            <div class="bus-name">VRL Travels #7890</div>
+                            <div class="bus-type">Volvo AC</div>
+                        </div>
+                        <div class="time-cell">08:00</div>
+                        <div class="time-cell">13:45</div>
+                        <div class="duration-cell">5h45m</div>
+                        <div class="expand-cell">
+                            <button class="expand-btn">▼</button>
+                        </div>
+                    </div>
+                    <div class="expanded-details hidden">
+                        <div class="details-grid">
+                            <div class="detail-item">🚌 Volvo AC</div>
+                            <div class="detail-item">🛑 6 stops</div>
+                            <div class="detail-item">💰 ₹350</div>
+                            <div class="detail-item">⏱️ 5h 45m</div>
+                            <div class="detail-item">📊 On Time</div>
+                            <div class="detail-item">📍 Track Live</div>
+                        </div>
+                        <div class="stops-info">
+                            Route: Chennai → Salem → Coimbatore (Express Route)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bus-row" onclick="toggleExpand(this)">
+                    <div class="fare-badge">₹190</div>
+                    <div class="row-content">
+                        <div class="bus-name-cell">
+                            <div class="bus-name">TNSTC #4567</div>
+                            <div class="bus-type">Government</div>
+                        </div>
+                        <div class="time-cell">09:30</div>
+                        <div class="time-cell">17:15</div>
+                        <div class="duration-cell">7h45m</div>
+                        <div class="expand-cell">
+                            <button class="expand-btn">▼</button>
+                        </div>
+                    </div>
+                    <div class="expanded-details hidden">
+                        <div class="details-grid">
+                            <div class="detail-item">🚌 Government</div>
+                            <div class="detail-item">🛑 15 stops</div>
+                            <div class="detail-item">💰 ₹190</div>
+                            <div class="detail-item">⏱️ 7h 45m</div>
+                            <div class="detail-item">📊 On Time</div>
+                            <div class="detail-item">📍 Track Live</div>
+                        </div>
+                        <div class="stops-info">
+                            Route: Chennai → Villupuram → Cuddalore → Salem → Erode → Tirupur → Coimbatore
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bus-row" onclick="toggleExpand(this)">
+                    <div class="fare-badge">₹320</div>
+                    <div class="row-content">
+                        <div class="bus-name-cell">
+                            <div class="bus-name">SRS Travels #9876</div>
+                            <div class="bus-type">Semi-Sleeper</div>
+                        </div>
+                        <div class="time-cell">22:30</div>
+                        <div class="time-cell">06:15</div>
+                        <div class="duration-cell">7h45m</div>
+                        <div class="expand-cell">
+                            <button class="expand-btn">▼</button>
+                        </div>
+                    </div>
+                    <div class="expanded-details hidden">
+                        <div class="details-grid">
+                            <div class="detail-item">🚌 Semi-Sleeper</div>
+                            <div class="detail-item">🛑 10 stops</div>
+                            <div class="detail-item">💰 ₹320</div>
+                            <div class="detail-item">⏱️ 7h 45m</div>
+                            <div class="detail-item">📊 On Time</div>
+                            <div class="detail-item">📍 Track Live</div>
+                        </div>
+                        <div class="stops-info">
+                            Route: Chennai → Hosur → Salem → Erode → Coimbatore (Night Service)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bus-row" onclick="toggleExpand(this)">
+                    <div class="fare-badge">₹260</div>
+                    <div class="row-content">
+                        <div class="bus-name-cell">
+                            <div class="bus-name">RedBus Express #5543</div>
+                            <div class="bus-type">AC Seater</div>
+                        </div>
+                        <div class="time-cell">10:45</div>
+                        <div class="time-cell">17:30</div>
+                        <div class="duration-cell">6h45m</div>
+                        <div class="expand-cell">
+                            <button class="expand-btn">▼</button>
+                        </div>
+                    </div>
+                    <div class="expanded-details hidden">
+                        <div class="details-grid">
+                            <div class="detail-item">🚌 AC Seater</div>
+                            <div class="detail-item">🛑 9 stops</div>
+                            <div class="detail-item">💰 ₹260</div>
+                            <div class="detail-item">⏱️ 6h 45m</div>
+                            <div class="detail-item">📊 On Time</div>
+                            <div class="detail-item">📍 Track Live</div>
+                        </div>
+                        <div class="stops-info">
+                            Route: Chennai → Kanchipuram → Vellore → Salem → Coimbatore
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traditional Card Layout -->
+        <div id="cards-layout" class="card-bus-list hidden">
+            <div class="compact-header">
+                <div class="compact-title">12 Buses Available</div>
+                <div class="route-info">Chennai → Coimbatore</div>
+            </div>
+
+            <div class="bus-card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-bus-name">KPN Express #2156</div>
+                        <div class="card-bus-type">AC Seater</div>
+                    </div>
+                    <div class="fare-badge">₹280</div>
+                </div>
+                <div class="card-timing">
+                    <div class="time-block">
+                        <div class="time-value">06:30</div>
+                        <div class="time-label">Chennai</div>
+                    </div>
+                    <div class="journey-line"></div>
+                    <div class="time-block">
+                        <div class="time-value">12:45</div>
+                        <div class="time-label">Coimbatore</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span>🛑 8 stops</span>
+                    <span>⏱️ 6h 15m</span>
+                    <span>📊 On Time</span>
+                </div>
+            </div>
+
+            <div class="bus-card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-bus-name">Parveen Travels #1245</div>
+                        <div class="card-bus-type">Non-AC</div>
+                    </div>
+                    <div class="fare-badge">₹220</div>
+                </div>
+                <div class="card-timing">
+                    <div class="time-block">
+                        <div class="time-value">07:15</div>
+                        <div class="time-label">Chennai</div>
+                    </div>
+                    <div class="journey-line"></div>
+                    <div class="time-block">
+                        <div class="time-value">14:30</div>
+                        <div class="time-label">Coimbatore</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span>🛑 12 stops</span>
+                    <span>⏱️ 7h 15m</span>
+                    <span>📊 On Time</span>
+                </div>
+            </div>
+
+            <div class="bus-card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-bus-name">VRL Travels #7890</div>
+                        <div class="card-bus-type">Volvo AC</div>
+                    </div>
+                    <div class="fare-badge">₹350</div>
+                </div>
+                <div class="card-timing">
+                    <div class="time-block">
+                        <div class="time-value">08:00</div>
+                        <div class="time-label">Chennai</div>
+                    </div>
+                    <div class="journey-line"></div>
+                    <div class="time-block">
+                        <div class="time-value">13:45</div>
+                        <div class="time-label">Coimbatore</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span>🛑 6 stops</span>
+                    <span>⏱️ 5h 45m</span>
+                    <span>📊 On Time</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-comparison">
+            <span id="stats-text">Compact: Shows 6 buses in screen vs Cards: Shows 3 buses</span>
+        </div>
+    </div>
+
+    <script>
+        function showLayout(type) {
+            const compactLayout = document.getElementById('compact-layout');
+            const cardsLayout = document.getElementById('cards-layout');
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const statsText = document.getElementById('stats-text');
+
+            toggleBtns.forEach(btn => btn.classList.remove('active'));
+
+            if (type === 'compact') {
+                compactLayout.classList.remove('hidden');
+                cardsLayout.classList.add('hidden');
+                toggleBtns[0].classList.add('active');
+                statsText.textContent = 'Compact: Shows 6+ buses in screen vs Cards: Shows 2-3 buses';
+            } else {
+                compactLayout.classList.add('hidden');
+                cardsLayout.classList.remove('hidden');
+                toggleBtns[1].classList.add('active');
+                statsText.textContent = 'Cards: Shows 2-3 buses in screen vs Compact: Shows 6+ buses';
+            }
+        }
+
+        function toggleExpand(row) {
+            const expandBtn = row.querySelector('.expand-btn');
+            const details = row.querySelector('.expanded-details');
+            
+            row.classList.toggle('expanded');
+            expandBtn.classList.toggle('expanded');
+            details.classList.toggle('hidden');
+        }
+
+        function toggleDensity() {
+            const table = document.getElementById('bus-table');
+            const btn = document.getElementById('density-btn');
+            
+            table.classList.toggle('ultra-compact');
+            
+            if (table.classList.contains('ultra-compact')) {
+                btn.classList.add('active');
+                btn.textContent = 'Normal Mode';
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = 'Ultra Compact Mode';
+            }
+        }
+    </script>
+</body>
+</html>

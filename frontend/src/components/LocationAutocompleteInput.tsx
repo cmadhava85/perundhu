@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { locationAutocompleteService } from '../services/locationAutocompleteService';
 import { formatLocationNameUniversal } from '../services/geocodingService';
 import type { LocationSuggestion } from '../services/locationAutocompleteService';
@@ -30,9 +30,31 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionListRef = useRef<HTMLUListElement>(null);
+  const lastQueryRef = useRef<string>('');
+  const isActiveRef = useRef<boolean>(true);
+  const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Debounced loading state setter to prevent rapid re-renders
+  const setDebouncedLoading = useCallback((loading: boolean) => {
+    if (loadingTimeoutRef.current) {
+      clearTimeout(loadingTimeoutRef.current);
+      loadingTimeoutRef.current = null;
+    }
+    
+    if (loading) {
+      // Set loading immediately for better UX
+      setIsLoading(true);
+    } else {
+      // Debounce setting loading to false to prevent flicker
+      loadingTimeoutRef.current = setTimeout(() => {
+        setIsLoading(false);
+        loadingTimeoutRef.current = null;
+      }, 100);
+    }
+  }, []); // Empty deps - setIsLoading is stable
 
   // Helper function to check if a city is in Tamil Nadu
-  const isInTamilNadu = (cityName: string): boolean => {
+  const isInTamilNadu = useCallback((cityName: string): boolean => {
     const tnCities = [
       'Chennai', 'Madurai', 'Coimbatore', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Tiruppur',
       'Dindigul', 'Thanjavur', 'Ranipet', 'Sivakasi', 'Karur', 'Udhagamandalam', 'Hosur',
@@ -49,49 +71,73 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
       tnCity.toLowerCase() === cityName.toLowerCase() ||
       cityName.toLowerCase().includes(tnCity.toLowerCase())
     );
-  };
+  }, []);
+
+  // Stable callback for handling suggestions
+  const handleSuggestionsCallback = useCallback((newSuggestions: LocationSuggestion[]) => {
+    if (!isActiveRef.current) {
+      return; // Prevent updates if component unmounted
+    }
+    
+    // Batch all state updates together to prevent multiple re-renders
+    React.startTransition(() => {
+      setSuggestions(newSuggestions);
+      setShowSuggestions(newSuggestions.length > 0);
+      setIsLoading(false); // Direct call instead of debounced
+    });
+  }, []); // No dependencies to prevent re-creation
 
   // Handle input changes and fetch suggestions
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     onChange(inputValue);
 
-    if (inputValue.length >= 2) { // Changed from 3 to 2 characters
-      setIsLoading(true);
+    // Prevent duplicate requests
+    if (lastQueryRef.current === inputValue) return;
+    lastQueryRef.current = inputValue;
+
+    if (inputValue.length >= 3) {
+      // Use debounced loading to prevent excessive re-renders
+      setDebouncedLoading(true);
       
-      locationAutocompleteService.getDebouncedSuggestions(
-        inputValue,
-        language,
-        (newSuggestions) => {
-          setSuggestions(newSuggestions);
-          setShowSuggestions(newSuggestions.length > 0);
-          setIsLoading(false);
-        }
-      );
+      try {
+        locationAutocompleteService.getDebouncedSuggestions(
+          inputValue,
+          handleSuggestionsCallback,
+          language
+        );
+      } catch (error) {
+        console.error('Error getting suggestions:', error);
+        // Batch state updates to prevent multiple re-renders
+        setDebouncedLoading(false);
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
     } else {
+      // Batch state updates to prevent multiple re-renders
+      setDebouncedLoading(false);
       setSuggestions([]);
       setShowSuggestions(false);
-      setIsLoading(false);
     }
-  };
+  }, [language]); // Minimal dependencies to prevent loops
 
   // Handle suggestion selection
-  const handleSuggestionClick = (suggestion: LocationSuggestion) => {
+  const handleSuggestionClick = useCallback((suggestion: LocationSuggestion) => {
     onChange(suggestion.name, suggestion);
     setSuggestions([]);
     setShowSuggestions(false);
     inputRef.current?.focus();
-  };
+  }, [onChange]);
 
   // Handle keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (!showSuggestions || suggestions.length === 0) return;
 
     if (e.key === 'Escape') {
       setShowSuggestions(false);
       e.preventDefault();
     }
-  };
+  }, [showSuggestions, suggestions.length]);
 
   // Close suggestions when clicking outside
   useEffect(() => {
@@ -107,9 +153,25 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
     };
 
     document.addEventListener('mousedown', handleClickOutside);
+    
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      // Clear debounce on cleanup
       locationAutocompleteService.clearDebounce();
+    };
+  }, []);
+
+  // Component cleanup
+  useEffect(() => {
+    isActiveRef.current = true;
+    
+    return () => {
+      isActiveRef.current = false;
+      locationAutocompleteService.clearDebounce();
+      // Clear loading timeout on cleanup
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -144,42 +206,38 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
         
         {showSuggestions && suggestions.length > 0 && (
           <ul ref={suggestionListRef} className="autocomplete-suggestions">
-            {suggestions.map((suggestion) => (
-              <li
-                key={suggestion.id}
-                className="autocomplete-suggestion"
-                onClick={() => handleSuggestionClick(suggestion)}
-              >
-                <div className="suggestion-main">
-                  <span className="suggestion-name">{formatLocationNameUniversal(suggestion.name)}</span>
-                  {suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
-                    <span className="suggestion-translated">({formatLocationNameUniversal(suggestion.translatedName)})</span>
-                  )}
-                </div>
-                <div className="suggestion-type">
-                  {/* Show Tamil Nadu priority indicator */}
-                  {isInTamilNadu(suggestion.name) ? (
-                    <span className="tn-badge">Tamil Nadu</span>
-                  ) : (
-                    <span className="other-state">India</span>
-                  )}
-                  
-                  {/* Show data source */}
-                  {suggestion.source === 'database' && <span className="source-badge primary">DB</span>}
-                  {suggestion.source === 'nominatim' && <span className="source-badge">OSM</span>}
-                  {suggestion.source === 'google' && <span className="source-badge google">Google</span>}
-                  {suggestion.source === 'local' && <span className="source-badge local">Local</span>}
-                </div>
-              </li>
-            ))}
+            {suggestions.map((suggestion) => {
+              const getSourceIcon = (source: string) => {
+                if (source === 'database') return '🚍';
+                if (source === 'local') return '⚡';
+                return '🌍';
+              };
+
+              return (
+                <li key={`${suggestion.source}-${suggestion.id}`}>
+                  <button
+                    type="button"
+                    className={`autocomplete-suggestion ${isInTamilNadu(suggestion.name) ? 'tn-city' : ''}`}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    <div className="suggestion-content">
+                      <span className="suggestion-name">
+                        {formatLocationNameUniversal(suggestion.name)}
+                      </span>
+                      {suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
+                        <span className="suggestion-translated">
+                          {suggestion.translatedName}
+                        </span>
+                      )}
+                      <span className="suggestion-source">
+                        {getSourceIcon(suggestion.source || '')}
+                      </span>
+                    </div>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
-        )}
-        
-        {value.length >= 2 && !isLoading && suggestions.length === 0 && showSuggestions && (
-          <div className="no-suggestions">
-            <span>No cities found for "{value}"</span>
-            <small>Try searching for any city in Tamil Nadu or India</small>
-          </div>
         )}
       </div>
     </div>

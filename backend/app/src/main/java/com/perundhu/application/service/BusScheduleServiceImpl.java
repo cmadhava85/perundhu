@@ -213,7 +213,9 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                     stop.arrivalTime(), // LocalTime arrivalTime
                     stop.departureTime(), // LocalTime departureTime
                     stop.sequence(), // int sequence
-                    Map.of() // Map<String, String> features - empty for now
+                    Map.of(), // Map<String, String> features - empty for now
+                    stop.location() != null ? stop.location().latitude() : null, // Double latitude
+                    stop.location() != null ? stop.location().longitude() : null // Double longitude
             );
         }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
     }

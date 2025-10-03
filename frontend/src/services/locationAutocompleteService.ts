@@ -14,8 +14,8 @@ export interface LocationSuggestion {
  * Ultra-fast location autocomplete service with instant suggestions
  */
 export class LocationAutocompleteService {
-  private static readonly MIN_QUERY_LENGTH = 2; // Reduced from 3 to 2
-  private static readonly DEBOUNCE_DELAY = 100; // Reduced from 200ms to 100ms
+  private static readonly MIN_QUERY_LENGTH = 3; // Check database after 3 characters as per requirement
+  private static readonly DEBOUNCE_DELAY = 100; // Reduced for faster response
   private static readonly INSTANT_DEBOUNCE = 50; // Ultra-fast for instant suggestions
   
   private debounceTimeout: NodeJS.Timeout | null = null;
@@ -30,29 +30,33 @@ export class LocationAutocompleteService {
     query: string, 
     language: string = 'en'
   ): Promise<LocationSuggestion[]> {
-    // Return empty for very short queries
+    // Return empty for very short queries (less than 3 characters)
     if (query.length < LocationAutocompleteService.MIN_QUERY_LENGTH) {
       return [];
     }
 
     try {
-      console.log(`FastAutocomplete: Searching for "${query}"`);
+      console.log(`🚀 FastAutocomplete: Searching for "${query}" (${query.length} chars)`);
       
-      // For short queries (2 chars), use instant suggestions only
-      if (query.length === 2) {
-        const instantResults = GeocodingService.getInstantSuggestions(query, 10);
-        return this.convertToSuggestions(instantResults);
+      // Use fast parallel search for better performance
+      const locations = await this.searchDatabaseAndNominatimParallel(query, 10);
+      
+      if (!locations || !Array.isArray(locations)) {
+        console.error(`❌ Invalid locations result:`, locations);
+        return [];
       }
       
-      // For 3+ chars, use smart search (instant + background API)
-      const locations = await GeocodingService.smartSearch(query, 10);
-      return this.convertToSuggestions(locations);
+      const suggestions = this.convertToSuggestions(locations);
+      console.log(`✅ Converted to ${suggestions.length} suggestions in fast mode`);
+      
+      return suggestions;
       
     } catch (error) {
       console.error('Error in fast autocomplete:', error);
       
       // Fallback to instant suggestions
       const instantResults = GeocodingService.getInstantSuggestions(query, 10);
+      console.log(`🔄 Fallback instant results for "${query}":`, instantResults.map(r => r.name));
       if (instantResults.length > 0) {
         return this.convertToSuggestions(instantResults);
       }
@@ -82,6 +86,183 @@ export class LocationAutocompleteService {
   }
 
   /**
+   * Fast parallel search: database + Nominatim simultaneously for better UX
+   * This replaces the sequential approach with parallel execution
+   */
+  private async searchDatabaseAndNominatimParallel(query: string, limit: number): Promise<any[]> {
+    console.log(`🚀 Starting parallel search for "${query}"`);
+    
+    // Start both searches simultaneously
+    const searchPromises = [
+      this.searchDatabase(query),
+      this.searchNominatimFast(query, limit)
+    ];
+    
+    try {
+      // Wait for both with a reasonable timeout
+      const results = await Promise.allSettled(searchPromises);
+      
+      const databaseResults = results[0].status === 'fulfilled' ? results[0].value : [];
+      const nominatimResults = results[1].status === 'fulfilled' ? results[1].value : [];
+      
+      console.log(`📊 Parallel results - DB: ${databaseResults.length}, Nominatim: ${nominatimResults.length}`);
+      
+      // If database is empty but Nominatim has results, use Nominatim
+      if (databaseResults.length === 0 && nominatimResults.length > 0) {
+        console.log(`🌍 Database empty, using Nominatim results (${nominatimResults.length})`);
+        return nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }));
+      }
+      
+      // Combine results (database first for priority)
+      const combinedResults = [
+        ...databaseResults.map(loc => ({ ...loc, source: 'database' })),
+        ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }))
+      ];
+      
+      const finalResults = this.deduplicateResults(combinedResults).slice(0, limit);
+      console.log(`✅ Parallel search completed: ${finalResults.length} results in total`);
+      
+      return finalResults;
+      
+    } catch (error) {
+      console.error('Parallel search failed:', error);
+      // Fallback to Nominatim only for speed if database fails
+      try {
+        console.log(`🔄 Fallback: Trying Nominatim only for "${query}"`);
+        const nominatimFallback = await this.searchNominatimFast(query, limit);
+        return nominatimFallback.map(loc => ({ ...loc, source: 'nominatim' }));
+      } catch (nominatimError) {
+        console.error('Nominatim fallback also failed:', nominatimError);
+        return [];
+      }
+    }
+  }
+  
+  /**
+   * Fast database search with timeout
+   */
+  private async searchDatabase(query: string): Promise<any[]> {
+    try {
+      console.log(`📊 Fast database search for "${query}"`);
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1500); // Reduced to 1.5 seconds
+      
+      const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
+        params: { q: query.trim(), language: 'en' },
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      const results = response.data || [];
+      console.log(`📊 Database returned ${results.length} results`);
+      
+      if (results.length === 0) {
+        console.log(`⚠️ Database empty for "${query}" - this is expected during development`);
+      }
+      
+      return results;
+      
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.warn('Database search timed out - using Nominatim fallback');
+      } else {
+        console.warn('Database search error:', error, '- using Nominatim fallback');
+      }
+      return [];
+    }
+  }
+  
+  /**
+   * Fast Nominatim search with minimal delays and single query
+   */
+  private async searchNominatimFast(query: string, limit: number): Promise<any[]> {
+    try {
+      console.log(`🌍 Fast Nominatim search for "${query}"`);
+      
+      // Use a single, optimized query instead of multiple attempts
+      const searchQuery = `${query}, Tamil Nadu, India`;
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+      
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?` + new URLSearchParams({
+          q: searchQuery,
+          format: 'json',
+          countrycodes: 'in',
+          limit: String(Math.min(limit, 5)), // Reduced limit for speed
+          addressdetails: '1'
+        }),
+        {
+          headers: { 'User-Agent': 'Perundhu Bus App (https://perundhu.com)' },
+          signal: controller.signal
+        }
+      );
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        console.warn(`Nominatim error: ${response.status}`);
+        return [];
+      }
+      
+      const data = await response.json();
+      console.log(`🌍 Nominatim returned ${data.length} results`);
+      
+      // Quick filtering for cities/towns only
+      const cityResults = data.filter((result: any) => {
+        const isValidPlace = ['city', 'town', 'village', 'hamlet'].includes(result.type) ||
+                            ['city', 'town', 'village'].includes(result.addresstype);
+        const isNotRoad = result.class !== 'highway' && result.class !== 'landuse' &&
+                         !result.type.includes('road') && result.type !== 'industrial';
+        return isValidPlace && isNotRoad;
+      });
+      
+      console.log(`🌍 Filtered to ${cityResults.length} city results`);
+      
+      return cityResults.map((result: any) => ({
+        id: -(Math.random() * 1000000), // Unique negative ID
+        name: this.formatLocationNameSimple(result.display_name),
+        latitude: parseFloat(result.lat),
+        longitude: parseFloat(result.lon),
+        source: 'nominatim'
+      }));
+      
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.warn('Nominatim search timed out');
+      } else {
+        console.error('Nominatim search error:', error);
+      }
+      return [];
+    }
+  }
+
+  /**
+   * Remove duplicate locations based on name similarity
+   */
+  private deduplicateResults(locations: any[]): any[] {
+    const filtered: any[] = [];
+    
+    for (const location of locations) {
+      const isDuplicate = filtered.some(existing => {
+        const normalize = (str: string) => str.toLowerCase().replace(/[^\w\s]/g, '').trim();
+        const name1 = normalize(location.name);
+        const name2 = normalize(existing.name);
+        
+        return name1 === name2 || name1.includes(name2) || name2.includes(name1);
+      });
+      
+      if (!isDuplicate) {
+        filtered.push(location);
+      }
+    }
+    
+    return filtered;
+  }
+
+  /**
    * Convert Location objects to LocationSuggestion format
    */
   private convertToSuggestions(locations: any[]): LocationSuggestion[] {
@@ -103,22 +284,54 @@ export class LocationAutocompleteService {
    */
   getDebouncedSuggestions(
     query: string,
-    language: string = 'en',
-    callback: (suggestions: LocationSuggestion[]) => void
+    callback: (suggestions: LocationSuggestion[]) => void,
+    language: string = 'en'
   ): void {
+    // Clear previous timeout
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
     }
 
-    // Use different debounce delays based on query length
-    const delay = query.length <= 2 ? 
+    // Use faster debounce delays for better UX
+    const delay = query.length <= 3 ? 
       LocationAutocompleteService.INSTANT_DEBOUNCE : 
       LocationAutocompleteService.DEBOUNCE_DELAY;
 
     this.debounceTimeout = setTimeout(async () => {
-      const suggestions = await this.getLocationSuggestions(query, language);
-      callback(suggestions);
+      try {
+        const suggestions = await this.getLocationSuggestions(query, language);
+        // Use requestIdleCallback to prevent blocking UI updates
+        if (typeof requestIdleCallback !== 'undefined') {
+          requestIdleCallback(() => callback(suggestions));
+        } else {
+          callback(suggestions);
+        }
+      } catch (error) {
+        console.error(`❌ Error in debounced search for "${query}":`, error);
+        callback([]); // Call callback with empty results on error
+      }
     }, delay);
+  }
+
+  /**
+   * Simple location name formatter (city first)
+   */
+  private formatLocationNameSimple(displayName: string): string {
+    if (!displayName?.includes(',')) {
+      return displayName || '';
+    }
+    
+    const parts = displayName.split(',').map(part => part.trim());
+    const cityName = parts[0];
+    
+    // Find district (skip state/country)
+    const districtName = parts.find(part => 
+      !/(tamil nadu|india|\d{5,6})/i.test(part) && 
+      part !== cityName && 
+      part.length > 2
+    );
+    
+    return districtName ? `${cityName}, ${districtName}` : cityName;
   }
 
   /**

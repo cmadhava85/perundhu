@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
+import LocationAutocompleteInput from "../LocationAutocompleteInput";
 import './SimpleRouteForm.css';
 
 interface Stop {
@@ -58,10 +59,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     onSubmit(enhancedData);
   };
 
+  // Use stable counter for stop IDs to prevent re-renders
+  const stopIdCounterRef = useRef(1);
+
   // Functions for managing intermediate stops
   const addStop = () => {
     const newStop: Stop = {
-      id: Date.now().toString(),
+      id: `stop-${stopIdCounterRef.current++}`,
       name: '',
       arrivalTime: '',
       departureTime: '',
@@ -77,6 +81,16 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         stop.id === id ? { ...stop, [field]: value } : stop
       )
     );
+  };
+
+  // Handle stop name autocomplete
+  const updateStopName = (id: string, value: string, location?: any) => {
+    setIntermediateStops(prev => 
+      prev.map(stop => 
+        stop.id === id ? { ...stop, name: value } : stop
+      )
+    );
+    console.log('Stop name selected:', value, location);
   };
 
   const removeStop = (id: string) => {
@@ -103,6 +117,23 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
       [e.target.name]: e.target.value
     });
   };
+
+  // Handle location autocomplete changes - Memoized to prevent refresh issues
+  const handleOriginChange = useCallback((value: string, location?: any) => {
+    setFormData(prev => ({
+      ...prev,
+      origin: value
+    }));
+    console.log('Origin selected:', value, location);
+  }, []);
+
+  const handleDestinationChange = useCallback((value: string, location?: any) => {
+    setFormData(prev => ({
+      ...prev,
+      destination: value
+    }));
+    console.log('Destination selected:', value, location);
+  }, []);
 
   // Helper function to calculate journey duration
   const calculateJourneyDuration = (departureTime: string, arrivalTime: string): string => {
@@ -169,14 +200,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               {t('route.departure', 'Departure')}
             </label>
             <div className="location-time-container">
-              <input
-                type="text"
+              <LocationAutocompleteInput
                 id="origin"
                 name="origin"
                 value={formData.origin}
-                onChange={handleChange}
-                className="modern-input location-input"
+                onChange={handleOriginChange}
                 placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
+                label=""
                 required
               />
               <div className="time-input-group">
@@ -203,14 +233,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               {t('route.arrival', 'Arrival')}
             </label>
             <div className="location-time-container">
-              <input
-                type="text"
+              <LocationAutocompleteInput
                 id="destination"
                 name="destination"
                 value={formData.destination}
-                onChange={handleChange}
-                className="modern-input location-input"
+                onChange={handleDestinationChange}
                 placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
+                label=""
                 required
               />
               <div className="time-input-group">
@@ -317,12 +346,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                           Stop Name
                           <span className="field-requirement">*</span>
                         </label>
-                        <input
-                          type="text"
+                        <LocationAutocompleteInput
+                          id={`stop-name-${stop.id}`}
+                          name="stopName"
                           value={stop.name}
-                          onChange={(e) => updateStop(stop.id, 'name', e.target.value)}
+                          onChange={(value, location) => updateStopName(stop.id, value, location)}
                           placeholder="e.g., Central Metro Station"
-                          className="stop-input"
+                          label=""
                           required
                         />
                       </div>

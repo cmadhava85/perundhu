@@ -27,7 +27,7 @@ export class GeocodingService {
     'Dindigul', 'Thanjavur', 'Ranipet', 'Sivakasi', 'Karur', 'Udhagamandalam', 'Hosur', 
     'Nagercoil', 'Kanchipuram', 'Erode', 'Tiruvannamalai', 'Pollachi', 'Rajapalayam', 'Arcot', 
     'Dharmapuri', 'Chidambaram', 'Ambur', 'Nagapattinam', 'Arakkonam', 'Kumbakonam', 'Neyveli', 
-    'Cuddalore', 'Mayiladuthurai', 'Pallavaram', 'Pudukkottai', 'Aruppukottai', 'Virudhunagar', 
+    'Cuddalore', 'Mayiladuthurai', 'Pallavaram', 'Pudukkottai', 'Aruppukottai', 'Aruppukkottai', 'Virudhunagar', 
     'Kodaikanal', 'Yercaud', 'Kanyakumari', 'Srivilliputhur', 'Ramanathapuram', 'Tenkasi', 
     'Theni', 'Palani', 'Krishnagiri', 'Namakkal', 'Tiruchirapalli', 'Villupuram', 'Vellore',
     'Tiruvallur', 'Kancheepuram', 'Thiruvallur', 'Tirupattur', 'Kallakurichi', 'Chengalpattu',
@@ -137,13 +137,11 @@ export class GeocodingService {
       
       // Only use external API if database results are insufficient
       if (databaseResults.length < 3) {
-        const nominatimResults = await GeocodingService.searchNominatimOptimized(query, Math.max(3, limit - databaseResults.length));
-        const googleResults = await GeocodingService.searchGooglePlaces(query, Math.max(3, limit - databaseResults.length));
+        const nominatimResults = await GeocodingService.searchNominatimOptimized(query, Math.max(5, limit - databaseResults.length));
 
         const combinedResults = [
           ...databaseResults.map(loc => ({ ...loc, source: 'database' as const })),
-          ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' as const })),
-          ...googleResults.map(loc => ({ ...loc, source: 'google' as const }))
+          ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' as const }))
         ];
         
         const finalResults = GeocodingService.deduplicateResults(combinedResults).slice(0, limit);
@@ -197,7 +195,7 @@ export class GeocodingService {
     // 2. Only use Nominatim if database results are insufficient
     let nominatimResults: Location[] = [];
     try {
-      const nominatimLimit = Math.max(3, limit - databaseResults.length);
+      const nominatimLimit = Math.max(5, limit - databaseResults.length);
       console.log(`Fetching ${nominatimLimit} results from Nominatim for "${query}"`);
       
       // Use optimized Nominatim search
@@ -206,28 +204,15 @@ export class GeocodingService {
     } catch (error) {
       console.error('Nominatim search failed:', error);
     }
-
-    // 3. Use Google Places API if other results are insufficient
-    let googleResults: Location[] = [];
-    try {
-      const googleLimit = Math.max(3, limit - databaseResults.length - nominatimResults.length);
-      console.log(`Fetching ${googleLimit} results from Google Places for "${query}"`);
-      
-      googleResults = await GeocodingService.searchGooglePlaces(query, googleLimit);
-      console.log(`Google Places returned ${googleResults.length} results for "${query}"`);
-    } catch (error) {
-      console.error('Google Places search failed:', error);
-    }
     
-    // 4. Combine and deduplicate results
+    // 3. Combine and deduplicate results (Database + Nominatim only)
     const combinedResults = [
       ...databaseResults.map(loc => ({ ...loc, source: 'database' as const })),
-      ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' as const })),
-      ...googleResults.map(loc => ({ ...loc, source: 'google' as const }))
+      ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' as const }))
     ];
     
     if (combinedResults.length === 0) {
-      console.log(`No results found for "${query}" in database, Nominatim, or Google Places`);
+      console.log(`No results found for "${query}" in database or OpenStreetMap Nominatim`);
       return [];
     }
     
@@ -239,6 +224,176 @@ export class GeocodingService {
     
     console.log(`Returning ${finalResults.length} deduplicated results for "${query}"`);
     return finalResults;
+  }
+
+  /**
+   * Generate query variations to handle spelling differences (e.g., Aruppukottai vs Aruppukkottai)
+   */
+  private static generateQueryVariations(query: string): string[] {
+    const variations = [query];
+    
+    // Handle Aruppukottai spelling variations for partial matches
+    const lowerQuery = query.toLowerCase();
+    if (lowerQuery.startsWith('arup')) {
+      variations.push(
+        'Aruppukottai',
+        'Aruppukkottai',  // OpenStreetMap spelling with double 'k'
+        query.replace(/arup/i, 'Arupp'),  // Add extra 'p'
+        query + 'p',  // For "arup" -> "arupp"
+        query + 'ukottai'  // For "arup" -> "arupukottai"
+      );
+    }
+    
+    return [...new Set(variations)]; // Remove duplicates
+  }
+
+  /**
+   * Search Nominatim specifically for city names, not roads or streets
+   * This implements the requirement to prioritize city names over road/street names
+   */
+  public static async searchNominatimCitiesOnly(query: string, limit: number): Promise<Location[]> {
+    // Rate limiting: wait if last request was too recent
+    const now = Date.now();
+    const timeSinceLastRequest = now - GeocodingService.lastRequestTime;
+    if (timeSinceLastRequest < GeocodingService.REQUEST_DELAY) {
+      await new Promise(resolve => setTimeout(resolve, GeocodingService.REQUEST_DELAY - timeSinceLastRequest));
+    }
+    GeocodingService.lastRequestTime = Date.now();
+
+    try {
+      // Enhanced search strategy specifically for cities/towns
+      const searchQueries = [];
+      
+      if (query.length <= 4) {
+        // For short queries, try multiple city-focused variations
+        const variations = GeocodingService.generateQueryVariations(query);
+        searchQueries.push(
+          ...variations.map(v => `${v} city Tamil Nadu`),
+          ...variations.map(v => `${v} town Tamil Nadu`),
+          `${query} Tamil Nadu India`
+        );
+      } else {
+        // For longer queries, focus on cities and towns
+        searchQueries.push(
+          `${query} city Tamil Nadu India`,
+          `${query} town Tamil Nadu India`,
+          `${query}, Tamil Nadu, India`
+        );
+      }
+
+      let allResults: any[] = [];
+
+      for (const searchQuery of searchQueries) {
+        const params = new URLSearchParams({
+          q: searchQuery,
+          format: 'json',
+          countrycodes: 'in',
+          limit: String(Math.min(limit, 8)),
+          addressdetails: '1'
+          // Note: Removed class/type restrictions as they don't filter effectively on Nominatim side
+        });
+
+        console.log(`🏙️ Nominatim city search: "${searchQuery}"`);
+        
+        const response = await fetch(`${GeocodingService.NOMINATIM_BASE_URL}/search?${params}`, {
+          headers: {
+            'User-Agent': 'Perundhu Bus App (https://perundhu.com)'
+          }
+        });
+
+        if (!response.ok) {
+          console.warn(`Nominatim city query failed for "${searchQuery}": ${response.status}`);
+          continue;
+        }
+
+        const data = await response.json();
+        console.log(`🔍 Nominatim raw response for "${searchQuery}":`, data.length, 'results');
+        
+        if (data.length > 0) {
+          // Log all results for debugging
+          data.forEach((result: any, index: number) => {
+            console.log(`  ${index + 1}. ${result.display_name} [class: ${result.class}, type: ${result.type}]`);
+          });
+          
+          // Filter to only include cities, towns, villages - exclude roads, highways, etc.
+          const cityResults = data.filter((result: any) => {
+            // More comprehensive filtering
+            const isValidPlace = (
+              result.type === 'city' || 
+              result.type === 'town' || 
+              result.type === 'village' || 
+              result.type === 'hamlet' ||
+              result.addresstype === 'city' ||
+              result.addresstype === 'town' ||
+              result.addresstype === 'village'
+            );
+            
+            const isNotRoad = (
+              result.class !== 'highway' && 
+              result.class !== 'landuse' &&
+              !result.type.includes('road') &&
+              !result.type.includes('street') &&
+              result.type !== 'industrial'
+            );
+            
+            const isAccepted = isValidPlace && isNotRoad;
+            console.log(`    Filter: ${result.display_name} -> ${isAccepted} (place: ${isValidPlace}, notRoad: ${isNotRoad})`);
+            return isAccepted;
+          });
+          
+          console.log(`✅ Filtered to ${cityResults.length} valid city/town results out of ${data.length} total`);
+          cityResults.forEach((result: any, index: number) => {
+            console.log(`    ${index + 1}. ✓ ${result.display_name}`);
+          });
+          
+          allResults = allResults.concat(cityResults);
+          
+          // Stop early if we have enough good results
+          if (allResults.length >= limit) {
+            console.log(`🎯 Got enough results (${allResults.length}), stopping search`);
+            break;
+          }
+        } else {
+          console.log(`❌ No results from Nominatim for "${searchQuery}"`);
+        }
+
+        // Reduced delay between queries
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+
+      // Sort by city importance and type
+      const getScore = (result: any) => {
+        let score = 0;
+        if (result.type === 'city') score += 100;
+        if (result.type === 'town') score += 90;
+        if (result.type === 'village') score += 80;
+        if (result.type === 'hamlet') score += 70;
+        score += (result.importance || 0) * 10;
+        return score;
+      };
+      
+      allResults.sort((a, b) => getScore(b) - getScore(a));
+      const sortedResults = allResults;
+
+      const finalResults = sortedResults.slice(0, limit).map((result, index) => ({
+        id: -(index + 1000), // Different ID range for city-only results
+        name: GeocodingService.formatLocationName(result.display_name),
+        latitude: parseFloat(result.lat),
+        longitude: parseFloat(result.lon),
+        source: 'nominatim' as const
+      }));
+      
+      console.log(`🎯 Final Nominatim city results (${finalResults.length}):`);
+      finalResults.forEach((result, index) => {
+        console.log(`  ${index + 1}. ${result.name} (${result.latitude}, ${result.longitude})`);
+      });
+      
+      return finalResults;
+
+    } catch (error) {
+      console.error('Nominatim city search failed:', error);
+      return [];
+    }
   }
 
   /**
@@ -254,11 +409,25 @@ export class GeocodingService {
     GeocodingService.lastRequestTime = Date.now();
 
     try {
-      // Simplified search strategy - only try 2 queries max instead of 4+ 
-      const searchQueries = [
-        `${query}, Tamil Nadu, India`,  // Primary search
-        `${query} city, Tamil Nadu, India`  // Backup search for cities
-      ];
+      // Enhanced search strategy for partial matches like "Arup"
+      const searchQueries = [];
+      
+      if (query.length <= 4) {
+        // For short queries like "Arup", try multiple variations
+        const variations = GeocodingService.generateQueryVariations(query);
+        searchQueries.push(
+          ...variations.map(v => `${v} Tamil Nadu`),
+          ...variations.map(v => `${v} Virudhunagar`),  // Aruppukkottai is in Virudhunagar district
+          `${query}* Tamil Nadu`,  // Wildcard search
+          `${query} Tamil Nadu India`   // Less restrictive
+        );
+      } else {
+        // For longer queries, use standard approach
+        searchQueries.push(
+          `${query}, Tamil Nadu, India`,
+          `${query} city, Tamil Nadu, India`
+        );
+      }
 
       let allResults: any[] = [];
 
@@ -267,12 +436,14 @@ export class GeocodingService {
           q: searchQuery,
           format: 'json',
           countrycodes: 'in',
-          limit: String(Math.min(limit, 5)), // Reduce API response size
+          limit: String(Math.min(limit, 8)), // Increased for better partial matches
           addressdetails: '1',
-          bounded: '1',
-          viewbox: '76.0,8.0,80.5,13.5' // Tamil Nadu bounding box
+          // Remove bounded restriction for short queries to allow partial matches
+          ...(query.length > 4 && { bounded: '1', viewbox: '76.0,8.0,80.5,13.5' })
         });
 
+        console.log(`🔍 Nominatim query: "${searchQuery}"`);
+        
         const response = await fetch(`${GeocodingService.NOMINATIM_BASE_URL}/search?${params}`, {
           headers: {
             'User-Agent': 'Perundhu Bus App (https://perundhu.com)'
@@ -286,13 +457,25 @@ export class GeocodingService {
 
         const data = await response.json();
         if (data.length > 0) {
-          console.log(`Found ${data.length} results for "${searchQuery}"`);
+          console.log(`🏙️ Found ${data.length} results for "${searchQuery}":`, data.map((r: any) => r.display_name));
+          
+          // Check if any result contains Aruppukottai/Aruppukkottai (both spellings)
+          const hasAruppukottai = data.some((item: any) =>
+            item.display_name?.toLowerCase().includes('aruppukottai') || 
+            item.display_name?.toLowerCase().includes('aruppukkottai')
+          );
+          if (hasAruppukottai) {
+            console.log('🎯 Aruppukottai found in Nominatim results!');
+          }
+          
           allResults = allResults.concat(data);
           
           // Stop early if we have enough good results
           if (allResults.length >= limit) {
             break;
           }
+        } else {
+          console.log(`❌ No results for "${searchQuery}"`);
         }
 
         // Reduced delay between queries
@@ -333,45 +516,9 @@ export class GeocodingService {
   }
 
   /**
-   * Google Places API integration for enhanced location coverage
+   * OpenStreetMap Nominatim search with enhanced query strategies for partial matches
+   * Cost-effective alternative to Google Places API
    */
-  private static async searchGooglePlaces(query: string, limit: number): Promise<Location[]> {
-    // Only use if Google Maps API key is available
-    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    if (!apiKey) {
-      console.warn('Google Places API key not configured');
-      return [];
-    }
-
-    try {
-      const params = new URLSearchParams({
-        input: query,
-        types: 'establishment|transit_station|bus_station',
-        components: 'country:in|administrative_area:tamil nadu',
-        key: apiKey
-      });
-
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?${params}`
-      );
-
-      if (!response.ok) return [];
-
-      const data = await response.json();
-      
-      return data.predictions?.slice(0, limit).map((prediction: any, index: number) => ({
-        id: -(2000 + index), // Unique negative ID for Google results
-        name: GeocodingService.formatLocationNameUniversal(prediction.description),
-        latitude: 0, // Would need Place Details API for coordinates
-        longitude: 0,
-        source: 'google' as const
-      })) || [];
-
-    } catch (error) {
-      console.error('Google Places search failed:', error);
-      return [];
-    }
-  }
 
   /**
    * Format Nominatim display name to prioritize town/city name first
@@ -387,6 +534,14 @@ export class GeocodingService {
       return part
         .replace(/\b(bus stand|railway station|bus stop|junction|depot)\b/gi, '')
         .replace(/\b(new|old)\s+/gi, '')
+        .trim();
+    };
+    
+    // Normalize spelling variations
+    const normalizeSpelling = (name: string): string => {
+      return name
+        .replace(/\bAruppukkottai\b/gi, 'Aruppukottai')  // OpenStreetMap -> Standard spelling
+        .replace(/\bArupukkottai\b/gi, 'Aruppukottai')   // Other variations
         .trim();
     };
     
@@ -415,10 +570,10 @@ export class GeocodingService {
       
       // The first meaningful part should be the city/town
       if (!cityName) {
-        cityName = cleanedPart;
+        cityName = normalizeSpelling(cleanedPart);
       } else if (!districtName && cleanedPart !== cityName) {
         // Second meaningful part is likely the district
-        districtName = cleanedPart;
+        districtName = normalizeSpelling(cleanedPart);
         break;
       }
     }
@@ -436,7 +591,7 @@ export class GeocodingService {
     
     // Fallback to first part if we couldn't extract a good city name
     if (!formattedName) {
-      formattedName = cleanPart(parts[0]) || parts[0];
+      formattedName = normalizeSpelling(cleanPart(parts[0])) || parts[0];
     }
     
     console.log(`Formatted "${displayName}" -> "${formattedName}"`);

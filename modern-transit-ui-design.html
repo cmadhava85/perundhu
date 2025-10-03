@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Transit App UI Design - Perundhu</title>
+    <style>
+        /* Import Transit Design System */
+        :root {
+          /* Primary Transit Colors */
+          --transit-primary: #0066FF;       /* Bright blue like Transit */
+          --transit-primary-dark: #0052CC;
+          --transit-primary-light: #3385FF;
+          --transit-secondary: #00C853;     /* Green for on-time status */
+          --transit-warning: #FF9500;       /* Orange for delays */
+          --transit-danger: #FF3B30;        /* Red for alerts/cancelled */
+          
+          /* Neutral Colors */
+          --transit-bg: #F2F2F7;           /* iOS system background */
+          --transit-surface: #FFFFFF;
+          --transit-surface-elevated: #FFFFFF;
+          --transit-text-primary: #1D1D1F;
+          --transit-text-secondary: #86868B;
+          --transit-text-tertiary: #C7C7CC;
+          --transit-divider: #E5E5EA;
+          
+          /* Transit Status Colors */
+          --status-on-time: #00C853;
+          --status-delayed: #FF9500;
+          --status-cancelled: #FF3B30;
+          --status-unknown: #86868B;
+          
+          /* Typography Scale (San Francisco inspired) */
+          --font-family-primary: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Arial, sans-serif;
+          --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+          
+          /* Font Sizes */
+          --text-xs: 11px;
+          --text-sm: 13px;
+          --text-base: 15px;
+          --text-lg: 17px;
+          --text-xl: 20px;
+          --text-2xl: 24px;
+          --text-3xl: 28px;
+          
+          /* Font Weights */
+          --font-regular: 400;
+          --font-medium: 500;
+          --font-semibold: 600;
+          --font-bold: 700;
+          
+          /* Spacing Scale */
+          --space-1: 4px;
+          --space-2: 8px;
+          --space-3: 12px;
+          --space-4: 16px;
+          --space-5: 20px;
+          --space-6: 24px;
+          --space-8: 32px;
+          --space-10: 40px;
+          --space-12: 48px;
+          
+          /* Border Radius */
+          --radius-sm: 6px;
+          --radius-md: 12px;
+          --radius-lg: 16px;
+          --radius-xl: 20px;
+          --radius-2xl: 24px;
+          
+          /* Shadows */
+          --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+          --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+          --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+          --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+          
+          /* Animations */
+          --transition-fast: 150ms ease;
+          --transition-base: 250ms ease;
+          --transition-slow: 350ms ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            background-color: var(--transit-bg);
+            color: var(--transit-text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+            padding: var(--space-6);
+            background: var(--transit-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .title {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            color: var(--transit-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .subtitle {
+            font-size: var(--text-lg);
+            color: var(--transit-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .feature-card {
+            background: var(--transit-surface);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--transit-divider);
+            text-align: center;
+            transition: var(--transition-base);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-3);
+        }
+
+        .feature-title {
+            font-size: var(--text-lg);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-2);
+        }
+
+        .feature-desc {
+            font-size: var(--text-sm);
+            color: var(--transit-text-secondary);
+        }
+
+        /* Modern Bus Card Demo */
+        .transit-bus-card {
+            background: var(--transit-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--transit-divider);
+            overflow: hidden;
+            transition: var(--transition-base);
+            margin-bottom: var(--space-4);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .transit-bus-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .transit-card-header {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--transit-divider);
+            background: linear-gradient(135deg, #F8FAFF 0%, #FFFFFF 100%);
+        }
+
+        .bus-route-info {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--space-3);
+        }
+
+        .route-number {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            background: var(--transit-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-bold);
+            letter-spacing: 0.5px;
+        }
+
+        .bus-type-badge {
+            padding: var(--space-1) var(--space-3);
+            background: rgba(88, 86, 214, 0.1);
+            color: #5856D6;
+            border-radius: var(--radius-sm);
+            font-size: var(--text-xs);
+            font-weight: var(--font-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .journey-timeline {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            position: relative;
+        }
+
+        .journey-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .journey-time {
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+            color: var(--transit-text-primary);
+            margin-bottom: var(--space-1);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .journey-location {
+            font-size: var(--text-sm);
+            color: var(--transit-text-secondary);
+            font-weight: var(--font-medium);
+        }
+
+        .journey-connection {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin: 0 var(--space-2);
+        }
+
+        .route-line {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--transit-primary) 0%, #3385FF 100%);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .route-line::before,
+        .route-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--transit-primary);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .route-line::before { left: 0; }
+        .route-line::after { right: 0; }
+
+        .journey-duration {
+            margin-top: var(--space-2);
+            padding: var(--space-1) var(--space-3);
+            background: var(--transit-surface-elevated);
+            border-radius: var(--radius-sm);
+            font-size: var(--text-xs);
+            font-weight: var(--font-semibold);
+            color: var(--transit-text-secondary);
+            border: 1px solid var(--transit-divider);
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-3) var(--space-4);
+            background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--status-on-time);
+            animation: pulse 2s infinite;
+        }
+
+        .status-text {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--status-on-time);
+        }
+
+        .price-display {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-2) var(--space-4);
+            background: var(--transit-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-bold);
+        }
+
+        /* Search Form Demo */
+        .search-demo {
+            background: var(--transit-surface);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-6);
+        }
+
+        .search-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-4);
+            text-align: center;
+        }
+
+        .location-inputs {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: var(--space-4);
+            align-items: end;
+            margin-bottom: var(--space-4);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            font-size: var(--text-sm);
+            color: var(--transit-text-secondary);
+            margin-bottom: var(--space-2);
+            font-weight: var(--font-medium);
+        }
+
+        .location-input {
+            padding: var(--space-4);
+            border: 1px solid var(--transit-divider);
+            border-radius: var(--radius-md);
+            font-size: var(--text-base);
+            background: var(--transit-surface);
+            transition: var(--transition-base);
+        }
+
+        .location-input:focus {
+            outline: none;
+            border-color: var(--transit-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .swap-button {
+            background: var(--transit-surface-elevated);
+            border: 1px solid var(--transit-divider);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-size: var(--text-lg);
+        }
+
+        .swap-button:hover {
+            background: var(--transit-primary);
+            color: white;
+            border-color: var(--transit-primary);
+        }
+
+        .search-button {
+            width: 100%;
+            padding: var(--space-4);
+            background: var(--transit-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--text-lg);
+            font-weight: var(--font-semibold);
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+
+        .search-button:hover {
+            background: var(--transit-primary-dark);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(0.95);
+            }
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .comparison-card {
+            background: var(--transit-surface);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--transit-divider);
+        }
+
+        .comparison-title {
+            font-size: var(--text-xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-4);
+            text-align: center;
+        }
+
+        .old-design {
+            border-color: #FF9500;
+        }
+
+        .new-design {
+            border-color: var(--transit-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .design-features {
+            list-style: none;
+        }
+
+        .design-features li {
+            padding: var(--space-2) 0;
+            font-size: var(--text-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .old-design .design-features li::before {
+            content: '❌';
+        }
+
+        .new-design .design-features li::before {
+            content: '✅';
+        }
+
+        @media (max-width: 768px) {
+            .location-inputs {
+                grid-template-columns: 1fr;
+                gap: var(--space-3);
+            }
+            
+            .swap-button {
+                justify-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">🚌 Modern Transit App Design</h1>
+            <p class="subtitle">Inspired by Transit, Moovit & Citymapper</p>
+            <p style="font-size: var(--text-base); color: var(--transit-text-secondary);">
+                A complete UI redesign for the Perundhu bus tracking application
+            </p>
+        </div>
+
+        <!-- Key Features -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Modern Design System</h3>
+                <p class="feature-desc">Clean, minimalist interface with professional typography and consistent spacing</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">Mobile-First</h3>
+                <p class="feature-desc">Optimized for mobile devices with touch-friendly interactions and responsive layout</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Real-time Updates</h3>
+                <p class="feature-desc">Live bus tracking, delay notifications, and crowding information</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Smart Search</h3>
+                <p class="feature-desc">Advanced filters for time, price, accessibility, and bus type preferences</p>
+            </div>
+        </div>
+
+        <!-- Search Form Demo -->
+        <div class="search-demo">
+            <h2 class="search-title">🔍 Smart Journey Planner</h2>
+            <div class="location-inputs">
+                <div class="input-group">
+                    <label class="input-label">🟢 From</label>
+                    <input type="text" class="location-input" placeholder="Enter departure location" value="Mumbai Central">
+                </div>
+                <button class="swap-button" title="Swap locations">⇅</button>
+                <div class="input-group">
+                    <label class="input-label">🔴 To</label>
+                    <input type="text" class="location-input" placeholder="Enter destination" value="Pune Station">
+                </div>
+            </div>
+            <button class="search-button">🔍 Find Buses</button>
+        </div>
+
+        <!-- Bus Card Demo -->
+        <h2 style="font-size: var(--text-2xl); font-weight: var(--font-semibold); margin-bottom: var(--space-4); text-align: center;">
+            📋 Modern Bus Cards
+        </h2>
+
+        <!-- Express Bus -->
+        <div class="transit-bus-card">
+            <div class="transit-card-header">
+                <div class="bus-route-info">
+                    <div style="display: flex; gap: var(--space-2); align-items: center;">
+                        <div class="route-number">🚌 MH-12-AB-1234</div>
+                        <div class="bus-type-badge" style="background-color: rgba(255, 149, 0, 0.1); color: #FF9500;">
+                            ⚡ Express
+                        </div>
+                    </div>
+                    <div style="font-size: var(--text-sm); color: var(--transit-text-secondary); font-weight: var(--font-medium);">
+                        Shivneri Express
+                    </div>
+                </div>
+                <div class="journey-timeline">
+                    <div class="journey-point">
+                        <div class="journey-time">06:30</div>
+                        <div class="journey-location">Mumbai Central</div>
+                    </div>
+                    <div class="journey-connection">
+                        <div class="route-line"></div>
+                        <div class="journey-duration">4h 30m</div>
+                    </div>
+                    <div class="journey-point">
+                        <div class="journey-time">11:00</div>
+                        <div class="journey-location">Pune Station</div>
+                    </div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">On Time</span>
+                </div>
+                <div class="price-display">
+                    <span style="font-size: var(--text-xs); opacity: 0.8;">₹</span>
+                    <span>450</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deluxe Bus -->
+        <div class="transit-bus-card">
+            <div class="transit-card-header">
+                <div class="bus-route-info">
+                    <div style="display: flex; gap: var(--space-2); align-items: center;">
+                        <div class="route-number">🚌 GJ-01-BC-5678</div>
+                        <div class="bus-type-badge" style="background-color: rgba(88, 86, 214, 0.1); color: #5856D6;">
+                            ✨ Deluxe AC
+                        </div>
+                    </div>
+                    <div style="font-size: var(--text-sm); color: var(--transit-text-secondary); font-weight: var(--font-medium);">
+                        Luxury Travel Services
+                    </div>
+                </div>
+                <div class="journey-timeline">
+                    <div class="journey-point">
+                        <div class="journey-time">14:15</div>
+                        <div class="journey-location">Mumbai Central</div>
+                    </div>
+                    <div class="journey-connection">
+                        <div class="route-line"></div>
+                        <div class="journey-duration">4h 45m</div>
+                    </div>
+                    <div class="journey-point">
+                        <div class="journey-time">19:00</div>
+                        <div class="journey-location">Pune Station</div>
+                    </div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="status-indicator">
+                    <div class="status-dot" style="background: var(--status-delayed); animation: pulse 1s infinite;"></div>
+                    <span class="status-text" style="color: var(--status-delayed);">15 min delay</span>
+                </div>
+                <div class="price-display">
+                    <span style="font-size: var(--text-xs); opacity: 0.8;">₹</span>
+                    <span>650</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Section -->
+        <h2 style="font-size: var(--text-2xl); font-weight: var(--font-semibold); margin: var(--space-8) 0 var(--space-4); text-align: center;">
+            🔄 Design Comparison
+        </h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-card old-design">
+                <h3 class="comparison-title" style="color: #FF9500;">❌ Previous Design</h3>
+                <ul class="design-features">
+                    <li>Complex, cluttered interface</li>
+                    <li>Inconsistent spacing and typography</li>
+                    <li>Limited mobile optimization</li>
+                    <li>Basic search functionality</li>
+                    <li>No real-time status indicators</li>
+                    <li>Poor information hierarchy</li>
+                    <li>Limited accessibility features</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-card new-design">
+                <h3 class="comparison-title" style="color: var(--transit-primary);">✅ New Transit-Inspired Design</h3>
+                <ul class="design-features">
+                    <li>Clean, minimalist interface</li>
+                    <li>Consistent design system</li>
+                    <li>Mobile-first responsive design</li>
+                    <li>Advanced search with smart filters</li>
+                    <li>Real-time status & live tracking</li>
+                    <li>Clear visual hierarchy</li>
+                    <li>Comprehensive accessibility support</li>
+                    <li>Professional transit app aesthetics</li>
+                    <li>Smooth animations and interactions</li>
+                    <li>Dark mode support</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Implementation Details -->
+        <div style="background: var(--transit-surface); padding: var(--space-6); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-bottom: var(--space-6);">
+            <h2 style="font-size: var(--text-2xl); font-weight: var(--font-semibold); margin-bottom: var(--space-4); text-align: center;">
+                🛠️ Implementation Guide
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+                <div>
+                    <h3 style="font-size: var(--text-lg); font-weight: var(--font-semibold); margin-bottom: var(--space-2); color: var(--transit-primary);">
+                        📁 New Components Created
+                    </h3>
+                    <ul style="font-size: var(--text-sm); color: var(--transit-text-secondary); line-height: 1.6;">
+                        <li>TransitBusCard.tsx</li>
+                        <li>TransitBusList.tsx</li>
+                        <li>TransitSearchForm.tsx</li>
+                        <li>transit-design-system.css</li>
+                        <li>transit-bus-card.css</li>
+                        <li>transit-realtime.css</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: var(--text-lg); font-weight: var(--font-semibold); margin-bottom: var(--space-2); color: var(--transit-primary);">
+                        🎨 Design Features
+                    </h3>
+                    <ul style="font-size: var(--text-sm); color: var(--transit-text-secondary); line-height: 1.6;">
+                        <li>San Francisco font system</li>
+                        <li>iOS-inspired color palette</li>
+                        <li>Consistent spacing scale</li>
+                        <li>Smooth micro-interactions</li>
+                        <li>Status-aware color coding</li>
+                        <li>Accessible contrast ratios</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: var(--text-lg); font-weight: var(--font-semibold); margin-bottom: var(--space-2); color: var(--transit-primary);">
+                        📱 Mobile Optimizations
+                    </h3>
+                    <ul style="font-size: var(--text-sm); color: var(--transit-text-secondary); line-height: 1.6;">
+                        <li>Touch-friendly button sizes</li>
+                        <li>Swipe gestures support</li>
+                        <li>Compact and comfortable views</li>
+                        <li>Performance optimizations</li>
+                        <li>Reduced cognitive load</li>
+                        <li>One-handed operation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: var(--space-6); color: var(--transit-text-secondary); border-top: 1px solid var(--transit-divider);">
+            <p style="font-size: var(--text-sm);">
+                🚌 Modern Transit UI Design for Perundhu Bus Tracking Application<br>
+                Inspired by industry-leading apps: Transit, Moovit, and Citymapper
+            </p>
+            <p style="font-size: var(--text-xs); margin-top: var(--space-2); color: var(--transit-text-tertiary);">
+                Ready for implementation • Mobile-first • Accessibility compliant • Performance optimized
+            </p>
+        </div>
+    </div>
+</body>
+</html>

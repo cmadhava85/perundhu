@@ -1,0 +1,228 @@
+/* Enhanced Bus List Sorting Styles - Non-conflicting version */
+
+/* Namespace all sorting-specific styles to avoid conflicts */
+
+/* Bus list reordering transitions - only for transit bus list */
+.transit-bus-list .bus-list-container {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Enhanced bus card interactions - scoped to avoid conflicts */
+.transit-bus-list .transit-bus-card-enhanced {
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.transit-bus-list .transit-bus-card-enhanced:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sorting button enhancements - scoped specifically */
+.bus-sort-controls .sort-btn-enhanced {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.bus-sort-controls .sort-btn-enhanced:hover {
+  transform: translateY(-1px);
+}
+
+.bus-sort-controls .sort-btn-enhanced.sort-active {
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.bus-sort-controls .sort-btn-enhanced.sort-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--transit-primary, #3B82F6), var(--transit-primary-dark, #1D4ED8));
+  border-radius: 1px;
+}
+
+/* Sort direction indicator - specific class */
+.sort-direction-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+  font-size: 0.875rem;
+}
+
+.sort-direction-arrow.direction-desc {
+  transform: rotate(180deg);
+}
+
+/* Loading states - scoped to bus sorting */
+.bus-sort-loading .transit-bus-list {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.bus-sort-loading .transit-bus-card {
+  animation: sort-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes sort-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Mobile sort controls - non-conflicting */
+@media (max-width: 640px) {
+  .bus-sort-controls-mobile {
+    gap: 0.25rem;
+  }
+  
+  .bus-sort-controls .sort-btn-mobile {
+    min-width: 44px;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .bus-sort-controls .sort-icon-mobile {
+    font-size: 0.875rem;
+  }
+}
+
+/* Filter panel animations - scoped */
+.bus-filters-panel-enhanced {
+  animation: bus-filter-slide-down 0.3s ease-out;
+}
+
+@keyframes bus-filter-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search input enhancements - specific to bus search */
+.bus-search-input-enhanced {
+  transition: all 0.2s ease-in-out;
+}
+
+.bus-search-input-enhanced:focus {
+  box-shadow: 0 0 0 3px rgba(var(--transit-primary-rgb, 59, 130, 246), 0.1);
+}
+
+/* Bus count badge animation - scoped */
+.bus-count-badge-enhanced {
+  animation: bus-count-fade-in-scale 0.3s ease-out;
+}
+
+@keyframes bus-count-fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Smart sort indicators - specific class */
+.sort-smart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--transit-secondary, #10B981);
+  border: 1px solid white;
+  border-radius: 50%;
+  animation: smart-sort-pulse 2s ease-in-out infinite;
+}
+
+@keyframes smart-sort-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Accessibility improvements - scoped */
+.bus-sort-controls .sort-btn-enhanced:focus {
+  outline: 2px solid var(--transit-primary, #3B82F6);
+  outline-offset: 2px;
+}
+
+.bus-sort-controls .sort-btn-enhanced:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Dark mode support - scoped */
+@media (prefers-color-scheme: dark) {
+  .transit-bus-list .transit-bus-card-enhanced:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .bus-sort-controls .sort-btn-enhanced.sort-active {
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+  }
+}
+
+/* Override any conflicting styles with higher specificity */
+.transit-app .bus-list-unified-container .bus-list-controls-section {
+  /* Ensure our sort controls maintain proper spacing */
+  padding-top: 0.625rem;
+  border-top: 1px solid var(--transit-divider, #E5E5EA);
+}
+
+.transit-app .bus-list-unified-container .bus-list-controls-section .flex {
+  /* Ensure flex properties work correctly */
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* Prevent style conflicts with existing button styles */
+.bus-sort-controls button {
+  /* Reset any inherited styles that might conflict */
+  background: unset;
+  border: unset;
+  color: unset;
+  font: unset;
+  outline: unset;
+  padding: unset;
+  text-decoration: none;
+}
+
+/* Ensure sort buttons maintain their designed appearance */
+.bus-sort-controls .sort-option-btn {
+  /* Apply the intended styles with higher specificity */
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  padding: 0.375rem 0.5rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  border-radius: 0.375rem !important;
+  transition: all 0.2s ease-in-out !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  border: 1px solid #D1D5DB !important;
+  min-width: 44px !important;
+}
+
+@media (min-width: 640px) {
+  .bus-sort-controls .sort-option-btn {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    gap: 0.5rem !important;
+    min-width: auto !important;
+  }
+}

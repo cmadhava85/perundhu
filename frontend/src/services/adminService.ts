@@ -64,6 +64,74 @@ const AdminService = {
     });
   },
 
+  // Integration methods - for syncing approved contributions to main database
+  integrateApprovedRoutes: async (): Promise<any> => {
+    const token = AdminService.getAdminToken();
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/admin/integration/approved-routes`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Integration endpoint not available - using manual integration guidance');
+      
+      // Since the backend integration endpoint isn't available yet,
+      // provide manual integration instructions
+      return {
+        manualIntegrationRequired: true,
+        message: 'Backend integration endpoint not available. Manual integration required.',
+        instructions: [
+          '1. Check if routes have status "INTEGRATION_FAILED" due to missing data',
+          '2. Routes need departure_time, arrival_time, and coordinates for integration',
+          '3. Run the complete integration SQL script to fix data and integrate',
+          '4. Use QUICK_INTEGRATION_FIX.md for the complete solution'
+        ],
+        sqlExample: `
+-- Complete integration fix:
+UPDATE route_contributions SET 
+  departure_time = '08:00', arrival_time = '09:30',
+  from_latitude = 9.4484, from_longitude = 77.8072,
+  to_latitude = 9.5089, to_longitude = 78.0931,
+  status = 'APPROVED'
+WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
+
+-- Then create bus route and mark as integrated...
+        `,
+        recommendedAction: 'Run complete_integration.sql script for instant fix'
+      };
+    }
+  },
+
+  integrateSpecificRoute: async (id: number): Promise<any> => {
+    const token = AdminService.getAdminToken();
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/admin/integration/route/${id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Integration endpoint not available for specific route');
+      throw new Error('Integration service not available for this route.');
+    }
+  },
+
+  getIntegrationStatus: async (): Promise<any> => {
+    const token = AdminService.getAdminToken();
+    try {
+      const response = await axios.get(`${API_URL}/api/admin/integration/status`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Integration status endpoint not available');
+      return { error: 'Integration status not available' };
+    }
+  },
+
   // Image contribution methods
   getImageContributions: async (): Promise<ImageContribution[]> => {
     const token = AdminService.getAdminToken();

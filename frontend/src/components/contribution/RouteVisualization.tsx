@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { StopContribution, Location } from '../../types';
-import LocationDropdown from '../search/LocationDropdown';
+import LocationAutocompleteInput from '../LocationAutocompleteInput';
 
 interface RouteVisualizationProps {
   fromLocation: string;
@@ -39,47 +39,58 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
   const [fromLocationData, setFromLocationData] = useState<Location | null>(null);
   const [toLocationData, setToLocationData] = useState<Location | null>(null);
 
-  // Handle location selection from the dropdown
-  const handleFromLocationSelect = (location: Location) => {
+  // Handle location selection from the autocomplete input - Memoized to prevent refresh issues
+  const handleFromLocationChange = useCallback((value: string, location?: any) => {
     // Store the full location data for future reference
-    setFromLocationData(location);
+    if (location) {
+      setFromLocationData({
+        id: location.id || 0,
+        name: location.name || value,
+        translatedName: location.translatedName || '',
+        latitude: location.latitude || 0,
+        longitude: location.longitude || 0
+      });
+    }
     
     // Create a synthetic event that mimics the standard input onChange event
     const syntheticEvent = {
       target: {
         name: 'fromLocationName',
-        value: location.name
+        value: value
       }
     } as React.ChangeEvent<HTMLInputElement>;
     
     onChangeFrom(syntheticEvent);
     
-    // Optional: If you want to store additional location data in the parent component
-    // This would require modifications to the parent component to accept this data
-    console.log('Selected origin location data:', location);
-  };
+    console.log('Selected origin location:', value, location);
+  }, [onChangeFrom]);
 
-  const handleToLocationSelect = (location: Location) => {
+  const handleToLocationChange = useCallback((value: string, location?: any) => {
     // Store the full location data for future reference
-    setToLocationData(location);
+    if (location) {
+      setToLocationData({
+        id: location.id || 0,
+        name: location.name || value,
+        translatedName: location.translatedName || '',
+        latitude: location.latitude || 0,
+        longitude: location.longitude || 0
+      });
+    }
     
     // Create a synthetic event that mimics the standard input onChange event
     const syntheticEvent = {
       target: {
         name: 'toLocationName',
-        value: location.name
+        value: value
       }
     } as React.ChangeEvent<HTMLInputElement>;
     
-    // Log the destination selection to ensure it's being called
-    console.log('Destination selected, about to update form with:', location.name);
+    console.log('Destination selected, about to update form with:', value);
     
     onChangeTo(syntheticEvent);
     
-    // Optional: If you want to store additional location data in the parent component
-    // This would require modifications to the parent component to accept this data
-    console.log('Selected destination location data:', location);
-  };
+    console.log('Selected destination location:', value, location);
+  }, [onChangeTo]);
 
   // Update our stored location data objects when names change externally
   useEffect(() => {
@@ -141,14 +152,14 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
         <div className="route-start-point">
           <div className="location-marker origin-marker"></div>
           <div className="location-dropdown-wrapper">
-            <LocationDropdown
+            <LocationAutocompleteInput
               id="fromLocationName"
-              label=""
+              name="fromLocationName"
+              value={fromLocation}
+              onChange={handleFromLocationChange}
               placeholder={t('contribution.fromLocation', 'Origin')}
-              selectedLocation={fromLocationData}
-              onSelect={handleFromLocationSelect}
-              disabled={false}
-              showValidationFeedback={fromError}
+              label=""
+              required={true}
             />
           </div>
           {departureTime && (
@@ -204,14 +215,14 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
         <div className="route-end-point">
           <div className="location-marker destination-marker"></div>
           <div className="location-dropdown-wrapper">
-            <LocationDropdown
+            <LocationAutocompleteInput
               id="toLocationName"
-              label=""
+              name="toLocationName"
+              value={toLocation}
+              onChange={handleToLocationChange}
               placeholder={t('contribution.toLocation', 'Destination')}
-              selectedLocation={toLocationData}
-              onSelect={handleToLocationSelect}
-              disabled={false}
-              showValidationFeedback={toError}
+              label=""
+              required={true}
             />
           </div>
           {arrivalTime && (

@@ -1,0 +1,31 @@
+# Perundhu PreProd Environment Configuration
+# Copy this file to terraform.tfvars and update values
+
+# GCP Configuration
+project_id = "your-gcp-project-id"
+region     = "us-central1"
+zone       = "us-central1-a"
+
+# Environment Configuration
+environment = "preprod"
+app_name    = "perundhu"
+
+# Database Configuration
+db_version       = "MYSQL_8_0"
+db_instance_tier = "db-f1-micro"  # For preprod; use db-n1-standard-1 for production
+
+# Monitoring Configuration
+notification_email = "admin@yourcompany.com"
+
+# Domain Configuration
+domain_name = "preprod.perundhu.com"
+enable_ssl  = true
+
+# Cloud Run Configuration
+max_instances  = 5
+min_instances  = 1
+cpu_limit     = "1000m"
+memory_limit  = "2Gi"
+
+# Container Image (update after building your image)
+container_image = "gcr.io/your-gcp-project-id/perundhu-backend:latest"

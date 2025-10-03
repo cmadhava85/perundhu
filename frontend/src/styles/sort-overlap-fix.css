@@ -1,0 +1,116 @@
+/* Emergency fix for text overlap in sorting buttons */
+
+/* Override all existing styles with absolute specificity */
+.bus-sort-controls .sort-option-btn {
+  /* Force proper text layout */
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  
+  /* Ensure proper spacing */
+  padding: 0.625rem 1rem !important;
+  margin: 0 !important;
+  
+  /* Force proper width */
+  min-width: 85px !important;
+  height: 38px !important;
+  
+  /* Ensure text doesn't overlap */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  
+  /* Remove any inherited styles that might cause issues */
+  box-shadow: none !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  
+  /* Ensure proper box model */
+  box-sizing: border-box !important;
+  border: 1px solid #D1D5DB !important;
+  border-radius: 6px !important;
+  background-color: #FFFFFF !important;
+  color: #6B7280 !important;
+}
+
+/* Active state */
+.bus-sort-controls .sort-option-btn.sort-active {
+  background-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+  border-color: #3B82F6 !important;
+}
+
+/* Desktop specific adjustments */
+@media (min-width: 640px) {
+  .bus-sort-controls .sort-option-btn {
+    font-size: 0.875rem !important;
+    padding: 0.75rem 1.25rem !important;
+    min-width: 110px !important;
+    height: 42px !important;
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 639px) {
+  .bus-sort-controls .sort-option-btn {
+    font-size: 0.6875rem !important;
+    padding: 0.5rem 0.75rem !important;
+    min-width: 70px !important;
+    height: 36px !important;
+  }
+}
+
+/* Container spacing */
+.bus-sort-controls .sort-buttons-container {
+  display: flex !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+  overflow-x: auto !important;
+  padding: 0.25rem 0 !important;
+}
+
+/* Individual button text styles */
+.bus-sort-controls .sort-text-mobile,
+.bus-sort-controls .sort-text-desktop {
+  display: inline !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Icon spacing */
+.bus-sort-controls .sort-icon {
+  margin-right: 0.5rem !important;
+  font-size: 0.875rem !important;
+}
+
+/* Ensure no text wrapping or overflow */
+.bus-sort-controls .sort-option-btn * {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* Remove any transform or positioning that might cause overlap */
+.bus-sort-controls .sort-option-btn,
+.bus-sort-controls .sort-option-btn * {
+  transform: none !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* Hide the smart badge to avoid overlap */
+.bus-sort-controls .sort-smart-badge {
+  display: none !important;
+}

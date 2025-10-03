@@ -2,6 +2,7 @@ package com.perundhu.adapter.in.rest;
 
 import com.perundhu.application.port.in.AdminUseCase;
 import com.perundhu.application.service.ImageContributionProcessingService;
+import com.perundhu.application.service.ContributionProcessingService;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.port.ImageContributionOutputPort;

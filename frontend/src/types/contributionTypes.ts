@@ -7,6 +7,14 @@ export type ContributionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 export interface StopContribution {
   stopOrder: number;
   name: string;
+  translatedName?: string;
+  taName?: string;
+  translations?: {
+    [key: string]: {
+      name: string;
+      [key: string]: any;
+    };
+  };
   latitude?: number;
   longitude?: number;
   arrivalTime?: string;
@@ -19,9 +27,13 @@ export interface RouteContribution {
   busName?: string;
   busNumber: string;
   fromLocationName: string;
+  fromLocationTranslatedName?: string;
+  fromLocationTaName?: string;
   fromLatitude?: number;
   fromLongitude?: number;
   toLocationName: string;
+  toLocationTranslatedName?: string;
+  toLocationTaName?: string;
   toLatitude?: number;
   toLongitude?: number;
   departureTime?: string;

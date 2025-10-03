@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution Page Autocomplete Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .status.success {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status.info {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #93c5fd;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #374151;
+        }
+
+        .autocomplete-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .autocomplete-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .suggestions-container {
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background: #f3f4f6;
+        }
+
+        .test-result {
+            padding: 15px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="demo-header">
+            <h1>🚌 Contribution Page Autocomplete Test</h1>
+            <p>Testing location autocomplete with database + OpenStreetMap fallback</p>
+        </div>
+
+        <div class="status success">
+            ✅ LocationAutocompleteInput component now replaces LocationDropdown
+        </div>
+
+        <div class="status info">
+            ℹ️ Autocomplete should search: Database → OpenStreetMap → Google Places
+        </div>
+
+        <div class="test-section">
+            <h2>📍 Route Location Test</h2>
+            <p>Test the same autocomplete functionality that's used in the contribution form:</p>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label>From Location (Origin)</label>
+                    <input 
+                        type="text" 
+                        class="autocomplete-input" 
+                        placeholder="Enter departure city (e.g., Chennai, Villupuram)"
+                        id="fromLocation"
+                    >
+                    <div class="test-result">
+                        <strong>Expected behavior:</strong>
+                        <ul>
+                            <li>Type 3+ characters to trigger search</li>
+                            <li>Shows cities from database first</li>
+                            <li>Falls back to OpenStreetMap for unknown cities</li>
+                            <li>Shows data source indicator (DB/Map)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>To Location (Destination)</label>
+                    <input 
+                        type="text" 
+                        class="autocomplete-input" 
+                        placeholder="Enter destination city (e.g., Coimbatore, Villupuram)"
+                        id="toLocation"
+                    >
+                    <div class="test-result">
+                        <strong>Test cities:</strong>
+                        <ul>
+                            <li><strong>Villupuram</strong> - Should now appear from DB</li>
+                            <li><strong>Chennai</strong> - Should appear from DB</li>
+                            <li><strong>TestCity123</strong> - Should fall back to OpenStreetMap</li>
+                            <li><strong>NewLocation456</strong> - Should try geocoding</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🚏 Stop Location Test</h2>
+            <p>Test autocomplete for intermediate stops:</p>
+
+            <div class="form-group">
+                <label>Stop Name</label>
+                <input 
+                    type="text" 
+                    class="autocomplete-input" 
+                    placeholder="Enter stop name (e.g., Vellore Bus Stand)"
+                    id="stopName"
+                >
+                <div class="test-result">
+                    <strong>Stop autocomplete features:</strong>
+                    <ul>
+                        <li>Same database + OpenStreetMap search</li>
+                        <li>Suggests bus stands, major landmarks</li>
+                        <li>Shows coordinates when available</li>
+                        <li>Helps users find exact stop names</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔧 Technical Implementation</h2>
+            <p>Changes made to restore autocomplete functionality:</p>
+            <div class="test-result">
+                <strong>Fixed Components:</strong>
+                <ul>
+                    <li><code>RouteVisualization.tsx</code> - Replaced LocationDropdown with LocationAutocompleteInput</li>
+                    <li><code>StopEntryForm.tsx</code> - Added LocationAutocompleteInput for stop names</li>
+                    <li>Uses <code>locationAutocompleteService</code> with full geocoding fallback</li>
+                    <li>Database → OpenStreetMap → Google Places search chain</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🌐 API Endpoints</h2>
+            <div class="test-result">
+                <strong>Backend endpoints used:</strong>
+                <ul>
+                    <li><code>/api/v1/bus-schedules/locations/autocomplete?q={query}</code> - Database search</li>
+                    <li><code>https://nominatim.openstreetmap.org/search</code> - OpenStreetMap geocoding</li>
+                    <li>Google Places API - Final fallback (if configured)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple test script to simulate autocomplete behavior
+        function testAutocomplete(inputId) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+
+            input.addEventListener('input', function(e) {
+                const value = e.target.value;
+                console.log(`${inputId} autocomplete test:`, value);
+                
+                if (value.length >= 3) {
+                    console.log(`Would search for: "${value}"`);
+                    console.log('Search order: 1) Database 2) OpenStreetMap 3) Google Places');
+                    
+                    // Test specific cities
+                    if (value.toLowerCase().includes('villupuram')) {
+                        console.log('✅ Villupuram should now be found in database');
+                    } else if (value.toLowerCase().includes('testcity')) {
+                        console.log('🌐 TestCity would use OpenStreetMap geocoding');
+                    }
+                }
+            });
+        }
+
+        // Initialize test inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            testAutocomplete('fromLocation');
+            testAutocomplete('toLocation');
+            testAutocomplete('stopName');
+            
+            console.log('Contribution page autocomplete test initialized');
+            console.log('Components updated to use LocationAutocompleteInput with full geocoding fallback');
+        });
+    </script>
+</body>
+</html>

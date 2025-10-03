@@ -27,12 +27,6 @@ import SearchResults from './components/SearchResults';
 import BottomNavigation from './components/BottomNavigation';
 import TransitBusCardTest from './components/TransitBusCardTest';
 
-// Services
-import { submitRouteContribution } from './services/api';
-
-// Types
-import type { RouteContribution } from './types/index';
-
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
 import { useBusSearch } from './hooks/useBusSearch';
@@ -107,7 +101,7 @@ function AppContent() {
   const [toLocation, setToLocation] = useState(initialToLocation);
   const [isSearching, setIsSearching] = useState(false);
   
-  // Update location states when API data is loaded
+  // Update location states when API data is loaded - only run when locations change
   useEffect(() => {
     if (locations && locations.length > 0) {
       if (!fromLocation) {
@@ -117,7 +111,7 @@ function AppContent() {
         setToLocation(locations[1]); // Set second location as default destination
       }
     }
-  }, [locations, fromLocation, toLocation]);
+  }, [locations, !fromLocation, !toLocation]); // More specific dependencies to prevent unnecessary re-renders
   
   useEffect(() => {
     // Check if this is the first time user is opening the app
@@ -139,16 +133,21 @@ function AppContent() {
     }
   }, [fromLocation, getDestinations]);
 
-  // Update main tab when route changes
+  // Update main tab when route changes - memoize to prevent excessive updates
   useEffect(() => {
-    if (location.pathname === '/contribute') {
-      setActiveMainTab('contribute');
-      setActiveTab('contribute');
-    } else if (location.pathname === '/' || location.pathname === '/search' || location.pathname === '/search-results') {
-      setActiveMainTab('search');
-      setActiveTab('search');
+    const pathname = location.pathname;
+    if (pathname === '/contribute') {
+      if (activeMainTab !== 'contribute') {
+        setActiveMainTab('contribute');
+        setActiveTab('contribute');
+      }
+    } else if (pathname === '/' || pathname === '/search' || pathname === '/search-results') {
+      if (activeMainTab !== 'search') {
+        setActiveMainTab('search');
+        setActiveTab('search');
+      }
     }
-  }, [location.pathname]);
+  }, [location.pathname, activeMainTab]);
 
   // Handler for the "Find Buses" button click
   const handleSearch = async () => {
@@ -208,9 +207,11 @@ function AppContent() {
         }
         break;
       case 'tracking':
-        // Navigate to tracking if results exist
+        // Navigate to tracking history or first bus if available
         if (buses.length > 0) {
-          navigate('/track/' + buses[0].id);
+          navigate('/bus/' + buses[0].id);
+        } else {
+          navigate('/history');
         }
         break;
       case 'contribute':
@@ -254,18 +255,6 @@ function AppContent() {
     useHighAccuracyLocation: true,
     darkMode: false,
     saveSearchHistory: true
-  };
-
-  // Enhanced route contribution submission handler
-  const handleRouteContribution = async (data: RouteContribution) => {
-    try {
-      await submitRouteContribution(data);
-      // You could add a toast notification here
-      console.log('Route contribution submitted successfully:', data);
-    } catch (error) {
-      console.error('Failed to submit route contribution:', error);
-      // You could add error handling/notification here
-    }
   };
 
   // Compile stops from stopsMap for selected bus

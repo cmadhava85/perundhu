@@ -36,8 +36,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [isMapInitialized, setIsMapInitialized] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
-  // Generate a unique ID for the map container if not provided
-  const mapContainerId = mapId || `map-container-${Math.random().toString(36).substring(2, 9)}`;
+  
+  // Use stable ID to prevent re-rendering issues
+  const stableMapId = useRef(mapId || `map-container-${Date.now()}-${Math.floor(Math.random() * 1000)}`);
+  const mapContainerId = stableMapId.current;
 
   useEffect(() => {
     const initMap = async () => {

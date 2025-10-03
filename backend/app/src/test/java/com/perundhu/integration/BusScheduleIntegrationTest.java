@@ -47,11 +47,15 @@ class BusScheduleIntegrationTest {
                                 LocalTime.of(8, 30),
                                 LocalTime.of(8, 32),
                                 1,
-                                Map.of("type", "regular"));
+                                Map.of("type", "regular"),
+                                13.0827,
+                                80.2707);
 
                 assertNotNull(stop);
                 assertEquals(1L, stop.id());
                 assertEquals("Test Stop", stop.name());
                 assertEquals(100L, stop.locationId());
+                assertEquals(13.0827, stop.latitude());
+                assertEquals(80.2707, stop.longitude());
         }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { StopContribution } from '../../types';
+import LocationAutocompleteInput from '../LocationAutocompleteInput';
 
 interface StopEntryFormProps {
   currentStop: StopContribution;
@@ -20,6 +21,21 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  // Handle stop name change from autocomplete
+  const handleStopNameChange = (value: string, location?: any) => {
+    // Create a synthetic event that mimics the standard input onChange event
+    const syntheticEvent = {
+      target: {
+        name: 'name',
+        value: value
+      }
+    } as React.ChangeEvent<HTMLInputElement>;
+    
+    onChange(syntheticEvent);
+    
+    console.log('Selected stop name:', value, location);
+  };
+
   return (
     <div className="add-stop-form">
       <div className="form-row">
@@ -28,15 +44,15 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
             {t('contribution.stopName', 'Stop Name')} *
             <span className="field-hint">{t('contribution.stopNameHint', 'Name of the bus stop or location')}</span>
           </label>
-          <input
-            type="text"
+          <LocationAutocompleteInput
             id="stopName"
             name="name"
             value={currentStop.name}
-            onChange={onChange}
+            onChange={handleStopNameChange}
             placeholder={t('contribution.stopNamePlaceholder', 'e.g. Vellore Bus Stand')}
-            className={error ? "field-error" : ""}
+            required={true}
           />
+          {error && <div className="field-error-text">{error}</div>}
         </div>
         
         <div className="form-group">

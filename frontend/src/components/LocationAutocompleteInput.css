@@ -208,6 +208,20 @@
   overflow: hidden;
 }
 
+/* Button-specific styles for autocomplete suggestions */
+.autocomplete-suggestion {
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+.autocomplete-suggestion:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 .dropdown-results li:last-child {
   margin-bottom: 0;
 }
