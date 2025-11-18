@@ -9,7 +9,7 @@ class SecurityService {
   /**
    * Securely store data in localStorage with basic obfuscation
    */
-  secureStore(key: string, data: any): void {
+  secureStore<T>(key: string, data: T): void {
     try {
       const serialized = JSON.stringify(data);
       const encoded = btoa(serialized); // Basic encoding for obfuscation
@@ -22,13 +22,13 @@ class SecurityService {
   /**
    * Securely retrieve data from localStorage
    */
-  secureRetrieve(key: string): any {
+  secureRetrieve<T>(key: string): T | null {
     try {
       const encoded = localStorage.getItem(key);
       if (!encoded) return null;
       
       const serialized = atob(encoded);
-      return JSON.parse(serialized);
+      return JSON.parse(serialized) as T;
     } catch (error) {
       console.error('Failed to retrieve secure data:', error);
       return null;
@@ -95,7 +95,7 @@ class SecurityService {
   /**
    * Validate API response for security headers
    */
-  validateSecurityHeaders(headers: any): boolean {
+  validateSecurityHeaders(headers: Record<string, string>): boolean {
     // Check for required security headers
     const requiredHeaders = ['x-content-type-options', 'x-frame-options'];
     

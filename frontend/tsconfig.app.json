@@ -25,11 +25,14 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": false, // Changed to false to ignore unused locals
-    "noUnusedParameters": false, // Changed to false to ignore unused parameters
-    "erasableSyntaxOnly": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": false,
     
     /* Vite environment support */
     "types": ["vite/client", "vitest/globals"]

@@ -1,0 +1,515 @@
+/* Clean Bus List Header Redesign - No Harsh Borders, Better Alignment */
+
+/* Reset and clean base styles */
+.bus-list-unified-container {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.bus-list-unified-container:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Header Section - Clean with subtle separator */
+.bus-list-header-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.bus-list-header-section h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.bus-count-badge-enhanced {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  color: #1E40AF;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  align-self: flex-start;
+}
+
+/* Route Display - Clean and Modern */
+.bus-list-header-section > div:nth-child(2) {
+  background: linear-gradient(135deg, #FAFBFC 0%, #F5F7FA 100%);
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.bus-list-header-section > div:nth-child(2) > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* Sorting Info Badge - Softer Design */
+.bus-list-header-section > div:nth-child(3) {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.bus-list-header-section > div:nth-child(3) span {
+  font-size: 13px;
+  font-weight: 500;
+  color: #15803D;
+}
+
+/* Controls Section - Clean Layout */
+.bus-list-controls-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Search and Filter Row - Perfect Alignment */
+.bus-list-controls-section > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Search Input - Modern and Clean */
+.bus-search-input-enhanced {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 16px 0 44px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  font-size: 15px;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.bus-search-input-enhanced:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: #F9FAFB;
+}
+
+.bus-search-input-enhanced:focus {
+  border-color: #3B82F6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.bus-search-input-enhanced::placeholder {
+  color: #9CA3AF;
+}
+
+/* Search Icon */
+.bus-list-controls-section > div:first-child > div:first-child {
+  position: relative;
+}
+
+.bus-list-controls-section > div:first-child > div:first-child::before {
+  content: '🔍';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Filter Button - Clean and Modern */
+.bus-list-controls-section > div:first-child > button {
+  height: 44px;
+  min-width: 44px;
+  padding: 0 16px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4B5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.bus-list-controls-section > div:first-child > button:hover {
+  background: #F9FAFB;
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #3B82F6;
+}
+
+.bus-list-controls-section > div:first-child > button.bg-blue-500 {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+.bus-list-controls-section > div:first-child > button.bg-blue-500:hover {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+/* Sort Controls - Modern Design */
+.bus-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.bus-sort-controls::-webkit-scrollbar {
+  display: none;
+}
+
+/* Sort Label */
+.sort-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+/* Sort Buttons Container */
+.sort-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
+/* Individual Sort Buttons - Clean Design */
+.sort-option-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6B7280;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.sort-option-btn:hover {
+  background: #F9FAFB;
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #3B82F6;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.sort-option-btn:active {
+  transform: translateY(0);
+}
+
+.sort-option-btn.sort-active {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+.sort-option-btn.sort-active:hover {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.35);
+}
+
+/* Sort Text Styles */
+.sort-text-mobile,
+.sort-text-desktop {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+}
+
+.sort-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Sort Direction Toggle */
+.sort-direction-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sort-direction-toggle:hover {
+  background: #F9FAFB;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.sort-direction-arrow {
+  display: inline-block;
+  font-size: 16px;
+  color: #6B7280;
+  transition: transform 0.3s ease;
+}
+
+.sort-direction-arrow.direction-desc {
+  transform: rotate(180deg);
+}
+
+/* Tooltip - Clean Design */
+.tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  background: rgba(17, 24, 39, 0.95);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.sort-option-btn:hover .tooltip-content {
+  opacity: 1;
+}
+
+/* Filters Panel - Clean Design */
+.bus-filters-panel-enhanced {
+  margin-top: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+  border-radius: 0 0 12px 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .bus-list-unified-container {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .bus-list-header-section {
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .bus-list-header-section h1 {
+    font-size: 20px;
+  }
+
+  .bus-count-badge-enhanced {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .bus-list-controls-section {
+    gap: 12px;
+  }
+
+  .bus-search-input-enhanced {
+    height: 42px;
+    font-size: 16px; /* Prevents iOS zoom */
+    padding: 0 14px 0 40px;
+  }
+
+  .bus-list-controls-section > div:first-child > button {
+    height: 42px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .bus-sort-controls {
+    padding-top: 12px;
+    gap: 8px;
+  }
+
+  .sort-label {
+    font-size: 13px;
+  }
+
+  .sort-option-btn {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .sort-direction-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sort-text-desktop {
+    display: none;
+  }
+
+  .sort-text-mobile {
+    display: inline;
+  }
+}
+
+@media (min-width: 769px) {
+  .sort-text-mobile {
+    display: none;
+  }
+
+  .sort-text-desktop {
+    display: inline;
+  }
+}
+
+@media (max-width: 480px) {
+  .bus-list-unified-container {
+    padding: 12px;
+  }
+
+  .bus-list-header-section h1 {
+    font-size: 18px;
+  }
+
+  .bus-list-controls-section > div:first-child {
+    gap: 8px;
+  }
+
+  .bus-search-input-enhanced {
+    height: 40px;
+    padding: 0 12px 0 38px;
+  }
+
+  .bus-list-controls-section > div:first-child > button {
+    height: 40px;
+    min-width: 40px;
+    padding: 0 10px;
+  }
+
+  .sort-option-btn {
+    height: 34px;
+    padding: 0 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .sort-direction-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sort-icon {
+    font-size: 12px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .bus-list-unified-container {
+    background: #1F2937;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .bus-list-header-section {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .bus-list-header-section h1 {
+    color: #F9FAFB;
+  }
+
+  .bus-search-input-enhanced {
+    background: #374151;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #F9FAFB;
+  }
+
+  .bus-search-input-enhanced:hover {
+    background: #4B5563;
+  }
+
+  .bus-search-input-enhanced:focus {
+    background: #374151;
+  }
+
+  .sort-option-btn {
+    background: #374151;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #D1D5DB;
+  }
+
+  .sort-option-btn:hover {
+    background: #4B5563;
+  }
+}
+
+/* Accessibility */
+.bus-search-input-enhanced:focus-visible,
+.sort-option-btn:focus-visible,
+.sort-direction-toggle:focus-visible,
+.bus-list-controls-section > div:first-child > button:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .bus-list-controls-section,
+  .bus-filters-panel-enhanced {
+    display: none;
+  }
+}

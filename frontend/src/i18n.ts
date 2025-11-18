@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { logDebug } from './utils/logger';
 
 import enTranslation from './locales/en/translation.json';
 import taTranslation from './locales/ta/translation.json';
@@ -50,11 +51,11 @@ i18n.on('languageChanged', (lng) => {
   if (lng === 'ta') {
     document.documentElement.classList.add('lang-ta');
     document.documentElement.classList.remove('lang-en');
-    console.log('Switched to Tamil language');
+    logDebug('Switched to Tamil language', { component: 'i18n' });
   } else {
     document.documentElement.classList.add('lang-en');
     document.documentElement.classList.remove('lang-ta');
-    console.log('Switched to English language');
+    logDebug('Switched to English language', { component: 'i18n' });
   }
 });
 

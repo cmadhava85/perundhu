@@ -1,5 +1,6 @@
 import { api } from './api';
 import type { Location } from '../types';
+import { logDebug, logError } from '../utils/logger';
 
 /**
  * OSM Bus Stop with enhanced facility information
@@ -53,7 +54,10 @@ export class OSMDiscoveryService {
     radiusKm: number = 25.0
   ): Promise<OSMBusStop[]> {
     try {
-      console.log(`Discovering OSM stops between ${fromLocation.name} and ${toLocation.name}`);
+      logDebug(`Discovering OSM stops between ${fromLocation.name} and ${toLocation.name}`, {
+        component: 'OSMDiscoveryService',
+        action: 'discoverIntermediateStops'
+      });
       
       const response = await api.get('/api/v1/bus-schedules/discover-stops', {
         params: {
@@ -63,10 +67,15 @@ export class OSMDiscoveryService {
         }
       });
       
-      console.log(`Found ${response.data.length} intermediate stops from OSM`);
+      logDebug(`Found ${response.data.length} intermediate stops from OSM`, {
+        component: 'OSMDiscoveryService',
+        count: response.data.length
+      });
       return response.data;
     } catch (error) {
-      console.error('Error discovering intermediate stops:', error);
+      logError('Error discovering intermediate stops', error, {
+        component: 'OSMDiscoveryService'
+      });
       throw error;
     }
   }
@@ -79,7 +88,10 @@ export class OSMDiscoveryService {
     toLocation: Location
   ): Promise<OSMBusRoute[]> {
     try {
-      console.log(`Discovering OSM routes between ${fromLocation.name} and ${toLocation.name}`);
+      logDebug(`Discovering OSM routes between ${fromLocation.name} and ${toLocation.name}`, {
+        component: 'OSMDiscoveryService',
+        action: 'discoverOSMRoutes'
+      });
       
       const response = await api.get('/api/v1/bus-schedules/discover-routes', {
         params: {
@@ -88,10 +100,15 @@ export class OSMDiscoveryService {
         }
       });
       
-      console.log(`Found ${response.data.length} OSM routes`);
+      logDebug(`Found ${response.data.length} OSM routes`, {
+        component: 'OSMDiscoveryService',
+        count: response.data.length
+      });
       return response.data;
     } catch (error) {
-      console.error('Error discovering OSM routes:', error);
+      logError('Error discovering OSM routes', error, {
+        component: 'OSMDiscoveryService'
+      });
       throw error;
     }
   }
@@ -103,7 +120,9 @@ export class OSMDiscoveryService {
   static async findStopsAlongRoute(): Promise<OSMBusStop[]> {
     // This would require a new backend endpoint for corridor-based search
     // For now, we'll use the existing discovery method with expanded search
-    console.log('Finding stops along route corridor - feature coming soon');
+    logDebug('Finding stops along route corridor - feature coming soon', {
+      component: 'OSMDiscoveryService'
+    });
     return [];
   }
 

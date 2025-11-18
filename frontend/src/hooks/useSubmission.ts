@@ -2,14 +2,14 @@ import { useState, useCallback } from 'react';
 
 export type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
-interface UseSubmissionOptions {
-  onSuccess?: (result: any) => void;
+interface UseSubmissionOptions<T> {
+  onSuccess?: (result: T) => void;
   onError?: (error: Error) => void;
   successMessage?: string;
   errorMessage?: string;
 }
 
-export const useSubmission = <T = any>(options: UseSubmissionOptions = {}) => {
+export const useSubmission = <T = unknown>(options: UseSubmissionOptions<T> = {}) => {
   const [status, setStatus] = useState<SubmissionStatus>('idle');
   const [message, setMessage] = useState<string>('');
   const [result, setResult] = useState<T | null>(null);

@@ -1,16 +1,18 @@
 /**
- * City Bus Stand Coordinates Mapping
- * Maps city names to their main bus stand coordinates
+ * City coordinates database for Tamil Nadu cities and towns
+ * Contains latitude/longitude data for quick location lookup
  */
 
-export interface CityCoordinates {
+import { logDebug } from './logger';
+
+export interface CityCoordinate {
   name: string;
   latitude: number;
   longitude: number;
   busStandName: string;
 }
 
-export const CITY_BUS_STANDS: Record<string, CityCoordinates> = {
+export const CITY_BUS_STANDS: Record<string, CityCoordinate> = {
   // Tamil Nadu Major Cities
   'chennai': {
     name: 'Chennai',
@@ -284,7 +286,10 @@ export const CITY_BUS_STANDS: Record<string, CityCoordinates> = {
  * Get city coordinates from city name
  * Performs fuzzy matching and handles common variations
  */
-export function getCityCoordinates(cityName: string): CityCoordinates | null {
+/**
+ * Get coordinates for a city by name
+ */
+export function getCityCoordinates(cityName: string): CityCoordinate | null {
   if (!cityName) return null;
   
   // Normalize city name for lookup
@@ -444,7 +449,10 @@ export async function getStopCoordinatesAsync(stop: { name: string; latitude?: n
   }
   
   // Final fallback: try geocoding
-  console.log(`Attempting to geocode unknown location: "${stop.name}"`);
+  logDebug(`Attempting to geocode unknown location: "${stop.name}"`, {
+    component: 'cityCoordinates',
+    stopName: stop.name
+  });
   const geocodedCoords = await geocodeCity(stop.name);
   if (geocodedCoords) {
     return {

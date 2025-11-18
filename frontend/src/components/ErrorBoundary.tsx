@@ -1,4 +1,5 @@
 import React from 'react';
+import { logError } from '../utils/logger';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -12,6 +13,18 @@ interface ErrorBoundaryProps {
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
 }
 
+/**
+ * ErrorBoundary Component
+ * 
+ * Note: This component uses a class component because React Error Boundaries
+ * are not yet supported with functional components. Error boundaries require
+ * the componentDidCatch lifecycle method, which is only available in class components.
+ * 
+ * This is an exception to our "functional components only" rule and is
+ * the recommended approach per React documentation.
+ * 
+ * @see https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary
+ */
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
@@ -23,7 +36,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    logError('ErrorBoundary caught an error', error, {
+      component: 'ErrorBoundary',
+      componentStack: errorInfo.componentStack
+    });
     
     this.setState({
       error,

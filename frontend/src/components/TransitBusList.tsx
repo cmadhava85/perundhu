@@ -3,11 +3,7 @@ import { useTranslation } from 'react-i18next';
 import TransitBusCard from './TransitBusCard';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import '../styles/transit-design-system.css';
-import '../styles/transit-bus-list-responsive.css';
-import '../styles/enhanced-bus-sorting.css';
-import '../styles/bus-sorting-fallback.css';
-import '../styles/sort-text-fixes.css';
-import '../styles/sort-overlap-fix.css';
+import '../styles/bus-list-clean-redesign.css';
 
 // Filter and sort types
 type SortOption = 'departure' | 'arrival' | 'duration' | 'price' | 'rating';
@@ -331,6 +327,14 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                   </div>
                 </div>
               )}
+
+              {/* Sorting Info Badge */}
+              <div className="flex items-center justify-center gap-2 mt-2 px-3 py-2 bg-green-50 border border-green-200 rounded-lg">
+                <span className="text-green-600 text-xs sm:text-sm">⚡</span>
+                <span className="text-green-700 text-xs sm:text-sm font-medium">
+                  Showing fastest routes first
+                </span>
+              </div>
             </div>
 
             {/* Controls Section */}

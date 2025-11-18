@@ -163,7 +163,7 @@ class OfflineService {
   }
 
   // Sync queue methods for operations that need to be synchronized when back online
-  async addToSyncQueue(operation: { type: string, data: any }): Promise<void> {
+  async addToSyncQueue<T>(operation: { type: string; data: T }): Promise<void> {
     const db = await this.initDB();
     await db.add(STORES.SYNC_QUEUE, {
       ...operation,
@@ -171,7 +171,7 @@ class OfflineService {
     });
   }
 
-  async getSyncQueue(): Promise<any[]> {
+  async getSyncQueue<T = unknown>(): Promise<Array<{ type: string; data: T; timestamp: number }>> {
     const db = await this.initDB();
     return db.getAll(STORES.SYNC_QUEUE);
   }

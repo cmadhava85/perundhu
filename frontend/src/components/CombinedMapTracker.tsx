@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logDebug } from '../utils/logger';
 import type { Location, Bus, Stop, BusLocation } from '../types';
 import type { Stop as ApiStop } from '../types/apiTypes';
 import MapComponent from './MapComponent';
@@ -85,7 +86,10 @@ const CombinedMapTracker = ({
       setInfoDialogOpen(true);
     } else {
       // It's a Bus type with different properties
-      console.log('Bus selected:', bus.busName || bus.busNumber);
+      logDebug('Bus selected', {
+        component: 'CombinedMapTracker',
+        busName: bus.busName || bus.busNumber
+      });
       // You might want to fetch additional information here
     }
   };
@@ -137,7 +141,10 @@ const CombinedMapTracker = ({
 
   // Enhanced stop selection handler
   const handleStopSelect = useCallback((stop: Stop) => {
-    console.log('Stop selected:', stop.name);
+    logDebug('Stop selected', {
+      component: 'CombinedMapTracker',
+      stopName: stop.name
+    });
     onStopSelect?.(stop);
     
     // Highlight the stop temporarily

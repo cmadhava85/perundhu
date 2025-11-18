@@ -14,17 +14,18 @@
   font-family: inherit;
   padding: 0;
   outline: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .transit-bus-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.08);
   transform: translateY(-1px);
-  border-color: var(--transit-primary-light);
+  border-color: rgba(0, 102, 255, 0.2);
 }
 
 .transit-bus-card.selected {
-  border-color: var(--transit-primary);
-  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.1);
+  border-color: rgba(0, 102, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 102, 255, 0.15), 0 0 0 1px rgba(0, 102, 255, 0.2);
 }
 
 /* Click feedback */
@@ -36,8 +37,8 @@
 /* Card Header */
 .transit-card-header {
   padding: var(--space-4) var(--space-4) var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--transit-divider);
-  background: linear-gradient(135deg, #F8FAFF 0%, #FFFFFF 100%);
+  border-bottom: none;
+  background: linear-gradient(135deg, #FAFBFF 0%, #FFFFFF 100%);
 }
 
 /* Mobile-First Bus Info Row */
@@ -415,8 +416,9 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-4);
-  background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
-  border-top: 1px solid var(--transit-divider);
+  background: rgba(248, 250, 255, 0.6);
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(8px);
 }
 
 .status-indicator {
@@ -476,7 +478,7 @@
 .route-details {
   padding: var(--space-4);
   background: linear-gradient(135deg, #FAFBFF 0%, #F5F7FF 100%);
-  border-top: 1px solid var(--transit-divider);
+  border-top: none;
 }
 
 .stops-simple-list {
@@ -490,18 +492,22 @@
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   gap: var(--space-3);
-  padding: var(--space-1) 0;
-  border-bottom: 1px solid var(--transit-divider);
+  padding: var(--space-3) var(--space-2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   font-size: var(--text-sm);
   align-items: center;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-1);
 }
 
 .stop-simple-item:last-child {
   border-bottom: none;
+  margin-bottom: 0;
 }
 
 .stop-simple-item:hover {
-  background: rgba(0, 102, 255, 0.02);
+  background: rgba(0, 102, 255, 0.04);
+  border-color: rgba(0, 102, 255, 0.1);
 }
 
 .stop-simple-number {
@@ -818,7 +824,7 @@
 /* Compact Info Grid - Always visible in compact form */
 .compact-info {
   padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--transit-divider);
+  border-bottom: none;
 }
 
 .card-info-grid.compact {
@@ -852,8 +858,8 @@
 
 .expanded-features {
   padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--transit-divider);
-  background: var(--transit-surface-elevated);
+  border-bottom: none;
+  background: rgba(248, 250, 255, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;

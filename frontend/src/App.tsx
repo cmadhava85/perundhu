@@ -25,12 +25,12 @@ import FeatureSettings from './components/FeatureSettings';
 import ErrorBoundary from './components/ErrorBoundary';
 import SearchResults from './components/SearchResults';
 import BottomNavigation from './components/BottomNavigation';
-import TransitBusCardTest from './components/TransitBusCardTest';
 
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
-import { useBusSearch } from './hooks/useBusSearch';
+import { useBusSearchEnhanced } from './hooks/useBusSearchEnhanced';
 import useBrowserDetection from './hooks/useBrowserDetection';
+import { LoadingSkeleton } from './components/LoadingSkeleton';
 
 // Context providers
 import { ThemeProvider } from './context/ThemeContext';
@@ -93,8 +93,9 @@ function AppContent() {
     connectingRoutes,
     searchBuses,
     setSelectedBusId,
-    resetResults
-  } = useBusSearch();
+    resetResults,
+    LoadingComponent
+  } = useBusSearchEnhanced();
   
   // State for selected locations with safer initialization
   const [fromLocation, setFromLocation] = useState(initialFromLocation);
@@ -347,7 +348,7 @@ function AppContent() {
                   }}
                 />
               ) : (
-                <Loading message={t('loading.locations', 'Loading locations...')} />
+                <LoadingSkeleton count={1} type="text" />
               )}
             </ErrorBoundary>
           } />
@@ -369,7 +370,7 @@ function AppContent() {
                   }}
                 />
               ) : (
-                <Loading message={t('loading.locations', 'Loading locations...')} />
+                <LoadingSkeleton count={1} type="text" />
               )}
             </ErrorBoundary>
           } />
@@ -384,9 +385,10 @@ function AppContent() {
                   stopsMap={stopsMap}
                   error={searchError}
                   connectingRoutes={connectingRoutes}
+                  loading={busesLoading}
                 />
               ) : (
-                <Loading message={t('loading.locations', 'Loading locations...')} />
+                <LoadingSkeleton count={1} type="text" />
               )}
             </ErrorBoundary>
           } />
@@ -451,11 +453,6 @@ function AppContent() {
                 {...featureSettings}
                 onSettingsChange={() => {}}
               />
-            </ErrorBoundary>
-          } />
-          <Route path="/test-bus-card" element={
-            <ErrorBoundary>
-              <TransitBusCardTest />
             </ErrorBoundary>
           } />
           <Route path="*" element={

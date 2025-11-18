@@ -108,7 +108,7 @@ export const useFormValidation = <T extends Record<string, any>>(
     setTouched({});
   }, [initialData]);
 
-  const setFieldValue = useCallback((name: string, value: any) => {
+  const setFieldValue = useCallback(<K extends keyof T>(name: K, value: T[K]) => {
     setData(prev => ({
       ...prev,
       [name]: value

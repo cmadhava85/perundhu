@@ -201,7 +201,7 @@ export class ApiService {
   /**
    * Generic POST request method with type safety
    */
-  public async post<T>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
+  public async post<T, D = unknown>(url: string, data: D, config?: AxiosRequestConfig): Promise<T> {
     try {
       const response: AxiosResponse<T> = await this.api.post(url, data, config);
       return response.data;
@@ -213,7 +213,7 @@ export class ApiService {
   /**
    * Generic PUT request method with type safety
    */
-  public async put<T>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
+  public async put<T, D = unknown>(url: string, data: D, config?: AxiosRequestConfig): Promise<T> {
     try {
       const response: AxiosResponse<T> = await this.api.put(url, data, config);
       return response.data;
@@ -237,18 +237,19 @@ export class ApiService {
   /**
    * Format error for better debugging
    */
-  private formatError(error: any): Error {
-    if (error.response) {
+  private formatError(error: unknown): Error {
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response: { status: number; data?: { message?: string } } };
       // Server responded with error status
-      const status = error.response.status;
-      const message = error.response.data?.message || 'Unknown error';
+      const status = axiosError.response.status;
+      const message = axiosError.response.data?.message || 'Unknown error';
       return new Error(`API Error ${status}: ${message}`);
-    } else if (error.request) {
+    } else if (error && typeof error === 'object' && 'request' in error) {
       // Request was made but no response
       return new Error('Network error - no response from server');
     } else {
       // Error in request configuration
-      return new Error(`Request error: ${error.message}`);
+      return new Error(`Request error: ${(error as Error).message}`);
     }
   }
 

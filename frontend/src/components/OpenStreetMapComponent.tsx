@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { logDebug, logWarn } from '../utils/logger';
 import type { Location, Stop } from '../types/index';
 import { getStopCoordinates, getStopCoordinatesAsync, getCoordinateSource } from '../utils/cityCoordinates';
 import '../styles/OpenStreetMapComponent.css';
@@ -7,8 +8,8 @@ interface OpenStreetMapComponentProps {
   fromLocation: Location;
   toLocation: Location;
   selectedStops?: Stop[];
-  buses?: any[];
-  onBusClick?: (bus: any) => void;
+  buses?: unknown[];
+  onBusClick?: (bus: unknown) => void;
   className?: string;
   style?: React.CSSProperties;
   mapId?: string;
@@ -29,9 +30,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
   mapId = 'osm-map'
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
   const isInitializingRef = useRef<boolean>(false);
-  const lastPropsRef = useRef<any>(null);
+  const lastPropsRef = useRef<{
+    fromLocation: Location;
+    toLocation: Location;
+    selectedStops: Stop[];
+    buses: unknown[];
+  } | null>(null);
 
   useEffect(() => {
     // Check if props have actually changed to avoid unnecessary re-renders
@@ -50,7 +56,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
       try {
         // Prevent multiple simultaneous initializations
         if (isInitializingRef.current) {
-          console.log('Map initialization already in progress, skipping');
+          logDebug('Map initialization already in progress, skipping', {
+            component: 'OpenStreetMapComponent'
+          });
           return;
         }
         
@@ -59,10 +67,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
         // Check if Leaflet is available
         if (typeof window !== 'undefined') {
           // Try to load Leaflet dynamically
-          const L = (window as any).L;
+          const L = (window as { L?: typeof import('leaflet') }).L;
           
           if (!L) {
-            console.warn('Leaflet not loaded, showing fallback');
+            logWarn('Leaflet not loaded, showing fallback', {
+              component: 'OpenStreetMapComponent'
+            });
             isInitializingRef.current = false;
             return;
           }
@@ -74,7 +84,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
                 mapInstanceRef.current.remove();
                 mapInstanceRef.current = null;
               } catch (error) {
-                console.warn('Error cleaning up previous map:', error);
+                logWarn('Error cleaning up previous map', {
+                  component: 'OpenStreetMapComponent',
+                  error
+                });
                 mapInstanceRef.current = null;
               }
             }
@@ -153,7 +166,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
             `);
 
             // Add intermediate stops with coordinate fallback and async geocoding
-            console.log('OpenStreetMapComponent: Selected stops:', selectedStops.length);
+            logDebug('OpenStreetMapComponent: Selected stops', {
+              component: 'OpenStreetMapComponent',
+              count: selectedStops.length
+            });
             
             const stopsWithCoordinates: Array<{stop: Stop, coords: {latitude: number, longitude: number}, source: string}> = [];
             
@@ -168,7 +184,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
                 }
                 
                 // If no coordinates found, try async geocoding
-                console.log(`Attempting geocoding for stop: "${stop.name}"`);
+                logDebug(`Attempting geocoding for stop: "${stop.name}"`, {
+                  component: 'OpenStreetMapComponent',
+                  stopName: stop.name
+                });
                 const asyncResult = await getStopCoordinatesAsync(stop);
                 if (asyncResult) {
                   return { 
@@ -179,10 +198,17 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
                   };
                 }
                 
-                console.warn(`OpenStreetMapComponent: No coordinates found for stop "${stop.name}" even after geocoding`);
+                logWarn(`No coordinates found for stop "${stop.name}" even after geocoding`, {
+                  component: 'OpenStreetMapComponent',
+                  stopName: stop.name
+                });
                 return null;
               } catch (error) {
-                console.error(`Error processing coordinates for stop "${stop.name}":`, error);
+                logWarn(`Error processing coordinates for stop "${stop.name}"`, {
+                  component: 'OpenStreetMapComponent',
+                  stopName: stop.name,
+                  error
+                });
                 return null;
               }
             });
@@ -197,10 +223,20 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
               .forEach((result) => {
                 const { stop, coords, source } = result;
                 stopsWithCoordinates.push({ stop, coords, source });
-                console.log(`OpenStreetMapComponent: Stop "${stop.name}": ${source} at (${coords.latitude}, ${coords.longitude})`);
+                logDebug(`Stop "${stop.name}": ${source} at coordinates`, {
+                  component: 'OpenStreetMapComponent',
+                  stopName: stop.name,
+                  source,
+                  latitude: coords.latitude,
+                  longitude: coords.longitude
+                });
               });
             
-            console.log(`OpenStreetMapComponent: ${stopsWithCoordinates.length}/${selectedStops.length} stops have coordinates`);
+            logDebug('Stops with coordinates summary', {
+              component: 'OpenStreetMapComponent',
+              withCoords: stopsWithCoordinates.length,
+              total: selectedStops.length
+            });
             
             // Show warning if some stops couldn't be located
             if (stopsWithCoordinates.length < selectedStops.length) {
@@ -260,15 +296,16 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
 
             // Add buses if provided
             buses.forEach((bus, index) => {
-              if ('latitude' in bus && 'longitude' in bus) {
-                const busMarker = L.marker([bus.latitude, bus.longitude], {
+              const typedBus = bus as { latitude?: number; longitude?: number; busName?: string; busNumber?: string };
+              if (typedBus.latitude && typedBus.longitude) {
+                const busMarker = L.marker([typedBus.latitude, typedBus.longitude], {
                   icon: busStopIcon
                 }).addTo(map);
 
                 busMarker.bindPopup(`
                   <div class="map-popup">
-                    <h4>${bus.busName || 'Bus Service'}</h4>
-                    <p>Number: ${bus.busNumber}</p>
+                    <h4>${typedBus.busName || 'Bus Service'}</h4>
+                    <p>Number: ${typedBus.busNumber}</p>
                     <p>Status: Live</p>
                   </div>
                 `);

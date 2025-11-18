@@ -4,6 +4,7 @@
  */
 
 import type { RewardPoints, RewardActivity } from '../types';
+import { logDebug } from '../utils/logger';
 
 export interface UserReward {
   id: number;
@@ -56,12 +57,22 @@ export const getUserRewards = async (userId: string): Promise<RewardPoints> => {
  */
 export const addPoints = async (userId: string, points: number, activity: string): Promise<void> => {
   // In a real implementation, this would make an API call
-  console.log(`Adding ${points} points to user ${userId} for: ${activity}`);
+  logDebug(`Adding ${points} points to user ${userId} for: ${activity}`, {
+    component: 'userRewardsService',
+    userId,
+    points,
+    activity
+  });
 };
 
 export const addRewardPoints = async (userId: string, points: number, activityType: string): Promise<void> => {
   // Mock implementation for testing
-  console.log(`Adding ${points} points to user ${userId} for ${activityType}`);
+  logDebug(`Adding ${points} points to user ${userId} for ${activityType}`, {
+    component: 'userRewardsService',
+    userId,
+    points,
+    activityType
+  });
 };
 
 /**

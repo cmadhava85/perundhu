@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TransitBusList from './TransitBusList';
+import { VirtualBusList } from './VirtualBusList';
+import { LoadingSkeleton } from './LoadingSkeleton';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import { ApiError } from '../services/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/transit-design-system.css';
 // Using TransitBusList with new Transit design system
 
@@ -17,6 +19,7 @@ interface SearchResultsProps {
   stopsMap?: Record<number, Stop[]>;  // Add this for the complete stops data
   error?: Error | ApiError | null;
   connectingRoutes?: any[];
+  loading?: boolean;  // Add loading prop
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({
@@ -26,11 +29,16 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   stops,
   stopsMap = {},
   error,
-  connectingRoutes = []
+  connectingRoutes = [],
+  loading = false
 }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
+  
+  // Use virtual scrolling for large lists (50+ buses)
+  const useVirtualScrolling = buses.length > 50;
   
   // Use stopsMap if available, otherwise fall back to the stops array
   const allStops = Object.keys(stopsMap).length > 0 
@@ -50,6 +58,19 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   const handleSelectBus = (bus: Bus) => {
     setSelectedBusId(bus.id);
   };
+
+  // Show loading skeleton while searching
+  if (loading) {
+    return (
+      <div className="transit-app">
+        <div className="search-results-content">
+          <div className="bus-list-section">
+            <LoadingSkeleton count={5} type="bus-card" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -75,18 +96,156 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   return (
     <div className="transit-app">
       <div className="search-results-content">
-        <div className="bus-list-section">
-          <TransitBusList 
-            buses={buses} 
-            selectedBusId={selectedBusId} 
-            stops={allStops}
-            stopsMap={stopsMap}
-            onSelectBus={handleSelectBus}
-            fromLocation={fromLocation.name}
-            toLocation={toLocation.name}
-            fromLocationObj={fromLocation}
-            toLocationObj={toLocation}
-          />
+        {/* Edit Search Button - Sticky at top */}
+        <div className="edit-search-header" style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 10,
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%)',
+          padding: '12px 16px',
+          borderRadius: '12px',
+          marginBottom: '16px',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '12px',
+          flexWrap: 'wrap'
+        }}>
+          {/* Current Search Display */}
+          <div style={{ 
+            flex: '1 1 auto',
+            minWidth: '200px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px'
+          }}>
+            <div style={{ 
+              fontSize: '11px', 
+              fontWeight: 600,
+              color: '#6B7280',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>
+              Current Search
+            </div>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#1F2937'
+            }}>
+              <span>📍 {fromLocation.name}</span>
+              <span style={{ color: '#3B82F6' }}>→</span>
+              <span>🎯 {toLocation.name}</span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ 
+            display: 'flex', 
+            gap: '8px',
+            flexShrink: 0
+          }}>
+            <button
+              onClick={() => navigate('/')}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '10px 16px',
+                background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 2px 8px rgba(59, 130, 246, 0.25)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.35)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(59, 130, 246, 0.25)';
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+              <span className="hidden sm:inline">Edit Search</span>
+              <span className="sm:hidden">Edit</span>
+            </button>
+
+            <button
+              onClick={() => {
+                navigate('/', { replace: true });
+                window.location.reload();
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '10px 16px',
+                background: '#FFFFFF',
+                color: '#6B7280',
+                border: '1.5px solid rgba(0, 0, 0, 0.08)',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#F9FAFB';
+                e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                e.currentTarget.style.color = '#3B82F6';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#FFFFFF';
+                e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)';
+                e.currentTarget.style.color = '#6B7280';
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <span className="hidden sm:inline">New Search</span>
+              <span className="sm:hidden">New</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="bus-list-section">{useVirtualScrolling ? (
+            <VirtualBusList
+              buses={buses}
+              onBusClick={handleSelectBus}
+              selectedBusId={selectedBusId}
+              height={600}
+            />
+          ) : (
+            <TransitBusList 
+              buses={buses} 
+              selectedBusId={selectedBusId} 
+              stops={allStops}
+              stopsMap={stopsMap}
+              onSelectBus={handleSelectBus}
+              fromLocation={fromLocation.name}
+              toLocation={toLocation.name}
+              fromLocationObj={fromLocation}
+              toLocationObj={toLocation}
+            />
+          )}
         </div>
         
         <div className="map-section">

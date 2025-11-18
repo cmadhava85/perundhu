@@ -84,9 +84,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
   return (
     <div className="transit-app">
-      <div className="transit-card elevated" style={{ padding: 'var(--space-6)', margin: 'var(--space-4) 0' }}>
+      <div className="transit-card elevated transit-search-form">
         {/* Header */}
-        <div className="stack stack-sm" style={{ marginBottom: 'var(--space-6)' }}>
+        <div className="stack stack-sm transit-form-header">
           <h2 className="text-title-2">🚌 Plan Your Journey</h2>
           <p className="text-caption">Find the best buses for your route</p>
         </div>

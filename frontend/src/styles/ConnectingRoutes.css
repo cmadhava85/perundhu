@@ -1,275 +1,403 @@
-/* ConnectingRoutes Component Styles */
+/* ConnectingRoutes Component - Enhanced Styles */
 
-.connecting-routes-container {
-  margin-bottom: 24px;
+.connecting-routes {
+  margin: 24px 0;
+  padding: 0;
 }
 
-.routes-header {
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.routes-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0;
-}
-
-.route-filters {
-  display: flex;
-  gap: 8px;
-}
-
-.filter-button {
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #4b5563;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filter-button:hover {
-  background-color: #f9fafb;
-}
-
-.filter-button.active {
-  background-color: #2563eb;
-  color: white;
-  border-color: #2563eb;
-}
-
-.route-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.no-routes-found {
+/* Header */
+.connecting-routes-header {
+  margin-bottom: 20px;
   text-align: center;
-  padding: 40px 20px;
-  background-color: #f9fafb;
-  border-radius: 8px;
-  color: #6b7280;
 }
 
-.no-routes-icon {
-  font-size: 32px;
-  margin-bottom: 16px;
-  color: #d1d5db;
-}
-
-.route-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background-color: white;
-  padding: 16px;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.route-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transform: translateY(-2px);
-}
-
-.route-card.expanded {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border-color: #93c5fd;
-}
-
-.route-summary {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.route-locations {
-  flex: 1;
-  min-width: 200px;
-}
-
-.route-locations h4 {
-  margin-top: 0;
-  margin-bottom: 16px;
-  font-weight: 600;
+.connecting-routes-title {
+  font-size: 1.75rem;
+  font-weight: 700;
   color: #1f2937;
-}
-
-.locations-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.route-arrow {
-  color: #6b7280;
-  font-size: 18px;
-}
-
-.route-metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.route-metric {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 16px;
-  background-color: #f9fafb;
-  border-radius: 6px;
-  min-width: 100px;
-}
-
-.metric-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2563eb;
-}
-
-.metric-label {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.expand-button {
-  margin-top: 16px;
+  margin: 0 0 8px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 8px;
-  width: 100%;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  color: #4b5563;
-  font-size: 14px;
+  gap: 8px;
+}
+
+.connecting-routes-subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Route Card */
+.connecting-route-card {
+  position: relative;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
   cursor: pointer;
-  transition: all 0.2s;
-}
-
-.expand-button:hover {
-  background-color: #f3f4f6;
-}
-
-.route-details {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
-.leg-container {
-  margin-bottom: 20px;
+.connecting-route-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
 }
 
-.leg-header {
+.connecting-route-card.expanded {
+  border-color: #3b82f6;
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+}
+
+/* Fastest Route Badge */
+.connecting-route-card.fastest-route {
+  border-color: #10b981;
+  background: linear-gradient(to bottom, #f0fdf4 0%, white 100%);
+}
+
+.connecting-route-card.fastest-route:hover {
+  border-color: #059669;
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.15);
+}
+
+.fastest-badge {
+  position: absolute;
+  top: -2px;
+  right: 20px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 0 0 12px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+  letter-spacing: 0.025em;
+}
+
+.badge-icon {
+  font-size: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.badge-text {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+/* Route Summary */
+.route-summary {
+  margin-top: 8px;
+}
+
+.route-main-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.from, .to {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.connection-point {
+  color: #3b82f6;
+  font-weight: 700;
+  position: relative;
+}
+
+.connection-point::after {
+  content: '🔄';
+  position: absolute;
+  top: -8px;
+  right: -20px;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.connector {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+/* Route Metrics */
+.route-metrics {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.metric-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+}
+
+.metric-item:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.metric-item.primary {
+  background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+  border-color: #93c5fd;
+}
+
+.connecting-route-card.fastest-route .metric-item.primary {
+  background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+  border-color: #6ee7b7;
+}
+
+.metric-icon {
+  font-size: 1.1rem;
+}
+
+.metric-label {
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.metric-value {
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Route Details (Expanded State) */
+.route-details {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px solid #e5e7eb;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.connection-info {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.connection-info h4 {
+  font-size: 1.1rem;
+  color: #3b82f6;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Legs Container */
+.legs-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.leg-card {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.leg-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.1);
+}
+
+.leg-card h4 {
+  margin: 0 0 16px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
 }
 
-.leg-icon {
-  width: 24px;
-  height: 24px;
-  background-color: #2563eb;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.leg-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #1f2937;
+.leg-card h4::before {
+  content: '🚌';
+  font-size: 1.2rem;
 }
 
 .leg-details {
-  padding-left: 32px;
-  border-left: 2px dashed #e5e7eb;
-  margin-left: 11px;
-}
-
-.leg-info-row {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.info-label {
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.info-value {
-  font-weight: 500;
-  color: #1f2937;
-  font-size: 14px;
-}
-
-.bus-details {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  padding: 12px;
-  background-color: #f9fafb;
-  border-radius: 6px;
-}
-
-.bus-info-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.wait-time {
-  display: flex;
-  align-items: center;
-  margin: 16px 0;
-  padding-left: 32px;
-}
-
-.wait-time-info {
-  background-color: #fff7ed;
-  border: 1px solid #fed7aa;
-  border-radius: 6px;
-  padding: 8px 12px;
-  color: #9a3412;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
 }
 
-.wait-icon {
-  font-size: 16px;
+.leg-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #4b5563;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-@media (max-width: 640px) {
-  .route-summary {
-    flex-direction: column;
+.leg-details strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.bus-time {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.departure, .arrival {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.departure span, .arrival span {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.departure strong, .arrival strong {
+  font-size: 1.1rem;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* Wait Time Indicator */
+.wait-time-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.wait-time-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fef9e7 100%);
+  border: 2px dashed #fbbf24;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.wait-time-badge span {
+  font-size: 0.75rem;
+  color: #92400e;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.wait-time-badge strong {
+  font-size: 1.2rem;
+  color: #78350f;
+  font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .connecting-routes-title {
+    font-size: 1.4rem;
   }
-  
+
+  .legs-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .wait-time-indicator {
+    order: 2;
+    margin: 12px 0;
+  }
+
+  .route-main-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .fastest-badge {
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .metric-item {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .connection-point::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .connecting-route-card {
+    padding: 16px;
+  }
+
   .route-metrics {
-    width: 100%;
-    justify-content: space-around;
+    gap: 8px;
   }
-  
-  .route-metric {
-    min-width: auto;
-    flex: 1;
+
+  .metric-item {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    text-align: center;
+  }
+
+  .metric-label {
+    display: none;
+  }
+
+  .bus-time {
+    flex-direction: column;
+    gap: 8px;
   }
 }

@@ -344,7 +344,7 @@ class AuthService {
 
   isTokenExpired(): boolean {
     const expiration = SecurityService.secureRetrieve('token_expiration');
-    if (!expiration) return true;
+    if (!expiration || typeof expiration !== 'number') return true;
     return Date.now() > expiration;
   }
 
