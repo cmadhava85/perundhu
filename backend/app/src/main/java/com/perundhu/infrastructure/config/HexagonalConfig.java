@@ -8,11 +8,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.perundhu.domain.port.BusAnalyticsRepository;
 import com.perundhu.domain.port.BusRepository;
+import com.perundhu.domain.port.BusTimingRecordRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.LocationValidationService;
 import com.perundhu.domain.port.OCRService;
 import com.perundhu.domain.port.RouteContributionRepository;
+import com.perundhu.domain.port.SkippedTimingRecordRepository;
 import com.perundhu.domain.port.StopRepository;
+import com.perundhu.domain.port.TimingImageContributionRepository;
 import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
 import com.perundhu.domain.service.RouteValidationService;
@@ -23,9 +26,12 @@ import com.perundhu.infrastructure.service.TranslationServiceImpl;
 import com.perundhu.infrastructure.config.TranslationProperties;
 import com.perundhu.infrastructure.persistence.adapter.BusAnalyticsRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
+import com.perundhu.infrastructure.persistence.adapter.BusTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.RouteContributionRepositoryAdapter;
+import com.perundhu.infrastructure.persistence.adapter.SkippedTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.StopJpaRepositoryAdapter;
+import com.perundhu.infrastructure.persistence.adapter.TimingImageContributionRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.TranslationJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.jpa.BusAnalyticsJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
@@ -33,13 +39,19 @@ import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.StopJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
+import com.perundhu.infrastructure.persistence.repository.BusTimingRecordJpaRepository;
+import com.perundhu.infrastructure.persistence.repository.SkippedTimingRecordJpaRepository;
+import com.perundhu.infrastructure.persistence.repository.TimingImageContributionJpaRepository;
 
 /**
  * Hexagonal Architecture Configuration
  * Configures beans for the hexagonal architecture layers
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "com.perundhu.infrastructure.persistence.jpa")
+@EnableJpaRepositories(basePackages = {
+    "com.perundhu.infrastructure.persistence.jpa",
+    "com.perundhu.infrastructure.persistence.repository"
+})
 public class HexagonalConfig {
 
   @Bean
@@ -77,6 +89,24 @@ public class HexagonalConfig {
   public BusAnalyticsRepository busAnalyticsRepository(
       @Qualifier("jpaPackageBusAnalyticsJpaRepository") BusAnalyticsJpaRepository jpaRepository) {
     return new BusAnalyticsRepositoryAdapter(jpaRepository);
+  }
+
+  @Bean
+  public TimingImageContributionRepository timingImageContributionRepository(
+      @Qualifier("repositoryPackageTimingImageContributionJpaRepository") TimingImageContributionJpaRepository jpaRepository) {
+    return new TimingImageContributionRepositoryAdapter(jpaRepository);
+  }
+
+  @Bean
+  public BusTimingRecordRepository busTimingRecordRepository(
+      @Qualifier("repositoryPackageBusTimingRecordJpaRepository") BusTimingRecordJpaRepository jpaRepository) {
+    return new BusTimingRecordRepositoryAdapter(jpaRepository);
+  }
+
+  @Bean
+  public SkippedTimingRecordRepository skippedTimingRecordRepository(
+      @Qualifier("repositoryPackageSkippedTimingRecordJpaRepository") SkippedTimingRecordJpaRepository jpaRepository) {
+    return new SkippedTimingRecordRepositoryAdapter(jpaRepository);
   }
 
   @Bean

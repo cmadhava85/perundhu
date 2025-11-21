@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import AuthService from '../../services/authService';
 import './UserManagement.css';
 
 interface User {
@@ -30,42 +31,23 @@ const UserManagement: React.FC = () => {
   const loadUsers = async () => {
     setLoading(true);
     try {
-      // Mock data for demonstration
-      const mockUsers: User[] = [
-        {
-          id: '1',
-          email: 'john.doe@example.com',
-          username: 'johndoe',
-          role: 'user',
-          status: 'active',
-          registrationDate: '2024-01-15',
-          lastLogin: '2025-09-04',
-          contributionsCount: 12
-        },
-        {
-          id: '2',
-          email: 'admin@perundhu.com',
-          username: 'admin',
-          role: 'admin',
-          status: 'active',
-          registrationDate: '2023-06-01',
-          lastLogin: '2025-09-05',
-          contributionsCount: 45
-        },
-        {
-          id: '3',
-          email: 'moderator@perundhu.com',
-          username: 'moderator',
-          role: 'moderator',
-          status: 'active',
-          registrationDate: '2023-08-15',
-          lastLogin: '2025-09-03',
-          contributionsCount: 28
-        }
-      ];
-      setUsers(mockUsers);
+      // Fetch users from API
+      const response = await AuthService.getUsers(0, 100);
+      const apiUsers = response.users.map(user => ({
+        id: user.id,
+        email: user.email,
+        username: user.name || user.email.split('@')[0],
+        role: (user.role?.toLowerCase() || 'user') as User['role'],
+        status: 'active' as User['status'],
+        registrationDate: user.createdAt || new Date().toISOString().split('T')[0],
+        lastLogin: user.lastLogin || new Date().toISOString().split('T')[0],
+        contributionsCount: 0
+      }));
+      setUsers(apiUsers);
     } catch (error) {
       console.error('Error loading users:', error);
+      // Show error to user
+      setUsers([]);
     } finally {
       setLoading(false);
     }
@@ -82,21 +64,31 @@ const UserManagement: React.FC = () => {
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     try {
+      await AuthService.updateUserRole(userId, newRole.toUpperCase());
       setUsers(prev => prev.map(user => 
         user.id === userId ? { ...user, role: newRole as User['role'] } : user
       ));
     } catch (error) {
       console.error('Error updating user role:', error);
+      alert('Failed to update user role. Please try again.');
     }
   };
 
   const handleStatusChange = async (userId: string, newStatus: string) => {
     try {
+      // Call appropriate API based on status
+      if (newStatus === 'banned') {
+        await AuthService.banUser(userId, 'Banned by administrator');
+      } else if (newStatus === 'active') {
+        await AuthService.unbanUser(userId);
+      }
+      
       setUsers(prev => prev.map(user => 
         user.id === userId ? { ...user, status: newStatus as User['status'] } : user
       ));
     } catch (error) {
       console.error('Error updating user status:', error);
+      alert('Failed to update user status. Please try again.');
     }
   };
 

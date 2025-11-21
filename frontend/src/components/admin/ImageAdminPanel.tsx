@@ -45,11 +45,57 @@ const ImageAdminPanel: React.FC = () => {
   const [showDetailDialog, setShowDetailDialog] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const fetchImageContributions = async () => {
+      try {
+        if (isMounted) {
+          setLoading(true);
+        }
+        const data = await AdminService.getImageContributions();
+        
+        if (isMounted) {
+          setContributions(data);
+        }
+      } catch (error) {
+        if (isMounted) {
+          console.error('Error fetching image contributions:', error);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
     fetchImageContributions();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
-    filterContributions();
+    const timer = setTimeout(() => {
+      let filtered = contributions;
+
+      if (statusFilter !== 'ALL') {
+        filtered = filtered.filter(contribution => contribution.status === statusFilter);
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter(contribution =>
+          contribution.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          contribution.submittedBy?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          contribution.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          contribution.id?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+
+      setFilteredContributions(filtered);
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [contributions, searchTerm, statusFilter]);
 
   const fetchImageContributions = async () => {
@@ -62,25 +108,6 @@ const ImageAdminPanel: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const filterContributions = () => {
-    let filtered = contributions;
-
-    if (statusFilter !== 'ALL') {
-      filtered = filtered.filter(contribution => contribution.status === statusFilter);
-    }
-
-    if (searchTerm) {
-      filtered = filtered.filter(contribution =>
-        contribution.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contribution.submittedBy?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contribution.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contribution.id?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    setFilteredContributions(filtered);
   };
 
   const handleApprove = async (contribution: ImageContribution) => {

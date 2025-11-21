@@ -317,7 +317,7 @@ export class GeocodingService {
           
           // Filter to only include cities, towns, villages - exclude roads, highways, etc.
           const cityResults = data.filter((result: any) => {
-            // More comprehensive filtering
+            // More comprehensive filtering to include state districts and counties
             const isValidPlace = (
               result.type === 'city' || 
               result.type === 'town' || 
@@ -325,7 +325,10 @@ export class GeocodingService {
               result.type === 'hamlet' ||
               result.addresstype === 'city' ||
               result.addresstype === 'town' ||
-              result.addresstype === 'village'
+              result.addresstype === 'village' ||
+              result.addresstype === 'state_district' ||
+              result.addresstype === 'county' ||
+              (result.class === 'boundary' && result.type === 'administrative' && result.address?.state_district)
             );
             
             const isNotRoad = (

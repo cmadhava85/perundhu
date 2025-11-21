@@ -37,6 +37,13 @@ export const getUserFriendlyErrorMessage = (error: Error | ApiError): { message:
       };
     }
     
+    if (error.code === 'OSM_LOCATION_NOT_SUPPORTED') {
+      return {
+        message: error.message,
+        suggestion: 'Look for locations with a 🚍 icon - these are in our database and can be searched.'
+      };
+    }
+    
     switch (error.status) {
       case 404:
         return {
@@ -49,6 +56,13 @@ export const getUserFriendlyErrorMessage = (error: Error | ApiError): { message:
           suggestion: 'Please try again later or contact support if the problem persists.'
         };
       case 400:
+        // Check if it's an OSM location error in the message
+        if (error.message.includes('not in our system')) {
+          return {
+            message: error.message,
+            suggestion: 'Please select locations from our database (marked with 🚍) for now.'
+          };
+        }
         return {
           message: 'There was a problem with your request.',
           suggestion: 'Please check the information you provided and try again.'

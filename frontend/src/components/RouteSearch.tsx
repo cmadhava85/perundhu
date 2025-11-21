@@ -1,7 +1,8 @@
+/**
+ * RouteSearch - Simple route search component
+ * TODO: This is a placeholder - consolidate with TransitSearchForm functionality
+ */
 import React from 'react';
-import type { FormEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import '../styles/RouteSearch.css';
 
 interface RouteSearchProps {
   searchQuery: string;
@@ -10,53 +11,50 @@ interface RouteSearchProps {
   isSearching: boolean;
 }
 
-/**
- * Component for searching routes
- */
 const RouteSearch: React.FC<RouteSearchProps> = ({
   searchQuery,
   setSearchQuery,
   onSearch,
   isSearching
 }) => {
-  const { t } = useTranslation();
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      onSearch(searchQuery);
-    }
+    onSearch(searchQuery);
   };
 
   return (
-    <div className="route-search">
-      <h2 className="search-title">{t('routes.search.title', 'Find Your Route')}</h2>
-      
-      <form onSubmit={handleSubmit} className="search-form">
-        <div className="search-input-container">
+    <div style={{ padding: '16px', background: 'white', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+      <form onSubmit={handleSubmit}>
+        <div style={{ display: 'flex', gap: '8px' }}>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t('routes.search.placeholder', 'Enter source and destination (e.g. "Chennai to Bangalore")')}
-            className="search-input"
-            disabled={isSearching}
+            placeholder="Search routes..."
+            style={{
+              flex: 1,
+              padding: '12px',
+              fontSize: '14px',
+              border: '2px solid #ddd',
+              borderRadius: '8px',
+              outline: 'none'
+            }}
           />
-          <button 
-            type="submit" 
-            className="search-button"
+          <button
+            type="submit"
             disabled={isSearching || !searchQuery.trim()}
+            style={{
+              padding: '12px 24px',
+              background: isSearching ? '#ccc' : '#007bff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: isSearching ? 'not-allowed' : 'pointer',
+              fontWeight: 500
+            }}
           >
-            {isSearching ? (
-              <span className="loading-spinner"></span>
-            ) : (
-              t('common.search', 'Search')
-            )}
+            {isSearching ? '🔍 Searching...' : '🔍 Search'}
           </button>
-        </div>
-        
-        <div className="search-tips">
-          {t('routes.search.tips', 'Tip: You can also search for specific bus numbers or landmarks')}
         </div>
       </form>
     </div>

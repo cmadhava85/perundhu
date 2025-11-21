@@ -21,26 +21,78 @@
   },
   "search": {
     "title": "Find Your Bus",
-    "from": "Origin:",
-    "to": "Destination:",
+    "from": "From",
+    "to": "To",
+    "fromPlaceholder": "Enter departure location",
+    "toPlaceholder": "Enter destination location",
     "selectDeparture": "Select an origin location",
     "selectDestination": "Select a destination location",
     "searchButton": "Search Buses",
-    "clickSearch": "Click Search to find buses from {{from}} to {{to}}"
+    "clickSearch": "Click Search to find buses from {{from}} to {{to}}",
+    "fromSuggestions": "From location suggestions",
+    "toSuggestions": "To location suggestions"
   },
   "searchForm": {
     "title": "Find Your Bus",
+    "planJourney": "Plan Your Journey",
+    "findBestBuses": "Find the best buses for your route",
     "fromLabel": "Origin",
     "toLabel": "Destination",
     "searchButton": "Search Buses",
     "resetButton": "Reset",
     "selectLocation": "Select an origin location",
-    "selectDestination": "Select a destination location"
+    "selectDestination": "Select a destination location",
+    "swapLocations": "Swap locations",
+    "viewOnMap": "View on Map",
+    "scheduleView": "Schedule View",
+    "suggestions": "Suggestions"
+  },
+  "searchResults": {
+    "currentSearch": "Current Search",
+    "editSearch": "Edit Search",
+    "edit": "Edit",
+    "newSearch": "New Search",
+    "new": "New",
+    "error": {
+      "title": "Search Error",
+      "home": "Back to Search"
+    }
   },
   "busList": {
     "availableBuses": "Available Buses",
     "title": "Available Buses",
     "noBuses": "No buses available for the selected route",
+    "noBusesFound": "No buses found",
+    "noBusesMessage": "We couldn't find any buses for your selected route.",
+    "suggestions": "Suggestions:",
+    "suggestionNearby": "Try searching for nearby locations",
+    "suggestionTimes": "Check different times of day",
+    "suggestionSupport": "Contact support for assistance",
+    "bus": "bus",
+    "buses": "buses",
+    "showingFastest": "Showing fastest routes first",
+    "searchPlaceholder": "Search buses...",
+    "filter": "Filter",
+    "sort": "Sort:",
+    "sortDeparture": "Departure",
+    "sortDepartureShort": "Dep",
+    "sortDepartureDesc": "Earliest first",
+    "sortArrival": "Arrival",
+    "sortArrivalShort": "Arr",
+    "sortArrivalDesc": "Shortest journey",
+    "sortDuration": "Duration",
+    "sortDurationShort": "Time",
+    "sortDurationDesc": "Fastest route",
+    "sortPrice": "Price",
+    "sortPriceDesc": "Best value",
+    "sortRating": "Rating",
+    "sortRatingDesc": "Top rated",
+    "filters": "Filters",
+    "busTypes": "Bus Types",
+    "quickFilters": "Quick Filters",
+    "expressOnly": "Express Only",
+    "accessible": "Accessible",
+    "priceRange": "Price Range",
     "busName": "Bus Name",
     "busNumber": "Bus Number",
     "departure": "Departure",
@@ -170,6 +222,95 @@
       "view": "View",
       "delete": "Delete",
       "deleteConfirm": "Are you sure you want to delete this route? This action cannot be undone."
+    },
+    "timingImages": {
+      "title": "Timing Image Management",
+      "subtitle": "Review and approve user-submitted timing images",
+      "pending": "Pending Review",
+      "approve": "Approve",
+      "reject": "Reject",
+      "delete": "Delete",
+      "view": "View",
+      "extractedData": "Extracted Data",
+      "ocrConfidence": "OCR Confidence",
+      "submittedBy": "Submitted By",
+      "submissionDate": "Submission Date",
+      "reviewStatus": "Review Status",
+      "manualReview": "Manual Review Required",
+      "noContributions": "No contributions found",
+      "loading": "Loading contributions...",
+      "filterStatus": "Filter by Status",
+      "searchPlaceholder": "Search contributions..."
+    }
+  },
+  "busTimings": {
+    "upload": {
+      "title": "Upload Bus Timing Board",
+      "description": "Share bus timing boards from bus stands to help other travelers",
+      "tip": "Tip: Clear photos of official bus timing boards work best",
+      "image": "Bus Timing Board Image",
+      "origin": "Origin Location (English)",
+      "originTamil": "Origin Location (Tamil)",
+      "notes": "Additional Notes",
+      "submit": "Submit Contribution",
+      "uploading": "Uploading...",
+      "reset": "Reset",
+      "success": "Upload successful! Your contribution is pending review.",
+      "boardType": "Board Type",
+      "selectBoardType": "Select board type",
+      "imagePreview": "Image Preview",
+      "removeImage": "Remove Image",
+      "dragDrop": "Click to upload or drag and drop",
+      "fileSize": "PNG, JPG up to 10MB"
+    },
+    "records": {
+      "title": "Bus Timing Records",
+      "morning": "Morning Timings",
+      "afternoon": "Afternoon Timings",
+      "night": "Night Timings",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "source": "Source",
+      "lastUpdated": "Last Updated",
+      "departureTime": "Departure Time",
+      "arrivalTime": "Arrival Time",
+      "noTimings": "No timings available for this route"
+    }
+  },
+  "enums": {
+    "boardType": {
+      "GOVERNMENT": "Government",
+      "PRIVATE": "Private",
+      "LOCAL": "Local",
+      "INTER_CITY": "Inter-City"
+    },
+    "timingImageStatus": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "PROCESSING": "Processing"
+    },
+    "duplicateCheckStatus": {
+      "CHECKED": "Checked",
+      "DUPLICATES_FOUND": "Duplicates Found",
+      "UNIQUE": "Unique",
+      "SKIPPED": "Skipped"
+    },
+    "skipReason": {
+      "DUPLICATE_EXACT": "Exact Duplicate",
+      "DUPLICATE_SIMILAR": "Similar Duplicate",
+      "INVALID_TIME": "Invalid Time",
+      "INVALID_LOCATION": "Invalid Location"
+    },
+    "timingType": {
+      "MORNING": "Morning",
+      "AFTERNOON": "Afternoon",
+      "NIGHT": "Night"
+    },
+    "timingSource": {
+      "USER_CONTRIBUTION": "User Contribution",
+      "OFFICIAL": "Official",
+      "OCR_EXTRACTED": "OCR Extracted"
     }
   }
 }

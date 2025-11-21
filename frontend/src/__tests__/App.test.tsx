@@ -279,8 +279,8 @@ vi.mock('../hooks/useLocationData', () => ({
   useLocationData: () => mockLocationData
 }));
 
-vi.mock('../hooks/useBusSearch', () => ({
-  useBusSearch: () => mockBusSearchData
+vi.mock('../hooks/useBusSearchEnhanced', () => ({
+  useBusSearchEnhanced: () => mockBusSearchData
 }));
 
 vi.mock('../hooks/useBrowserDetection', () => ({

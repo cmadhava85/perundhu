@@ -48,18 +48,16 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
 
     @Override
     public List<RouteContribution> findByStatus(String status) {
-        // Since the repository doesn't have findByStatus, we'll need to filter manually
-        return repository.findAll().stream()
-                .filter(entity -> status.equals(entity.getStatus()))
+        // Use optimized JPA query instead of loading all records
+        return repository.findByStatus(status).stream()
                 .map(this::mapToDomainModel)
                 .toList();
     }
 
     @Override
     public List<RouteContribution> findBySubmittedBy(String submittedBy) {
-        // Filter by submittedBy field
-        return repository.findAll().stream()
-                .filter(entity -> submittedBy.equals(entity.getSubmittedBy()))
+        // Use optimized JPA query instead of loading all records
+        return repository.findBySubmittedBy(submittedBy).stream()
                 .map(this::mapToDomainModel)
                 .toList();
     }
@@ -67,11 +65,8 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     @Override
     public List<RouteContribution> findBySubmittedByAndSubmissionDateAfter(String submittedBy,
             LocalDateTime submissionDate) {
-        // Filter by submittedBy and submission date
-        return repository.findAll().stream()
-                .filter(entity -> submittedBy.equals(entity.getSubmittedBy()) &&
-                        entity.getSubmissionDate() != null &&
-                        entity.getSubmissionDate().isAfter(submissionDate))
+        // Use optimized JPA query with proper indexing
+        return repository.findBySubmittedByAndSubmissionDateAfter(submittedBy, submissionDate).stream()
                 .map(this::mapToDomainModel)
                 .toList();
     }
@@ -95,19 +90,16 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
 
     @Override
     public long countByStatus(String status) {
-        // Since the repository doesn't have countByStatus, we'll need to count manually
-        return repository.findAll().stream()
-                .filter(entity -> status.equals(entity.getStatus()))
-                .count();
+        // Use optimized COUNT query instead of loading all records
+        return repository.countByStatus(status);
     }
 
     @Override
     public boolean existsByBusNumberAndFromLocationNameAndToLocationName(String busNumber, String fromLocationName,
             String toLocationName) {
-        return repository.findAll().stream()
-                .anyMatch(entity -> busNumber.equals(entity.getBusNumber()) &&
-                        fromLocationName.equals(entity.getFromLocationName()) &&
-                        toLocationName.equals(entity.getToLocationName()));
+        // Use optimized EXISTS query - returns immediately on first match
+        return repository.existsByBusNumberAndFromLocationNameAndToLocationName(
+                busNumber, fromLocationName, toLocationName);
     }
 
     // Helper methods for mapping between domain model and JPA entity

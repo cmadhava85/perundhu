@@ -15,7 +15,7 @@ buildscript {
         maven { url 'https://repo.spring.io/snapshot' }
     }
     dependencies {
-        classpath 'mysql:mysql-connector-java:8.0.33'
+        classpath 'com.mysql:mysql-connector-j:8.3.0'
     }
 }
 
@@ -28,6 +28,10 @@ plugins {
     // Add the versions plugin to check for dependency updates
     id 'com.github.ben-manes.versions' version '0.51.0'
     id 'org.flywaydb.flyway' version '10.10.0'
+}
+
+configurations {
+    flywayMigration
 }
 
 repositories {
@@ -44,20 +48,20 @@ sourceSets {
     // Configure the main source set to include the app module sources
     main {
         java {
-            srcDirs = ['app/src/main/java', 'src/main/java']
+            srcDirs = ['app/src/main/java', 'src/main/java', 'infrastructure/src/main/java']
         }
         resources {
-            srcDirs = ['app/src/main/resources', 'src/main/resources']
+            srcDirs = ['app/src/main/resources', 'src/main/resources', 'infrastructure/src/main/resources']
         }
     }
     
     // Configure the test source set to include app module test sources
     test {
         java {
-            srcDirs = ['app/src/test/java', 'src/test/java']
+            srcDirs = ['app/src/test/java', 'src/test/java', 'infrastructure/src/test/java']
         }
         resources {
-            srcDirs = ['app/src/main/resources', 'app/src/test/resources', 'src/test/resources']
+            srcDirs = ['app/src/main/resources', 'app/src/test/resources', 'src/test/resources', 'infrastructure/src/test/resources']
         }
     }
     
@@ -162,6 +166,10 @@ dependencies {
     implementation 'org.flywaydb:flyway-core:10.10.0'
     implementation 'org.flywaydb:flyway-mysql:10.10.0'
     
+    // Add Flyway MySQL driver for Gradle plugin
+    flywayMigration 'com.mysql:mysql-connector-j:8.3.0'
+    flywayMigration 'org.flywaydb:flyway-mysql:10.10.0'
+    
     // Testing dependencies - using Spring Boot managed versions for consistency
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
@@ -197,19 +205,26 @@ dependencies {
     // JSON handling
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    
+    // Tesseract OCR for image text extraction (Tamil + English)
+    implementation 'net.sourceforge.tess4j:tess4j:5.7.0'
+    
+    // Image processing for OCR preprocessing
+    implementation 'org.imgscalr:imgscalr-lib:4.2'
 }
 
 flyway {
     url = project.findProperty('flyway.url') ?: System.getenv('DB_URL') ?: 'jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true'
     user = project.findProperty('flyway.user') ?: System.getenv('DB_USERNAME') ?: 'root'
     password = project.findProperty('flyway.password') ?: System.getenv('DB_PASSWORD') ?: 'root'
-    locations = ['classpath:db/migration']
+    locations = ['classpath:db/migration', 'classpath:db/migration/mysql']
     baselineOnMigrate = true
     validateOnMigrate = false
     outOfOrder = true
     driver = 'com.mysql.cj.jdbc.Driver'
     createSchemas = true
     schemas = ['perundhu']
+    configurations = ['flywayMigration']
 }
 
 // Fix configuration cache issues for Flyway tasks

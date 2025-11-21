@@ -34,7 +34,7 @@ import com.perundhu.domain.service.ConnectingRouteService;
 public class BusScheduleServiceImpl implements BusScheduleService {
 
     // Constants to avoid string duplication
-    private static final String ENTITY_TYPE_LOCATION = "Location";
+    private static final String ENTITY_TYPE_LOCATION = "location";
     private static final String ENTITY_TYPE_BUS = "Bus";
     private static final String ENTITY_TYPE_STOP = "Stop";
     private static final String FIELD_NAME = "name";
@@ -192,11 +192,12 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             final String[] translatedNameHolder = { stopName };
 
             // If language code is provided, try to get translation
-            if (languageCode != null && !languageCode.isEmpty()) {
-                // Get translation for the stop name if available - using record accessor
+            // Note: Stops use location names, so we translate using the location's translation
+            if (languageCode != null && !languageCode.isEmpty() && stop.location() != null) {
+                // Get translation for the stop's location name
                 translationRepository
                         .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
-                                ENTITY_TYPE_STOP, stop.id().value(), FIELD_NAME, languageCode)
+                                ENTITY_TYPE_LOCATION, stop.location().id().value(), FIELD_NAME, languageCode)
                         .ifPresent(translation -> {
                             // Using var for local variable type inference (Java 10+)
                             var translatedValue = translation.getTranslatedValue();
@@ -295,12 +296,16 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
             for (Stop stop : stops) {
                 // First check if the location itself is not null before accessing its id
-                if (stop.location() != null) {
-                    // Compare the Long value from the LocationId with fromLocationId
-                    if (stop.location().id() != null && stop.location().id().value().equals(fromLocationId)) {
+                if (stop.location() != null && stop.location().id() != null) {
+                    Long stopLocationId = stop.location().id().value();
+
+                    // Check if this is the from location
+                    if (stopLocationId.equals(fromLocationId)) {
                         hasFromLocation = true;
-                    } else if (stop.location().id() != null && stop.location().id().value().equals(toLocationId)
-                            && hasFromLocation) {
+                    }
+
+                    // Check if this is the to location AND we've already passed the from location
+                    if (stopLocationId.equals(toLocationId) && hasFromLocation) {
                         hasToLocation = true;
                         break;
                     }
@@ -333,12 +338,16 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
             for (Stop stop : stops) {
                 // First check if the location itself is not null before accessing its id
-                if (stop.location() != null) {
-                    // Compare the Long value from the LocationId with fromLocationId
-                    if (stop.location().id() != null && stop.location().id().value().equals(fromLocationId)) {
+                if (stop.location() != null && stop.location().id() != null) {
+                    Long stopLocationId = stop.location().id().value();
+
+                    // Check if this is the from location
+                    if (stopLocationId.equals(fromLocationId)) {
                         hasFromLocation = true;
-                    } else if (stop.location().id() != null && stop.location().id().value().equals(toLocationId)
-                            && hasFromLocation) {
+                    }
+
+                    // Check if this is the to location AND we've already passed the from location
+                    if (stopLocationId.equals(toLocationId) && hasFromLocation) {
                         hasToLocation = true;
                         break;
                     }
@@ -436,8 +445,12 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
     @Override
     public List<Location> searchLocationsByName(String query) {
-        // TODO: Implement actual logic to search locations by name
-        return new ArrayList<>();
+        if (query == null || query.trim().length() < 3) {
+            return new ArrayList<>();
+        }
+
+        // Use the repository method to search for locations by name pattern
+        return locationRepository.findByNameContaining(query.trim());
     }
 
     @Override

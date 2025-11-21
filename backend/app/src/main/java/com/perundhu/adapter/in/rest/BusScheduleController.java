@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.util.concurrent.RateLimiter;
+import com.perundhu.adapter.in.rest.dto.PaginatedResponse;
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
@@ -27,6 +32,7 @@ import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
+import com.perundhu.infrastructure.exception.RateLimitException;
 
 /**
  * REST API Controller for bus schedules with enhanced security
@@ -39,11 +45,47 @@ public class BusScheduleController {
     private static final Logger log = LoggerFactory.getLogger(BusScheduleController.class);
     private final BusScheduleService busScheduleService;
     private final OpenStreetMapGeocodingService geocodingService;
+    private final RateLimiter globalRateLimiter;
+    private final ConcurrentHashMap<String, RateLimiter> userRateLimiters;
 
-    public BusScheduleController(BusScheduleService busScheduleService,
-            OpenStreetMapGeocodingService geocodingService) {
+    public BusScheduleController(
+            BusScheduleService busScheduleService,
+            OpenStreetMapGeocodingService geocodingService,
+            RateLimiter globalRateLimiter,
+            ConcurrentHashMap<String, RateLimiter> userRateLimiters) {
         this.busScheduleService = busScheduleService;
         this.geocodingService = geocodingService;
+        this.globalRateLimiter = globalRateLimiter;
+        this.userRateLimiters = userRateLimiters;
+    }
+
+    /**
+     * Check rate limit and throw exception if exceeded
+     */
+    private void checkRateLimit(String userId) {
+        // Check global rate limit
+        if (!globalRateLimiter.tryAcquire(100, TimeUnit.MILLISECONDS)) {
+            log.warn("Global rate limit exceeded");
+            throw new RateLimitException("Too many requests. Please try again later.");
+        }
+
+        // Check per-user rate limit
+        RateLimiter userLimiter = userRateLimiters.computeIfAbsent(
+                userId,
+                k -> RateLimiter.create(10.0));
+
+        if (!userLimiter.tryAcquire(100, TimeUnit.MILLISECONDS)) {
+            log.warn("Rate limit exceeded for user: {}", userId);
+            throw new RateLimitException("Too many requests. Please slow down.");
+        }
+    }
+
+    /**
+     * Get user ID from request (simplified - in production use security context)
+     */
+    private String getUserId() {
+        // In production, get from SecurityContext or JWT
+        return "anonymous-user";
     }
 
     /**
@@ -86,7 +128,7 @@ public class BusScheduleController {
      */
     @GetMapping("/locations")
     public ResponseEntity<List<LocationDTO>> getAllLocations(
-            @RequestParam(defaultValue = "en") String language) {
+            @RequestParam(name = "lang", defaultValue = "en") String language) {
         log.info("Getting all locations with language: {} (public access)", language);
         try {
             List<LocationDTO> locations = busScheduleService.getAllLocations(language);
@@ -137,24 +179,28 @@ public class BusScheduleController {
 
     /**
      * Public search endpoint with comprehensive results including continuing buses
+     * Rate limited to prevent abuse
      */
     @GetMapping("/search")
-    public ResponseEntity<List<BusDTO>> searchPublicRoutes(
+    public ResponseEntity<PaginatedResponse<BusDTO>> searchPublicRoutes(
             @RequestParam(required = false) Long fromLocationId,
             @RequestParam(required = false) Long toLocationId,
             @RequestParam(required = false) String fromLocation,
             @RequestParam(required = false) String toLocation,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "true") boolean includeContinuing) {
 
-        log.info(
-                "Comprehensive search: fromLocationId={}, toLocationId={}, fromLocation='{}', toLocation='{}', includeContinuing={}",
-                fromLocationId, toLocationId, fromLocation, toLocation, includeContinuing);
+        // Apply rate limiting
+        checkRateLimit(getUserId());
 
-        // Limit search results for public access
-        if (size > 10) {
-            size = 10;
+        log.info(
+                "Comprehensive search: fromLocationId={}, toLocationId={}, fromLocation='{}', toLocation='{}', page={}, size={}",
+                fromLocationId, toLocationId, fromLocation, toLocation, page, size);
+
+        // Limit search results for public access (max 50 per page)
+        if (size > 50) {
+            size = 50;
         }
 
         try {
@@ -211,22 +257,63 @@ public class BusScheduleController {
                 return ResponseEntity.badRequest().build();
             }
 
+            // Sort all results by shortest route first (duration, then departure time)
+            allResults.sort((a, b) -> {
+                // 1. Sort by duration (shortest first)
+                int durationA = calculateDuration(a);
+                int durationB = calculateDuration(b);
+
+                if (durationA != durationB) {
+                    return Integer.compare(durationA, durationB);
+                }
+
+                // 2. If duration is same, sort by departure time (earliest first)
+                String depA = a.departureTime() != null ? a.departureTime() : "23:59";
+                String depB = b.departureTime() != null ? b.departureTime() : "23:59";
+
+                int timeCompare = depA.compareTo(depB);
+                if (timeCompare != 0) {
+                    return timeCompare;
+                }
+
+                // 3. If same time, prefer higher rating
+                double ratingA = a.rating() != null ? a.rating() : 0.0;
+                double ratingB = b.rating() != null ? b.rating() : 0.0;
+
+                return Double.compare(ratingB, ratingA); // Higher rating first
+            });
+
+            // Store total before pagination
+            long totalResults = allResults.size();
+
             // Apply pagination to combined results
             int startIndex = page * size;
             int endIndex = Math.min(startIndex + size, allResults.size());
 
+            List<BusDTO> pageResults;
             if (startIndex >= allResults.size()) {
-                allResults = new ArrayList<>();
+                pageResults = new ArrayList<>();
             } else {
-                allResults = allResults.subList(startIndex, endIndex);
+                pageResults = allResults.subList(startIndex, endIndex);
             }
 
             // Sanitize for public access
-            allResults = sanitizeRoutesForPublicAccess(allResults);
+            pageResults = sanitizeRoutesForPublicAccess(pageResults);
 
-            log.info("Returning {} total results (page {}, size {})", allResults.size(), page, size);
-            return ResponseEntity.ok(allResults);
+            // Create paginated response
+            PaginatedResponse<BusDTO> response = PaginatedResponse.of(
+                    pageResults,
+                    page,
+                    size,
+                    totalResults);
 
+            log.info("Returning {} results of {} total (page {}, size {})",
+                    pageResults.size(), totalResults, page, size);
+            return ResponseEntity.ok(response);
+
+        } catch (RateLimitException e) {
+            log.warn("Rate limit exceeded: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
         } catch (Exception e) {
             log.error("Error in comprehensive search", e);
             return ResponseEntity.internalServerError().build();
@@ -339,7 +426,7 @@ public class BusScheduleController {
     @GetMapping("/buses/{busId}/stops")
     public ResponseEntity<List<StopDTO>> getBusStops(
             @PathVariable Long busId,
-            @RequestParam(defaultValue = "en") String language) {
+            @RequestParam(name = "lang", defaultValue = "en") String language) {
         log.info("Getting stops for bus {} with language: {} (premium access)", busId, language);
 
         if (busId == null || busId <= 0) {
@@ -367,7 +454,7 @@ public class BusScheduleController {
     @GetMapping("/buses/{busId}/stops/basic")
     public ResponseEntity<List<StopDTO>> getBusStopsBasic(
             @PathVariable Long busId,
-            @RequestParam(defaultValue = "en") String language) {
+            @RequestParam(name = "lang", defaultValue = "en") String language) {
         log.info("Getting basic stops for bus {} with language: {} (public access)", busId, language);
 
         if (busId == null || busId <= 0) {
@@ -506,16 +593,20 @@ public class BusScheduleController {
     }
 
     private List<BusDTO> sanitizeRoutesForPublicAccess(List<BusDTO> routes) {
+        // Return basic route information for public access
+        // Don't limit here - pagination is handled in the endpoint
         return routes.stream()
                 .map(route -> new BusDTO(
                         route.id(),
-                        route.number(), // Use number field
+                        route.number(),
                         route.name(),
                         "Unknown", // operator - not available
                         "Unknown", // type - not available
+                        route.departureTime(),
+                        route.arrivalTime(),
+                        route.rating(),
                         Map.of() // features as empty map
                 ))
-                .limit(10) // Limit to 10 results for public access
                 .toList();
     }
 
@@ -523,5 +614,35 @@ public class BusScheduleController {
         // Allow basic users to see departure/arrival times
         // Only hide premium features like detailed stops and live tracking
         return true; // Changed from false to true to show basic timing information
+    }
+
+    /**
+     * Calculate duration in minutes for a bus journey
+     * Used for sorting buses by shortest route first
+     */
+    private int calculateDuration(BusDTO bus) {
+        if (bus.departureTime() == null || bus.arrivalTime() == null) {
+            return 9999; // Put buses without timing info at end
+        }
+
+        try {
+            String[] depParts = bus.departureTime().split(":");
+            String[] arrParts = bus.arrivalTime().split(":");
+
+            int depMinutes = Integer.parseInt(depParts[0]) * 60 + Integer.parseInt(depParts[1]);
+            int arrMinutes = Integer.parseInt(arrParts[0]) * 60 + Integer.parseInt(arrParts[1]);
+
+            int duration = arrMinutes - depMinutes;
+
+            // Handle overnight journeys (negative duration means next day arrival)
+            if (duration < 0) {
+                duration += 24 * 60; // Add 24 hours
+            }
+
+            return duration;
+        } catch (Exception e) {
+            log.warn("Error calculating duration for bus {}: {}", bus.id(), e.getMessage());
+            return 9999; // Put buses with invalid time format at end
+        }
     }
 }

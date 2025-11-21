@@ -46,8 +46,8 @@ const LocationInput: React.FC<LocationInputProps> = ({
     const newValue = e.target.value;
     setInputValue(newValue);
     
-    // Trigger search when user types
-    if (newValue.length >= 2) {
+    // Trigger search when user types at least 3 characters
+    if (newValue.length >= 3) {
       onChange(null); // Clear selected location while typing
       onSearch?.(newValue); // Trigger search
     } else if (newValue.length === 0) {

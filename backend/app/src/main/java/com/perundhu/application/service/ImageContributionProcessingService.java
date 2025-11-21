@@ -8,8 +8,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +42,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     private final RouteContributionOutputPort routeContributionOutputPort;
 
     // Thread pool for async processing
-    private final Executor asyncExecutor = Executors.newFixedThreadPool(5);
+    private final ExecutorService asyncExecutor = Executors.newFixedThreadPool(5);
 
     /**
      * Process an uploaded bus schedule image
@@ -568,6 +571,31 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     multipartFile.getInputStream());
         } catch (Exception e) {
             throw new RuntimeException("Failed to convert MultipartFile to FileUpload", e);
+        }
+    }
+
+    /**
+     * Cleanup method called when the application shuts down
+     * Ensures proper shutdown of the async thread pool
+     */
+    @PreDestroy
+    public void cleanup() {
+        logger.info("Shutting down image processing thread pool");
+        asyncExecutor.shutdown();
+        try {
+            if (!asyncExecutor.awaitTermination(30, TimeUnit.SECONDS)) {
+                logger.warn("Image processing thread pool did not terminate gracefully, forcing shutdown");
+                asyncExecutor.shutdownNow();
+                if (!asyncExecutor.awaitTermination(10, TimeUnit.SECONDS)) {
+                    logger.error("Image processing thread pool did not terminate after forced shutdown");
+                }
+            } else {
+                logger.info("Image processing thread pool shut down successfully");
+            }
+        } catch (InterruptedException e) {
+            logger.error("Thread pool shutdown interrupted, forcing immediate shutdown");
+            asyncExecutor.shutdownNow();
+            Thread.currentThread().interrupt();
         }
     }
 }

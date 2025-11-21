@@ -278,17 +278,17 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
         <div className="transit-card elevated" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
           <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>🚌</div>
           <h3 className="text-title-2" style={{ marginBottom: 'var(--space-2)' }}>
-            No buses found
+            {t('busList.noBusesFound', 'No buses found')}
           </h3>
           <p className="text-body" style={{ color: 'var(--transit-text-secondary)', marginBottom: 'var(--space-4)' }}>
-            We couldn't find any buses for your selected route.
+            {t('busList.noBusesMessage', "We couldn't find any buses for your selected route.")}
           </p>
           <div className="stack stack-sm" style={{ maxWidth: '300px', margin: '0 auto' }}>
-            <div className="text-caption">Suggestions:</div>
+            <div className="text-caption">{t('busList.suggestions', 'Suggestions:')}</div>
             <ul style={{ textAlign: 'left', color: 'var(--transit-text-secondary)' }}>
-              <li>Try searching for nearby locations</li>
-              <li>Check different times of day</li>
-              <li>Contact support for assistance</li>
+              <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
+              <li>{t('busList.suggestionTimes', 'Check different times of day')}</li>
+              <li>{t('busList.suggestionSupport', 'Contact support for assistance')}</li>
             </ul>
           </div>
         </div>
@@ -311,7 +311,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                   {t('busList.title', 'Available Buses')}
                 </h1>
                 <div className="bus-count-badge-enhanced inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold rounded-md whitespace-nowrap self-start sm:self-auto">
-                  {filteredAndSortedBuses.length} {filteredAndSortedBuses.length === 1 ? 'bus' : 'buses'}
+                  {filteredAndSortedBuses.length} {filteredAndSortedBuses.length === 1 ? t('busList.bus', 'bus') : t('busList.buses', 'buses')}
                 </div>
               </div>
 
@@ -332,7 +332,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
               <div className="flex items-center justify-center gap-2 mt-2 px-3 py-2 bg-green-50 border border-green-200 rounded-lg">
                 <span className="text-green-600 text-xs sm:text-sm">⚡</span>
                 <span className="text-green-700 text-xs sm:text-sm font-medium">
-                  Showing fastest routes first
+                  {t('busList.showingFastest', 'Showing fastest routes first')}
                 </span>
               </div>
             </div>
@@ -344,7 +344,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 <div className="flex-1 relative min-w-0">
                   <input
                     type="text"
-                    placeholder="Search buses..."
+                    placeholder={t('busList.searchPlaceholder', 'Search buses...')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="bus-search-input-enhanced w-full pl-8 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 hover:border-gray-400"
@@ -363,22 +363,22 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                   onClick={() => setShowFilters(!showFilters)}
                 >
                   <span className="text-sm sm:text-base">🔧</span>
-                  <span className="hidden sm:inline font-medium">Filter</span>
+                  <span className="hidden sm:inline font-medium">{t('busList.filter', 'Filter')}</span>
                 </button>
               </div>
 
               {/* Sort Controls Row - Enhanced Mobile-Optimized Design */}
               <div className="bus-sort-controls flex items-center gap-1.5 sm:gap-3 pt-2.5 sm:pt-4 border-t border-gray-200 overflow-x-auto">
                 <span className="sort-label">
-                  Sort:
+                  {t('busList.sort', 'Sort:')}
                 </span>
                 <div className="sort-buttons-container">
                   {[
-                    { key: 'departure', label: 'Departure', shortLabel: 'Dep', icon: '🕐', description: 'Earliest first' },
-                    { key: 'arrival', label: 'Arrival', shortLabel: 'Arr', icon: '🏁', description: 'Shortest journey' },
-                    { key: 'duration', label: 'Duration', shortLabel: 'Time', icon: '⏱️', description: 'Fastest route' },
-                    { key: 'price', label: 'Price', shortLabel: '₹', icon: '💰', description: 'Best value' },
-                    { key: 'rating', label: 'Rating', shortLabel: '⭐', icon: '⭐', description: 'Top rated' }
+                    { key: 'departure', label: t('busList.sortDeparture', 'Departure'), shortLabel: t('busList.sortDepartureShort', 'Dep'), icon: '🕐', description: t('busList.sortDepartureDesc', 'Earliest first') },
+                    { key: 'arrival', label: t('busList.sortArrival', 'Arrival'), shortLabel: t('busList.sortArrivalShort', 'Arr'), icon: '🏁', description: t('busList.sortArrivalDesc', 'Shortest journey') },
+                    { key: 'duration', label: t('busList.sortDuration', 'Duration'), shortLabel: t('busList.sortDurationShort', 'Time'), icon: '⏱️', description: t('busList.sortDurationDesc', 'Fastest route') },
+                    { key: 'price', label: t('busList.sortPrice', 'Price'), shortLabel: '₹', icon: '💰', description: t('busList.sortPriceDesc', 'Best value') },
+                    { key: 'rating', label: t('busList.sortRating', 'Rating'), shortLabel: '⭐', icon: '⭐', description: t('busList.sortRatingDesc', 'Top rated') }
                   ].map(({ key, label, shortLabel, icon, description }) => (
                     <button
                       key={key}
@@ -427,7 +427,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                     fontSize: 'var(--text-lg)',
                     color: 'var(--transit-text-primary)'
                   }}>
-                    🔧 Filters
+                    🔧 {t('busList.filters', 'Filters')}
                   </h3>
                   
                   <div className="stack stack-md">
@@ -438,7 +438,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                         fontWeight: 'var(--font-medium)',
                         color: 'var(--transit-text-secondary)'
                       }}>
-                        Bus Types
+                        {t('busList.busTypes', 'Bus Types')}
                       </div>
                       <div className="row row-sm" style={{ flexWrap: 'wrap' }}>
                         {busTypes.map(type => (
@@ -466,7 +466,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                         fontWeight: 'var(--font-medium)',
                         color: 'var(--transit-text-secondary)'
                       }}>
-                        Quick Filters
+                        {t('busList.quickFilters', 'Quick Filters')}
                       </div>
                       <div className="row row-sm" style={{ flexWrap: 'wrap' }}>
                         <button
@@ -479,7 +479,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                             borderRadius: 'var(--radius-sm)'
                           }}
                         >
-                          ⚡ Express Only
+                          ⚡ {t('busList.expressOnly', 'Express Only')}
                         </button>
                         <button
                           className={`transit-button ${filters.accessibility ? 'primary' : 'secondary'}`}
@@ -491,7 +491,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                             borderRadius: 'var(--radius-sm)'
                           }}
                         >
-                          ♿ Accessible
+                          ♿ {t('busList.accessible', 'Accessible')}
                         </button>
                       </div>
                     </div>
@@ -503,7 +503,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                         fontWeight: 'var(--font-medium)',
                         color: 'var(--transit-text-secondary)'
                       }}>
-                        Price Range: ₹{filters.priceRange[0]} - ₹{filters.priceRange[1]}
+                        {t('busList.priceRange', 'Price Range')}: ₹{filters.priceRange[0]} - ₹{filters.priceRange[1]}
                       </div>
                       <input
                         type="range"

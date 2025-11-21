@@ -55,6 +55,7 @@ export interface Bus {
   capacity?: number;
   // Add properties to match apiTypes.ts structure
   name?: string;
+  number?: string; // Alias for busNumber
   fromLocationId?: number;
   toLocationId?: number;
   fromLocation?: Location;
@@ -68,6 +69,7 @@ export interface Bus {
   busType?: string;
   duration?: string;
   rating?: number;
+  features?: Record<string, string>; // Bus features like AC, WiFi, etc.
 }
 
 export interface Stop {

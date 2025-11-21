@@ -86,47 +86,39 @@ export class LocationAutocompleteService {
   }
 
   /**
-   * Fast parallel search: database + Nominatim simultaneously for better UX
-   * This replaces the sequential approach with parallel execution
+   * Database-first search: prioritize database, only use Nominatim if DB returns no results
+   * This prevents unnecessary Nominatim API calls when we have data in the database
    */
   private async searchDatabaseAndNominatimParallel(query: string, limit: number): Promise<any[]> {
-    console.log(`🚀 Starting parallel search for "${query}"`);
-    
-    // Start both searches simultaneously
-    const searchPromises = [
-      this.searchDatabase(query),
-      this.searchNominatimFast(query, limit)
-    ];
+    console.log(`🚀 Starting database-first search for "${query}"`);
     
     try {
-      // Wait for both with a reasonable timeout
-      const results = await Promise.allSettled(searchPromises);
+      // Try database first
+      const databaseResults = await this.searchDatabase(query);
       
-      const databaseResults = results[0].status === 'fulfilled' ? results[0].value : [];
-      const nominatimResults = results[1].status === 'fulfilled' ? results[1].value : [];
+      console.log(`📊 Database results: ${databaseResults.length}`);
       
-      console.log(`📊 Parallel results - DB: ${databaseResults.length}, Nominatim: ${nominatimResults.length}`);
+      // If database has results, use them and skip Nominatim
+      if (databaseResults.length > 0) {
+        console.log(`✅ Using database results (${databaseResults.length}) - skipping Nominatim`);
+        return databaseResults.map(loc => ({ ...loc, source: 'database' }));
+      }
       
-      // If database is empty but Nominatim has results, use Nominatim
-      if (databaseResults.length === 0 && nominatimResults.length > 0) {
-        console.log(`🌍 Database empty, using Nominatim results (${nominatimResults.length})`);
+      // Only call Nominatim if database is empty
+      console.log(`⚠️ Database empty, falling back to Nominatim for "${query}"`);
+      const nominatimResults = await this.searchNominatimFast(query, limit);
+      
+      if (nominatimResults.length > 0) {
+        console.log(`🌍 Using Nominatim results (${nominatimResults.length})`);
         return nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }));
       }
       
-      // Combine results (database first for priority)
-      const combinedResults = [
-        ...databaseResults.map(loc => ({ ...loc, source: 'database' })),
-        ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }))
-      ];
-      
-      const finalResults = this.deduplicateResults(combinedResults).slice(0, limit);
-      console.log(`✅ Parallel search completed: ${finalResults.length} results in total`);
-      
-      return finalResults;
+      console.log(`❌ No results found from database or Nominatim`);
+      return [];
       
     } catch (error) {
-      console.error('Parallel search failed:', error);
-      // Fallback to Nominatim only for speed if database fails
+      console.error('Database-first search failed:', error);
+      // Fallback to Nominatim only if database completely fails
       try {
         console.log(`🔄 Fallback: Trying Nominatim only for "${query}"`);
         const nominatimFallback = await this.searchNominatimFast(query, limit);
@@ -212,10 +204,22 @@ export class LocationAutocompleteService {
       
       // Quick filtering for cities/towns only
       const cityResults = data.filter((result: any) => {
-        const isValidPlace = ['city', 'town', 'village', 'hamlet'].includes(result.type) ||
-                            ['city', 'town', 'village'].includes(result.addresstype);
-        const isNotRoad = result.class !== 'highway' && result.class !== 'landuse' &&
-                         !result.type.includes('road') && result.type !== 'industrial';
+        // Accept various place types
+        const isValidPlace = (
+          ['city', 'town', 'village', 'hamlet'].includes(result.type) ||
+          ['city', 'town', 'village', 'state_district', 'county'].includes(result.addresstype) ||
+          (result.class === 'boundary' && result.type === 'administrative' && result.address?.state_district)
+        );
+        
+        // Exclude roads and highways
+        const isNotRoad = (
+          result.class !== 'highway' && 
+          result.class !== 'landuse' &&
+          !result.type.includes('road') && 
+          !result.type.includes('street') &&
+          result.type !== 'industrial'
+        );
+        
         return isValidPlace && isNotRoad;
       });
       

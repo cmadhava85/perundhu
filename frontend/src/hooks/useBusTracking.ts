@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { Bus, Stop } from '../types';
 
 interface UseBusTrackingProps {
@@ -26,7 +26,6 @@ interface UseBusTrackingReturn {
 }
 
 export const useBusTracking = ({ buses, stops }: UseBusTrackingProps): UseBusTrackingReturn => {
-  const [busesState, setBuses] = useState<Bus[]>(buses);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
@@ -76,12 +75,8 @@ export const useBusTracking = ({ buses, stops }: UseBusTrackingProps): UseBusTra
     console.log('Stopped tracking');
   };
 
-  useEffect(() => {
-    setBuses(buses);
-  }, [buses]);
-
   return {
-    buses: busesState,
+    buses,  // Use prop directly instead of duplicating in state
     isLoading,
     error,
     searchForBuses,

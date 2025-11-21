@@ -19,19 +19,35 @@ const UserSessionHistory: React.FC<{ userId: string }> = ({ userId }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchSessions = async () => {
       try {
-        setLoading(true);
+        if (isMounted) {
+          setLoading(true);
+        }
         const data = await getUserSessions(userId);
-        setSessions(data);
-        setError(null);
+        
+        if (isMounted) {
+          setSessions(data);
+          setError(null);
+        }
       } catch (err) {
-        setError('Failed to load session history');
+        if (isMounted) {
+          setError('Failed to load session history');
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
+
     fetchSessions();
+
+    return () => {
+      isMounted = false;
+    };
   }, [userId]);
 
   if (loading) return <div>Loading session history...</div>;

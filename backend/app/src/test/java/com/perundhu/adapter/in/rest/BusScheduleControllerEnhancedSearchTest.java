@@ -27,8 +27,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.google.common.util.concurrent.RateLimiter;
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.service.BusScheduleService;
+import com.perundhu.application.service.OpenStreetMapGeocodingService;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -39,6 +43,15 @@ class BusScheduleControllerEnhancedSearchTest {
         @Mock
         private BusScheduleService busScheduleService;
 
+        @Mock
+        private OpenStreetMapGeocodingService geocodingService;
+
+        @Mock
+        private RateLimiter globalRateLimiter;
+
+        @Mock
+        private ConcurrentHashMap<String, RateLimiter> userRateLimiters;
+
         @InjectMocks
         private BusScheduleController controller;
 
@@ -48,29 +61,22 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @BeforeEach
         void setUp() {
+                // Mock rate limiters to always allow requests
+                when(globalRateLimiter.tryAcquire(anyLong(), any())).thenReturn(true);
+                when(userRateLimiters.computeIfAbsent(any(), any())).thenReturn(globalRateLimiter);
+
                 mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
                 testDirectBuses = Arrays.asList(
-                                new BusDTO(
-                                                1L, "EXP001", "Express Bus",
-                                                "Express Operator", "Express",
-                                                Map.of("type", "express")),
-                                new BusDTO(
-                                                2L, "REG002", "Regular Bus",
-                                                "Regular Operator", "Regular",
-                                                Map.of("type", "regular")));
+                                BusDTO.of(1L, "EXP001", "Express Bus", "Express Operator", "Express"),
+                                BusDTO.of(2L, "REG002", "Regular Bus", "Regular Operator", "Regular"));
 
                 testViaBuses = Arrays.asList(
-                                new BusDTO(
-                                                3L, "VIA003", "Via Bus",
-                                                "Via Operator", "Regular",
-                                                Map.of("type", "via")));
+                                BusDTO.of(3L, "VIA003", "Via Bus", "Via Operator", "Regular"));
 
                 testContinuingBuses = Arrays.asList(
-                                new BusDTO(
-                                                4L, "CONT004", "Continuing Bus (via Bangalore)",
-                                                "Continuing Operator", "Express",
-                                                Map.of("type", "continuing")));
+                                BusDTO.of(4L, "CONT004", "Continuing Bus (via Bangalore)", "Continuing Operator",
+                                                "Express"));
         }
 
         @Test
@@ -89,9 +95,10 @@ class BusScheduleControllerEnhancedSearchTest {
                                 .param("includeContinuing", "true")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$", hasSize(4))) // All buses combined
-                                .andExpect(jsonPath("$[0].name", is("Express Bus")))
-                                .andExpect(jsonPath("$[0].number", is("EXP001"))); // Changed from busNumber to number
+                                .andExpect(jsonPath("$.items", hasSize(4))) // All buses combined
+                                .andExpect(jsonPath("$.items[0].name", is("Express Bus")))
+                                .andExpect(jsonPath("$.items[0].number", is("EXP001"))); // Changed from busNumber to
+                                                                                         // number
         }
 
         @Test
@@ -107,8 +114,8 @@ class BusScheduleControllerEnhancedSearchTest {
                                 .param("includeContinuing", "false")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$", hasSize(3))) // Direct + via buses only
-                                .andExpect(jsonPath("$[0].name", is("Express Bus")));
+                                .andExpect(jsonPath("$.items", hasSize(3))) // Direct + via buses only
+                                .andExpect(jsonPath("$.items[0].name", is("Express Bus")));
         }
 
         @Test
@@ -134,7 +141,7 @@ class BusScheduleControllerEnhancedSearchTest {
                                 .param("toLocationId", "998")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$", hasSize(0)));
+                                .andExpect(jsonPath("$.items", hasSize(0)));
         }
 
         @Test
@@ -151,7 +158,7 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Test
         void testEnhancedSearch_LegacyStringParameters_Success() throws Exception {
-                when(busScheduleService.searchRoutes("Chennai", "Bangalore", 0, 10))
+                when(busScheduleService.searchRoutes("Chennai", "Bangalore", 0, 20))
                                 .thenReturn(testDirectBuses);
 
                 mockMvc.perform(get("/api/v1/bus-schedules/search")
@@ -159,8 +166,8 @@ class BusScheduleControllerEnhancedSearchTest {
                                 .param("toLocation", "Bangalore")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$", hasSize(2)))
-                                .andExpect(jsonPath("$[0].name", is("Express Bus")));
+                                .andExpect(jsonPath("$.items", hasSize(2)))
+                                .andExpect(jsonPath("$.items[0].name", is("Express Bus")));
         }
 
         @Test
@@ -178,7 +185,7 @@ class BusScheduleControllerEnhancedSearchTest {
                                 .param("size", "1")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$", hasSize(1)))
-                                .andExpect(jsonPath("$[0].name", is("Express Bus")));
+                                .andExpect(jsonPath("$.items", hasSize(1)))
+                                .andExpect(jsonPath("$.items[0].name", is("Express Bus")));
         }
 }

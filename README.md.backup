@@ -1,0 +1,121 @@
+# Perundhu Bus Tracker
+
+Real-time bus tracking and route planning application for Tamil Nadu, India.
+
+## 📋 Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [GitHub Copilot Integration](#github-copilot-integration)
+- [Architecture](#architecture)
+- [Development](#development)
+
+## 🛠 Tech Stack
+
+### Frontend
+- React 18.3 + TypeScript 5.6
+- Vite build tool
+- React Router v6
+- Material UI + TailwindCSS
+- Leaflet (OpenStreetMap)
+- Vitest + React Testing Library
+- Playwright E2E tests
+
+### Backend
+- Java 17 LTS
+- Spring Boot 3.4.5
+- Spring Data JPA
+- Spring Security (OAuth2 JWT)
+- MySQL + Flyway migrations
+- Gradle build tool
+- JUnit 5 + Mockito
+- Hexagonal Architecture
+
+## 🚀 Quick Start
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev  # Runs on http://localhost:5173
+```
+
+### Backend
+```bash
+cd backend
+./gradlew bootRun  # Runs on http://localhost:8080
+```
+
+## 🤖 GitHub Copilot Integration
+
+This project includes comprehensive GitHub Copilot configuration for AI-assisted development.
+
+**Quick access to features:**
+- 📝 **Prompts**: `@workspace /playwright-generate-test`, `/sql-code-review`, `/java-junit`
+- 📚 **Instructions**: Auto-applied to `*.ts`, `*.tsx`, `*.java` files
+- 💬 **Chat Modes**: `#expert-react-frontend-engineer`, `#principal-software-engineer`
+
+See [COPILOT_SETUP.md](./COPILOT_SETUP.md) for complete details.
+
+## Bus Schedule Application
+
+## Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Backend
+    participant Database
+
+    User->>Frontend: Select From and To locations
+    Frontend->>Backend: Fetch destination places
+    Backend->>Database: Query destination places
+    Database-->>Backend: Return destination places
+    Backend-->>Frontend: Return destination places
+    User->>Frontend: Click Search
+    Frontend->>Backend: Fetch bus schedule
+    Backend->>Database: Query bus schedule
+    Database-->>Backend: Return bus schedule
+    Backend-->>Frontend: Return bus schedule
+    User->>Frontend: Click on a bus row
+    Frontend->>Backend: Fetch stops between From and To
+    Backend->>Database: Query stops
+    Database-->>Backend: Return stops
+    Backend-->>Frontend: Return stops
+```
+
+## Class Diagram
+```mermaid
+classDiagram
+    class User {
+        +String name
+        +String email
+    }
+    class BusSchedule {
+        +String from
+        +String to
+        +String busName
+        +String busNumber
+        +String departureTime
+        +String arrivalTime
+    }
+    class Stop {
+        +String name
+        +String arrivalTime
+        +String departureTime
+    }
+    User --> Frontend
+    Frontend --> Backend
+    Backend --> Database
+    Backend --> BusSchedule
+    BusSchedule --> Stop
+```
+
+## Architecture Diagram
+```mermaid
+flowchart TD
+    User[User] -->|Mobile Browser| Frontend[React Frontend]
+    Frontend -->|REST API Calls| Backend[Spring Boot Backend]
+    Backend -->|Relational Queries| Database[MySQL Database]
+    Backend -->|GCP Integration| GCP[Google Cloud Platform]
+```

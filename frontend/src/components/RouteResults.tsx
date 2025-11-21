@@ -1,6 +1,8 @@
+/**
+ * RouteResults - Simple route results display component
+ * TODO: This is a placeholder - consolidate with TransitBusList functionality
+ */
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import '../styles/RouteResults.css';
 
 interface RouteResultsProps {
   results: any[];
@@ -13,9 +15,6 @@ interface RouteResultsProps {
   };
 }
 
-/**
- * Component for displaying route search results
- */
 const RouteResults: React.FC<RouteResultsProps> = ({
   results,
   isSearching,
@@ -23,69 +22,64 @@ const RouteResults: React.FC<RouteResultsProps> = ({
   setSelectedRoute,
   browserInfo
 }) => {
-  const { t } = useTranslation();
-  const isMobile = browserInfo.deviceType === 'mobile';
-
   if (isSearching) {
     return (
-      <div className="route-results-loading">
-        <div className="loading-spinner"></div>
-        <p>{t('routes.results.searching', 'Searching for routes...')}</p>
+      <div style={{ padding: '24px', textAlign: 'center' }}>
+        <div style={{ fontSize: '24px', marginBottom: '8px' }}>🔄</div>
+        <div>Searching for routes...</div>
       </div>
     );
   }
 
-  if (results.length === 0) {
+  if (!results || results.length === 0) {
     return (
-      <div className="route-results-empty">
-        <p>{t('routes.results.noResults', 'No routes found. Try adjusting your search.')}</p>
+      <div style={{ padding: '24px', textAlign: 'center', color: '#666' }}>
+        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚌</div>
+        <div style={{ fontSize: '18px', fontWeight: 500, marginBottom: '8px' }}>
+          No routes found
+        </div>
+        <div style={{ fontSize: '14px' }}>
+          Try searching for a different route or location
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="route-results">
-      <h3 className="results-title">
-        {t('routes.results.title', '{{count}} Routes Found', { count: results.length })}
-      </h3>
-      
-      <div className="results-list">
+    <div style={{ padding: '16px' }}>
+      <div style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 500 }}>
+        {results.length} route{results.length !== 1 ? 's' : ''} found
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {results.map((route, index) => (
-          <div 
-            key={`route-${index}`}
-            className={`route-item ${selectedRoute === route ? 'selected' : ''}`}
+          <div
+            key={route.id || index}
             onClick={() => setSelectedRoute(route)}
+            style={{
+              padding: '16px',
+              background: selectedRoute?.id === route.id ? '#e3f2fd' : 'white',
+              border: `2px solid ${selectedRoute?.id === route.id ? '#2196f3' : '#ddd'}`,
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              if (selectedRoute?.id !== route.id) {
+                e.currentTarget.style.borderColor = '#aaa';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (selectedRoute?.id !== route.id) {
+                e.currentTarget.style.borderColor = '#ddd';
+              }
+            }}
           >
-            <div className="route-header">
-              <h4 className="route-name">{route.name || `Route ${index + 1}`}</h4>
-              <span className="route-duration">
-                {route.duration ? `${Math.round(route.duration)} min` : 'N/A'}
-              </span>
+            <div style={{ fontWeight: 500, marginBottom: '4px' }}>
+              {route.name || route.routeNumber || `Route ${index + 1}`}
             </div>
-            
-            <div className="route-details">
-              <div className="route-endpoints">
-                <div className="route-from">{route.from || 'Unknown origin'}</div>
-                <div className="route-arrow">→</div>
-                <div className="route-to">{route.to || 'Unknown destination'}</div>
-              </div>
-              
-              {route.transfers !== undefined && (
-                <div className="route-transfers">
-                  {route.transfers === 0 
-                    ? t('routes.results.direct', 'Direct')
-                    : t('routes.results.transfers', '{{count}} transfer(s)', { count: route.transfers })}
-                </div>
-              )}
-            </div>
-            
-            {!isMobile && route.buses && (
-              <div className="route-buses">
-                {route.buses.map((bus: any, busIndex: number) => (
-                  <span key={`bus-${busIndex}`} className="bus-badge">
-                    {bus.name || bus.number || `Bus ${busIndex + 1}`}
-                  </span>
-                ))}
+            {route.description && (
+              <div style={{ fontSize: '14px', color: '#666' }}>
+                {route.description}
               </div>
             )}
           </div>

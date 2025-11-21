@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.perundhu.application.dto.BusDTO;
 
 @SpringBootTest
@@ -50,8 +51,22 @@ class EnhancedSearchIntegrationTest {
         .getResponse()
         .getContentAsString();
 
-    // Parse the response
-    BusDTO[] buses = objectMapper.readValue(response, BusDTO[].class);
+    // Parse the response - handle both array and paginated response
+    JsonNode jsonNode = objectMapper.readTree(response);
+    BusDTO[] buses;
+
+    if (jsonNode.isArray()) {
+      buses = objectMapper.readValue(response, BusDTO[].class);
+    } else if (jsonNode.has("content")) {
+      // Paginated response with content field
+      buses = objectMapper.readValue(jsonNode.get("content").toString(), BusDTO[].class);
+    } else if (jsonNode.has("items")) {
+      // Paginated response with items field
+      buses = objectMapper.readValue(jsonNode.get("items").toString(), BusDTO[].class);
+    } else {
+      fail("Unexpected response format: " + response);
+      return;
+    }
 
     // Verify the response structure
     assertNotNull(buses);
@@ -85,8 +100,22 @@ class EnhancedSearchIntegrationTest {
         .getResponse()
         .getContentAsString();
 
-    // Parse the response
-    BusDTO[] buses = objectMapper.readValue(response, BusDTO[].class);
+    // Parse the response - handle both array and paginated response
+    JsonNode jsonNode = objectMapper.readTree(response);
+    BusDTO[] buses;
+
+    if (jsonNode.isArray()) {
+      buses = objectMapper.readValue(response, BusDTO[].class);
+    } else if (jsonNode.has("content")) {
+      // Paginated response with content field
+      buses = objectMapper.readValue(jsonNode.get("content").toString(), BusDTO[].class);
+    } else if (jsonNode.has("items")) {
+      // Paginated response with items field
+      buses = objectMapper.readValue(jsonNode.get("items").toString(), BusDTO[].class);
+    } else {
+      fail("Unexpected response format: " + response);
+      return;
+    }
 
     // Verify the response structure
     assertNotNull(buses);
@@ -182,8 +211,22 @@ class EnhancedSearchIntegrationTest {
         .getResponse()
         .getContentAsString();
 
-    // Parse the response
-    BusDTO[] buses = objectMapper.readValue(response, BusDTO[].class);
+    // Parse the response - handle both array and paginated response
+    JsonNode jsonNode = objectMapper.readTree(response);
+    BusDTO[] buses;
+
+    if (jsonNode.isArray()) {
+      buses = objectMapper.readValue(response, BusDTO[].class);
+    } else if (jsonNode.has("content")) {
+      // Paginated response with content field
+      buses = objectMapper.readValue(jsonNode.get("content").toString(), BusDTO[].class);
+    } else if (jsonNode.has("items")) {
+      // Paginated response with items field
+      buses = objectMapper.readValue(jsonNode.get("items").toString(), BusDTO[].class);
+    } else {
+      fail("Unexpected response format: " + response);
+      return;
+    }
 
     // Verify no duplicate bus IDs
     java.util.Set<Long> seenIds = new java.util.HashSet<>();

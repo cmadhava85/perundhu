@@ -31,38 +31,82 @@ const RouteAdminPanel: React.FC = () => {
 
   // Load routes on component mount and when filter changes
   useEffect(() => {
+    let isMounted = true;
+
+    const loadRoutes = async () => {
+      try {
+        if (isMounted) {
+          setLoading(true);
+        }
+        let data;
+        
+        if (statusFilter === 'all') {
+          data = await AdminService.getRouteContributions();
+        } else if (statusFilter === 'pending') {
+          data = await AdminService.getPendingRouteContributions();
+        } else {
+          data = await AdminService.getRouteContributions();
+          // Filter by status if not 'all'
+          data = data.filter(c => c.status?.toLowerCase() === statusFilter);
+        }
+        
+        if (isMounted) {
+          setRoutes(data);
+          setFilteredRoutes(data);
+          setError(null);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Failed to load route contributions. Please try again later.');
+          console.error('Error loading routes:', err);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
     loadRoutes();
+
+    return () => {
+      isMounted = false;
+    };
   }, [statusFilter]);
 
-  // Filter routes when search query changes
+  // Filter routes when search query changes with debounce
   useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setFilteredRoutes(routes);
-    } else {
-      const lowerQuery = searchQuery.toLowerCase();
-      
-      // Helper function to check if text matches query
-      const textMatches = (text?: string) => text?.toLowerCase().includes(lowerQuery) || false;
-      
-      const filtered = routes.filter(route => {
-        // Search in bus number, location names, stops, and submitter
-        return textMatches(route.busNumber) ||
-               textMatches(route.fromLocationName) ||
-               textMatches(route.fromLocationTranslatedName) ||
-               textMatches(route.fromLocationTaName) ||
-               textMatches(route.toLocationName) ||
-               textMatches(route.toLocationTranslatedName) ||
-               textMatches(route.toLocationTaName) ||
-               textMatches(route.submittedBy) ||
-               route.stops?.some(stop => 
-                 textMatches(stop.name) ||
-                 textMatches(stop.translatedName) ||
-                 textMatches(stop.taName)
-               );
-      });
-      
-      setFilteredRoutes(filtered);
-    }
+    const timer = setTimeout(() => {
+      if (searchQuery.trim() === '') {
+        setFilteredRoutes(routes);
+      } else {
+        const lowerQuery = searchQuery.toLowerCase();
+        
+        // Helper function to check if text matches query
+        const textMatches = (text?: string) => text?.toLowerCase().includes(lowerQuery) || false;
+        
+        const filtered = routes.filter(route => {
+          // Search in bus number, location names, stops, and submitter
+          return textMatches(route.busNumber) ||
+                 textMatches(route.fromLocationName) ||
+                 textMatches(route.fromLocationTranslatedName) ||
+                 textMatches(route.fromLocationTaName) ||
+                 textMatches(route.toLocationName) ||
+                 textMatches(route.toLocationTranslatedName) ||
+                 textMatches(route.toLocationTaName) ||
+                 textMatches(route.submittedBy) ||
+                 route.stops?.some(stop => 
+                   textMatches(stop.name) ||
+                   textMatches(stop.translatedName) ||
+                   textMatches(stop.taName)
+                 );
+        });
+        
+        setFilteredRoutes(filtered);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [searchQuery, routes]);
 
   // Function to load routes based on status filter

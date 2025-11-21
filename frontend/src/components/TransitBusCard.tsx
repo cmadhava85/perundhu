@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
@@ -25,8 +26,26 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   isCompact = false
 }) => {
 
+  const { i18n } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const isSelected = selectedBusId === bus.id;
+  
+  // Helper function to get display name for location
+  const getLocationDisplayName = (location?: AppLocation) => {
+    if (!location) return '';
+    if (i18n.language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  };
+  
+  // Helper function to get display name for stop
+  const getStopDisplayName = (stop: Stop) => {
+    if (i18n.language === 'ta' && stop.translatedName) {
+      return stop.translatedName;
+    }
+    return stop.name;
+  };
 
   const handleCardClick = useCallback(() => {
     setIsExpanded(prev => !prev);
@@ -125,7 +144,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
     <button 
       className={`transit-bus-card ${isSelected ? 'selected' : ''} ${isCompact ? 'compact' : ''} fade-in`}
       onClick={handleCardClick}
-      aria-label={`Bus ${bus.busNumber || 'Transit'} from ${fromLocation?.name || bus.from} to ${toLocation?.name || bus.to}`}
+      aria-label={`Bus ${bus.busNumber || 'Transit'} from ${getLocationDisplayName(fromLocation) || bus.from} to ${getLocationDisplayName(toLocation) || bus.to}`}
       type="button"
     >
       {/* Card Header */}
@@ -148,7 +167,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
           {/* Cities and Progress Bar Row */}
           <div className="cities-progress-row">
             <div className="city-name start-city">
-              {fromLocation?.name || bus.from || 'Origin'}
+              {getLocationDisplayName(fromLocation) || bus.from || 'Origin'}
             </div>
             <div className="progress-container">
               <div className="progress-bar">
@@ -161,7 +180,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               </div>
             </div>
             <div className="city-name end-city">
-              {toLocation?.name || bus.to || 'Destination'}
+              {getLocationDisplayName(toLocation) || bus.to || 'Destination'}
             </div>
           </div>
 
@@ -253,7 +272,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               {stops.map((stop, index) => (
                 <div key={stop.id || index} className="stop-simple-item">
                   <span className="stop-simple-number">{index + 1}</span>
-                  <span className="stop-simple-name">{stop.name}</span>
+                  <span className="stop-simple-name">{getStopDisplayName(stop)}</span>
                   <span className="stop-simple-time">
                     {stop.arrivalTime || '--:--'}
                   </span>

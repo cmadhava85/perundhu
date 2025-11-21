@@ -21,6 +21,9 @@ const useLocationData = (language?: string) => {
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
+    let isMounted = true;
+    const abortController = new AbortController();
+
     const fetchLocations = async () => {
       try {
         // Use provided language parameter or fall back to i18n.language
@@ -31,15 +34,17 @@ const useLocationData = (language?: string) => {
           return;
         }
 
-        setIsFetching(true);
-        setIsLoading(true);
-        setError(null);
+        if (isMounted) {
+          setIsFetching(true);
+          setIsLoading(true);
+          setError(null);
+        }
         
         // Pass the current language to the API
         const data = await getLocations(currentLanguage);
         
-        // Only update state if we're still on the same language request
-        if (currentLanguage === (language || i18n.language)) {
+        // Only update state if component is still mounted and language hasn't changed
+        if (isMounted && currentLanguage === (language || i18n.language)) {
           setLocations(data);
           setLastFetchLanguage(currentLanguage);
           
@@ -48,16 +53,28 @@ const useLocationData = (language?: string) => {
             setDestinations(data);
           }
         }
-      } catch (err) {
+      } catch (err: any) {
+        if (err.name === 'AbortError' || err.name === 'CanceledError') {
+          return; // Ignore aborted requests
+        }
         console.error('useLocationData: Error in fetchLocations:', err);
-        setError(err instanceof Error ? err : new Error('Failed to fetch location data'));
+        if (isMounted) {
+          setError(err instanceof Error ? err : new Error('Failed to fetch location data'));
+        }
       } finally {
-        setIsLoading(false);
-        setIsFetching(false);
+        if (isMounted) {
+          setIsLoading(false);
+          setIsFetching(false);
+        }
       }
     };
 
     fetchLocations();
+
+    return () => {
+      isMounted = false;
+      abortController.abort();
+    };
   }, [i18n.language, language]); // Only language changes should trigger fetch
 
   // Clear error state

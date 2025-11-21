@@ -4,7 +4,6 @@ import type { Location } from '../../types';
 import { searchLocations } from '../../services/locationService';
 import { formatLocationNameUniversal } from '../../services/geocodingService';
 import debounce from 'lodash/debounce';
-import '../LocationAutocompleteInput.css';
 
 interface LocationDropdownProps {
   id: string;

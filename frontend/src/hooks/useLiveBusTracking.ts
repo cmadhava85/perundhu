@@ -32,22 +32,6 @@ export const useLiveBusTracking = ({
   const [isTracking, setIsTracking] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const fetchBusLocations = async () => {
-    if (!isEnabled) return;
-
-    try {
-      setLoading(true);
-      setError(null);
-      const locations = await getCurrentBusLocations();
-      setBusLocations(locations);
-      setLastUpdated(new Date());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch bus locations');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const startTracking = () => {
     setIsTracking(true);
   };
@@ -68,6 +52,37 @@ export const useLiveBusTracking = ({
       return;
     }
 
+    let isMounted = true;
+    const abortController = new AbortController();
+
+    const fetchBusLocations = async () => {
+      if (!isEnabled || !isMounted) return;
+
+      try {
+        if (isMounted) {
+          setLoading(true);
+          setError(null);
+        }
+        const locations = await getCurrentBusLocations();
+        
+        if (isMounted) {
+          setBusLocations(locations);
+          setLastUpdated(new Date());
+        }
+      } catch (err: any) {
+        if (err.name === 'AbortError' || err.name === 'CanceledError') {
+          return; // Ignore aborted requests
+        }
+        if (isMounted) {
+          setError(err instanceof Error ? err.message : 'Failed to fetch bus locations');
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
     // Initial fetch
     fetchBusLocations();
 
@@ -75,6 +90,8 @@ export const useLiveBusTracking = ({
     intervalRef.current = setInterval(fetchBusLocations, 30000); // Update every 30 seconds
 
     return () => {
+      isMounted = false;
+      abortController.abort();
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;

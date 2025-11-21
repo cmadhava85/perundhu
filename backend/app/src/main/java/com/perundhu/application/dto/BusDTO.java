@@ -15,6 +15,9 @@ public record BusDTO(
                 String name,
                 String operator,
                 String type,
+                String departureTime,
+                String arrivalTime,
+                Double rating,
                 Map<String, String> features) {
         // Records automatically provide constructor, getters, equals, hashCode, and
         // toString
@@ -41,6 +44,9 @@ public record BusDTO(
                                 bus.name(),
                                 bus.operator(),
                                 bus.type(),
+                                bus.getDepartureTime() != null ? bus.getDepartureTime().toString() : null,
+                                bus.getArrivalTime() != null ? bus.getArrivalTime().toString() : null,
+                                4.0, // Default rating
                                 featuresMap);
         }
 
@@ -48,6 +54,6 @@ public record BusDTO(
          * Factory method for creating basic BusDTO instances for backward compatibility
          */
         public static BusDTO of(Long id, String number, String name, String operator, String type) {
-                return new BusDTO(id, number, name, operator, type, Map.of());
+                return new BusDTO(id, number, name, operator, type, null, null, 4.0, Map.of());
         }
 }

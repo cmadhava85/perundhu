@@ -39,12 +39,12 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
               onBusClick?.(bus);
             }
           }}
-          aria-label={`Bus ${bus.number} from ${bus.fromLocation?.name} to ${bus.toLocation?.name}`}
+          aria-label={`Bus ${bus.number || bus.busNumber} from ${bus.fromLocation?.name} to ${bus.toLocation?.name}`}
         >
           <div className="bus-card-header">
             <div className="bus-info">
-              <h3 className="bus-name">{bus.name}</h3>
-              <span className="bus-number">{bus.number}</span>
+              <h3 className="bus-name">{bus.name || bus.busName}</h3>
+              <span className="bus-number">{bus.number || bus.busNumber}</span>
             </div>
           </div>
 
@@ -77,7 +77,7 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
             <div className="bus-features">
               {Object.entries(bus.features).map(([key, value]) => (
                 <span key={key} className="feature-badge">
-                  {value}
+                  {String(value)}
                 </span>
               ))}
             </div>

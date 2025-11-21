@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+/**
+ * LocationAutocompleteInput - Wrapper component for autocomplete functionality
+ * This component provides backward compatibility for components that were using the old LocationAutocompleteInput
+ * It integrates with locationAutocompleteService for DB + OpenStreetMap search
+ */
+import React, { useState, useEffect, useCallback } from 'react';
 import { locationAutocompleteService } from '../services/locationAutocompleteService';
-import { formatLocationNameUniversal } from '../services/geocodingService';
 import type { LocationSuggestion } from '../services/locationAutocompleteService';
-import './LocationAutocompleteInput.css';
 
 interface LocationAutocompleteInputProps {
   id: string;
@@ -13,6 +16,7 @@ interface LocationAutocompleteInputProps {
   required?: boolean;
   label?: string;
   language?: string;
+  className?: string;
 }
 
 const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
@@ -20,86 +24,28 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   name,
   value,
   onChange,
-  placeholder,
+  placeholder = 'Enter location',
   required = false,
   label,
-  language = 'en'
+  language = 'en',
+  className = ''
 }) => {
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const suggestionListRef = useRef<HTMLUListElement>(null);
-  const lastQueryRef = useRef<string>('');
-  const isActiveRef = useRef<boolean>(true);
-  const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  // Debounced loading state setter to prevent rapid re-renders
-  const setDebouncedLoading = useCallback((loading: boolean) => {
-    if (loadingTimeoutRef.current) {
-      clearTimeout(loadingTimeoutRef.current);
-      loadingTimeoutRef.current = null;
-    }
-    
-    if (loading) {
-      // Set loading immediately for better UX
-      setIsLoading(true);
-    } else {
-      // Debounce setting loading to false to prevent flicker
-      loadingTimeoutRef.current = setTimeout(() => {
-        setIsLoading(false);
-        loadingTimeoutRef.current = null;
-      }, 100);
-    }
-  }, []); // Empty deps - setIsLoading is stable
 
-  // Helper function to check if a city is in Tamil Nadu
-  const isInTamilNadu = useCallback((cityName: string): boolean => {
-    const tnCities = [
-      'Chennai', 'Madurai', 'Coimbatore', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Tiruppur',
-      'Dindigul', 'Thanjavur', 'Ranipet', 'Sivakasi', 'Karur', 'Udhagamandalam', 'Hosur',
-      'Nagercoil', 'Kanchipuram', 'Erode', 'Tiruvannamalai', 'Pollachi', 'Rajapalayam',
-      'Arcot', 'Dharmapuri', 'Chidambaram', 'Ambur', 'Nagapattinam', 'Arakkonam', 'Kumbakonam',
-      'Neyveli', 'Cuddalore', 'Mayiladuthurai', 'Pallavaram', 'Pudukkottai', 'Aruppukottai',
-      'Virudhunagar', 'Kodaikanal', 'Yercaud', 'Kanyakumari', 'Srivilliputhur', 'Ramanathapuram',
-      'Tenkasi', 'Theni', 'Palani', 'Krishnagiri', 'Namakkal', 'Villupuram', 'Vellore',
-      'Tiruvallur', 'Tirupattur', 'Kallakurichi', 'Chengalpattu', 'Thoothukudi', 'Tiruvarur',
-      'Perambalur', 'Ariyalur', 'Nilgiris', 'Thenkasi'
-    ];
-    
-    return tnCities.some(tnCity => 
-      tnCity.toLowerCase() === cityName.toLowerCase() ||
-      cityName.toLowerCase().includes(tnCity.toLowerCase())
-    );
+  const handleSuggestionsCallback = useCallback((newSuggestions: LocationSuggestion[]) => {
+    setSuggestions(newSuggestions);
+    setShowSuggestions(newSuggestions.length > 0);
+    setIsLoading(false);
   }, []);
 
-  // Stable callback for handling suggestions
-  const handleSuggestionsCallback = useCallback((newSuggestions: LocationSuggestion[]) => {
-    if (!isActiveRef.current) {
-      return; // Prevent updates if component unmounted
-    }
-    
-    // Batch all state updates together to prevent multiple re-renders
-    React.startTransition(() => {
-      setSuggestions(newSuggestions);
-      setShowSuggestions(newSuggestions.length > 0);
-      setIsLoading(false); // Direct call instead of debounced
-    });
-  }, []); // No dependencies to prevent re-creation
-
-  // Handle input changes and fetch suggestions
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     onChange(inputValue);
 
-    // Prevent duplicate requests
-    if (lastQueryRef.current === inputValue) return;
-    lastQueryRef.current = inputValue;
-
     if (inputValue.length >= 3) {
-      // Use debounced loading to prevent excessive re-renders
-      setDebouncedLoading(true);
-      
+      setIsLoading(true);
       try {
         locationAutocompleteService.getDebouncedSuggestions(
           inputValue,
@@ -108,135 +54,129 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
         );
       } catch (error) {
         console.error('Error getting suggestions:', error);
-        // Batch state updates to prevent multiple re-renders
-        setDebouncedLoading(false);
+        setIsLoading(false);
         setSuggestions([]);
         setShowSuggestions(false);
       }
     } else {
-      // Batch state updates to prevent multiple re-renders
-      setDebouncedLoading(false);
+      setIsLoading(false);
       setSuggestions([]);
       setShowSuggestions(false);
     }
-  }, [language]); // Minimal dependencies to prevent loops
+  };
 
-  // Handle suggestion selection
-  const handleSuggestionClick = useCallback((suggestion: LocationSuggestion) => {
+  const handleSuggestionClick = (suggestion: LocationSuggestion) => {
     onChange(suggestion.name, suggestion);
     setSuggestions([]);
     setShowSuggestions(false);
-    inputRef.current?.focus();
-  }, [onChange]);
+  };
 
-  // Handle keyboard navigation
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (!showSuggestions || suggestions.length === 0) return;
-
-    if (e.key === 'Escape') {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape' && showSuggestions) {
       setShowSuggestions(false);
       e.preventDefault();
     }
-  }, [showSuggestions, suggestions.length]);
+  };
 
-  // Close suggestions when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node) &&
-        suggestionListRef.current &&
-        !suggestionListRef.current.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      // Clear debounce on cleanup
       locationAutocompleteService.clearDebounce();
-    };
-  }, []);
-
-  // Component cleanup
-  useEffect(() => {
-    isActiveRef.current = true;
-    
-    return () => {
-      isActiveRef.current = false;
-      locationAutocompleteService.clearDebounce();
-      // Clear loading timeout on cleanup
-      if (loadingTimeoutRef.current) {
-        clearTimeout(loadingTimeoutRef.current);
-      }
     };
   }, []);
 
   return (
-    <div className="location-autocomplete-container">
+    <div className={`location-autocomplete-container ${className}`} style={{ position: 'relative' }}>
       {label && (
-        <label htmlFor={id} className="autocomplete-label">
+        <label htmlFor={id} style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
           {label}
         </label>
       )}
       
-      <div className="autocomplete-input-wrapper">
+      <div style={{ position: 'relative' }}>
         <input
-          ref={inputRef}
           type="text"
           id={id}
           name={name}
           value={value}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          onFocus={() => value.length >= 3 && setShowSuggestions(suggestions.length > 0)}
           placeholder={placeholder}
           required={required}
-          className="autocomplete-input"
+          style={{
+            width: '100%',
+            padding: '12px',
+            fontSize: '14px',
+            border: '2px solid #ddd',
+            borderRadius: '8px',
+            outline: 'none'
+          }}
           autoComplete="off"
         />
         
         {isLoading && (
-          <div className="autocomplete-loading">
-            <div className="loading-spinner"></div>
+          <div style={{
+            position: 'absolute',
+            right: '12px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            fontSize: '14px'
+          }}>
+            🔄
           </div>
         )}
         
         {showSuggestions && suggestions.length > 0 && (
-          <ul ref={suggestionListRef} className="autocomplete-suggestions">
-            {suggestions.map((suggestion) => {
-              const getSourceIcon = (source: string) => {
-                if (source === 'database') return '🚍';
-                if (source === 'local') return '⚡';
-                return '🌍';
-              };
-
-              return (
-                <li key={`${suggestion.source}-${suggestion.id}`}>
-                  <button
-                    type="button"
-                    className={`autocomplete-suggestion ${isInTamilNadu(suggestion.name) ? 'tn-city' : ''}`}
-                    onClick={() => handleSuggestionClick(suggestion)}
-                  >
-                    <div className="suggestion-content">
-                      <span className="suggestion-name">
-                        {formatLocationNameUniversal(suggestion.name)}
-                      </span>
-                      {suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
-                        <span className="suggestion-translated">
-                          {suggestion.translatedName}
-                        </span>
-                      )}
-                      <span className="suggestion-source">
-                        {getSourceIcon(suggestion.source || '')}
-                      </span>
-                    </div>
-                  </button>
-                </li>
-              );
-            })}
+          <ul style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            margin: '4px 0 0 0',
+            padding: 0,
+            listStyle: 'none',
+            background: 'white',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            maxHeight: '200px',
+            overflowY: 'auto',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            zIndex: 1000
+          }}>
+            {suggestions.map((suggestion, index) => (
+              <li key={`${suggestion.source}-${suggestion.id || index}`}>
+                <button
+                  type="button"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: 'none',
+                    background: 'transparent',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    borderBottom: index < suggestions.length - 1 ? '1px solid #eee' : 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                >
+                  <span>
+                    {suggestion.source === 'database' ? '🚍' : suggestion.source === 'local' ? '⚡' : '🌍'}
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <div>{suggestion.name}</div>
+                    {suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
+                      <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                        {suggestion.translatedName}
+                      </div>
+                    )}
+                  </div>
+                </button>
+              </li>
+            ))}
           </ul>
         )}
       </div>

@@ -32,28 +32,36 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   connectingRoutes = [],
   loading = false
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
   
+  // Helper function to get display name for location
+  const getLocationDisplayName = (location: AppLocation) => {
+    if (i18n.language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  };
+  
   // Use virtual scrolling for large lists (50+ buses)
   const useVirtualScrolling = buses.length > 50;
   
-  // Use stopsMap if available, otherwise fall back to the stops array
-  const allStops = Object.keys(stopsMap).length > 0 
-    ? Object.values(stopsMap).flat() 
-    : stops;
-  
   useEffect(() => {
     if (selectedBusId) {
+      // Compute allStops inside effect to avoid dependency issues
+      const allStops = Object.keys(stopsMap).length > 0 
+        ? Object.values(stopsMap).flat() 
+        : stops;
+      
       // Try to get stops from stopsMap first, then fall back to filtering all stops
       const busStops = stopsMap[selectedBusId] || allStops.filter(stop => stop.busId === selectedBusId);
       setSelectedBusStops(busStops);
     } else {
       setSelectedBusStops([]);
     }
-  }, [selectedBusId, stopsMap, allStops]);
+  }, [selectedBusId, stopsMap, stops]);
   
   const handleSelectBus = (bus: Bus) => {
     setSelectedBusId(bus.id);
@@ -128,7 +136,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>
-              Current Search
+              {t('searchResults.currentSearch', 'Current Search')}
             </div>
             <div style={{ 
               display: 'flex', 
@@ -138,10 +146,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               fontWeight: 600,
               color: '#1F2937'
             }}>
-              <span>📍 {fromLocation.name}</span>
-              <span style={{ color: '#3B82F6' }}>→</span>
-              <span>🎯 {toLocation.name}</span>
+                          <div className="row row-sm" style={{ alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)', flexWrap: 'wrap' }}>
+              <span>📍 {getLocationDisplayName(fromLocation)}</span>
+              <span style={{ color: 'var(--transit-primary)' }}>→</span>
+              <span>🎯 {getLocationDisplayName(toLocation)}</span>
             </div>
+          </div>
           </div>
 
           {/* Action Buttons */}
@@ -182,14 +192,14 @@ const SearchResults: React.FC<SearchResultsProps> = ({
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
               </svg>
-              <span className="hidden sm:inline">Edit Search</span>
-              <span className="sm:hidden">Edit</span>
+              <span className="hidden sm:inline">{t('searchResults.editSearch', 'Edit Search')}</span>
+              <span className="sm:hidden">{t('searchResults.edit', 'Edit')}</span>
             </button>
 
             <button
               onClick={() => {
                 navigate('/', { replace: true });
-                window.location.reload();
+                globalThis.location.reload();
               }}
               style={{
                 display: 'inline-flex',
@@ -220,8 +230,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.35-4.35" />
               </svg>
-              <span className="hidden sm:inline">New Search</span>
-              <span className="sm:hidden">New</span>
+              <span className="hidden sm:inline">{t('searchResults.newSearch', 'New Search')}</span>
+              <span className="sm:hidden">{t('searchResults.new', 'New')}</span>
             </button>
           </div>
         </div>
@@ -237,11 +247,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({
             <TransitBusList 
               buses={buses} 
               selectedBusId={selectedBusId} 
-              stops={allStops}
+              stops={Object.keys(stopsMap).length > 0 ? Object.values(stopsMap).flat() : stops}
               stopsMap={stopsMap}
               onSelectBus={handleSelectBus}
-              fromLocation={fromLocation.name}
-              toLocation={toLocation.name}
+              fromLocation={getLocationDisplayName(fromLocation)}
+              toLocation={getLocationDisplayName(toLocation)}
               fromLocationObj={fromLocation}
               toLocationObj={toLocation}
             />
@@ -249,7 +259,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         </div>
         
         <div className="map-section">
-          {typeof window !== 'undefined' && (window as any).L ? (
+          {typeof globalThis !== 'undefined' && (globalThis as any).L ? (
             <OpenStreetMapComponent
               fromLocation={fromLocation}
               toLocation={toLocation}

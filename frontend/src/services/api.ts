@@ -382,9 +382,31 @@ const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation
 export const searchBuses = async (
   fromLocation: Location, 
   toLocation: Location,
-  includeContinuing: boolean = false
+  includeContinuing: boolean = false,
+  languageCode: string = 'en'
 ): Promise<Bus[]> => {
   try {
+    // Check if locations are from OpenStreetMap (negative IDs)
+    const isFromOSM = fromLocation.id < 0;
+    const isToOSM = toLocation.id < 0;
+    
+    // If either location is from OpenStreetMap, we need to find nearby locations in the database
+    if (isFromOSM || isToOSM) {
+      console.log('🌍 OpenStreetMap location detected, searching by coordinates');
+      
+      // For now, return empty array with a helpful message
+      // TODO: Implement coordinate-based search or find nearest database locations
+      console.warn('⚠️ OpenStreetMap locations not yet supported for bus search');
+      console.warn(`From: ${fromLocation.name} (${fromLocation.latitude}, ${fromLocation.longitude})`);
+      console.warn(`To: ${toLocation.name} (${toLocation.latitude}, ${toLocation.longitude})`);
+      
+      throw new ApiError(
+        `Currently, we can only search between locations in our database. "${isFromOSM ? fromLocation.name : toLocation.name}" is not in our system yet. Please try selecting a nearby city that appears with a 🚍 icon.`,
+        400,
+        'OSM_LOCATION_NOT_SUPPORTED'
+      );
+    }
+    
     const response = await api.get('/api/v1/bus-schedules/search', {
       params: {
         fromLocationId: fromLocation.id,
@@ -402,7 +424,7 @@ export const searchBuses = async (
     // Fetch real stops data for each bus
     for (const bus of buses) {
       try {
-        const stops = await getStops(bus.id);
+        const stops = await getStops(bus.id, languageCode);
         if (stops.length > 0) {
           // Update bus timing with actual stop times
           bus.departureTime = stops[0].departureTime;
@@ -418,6 +440,12 @@ export const searchBuses = async (
     return buses;
   } catch (error) {
     console.error('Error searching buses:', error);
+    
+    // If it's our custom OSM error, throw it as-is
+    if (error instanceof ApiError && error.errorCode === 'OSM_LOCATION_NOT_SUPPORTED') {
+      throw error;
+    }
+    
     throw new ApiError('Failed to search for buses. Please try again.');
   }
 };
@@ -487,7 +515,7 @@ export const getStops = async (busId: number, languageCode: string = 'en'): Prom
   try {
     console.log(`Fetching stops for bus ${busId} with language ${languageCode}`);
     const response = await api.get(`/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
-      params: { language: languageCode }
+      params: { lang: languageCode }
     });
     console.log('Stops API response:', response.data);
     

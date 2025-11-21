@@ -134,6 +134,33 @@ function AppContent() {
     }
   }, [fromLocation, getDestinations]);
 
+  // Restore search parameters from URL on page load/refresh
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const fromId = searchParams.get('from');
+    const toId = searchParams.get('to');
+    
+    if (fromId && toId && locations && locations.length > 0) {
+      const from = locations.find(loc => loc.id === parseInt(fromId));
+      const to = locations.find(loc => loc.id === parseInt(toId));
+      
+      if (from && to) {
+        // Only update if different from current state to avoid unnecessary re-renders
+        if (fromLocation?.id !== from.id) {
+          setFromLocation(from);
+        }
+        if (toLocation?.id !== to.id) {
+          setToLocation(to);
+        }
+        
+        // If on search-results page and search hasn't been performed yet, perform search
+        if (location.pathname === '/search-results' && buses.length === 0 && !busesLoading) {
+          searchBuses(from, to);
+        }
+      }
+    }
+  }, [location.search, location.pathname, locations]);
+
   // Update main tab when route changes - memoize to prevent excessive updates
   useEffect(() => {
     const pathname = location.pathname;
@@ -151,8 +178,12 @@ function AppContent() {
   }, [location.pathname, activeMainTab]);
 
   // Handler for the "Find Buses" button click
-  const handleSearch = async () => {
-    if (!fromLocation || !toLocation) {
+  const handleSearch = async (fromLoc?: Location, toLoc?: Location) => {
+    // Use parameters if provided, otherwise fall back to state
+    const searchFrom = fromLoc || fromLocation;
+    const searchTo = toLoc || toLocation;
+    
+    if (!searchFrom || !searchTo) {
       return;
     }
 
@@ -160,18 +191,18 @@ function AppContent() {
     resetResults();
 
     try {
-      console.log(`Searching for buses from ${fromLocation.name} to ${toLocation.name}`);
+      console.log(`Searching for buses from ${searchFrom.name} to ${searchTo.name}`);
       
-      await searchBuses(fromLocation, toLocation);
+      await searchBuses(searchFrom, searchTo);
       
-      // Navigate to search results page
-      navigate('/search-results');
+      // Navigate to search results page with query parameters
+      navigate(`/search-results?from=${searchFrom.id}&to=${searchTo.id}`);
     } catch (error) {
       console.error('Error searching buses:', error);
       
       // Navigate to search results page even if there's an error
       // The SearchResults component will handle displaying the error
-      navigate('/search-results');
+      navigate(`/search-results?from=${searchFrom.id}&to=${searchTo.id}`);
     } finally {
       setIsSearching(false);
     }
@@ -344,7 +375,7 @@ function AppContent() {
                   onSearch={(from, to, options) => {
                     setFromLocation(from);
                     setToLocation(to);
-                    handleSearch();
+                    handleSearch(from, to);
                   }}
                 />
               ) : (
@@ -366,7 +397,7 @@ function AppContent() {
                   onSearch={(from, to, options) => {
                     setFromLocation(from);
                     setToLocation(to);
-                    handleSearch();
+                    handleSearch(from, to);
                   }}
                 />
               ) : (
