@@ -5,6 +5,7 @@ import './styles/transit-realtime.css';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import type { Location as BusLocation } from './types';
 
 // Components
 import Header from './components/Header';
@@ -178,7 +179,7 @@ function AppContent() {
   }, [location.pathname, activeMainTab]);
 
   // Handler for the "Find Buses" button click
-  const handleSearch = async (fromLoc?: Location, toLoc?: Location) => {
+  const handleSearch = async (fromLoc?: BusLocation, toLoc?: BusLocation) => {
     // Use parameters if provided, otherwise fall back to state
     const searchFrom = fromLoc || fromLocation;
     const searchTo = toLoc || toLocation;

@@ -33,15 +33,20 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const handleSuggestionsCallback = useCallback((newSuggestions: LocationSuggestion[]) => {
-    setSuggestions(newSuggestions);
-    setShowSuggestions(newSuggestions.length > 0);
-    setIsLoading(false);
-  }, []);
+    if (!isSelecting) {
+      setSuggestions(newSuggestions);
+      setShowSuggestions(newSuggestions.length > 0);
+      setIsLoading(false);
+    }
+  }, [isSelecting]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
+    setIsSelecting(false);
     onChange(inputValue);
 
     if (inputValue.length >= 3) {
@@ -66,9 +71,48 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   };
 
   const handleSuggestionClick = (suggestion: LocationSuggestion) => {
-    onChange(suggestion.name, suggestion);
-    setSuggestions([]);
+    // Mark as selecting FIRST to prevent blur from interfering
+    setIsSelecting(true);
+    
+    // Clear any pending blur timeout
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current);
+      blurTimeoutRef.current = null;
+    }
+    
+    // Immediately close dropdown and notify parent
     setShowSuggestions(false);
+    setSuggestions([]);
+    onChange(suggestion.name, suggestion);
+    
+    // Reset selecting flag after a short delay
+    setTimeout(() => setIsSelecting(false), 50);
+  };
+
+  const handleFocus = () => {
+    // Clear any pending blur timeout
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current);
+      blurTimeoutRef.current = null;
+    }
+    
+    if (value.length >= 3 && suggestions.length > 0) {
+      setShowSuggestions(true);
+    }
+  };
+
+  const handleBlur = () => {
+    // Only blur if not currently selecting
+    if (!isSelecting) {
+      // Delay hiding suggestions to allow click to register
+      if (blurTimeoutRef.current) {
+        clearTimeout(blurTimeoutRef.current);
+      }
+      
+      blurTimeoutRef.current = setTimeout(() => {
+        setShowSuggestions(false);
+      }, 150);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -81,6 +125,9 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   useEffect(() => {
     return () => {
       locationAutocompleteService.clearDebounce();
+      if (blurTimeoutRef.current) {
+        clearTimeout(blurTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -100,7 +147,8 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
           value={value}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          onFocus={() => value.length >= 3 && setShowSuggestions(suggestions.length > 0)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           placeholder={placeholder}
           required={required}
           style={{
@@ -127,27 +175,37 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
         )}
         
         {showSuggestions && suggestions.length > 0 && (
-          <ul style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            margin: '4px 0 0 0',
-            padding: 0,
-            listStyle: 'none',
-            background: 'white',
-            border: '1px solid #ddd',
-            borderRadius: '8px',
-            maxHeight: '200px',
-            overflowY: 'auto',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-            zIndex: 1000
-          }}>
+          <ul 
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
+              margin: '4px 0 0 0',
+              padding: 0,
+              listStyle: 'none',
+              background: 'white',
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              maxHeight: '200px',
+              overflowY: 'auto',
+              boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+              zIndex: 1000
+            }}
+            onMouseDown={(e) => {
+              // Prevent input from losing focus
+              e.preventDefault();
+            }}
+          >
             {suggestions.map((suggestion, index) => (
               <li key={`${suggestion.source}-${suggestion.id || index}`}>
                 <button
                   type="button"
-                  onClick={() => handleSuggestionClick(suggestion)}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleSuggestionClick(suggestion);
+                  }}
                   style={{
                     width: '100%',
                     padding: '12px',

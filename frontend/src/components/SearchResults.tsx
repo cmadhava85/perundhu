@@ -48,6 +48,13 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   // Use virtual scrolling for large lists (50+ buses)
   const useVirtualScrolling = buses.length > 50;
   
+  // Auto-select first bus when buses are loaded
+  useEffect(() => {
+    if (buses.length > 0 && selectedBusId === null) {
+      setSelectedBusId(buses[0].id);
+    }
+  }, [buses, selectedBusId]);
+  
   useEffect(() => {
     if (selectedBusId) {
       // Compute allStops inside effect to avoid dependency issues
