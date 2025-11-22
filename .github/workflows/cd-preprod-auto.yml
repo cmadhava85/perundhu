@@ -20,8 +20,6 @@ jobs:
   build-and-push-images:
     name: Build & Push Pre-Prod Images
     runs-on: ubuntu-latest
-    # Only run if GCPSECRET exists
-    if: ${{ secrets.GCPSECRET != '' }}
     permissions:
       contents: read
       id-token: write
