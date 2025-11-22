@@ -20,6 +20,8 @@ jobs:
   build-and-push-images:
     name: Build & Push Pre-Prod Images
     runs-on: ubuntu-latest
+    # Only run if GCP_SA_KEY secret exists
+    if: ${{ secrets.GCP_SA_KEY != '' }}
     permissions:
       contents: read
       id-token: write
