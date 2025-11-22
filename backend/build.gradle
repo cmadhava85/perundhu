@@ -16,6 +16,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.mysql:mysql-connector-j:8.3.0'
+        classpath 'org.flywaydb:flyway-mysql:10.10.0'
     }
 }
 
