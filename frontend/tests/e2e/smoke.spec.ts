@@ -10,9 +10,12 @@ test.describe('Basic Smoke Tests', () => {
     // Check if the page title contains our app name
     await expect(page).toHaveTitle(/Perundhu/i);
     
-    // Verify basic elements are present
-    const searchForm = page.locator('form');
-    await expect(searchForm).toBeVisible();
+    // Verify search inputs are present (actual elements that exist)
+    const fromInput = page.locator('input[placeholder*="departure"]').first();
+    const toInput = page.locator('input[placeholder*="destination"]').first();
+    
+    await expect(fromInput).toBeVisible();
+    await expect(toInput).toBeVisible();
     
     console.log('✅ Homepage loaded successfully');
   });
@@ -25,20 +28,20 @@ test.describe('Basic Smoke Tests', () => {
     // Wait for page load
     await page.waitForLoadState('networkidle');
     
-    // Check if mobile layout is working
-    const searchForm = page.locator('form');
-    await expect(searchForm).toBeVisible();
+    // Check if search inputs are visible on mobile
+    const fromInput = page.locator('input[placeholder*="departure"]').first();
+    await expect(fromInput).toBeVisible();
     
     console.log('✅ Mobile responsiveness verified');
   });
 
   test('should work across different browsers', async ({ page, browserName }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
     
     // Basic functionality should work in all browsers
-    const searchForm = page.locator('form');
-    await expect(searchForm).toBeVisible();
+    const fromInput = page.locator('input[placeholder*="departure"]').first();
+    await expect(fromInput).toBeVisible();
     
     console.log(`✅ Working correctly in ${browserName}`);
   });

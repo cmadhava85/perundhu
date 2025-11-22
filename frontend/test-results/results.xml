@@ -1,0 +1,150 @@
+<testsuites id="" name="" tests="52" failures="0" skipped="0" errors="0" time="19.235019999999995">
+<testsuite name="complete-user-journey.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="chromium" tests="9" failures="0" skipped="0" time="33.759" errors="0">
+<testcase name="Complete User Journey - Search to Results › should complete full search flow: type locations → search → see results" classname="complete-user-journey.spec.ts" time="4.811">
+</testcase>
+<testcase name="Bus List Interactions › should expand bus row and show stops when clicked" classname="complete-user-journey.spec.ts" time="3.462">
+</testcase>
+<testcase name="Bus List Interactions › should show map with stops markers when bus is expanded" classname="complete-user-journey.spec.ts" time="3.46">
+</testcase>
+<testcase name="Sorting Features › should sort buses by different criteria" classname="complete-user-journey.spec.ts" time="3.268">
+</testcase>
+<testcase name="Sorting Features › should highlight active sort option" classname="complete-user-journey.spec.ts" time="3.364">
+</testcase>
+<testcase name="Edit Search and Refetch › should allow editing search and fetch new results" classname="complete-user-journey.spec.ts" time="6.925">
+</testcase>
+<testcase name="Additional User Scenarios › should handle no results gracefully" classname="complete-user-journey.spec.ts" time="2.777">
+</testcase>
+<testcase name="Additional User Scenarios › should filter buses by type if filter available" classname="complete-user-journey.spec.ts" time="2.792">
+</testcase>
+<testcase name="Additional User Scenarios › should show bus details like fare, duration, stops count" classname="complete-user-journey.spec.ts" time="2.9">
+</testcase>
+</testsuite>
+<testsuite name="connectivity.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="chromium" tests="4" failures="0" skipped="0" time="3.692" errors="0">
+<testcase name="Application Connectivity › should load the application successfully" classname="connectivity.spec.ts" time="0.993">
+</testcase>
+<testcase name="Application Connectivity › should display search inputs on homepage" classname="connectivity.spec.ts" time="0.938">
+</testcase>
+<testcase name="Application Connectivity › should allow user interactions" classname="connectivity.spec.ts" time="0.933">
+</testcase>
+<testcase name="Application Connectivity › should not have critical console errors" classname="connectivity.spec.ts" time="0.828">
+</testcase>
+</testsuite>
+<testsuite name="search-flow.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="chromium" tests="6" failures="0" skipped="0" time="7.704" errors="0">
+<testcase name="Search and Results Flow › should display search form on homepage" classname="search-flow.spec.ts" time="0.909">
+</testcase>
+<testcase name="Search and Results Flow › should allow typing in search inputs" classname="search-flow.spec.ts" time="1.025">
+</testcase>
+<testcase name="Search and Results Flow › should show location suggestions when typing" classname="search-flow.spec.ts" time="2.065">
+</testcase>
+<testcase name="Search and Results Flow › should handle empty search gracefully" classname="search-flow.spec.ts" time="1.544">
+</testcase>
+<testcase name="Search and Results Flow › should work on mobile viewport" classname="search-flow.spec.ts" time="1.12">
+</testcase>
+<testcase name="Search and Results Flow › should preserve search inputs when navigating" classname="search-flow.spec.ts" time="1.041">
+</testcase>
+</testsuite>
+<testsuite name="simple.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="chromium" tests="4" failures="0" skipped="0" time="3.771" errors="0">
+<testcase name="Simple E2E Tests › page loads successfully" classname="simple.spec.ts" time="0.961">
+</testcase>
+<testcase name="Simple E2E Tests › search inputs are visible" classname="simple.spec.ts" time="0.996">
+</testcase>
+<testcase name="Simple E2E Tests › can type in search inputs" classname="simple.spec.ts" time="0.902">
+</testcase>
+<testcase name="Simple E2E Tests › works on mobile viewport" classname="simple.spec.ts" time="0.912">
+</testcase>
+</testsuite>
+<testsuite name="smoke.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="chromium" tests="3" failures="0" skipped="0" time="3.673" errors="0">
+<testcase name="Basic Smoke Tests › should load the homepage" classname="smoke.spec.ts" time="1.398">
+<system-out>
+<![CDATA[✅ Homepage loaded successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic Smoke Tests › should be responsive on mobile" classname="smoke.spec.ts" time="1.335">
+<system-out>
+<![CDATA[✅ Mobile responsiveness verified
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic Smoke Tests › should work across different browsers" classname="smoke.spec.ts" time="0.94">
+<system-out>
+<![CDATA[✅ Working correctly in chromium
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="complete-user-journey.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="mobile" tests="9" failures="0" skipped="0" time="32.352" errors="0">
+<testcase name="Complete User Journey - Search to Results › should complete full search flow: type locations → search → see results" classname="complete-user-journey.spec.ts" time="4.864">
+</testcase>
+<testcase name="Bus List Interactions › should expand bus row and show stops when clicked" classname="complete-user-journey.spec.ts" time="3.303">
+</testcase>
+<testcase name="Bus List Interactions › should show map with stops markers when bus is expanded" classname="complete-user-journey.spec.ts" time="3.034">
+</testcase>
+<testcase name="Sorting Features › should sort buses by different criteria" classname="complete-user-journey.spec.ts" time="3.242">
+</testcase>
+<testcase name="Sorting Features › should highlight active sort option" classname="complete-user-journey.spec.ts" time="3.226">
+</testcase>
+<testcase name="Edit Search and Refetch › should allow editing search and fetch new results" classname="complete-user-journey.spec.ts" time="6.831">
+</testcase>
+<testcase name="Additional User Scenarios › should handle no results gracefully" classname="complete-user-journey.spec.ts" time="2.618">
+</testcase>
+<testcase name="Additional User Scenarios › should filter buses by type if filter available" classname="complete-user-journey.spec.ts" time="2.613">
+</testcase>
+<testcase name="Additional User Scenarios › should show bus details like fare, duration, stops count" classname="complete-user-journey.spec.ts" time="2.621">
+</testcase>
+</testsuite>
+<testsuite name="connectivity.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="mobile" tests="4" failures="0" skipped="0" time="2.9" errors="0">
+<testcase name="Application Connectivity › should load the application successfully" classname="connectivity.spec.ts" time="0.749">
+</testcase>
+<testcase name="Application Connectivity › should display search inputs on homepage" classname="connectivity.spec.ts" time="0.739">
+</testcase>
+<testcase name="Application Connectivity › should allow user interactions" classname="connectivity.spec.ts" time="0.735">
+</testcase>
+<testcase name="Application Connectivity › should not have critical console errors" classname="connectivity.spec.ts" time="0.677">
+</testcase>
+</testsuite>
+<testsuite name="search-flow.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="mobile" tests="6" failures="0" skipped="0" time="6.602" errors="0">
+<testcase name="Search and Results Flow › should display search form on homepage" classname="search-flow.spec.ts" time="0.82">
+</testcase>
+<testcase name="Search and Results Flow › should allow typing in search inputs" classname="search-flow.spec.ts" time="0.961">
+</testcase>
+<testcase name="Search and Results Flow › should show location suggestions when typing" classname="search-flow.spec.ts" time="1.992">
+</testcase>
+<testcase name="Search and Results Flow › should handle empty search gracefully" classname="search-flow.spec.ts" time="0.826">
+</testcase>
+<testcase name="Search and Results Flow › should work on mobile viewport" classname="search-flow.spec.ts" time="1.061">
+</testcase>
+<testcase name="Search and Results Flow › should preserve search inputs when navigating" classname="search-flow.spec.ts" time="0.942">
+</testcase>
+</testsuite>
+<testsuite name="simple.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="mobile" tests="4" failures="0" skipped="0" time="3.915" errors="0">
+<testcase name="Simple E2E Tests › page loads successfully" classname="simple.spec.ts" time="0.806">
+</testcase>
+<testcase name="Simple E2E Tests › search inputs are visible" classname="simple.spec.ts" time="1.047">
+</testcase>
+<testcase name="Simple E2E Tests › can type in search inputs" classname="simple.spec.ts" time="0.967">
+</testcase>
+<testcase name="Simple E2E Tests › works on mobile viewport" classname="simple.spec.ts" time="1.095">
+</testcase>
+</testsuite>
+<testsuite name="smoke.spec.ts" timestamp="2025-11-22T02:12:35.311Z" hostname="mobile" tests="3" failures="0" skipped="0" time="3.453" errors="0">
+<testcase name="Basic Smoke Tests › should load the homepage" classname="smoke.spec.ts" time="1.219">
+<system-out>
+<![CDATA[✅ Homepage loaded successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic Smoke Tests › should be responsive on mobile" classname="smoke.spec.ts" time="1.365">
+<system-out>
+<![CDATA[✅ Mobile responsiveness verified
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic Smoke Tests › should work across different browsers" classname="smoke.spec.ts" time="0.869">
+<system-out>
+<![CDATA[✅ Working correctly in webkit
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

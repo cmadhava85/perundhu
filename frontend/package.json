@@ -11,7 +11,14 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test:e2e": "npm run dev & sleep 5 && npx playwright test; kill %1",
+    "test:e2e:ui": "npx playwright test --ui",
+    "test:e2e:headed": "npx playwright test --headed",
+    "test:e2e:debug": "npx playwright test --debug",
+    "test:e2e:chromium": "npx playwright test --project=chromium",
+    "test:e2e:mobile": "npx playwright test --project=mobile",
+    "test:e2e:report": "npx playwright show-report"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -71,7 +78,8 @@
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0",
     "vite": "^5.4.8",
-    "vitest": "^2.1.2"
+    "vitest": "^2.1.2",
+    "wait-on": "^9.0.3"
   },
   "peerDependencies": {
     "react": "^18.3.1",
