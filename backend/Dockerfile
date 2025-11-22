@@ -9,8 +9,9 @@ WORKDIR /app
 COPY build.gradle settings.gradle gradle.properties ./
 COPY gradle/ gradle/
 
-# Copy source code
+# Copy all source modules
 COPY app/ app/
+COPY infrastructure/ infrastructure/
 COPY src/ src/
 
 # Build application
