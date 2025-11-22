@@ -144,6 +144,7 @@ jobs:
           -Pflyway.url="${FLYWAY_URL}" \
           -Pflyway.user="${FLYWAY_USER}" \
           -Pflyway.password="${FLYWAY_PASSWORD}" \
+          -Pflyway.locations="classpath:db/migration/mysql" \
           --no-configuration-cache \
           --info
     
