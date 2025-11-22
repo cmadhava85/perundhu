@@ -14,6 +14,9 @@ COPY app/ app/
 COPY infrastructure/ infrastructure/
 COPY src/ src/
 
+# Copy health check script
+COPY health-check.sh ./
+
 # Build application
 RUN gradle clean build -x test --no-daemon
 
