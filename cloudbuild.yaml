@@ -162,6 +162,7 @@ steps:
     args:
       - '-c'
       - |
+        set -e  # Exit on any error
         echo "Building backend Docker image..."
         docker build \
           -t gcr.io/$PROJECT_ID/perundhu-backend:$BUILD_ID \
@@ -179,6 +180,7 @@ steps:
     args:
       - '-c'
       - |
+        set -e  # Exit on any error
         echo "Building frontend Docker image..."
         docker build \
           -t gcr.io/$PROJECT_ID/perundhu-frontend:$BUILD_ID \
@@ -223,19 +225,33 @@ steps:
   # PUSH IMAGES TO REGISTRY
   # ============================================================================
 
-  # Push backend image
+  # Push backend images (all tags)
   - name: 'gcr.io/cloud-builders/docker'
-    args: 
-      - 'push'
-      - 'gcr.io/$PROJECT_ID/perundhu-backend:$BUILD_ID'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        set -e  # Exit on any error
+        echo "Pushing backend images to registry..."
+        docker push gcr.io/$PROJECT_ID/perundhu-backend:$BUILD_ID
+        docker push gcr.io/$PROJECT_ID/perundhu-backend:$SHORT_SHA
+        docker push gcr.io/$PROJECT_ID/perundhu-backend:latest
+        echo "Backend images pushed successfully"
     id: 'push-backend-image'
     waitFor: ['container-security-scan']
 
-  # Push frontend image
+  # Push frontend images (all tags)
   - name: 'gcr.io/cloud-builders/docker'
-    args: 
-      - 'push'
-      - 'gcr.io/$PROJECT_ID/perundhu-frontend:$BUILD_ID'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        set -e  # Exit on any error
+        echo "Pushing frontend images to registry..."
+        docker push gcr.io/$PROJECT_ID/perundhu-frontend:$BUILD_ID
+        docker push gcr.io/$PROJECT_ID/perundhu-frontend:$SHORT_SHA
+        docker push gcr.io/$PROJECT_ID/perundhu-frontend:latest
+        echo "Frontend images pushed successfully"
     id: 'push-frontend-image'
     waitFor: ['container-security-scan']
 
