@@ -96,20 +96,6 @@ jobs:
     name: Backend Tests
     runs-on: ubuntu-latest
     
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: test_password
-          MYSQL_DATABASE: perundhu_test
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-    
     steps:
     - uses: actions/checkout@v4
     
@@ -128,9 +114,10 @@ jobs:
       working-directory: ./backend
       run: ./gradlew test
       env:
-        SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/perundhu_test
-        SPRING_DATASOURCE_USERNAME: root
-        SPRING_DATASOURCE_PASSWORD: test_password
+        SPRING_PROFILES_ACTIVE: test
+        SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+        SPRING_DATASOURCE_USERNAME: sa
+        SPRING_DATASOURCE_PASSWORD: ""
     
     - name: Upload test results
       uses: actions/upload-artifact@v4
