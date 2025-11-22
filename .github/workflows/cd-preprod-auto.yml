@@ -111,13 +111,23 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
     
+    - name: Install Cloud SQL Proxy
+      run: |
+        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+        chmod +x cloud_sql_proxy
+    
+    - name: Start Cloud SQL Proxy
+      run: |
+        ./cloud_sql_proxy -instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql=tcp:3306 &
+        sleep 5
+    
     - name: Deploy Database Migrations
       working-directory: ./backend
       run: |
         chmod +x gradlew
-        # Run Flyway migrations for preprod
+        # Run Flyway migrations for preprod using Cloud SQL Proxy
         ./gradlew flywayMigrate \
-          -Pflyway.url="${{ secrets.PREPROD_DB_URL }}" \
+          -Pflyway.url="jdbc:mysql://127.0.0.1:3306/perundhu" \
           -Pflyway.user="${{ secrets.PREPROD_DB_USER }}" \
           -Pflyway.password="${{ secrets.PREPROD_DB_PASSWORD }}" \
           --no-configuration-cache
