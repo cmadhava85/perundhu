@@ -128,9 +128,10 @@ jobs:
       run: |
         # Run Flyway migrations
         ./gradlew flywayMigrate \
-          -Dflyway.url="${{ secrets.PROD_DB_URL }}" \
-          -Dflyway.user="${{ secrets.PROD_DB_USER }}" \
-          -Dflyway.password="${{ secrets.PROD_DB_PASSWORD }}"
+          -Pflyway.url="${{ secrets.PROD_DB_URL }}" \
+          -Pflyway.user="${{ secrets.PROD_DB_USER }}" \
+          -Pflyway.password="${{ secrets.PROD_DB_PASSWORD }}" \
+          --no-configuration-cache
     
     - name: Deploy Backend to Production
       run: |

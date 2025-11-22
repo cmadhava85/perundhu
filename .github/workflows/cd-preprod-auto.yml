@@ -117,9 +117,10 @@ jobs:
         chmod +x gradlew
         # Run Flyway migrations for preprod
         ./gradlew flywayMigrate \
-          -Dflyway.url="${{ secrets.PREPROD_DB_URL }}" \
-          -Dflyway.user="${{ secrets.PREPROD_DB_USER }}" \
-          -Dflyway.password="${{ secrets.PREPROD_DB_PASSWORD }}"
+          -Pflyway.url="${{ secrets.PREPROD_DB_URL }}" \
+          -Pflyway.user="${{ secrets.PREPROD_DB_USER }}" \
+          -Pflyway.password="${{ secrets.PREPROD_DB_PASSWORD }}" \
+          --no-configuration-cache
     
     - name: Deploy Backend to Pre-Production
       run: |

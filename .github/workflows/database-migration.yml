@@ -101,27 +101,31 @@ jobs:
       run: |
         echo "DRY RUN MODE - No actual migration will be performed"
         ./gradlew flywayInfo \
-          -Dflyway.url="${{ env.DB_URL }}" \
-          -Dflyway.user="${{ env.DB_USER }}" \
-          -Dflyway.password="${{ env.DB_PASSWORD }}"
+          -Pflyway.url="${{ env.DB_URL }}" \
+          -Pflyway.user="${{ env.DB_USER }}" \
+          -Pflyway.password="${{ env.DB_PASSWORD }}" \
+          --no-configuration-cache
     
     - name: Run Flyway Migrate
       if: github.event.inputs.dry_run == 'false' && github.event.inputs.action == 'migrate'
       working-directory: ./backend
       run: |
         ./gradlew flywayMigrate \
-          -Dflyway.url="${{ env.DB_URL }}" \
-          -Dflyway.user="${{ env.DB_USER }}" \
-          -Dflyway.password="${{ env.DB_PASSWORD }}"
+          -Pflyway.url="${{ env.DB_URL }}" \
+          -Pflyway.user="${{ env.DB_USER }}" \
+          -Pflyway.password="${{ env.DB_PASSWORD }}" \
+          --no-configuration-cache
     
     - name: Run Flyway Repair
       if: github.event.inputs.action == 'repair'
       working-directory: ./backend
       run: |
         ./gradlew flywayRepair \
-          -Dflyway.url="${{ env.DB_URL }}" \
-          -Dflyway.user="${{ env.DB_USER }}" \
-          -Dflyway.password="${{ env.DB_PASSWORD }}"
+          -Pflyway.url="${{ env.DB_URL }}" \
+          -Pflyway.user="${{ env.DB_USER }}" \
+          -Pflyway.password="${{ env.DB_PASSWORD }}" \
+          --no-configuration-cache
+          --no-configuration-cache
     
     - name: Create migration summary
       if: always()
