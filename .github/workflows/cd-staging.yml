@@ -1,0 +1,224 @@
+name: CD - Deploy to Staging
+
+on:
+  push:
+    branches: [ develop ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - preprod
+
+env:
+  GCP_PROJECT_ID: astute-strategy-406601
+  GCP_REGION: asia-south1
+  ARTIFACT_REGISTRY: asia-south1-docker.pkg.dev
+  NODE_VERSION: '18'
+  JAVA_VERSION: '17'
+
+jobs:
+  build-and-push-frontend:
+    name: Build & Push Frontend Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Configure Docker for Artifact Registry
+      run: |
+        gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
+    
+    - name: Build and push Frontend Docker image
+      working-directory: ./frontend
+      run: |
+        IMAGE_TAG="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${{ github.sha }}"
+        docker build -t $IMAGE_TAG .
+        docker push $IMAGE_TAG
+        echo "FRONTEND_IMAGE=$IMAGE_TAG" >> $GITHUB_ENV
+    
+    - name: Save image tag
+      run: echo "${{ env.FRONTEND_IMAGE }}" > frontend-image.txt
+    
+    - name: Upload image tag artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-image-tag
+        path: frontend-image.txt
+
+  build-and-push-backend:
+    name: Build & Push Backend Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Build JAR
+      working-directory: ./backend
+      run: |
+        chmod +x gradlew
+        ./gradlew build -x test
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Configure Docker for Artifact Registry
+      run: |
+        gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
+    
+    - name: Build and push Backend Docker image
+      working-directory: ./backend
+      run: |
+        IMAGE_TAG="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:${{ github.sha }}"
+        docker build -t $IMAGE_TAG .
+        docker push $IMAGE_TAG
+        echo "BACKEND_IMAGE=$IMAGE_TAG" >> $GITHUB_ENV
+    
+    - name: Save image tag
+      run: echo "${{ env.BACKEND_IMAGE }}" > backend-image.txt
+    
+    - name: Upload image tag artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: backend-image-tag
+        path: backend-image.txt
+
+  deploy-to-cloud-run:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    needs: [build-and-push-frontend, build-and-push-backend]
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download frontend image tag
+      uses: actions/download-artifact@v4
+      with:
+        name: frontend-image-tag
+    
+    - name: Download backend image tag
+      uses: actions/download-artifact@v4
+      with:
+        name: backend-image-tag
+    
+    - name: Set image tags
+      run: |
+        echo "FRONTEND_IMAGE=$(cat frontend-image.txt)" >> $GITHUB_ENV
+        echo "BACKEND_IMAGE=$(cat backend-image.txt)" >> $GITHUB_ENV
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Deploy Backend to Cloud Run
+      run: |
+        gcloud run deploy perundhu-backend-staging \
+          --image ${{ env.BACKEND_IMAGE }} \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=staging" \
+          --set-secrets="DB_PASSWORD=db-password:latest,JWT_SECRET=jwt-secret:latest" \
+          --memory 1Gi \
+          --cpu 1 \
+          --min-instances 0 \
+          --max-instances 10
+    
+    - name: Deploy Frontend to Cloud Run
+      run: |
+        gcloud run deploy perundhu-frontend-staging \
+          --image ${{ env.FRONTEND_IMAGE }} \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --allow-unauthenticated \
+          --memory 512Mi \
+          --cpu 1 \
+          --min-instances 0 \
+          --max-instances 5
+    
+    - name: Get service URLs
+      id: urls
+      run: |
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-staging --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-staging --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
+        echo "frontend_url=$FRONTEND_URL" >> $GITHUB_OUTPUT
+    
+    - name: Create deployment summary
+      run: |
+        echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Staging Environment" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Backend URL**: ${{ steps.urls.outputs.backend_url }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Frontend URL**: ${{ steps.urls.outputs.frontend_url }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit SHA**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+
+  run-smoke-tests:
+    name: Run Smoke Tests
+    runs-on: ubuntu-latest
+    needs: [deploy-to-cloud-run]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Get service URLs
+      run: |
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-staging --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-staging --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
+        echo "FRONTEND_URL=$FRONTEND_URL" >> $GITHUB_ENV
+    
+    - name: Test Backend Health
+      run: |
+        curl -f ${{ env.BACKEND_URL }}/actuator/health || exit 1
+    
+    - name: Test Frontend Health
+      run: |
+        curl -f ${{ env.FRONTEND_URL }} || exit 1

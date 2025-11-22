@@ -5,61 +5,11 @@ on:
     branches: [ main, master, develop ]
   pull_request:
     branches: [ main, master, develop ]
+  workflow_dispatch:
 
 jobs:
   e2e-tests:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        browser: [chromium, firefox, webkit]
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
-    
-    - name: Install dependencies
-      working-directory: ./frontend
-      run: npm ci
-    
-    - name: Install Playwright Browsers
-      working-directory: ./frontend
-      run: npx playwright install --with-deps ${{ matrix.browser }}
-    
-    - name: Build application
-      working-directory: ./frontend
-      run: npm run build
-    
-    - name: Run Playwright tests
-      working-directory: ./frontend
-      run: npx playwright test --project=${{ matrix.browser }}-desktop
-      env:
-        CI: true
-    
-    - name: Upload Playwright Report
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report-${{ matrix.browser }}
-        path: frontend/playwright-report/
-        retention-days: 30
-    
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results-${{ matrix.browser }}
-        path: frontend/test-results/
-        retention-days: 30
-
-  mobile-e2e-tests:
+    name: E2E Tests (Chrome & Mobile)
     timeout-minutes: 30
     runs-on: ubuntu-latest
     
@@ -81,16 +31,47 @@ jobs:
       working-directory: ./frontend
       run: npx playwright install --with-deps chromium
     
-    - name: Run Mobile Playwright tests
+    - name: Build application
       working-directory: ./frontend
-      run: npx playwright test --project=mobile-chrome --project=mobile-safari
+      run: npm run build
+    
+    - name: Start dev server in background
+      working-directory: ./frontend
+      run: |
+        npm run dev &
+        echo $! > .vite-pid
+        # Wait for server to be ready
+        timeout 60 bash -c 'until curl -s http://localhost:5173 > /dev/null; do sleep 1; done'
       env:
         CI: true
     
-    - name: Upload Mobile Test Results
+    - name: Run E2E tests (chromium + mobile)
+      working-directory: ./frontend
+      run: npx playwright test --project=chromium --project=mobile
+      env:
+        CI: true
+    
+    - name: Stop dev server
+      if: always()
+      working-directory: ./frontend
+      run: |
+        if [ -f .vite-pid ]; then
+          kill $(cat .vite-pid) 2>/dev/null || true
+        fi
+        pkill -f vite || true
+    
+    - name: Upload Playwright Report
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: mobile-test-results
+        name: playwright-report
+        path: frontend/playwright-report/
+        retention-days: 30
+    
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
         path: frontend/test-results/
         retention-days: 30

@@ -1,0 +1,156 @@
+name: Dependency Update
+
+on:
+  schedule:
+    # Run weekly on Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-frontend-dependencies:
+    name: Update Frontend Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Update dependencies
+      working-directory: ./frontend
+      run: |
+        npm update
+        npm audit fix --audit-level=moderate || true
+    
+    - name: Run tests
+      working-directory: ./frontend
+      run: |
+        npm ci
+        npm test --if-present || echo "No tests configured"
+        npm run build
+    
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore(deps): update frontend dependencies'
+        title: '🔄 Update Frontend Dependencies'
+        body: |
+          ## Frontend Dependency Updates
+          
+          This PR updates frontend dependencies to their latest compatible versions.
+          
+          ### Changes
+          - Updated npm packages
+          - Applied security fixes
+          
+          ### Testing
+          - ✅ Build successful
+          - ✅ Tests passed (if available)
+          
+          Please review the changes and merge if everything looks good.
+        branch: deps/frontend-updates
+        delete-branch: true
+        labels: dependencies,frontend
+
+  update-backend-dependencies:
+    name: Update Backend Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Update Gradle dependencies
+      working-directory: ./backend
+      run: |
+        chmod +x gradlew
+        # Show dependency updates
+        ./gradlew dependencyUpdates
+    
+    - name: Run tests
+      working-directory: ./backend
+      run: |
+        ./gradlew test
+        ./gradlew build
+    
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore(deps): update backend dependencies'
+        title: '🔄 Update Backend Dependencies'
+        body: |
+          ## Backend Dependency Updates
+          
+          This PR contains dependency updates for the backend.
+          
+          ### Changes
+          Check the Gradle dependency report for details.
+          
+          ### Testing
+          - ✅ Build successful
+          - ✅ All tests passed
+          
+          Please review and merge if appropriate.
+        branch: deps/backend-updates
+        delete-branch: true
+        labels: dependencies,backend
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Frontend security audit
+      working-directory: ./frontend
+      run: |
+        npm audit --audit-level=moderate
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Backend security audit
+      working-directory: ./backend
+      run: |
+        chmod +x gradlew
+        # Run OWASP dependency check if configured
+        ./gradlew dependencyCheckAnalyze || echo "Dependency check not configured"
+    
+    - name: Upload security reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-reports
+        path: |
+          backend/build/reports/
+          frontend/npm-audit.json
+        retention-days: 30

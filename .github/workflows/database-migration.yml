@@ -1,0 +1,141 @@
+name: Database Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - preprod
+          - production
+      action:
+        description: 'Migration action'
+        required: true
+        type: choice
+        options:
+          - migrate
+          - validate
+          - info
+          - repair
+      dry_run:
+        description: 'Dry run (no actual changes)'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  database-migration:
+    name: Run Database Migration
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Set environment variables
+      run: |
+        ENV="${{ github.event.inputs.environment }}"
+        
+        if [ "$ENV" == "production" ]; then
+          echo "DB_URL=${{ secrets.PROD_DB_URL }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.PROD_DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.PROD_DB_PASSWORD }}" >> $GITHUB_ENV
+        elif [ "$ENV" == "staging" ]; then
+          echo "DB_URL=${{ secrets.STAGING_DB_URL }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.STAGING_DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.STAGING_DB_PASSWORD }}" >> $GITHUB_ENV
+        else
+          echo "DB_URL=${{ secrets.PREPROD_DB_URL }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.PREPROD_DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.PREPROD_DB_PASSWORD }}" >> $GITHUB_ENV
+        fi
+    
+    - name: Backup database (production only)
+      if: github.event.inputs.environment == 'production' && github.event.inputs.dry_run == 'false'
+      working-directory: ./backend
+      run: |
+        BACKUP_FILE="backup_$(date +%Y%m%d_%H%M%S).sql"
+        echo "Creating database backup: $BACKUP_FILE"
+        # Add your backup command here
+        # Example: mysqldump or pg_dump
+    
+    - name: Run Flyway Info
+      working-directory: ./backend
+      run: |
+        chmod +x gradlew
+        ./gradlew flywayInfo \
+          -Dflyway.url="${{ env.DB_URL }}" \
+          -Dflyway.user="${{ env.DB_USER }}" \
+          -Dflyway.password="${{ env.DB_PASSWORD }}"
+    
+    - name: Run Flyway Validate
+      if: github.event.inputs.action == 'validate' || github.event.inputs.action == 'migrate'
+      working-directory: ./backend
+      run: |
+        ./gradlew flywayValidate \
+          -Dflyway.url="${{ env.DB_URL }}" \
+          -Dflyway.user="${{ env.DB_USER }}" \
+          -Dflyway.password="${{ env.DB_PASSWORD }}"
+    
+    - name: Run Flyway Migrate (Dry Run)
+      if: github.event.inputs.dry_run == 'true' && github.event.inputs.action == 'migrate'
+      working-directory: ./backend
+      run: |
+        echo "DRY RUN MODE - No actual migration will be performed"
+        ./gradlew flywayInfo \
+          -Dflyway.url="${{ env.DB_URL }}" \
+          -Dflyway.user="${{ env.DB_USER }}" \
+          -Dflyway.password="${{ env.DB_PASSWORD }}"
+    
+    - name: Run Flyway Migrate
+      if: github.event.inputs.dry_run == 'false' && github.event.inputs.action == 'migrate'
+      working-directory: ./backend
+      run: |
+        ./gradlew flywayMigrate \
+          -Dflyway.url="${{ env.DB_URL }}" \
+          -Dflyway.user="${{ env.DB_USER }}" \
+          -Dflyway.password="${{ env.DB_PASSWORD }}"
+    
+    - name: Run Flyway Repair
+      if: github.event.inputs.action == 'repair'
+      working-directory: ./backend
+      run: |
+        ./gradlew flywayRepair \
+          -Dflyway.url="${{ env.DB_URL }}" \
+          -Dflyway.user="${{ env.DB_USER }}" \
+          -Dflyway.password="${{ env.DB_PASSWORD }}"
+    
+    - name: Create migration summary
+      if: always()
+      run: |
+        echo "## Database Migration Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Environment**: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Action**: ${{ github.event.inputs.action }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Dry Run**: ${{ github.event.inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Executed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Notify on failure
+      if: failure() && github.event.inputs.environment == 'production'
+      run: |
+        echo "🚨 Production migration failed! Manual intervention may be required."
+        # Add notification logic here (Slack, email, etc.)

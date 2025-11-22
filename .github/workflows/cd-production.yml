@@ -1,0 +1,287 @@
+name: CD - Deploy to Production
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to deploy'
+        required: true
+        type: string
+
+env:
+  GCP_PROJECT_ID: astute-strategy-406601
+  GCP_REGION: asia-south1
+  ARTIFACT_REGISTRY: asia-south1-docker.pkg.dev
+  NODE_VERSION: '18'
+  JAVA_VERSION: '17'
+
+jobs:
+  validate-release:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.version || github.event.release.tag_name }}
+    
+    - name: Validate version tag
+      run: |
+        VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
+        if [[ ! $VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Invalid version format: $VERSION (expected: vX.Y.Z)"
+          exit 1
+        fi
+
+  build-and-push-images:
+    name: Build & Push Production Images
+    runs-on: ubuntu-latest
+    needs: [validate-release]
+    permissions:
+      contents: read
+      id-token: write
+    
+    outputs:
+      frontend_image: ${{ steps.set-outputs.outputs.frontend_image }}
+      backend_image: ${{ steps.set-outputs.outputs.backend_image }}
+      version: ${{ steps.set-outputs.outputs.version }}
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.version || github.event.release.tag_name }}
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Build Backend JAR
+      working-directory: ./backend
+      run: |
+        chmod +x gradlew
+        ./gradlew build -x test
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Configure Docker for Artifact Registry
+      run: |
+        gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
+    
+    - name: Build and push images
+      id: set-outputs
+      run: |
+        VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
+        
+        # Frontend
+        FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${VERSION}"
+        FRONTEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:latest"
+        docker build -t $FRONTEND_IMAGE -t $FRONTEND_LATEST ./frontend
+        docker push $FRONTEND_IMAGE
+        docker push $FRONTEND_LATEST
+        
+        # Backend
+        BACKEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:${VERSION}"
+        BACKEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:latest"
+        docker build -t $BACKEND_IMAGE -t $BACKEND_LATEST ./backend
+        docker push $BACKEND_IMAGE
+        docker push $BACKEND_LATEST
+        
+        echo "frontend_image=$FRONTEND_IMAGE" >> $GITHUB_OUTPUT
+        echo "backend_image=$BACKEND_IMAGE" >> $GITHUB_OUTPUT
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  deploy-to-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build-and-push-images]
+    environment:
+      name: production
+      url: https://perundhu.app
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Deploy Database Migrations
+      working-directory: ./backend
+      run: |
+        # Run Flyway migrations
+        ./gradlew flywayMigrate \
+          -Dflyway.url="${{ secrets.PROD_DB_URL }}" \
+          -Dflyway.user="${{ secrets.PROD_DB_USER }}" \
+          -Dflyway.password="${{ secrets.PROD_DB_PASSWORD }}"
+    
+    - name: Deploy Backend to Production
+      run: |
+        gcloud run deploy perundhu-backend-prod \
+          --image ${{ needs.build-and-push-images.outputs.backend_image }} \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=production" \
+          --set-secrets="DB_PASSWORD=prod-db-password:latest,JWT_SECRET=prod-jwt-secret:latest" \
+          --memory 2Gi \
+          --cpu 2 \
+          --min-instances 1 \
+          --max-instances 50 \
+          --concurrency 80 \
+          --timeout 300s \
+          --labels="version=${{ needs.build-and-push-images.outputs.version }},env=production"
+    
+    - name: Deploy Frontend to Production
+      run: |
+        gcloud run deploy perundhu-frontend-prod \
+          --image ${{ needs.build-and-push-images.outputs.frontend_image }} \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --allow-unauthenticated \
+          --memory 1Gi \
+          --cpu 1 \
+          --min-instances 1 \
+          --max-instances 20 \
+          --concurrency 80 \
+          --timeout 60s \
+          --labels="version=${{ needs.build-and-push-images.outputs.version }},env=production"
+    
+    - name: Get service URLs
+      id: urls
+      run: |
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
+        echo "frontend_url=$FRONTEND_URL" >> $GITHUB_OUTPUT
+    
+    - name: Update DNS (if using custom domain)
+      run: |
+        # Add your DNS update logic here if using custom domain
+        echo "Update DNS records to point to:"
+        echo "Backend: ${{ steps.urls.outputs.backend_url }}"
+        echo "Frontend: ${{ steps.urls.outputs.frontend_url }}"
+
+  run-production-tests:
+    name: Run Production Smoke Tests
+    runs-on: ubuntu-latest
+    needs: [deploy-to-production]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Get service URLs
+      run: |
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
+        echo "FRONTEND_URL=$FRONTEND_URL" >> $GITHUB_ENV
+    
+    - name: Test Backend Health
+      run: |
+        for i in {1..5}; do
+          if curl -f ${{ env.BACKEND_URL }}/actuator/health; then
+            echo "Backend is healthy"
+            break
+          fi
+          if [ $i -eq 5 ]; then
+            echo "Backend health check failed after 5 attempts"
+            exit 1
+          fi
+          sleep 10
+        done
+    
+    - name: Test Frontend
+      run: |
+        curl -f ${{ env.FRONTEND_URL }} || exit 1
+    
+    - name: Test API endpoints
+      run: |
+        # Test a sample API endpoint
+        curl -f ${{ env.BACKEND_URL }}/api/locations || echo "Locations endpoint test"
+
+  create-deployment-summary:
+    name: Create Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [build-and-push-images, deploy-to-production, run-production-tests]
+    if: always()
+    
+    steps:
+    - name: Generate summary
+      run: |
+        echo "## 🚀 Production Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: ${{ needs.build-and-push-images.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Environment**: Production" >> $GITHUB_STEP_SUMMARY
+        echo "- **Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit SHA**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Docker Images" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Frontend**: ${{ needs.build-and-push-images.outputs.frontend_image }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Backend**: ${{ needs.build-and-push-images.outputs.backend_image }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Status" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ needs.run-production-tests.result }}" == "success" ]; then
+          echo "✅ All smoke tests passed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Some smoke tests failed" >> $GITHUB_STEP_SUMMARY
+        fi
+
+  notify-deployment:
+    name: Notify Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy-to-production]
+    if: always()
+    
+    steps:
+    - name: Send Slack notification
+      if: env.SLACK_WEBHOOK_URL != ''
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        STATUS="${{ needs.deploy-to-production.result }}"
+        COLOR="good"
+        if [ "$STATUS" != "success" ]; then
+          COLOR="danger"
+        fi
+        
+        curl -X POST $SLACK_WEBHOOK_URL -H 'Content-Type: application/json' -d "{
+          \"attachments\": [{
+            \"color\": \"$COLOR\",
+            \"title\": \"Production Deployment $STATUS\",
+            \"fields\": [
+              {\"title\": \"Version\", \"value\": \"${{ needs.build-and-push-images.outputs.version }}\", \"short\": true},
+              {\"title\": \"Status\", \"value\": \"$STATUS\", \"short\": true},
+              {\"title\": \"Deployed by\", \"value\": \"${{ github.actor }}\", \"short\": true}
+            ]
+          }]
+        }"

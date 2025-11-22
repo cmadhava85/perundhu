@@ -1,0 +1,67 @@
+{
+  "orderCode": "nqa-38422557",
+  "responseFrom": "NVC FordPay Get PaymentInfo API",
+  "class": "FordPayPaymentInfoResponse",
+  "success": {
+    "class": "PaymentInfoSuccessResponse",
+    "amount": 25444,
+    "amountCaptured": 0,
+    "amountRefunded": 0,
+    "currency": "usd",
+    "status": "requires_capture",
+    "id": "pi_3SYwvKPMcgjPQR4zBtBkXhXE",
+    "captureBefore": "2B-11-2025T16:10:49Z",
+    "orderId": "nqa-38422557",
+    "paymentMethodDetails": {
+      "paymentMethodId": "pm_1QjizPAVQB5iubSoQdVyHEP",
+      "type": "CARD",
+      "connectedPaymentMethodId": "pm_1SYwv4PKcgjPQR4z09akzNT",
+      "card": {
+        "brand": "visa",
+        "expiryMonth": 12,
+        "expiryYear": 2028,
+        "lastFourDigits": "4242"
+      }
+    },
+    "extendedAuthorization": {
+      "status": "available",
+      "incrementalAuthorization": {
+        "status": "available"
+      }
+    },
+    "metadata": {
+      "additionalConsumerId": "ecomm368-cco-order-payment-info-qa",
+      "baseSiteId": "USA",
+      "consumerId": "ecomm368-cco-order-payment-info-qa",
+      "ecommType": "ECOMM_PART",
+      "email": "IMYRONQVEFQRD.COM",
+      "fordPayTrackId": "d4333b9e57caa5fe6c7fac8676631586",
+      "givenName": "I",
+      "igpEmail": "IMYRONQVEFQRD.COM",
+      "itemDescription": "Ford - Parts Payment details",
+      "lastModified": "2025-11-21T16:18:27.4833992",
+      "orderingId": "38422557",
+      "paymentInitiator": "CUSTOMER",
+      "pgpCustomerId": "cus_QzoSB8bjijB6",
+      "sourceIdentifier": "A79A5742-1667-41AB-B2FXXXXXXXXXXXXXXX",
+      "surname": "m"
+    }
+  },
+  "failure": [
+    {
+      "id": "pi_3SYwv5KxB8AqpWm2KTGuUJW",
+      "description": "Retrieving payment info failed, errorCode=842",
+      "traceId": "f08acb7b4ece48e5b4e88cc26ee24839",
+      "timeStamp": "2025-11-21T16:18:51.656125969Z",
+      "stripeErrorCode": 842,
+      "declineCode": 842,
+      "pgpErrorCode": 842
+    }
+  ],
+  "requestData": {
+    "class": "FordPayPaymentInfoResponseRequestData",
+    "totalCount": 2,
+    "successCount": 1,
+    "failureCount": 1
+  }
+}
