@@ -20,21 +20,21 @@ INSERT IGNORE INTO locations (id, name, latitude, longitude) VALUES
 (15, 'Salem', 11.6643, 78.1460);
 
 -- Ensure buses table has data
-INSERT IGNORE INTO buses (id, name, bus_number, departure_time, arrival_time, from_location_id, to_location_id, capacity, category) VALUES
-(1, 'Chennai Express', '45A', '08:00:00', '09:30:00', 1, 2, 50, 'Regular'),
-(2, 'Tambaram Special', '18C', '09:15:00', '10:45:00', 2, 1, 50, 'Regular'),
-(3, 'Velachery Direct', '29C', '07:30:00', '08:45:00', 3, 1, 50, 'Regular'),
-(4, 'T Nagar Shuttle', '23B', '08:45:00', '09:30:00', 4, 1, 50, 'Regular'),
-(5, 'Adyar Line', '5B', '07:00:00', '08:15:00', 5, 1, 50, 'Regular'),
-(6, 'Porur Express', '54C', '06:30:00', '08:00:00', 6, 1, 50, 'Regular'),
-(7, 'Anna Nagar Direct', '27B', '07:45:00', '09:00:00', 7, 1, 50, 'Regular'),
-(8, 'Ambattur Route', '14A', '06:45:00', '08:30:00', 8, 1, 50, 'Regular'),
-(9, 'IT Corridor Bus', '102', '08:30:00', '10:00:00', 9, 1, 50, 'Regular'),
-(10, 'Beach Route', '21G', '09:00:00', '10:15:00', 10, 1, 50, 'Regular'),
-(11, 'Chennai-Madurai Superfast', 'TN-01-SF-001', '06:00:00', '13:30:00', 1, 11, 45, 'Express'),
-(12, 'Chennai-Coimbatore Express', 'TN-01-SF-002', '07:00:00', '15:00:00', 1, 12, 45, 'Express'),
-(13, 'Madurai-Chennai Daily', 'TN-01-SF-003', '16:00:00', '23:30:00', 11, 1, 45, 'Express'),
-(14, 'Coimbatore-Chennai Deluxe', 'TN-01-SF-004', '17:00:00', '01:00:00', 12, 1, 45, 'Express');
+INSERT IGNORE INTO buses (id, name, bus_number, departure_time, arrival_time, from_location_id, to_location_id) VALUES
+(1, 'Chennai Express', '45A', '08:00:00', '09:30:00', 1, 2),
+(2, 'Tambaram Special', '18C', '09:15:00', '10:45:00', 2, 1),
+(3, 'Velachery Direct', '29C', '07:30:00', '08:45:00', 3, 1),
+(4, 'T Nagar Shuttle', '23B', '08:45:00', '09:30:00', 4, 1),
+(5, 'Adyar Line', '5B', '07:00:00', '08:15:00', 5, 1),
+(6, 'Porur Express', '54C', '06:30:00', '08:00:00', 6, 1),
+(7, 'Anna Nagar Direct', '27B', '07:45:00', '09:00:00', 7, 1),
+(8, 'Ambattur Route', '14A', '06:45:00', '08:30:00', 8, 1),
+(9, 'IT Corridor Bus', '102', '08:30:00', '10:00:00', 9, 1),
+(10, 'Beach Route', '21G', '09:00:00', '10:15:00', 10, 1),
+(11, 'Chennai-Madurai Superfast', 'TN-01-SF-001', '06:00:00', '13:30:00', 1, 11),
+(12, 'Chennai-Coimbatore Express', 'TN-01-SF-002', '07:00:00', '15:00:00', 1, 12),
+(13, 'Madurai-Chennai Daily', 'TN-01-SF-003', '16:00:00', '23:30:00', 11, 1),
+(14, 'Coimbatore-Chennai Deluxe', 'TN-01-SF-004', '17:00:00', '01:00:00', 12, 1);
 
 -- Ensure stops table has data
 INSERT IGNORE INTO stops (id, name, bus_id, location_id, arrival_time, departure_time, stop_order) VALUES
