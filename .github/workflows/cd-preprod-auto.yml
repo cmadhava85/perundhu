@@ -119,18 +119,33 @@ jobs:
     - name: Start Cloud SQL Proxy
       run: |
         ./cloud_sql_proxy -instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql=tcp:3306 &
-        sleep 5
+        PROXY_PID=$!
+        echo "PROXY_PID=$PROXY_PID" >> $GITHUB_ENV
+        # Wait for proxy to be ready
+        for i in {1..30}; do
+          if nc -z 127.0.0.1 3306 2>/dev/null; then
+            echo "Cloud SQL Proxy is ready!"
+            break
+          fi
+          echo "Waiting for Cloud SQL Proxy... ($i/30)"
+          sleep 2
+        done
     
     - name: Deploy Database Migrations
       working-directory: ./backend
+      env:
+        FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
+        FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
+        FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
       run: |
         chmod +x gradlew
         # Run Flyway migrations for preprod using Cloud SQL Proxy
         ./gradlew flywayMigrate \
-          -Pflyway.url="jdbc:mysql://127.0.0.1:3306/perundhu" \
-          -Pflyway.user="${{ secrets.PREPROD_DB_USER }}" \
-          -Pflyway.password="${{ secrets.PREPROD_DB_PASSWORD }}" \
-          --no-configuration-cache
+          -Pflyway.url="${FLYWAY_URL}" \
+          -Pflyway.user="${FLYWAY_USER}" \
+          -Pflyway.password="${FLYWAY_PASSWORD}" \
+          --no-configuration-cache \
+          --info
     
     - name: Deploy Backend to Pre-Production
       run: |
