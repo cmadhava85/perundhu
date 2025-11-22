@@ -17,16 +17,15 @@ COPY src/ src/
 RUN gradle clean build -x test --no-daemon
 
 # Runtime stage
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-alpine
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     curl \
-    netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
+    netcat-openbsd
 
-# Create app user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+# Create app user (alpine uses addgroup/adduser)
+RUN addgroup -S appuser && adduser -S -G appuser appuser
 
 # Set working directory
 WORKDIR /app
