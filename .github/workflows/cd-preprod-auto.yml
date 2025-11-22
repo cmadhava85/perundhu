@@ -154,8 +154,9 @@ jobs:
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod" \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,DB_HOST=35.192.21.223,DB_NAME=perundhu,DB_USER=perundhu_user" \
           --set-secrets="DB_PASSWORD=preprod-db-password:latest,JWT_SECRET=preprod-jwt-secret:latest" \
+          --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
           --memory 1Gi \
           --cpu 1 \
           --min-instances 0 \
