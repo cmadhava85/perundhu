@@ -5,7 +5,7 @@ resource "google_secret_manager_secret" "db_password" {
   secret_id = "${var.app_name}-${var.environment}-db-password"
   
   replication {
-    automatic = true
+    auto {}
   }
 }
 
@@ -19,7 +19,7 @@ resource "google_secret_manager_secret" "redis_auth" {
   secret_id = "${var.app_name}-${var.environment}-redis-auth"
   
   replication {
-    automatic = true
+    auto {}
   }
 }
 
@@ -33,7 +33,7 @@ resource "google_secret_manager_secret" "jwt_secret" {
   secret_id = "${var.app_name}-${var.environment}-jwt-secret"
   
   replication {
-    automatic = true
+    auto {}
   }
 }
 
@@ -52,7 +52,7 @@ resource "google_secret_manager_secret" "api_keys" {
   secret_id = "${var.app_name}-${var.environment}-api-keys"
   
   replication {
-    automatic = true
+    auto {}
   }
 }
 
