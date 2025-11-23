@@ -164,6 +164,7 @@ module "cloud_run" {
   storage_bucket_name       = module.storage.images_bucket_name
   redis_host                = module.redis.redis_host
   redis_port                = module.redis.redis_port
+  custom_domain             = var.backend_custom_domain
 
   depends_on = [module.vpc, module.database, module.storage, module.redis, module.iam]
 }

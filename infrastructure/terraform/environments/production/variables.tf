@@ -52,6 +52,18 @@ variable "domain_name" {
   default     = "perundhu.app"
 }
 
+variable "backend_custom_domain" {
+  description = "Custom domain for backend API"
+  type        = string
+  default     = "api.perundhu.app"
+}
+
+variable "frontend_custom_domain" {
+  description = "Custom domain for frontend"
+  type        = string
+  default     = "www.perundhu.app"
+}
+
 variable "enable_ssl" {
   description = "Enable SSL/TLS for the application"
   type        = bool
