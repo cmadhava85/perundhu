@@ -1,15 +1,6 @@
 package com.perundhu.infrastructure.ocr;
 
-import net.sourceforge.tess4j.ITesseract;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
-import org.imgscalr.Scalr;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
+
+import org.imgscalr.Scalr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
 
 /**
  * OCR Service using Tesseract for extracting timing data from bus timing board
@@ -290,7 +291,8 @@ public class TesseractOcrService {
    */
   private String cleanDestinationName(String name) {
     // Remove special characters but keep Tamil and English letters, spaces
-    return name.replaceAll("[^a-zA-Z\\p{Tamil}\\s]", "").trim();
+    // Tamil Unicode range: U+0B80-U+0BFF
+    return name.replaceAll("[^a-zA-Z\\u0B80-\\u0BFF\\s]", "").trim();
   }
 
   /**
@@ -318,7 +320,8 @@ public class TesseractOcrService {
     }
 
     // Check text quality (presence of Tamil/English characters)
-    if (rawText.matches(".*[a-zA-Z\\p{Tamil}]+.*")) {
+    // Tamil Unicode range: U+0B80-U+0BFF
+    if (rawText.matches(".*[a-zA-Z\\u0B80-\\u0BFF]+.*")) {
       score += 0.1;
     }
 

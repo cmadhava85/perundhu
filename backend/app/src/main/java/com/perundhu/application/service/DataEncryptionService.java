@@ -30,6 +30,7 @@ public class DataEncryptionService {
   private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
   private static final int KEY_LENGTH = 256;
   private static final int IV_LENGTH = 16;
+  private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
   private final SecretKey masterKey;
   private final boolean encryptionEnabled;
@@ -203,7 +204,7 @@ public class DataEncryptionService {
 
   private byte[] generateRandomIV() {
     byte[] iv = new byte[IV_LENGTH];
-    new SecureRandom().nextBytes(iv);
+    SECURE_RANDOM.nextBytes(iv);
     return iv;
   }
 
