@@ -156,6 +156,4 @@ resource "google_storage_notification" "image_notification" {
   payload_format = "JSON_API_V1"
   topic          = var.pubsub_topic_image_processing
   event_types    = ["OBJECT_FINALIZE"]
-  
-  depends_on = [var.depends_on]
 }

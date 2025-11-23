@@ -60,8 +60,6 @@ resource "google_sql_database_instance" "mysql_instance" {
       hour = 3
     }
   }
-
-  depends_on = [var.depends_on]
 }
 
 # Database

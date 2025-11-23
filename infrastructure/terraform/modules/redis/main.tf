@@ -35,6 +35,4 @@ resource "google_redis_instance" "cache" {
       }
     }
   }
-  
-  depends_on = [var.depends_on]
 }

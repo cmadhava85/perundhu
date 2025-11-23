@@ -4,8 +4,6 @@ resource "google_compute_network" "vpc_network" {
   name                    = "${var.app_name}-${var.environment}-vpc"
   auto_create_subnetworks = false
   mtu                     = 1460
-
-  depends_on = [var.depends_on]
 }
 
 resource "google_compute_subnetwork" "public_subnet" {

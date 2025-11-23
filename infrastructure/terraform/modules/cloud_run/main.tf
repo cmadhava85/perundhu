@@ -158,8 +158,6 @@ resource "google_cloud_run_service" "backend" {
     percent         = 100
     latest_revision = true
   }
-
-  depends_on = [var.depends_on]
 }
 
 # IAM policy to allow public access (you may want to restrict this)
