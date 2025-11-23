@@ -1,9 +1,9 @@
 # Perundhu PreProd Environment Configuration
-# Copy this file to terraform.tfvars and update values
+# Copy this file to terraform.tfvars and update values if needed
 
 # GCP Configuration
-project_id = "your-gcp-project-id"
-region     = "us-central1"
+project_id = "astute-strategy-406601"
+region     = "us-central1"  # Note: Database region. Cloud Run is in asia-south1
 zone       = "us-central1-a"
 
 # Environment Configuration
@@ -12,20 +12,20 @@ app_name    = "perundhu"
 
 # Database Configuration
 db_version       = "MYSQL_8_0"
-db_instance_tier = "db-f1-micro"  # For preprod; use db-n1-standard-1 for production
+db_instance_tier = "db-f1-micro"  # Match your existing instance tier
 
 # Monitoring Configuration
-notification_email = "admin@yourcompany.com"
+notification_email = "your-email@example.com"  # UPDATE THIS
 
 # Domain Configuration
-domain_name = "preprod.perundhu.com"
+domain_name = "preprod.perundhu.app"
 enable_ssl  = true
 
 # Cloud Run Configuration
-max_instances  = 5
-min_instances  = 1
+max_instances  = 10
+min_instances  = 0
 cpu_limit     = "1000m"
-memory_limit  = "2Gi"
+memory_limit  = "1Gi"
 
-# Container Image (update after building your image)
-container_image = "gcr.io/your-gcp-project-id/perundhu-backend:latest"
+# Container Image (managed by CI/CD)
+container_image = "asia-south1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:preprod-latest"

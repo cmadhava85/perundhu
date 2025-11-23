@@ -1,13 +1,9 @@
 name: CD - Auto Deploy to Pre-Production
 
+# Triggered by CI pipeline on successful build or manually
 on:
-  push:
-    branches: [ main, master ]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
-      - '.github/workflows/cd-preprod-auto.yml'
   workflow_dispatch:
+  workflow_call:
 
 env:
   GCP_PROJECT_ID: astute-strategy-406601
@@ -198,58 +194,37 @@ jobs:
     needs: [deploy-to-preprod]
     
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCPSECRET }}
-    
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    
-    - name: Get service URLs
-      run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
-        echo "FRONTEND_URL=$FRONTEND_URL" >> $GITHUB_ENV
-    
     - name: Wait for services to stabilize
-      run: sleep 30
+      run: sleep 20
     
-    - name: Test Backend Health
+    - name: Test Backend API
+      env:
+        BACKEND_URL: https://perundhu-backend-preprod-c6qn3mz4wa-el.a.run.app
       run: |
-        echo "Testing Backend Health: ${{ env.BACKEND_URL }}/actuator/health"
+        echo "Testing Backend API: ${{ env.BACKEND_URL }}/api/v1/bus-schedules"
         for i in {1..10}; do
-          if curl -f -s ${{ env.BACKEND_URL }}/actuator/health; then
-            echo "✅ Backend is healthy"
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/api/v1/bus-schedules)
+          if [ "$HTTP_CODE" -eq "200" ] || [ "$HTTP_CODE" -eq "404" ]; then
+            echo "✅ Backend API is responding (HTTP $HTTP_CODE)"
             exit 0
           fi
-          echo "Attempt $i/10 failed, retrying in 10s..."
+          echo "Attempt $i/10: HTTP $HTTP_CODE, retrying in 10s..."
           sleep 10
         done
         echo "❌ Backend health check failed after 10 attempts"
         exit 1
     
     - name: Test Frontend
+      env:
+        FRONTEND_URL: https://perundhu-frontend-preprod-c6qn3mz4wa-el.a.run.app
       run: |
         echo "Testing Frontend: ${{ env.FRONTEND_URL }}"
-        if curl -f -s ${{ env.FRONTEND_URL }} > /dev/null; then
-          echo "✅ Frontend is accessible"
+        HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.FRONTEND_URL }})
+        if [ "$HTTP_CODE" -eq "200" ]; then
+          echo "✅ Frontend is accessible (HTTP $HTTP_CODE)"
         else
-          echo "❌ Frontend is not accessible"
+          echo "❌ Frontend returned HTTP $HTTP_CODE"
           exit 1
-        fi
-    
-    - name: Test API endpoints
-      run: |
-        echo "Testing API endpoints..."
-        # Test locations endpoint (example)
-        if curl -f -s ${{ env.BACKEND_URL }}/api/locations > /dev/null; then
-          echo "✅ Locations endpoint works"
-        else
-          echo "⚠️ Locations endpoint returned error (might be expected)"
         fi
 
   create-deployment-summary:

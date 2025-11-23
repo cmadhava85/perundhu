@@ -1,0 +1,31 @@
+# Perundhu Production Environment Configuration
+# Copy this file to terraform.tfvars and update values
+
+# GCP Configuration
+project_id = "astute-strategy-406601"
+region     = "us-central1"  # Database region
+zone       = "us-central1-a"
+
+# Environment Configuration
+environment = "production"
+app_name    = "perundhu"
+
+# Database Configuration - Production settings
+db_version       = "MYSQL_8_0"
+db_instance_tier = "db-n1-standard-1"  # Higher tier for production
+
+# Monitoring Configuration
+notification_email = "admin@perundhu.app"  # UPDATE THIS
+
+# Domain Configuration
+domain_name = "perundhu.app"
+enable_ssl  = true
+
+# Cloud Run Configuration - Production settings
+max_instances  = 50   # Higher limit for production
+min_instances  = 1    # Always keep at least one instance running
+cpu_limit     = "2000m"  # 2 CPUs
+memory_limit  = "2Gi"    # 2GB RAM
+
+# Container Image (managed by CI/CD)
+container_image = "asia-south1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:latest"

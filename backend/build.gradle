@@ -29,6 +29,11 @@ plugins {
     // Add the versions plugin to check for dependency updates
     id 'com.github.ben-manes.versions' version '0.51.0'
     id 'org.flywaydb.flyway' version '10.10.0'
+    // Code quality plugins
+    id 'jacoco'  // Test coverage
+    id 'checkstyle'  // Code style checking
+    id 'pmd'  // Static code analysis
+    id 'com.github.spotbugs' version '6.0.26'  // Bug detection
 }
 
 configurations {
@@ -308,6 +313,104 @@ configurations {
 application {
     // Define the main class for the application.
     mainClass = 'com.perundhu.App'
+}
+
+// ==================== Code Quality Configurations ====================
+
+// JaCoCo Configuration - Test Coverage
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/config/**',
+                '**/App.class',
+                '**/Application.class'
+            ])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.50  // 50% minimum coverage
+            }
+        }
+    }
+}
+
+// Checkstyle Configuration - Code Style
+checkstyle {
+    toolVersion = '10.20.1'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures = true  // Don't fail build, just report
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+checkstyleMain {
+    source = 'app/src/main/java'
+}
+
+checkstyleTest {
+    source = 'app/src/test/java'
+}
+
+// PMD Configuration - Static Analysis
+pmd {
+    toolVersion = '7.7.0'
+    ignoreFailures = true
+    ruleSetFiles = files("${rootDir}/config/pmd/ruleset.xml")
+    ruleSets = []  // Clear default rulesets
+    consoleOutput = true
+}
+
+pmdMain {
+    source = 'app/src/main/java'
+}
+
+pmdTest {
+    source = 'app/src/test/java'
+}
+
+// SpotBugs Configuration - Bug Detection
+spotbugs {
+    toolVersion = '4.8.6'
+    ignoreFailures = true
+    effort = 'max'
+    reportLevel = 'medium'
+}
+
+spotbugsMain {
+    reports {
+        html.required = true
+        xml.required = false
+    }
+}
+
+spotbugsTest {
+    reports {
+        html.required = true
+        xml.required = false
+    }
+}
+
+// Create quality check task that runs all checks
+task qualityCheck {
+    group = 'verification'
+    description = 'Run all code quality checks'
+    dependsOn checkstyleMain, checkstyleTest, pmdMain, pmdTest, spotbugsMain, jacocoTestReport
 }
 
 // Keep regular tests disabled for now, while we're migrating

@@ -1,15 +1,17 @@
 name: Docker Build
 
+# This workflow is disabled as image building is handled by CD pipelines
+# Uncomment 'on' section if you need standalone Docker builds
 on:
-  push:
-    branches: [ main, develop ]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
-      - 'Dockerfile'
-      - '.dockerignore'
-  pull_request:
-    branches: [ main, develop ]
+  # push:
+  #   branches: [ main, develop ]
+  #   paths:
+  #     - 'frontend/**'
+  #     - 'backend/**'
+  #     - 'Dockerfile'
+  #     - '.dockerignore'
+  # pull_request:
+  #   branches: [ main, develop ]
   workflow_dispatch:
 
 env:
