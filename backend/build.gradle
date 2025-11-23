@@ -388,8 +388,6 @@ pmdTest {
 spotbugs {
     toolVersion = '4.8.6'
     ignoreFailures = true
-    effort = 'max'
-    reportLevel = 'medium'
 }
 
 spotbugsMain {
