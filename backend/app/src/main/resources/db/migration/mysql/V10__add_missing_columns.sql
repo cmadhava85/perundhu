@@ -6,26 +6,118 @@
 -- ====================================
 
 -- Add active column
-ALTER TABLE buses 
-ADD COLUMN IF NOT EXISTS active BOOLEAN DEFAULT TRUE COMMENT 'Whether the bus route is currently active';
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'buses' 
+    AND COLUMN_NAME = 'active'
+);
+
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE buses ADD COLUMN active BOOLEAN DEFAULT TRUE COMMENT "Whether the bus route is currently active"',
+  'SELECT "Column active already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- Add capacity column
-ALTER TABLE buses 
-ADD COLUMN IF NOT EXISTS capacity INT DEFAULT 50 COMMENT 'Passenger capacity of the bus';
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'buses' 
+    AND COLUMN_NAME = 'capacity'
+);
+
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE buses ADD COLUMN capacity INT DEFAULT 50 COMMENT "Passenger capacity of the bus"',
+  'SELECT "Column capacity already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- Add category column
-ALTER TABLE buses 
-ADD COLUMN IF NOT EXISTS category VARCHAR(50) DEFAULT 'Unknown' COMMENT 'Bus category/type';
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'buses' 
+    AND COLUMN_NAME = 'category'
+);
 
--- Add timestamps if not already added in V6
-ALTER TABLE buses 
-ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE buses ADD COLUMN category VARCHAR(50) DEFAULT "Unknown" COMMENT "Bus category/type"',
+  'SELECT "Column category already exists" AS message'
+);
 
-ALTER TABLE buses 
-ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add created_at timestamp
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'buses' 
+    AND COLUMN_NAME = 'created_at'
+);
+
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE buses ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+  'SELECT "Column created_at already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add updated_at timestamp
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'buses' 
+    AND COLUMN_NAME = 'updated_at'
+);
+
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE buses ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+  'SELECT "Column updated_at already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- Add index on active buses for faster queries
-CREATE INDEX IF NOT EXISTS idx_buses_active ON buses(active);
+SET @index_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.STATISTICS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'buses' 
+    AND INDEX_NAME = 'idx_buses_active'
+);
+
+SET @sql = IF(
+  @index_exists = 0,
+  'CREATE INDEX idx_buses_active ON buses(active)',
+  'SELECT "Index idx_buses_active already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- ====================================
 -- 2. Restructure route_contributions table

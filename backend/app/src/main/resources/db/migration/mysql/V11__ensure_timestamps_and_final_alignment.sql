@@ -4,11 +4,41 @@
 -- ====================================
 -- 1. Ensure locations table has timestamps
 -- ====================================
-ALTER TABLE locations 
-ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation timestamp';
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'locations' 
+    AND COLUMN_NAME = 'created_at'
+);
 
-ALTER TABLE locations 
-ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last update timestamp';
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE locations ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT "Creation timestamp"',
+  'SELECT "locations.created_at already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @column_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE() 
+    AND TABLE_NAME = 'locations' 
+    AND COLUMN_NAME = 'updated_at'
+);
+
+SET @sql = IF(
+  @column_exists = 0,
+  'ALTER TABLE locations ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last update timestamp"',
+  'SELECT "locations.updated_at already exists" AS message'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- ====================================
 -- 2. Update buses table to ensure all V10 columns exist
