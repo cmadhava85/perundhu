@@ -15,5 +15,5 @@ output "service_location" {
 
 output "latest_revision" {
   description = "Latest revision name"
-  value       = google_cloud_run_service.backend.status[0].latestReadyRevisionName
+  value       = google_cloud_run_service.backend.template[0].metadata[0].name
 }
