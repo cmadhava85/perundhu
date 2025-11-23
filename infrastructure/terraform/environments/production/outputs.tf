@@ -60,7 +60,7 @@ output "images_bucket_name" {
 
 output "backups_bucket_name" {
   description = "The Cloud Storage bucket for backups"
-  value       = module.storage.backups_bucket_name
+  value       = module.storage.backup_bucket_name
 }
 
 # Redis Outputs

@@ -49,7 +49,7 @@ resource "google_monitoring_alert_policy" "uptime_alert" {
     condition_threshold {
       filter          = "metric.type=\"monitoring.googleapis.com/uptime_check/check_passed\" resource.type=\"uptime_url\""
       duration        = "300s"
-      comparison      = "COMPARISON_EQUAL"
+      comparison      = "COMPARISON_EQ"
       threshold_value = 0
       
       trigger {
@@ -82,7 +82,7 @@ resource "google_monitoring_alert_policy" "error_rate_alert" {
     condition_threshold {
       filter          = "metric.type=\"run.googleapis.com/request_count\" resource.type=\"cloud_run_revision\" metric.label.response_code_class=\"5xx\""
       duration        = "300s"
-      comparison      = "COMPARISON_GREATER_THAN"
+      comparison      = "COMPARISON_GT"
       threshold_value = 10
       
       trigger {
@@ -113,7 +113,7 @@ resource "google_monitoring_alert_policy" "db_connections_alert" {
     condition_threshold {
       filter          = "metric.type=\"cloudsql.googleapis.com/database/postgresql/num_backends\" resource.type=\"cloudsql_database\""
       duration        = "300s"
-      comparison      = "COMPARISON_GREATER_THAN"
+      comparison      = "COMPARISON_GT"
       threshold_value = 80
       
       trigger {
@@ -142,7 +142,7 @@ resource "google_monitoring_alert_policy" "redis_memory_alert" {
     condition_threshold {
       filter          = "metric.type=\"redis.googleapis.com/stats/memory/usage_ratio\" resource.type=\"redis_instance\""
       duration        = "300s"
-      comparison      = "COMPARISON_GREATER_THAN"
+      comparison      = "COMPARISON_GT"
       threshold_value = 0.8
       
       trigger {
