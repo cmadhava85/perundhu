@@ -52,12 +52,6 @@ variable "domain_name" {
   default     = "perundhu.app"
 }
 
-variable "backend_custom_domain" {
-  description = "Custom domain for backend API"
-  type        = string
-  default     = "api.perundhu.app"
-}
-
 variable "frontend_custom_domain" {
   description = "Custom domain for frontend"
   type        = string

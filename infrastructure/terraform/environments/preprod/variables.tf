@@ -52,18 +52,6 @@ variable "domain_name" {
   default     = "preprod.perundhu.com"
 }
 
-variable "backend_custom_domain" {
-  description = "Custom domain for backend API"
-  type        = string
-  default     = "api-preprod.perundhu.app"
-}
-
-variable "frontend_custom_domain" {
-  description = "Custom domain for frontend"
-  type        = string
-  default     = "preprod.perundhu.app"
-}
-
 variable "enable_ssl" {
   description = "Enable SSL/HTTPS"
   type        = bool
