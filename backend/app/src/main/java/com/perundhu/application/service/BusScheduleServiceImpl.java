@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusRouteDTO;
-import com.perundhu.application.dto.BusRouteSegmentDTO;
 import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.OSMBusStopDTO;
@@ -125,7 +124,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             final String[] translatedNameHolder = { stopName };
 
             // If language code is provided, try to get translation
-            // Note: Stops use location names, so we translate using the location's translation
+            // Note: Stops use location names, so we translate using the location's
+            // translation
             if (languageCode != null && !languageCode.isEmpty() && stop.location() != null) {
                 // Get translation for the stop's location name
                 translationRepository

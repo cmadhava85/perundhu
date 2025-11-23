@@ -18,11 +18,7 @@ import com.perundhu.domain.port.TimingImageContributionRepository;
 import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.domain.port.TranslationService;
 import com.perundhu.domain.service.RouteValidationService;
-import com.perundhu.infrastructure.adapter.out.persistence.InMemoryStopRepositoryAdapter;
-import com.perundhu.infrastructure.adapter.out.persistence.InMemoryTranslationRepositoryAdapter;
 import com.perundhu.infrastructure.adapter.service.impl.OCRServiceImpl;
-import com.perundhu.infrastructure.service.TranslationServiceImpl;
-import com.perundhu.infrastructure.config.TranslationProperties;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
@@ -39,6 +35,7 @@ import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.BusTimingRecordJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.SkippedTimingRecordJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.TimingImageContributionJpaRepository;
+import com.perundhu.infrastructure.service.TranslationServiceImpl;
 
 /**
  * Hexagonal Architecture Configuration
