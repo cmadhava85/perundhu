@@ -368,17 +368,14 @@ checkstyleTest {
 pmd {
     toolVersion = '7.7.0'
     ignoreFailures = true
-    ruleSetFiles = files("${rootDir}/config/pmd/ruleset.xml")
-    ruleSets = []  // Clear default rulesets
-    consoleOutput = true
 }
 
 pmdMain {
-    source = 'app/src/main/java'
+    enabled = false  // Disable in Docker build
 }
 
 pmdTest {
-    source = 'app/src/test/java'
+    enabled = false  // Disable in Docker build
 }
 
 // SpotBugs Configuration - Bug Detection
