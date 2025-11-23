@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.perundhu.domain.port.BusAnalyticsRepository;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.BusTimingRecordRepository;
 import com.perundhu.domain.port.LocationRepository;
@@ -24,7 +23,6 @@ import com.perundhu.infrastructure.adapter.out.persistence.InMemoryTranslationRe
 import com.perundhu.infrastructure.adapter.service.impl.OCRServiceImpl;
 import com.perundhu.infrastructure.service.TranslationServiceImpl;
 import com.perundhu.infrastructure.config.TranslationProperties;
-import com.perundhu.infrastructure.persistence.adapter.BusAnalyticsRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
@@ -33,7 +31,6 @@ import com.perundhu.infrastructure.persistence.adapter.SkippedTimingRecordReposi
 import com.perundhu.infrastructure.persistence.adapter.StopJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.TimingImageContributionRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.TranslationJpaRepositoryAdapter;
-import com.perundhu.infrastructure.persistence.jpa.BusAnalyticsJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
@@ -83,12 +80,6 @@ public class HexagonalConfig {
   public TranslationRepository translationRepository(
       @Qualifier("jpaPackageTranslationJpaRepository") TranslationJpaRepository translationJpaRepository) {
     return new TranslationJpaRepositoryAdapter(translationJpaRepository);
-  }
-
-  @Bean
-  public BusAnalyticsRepository busAnalyticsRepository(
-      @Qualifier("jpaPackageBusAnalyticsJpaRepository") BusAnalyticsJpaRepository jpaRepository) {
-    return new BusAnalyticsRepositoryAdapter(jpaRepository);
   }
 
   @Bean

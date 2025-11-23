@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.util.concurrent.RateLimiter;
 import com.perundhu.adapter.in.rest.dto.PaginatedResponse;
 import com.perundhu.application.dto.BusDTO;
-import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.dto.OSMBusStopDTO;
@@ -399,28 +398,6 @@ public class BusScheduleController {
     }
 
     /**
-     * Find connecting routes - requires user authentication
-     */
-    @GetMapping("/connecting-routes")
-    public ResponseEntity<List<ConnectingRouteDTO>> findConnectingRoutes(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId) {
-        log.info("Finding connecting routes between locations: {} and {} (authenticated)", fromLocationId,
-                toLocationId);
-        try {
-            List<ConnectingRouteDTO> routes = busScheduleService.findConnectingRoutes(fromLocationId, toLocationId);
-
-            // Encrypt sensitive route data
-            routes = encryptRouteDetails(routes);
-
-            return ResponseEntity.ok(routes);
-        } catch (Exception e) {
-            log.error("Error finding connecting routes", e);
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    /**
      * Get stops for a specific bus - premium feature
      */
     @GetMapping("/buses/{busId}/stops")
@@ -563,22 +540,6 @@ public class BusScheduleController {
                 bus.name(),
                 "Unknown", // operator - not available in current BusDTO
                 "Unknown"); // type - not available in current BusDTO
-    }
-
-    private List<ConnectingRouteDTO> encryptRouteDetails(List<ConnectingRouteDTO> routes) {
-        return routes.stream()
-                .map(route -> {
-                    // For now, return routes without encryption since the encrypted data isn't used
-                    // Future enhancement: implement actual encryption when security layer is added
-                    return ConnectingRouteDTO.of(
-                            route.id(),
-                            route.connectionPoint(),
-                            route.firstLeg(),
-                            route.secondLeg())
-                            .withTiming(route.waitTime(), route.totalDuration(), route.totalDistance())
-                            .withConnectionStops(route.connectionStops());
-                })
-                .toList();
     }
 
     private List<StopDTO> encryptStopDetails(List<StopDTO> stops) {

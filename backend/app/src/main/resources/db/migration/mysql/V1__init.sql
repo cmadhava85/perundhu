@@ -4,12 +4,10 @@
 -- First, drop existing tables in correct order to avoid foreign key constraints
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS connecting_routes;
 DROP TABLE IF EXISTS stops;
 DROP TABLE IF EXISTS buses;
 DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS translations;
-DROP TABLE IF EXISTS migration_history;
 
 SET FOREIGN_KEY_CHECKS=1;
 
@@ -66,38 +64,12 @@ CREATE TABLE stops (
     CONSTRAINT fk_stop_location FOREIGN KEY (location_id) REFERENCES locations(id)
 );
 
--- Create connecting routes table
-CREATE TABLE connecting_routes (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    first_bus_id BIGINT NOT NULL,
-    second_bus_id BIGINT NOT NULL,
-    connection_point_id BIGINT NOT NULL,
-    wait_time_minutes INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_connecting_route_first_bus FOREIGN KEY (first_bus_id) REFERENCES buses(id),
-    CONSTRAINT fk_connecting_route_second_bus FOREIGN KEY (second_bus_id) REFERENCES buses(id),
-    CONSTRAINT fk_connecting_route_connection_point FOREIGN KEY (connection_point_id) REFERENCES locations(id)
-);
-
--- Create migration_history table for tracking custom migrations
-CREATE TABLE migration_history (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    migration_name VARCHAR(255) NOT NULL,
-    executed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    success BOOLEAN NOT NULL DEFAULT TRUE,
-    description VARCHAR(1000),
-    CONSTRAINT unique_migration UNIQUE (migration_name)
-);
-
 -- Add indexes for better performance
 CREATE INDEX idx_translations_entity ON translations(entity_type, entity_id);
 CREATE INDEX idx_translations_language ON translations(language_code);
 CREATE INDEX idx_translations_field ON translations(field_name);
 CREATE INDEX idx_buses_locations ON buses(from_location_id, to_location_id);
 CREATE INDEX idx_stops_sequence ON stops(bus_id, stop_order);
-CREATE INDEX idx_connecting_routes_buses ON connecting_routes(first_bus_id, second_bus_id);
-CREATE INDEX idx_connecting_routes_connection ON connecting_routes(connection_point_id);
 
 -- Insert base data for locations
 INSERT INTO locations (name, latitude, longitude) VALUES 
@@ -133,11 +105,6 @@ INSERT INTO stops (name, bus_id, location_id, arrival_time, departure_time, stop
 ('Trichy', 4, 4, '11:00:00', '11:10:00', 3),
 ('Dindigul', 4, NULL, '12:30:00', '12:35:00', 4),
 ('Madurai', 4, 3, '14:00:00', '14:00:00', 5);
-
--- Insert connecting routes
-INSERT INTO connecting_routes (first_bus_id, second_bus_id, connection_point_id, wait_time_minutes) VALUES
-(1, 6, 2, 30),  -- Chennai to Coimbatore to Trichy
-(3, 1, 1, 45);  -- Chennai to Madurai to Coimbatore
 
 -- Add Tamil translations for locations
 INSERT INTO translations (entity_type, entity_id, language_code, field_name, translated_value) VALUES

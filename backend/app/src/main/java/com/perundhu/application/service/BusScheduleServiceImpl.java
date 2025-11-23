@@ -12,14 +12,12 @@ import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.dto.BusRouteSegmentDTO;
 import com.perundhu.application.dto.BusScheduleDTO;
-import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.RouteDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.BusId;
-import com.perundhu.domain.model.ConnectingRoute;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.LocationId;
 import com.perundhu.domain.model.Stop;
@@ -28,7 +26,6 @@ import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.port.TranslationRepository;
-import com.perundhu.domain.service.ConnectingRouteService;
 
 @Service
 public class BusScheduleServiceImpl implements BusScheduleService {
@@ -43,20 +40,17 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     private final LocationRepository locationRepository;
     private final StopRepository stopRepository;
     private final TranslationRepository translationRepository;
-    private final ConnectingRouteService connectingRouteService;
 
     // Constructor injection instead of field injection
     public BusScheduleServiceImpl(
             BusRepository busRepository,
             LocationRepository locationRepository,
             StopRepository stopRepository,
-            TranslationRepository translationRepository,
-            ConnectingRouteService connectingRouteService) {
+            TranslationRepository translationRepository) {
         this.busRepository = busRepository;
         this.locationRepository = locationRepository;
         this.stopRepository = stopRepository;
         this.translationRepository = translationRepository;
-        this.connectingRouteService = connectingRouteService;
     }
 
     @Override
@@ -112,67 +106,6 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         return buses.stream()
                 .map(BusDTO::fromDomain)
                 .toList();
-    }
-
-    @Override
-    public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId) {
-        // Get the location entities using domain IDs
-        Optional<Location> fromLocationOptional = locationRepository.findById(new LocationId(fromLocationId));
-        Optional<Location> toLocationOptional = locationRepository.findById(new LocationId(toLocationId));
-
-        if (fromLocationOptional.isEmpty() || toLocationOptional.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        Location fromLocation = fromLocationOptional.get();
-        Location toLocation = toLocationOptional.get();
-
-        // Get all buses for constructing routes
-        List<Bus> allBuses = busRepository.findAll();
-
-        // Use the connecting route service to find routes with domain model
-        List<ConnectingRoute> domainRoutes = connectingRouteService.findConnectingRoutesDetailed(allBuses, fromLocation,
-                toLocation, null);
-
-        // Convert domain models to DTOs
-        return convertToDTOs(domainRoutes, null);
-    }
-
-    public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId, Integer maxDepth) {
-        // Get the location entities using domain IDs
-        Optional<Location> fromLocationOptional = locationRepository.findById(new LocationId(fromLocationId));
-        Optional<Location> toLocationOptional = locationRepository.findById(new LocationId(toLocationId));
-
-        if (fromLocationOptional.isEmpty() || toLocationOptional.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        Location fromLocation = fromLocationOptional.get();
-        Location toLocation = toLocationOptional.get();
-
-        // Get all buses for constructing routes
-        List<Bus> allBuses = busRepository.findAll();
-
-        // Use the connecting route service to find routes with domain model
-        List<ConnectingRoute> domainRoutes = connectingRouteService.findConnectingRoutesDetailed(allBuses, fromLocation,
-                toLocation, null, maxDepth);
-
-        // Convert domain models to DTOs
-        return convertToDTOs(domainRoutes, null);
-    }
-
-    @Override
-    public List<ConnectingRouteDTO> findConnectingRoutes(Location fromLocation, Location toLocation,
-            String languageCode) {
-        // Get all buses for constructing routes
-        List<Bus> allBuses = busRepository.findAll();
-
-        // Use the connecting route service to find routes with domain model
-        List<ConnectingRoute> domainRoutes = connectingRouteService.findConnectingRoutesDetailed(allBuses, fromLocation,
-                toLocation, languageCode);
-
-        // Convert domain models to DTOs
-        return convertToDTOs(domainRoutes, languageCode);
     }
 
     @Override
@@ -360,52 +293,6 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         }
 
         return false;
-    }
-
-    /**
-     * Convert domain ConnectingRoute objects to ConnectingRouteDTO objects
-     * This is where the transformation from domain to application layer happens
-     */
-    private List<ConnectingRouteDTO> convertToDTOs(List<ConnectingRoute> domainRoutes, String languageCode) {
-        List<ConnectingRouteDTO> dtos = new ArrayList<>();
-
-        for (ConnectingRoute route : domainRoutes) {
-            // Create bus route segments for this connecting route
-            List<BusRouteSegmentDTO> segments = new ArrayList<>();
-            List<Bus> buses = route.getBuses();
-
-            for (int i = 0; i < buses.size(); i++) {
-                Bus bus = buses.get(i);
-
-                // Determine from/to location names for this segment
-                String fromName = i == 0 ? route.getFrom().name() : null;
-                String toName = i == buses.size() - 1 ? route.getTo().name() : null;
-
-                BusRouteSegmentDTO segment = new BusRouteSegmentDTO(
-                        bus.id().value(),
-                        bus.name(),
-                        bus.number(),
-                        fromName,
-                        toName,
-                        bus.departureTime() != null ? bus.departureTime().toString() : null,
-                        bus.arrivalTime() != null ? bus.arrivalTime().toString() : null,
-                        null, null, null, null, null);
-
-                segments.add(segment);
-            }
-
-            // Build the DTO using factory method
-            ConnectingRouteDTO dto = ConnectingRouteDTO.of(
-                    null, // Generated ID
-                    "Connection Point", // Connection point between routes
-                    null, // firstLeg - will be set appropriately
-                    null // secondLeg - will be set appropriately
-            );
-
-            dtos.add(dto);
-        }
-
-        return dtos;
     }
 
     // Missing method implementations

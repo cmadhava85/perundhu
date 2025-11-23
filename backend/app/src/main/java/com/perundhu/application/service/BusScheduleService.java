@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusScheduleDTO;
-import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.RouteDTO;
 import com.perundhu.application.dto.StopDTO;
@@ -61,21 +60,6 @@ public interface BusScheduleService {
      * @return List of buses that pass through both locations
      */
     List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId);
-
-    /**
-     * Find connecting routes between locations when no direct buses are available
-     * 
-     * @param fromLocationId Starting location ID
-     * @param toLocationId   Destination location ID
-     * @return List of connecting routes with transfer points
-     */
-    List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId);
-
-    /**
-     * Find connecting routes between two locations using Location objects
-     * This overload accepts Location objects and language code
-     */
-    List<ConnectingRouteDTO> findConnectingRoutes(Location fromLocation, Location toLocation, String languageCode);
 
     /**
      * Get stops for a specific bus with language support
