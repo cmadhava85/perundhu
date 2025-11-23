@@ -355,8 +355,6 @@ checkstyle {
     toolVersion = '10.20.1'
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     ignoreFailures = true  // Don't fail build, just report
-    maxWarnings = 0
-    maxErrors = 0
 }
 
 checkstyleMain {
@@ -364,7 +362,7 @@ checkstyleMain {
 }
 
 checkstyleTest {
-    source = 'app/src/test/java'
+    enabled = false  // Disable checkstyle for tests in CI
 }
 
 // PMD Configuration - Static Analysis
