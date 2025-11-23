@@ -353,12 +353,11 @@ jacocoTestCoverageVerification {
 // Checkstyle Configuration - Code Style
 checkstyle {
     toolVersion = '10.20.1'
-    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     ignoreFailures = true  // Don't fail build, just report
 }
 
 checkstyleMain {
-    source = 'app/src/main/java'
+    enabled = false  // Disable in Docker build
 }
 
 checkstyleTest {
