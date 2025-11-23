@@ -208,6 +208,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [frontend-build, backend-build, security-scan]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    permissions:
+      actions: write
+      contents: read
     
     steps:
     - name: Trigger CD Pipeline

@@ -29,9 +29,3 @@ variable "enable_public_access" {
   type        = bool
   default     = true
 }
-
-variable "depends_on" {
-  description = "List of resources this module depends on"
-  type        = list(any)
-  default     = []
-}

@@ -1,0 +1,31 @@
+# These owners will be the default owners for everything in the repo
+* @mchand69
+
+# Backend code
+/backend/ @mchand69
+/backend/app/src/main/java/ @mchand69
+
+# Frontend code
+/frontend/ @mchand69
+/frontend/src/ @mchand69
+
+# Infrastructure and DevOps
+/infrastructure/ @mchand69
+/.github/ @mchand69
+/infrastructure/terraform/ @mchand69
+
+# CI/CD Workflows - require approval
+/.github/workflows/ @mchand69
+
+# Database migrations - require careful review
+/backend/app/src/main/resources/db/migration/ @mchand69
+
+# Configuration files - require approval
+*.properties @mchand69
+*.yml @mchand69
+*.yaml @mchand69
+.env* @mchand69
+
+# Documentation
+*.md @mchand69
+/docs/ @mchand69

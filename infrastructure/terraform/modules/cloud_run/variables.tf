@@ -105,9 +105,3 @@ variable "custom_domain" {
   type        = string
   default     = ""
 }
-
-variable "depends_on" {
-  description = "List of resources this module depends on"
-  type        = list(any)
-  default     = []
-}

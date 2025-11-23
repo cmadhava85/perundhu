@@ -1,0 +1,140 @@
+name: Monitoring & Alerting
+
+on:
+  schedule:
+    # Run every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to monitor'
+        required: true
+        type: choice
+        options:
+          - preprod
+          - production
+        default: preprod
+
+jobs:
+  uptime-check:
+    name: Uptime & Health Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set URLs
+      id: urls
+      run: |
+        if [ "${{ github.event.inputs.environment || 'preprod' }}" == "production" ]; then
+          echo "backend=https://perundhu-backend-prod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+          echo "frontend=https://perundhu.app" >> $GITHUB_OUTPUT
+        else
+          echo "backend=https://perundhu-backend-preprod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+          echo "frontend=https://perundhu-frontend-preprod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Check Backend Health
+      id: backend-health
+      run: |
+        RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ steps.urls.outputs.backend }}/api/v1/bus-schedules || echo "000")
+        RESPONSE_TIME=$(curl -s -o /dev/null -w "%{time_total}" ${{ steps.urls.outputs.backend }}/api/v1/bus-schedules || echo "0")
+        
+        echo "code=${RESPONSE_CODE}" >> $GITHUB_OUTPUT
+        echo "time=${RESPONSE_TIME}" >> $GITHUB_OUTPUT
+        
+        if [[ "$RESPONSE_CODE" != "200" && "$RESPONSE_CODE" != "404" ]]; then
+          echo "❌ Backend unhealthy: HTTP ${RESPONSE_CODE}"
+          exit 1
+        fi
+    
+    - name: Check Frontend Availability
+      id: frontend-health
+      run: |
+        RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ steps.urls.outputs.frontend }} || echo "000")
+        RESPONSE_TIME=$(curl -s -o /dev/null -w "%{time_total}" ${{ steps.urls.outputs.frontend }} || echo "0")
+        
+        echo "code=${RESPONSE_CODE}" >> $GITHUB_OUTPUT
+        echo "time=${RESPONSE_TIME}" >> $GITHUB_OUTPUT
+        
+        if [ "$RESPONSE_CODE" != "200" ]; then
+          echo "❌ Frontend unavailable: HTTP ${RESPONSE_CODE}"
+          exit 1
+        fi
+    
+    - name: Health Summary
+      if: always()
+      run: |
+        echo "## 🏥 Health Check Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Environment**: ${{ github.event.inputs.environment || 'preprod' }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Backend" >> $GITHUB_STEP_SUMMARY
+        echo "- Status: ${{ steps.backend-health.outputs.code }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Response Time: ${{ steps.backend-health.outputs.time }}s" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Frontend" >> $GITHUB_STEP_SUMMARY
+        echo "- Status: ${{ steps.frontend-health.outputs.code }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Response Time: ${{ steps.frontend-health.outputs.time }}s" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Alert on Failure
+      if: failure()
+      run: |
+        echo "🚨 Service health check failed!"
+        # Add notification logic here (Slack, email, etc.)
+
+  ssl-certificate-check:
+    name: SSL Certificate Expiry Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check SSL Expiry
+      run: |
+        DOMAIN="${{ github.event.inputs.environment == 'production' && 'perundhu.app' || 'perundhu-frontend-preprod-c6qn3mz4wa-el.a.run.app' }}"
+        
+        EXPIRY=$(echo | openssl s_client -servername $DOMAIN -connect $DOMAIN:443 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+        EXPIRY_EPOCH=$(date -d "$EXPIRY" +%s)
+        CURRENT_EPOCH=$(date +%s)
+        DAYS_LEFT=$(( ($EXPIRY_EPOCH - $CURRENT_EPOCH) / 86400 ))
+        
+        echo "## 🔒 SSL Certificate Status" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- Domain: $DOMAIN" >> $GITHUB_STEP_SUMMARY
+        echo "- Expires: $EXPIRY" >> $GITHUB_STEP_SUMMARY
+        echo "- Days Remaining: $DAYS_LEFT" >> $GITHUB_STEP_SUMMARY
+        
+        if [ $DAYS_LEFT -lt 30 ]; then
+          echo "⚠️ Certificate expires in less than 30 days!"
+        fi
+
+  dependency-outdated-check:
+    name: Check for Outdated Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Check Frontend Dependencies
+      working-directory: ./frontend
+      run: |
+        npm install
+        echo "## 📦 Frontend Dependencies" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        npm outdated || true >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Check Backend Dependencies
+      working-directory: ./backend
+      run: |
+        chmod +x gradlew
+        echo "## 📦 Backend Dependencies" >> $GITHUB_STEP_SUMMARY
+        ./gradlew dependencyUpdates || true

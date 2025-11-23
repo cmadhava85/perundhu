@@ -38,9 +38,3 @@ variable "oauth_client_secret" {
   default     = ""
   sensitive   = true
 }
-
-variable "depends_on" {
-  description = "List of resources this module depends on"
-  type        = list(any)
-  default     = []
-}

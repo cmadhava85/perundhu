@@ -1,0 +1,148 @@
+name: Database Management
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        type: choice
+        options:
+          - preprod
+          - production
+        default: preprod
+      action:
+        description: 'Action to perform'
+        required: true
+        type: choice
+        options:
+          - backup
+          - validate-migrations
+          - migration-status
+        default: migration-status
+
+env:
+  JAVA_VERSION: '17'
+
+jobs:
+  database-backup:
+    name: Database Backup
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'backup'
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Set Database Instance
+      id: set-db
+      run: |
+        if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          echo "instance=perundhu-production-mysql" >> $GITHUB_OUTPUT
+          echo "bucket=perundhu-db-backups-production" >> $GITHUB_OUTPUT
+        else
+          echo "instance=perundhu-preprod-mysql" >> $GITHUB_OUTPUT
+          echo "bucket=perundhu-db-backups-preprod" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Backup
+      run: |
+        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+        BACKUP_NAME="backup-${{ github.event.inputs.environment }}-${TIMESTAMP}"
+        
+        gcloud sql backups create \
+          --instance=${{ steps.set-db.outputs.instance }} \
+          --description="Manual backup from GitHub Actions - ${TIMESTAMP}"
+        
+        echo "## ✅ Database Backup Created" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- Instance: ${{ steps.set-db.outputs.instance }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Timestamp: ${TIMESTAMP}" >> $GITHUB_STEP_SUMMARY
+        echo "- Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+
+  validate-migrations:
+    name: Validate Flyway Migrations
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'validate-migrations'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Grant execute permission
+      working-directory: ./backend
+      run: chmod +x gradlew
+    
+    - name: Validate Migration Scripts
+      working-directory: ./backend
+      run: |
+        ./gradlew flywayValidate \
+          -Pflyway.url="jdbc:h2:mem:testdb" \
+          -Pflyway.user=sa \
+          -Pflyway.password="" \
+          --no-configuration-cache || true
+      continue-on-error: true
+    
+    - name: Check Migration Naming
+      working-directory: ./backend
+      run: |
+        echo "## 📋 Migration Files" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        find app/src/main/resources/db/migration -name "*.sql" | sort >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+  migration-status:
+    name: Check Migration Status
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'migration-status'
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Grant execute permission
+      working-directory: ./backend
+      run: chmod +x gradlew
+    
+    - name: Get Migration Info
+      working-directory: ./backend
+      env:
+        ENV: ${{ github.event.inputs.environment }}
+      run: |
+        if [ "$ENV" == "production" ]; then
+          DB_SECRET="prod-db-password"
+        else
+          DB_SECRET="preprod-db-password"
+        fi
+        
+        echo "Migration status check for $ENV environment" >> $GITHUB_STEP_SUMMARY

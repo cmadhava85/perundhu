@@ -124,7 +124,7 @@ describe('API Service', () => {
 
       // Assert - just verify the API was called correctly and data was returned
       expect(mockGet).toHaveBeenCalledWith('/api/v1/bus-schedules/buses/1/stops/basic', {
-        params: { language: 'en' }
+        params: { lang: 'en' }
       });
       expect(stops).toBeDefined();
       expect(Array.isArray(stops)).toBe(true);

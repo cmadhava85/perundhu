@@ -1,0 +1,172 @@
+name: Performance & Load Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to test'
+        required: true
+        type: choice
+        options:
+          - preprod
+          - production
+        default: preprod
+      duration:
+        description: 'Test duration in seconds'
+        required: false
+        default: '60'
+      virtual_users:
+        description: 'Number of virtual users'
+        required: false
+        default: '10'
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  lighthouse-performance:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli
+    
+    - name: Set Frontend URL
+      id: set-url
+      run: |
+        if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          echo "url=https://perundhu.app" >> $GITHUB_OUTPUT
+        else
+          echo "url=https://perundhu-frontend-preprod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Run Lighthouse CI
+      run: |
+        lhci autorun \
+          --collect.url=${{ steps.set-url.outputs.url }} \
+          --collect.numberOfRuns=3 \
+          --upload.target=temporary-public-storage
+      continue-on-error: true
+    
+    - name: Performance Report Summary
+      run: |
+        echo "## 🚀 Lighthouse Performance Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+        echo "URL: ${{ steps.set-url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Check the full report above for detailed metrics." >> $GITHUB_STEP_SUMMARY
+
+  load-testing:
+    name: Load Testing with K6
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set Backend URL
+      id: set-url
+      run: |
+        if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          echo "url=https://perundhu-backend-prod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+        else
+          echo "url=https://perundhu-backend-preprod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create K6 Test Script
+      run: |
+        cat > load-test.js << 'EOF'
+        import http from 'k6/http';
+        import { check, sleep } from 'k6';
+        import { Rate } from 'k6/metrics';
+
+        const errorRate = new Rate('errors');
+        const baseUrl = __ENV.API_URL;
+
+        export const options = {
+          stages: [
+            { duration: '30s', target: __ENV.VUS || 10 },
+            { duration: '1m', target: __ENV.VUS || 10 },
+            { duration: '30s', target: 0 },
+          ],
+          thresholds: {
+            http_req_duration: ['p(95)<500'],
+            errors: ['rate<0.1'],
+          },
+        };
+
+        export default function () {
+          // Test bus schedules endpoint
+          const res = http.get(`${baseUrl}/api/v1/bus-schedules`);
+          const success = check(res, {
+            'status is 200 or 404': (r) => r.status === 200 || r.status === 404,
+            'response time < 500ms': (r) => r.timings.duration < 500,
+          });
+          
+          errorRate.add(!success);
+          sleep(1);
+        }
+        EOF
+    
+    - name: Run K6 Load Test
+      uses: grafana/k6-action@v0.3.1
+      with:
+        filename: load-test.js
+      env:
+        API_URL: ${{ steps.set-url.outputs.url }}
+        VUS: ${{ github.event.inputs.virtual_users }}
+      continue-on-error: true
+    
+    - name: Load Test Summary
+      run: |
+        echo "## 📊 Load Test Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Virtual Users: ${{ github.event.inputs.virtual_users }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Duration: ${{ github.event.inputs.duration }}s" >> $GITHUB_STEP_SUMMARY
+        echo "- Target: ${{ steps.set-url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+
+  accessibility-testing:
+    name: Accessibility Testing (axe)
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Install axe-cli
+      run: npm install -g @axe-core/cli
+    
+    - name: Set Frontend URL
+      id: set-url
+      run: |
+        if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          echo "url=https://perundhu.app" >> $GITHUB_OUTPUT
+        else
+          echo "url=https://perundhu-frontend-preprod-c6qn3mz4wa-el.a.run.app" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Run axe Accessibility Tests
+      run: |
+        axe ${{ steps.set-url.outputs.url }} --exit || true
+      continue-on-error: true
+    
+    - name: Accessibility Report
+      run: |
+        echo "## ♿ Accessibility Test Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Tested URL: ${{ steps.set-url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Check logs above for WCAG compliance issues." >> $GITHUB_STEP_SUMMARY

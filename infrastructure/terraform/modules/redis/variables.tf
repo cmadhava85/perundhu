@@ -45,9 +45,3 @@ variable "redis_version" {
   type        = string
   default     = "REDIS_6_X"
 }
-
-variable "depends_on" {
-  description = "List of resources this module depends on"
-  type        = list(any)
-  default     = []
-}

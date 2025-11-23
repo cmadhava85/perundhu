@@ -57,9 +57,3 @@ variable "create_test_database" {
   type        = bool
   default     = true
 }
-
-variable "depends_on" {
-  description = "List of resources this module depends on"
-  type        = list(any)
-  default     = []
-}

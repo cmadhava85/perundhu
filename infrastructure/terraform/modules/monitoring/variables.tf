@@ -33,9 +33,3 @@ variable "notification_email" {
   description = "Email address for alerts"
   type        = string
 }
-
-variable "depends_on" {
-  description = "List of resources this module depends on"
-  type        = list(any)
-  default     = []
-}

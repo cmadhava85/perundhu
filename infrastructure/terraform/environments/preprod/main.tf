@@ -13,12 +13,6 @@ terraform {
       version = "~> 5.0"
     }
   }
-
-  # Backend configuration for storing state
-  backend "gcs" {
-    bucket = "perundhu-terraform-state-preprod"
-    prefix = "preprod/state"
-  }
 }
 
 # Configure the Google Cloud Provider
