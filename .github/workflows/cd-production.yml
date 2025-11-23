@@ -83,9 +83,35 @@ jobs:
       run: |
         VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
         
-        # Frontend
+        # Get backend URL from Cloud Run
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-production-1032721240281.asia-south1.run.app")
+        
+        # Frontend - Build with production environment variables
         FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${VERSION}"
         FRONTEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:latest"
+        
+        # Create production env file with actual backend URL
+        cat > ./frontend/.env.local << EOF
+        VITE_API_URL=${BACKEND_URL}
+        VITE_API_BASE_URL=${BACKEND_URL}
+        VITE_API_KEY=production-api-key
+        VITE_APP_VERSION=${VERSION}
+        VITE_SECURITY_ENABLED=true
+        VITE_RATE_LIMIT_ENABLED=true
+        VITE_ENCRYPTION_ENABLED=true
+        VITE_FEATURE_TRACKING=true
+        VITE_FEATURE_REWARDS=true
+        VITE_FEATURE_ANALYTICS=true
+        VITE_FEATURE_CONTRIBUTIONS=true
+        VITE_MOCK_API=false
+        VITE_USE_MOCK_DATA=false
+        VITE_OFFLINE_MODE=false
+        VITE_AUTH_PROVIDER=oauth2
+        VITE_JWT_ISSUER=https://perundhu.com
+        VITE_JWT_AUDIENCE=perundhu-api
+        VITE_ENABLE_MAP=true
+        EOF
+        
         docker build -t $FRONTEND_IMAGE -t $FRONTEND_LATEST ./frontend
         docker push $FRONTEND_IMAGE
         docker push $FRONTEND_LATEST

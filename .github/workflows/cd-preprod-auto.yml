@@ -60,9 +60,13 @@ jobs:
         TIMESTAMP=$(date +%Y%m%d-%H%M%S)
         TAG="${TIMESTAMP}-${COMMIT_SHA}"
         
-        # Frontend
+        # Frontend - Build with preprod environment variables
         FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${TAG}"
         FRONTEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest"
+        
+        # Copy preprod env file for build
+        cp ./frontend/.env.preprod ./frontend/.env.local
+        
         docker build -t $FRONTEND_IMAGE -t $FRONTEND_LATEST ./frontend
         docker push $FRONTEND_IMAGE
         docker push $FRONTEND_LATEST
