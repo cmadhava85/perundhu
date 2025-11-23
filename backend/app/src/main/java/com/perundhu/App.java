@@ -10,7 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
         "com.perundhu.adapter",
         "com.perundhu.infrastructure",
         "com.perundhu.config",
-        "com.perundhu.domain"
+        "com.perundhu.domain",
+        "com.perundhu.api"
 })
 public class App {
     public static void main(String[] args) {
