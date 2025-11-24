@@ -135,7 +135,9 @@ jobs:
       id: plan
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
-        terraform plan -no-color -out=tfplan
+        terraform plan -no-color -out=tfplan \
+          -var="project_id=astute-strategy-406601" \
+          -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
     - name: Upload Plan
@@ -360,7 +362,9 @@ jobs:
       id: plan
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
-        terraform plan -no-color -out=tfplan
+        terraform plan -no-color -out=tfplan \
+          -var="project_id=astute-strategy-406601" \
+          -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
     - name: Upload Plan
