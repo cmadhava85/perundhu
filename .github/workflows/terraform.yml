@@ -114,6 +114,11 @@ jobs:
         fi
         echo "Verifying bucket exists..."
         gcloud storage buckets describe gs://$BUCKET_NAME
+        echo "Testing bucket access with service account..."
+        echo "test" | gcloud storage cp - gs://$BUCKET_NAME/test-access.txt
+        gcloud storage rm gs://$BUCKET_NAME/test-access.txt
+        echo "Bucket access confirmed"
+    
     - name: Debug GCP Credentials
       run: |
         echo "GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}"
