@@ -83,6 +83,8 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
@@ -95,13 +97,18 @@ jobs:
     - name: Create Terraform backend bucket if not exists
       run: |
         BUCKET_NAME="perundhu-terraform-state-preprod"
+        echo "Checking if bucket $BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
-          echo "Creating Terraform state bucket: $BUCKET_NAME"
+          echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
           gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
+          echo "Enabling versioning on bucket..."
           gcloud storage buckets update gs://$BUCKET_NAME --versioning
+          echo "Bucket created and configured successfully"
         else
           echo "Terraform state bucket already exists"
         fi
+        echo "Verifying bucket exists..."
+        gcloud storage buckets describe gs://$BUCKET_NAME
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
@@ -176,6 +183,8 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
@@ -245,6 +254,8 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
@@ -292,6 +303,8 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
@@ -304,13 +317,18 @@ jobs:
     - name: Create Terraform backend bucket if not exists
       run: |
         BUCKET_NAME="perundhu-terraform-state-production"
+        echo "Checking if bucket $BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
-          echo "Creating Terraform state bucket: $BUCKET_NAME"
+          echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
           gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
+          echo "Enabling versioning on bucket..."
           gcloud storage buckets update gs://$BUCKET_NAME --versioning
+          echo "Bucket created and configured successfully"
         else
           echo "Terraform state bucket already exists"
         fi
+        echo "Verifying bucket exists..."
+        gcloud storage buckets describe gs://$BUCKET_NAME
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
@@ -357,6 +375,8 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
@@ -426,6 +446,8 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCPSECRET }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
