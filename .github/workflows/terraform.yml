@@ -109,6 +109,13 @@ jobs:
         fi
         echo "Verifying bucket exists..."
         gcloud storage buckets describe gs://$BUCKET_NAME
+    - name: Debug GCP Credentials
+      run: |
+        echo "GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}"
+        echo "Credentials file exists: $(test -f "${GOOGLE_APPLICATION_CREDENTIALS}" && echo yes || echo no)"
+        gcloud config get-value project
+        gcloud auth list
+
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
