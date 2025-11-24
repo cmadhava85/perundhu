@@ -36,7 +36,8 @@ export class ApiService {
    * Creates a configured axios instance
    */
   private createApiInstance(): AxiosInstance {
-    const apiUrl = this.getEnv('VITE_API_URL', 'http://localhost:8080/api/v1');
+    const baseUrl = this.getEnv('VITE_API_URL', 'http://localhost:8080');
+    const apiUrl = baseUrl.endsWith('/api/v1') ? baseUrl : `${baseUrl}/api/v1`;
     
     console.log(`Creating API instance with baseURL: ${apiUrl}`);
     

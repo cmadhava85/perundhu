@@ -11,7 +11,6 @@ import type { Location as BusLocation } from './types';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import TransitSearchForm from './components/TransitSearchForm';
-import TransitBusList from './components/TransitBusList';
 import CombinedMapTracker from './components/CombinedMapTracker';
 import ConnectingRoutes from './components/ConnectingRoutes';
 import ErrorDisplay from './components/ErrorDisplay';
@@ -60,7 +59,6 @@ function App() {
  */
 function AppContent() {
   const { t } = useTranslation();
-  const browserInfo = useBrowserDetection();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -78,8 +76,8 @@ function AppContent() {
   // Use real data hooks instead of mock data
   const { 
     locations, 
-    destinations, 
-    loading: locationsLoading,
+    destinations: _destinations, 
+    loading: _locationsLoading,
     getDestinations,
     fromLocation: initialFromLocation,
     toLocation: initialToLocation
@@ -93,15 +91,15 @@ function AppContent() {
     error: searchError,
     connectingRoutes,
     searchBuses,
-    setSelectedBusId,
+    setSelectedBusId: _setSelectedBusId,
     resetResults,
-    LoadingComponent
+    LoadingComponent: _LoadingComponent
   } = useBusSearchEnhanced();
   
   // State for selected locations with safer initialization
   const [fromLocation, setFromLocation] = useState(initialFromLocation);
   const [toLocation, setToLocation] = useState(initialToLocation);
-  const [isSearching, setIsSearching] = useState(false);
+  const [_isSearching, setIsSearching] = useState(false);
   
   // Update location states when API data is loaded - only run when locations change
   useEffect(() => {
@@ -373,7 +371,7 @@ function AppContent() {
                     setFromLocation(from);
                     setToLocation(to);
                   }}
-                  onSearch={(from, to, options) => {
+                  onSearch={(from, to, _options) => {
                     setFromLocation(from);
                     setToLocation(to);
                     handleSearch(from, to);
@@ -395,7 +393,7 @@ function AppContent() {
                     setFromLocation(from);
                     setToLocation(to);
                   }}
-                  onSearch={(from, to, options) => {
+                  onSearch={(from, to, _options) => {
                     setFromLocation(from);
                     setToLocation(to);
                     handleSearch(from, to);

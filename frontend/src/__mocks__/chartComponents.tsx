@@ -12,7 +12,7 @@ export const BusUtilizationChart = () => (
 );
 
 // Mock any other chart components that might be used
-export const AnalyticsSummaryCard = ({ title, children }: { title: string, children: any }) => (
+export const AnalyticsSummaryCard = ({ title, children }: { title: string, children: React.ReactNode }) => (
   <div data-testid="analytics-summary-card">
     <h3>{title}</h3>
     {children}
