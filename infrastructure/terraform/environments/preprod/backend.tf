@@ -3,7 +3,7 @@
 
 terraform {
   backend "gcs" {
-    # bucket  = "your-project-terraform-state-preprod"  # Configured via deploy script
-    # prefix  = "preprod/state"                         # Configured via deploy script
+    bucket  = "perundhu-terraform-state-preprod"
+    prefix  = "preprod/state"
   }
 }
