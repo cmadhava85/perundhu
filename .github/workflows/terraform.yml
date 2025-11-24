@@ -97,12 +97,17 @@ jobs:
     - name: Create Terraform backend bucket if not exists
       run: |
         BUCKET_NAME="perundhu-terraform-state-preprod"
+        SERVICE_ACCOUNT="perundhu@astute-strategy-406601.iam.gserviceaccount.com"
         echo "Checking if bucket $BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
           echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
           gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
           echo "Enabling versioning on bucket..."
           gcloud storage buckets update gs://$BUCKET_NAME --versioning
+          echo "Granting service account access to bucket..."
+          gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
+            --member="serviceAccount:$SERVICE_ACCOUNT" \
+            --role="roles/storage.objectAdmin"
           echo "Bucket created and configured successfully"
         else
           echo "Terraform state bucket already exists"
@@ -324,12 +329,17 @@ jobs:
     - name: Create Terraform backend bucket if not exists
       run: |
         BUCKET_NAME="perundhu-terraform-state-production"
+        SERVICE_ACCOUNT="perundhu@astute-strategy-406601.iam.gserviceaccount.com"
         echo "Checking if bucket $BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
           echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
           gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
           echo "Enabling versioning on bucket..."
           gcloud storage buckets update gs://$BUCKET_NAME --versioning
+          echo "Granting service account access to bucket..."
+          gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
+            --member="serviceAccount:$SERVICE_ACCOUNT" \
+            --role="roles/storage.objectAdmin"
           echo "Bucket created and configured successfully"
         else
           echo "Terraform state bucket already exists"
