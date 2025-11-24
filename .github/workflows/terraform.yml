@@ -1,17 +1,16 @@
 name: Terraform Infrastructure
 
-# Disabled: PreProd infrastructure already manually configured
-# Re-enable when setting up production or new environments
 on:
-  # push:
-  #   branches: [ main, master ]
-  #   paths:
-  #     - 'infrastructure/terraform/**'
-  #     - '.github/workflows/terraform.yml'
-  # pull_request:
-  #   branches: [ main, master ]
-  #   paths:
-  #     - 'infrastructure/terraform/**'
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'infrastructure/terraform/**'
+      - '.github/workflows/terraform.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'infrastructure/terraform/**'
+      - '.github/workflows/terraform.yml'
   workflow_dispatch:
     inputs:
       environment:
@@ -106,7 +105,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init
+      run: terraform init -input=false
     
     - name: Terraform Plan
       id: plan
@@ -188,7 +187,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init
+      run: terraform init -input=false
     
     - name: Download Plan
       uses: actions/download-artifact@v4
@@ -257,7 +256,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init
+      run: terraform init -input=false
     
     - name: Terraform Destroy
       working-directory: ${{ env.TF_ENV_DIR }}
@@ -315,7 +314,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init
+      run: terraform init -input=false
     
     - name: Terraform Plan
       id: plan
@@ -369,7 +368,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init
+      run: terraform init -input=false
     
     - name: Download Plan
       uses: actions/download-artifact@v4
@@ -438,7 +437,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init
+      run: terraform init -input=false
     
     - name: Terraform Destroy
       working-directory: ${{ env.TF_ENV_DIR }}

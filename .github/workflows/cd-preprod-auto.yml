@@ -2,6 +2,12 @@ name: CD - Auto Deploy to Pre-Production
 
 # Triggered by CI pipeline on successful build or manually
 on:
+  push:
+    branches: [ main, master ]
+    paths-ignore:
+      - 'infrastructure/terraform/**'
+      - '.github/workflows/terraform.yml'
+      - '**.md'
   workflow_dispatch:
   workflow_call:
 

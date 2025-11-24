@@ -9,6 +9,14 @@ on:
         description: 'Version tag to deploy'
         required: true
         type: string
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'v*'
+    paths-ignore:
+      - 'infrastructure/terraform/**'
+      - '.github/workflows/terraform.yml'
+      - '**.md'
 
 env:
   GCP_PROJECT_ID: astute-strategy-406601
