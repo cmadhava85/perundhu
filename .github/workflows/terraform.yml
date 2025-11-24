@@ -95,10 +95,10 @@ jobs:
     - name: Create Terraform backend bucket if not exists
       run: |
         BUCKET_NAME="perundhu-terraform-state-preprod"
-        if ! gsutil ls -b gs://$BUCKET_NAME 2>/dev/null; then
+        if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
           echo "Creating Terraform state bucket: $BUCKET_NAME"
-          gsutil mb -p astute-strategy-406601 -c STANDARD -l asia-south1 gs://$BUCKET_NAME
-          gsutil versioning set on gs://$BUCKET_NAME
+          gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
+          gcloud storage buckets update gs://$BUCKET_NAME --versioning
         else
           echo "Terraform state bucket already exists"
         fi
@@ -304,10 +304,10 @@ jobs:
     - name: Create Terraform backend bucket if not exists
       run: |
         BUCKET_NAME="perundhu-terraform-state-production"
-        if ! gsutil ls -b gs://$BUCKET_NAME 2>/dev/null; then
+        if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
           echo "Creating Terraform state bucket: $BUCKET_NAME"
-          gsutil mb -p astute-strategy-406601 -c STANDARD -l asia-south1 gs://$BUCKET_NAME
-          gsutil versioning set on gs://$BUCKET_NAME
+          gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
+          gcloud storage buckets update gs://$BUCKET_NAME --versioning
         else
           echo "Terraform state bucket already exists"
         fi
