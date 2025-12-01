@@ -1,9 +1,10 @@
 name: Monitoring & Alerting
 
+# DISABLED - Scheduled monitoring disabled, run manually if needed
 on:
-  schedule:
-    # Run every 6 hours
-    - cron: '0 */6 * * *'
+  # schedule:
+  #   # Run every 6 hours
+  #   - cron: '0 */6 * * *'
   workflow_dispatch:
     inputs:
       environment:

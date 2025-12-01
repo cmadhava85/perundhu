@@ -1,8 +1,9 @@
 name: CD - Deploy to Staging
 
+# DISABLED - Staging environment disabled
 on:
-  push:
-    branches: [ develop ]
+  # push:
+  #   branches: [ develop ]
   workflow_dispatch:
     inputs:
       environment:

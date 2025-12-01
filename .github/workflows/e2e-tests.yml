@@ -1,6 +1,6 @@
 name: E2E Tests
 
-# Temporarily disabled - uncomment to re-enable
+# DISABLED - Run manually if needed
 on:
   # push:
   #   branches: [ main, master, develop ]

@@ -1,5 +1,6 @@
 name: Database Migration
 
+# DISABLED - Run manually if needed
 on:
   workflow_dispatch:
     inputs:

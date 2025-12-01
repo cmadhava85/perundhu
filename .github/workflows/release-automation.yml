@@ -1,5 +1,6 @@
 name: Release Automation
 
+# Manual workflow - kept for production releases
 on:
   workflow_dispatch:
     inputs:

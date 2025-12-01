@@ -1,5 +1,6 @@
 name: Performance & Load Testing
 
+# DISABLED - Run manually if needed
 on:
   workflow_dispatch:
     inputs:
