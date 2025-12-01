@@ -2,7 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ main, master ]  # Removed develop to save minutes
     paths-ignore:
       - 'infrastructure/terraform/**'
       - '.github/workflows/terraform.yml'
@@ -14,6 +14,11 @@ on:
       - '.github/workflows/terraform.yml'
       - '**.md'
   workflow_dispatch:
+
+# Cancel in-progress runs when new commits are pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   NODE_VERSION: '18'

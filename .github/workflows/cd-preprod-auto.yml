@@ -4,12 +4,17 @@ name: CD - Auto Deploy to Pre-Production
 on:
   push:
     branches: [ main, master ]
-    paths-ignore:
-      - 'infrastructure/terraform/**'
-      - '.github/workflows/terraform.yml'
-      - '**.md'
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+      - '.github/workflows/cd-preprod-auto.yml'
   workflow_dispatch:
   workflow_call:
+
+# Cancel in-progress deployments when new commits are pushed
+concurrency:
+  group: preprod-deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   GCP_PROJECT_ID: astute-strategy-406601

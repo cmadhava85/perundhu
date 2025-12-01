@@ -18,6 +18,11 @@ on:
       - '.github/workflows/terraform.yml'
       - '**.md'
 
+# Prevent concurrent production deployments
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false  # Don't cancel production deploys
+
 env:
   GCP_PROJECT_ID: astute-strategy-406601
   GCP_REGION: asia-south1
