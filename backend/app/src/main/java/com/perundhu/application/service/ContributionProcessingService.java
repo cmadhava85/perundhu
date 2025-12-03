@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -263,6 +264,23 @@ public class ContributionProcessingService {
     /**
      * Process stops for a contribution
      */
+    /**
+     * Generate a placeholder bus number from route information
+     * Format: GEN-{FROM_PREFIX}-{TO_PREFIX}-{COUNTER}
+     * Example: GEN-SIV-VIR-001
+     */
+    private String generateBusNumberFromRoute(String fromLocation, String toLocation) {
+        String fromPrefix = fromLocation.substring(0, Math.min(3, fromLocation.length())).toUpperCase();
+        String toPrefix = toLocation.substring(0, Math.min(3, toLocation.length())).toUpperCase();
+
+        // Get count of existing routes to generate unique number
+        long count = busRepository.findAll().stream()
+                .filter(bus -> bus.getBusNumber().startsWith("GEN-" + fromPrefix + "-" + toPrefix))
+                .count();
+
+        return String.format("GEN-%s-%s-%03d", fromPrefix, toPrefix, count + 1);
+    }
+
     private void processStops(RouteContribution contribution, Bus savedBus) {
         if (contribution.getStops() != null && !contribution.getStops().isEmpty()) {
             contribution.getStops().forEach(stopContribution -> {
@@ -759,6 +777,14 @@ public class ContributionProcessingService {
             if (contribution.getArrivalTime() == null || contribution.getArrivalTime().isBlank()) {
                 throw new IllegalArgumentException("Arrival time is required for integration");
             }
+            // Bus number is optional - generate one if missing
+            if (contribution.getBusNumber() == null || contribution.getBusNumber().isBlank()) {
+                // Generate placeholder bus number from route (e.g., "SIV-VIR-001")
+                String generatedBusNumber = generateBusNumberFromRoute(
+                        contribution.getFromLocationName(),
+                        contribution.getToLocationName());
+                contribution.setBusNumber(generatedBusNumber);
+            }
 
             // 1. Create/get locations
             var fromLocation = getOrCreateLocation(
@@ -795,24 +821,60 @@ public class ContributionProcessingService {
                         + contribution.getDepartureTime() + "', Arrival: '" + contribution.getArrivalTime() + "'");
             }
 
-            // 3. Create new bus entry
-            var newBus = Bus.create(
-                    new BusId(1L), // Temporary ID, will be replaced by database
-                    contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
-                    contribution.getBusNumber(),
-                    fromLocation,
-                    toLocation,
-                    departureTime,
-                    arrivalTime);
+            // 3. Check if this exact timing already exists (same route AND timing)
+            // Note: For user-contributed routes without bus number, we check by
+            // route+timing only
+            Optional<Bus> existingBusWithTiming = Optional.empty();
 
-            var savedBus = busRepository.save(newBus);
+            if (contribution.getBusNumber() != null && !contribution.getBusNumber().startsWith("GEN-")) {
+                // Real bus number - check for exact match (bus number + route + timing)
+                existingBusWithTiming = busRepository.findByBusNumberAndRoute(
+                        contribution.getBusNumber(),
+                        fromLocation.getId(),
+                        toLocation.getId())
+                        .filter(bus -> bus.getDepartureTime().equals(departureTime)
+                                && bus.getArrivalTime().equals(arrivalTime));
+            } else {
+                // Generated bus number - check by route + timing only
+                List<Bus> routeBuses = busRepository.findBusesBetweenLocations(
+                        fromLocation.getId().getValue(),
+                        toLocation.getId().getValue());
+                existingBusWithTiming = routeBuses.stream()
+                        .filter(bus -> bus.getDepartureTime().equals(departureTime)
+                                && bus.getArrivalTime().equals(arrivalTime))
+                        .findFirst();
+            }
 
-            // 3. Create stops if provided
+            Bus savedBus;
+            if (existingBusWithTiming.isPresent()) {
+                // Exact duplicate (same route and timing) - skip
+                savedBus = existingBusWithTiming.get();
+            } else {
+                // Either new route OR same route with different timing - create new entry
+                // This allows: Bus 123 Sivakasi→Virudhunagar at 6 AM, 9 AM, 12 PM (3 separate
+                // rows)
+                var newBus = Bus.create(
+                        new BusId(1L), // Temporary ID, will be replaced by database
+                        contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
+                        contribution.getBusNumber(),
+                        fromLocation,
+                        toLocation,
+                        departureTime,
+                        arrivalTime);
+
+                savedBus = busRepository.save(newBus);
+            }
+
+            // 4. Create/update stops if provided
             processStops(contribution, savedBus);
 
-            // 4. Mark contribution as integrated
+            // 5. Mark contribution as integrated
+            String statusMessage = existingBusWithTiming.isPresent()
+                    ? "Duplicate timing skipped - already exists in database"
+                    : "Successfully integrated into bus database";
+
             contribution.setStatus("INTEGRATED");
-            contribution.setValidationMessage("Successfully integrated into bus database");
+            contribution.setValidationMessage(statusMessage);
             contribution.setProcessedDate(LocalDateTime.now());
             routeContributionRepository.save(contribution);
 

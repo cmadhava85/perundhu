@@ -20,7 +20,8 @@ Perundhu is a comprehensive bus tracking and route planning application built wi
 - 🚍 Real-time bus tracking with live location updates
 - 🗺️ Interactive route planning with OpenStreetMap
 - 📸 OCR-based bus timing image processing (Tamil + English)
-- 🔍 Smart autocomplete for bus stops and routes
+- � Copy-paste route contributions from WhatsApp/Facebook/Twitter
+- �🔍 Smart autocomplete for bus stops and routes
 - 📱 Mobile-responsive design with Material UI
 - 🔐 Secure OAuth2 JWT authentication
 - ☁️ Cloud-native deployment on Google Cloud Platform
@@ -328,6 +329,10 @@ gcloud run deploy perundhu-frontend --image gcr.io/PROJECT_ID/perundhu-frontend
 |----------|-------------|
 | [OCR_IMPLEMENTATION_COMPLETE.md](./OCR_IMPLEMENTATION_COMPLETE.md) | OCR timing image processing system |
 | [BUS_TIMING_IMAGE_SYSTEM.md](./BUS_TIMING_IMAGE_SYSTEM.md) | Bus timing image contribution system |
+| [PASTE_CONTRIBUTION_IMPLEMENTATION.md](./PASTE_CONTRIBUTION_IMPLEMENTATION.md) | Copy-paste contribution with NLP extraction |
+| [CONTRIBUTION_METHODS_SECURITY_ANALYSIS.md](./CONTRIBUTION_METHODS_SECURITY_ANALYSIS.md) | Security comparison across all contribution methods |
+| [CRITICAL_SECURITY_FIXES_SUMMARY.md](./CRITICAL_SECURITY_FIXES_SUMMARY.md) | Phase 1: Critical security fixes implementation |
+| [HIGH_PRIORITY_SECURITY_FIXES.md](./HIGH_PRIORITY_SECURITY_FIXES.md) | Phase 2: High-priority security fixes implementation |
 | [AUTHENTICATION_SETUP.md](./AUTHENTICATION_SETUP.md) | OAuth2 JWT authentication setup |
 | [TRANSIT_ROUTING_IMPLEMENTATION.md](./TRANSIT_ROUTING_IMPLEMENTATION.md) | Transit routing and navigation |
 | [OPENSTREETMAP_STOP_FEATURES.md](./OPENSTREETMAP_STOP_FEATURES.md) | OpenStreetMap integration |
@@ -475,6 +480,40 @@ This project includes comprehensive GitHub Copilot configuration:
 - **Chat Modes**: `#expert-react-frontend-engineer`, `#principal-software-engineer`
 
 See [COPILOT_SETUP.md](./COPILOT_SETUP.md) for complete details.
+
+### Feature Flags
+
+Control application features using environment variables:
+
+**Contribution Methods:**
+```bash
+# Voice Contribution (BETA) - Web Speech API transcription
+VITE_ENABLE_VOICE_CONTRIBUTION=false  # Default: disabled
+
+# Image OCR Contribution (STABLE)
+VITE_ENABLE_IMAGE_CONTRIBUTION=true   # Default: enabled
+
+# Manual Form Entry (STABLE)
+VITE_ENABLE_MANUAL_CONTRIBUTION=true  # Default: enabled
+```
+
+**Other Features:**
+```bash
+# Map Feature
+VITE_ENABLE_MAP=false
+
+# Analytics and Tracking
+VITE_FEATURE_TRACKING=true
+VITE_FEATURE_REWARDS=true
+VITE_FEATURE_ANALYTICS=true
+```
+
+**To enable a feature:**
+1. Add to `.env.local` (development) or deployment environment variables
+2. Set value to `true`
+3. Restart development server or redeploy
+
+See [VOICE_CONTRIBUTION_FEATURE.md](./VOICE_CONTRIBUTION_FEATURE.md) for voice feature details.
 
 ## 📝 Contributing
 

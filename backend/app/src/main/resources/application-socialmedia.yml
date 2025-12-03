@@ -1,0 +1,46 @@
+# Social Media Integration Configuration
+# Copy these settings to your main application.yml
+
+socialmedia:
+  enabled: false  # Set to true to enable social media monitoring
+  
+  monitoring:
+    schedule: "0 */5 * * * ?"  # Cron expression: every 5 minutes
+  
+  twitter:
+    enabled: false  # Set to true to enable Twitter monitoring
+    api-key: ${TWITTER_API_KEY:}
+    api-secret: ${TWITTER_API_SECRET:}
+    access-token: ${TWITTER_ACCESS_TOKEN:}
+    access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET:}
+    account-handle: "@PerundhuRoutes"
+    branded-hashtags:
+      - "PerundhuRoutes"
+      - "PerundhuBus"
+      - "ShareBusRoute"
+    community-hashtags:
+      - "TNSTCbus"
+      - "MTCBus"
+      - "TamilNaduBus"
+      - "பேருந்து"
+  
+  facebook:
+    enabled: false  # Set to true to enable Facebook monitoring
+    page-id: ${FACEBOOK_PAGE_ID:}
+    access-token: ${FACEBOOK_ACCESS_TOKEN:}
+  
+  instagram:
+    enabled: false  # Set to true to enable Instagram monitoring
+    user-id: ${INSTAGRAM_USER_ID:}
+    access-token: ${INSTAGRAM_ACCESS_TOKEN:}  # Same as Facebook token if linked
+    branded-hashtag: "PerundhuRoutes"
+
+# Environment Variables Required:
+# export TWITTER_API_KEY="your-api-key"
+# export TWITTER_API_SECRET="your-api-secret"
+# export TWITTER_ACCESS_TOKEN="your-access-token"
+# export TWITTER_ACCESS_TOKEN_SECRET="your-access-token-secret"
+# export FACEBOOK_PAGE_ID="your-page-id"
+# export FACEBOOK_ACCESS_TOKEN="your-long-lived-page-token"
+# export INSTAGRAM_USER_ID="your-instagram-business-id"
+# export INSTAGRAM_ACCESS_TOKEN="your-facebook-page-token"

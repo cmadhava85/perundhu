@@ -1,24 +1,34 @@
 package com.perundhu.adapter.in.rest;
 
-import com.perundhu.application.port.in.AdminUseCase;
-import com.perundhu.application.service.ImageContributionProcessingService;
-import com.perundhu.application.service.ContributionProcessingService;
-import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.model.ImageContribution;
-import com.perundhu.domain.port.ImageContributionOutputPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.perundhu.application.port.in.AdminUseCase;
+import com.perundhu.application.service.ImageContributionProcessingService;
+import com.perundhu.domain.model.ImageContribution;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.ImageContributionOutputPort;
+import com.perundhu.domain.port.input.SocialMediaMonitoringInputPort;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * REST controller for admin operations
@@ -36,6 +46,7 @@ public class AdminController {
     private final AdminUseCase adminUseCase;
     private final ImageContributionProcessingService imageProcessingService;
     private final ImageContributionOutputPort imageContributionOutputPort;
+    private final Optional<SocialMediaMonitoringInputPort> socialMediaMonitoringService;
 
     /**
      * Get all route contributions
@@ -253,6 +264,75 @@ public class AdminController {
             log.error("Error extracting OCR from contribution {}: {}", id, e.getMessage(), e);
             return ResponseEntity.internalServerError()
                     .body(Map.of("error", "Failed to extract OCR data: " + e.getMessage()));
+        }
+    }
+
+    // ==================== Social Media Monitoring Endpoints ====================
+
+    /**
+     * Get social media monitoring statistics
+     * Only available if social media integration is enabled
+     * 
+     * @return Social media monitoring statistics
+     */
+    @GetMapping("/social-media/stats")
+    public ResponseEntity<?> getSocialMediaStats() {
+        log.info("Request to get social media monitoring statistics");
+
+        if (socialMediaMonitoringService.isEmpty()) {
+            return ResponseEntity.ok(Map.of(
+                    "enabled", false,
+                    "message", "Social media monitoring is not enabled"));
+        }
+
+        try {
+            SocialMediaMonitoringInputPort.MonitoringStatistics stats = socialMediaMonitoringService.get()
+                    .getStatistics();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("enabled", true);
+            response.put("totalPostsMonitored", stats.getTotalPostsMonitored());
+            response.put("totalContributionsCreated", stats.getTotalContributionsCreated());
+            response.put("lastMonitoringTimestamp", stats.getLastMonitoringTimestamp());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error getting social media stats: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to get social media statistics: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Manually trigger social media monitoring
+     * Useful for testing or forcing an immediate check
+     * 
+     * @return Monitoring results
+     */
+    @PostMapping("/social-media/monitor")
+    public ResponseEntity<?> triggerSocialMediaMonitoring() {
+        log.info("Request to manually trigger social media monitoring");
+
+        if (socialMediaMonitoringService.isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Social media monitoring is not enabled"));
+        }
+
+        try {
+            SocialMediaMonitoringInputPort.MonitoringResult result = socialMediaMonitoringService.get()
+                    .monitorAllPlatforms();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("postsFound", result.getTotalPostsFound());
+            response.put("contributionsCreated", result.getContributionsCreated());
+            response.put("errors", result.getErrors());
+            response.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error triggering social media monitoring: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to trigger monitoring: " + e.getMessage()));
         }
     }
 

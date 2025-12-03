@@ -31,11 +31,40 @@ This document outlines all planned contribution methods for the Perundhu bus rou
 - `/api/v1/contributions/images/{id}/status` - Check processing status
 - `/api/v1/contributions/images/{id}/retry` - Retry failed processing
 
+#### 3. Voice/Audio Contribution
+**Status:** Production Ready (Feature Flag Disabled by Default)  
+**Components:** `VoiceContributionRecorder.tsx`, `RouteTextParser.java`
+
+- Record voice contributions while traveling
+- Real-time speech-to-text transcription
+- Web Speech API (FREE, browser-native)
+- Tamil and English language support
+- NLP parsing to extract route data
+- Live transcription preview
+- Interactive help guide with examples
+
+**Backend Support:**
+- `/api/v1/contributions/voice` - Submit voice contribution
+- NLP text parsing for route extraction
+- Rate limiting (10 transcriptions/hour, 5 contributions/hour)
+
+**Feature Flag:**
+```bash
+VITE_ENABLE_VOICE_CONTRIBUTION=false  # Default: disabled
+```
+
+**To Enable:**
+Set `VITE_ENABLE_VOICE_CONTRIBUTION=true` in environment variables
+
+**Documentation:**
+- [VOICE_CONTRIBUTION_FEATURE.md](./VOICE_CONTRIBUTION_FEATURE.md) - Complete guide
+- [VOICE_FEATURE_FLAG_SUMMARY.md](./VOICE_FEATURE_FLAG_SUMMARY.md) - Quick reference
+
 ---
 
 ## Proposed Enhancement Methods
 
-### 🎤 1. Voice/Audio Contribution
+### 🎤 1. Voice/Audio Contribution - ✅ IMPLEMENTED
 
 **Use Case:** Users share route information verbally while traveling or at bus stands
 
@@ -538,11 +567,17 @@ public ResponseEntity<?> submitYouTubeContribution(
 
 ---
 
-### 🐦 5. Twitter/X Hashtag Monitoring
+### 🐦 5. Twitter/X Account Integration
 
-**Use Case:** Real-time route updates shared via Twitter
+**Use Case:** Users share route updates via Twitter mentions and hashtags
 
 **Priority:** MEDIUM - Phase 2 (Week 4)
+
+**Official Account Strategy:**
+- Create `@PerundhuRoutes` Twitter account
+- Users mention account: `@PerundhuRoutes Bus 27D Chennai to Madurai 6AM`
+- Monitor branded hashtag: `#PerundhuRoutes`
+- Auto-reply to acknowledge contributions
 
 **Technical Implementation:**
 
@@ -555,30 +590,73 @@ public class TwitterMonitoringService {
     private final RouteTextParser routeTextParser;
     private final ContributionInputPort contributionInputPort;
     
-    private final List<String> MONITORED_HASHTAGS = Arrays.asList(
+    // Official Perundhu account
+    private static final String PERUNDHU_ACCOUNT = "@PerundhuRoutes";
+    
+    // Branded hashtags
+    private final List<String> BRANDED_HASHTAGS = Arrays.asList(
+        "#PerundhuRoutes",
+        "#PerundhuBus",
+        "#ShareBusRoute"
+    );
+    
+    // Additional community hashtags (optional, within free tier limits)
+    private final List<String> COMMUNITY_HASHTAGS = Arrays.asList(
         "#TNSTCbus", 
         "#MTCBus", 
         "#TamilNaduBus", 
-        "#பேருந்து",
-        "#PerundhuRoute",
-        "#BusTimings",
-        "#ChennaiToMadurai"
+        "#பேருந்து"
     );
     
     @Scheduled(fixedRate = 300000) // Every 5 minutes
-    public void monitorHashtags() {
-        for (String hashtag : MONITORED_HASHTAGS) {
+    public void monitorTwitter() {
+        // 1. Monitor mentions (FREE, unlimited for own account)
+        monitorMentions();
+        
+        // 2. Monitor branded hashtags (FREE)
+        monitorBrandedHashtags();
+        
+        // 3. Monitor community hashtags (within free tier: 1,500/month = 50/day)
+        monitorCommunityHashtags();
+    }
+    
+    private void monitorMentions() {
+        try {
+            // Get mentions of @PerundhuRoutes (FREE, no rate limit)
+            String query = PERUNDHU_ACCOUNT + " -is:retweet";
+            
+            List<Tweet> mentions = twitterAPI.searchRecent(
+                query,
+                100,
+                LocalDateTime.now().minusMinutes(5)
+            );
+            
+            log.info("Found {} mentions of {}", mentions.size(), PERUNDHU_ACCOUNT);
+            
+            mentions.forEach(tweet -> {
+                processTweet(tweet, "TWITTER_MENTION");
+                replyToContributor(tweet);
+            });
+            
+        } catch (Exception e) {
+            log.error("Error monitoring mentions: {}", e.getMessage());
+        }
+    }
+    
+    private void monitorBrandedHashtags() {
+        for (String hashtag : BRANDED_HASHTAGS) {
             try {
-                // Search recent tweets
+                String query = hashtag + " -is:retweet";
+                
                 List<Tweet> tweets = twitterAPI.searchRecent(
-                    hashtag, 
-                    100, // max results
-                    LocalDateTime.now().minusMinutes(5) // since last check
+                    query,
+                    50,
+                    LocalDateTime.now().minusMinutes(5)
                 );
                 
-                log.info("Found {} tweets for hashtag {}", tweets.size(), hashtag);
+                log.info("Found {} tweets for branded hashtag {}", tweets.size(), hashtag);
                 
-                tweets.forEach(tweet -> processTweet(tweet));
+                tweets.forEach(tweet -> processTweet(tweet, "TWITTER_HASHTAG"));
                 
             } catch (Exception e) {
                 log.error("Error monitoring hashtag {}: {}", hashtag, e.getMessage());
@@ -586,14 +664,36 @@ public class TwitterMonitoringService {
         }
     }
     
-    private void processTweet(Tweet tweet) {
+    private void monitorCommunityHashtags() {
+        // Use sparingly: 50 tweets/day from free tier (1,500/month)
+        for (String hashtag : COMMUNITY_HASHTAGS) {
+            try {
+                String query = hashtag + " -is:retweet";
+                
+                List<Tweet> tweets = twitterAPI.searchRecent(
+                    query,
+                    10, // Limited to conserve quota
+                    LocalDateTime.now().minusHours(1) // Less frequent
+                );
+                
+                log.info("Found {} community tweets for {}", tweets.size(), hashtag);
+                
+                tweets.forEach(tweet -> processTweet(tweet, "TWITTER_COMMUNITY"));
+                
+            } catch (Exception e) {
+                log.error("Error monitoring community hashtag {}: {}", hashtag, e.getMessage());
+            }
+        }
+    }
+    
+    private void processTweet(Tweet tweet, String source) {
         // Parse tweet content
         RouteData routeData = routeTextParser.extractRouteFromText(tweet.getText());
         
         if (routeData.isValid() && routeData.getConfidence() > 0.6) {
             // Create contribution
             RouteContribution contribution = RouteContribution.builder()
-                .source("TWITTER")
+                .source(source)
                 .sourceUrl(tweet.getUrl())
                 .submittedBy("twitter_" + tweet.getAuthorId())
                 .status("PENDING_SOCIAL_MEDIA_REVIEW")
@@ -608,62 +708,341 @@ public class TwitterMonitoringService {
             RouteContribution saved = contributionInputPort
               .submitRouteContribution(contribution.toMap(), contribution.getSubmittedBy());
             
-            // Reply to tweet to thank contributor
-            try {
-                String replyText = String.format(
-                    "@%s Thanks for sharing! We've added this to our database. " +
-                    "Track status: https://perundhu.app/contribution/%s #PerundhuRoute",
-                    tweet.getAuthor().getUsername(),
-                    saved.getId()
-                );
-                
-                twitterAPI.reply(tweet.getId(), replyText);
-                
-            } catch (Exception e) {
-                log.warn("Failed to reply to tweet {}: {}", tweet.getId(), e.getMessage());
-            }
+            log.info("Created contribution {} from tweet {}", saved.getId(), tweet.getId());
+        }
+    }
+    
+    private void replyToContributor(Tweet tweet) {
+        try {
+            String replyText = String.format(
+                "@%s Thanks for sharing! We've received your route information. " +
+                "Our team will review it soon. Track at: perundhu.app #PerundhuRoutes",
+                tweet.getAuthor().getUsername()
+            );
+            
+            twitterAPI.reply(tweet.getId(), replyText);
+            
+        } catch (Exception e) {
+            log.warn("Failed to reply to tweet {}: {}", tweet.getId(), e.getMessage());
         }
     }
 }
 ```
 
+**API Costs:**
+- Monitoring mentions: **FREE** (unlimited)
+- Branded hashtags: **FREE** (within quotas)
+- Community hashtags: **FREE tier** (1,500 tweets/month)
+- Upgrade to Basic ($100/month) if needed for more hashtag searches
+
 **Monitored Patterns:**
-- Direct route information in tweets
+- Direct mentions: `@PerundhuRoutes Bus 27D Chennai to Madurai 6AM`
+- Route information with hashtags
+- Photos of bus schedules (OCR attached images)
 - Links to official schedule PDFs
-- User complaints/suggestions about routes
 - Real-time delay/cancellation updates
 
 ---
 
-### 👥 6. Facebook Group Monitoring
+### 👥 6. Facebook Page Integration
 
-**Use Case:** Tamil Nadu bus traveler groups share route information
+**Use Case:** Users share route information on official Perundhu Facebook Page
 
 **Priority:** MEDIUM - Phase 2
 
-**Monitored Groups:**
-- TN Bus Travelers
-- Chennai Bus Updates  
-- TNSTC Passengers Forum
-- Madurai Bus Commuters
-- Tamil Nadu Transport Network
+**Official Page Strategy:**
+- Create "Perundhu Bus Routes" Facebook Page
+- Users post route info directly to page (posts, comments, images)
+- Full API access as page owner (FREE, unlimited)
+- Community engagement and moderation
 
-**Implementation:** Similar to Twitter monitoring with Facebook Graph API
+**Monitored Content:**
+- Page posts from community members
+- Comments on posts
+- Photos uploaded (OCR for schedules)
+- Videos with route information
+
+**Technical Implementation:**
+
+```java
+@Service
+@Slf4j
+public class FacebookPageMonitoringService {
+    
+    private final FacebookGraphAPI facebookAPI;
+    private final RouteTextParser routeTextParser;
+    private final ContributionInputPort contributionInputPort;
+    private final OCRService ocrService;
+    
+    private static final String PAGE_ID = "{your-perundhu-page-id}";
+    private static final String PAGE_ACCESS_TOKEN = "{long-lived-page-token}";
+    
+    @Scheduled(fixedRate = 300000) // Every 5 minutes
+    public void monitorPageActivity() {
+        // 1. Monitor new posts on page
+        monitorPagePosts();
+        
+        // 2. Monitor comments on existing posts
+        monitorPageComments();
+        
+        // 3. Monitor visitor posts (if enabled)
+        monitorVisitorPosts();
+    }
+    
+    private void monitorPagePosts() {
+        try {
+            // Get recent posts on the page (FREE, unlimited)
+            String endpoint = String.format(
+                "/%s/feed?fields=message,created_time,attachments,from,permalink_url&limit=50",
+                PAGE_ID
+            );
+            
+            JSONObject response = facebookAPI.get(endpoint, PAGE_ACCESS_TOKEN);
+            JSONArray posts = response.getJSONArray("data");
+            
+            for (int i = 0; i < posts.length(); i++) {
+                JSONObject post = posts.getJSONObject(i);
+                processPost(post);
+            }
+            
+            log.info("Processed {} Facebook page posts", posts.length());
+            
+        } catch (Exception e) {
+            log.error("Error monitoring Facebook page posts: {}", e.getMessage());
+        }
+    }
+    
+    private void processPost(JSONObject post) {
+        String message = post.optString("message", "");
+        String postUrl = post.optString("permalink_url", "");
+        String authorId = post.getJSONObject("from").optString("id", "");
+        
+        // Parse text content
+        RouteData textRouteData = routeTextParser.extractRouteFromText(message);
+        
+        if (textRouteData.isValid() && textRouteData.getConfidence() > 0.6) {
+            createContribution(textRouteData, "FACEBOOK_POST", postUrl, authorId);
+        }
+        
+        // Process attached images (if any)
+        if (post.has("attachments")) {
+            JSONArray attachments = post.getJSONObject("attachments").getJSONArray("data");
+            
+            for (int i = 0; i < attachments.length(); i++) {
+                JSONObject attachment = attachments.getJSONObject(i);
+                
+                if ("photo".equals(attachment.optString("type"))) {
+                    String imageUrl = attachment.getJSONObject("media")
+                        .getJSONObject("image")
+                        .optString("src");
+                    
+                    // OCR the image
+                    processImageAttachment(imageUrl, postUrl, authorId);
+                }
+            }
+        }
+    }
+    
+    private void processImageAttachment(String imageUrl, String postUrl, String authorId) {
+        try {
+            // Download image
+            BufferedImage image = ImageIO.read(new URL(imageUrl));
+            
+            // Run OCR
+            OCRResult ocrResult = ocrService.processImage(image);
+            
+            // Parse OCR text for route data
+            RouteData routeData = routeTextParser.extractRouteFromText(ocrResult.getText());
+            
+            if (routeData.isValid() && routeData.getConfidence() > 0.6) {
+                createContribution(routeData, "FACEBOOK_IMAGE_OCR", postUrl, authorId);
+            }
+            
+        } catch (Exception e) {
+            log.error("Error processing Facebook image: {}", e.getMessage());
+        }
+    }
+    
+    private void monitorPageComments() {
+        // Monitor comments on recent posts for additional route details
+        // Implementation similar to monitorPagePosts
+    }
+    
+    private void monitorVisitorPosts() {
+        // If page allows visitor posts, monitor them
+        String endpoint = String.format(
+            "/%s/visitor_posts?fields=message,created_time,from,permalink_url&limit=20",
+            PAGE_ID
+        );
+        
+        // Process similar to page posts
+    }
+    
+    private void createContribution(RouteData routeData, String source, 
+                                    String sourceUrl, String authorId) {
+        RouteContribution contribution = RouteContribution.builder()
+            .source(source)
+            .sourceUrl(sourceUrl)
+            .submittedBy("facebook_" + authorId)
+            .status("PENDING_SOCIAL_MEDIA_REVIEW")
+            .busNumber(routeData.getBusNumber())
+            .fromLocationName(routeData.getFromLocation())
+            .toLocationName(routeData.getToLocation())
+            .rawContent(routeData.getRawText())
+            .confidenceScore(routeData.getConfidence())
+            .build();
+        
+        RouteContribution saved = contributionInputPort
+            .submitRouteContribution(contribution.toMap(), contribution.getSubmittedBy());
+        
+        log.info("Created contribution {} from Facebook", saved.getId());
+    }
+}
+```
+
+**API Benefits:**
+- **FREE** unlimited access to your own page data
+- No rate limiting for page owner
+- Full access to posts, comments, images, videos
+- Can reply/moderate directly
+- Analytics and insights available
+
+**Setup Requirements:**
+1. Create Facebook Page
+2. Create Facebook App (for API access)
+3. Generate long-lived Page Access Token
+4. Enable public posting on page (optional)
 
 ---
 
-### 📸 7. Instagram Post/Story Extraction
+### 📸 7. Instagram Business Account Integration
 
-**Use Case:** Users share bus schedule photos on Instagram
+**Use Case:** Users share bus schedule photos on official Perundhu Instagram account
 
 **Priority:** LOW - Phase 3
 
-**Implementation:**
-- Parse Instagram post URLs
-- Extract images and captions
-- Run OCR on images
-- Parse captions for route info
-- Support Instagram Stories (with 24-hour window)
+**Official Account Strategy:**
+- Create Instagram Business account `@perundhu_bus_routes`
+- Users tag account or use branded hashtag `#PerundhuRoutes`
+- Full API access via Facebook Graph API (FREE)
+- Link to Facebook Page for unified management
+
+**Technical Implementation:**
+
+```java
+@Service
+@Slf4j
+public class InstagramMonitoringService {
+    
+    private final FacebookGraphAPI graphAPI;
+    private final RouteTextParser routeTextParser;
+    private final OCRService ocrService;
+    
+    private static final String IG_USER_ID = "{your-instagram-business-id}";
+    private static final String ACCESS_TOKEN = "{facebook-page-token}";
+    
+    @Scheduled(fixedRate = 600000) // Every 10 minutes
+    public void monitorInstagram() {
+        // 1. Monitor branded hashtag
+        monitorBrandedHashtag();
+        
+        // 2. Monitor account mentions (if available)
+        monitorAccountMentions();
+        
+        // 3. Monitor own posts and comments
+        monitorOwnPosts();
+    }
+    
+    private void monitorBrandedHashtag() {
+        try {
+            // Search for hashtag ID
+            String searchEndpoint = String.format(
+                "/ig_hashtag_search?user_id=%s&q=PerundhuRoutes",
+                IG_USER_ID
+            );
+            
+            JSONObject hashtagSearch = graphAPI.get(searchEndpoint, ACCESS_TOKEN);
+            String hashtagId = hashtagSearch.getJSONArray("data")
+                .getJSONObject(0)
+                .getString("id");
+            
+            // Get recent media with this hashtag
+            String mediaEndpoint = String.format(
+                "/%s/recent_media?user_id=%s&fields=id,caption,media_url,media_type,timestamp,permalink",
+                hashtagId,
+                IG_USER_ID
+            );
+            
+            JSONObject response = graphAPI.get(mediaEndpoint, ACCESS_TOKEN);
+            JSONArray media = response.getJSONArray("data");
+            
+            for (int i = 0; i < media.length(); i++) {
+                JSONObject post = media.getJSONObject(i);
+                processInstagramPost(post);
+            }
+            
+            log.info("Processed {} Instagram posts with #PerundhuRoutes", media.length());
+            
+        } catch (Exception e) {
+            log.error("Error monitoring Instagram hashtag: {}", e.getMessage());
+        }
+    }
+    
+    private void processInstagramPost(JSONObject post) {
+        String caption = post.optString("caption", "");
+        String mediaUrl = post.optString("media_url", "");
+        String mediaType = post.optString("media_type", "");
+        String permalink = post.optString("permalink", "");
+        
+        // Parse caption text
+        RouteData captionData = routeTextParser.extractRouteFromText(caption);
+        
+        if (captionData.isValid() && captionData.getConfidence() > 0.6) {
+            createContribution(captionData, "INSTAGRAM_CAPTION", permalink);
+        }
+        
+        // OCR image/video thumbnail if it's a photo/video
+        if ("IMAGE".equals(mediaType) || "VIDEO".equals(mediaType)) {
+            try {
+                BufferedImage image = ImageIO.read(new URL(mediaUrl));
+                OCRResult ocrResult = ocrService.processImage(image);
+                
+                RouteData ocrData = routeTextParser.extractRouteFromText(ocrResult.getText());
+                
+                if (ocrData.isValid() && ocrData.getConfidence() > 0.6) {
+                    createContribution(ocrData, "INSTAGRAM_IMAGE_OCR", permalink);
+                }
+                
+            } catch (Exception e) {
+                log.error("Error processing Instagram image: {}", e.getMessage());
+            }
+        }
+    }
+    
+    private void monitorOwnPosts() {
+        // Monitor posts on your own account and their comments
+        String endpoint = String.format(
+            "/%s/media?fields=id,caption,media_url,comments{text,username,timestamp}",
+            IG_USER_ID
+        );
+        
+        // Process own posts and extract route data from comments
+    }
+}
+```
+
+**API Benefits:**
+- **FREE** access via Instagram Graph API (linked to Facebook)
+- Monitor branded hashtag `#PerundhuRoutes`
+- Access to photos, videos, captions, comments
+- Stories monitoring (24-hour window)
+- No additional costs
+
+**Setup Requirements:**
+1. Create Instagram Business account
+2. Link to Facebook Page
+3. Use same Facebook App credentials
+4. Promote branded hashtag to users
 
 ---
 
@@ -787,9 +1166,9 @@ public ResponseEntity<?> verifyEdit(
 ## Implementation Priority Summary
 
 ### **Phase 1 - Quick Wins (2-3 weeks)**
-1. ✅ Smart Copy-Paste - HIGHEST PRIORITY
-2. ✅ Voice Contribution
-3. ✅ Route Edit Suggestions
+1. ✅ **Voice Contribution** - IMPLEMENTED (Feature flag disabled)
+2. 📋 Smart Copy-Paste - PLANNED
+3. ✏️ Route Edit Suggestions - PLANNED
 
 ### **Phase 2 - Medium Term (1-2 months)**
 4. GPS Track Contribution

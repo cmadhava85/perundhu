@@ -1,17 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { submitRouteContribution, submitImageContribution } from "../services/api";
 import AuthService from '../services/authService';
 import { SimpleRouteForm } from './forms/SimpleRouteForm';
 import ImageContributionUpload from './ImageContributionUpload';
 import { ContributionMethodSelector } from './contribution/ContributionMethodSelector';
+import { VoiceContributionRecorder } from './contribution/VoiceContributionRecorder';
+import { TextPasteContribution } from './contribution/TextPasteContribution';
+import { featureFlags } from '../config/featureFlags';
 import './RouteContribution.css';
 
 export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
-  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image'>('manual');
+  
+  // Initialize with first available method
+  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' => {
+    if (featureFlags.enableManualContribution) return 'manual';
+    if (featureFlags.enablePasteContribution) return 'paste';
+    if (featureFlags.enableImageContribution) return 'image';
+    if (featureFlags.enableVoiceContribution) return 'voice';
+    return 'manual'; // Fallback
+  };
+  
+  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste'>(getDefaultMethod());
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
+  const [voiceTranscription, setVoiceTranscription] = useState<string>('');
+
+  // Update selected method if current method becomes disabled
+  useEffect(() => {
+    const isCurrentMethodEnabled = 
+      (contributionMethod === 'manual' && featureFlags.enableManualContribution) ||
+      (contributionMethod === 'image' && featureFlags.enableImageContribution) ||
+      (contributionMethod === 'voice' && featureFlags.enableVoiceContribution) ||
+      (contributionMethod === 'paste' && featureFlags.enablePasteContribution);
+    
+    if (!isCurrentMethodEnabled) {
+      setContributionMethod(getDefaultMethod());
+    }
+  }, [contributionMethod]);
 
   const handleSecureSubmission = async (data: any, isImage: boolean) => {
     setSubmissionStatus('submitting');
@@ -35,6 +62,41 @@ export const RouteContribution: React.FC = () => {
       setSubmissionStatus('error');
       setStatusMessage(
         t('contribution.errorMessage', 'Failed to submit contribution. Please try again.')
+      );
+    }
+  };
+
+  const handleVoiceTranscription = async (transcribedText: string, audioBlob: Blob) => {
+    // Store transcription for display
+    setVoiceTranscription(transcribedText);
+    
+    // Show transcription in an info box and allow user to review/edit before submitting
+    // For now, we'll auto-submit the voice contribution
+    setSubmissionStatus('submitting');
+    
+    try {
+      const formData = new FormData();
+      formData.append('audio', audioBlob, 'voice-contribution.webm');
+      formData.append('transcribedText', transcribedText);
+      formData.append('language', 'auto');
+      
+      const response = await fetch('/api/v1/contributions/voice', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error('Voice contribution failed');
+      }
+      
+      setSubmissionStatus('success');
+      setStatusMessage(t('contribution.voice.successMessage', 'Voice contribution submitted successfully!'));
+      setVoiceTranscription('');
+    } catch (error) {
+      console.error('Voice submission error:', error);
+      setSubmissionStatus('error');
+      setStatusMessage(
+        t('contribution.voice.errorMessage', 'Failed to submit voice contribution. Please try again.')
       );
     }
   };
@@ -87,13 +149,46 @@ export const RouteContribution: React.FC = () => {
         />
         
         <div className="form-container">
-          {contributionMethod === 'manual' ? (
+          {contributionMethod === 'manual' && (
             <div>
               <SimpleRouteForm 
                 onSubmit={(data) => handleSecureSubmission(data, false)} 
               />
             </div>
-          ) : (
+          )}
+          
+          {contributionMethod === 'voice' && (
+            <div>
+              <VoiceContributionRecorder
+                onTranscription={handleVoiceTranscription}
+                language="auto"
+                maxDuration={120}
+              />
+              {voiceTranscription && (
+                <div className="transcription-preview">
+                  <h4>{t('voice.transcription', 'Transcribed Text:')}</h4>
+                  <p>{voiceTranscription}</p>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {contributionMethod === 'paste' && (
+            <div>
+              <TextPasteContribution
+                onSubmit={(contributionId: string) => {
+                  setSubmissionStatus('success');
+                  setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
+                }}
+                onError={(error: string) => {
+                  setSubmissionStatus('error');
+                  setStatusMessage(error);
+                }}
+              />
+            </div>
+          )}
+          
+          {contributionMethod === 'image' && (
             <div>
               <ImageContributionUpload 
                 onSuccess={(contributionId: string) => {

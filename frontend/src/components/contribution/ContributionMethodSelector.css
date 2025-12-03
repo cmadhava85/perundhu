@@ -7,7 +7,7 @@
 
 .method-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-md);
 }
 
@@ -101,6 +101,20 @@
 
 .method-badge.secondary {
   background: var(--color-green-500);
+}
+
+.method-badge.new {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 /* Responsive design */

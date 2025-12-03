@@ -1,28 +1,40 @@
 package com.perundhu.adapter.in.rest;
 
-import com.perundhu.domain.port.ContributionInputPort;
-import com.perundhu.domain.port.SecurityMonitoringPort;
-import com.perundhu.domain.port.InputValidationPort;
-import com.perundhu.application.service.AuthenticationService;
-import com.perundhu.domain.model.RouteContribution;
-import com.perundhu.domain.model.ImageContribution;
-import com.perundhu.application.service.ImageContributionProcessingService;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import jakarta.servlet.http.HttpServletRequest;
 
+import com.perundhu.adapter.out.cache.InMemoryImageHashRepository;
+import com.perundhu.adapter.out.security.RecaptchaService;
+import com.perundhu.application.service.AuthenticationService;
+import com.perundhu.application.service.ImageContributionProcessingService;
+import com.perundhu.application.service.PasteContributionValidator;
+import com.perundhu.application.service.RouteTextParser;
+import com.perundhu.application.service.TextFormatNormalizer;
+import com.perundhu.domain.model.ImageContribution;
+import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.port.ContributionInputPort;
+import com.perundhu.domain.port.InputValidationPort;
+import com.perundhu.domain.port.SecurityMonitoringPort;
+
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.*;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.time.LocalDateTime;
 
 /**
  * Inbound adapter for contribution REST API.
@@ -40,6 +52,11 @@ public class ContributionController {
   private final InputValidationPort inputValidationPort;
   private final AuthenticationService authenticationService;
   private final ImageContributionProcessingService imageProcessingService;
+  private final RouteTextParser routeTextParser;
+  private final PasteContributionValidator pasteValidator;
+  private final TextFormatNormalizer textNormalizer;
+  private final InMemoryImageHashRepository imageHashRepository;
+  private final RecaptchaService recaptchaService;
 
   /**
    * Submit a route contribution with comprehensive security validation
@@ -63,11 +80,56 @@ public class ContributionController {
         return createSecurityBlockedResponse();
       }
 
+      // Honeypot check (bot detection)
+      String honeypot = (String) contributionData.get("website");
+      if (honeypot != null && !honeypot.isEmpty()) {
+        log.warn("Bot detected via honeypot in manual contribution from IP: {}", request.getRemoteAddr());
+        // Return fake success to confuse bot
+        Map<String, Object> fakeResponse = new HashMap<>();
+        fakeResponse.put("success", true);
+        fakeResponse.put("message", "Contribution received");
+        return ResponseEntity.ok(fakeResponse);
+      }
+
       // Rate limiting check using domain port
       if (!securityMonitoringPort.checkRateLimit(clientId, "contributions", 3, 3600000)) {
         log.warn("Rate limit exceeded for contribution submission: {}", clientId);
         return ResponseEntity.status(429)
             .body(createErrorResponse("Rate limit exceeded. Please try again later."));
+      }
+
+      // CAPTCHA verification for new users (placeholder - integrate with Google
+      // reCAPTCHA or similar)
+      // CAPTCHA verification for anonymous/new users
+      String captchaToken = (String) contributionData.get("captchaToken");
+      if (recaptchaService.isEnabled()) {
+        // Require CAPTCHA for new users (less than 5 approved contributions)
+        // TODO: Get user contribution count from database
+        // int userContributionCount =
+        // contributionInputPort.getApprovedContributionCount(userId);
+        // if (userContributionCount < 5 && !recaptchaService.verifyToken(captchaToken,
+        // "manual_contribution")) {
+        if (captchaToken != null && !recaptchaService.verifyToken(captchaToken, "manual_contribution")) {
+          log.warn("CAPTCHA verification failed for user: {}", userId);
+          return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
+        }
+      }
+
+      // Duplicate detection - hash key fields to prevent identical submissions
+      // Duplicate detection - hash key fields to prevent identical submissions
+      String duplicateCheckHash = generateContributionHash(
+          (String) contributionData.get("busNumber"),
+          (String) contributionData.get("fromLocationName"),
+          (String) contributionData.get("toLocationName"),
+          (String) contributionData.get("departureTime"));
+
+      // Check for duplicate within 24-hour window
+      if (imageHashRepository.isDuplicate(duplicateCheckHash)) {
+        String originalContributionId = imageHashRepository.getContributionId(duplicateCheckHash);
+        log.warn("Duplicate manual contribution detected: hash={}, original={}",
+            duplicateCheckHash, originalContributionId);
+        return ResponseEntity.status(409)
+            .body(createErrorResponse("Duplicate contribution detected. This route was already submitted recently."));
       }
 
       // Validate and sanitize input data using domain port
@@ -95,6 +157,9 @@ public class ContributionController {
       // Submit route contribution through input port
       RouteContribution savedContribution = contributionInputPort
           .submitRouteContribution(validationResult.sanitizedValues(), userId);
+
+      // Store hash to prevent duplicates within 24 hours
+      imageHashRepository.storeHash(duplicateCheckHash, savedContribution.getId());
 
       // Log security event for successful submission using domain port
       securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
@@ -164,11 +229,30 @@ public class ContributionController {
         return createSecurityBlockedResponse();
       }
 
+      // Honeypot check (bot detection)
+      String honeypot = metadata.get("website");
+      if (honeypot != null && !honeypot.isEmpty()) {
+        log.warn("Bot detected via honeypot in image contribution from IP: {}", request.getRemoteAddr());
+        Map<String, Object> fakeResponse = new HashMap<>();
+        fakeResponse.put("success", true);
+        fakeResponse.put("message", "Image uploaded successfully");
+        return ResponseEntity.ok(fakeResponse);
+      }
+
       // Rate limiting check for image uploads
       if (!securityMonitoringPort.checkRateLimit(clientId, "image-contributions", 5, 3600000)) {
         log.warn("Rate limit exceeded for image contribution submission: {}", clientId);
         return ResponseEntity.status(429)
             .body(createErrorResponse("Rate limit exceeded. Please try again later."));
+      }
+
+      // CAPTCHA verification for anonymous/new users
+      String captchaToken = metadata.get("captchaToken");
+      if (recaptchaService.isEnabled() && captchaToken != null) {
+        if (!recaptchaService.verifyToken(captchaToken, "image_upload")) {
+          log.warn("CAPTCHA verification failed for image upload from user: {}", userId);
+          return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
+        }
       }
 
       // Validate image file with enhanced security checks
@@ -179,8 +263,28 @@ public class ContributionController {
                 createErrorResponse("Invalid image file. Please upload a valid JPEG, PNG, or WebP image under 10MB."));
       }
 
+      // Image duplicate detection using file hash
+      String imageHash = generateImageHash(imageFile);
+
+      // Check for duplicate within 24-hour window
+      if (imageHashRepository.isDuplicate(imageHash)) {
+        String originalContributionId = imageHashRepository.getContributionId(imageHash);
+        log.warn("Duplicate image detected: hash={}, original={}", imageHash, originalContributionId);
+        return ResponseEntity.status(409)
+            .body(createErrorResponse("Duplicate image detected. This image was already uploaded recently."));
+      }
+
       // Validate metadata using domain port
       Map<String, String> sanitizedMetadata = sanitizeImageMetadata(metadata);
+
+      // Check for spam patterns in metadata (description, location, etc.)
+      for (Map.Entry<String, String> entry : sanitizedMetadata.entrySet()) {
+        if (entry.getValue() != null && containsSpamPatterns(entry.getValue())) {
+          log.warn("Spam detected in image metadata from user: {}", userId);
+          return ResponseEntity.badRequest()
+              .body(createErrorResponse("Invalid content detected in image metadata"));
+        }
+      }
 
       // Check image content for security threats
       if (!isImageContentSafe(imageFile)) {
@@ -202,6 +306,9 @@ public class ContributionController {
       // Process image contribution with enhanced AI/OCR processing
       ImageContribution contribution = imageProcessingService.processImageContribution(
           imageFile, sanitizedMetadata, userId);
+
+      // Store hash to prevent duplicates within 24 hours
+      imageHashRepository.storeHash(imageHash, contribution.getId());
 
       // Log successful submission
       securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
@@ -242,6 +349,492 @@ public class ContributionController {
 
       return ResponseEntity.internalServerError()
           .body(createErrorResponse("Failed to process image contribution. Please try again."));
+    }
+  }
+
+  /**
+   * Transcribe voice audio to text
+   */
+  @PostMapping("/voice/transcribe")
+  public ResponseEntity<Map<String, Object>> transcribeVoice(
+      @RequestParam("audio") MultipartFile audioFile,
+      @RequestParam(value = "language", defaultValue = "auto") String language,
+      HttpServletRequest request) {
+
+    String clientId = getClientId(request);
+    String userId = authenticationService.getCurrentUserId();
+
+    if (userId == null || userId.equals("anonymous")) {
+      userId = "anonymous_" + clientId;
+    }
+
+    try {
+      log.info("Transcribing voice audio from user: {}, language: {}", userId, language);
+
+      // Security checks
+      if (!performSecurityChecksAnonymous(request, clientId, "voice-transcription")) {
+        return createSecurityBlockedResponse();
+      }
+
+      // Rate limiting
+      if (!securityMonitoringPort.checkRateLimit(clientId, "voice-transcriptions", 10, 3600000)) {
+        log.warn("Rate limit exceeded for voice transcription: {}", clientId);
+        return ResponseEntity.status(429)
+            .body(createErrorResponse("Rate limit exceeded. Please try again later."));
+      }
+
+      // Validate audio file
+      if (!isValidAudioFile(audioFile)) {
+        log.warn("Invalid audio file submitted by user: {}", userId);
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Invalid audio file. Please upload a valid audio file under 5MB."));
+      }
+
+      // TODO: Integrate with Google Cloud Speech-to-Text API
+      // For now, return a placeholder response
+      String transcribedText = "Placeholder: Audio transcription will be implemented with Google Cloud Speech-to-Text API";
+
+      // Parse transcribed text using NLP
+      RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(transcribedText);
+
+      Map<String, Object> response = new HashMap<>();
+      response.put("success", true);
+      response.put("transcribedText", transcribedText);
+      response.put("confidence", routeData.getConfidence());
+      response.put("extractedData", Map.of(
+          "busNumber", routeData.getBusNumber() != null ? routeData.getBusNumber() : "",
+          "fromLocation", routeData.getFromLocation() != null ? routeData.getFromLocation() : "",
+          "toLocation", routeData.getToLocation() != null ? routeData.getToLocation() : "",
+          "timings", routeData.getTimings(),
+          "stops", routeData.getStops()));
+
+      return ResponseEntity.ok(response);
+
+    } catch (Exception e) {
+      log.error("Error transcribing voice audio from user {}: {}", userId, e.getMessage(), e);
+      return ResponseEntity.internalServerError()
+          .body(createErrorResponse("Failed to transcribe audio. Please try again."));
+    }
+  }
+
+  /**
+   * Submit a voice contribution with transcribed text
+   */
+  @PostMapping("/voice")
+  public ResponseEntity<Map<String, Object>> submitVoiceContribution(
+      @RequestParam(value = "audio", required = false) MultipartFile audioFile,
+      @RequestParam("transcribedText") String transcribedText,
+      @RequestParam(value = "language", defaultValue = "auto") String language,
+      HttpServletRequest request) {
+
+    String clientId = getClientId(request);
+    String userId = authenticationService.getCurrentUserId();
+
+    if (userId == null || userId.equals("anonymous")) {
+      userId = "anonymous_" + clientId;
+    }
+
+    try {
+      log.info("Processing voice contribution from user: {}", userId);
+
+      // Security checks
+      if (!performSecurityChecksAnonymous(request, clientId, "voice-contribution")) {
+        return createSecurityBlockedResponse();
+      }
+
+      // Honeypot check (bot detection) - check request parameters
+      String honeypot = request.getParameter("website");
+      if (honeypot != null && !honeypot.isEmpty()) {
+        log.warn("Bot detected via honeypot in voice contribution from IP: {}", request.getRemoteAddr());
+        Map<String, Object> fakeResponse = new HashMap<>();
+        fakeResponse.put("success", true);
+        fakeResponse.put("message", "Voice contribution received");
+        return ResponseEntity.ok(fakeResponse);
+      }
+
+      // CAPTCHA verification for new users
+      String voiceCaptchaToken = request.getParameter("captchaToken");
+      if (recaptchaService.isEnabled() && voiceCaptchaToken != null) {
+        if (!recaptchaService.verifyToken(voiceCaptchaToken, "voice_upload")) {
+          log.warn("CAPTCHA verification failed for voice upload from user: {}", userId);
+          return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
+        }
+      }
+
+      // Rate limiting
+      if (!securityMonitoringPort.checkRateLimit(clientId, "voice-contributions", 5, 3600000)) {
+        log.warn("Rate limit exceeded for voice contribution submission: {}", clientId);
+        return ResponseEntity.status(429)
+            .body(createErrorResponse("Rate limit exceeded. Please try again later."));
+      }
+
+      // Validate transcribed text
+      if (transcribedText == null || transcribedText.trim().isEmpty()) {
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Transcribed text is required"));
+      }
+
+      // Sanitize transcribed text to prevent XSS and injection attacks
+      String sanitizedText = inputValidationPort.sanitizeTextInput(transcribedText);
+
+      // Validate transcribed text doesn't contain malicious patterns
+      if (inputValidationPort.containsMaliciousPatterns(sanitizedText)) {
+        log.warn("Malicious patterns detected in voice transcription from user: {}", userId);
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Invalid content detected in transcription"));
+      }
+
+      // Validate voice content using paste validator (spam, chat detection)
+      PasteContributionValidator.ValidationResult contentValidation = pasteValidator
+          .validatePasteContent(sanitizedText);
+
+      if (!contentValidation.isValid()) {
+        log.warn("Voice content validation failed for user {}: {}", userId, contentValidation.getReason());
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Invalid content: " + contentValidation.getReason()));
+      }
+
+      // Parse transcribed text using NLP
+      RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(sanitizedText);
+
+      // Check if enough data was extracted
+      if (routeData.getConfidence() < 0.3) {
+        log.warn("Low confidence route data from voice contribution: {}", routeData.getConfidence());
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse(
+                "Could not extract enough route information from the transcription. Please provide more details."));
+      }
+
+      // Create contribution data map
+      Map<String, Object> contributionData = new HashMap<>();
+      contributionData.put("busNumber", routeData.getBusNumber());
+      contributionData.put("fromLocationName", routeData.getFromLocation());
+      contributionData.put("toLocationName", routeData.getToLocation());
+      contributionData.put("departureTime", !routeData.getTimings().isEmpty() ? routeData.getTimings().get(0) : null);
+      contributionData.put("arrivalTime", routeData.getTimings().size() > 1 ? routeData.getTimings().get(1) : null);
+      contributionData.put("additionalNotes", "Voice contribution - Raw text: " + transcribedText);
+      contributionData.put("submittedBy", userId);
+      contributionData.put("source", "VOICE");
+      contributionData.put("language", language);
+
+      // Add stops if extracted
+      if (!routeData.getStops().isEmpty()) {
+        contributionData.put("stops", routeData.getStops());
+      }
+
+      // Validate contribution data
+      InputValidationPort.ContributionValidationResult validationResult = inputValidationPort
+          .validateContributionData(contributionData);
+
+      if (!validationResult.valid()) {
+        log.warn("Validation failed for voice contribution from user {}: {}", userId,
+            validationResult.errors());
+        return ResponseEntity.badRequest()
+            .body(createValidationErrorResponse(validationResult.errors()));
+      }
+
+      // Submit route contribution
+      RouteContribution savedContribution = contributionInputPort
+          .submitRouteContribution(validationResult.sanitizedValues(), userId);
+
+      // Log security event
+      securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
+          clientId,
+          "VOICE_CONTRIBUTION",
+          "INFO",
+          "Voice contribution submitted successfully",
+          "/api/v1/contributions/voice",
+          request.getHeader("User-Agent"),
+          LocalDateTime.now()));
+
+      Map<String, Object> response = new HashMap<>();
+      response.put("success", true);
+      response.put("message", "Voice contribution submitted successfully");
+      response.put("submissionId", savedContribution.getId());
+      response.put("status", savedContribution.getStatus());
+      response.put("confidence", routeData.getConfidence());
+      response.put("extractedData", Map.of(
+          "busNumber", routeData.getBusNumber() != null ? routeData.getBusNumber() : "",
+          "fromLocation", routeData.getFromLocation() != null ? routeData.getFromLocation() : "",
+          "toLocation", routeData.getToLocation() != null ? routeData.getToLocation() : ""));
+      response.put("estimatedProcessingTime", "24-48 hours");
+
+      return ResponseEntity.ok(response);
+
+    } catch (IllegalArgumentException e) {
+      log.warn("Validation error for voice contribution from user {}: {}", userId, e.getMessage());
+      return ResponseEntity.badRequest()
+          .body(createErrorResponse(e.getMessage()));
+
+    } catch (Exception e) {
+      log.error("Error processing voice contribution from user {}: {}", userId, e.getMessage(), e);
+
+      // Log security event
+      securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
+          clientId,
+          "PROCESSING_ERROR",
+          "HIGH",
+          "Voice contribution processing failed: " + e.getMessage(),
+          "/api/v1/contributions/voice",
+          request.getHeader("User-Agent"),
+          LocalDateTime.now()));
+
+      return ResponseEntity.internalServerError()
+          .body(createErrorResponse("Failed to process voice contribution. Please try again."));
+    }
+  }
+
+  /**
+   * Submit a paste/text contribution with smart validation and NLP extraction
+   */
+  @PostMapping("/paste")
+  public ResponseEntity<Map<String, Object>> submitPasteContribution(
+      @RequestBody Map<String, Object> requestData,
+      HttpServletRequest request) {
+
+    String clientId = getClientId(request);
+    String userId = authenticationService.getCurrentUserId();
+
+    // Require authentication for paste contributions
+    if (userId == null || userId.equals("anonymous")) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(createErrorResponse("Login required for paste contributions"));
+    }
+
+    try {
+      // Security checks
+      if (!performSecurityChecksAnonymous(request, clientId, "paste-contribution")) {
+        return createSecurityBlockedResponse();
+      }
+
+      // Strict rate limiting for paste (5 per hour)
+      if (!securityMonitoringPort.checkRateLimit(clientId, "paste-contributions", 5, 3600000)) {
+        log.warn("Rate limit exceeded for paste contribution submission: {}", clientId);
+        return ResponseEntity.status(429)
+            .body(createErrorResponse("Rate limit exceeded. Maximum 5 paste contributions per hour."));
+      }
+
+      // Extract and validate text
+      String pastedText = (String) requestData.get("text");
+      String sourceAttribution = (String) requestData.get("sourceAttribution");
+      @SuppressWarnings("unused")
+      String captchaToken = (String) requestData.get("captchaToken");
+      // TODO: Implement CAPTCHA verification for new users
+
+      if (pastedText == null || pastedText.trim().isEmpty()) {
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Pasted text cannot be empty"));
+      }
+
+      // Honeypot check (bot detection)
+      String honeypot = (String) requestData.get("website");
+      if (honeypot != null && !honeypot.isEmpty()) {
+        log.warn("Bot detected via honeypot from IP: {}", request.getRemoteAddr());
+        // Return fake success to confuse bot
+        Map<String, Object> fakeResponse = new HashMap<>();
+        fakeResponse.put("success", true);
+        fakeResponse.put("message", "Contribution received");
+        return ResponseEntity.ok(fakeResponse);
+      }
+
+      // Validate paste content
+      PasteContributionValidator.ValidationResult validation = pasteValidator.validatePasteContent(pastedText);
+
+      if (!validation.isValid()) {
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse(validation.getReason()));
+      }
+
+      // Normalize text format (WhatsApp, Facebook, Twitter, etc.)
+      String normalizedText = textNormalizer.normalizeToStandardFormat(pastedText);
+
+      // Extract route data using NLP
+      RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
+
+      // Check minimum confidence (30% threshold for paste)
+      if (routeData.getConfidence() < 0.3) {
+        log.warn("Low confidence route data from paste contribution: {}", routeData.getConfidence());
+        return ResponseEntity.badRequest()
+            .body(Map.of(
+                "success", false,
+                "message", "Could not extract route information from pasted text",
+                "confidence", routeData.getConfidence(),
+                "suggestions", List.of(
+                    "Make sure text contains bus number or route number",
+                    "Include 'from' and 'to' location names",
+                    "Add timing information if available",
+                    "Remove personal chat messages and focus on route details")));
+      }
+
+      // Apply additional penalties for paste contributions
+      double adjustedConfidence = routeData.getConfidence();
+
+      // Penalty for personal pronouns
+      if (pastedText.matches("(?i).*(I'm|I am|we are|my|our).*")) {
+        adjustedConfidence *= 0.5;
+      }
+
+      // Penalty for future tense
+      if (pastedText.matches("(?i).*(will|going to|tomorrow).*")) {
+        adjustedConfidence *= 0.6;
+      }
+
+      // Cap at 0.95 (never 100% confident from paste)
+      adjustedConfidence = Math.min(adjustedConfidence, 0.95);
+
+      // Create contribution data
+      Map<String, Object> contributionData = new HashMap<>();
+      contributionData.put("busNumber", routeData.getBusNumber());
+      contributionData.put("fromLocationName", routeData.getFromLocation());
+      contributionData.put("toLocationName", routeData.getToLocation());
+      contributionData.put("departureTime", !routeData.getTimings().isEmpty() ? routeData.getTimings().get(0) : null);
+      contributionData.put("arrivalTime", routeData.getTimings().size() > 1 ? routeData.getTimings().get(1) : null);
+      contributionData.put("submittedBy", userId);
+      contributionData.put("source", "PASTE");
+      contributionData.put("confidenceScore", adjustedConfidence);
+
+      // Build detailed notes
+      StringBuilder notes = new StringBuilder("Paste contribution");
+      if (sourceAttribution != null && !sourceAttribution.trim().isEmpty()) {
+        notes.append(" - Source: ").append(sourceAttribution);
+      }
+      notes.append("\n\nOriginal text:\n").append(pastedText);
+      if (!pastedText.equals(normalizedText)) {
+        notes.append("\n\nNormalized text:\n").append(normalizedText);
+      }
+      contributionData.put("additionalNotes", notes.toString());
+
+      // Add stops if extracted
+      if (!routeData.getStops().isEmpty()) {
+        contributionData.put("stops", routeData.getStops());
+      }
+
+      // Add warnings to notes
+      if (!validation.getWarnings().isEmpty()) {
+        contributionData.put("validationWarnings", String.join("; ", validation.getWarnings()));
+      }
+
+      // Validate contribution data
+      InputValidationPort.ContributionValidationResult validationResult = inputValidationPort
+          .validateContributionData(contributionData);
+
+      if (!validationResult.valid()) {
+        log.warn("Validation failed for paste contribution from user {}: {}", userId,
+            validationResult.errors());
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Validation failed: " + String.join(", ", validationResult.errors().values())));
+      }
+
+      // Submit contribution (always goes to PENDING_VERIFICATION)
+      RouteContribution savedContribution = contributionInputPort
+          .submitRouteContribution(validationResult.sanitizedValues(), userId);
+
+      // Prepare response
+      Map<String, Object> response = new HashMap<>();
+      response.put("success", true);
+      response.put("message", "Paste contribution submitted for review");
+      response.put("contributionId", savedContribution.getId());
+      response.put("confidence", adjustedConfidence);
+      response.put("extractedData", Map.of(
+          "busNumber", routeData.getBusNumber() != null ? routeData.getBusNumber() : "Not detected",
+          "fromLocation", routeData.getFromLocation() != null ? routeData.getFromLocation() : "Not detected",
+          "toLocation", routeData.getToLocation() != null ? routeData.getToLocation() : "Not detected",
+          "timings", routeData.getTimings(),
+          "stops", routeData.getStops()));
+      response.put("warnings", validation.getWarnings());
+      response.put("status", "PENDING_VERIFICATION");
+      response.put("estimatedReviewTime", adjustedConfidence >= 0.7 ? "12-24 hours" : "24-48 hours");
+
+      log.info("Paste contribution submitted by user {}, confidence: {}", userId, adjustedConfidence);
+
+      return ResponseEntity.ok(response);
+
+    } catch (IllegalArgumentException e) {
+      log.warn("Validation error for paste contribution from user {}: {}", userId, e.getMessage());
+      return ResponseEntity.badRequest()
+          .body(createErrorResponse(e.getMessage()));
+
+    } catch (Exception e) {
+      log.error("Error processing paste contribution from user {}: {}", userId, e.getMessage(), e);
+
+      securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
+          clientId,
+          "PROCESSING_ERROR",
+          "HIGH",
+          "Paste contribution processing failed: " + e.getMessage(),
+          "/api/v1/contributions/paste",
+          request.getHeader("User-Agent"),
+          LocalDateTime.now()));
+
+      return ResponseEntity.internalServerError()
+          .body(createErrorResponse("Failed to process paste contribution. Please try again."));
+    }
+  }
+
+  /**
+   * Validate and preview pasted text before submission
+   */
+  @PostMapping("/paste/validate")
+  public ResponseEntity<Map<String, Object>> validatePasteText(
+      @RequestBody Map<String, Object> requestData,
+      HttpServletRequest request) {
+
+    String clientId = getClientId(request);
+
+    try {
+      String pastedText = (String) requestData.get("text");
+
+      if (pastedText == null || pastedText.trim().isEmpty()) {
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Text cannot be empty"));
+      }
+
+      // Rate limit validation requests (more lenient than submissions)
+      if (!securityMonitoringPort.checkRateLimit(clientId, "paste-validations", 20, 3600000)) {
+        return ResponseEntity.status(429)
+            .body(createErrorResponse("Too many validation requests. Please slow down."));
+      }
+
+      // Validate content
+      PasteContributionValidator.ValidationResult validation = pasteValidator.validatePasteContent(pastedText);
+
+      // Normalize format
+      String normalizedText = textNormalizer.normalizeToStandardFormat(pastedText);
+      TextFormatNormalizer.FormatMetadata formatMeta = textNormalizer.getFormatMetadata(pastedText);
+
+      // Extract route data
+      RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
+
+      // Calculate adjusted confidence
+      double adjustedConfidence = routeData.getConfidence();
+      if (pastedText.matches("(?i).*(I'm|I am|we are|my|our).*")) {
+        adjustedConfidence *= 0.5;
+      }
+      if (pastedText.matches("(?i).*(will|going to|tomorrow).*")) {
+        adjustedConfidence *= 0.6;
+      }
+      adjustedConfidence = Math.min(adjustedConfidence, 0.95);
+
+      // Build response
+      Map<String, Object> response = new HashMap<>();
+      response.put("isValid", validation.isValid());
+      response.put("reason", validation.getReason());
+      response.put("warnings", validation.getWarnings());
+      response.put("formatDetected", formatMeta.getType().toString());
+      response.put("confidence", adjustedConfidence);
+      response.put("extracted", Map.of(
+          "busNumber", routeData.getBusNumber(),
+          "fromLocation", routeData.getFromLocation(),
+          "toLocation", routeData.getToLocation(),
+          "timings", routeData.getTimings(),
+          "stops", routeData.getStops()));
+
+      return ResponseEntity.ok(response);
+
+    } catch (Exception e) {
+      log.error("Error validating paste text from client {}: {}", clientId, e.getMessage());
+      return ResponseEntity.internalServerError()
+          .body(createErrorResponse("Validation error. Please try again."));
     }
   }
 
@@ -603,6 +1196,28 @@ public class ContributionController {
         contentType.equals("image/webp"));
   }
 
+  private boolean isValidAudioFile(MultipartFile file) {
+    if (file == null || file.isEmpty()) {
+      return false;
+    }
+
+    // Check file size (max 5MB for audio)
+    if (file.getSize() > 5 * 1024 * 1024) {
+      return false;
+    }
+
+    // Check content type for audio files
+    String contentType = file.getContentType();
+    return contentType != null && (contentType.startsWith("audio/") ||
+        contentType.equals("video/webm") || // WebM audio from MediaRecorder
+        contentType.equals("audio/webm") ||
+        contentType.equals("audio/wav") ||
+        contentType.equals("audio/mp3") ||
+        contentType.equals("audio/mpeg") ||
+        contentType.equals("audio/mp4") ||
+        contentType.equals("audio/ogg"));
+  }
+
   private boolean isImageContentSafe(MultipartFile file) {
     try {
       byte[] content = file.getBytes();
@@ -745,5 +1360,66 @@ public class ContributionController {
   private boolean isAdminUser(String userId) {
     // Placeholder for admin user check logic
     return "admin".equals(userId);
+  }
+
+  /**
+   * Generate hash for contribution duplicate detection
+   */
+  private String generateContributionHash(String busNumber, String fromLocation, String toLocation, String time) {
+    String combined = (busNumber != null ? busNumber : "") +
+        (fromLocation != null ? fromLocation : "") +
+        (toLocation != null ? toLocation : "") +
+        (time != null ? time : "");
+    return String.valueOf(combined.hashCode());
+  }
+
+  /**
+   * Generate hash for image duplicate detection.
+   *
+   * @param imageFile Image file to hash
+   * @return Base64 encoded MD5 hash
+   */
+  private String generateImageHash(MultipartFile imageFile) {
+    try {
+      byte[] imageBytes = imageFile.getBytes();
+      java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+      byte[] hashBytes = md.digest(imageBytes);
+      return java.util.Base64.getEncoder().encodeToString(hashBytes);
+    } catch (Exception e) {
+      log.error("Error generating image hash: {}", e.getMessage());
+      // Fallback to size + filename hash
+      return String.valueOf(imageFile.getSize() + imageFile.getOriginalFilename().hashCode());
+    }
+  }
+
+  /**
+   * Check if text contains spam patterns.
+   *
+   * @param text Text to check
+   * @return true if spam detected
+   */
+  private boolean containsSpamPatterns(String text) {
+    if (text == null || text.isEmpty()) {
+      return false;
+    }
+
+    String lowerText = text.toLowerCase();
+
+    // Common spam keywords
+    String[] spamKeywords = {
+        "buy now", "click here", "limited time", "act now", "free money",
+        "make money", "earn cash", "work from home", "lose weight",
+        "viagra", "casino", "lottery", "winner", "congratulations you won"
+    };
+
+    for (String keyword : spamKeywords) {
+      if (lowerText.contains(keyword)) {
+        return true;
+      }
+    }
+
+    // Excessive URLs (more than 2 in metadata is suspicious)
+    long urlCount = (long) lowerText.split("http").length - 1;
+    return urlCount > 2;
   }
 }
