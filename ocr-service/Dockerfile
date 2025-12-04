@@ -11,7 +11,9 @@ FROM python:3.11-slim AS builder
 WORKDIR /build
 
 # Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN rm -rf /var/lib/apt/lists/* && \
+    apt-get update --fix-missing && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
@@ -36,11 +38,19 @@ FROM python:3.11-slim AS runtime
 WORKDIR /app
 
 # Install only runtime system dependencies (no build tools)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Use retry logic for apt-get to handle transient network failures
+# libgl1-mesa-glx, libglib2.0-0 needed for OpenCV (used by PaddleOCR)
+# libgomp1 needed for OpenMP parallel processing
+RUN rm -rf /var/lib/apt/lists/* && \
+    apt-get update --fix-missing && \
+    apt-get install -y --no-install-recommends \
     curl \
     libgl1-mesa-glx \
     libglib2.0-0 \
     libgomp1 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -48,16 +58,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy pre-downloaded PaddleOCR models from builder
-COPY --from=builder /root/.paddleocr /root/.paddleocr
+# Create non-root user for security BEFORE copying models
+RUN useradd --create-home --shell /bin/bash appuser
+
+# Copy pre-downloaded PaddleOCR models to appuser's home directory
+# PaddleOCR looks for models in ~/.paddleocr/
+COPY --from=builder /root/.paddleocr /home/appuser/.paddleocr
 
 # Copy application code
 COPY main.py .
 
-# Create non-root user for security
-RUN useradd --create-home --shell /bin/bash appuser && \
-    chown -R appuser:appuser /app /root/.paddleocr
+# Set ownership of all app files
+RUN chown -R appuser:appuser /app /home/appuser/.paddleocr
+
 USER appuser
+
+# Set HOME explicitly for PaddleOCR to find models
+ENV HOME=/home/appuser
 
 # Expose port
 EXPOSE 8081
