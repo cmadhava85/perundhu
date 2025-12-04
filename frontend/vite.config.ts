@@ -88,12 +88,6 @@ export default defineConfig({
   },
   // Environment variables configuration
   envPrefix: 'VITE_',
-  define: {
-    'import.meta.env.VITE_API_URL': JSON.stringify(
-      process.env.VITE_API_URL || 'http://localhost:8080'
-    ),
-    'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
-      process.env.VITE_API_BASE_URL || 'http://localhost:8080'
-    ),
-  },
+  // Note: VITE_* env vars are automatically loaded from .env files
+  // Do NOT use define: {} to override them as it bypasses .env file loading
 })

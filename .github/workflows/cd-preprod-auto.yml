@@ -146,12 +146,18 @@ jobs:
         
         # Get backend URL for frontend build
         BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-preprod-1032721240281.asia-south1.run.app")
+        echo "Using Backend URL: $BACKEND_URL"
         
-        # Create .env.local with backend URL
-        cat > ./frontend/.env.local << EOF
-        VITE_API_URL=${BACKEND_URL}
-        VITE_API_BASE_URL=${BACKEND_URL}
-        EOF
+        # Create .env.local with backend URL (this file is copied into Docker build context)
+        echo "VITE_API_URL=${BACKEND_URL}" > ./frontend/.env.local
+        echo "VITE_API_BASE_URL=${BACKEND_URL}" >> ./frontend/.env.local
+        
+        # Also create .env.production.local for Vite production build
+        echo "VITE_API_URL=${BACKEND_URL}" > ./frontend/.env.production.local
+        echo "VITE_API_BASE_URL=${BACKEND_URL}" >> ./frontend/.env.production.local
+        
+        echo "Created .env.local and .env.production.local with VITE_API_URL=$BACKEND_URL"
+        cat ./frontend/.env.local
         
         docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
         docker push $IMAGE

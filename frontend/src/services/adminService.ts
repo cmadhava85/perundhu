@@ -2,8 +2,8 @@ import axios from 'axios';
 import type { RouteContribution, ImageContribution } from '../types/contributionTypes';
 import AuthService from './authService';
 
-// Direct API URL configuration
-const API_URL = 'http://localhost:8080';
+// API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 /**
  * Service to handle admin operations with development admin authentication

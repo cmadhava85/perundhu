@@ -106,19 +106,19 @@ jobs:
         VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
         
         # Get backend URL from Cloud Run
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-production-1032721240281.asia-south1.run.app")
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-1032721240281.asia-south1.run.app")
         
         # Frontend - Build with production environment variables
         FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${VERSION}"
         FRONTEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:latest"
         
-        # Use .env.production as base and override API URLs
-        cp ./frontend/.env.production ./frontend/.env.local
-        cat >> ./frontend/.env.local << EOF
-        VITE_API_URL=${BACKEND_URL}
-        VITE_API_BASE_URL=${BACKEND_URL}
-        VITE_APP_VERSION=${VERSION}
-        EOF
+        # Create .env.production.local to override .env.production with real URLs
+        echo "VITE_API_URL=${BACKEND_URL}" > ./frontend/.env.production.local
+        echo "VITE_API_BASE_URL=${BACKEND_URL}" >> ./frontend/.env.production.local
+        echo "VITE_APP_VERSION=${VERSION}" >> ./frontend/.env.production.local
+        
+        echo "Created .env.production.local with VITE_API_URL=$BACKEND_URL"
+        cat ./frontend/.env.production.local
         
         docker build -t $FRONTEND_IMAGE -t $FRONTEND_LATEST ./frontend
         docker push $FRONTEND_IMAGE

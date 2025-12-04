@@ -81,6 +81,18 @@ export interface PaginatedResponse<T> {
 
 // Helper function to safely get environment variables in both Jest and Vite environments
 const getEnv = (key: string, defaultValue: string): string => {
+  // Vite environment (browser) - check import.meta.env first
+  // This is the primary way Vite exposes environment variables
+  try {
+    // @ts-expect-error - import.meta.env is available in Vite
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
+      // @ts-expect-error - Get from Vite env
+      return import.meta.env[key];
+    }
+  } catch {
+    // import.meta not available (Node.js/Jest environment)
+  }
+  
   // Jest environment (Node.js)
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
     return process.env[key] as string;
@@ -102,18 +114,6 @@ const getEnv = (key: string, defaultValue: string): string => {
       (global as unknown as GlobalWithMeta).import.meta.env && 
       (global as unknown as GlobalWithMeta).import.meta.env[key]) {
     return (global as unknown as GlobalWithMeta).import.meta.env[key];
-  }
-  
-  // Vite environment (browser)
-  // Safe access without direct import.meta reference
-  try {
-    // @ts-expect-error - For Vite/browser environment
-    if (typeof window !== 'undefined' && window.__VITE_ENV__ && window.__VITE_ENV__[key]) {
-      // @ts-expect-error - Get from injected object
-      return window.__VITE_ENV__[key];
-    }
-  } catch (e) {
-    console.warn(`Error accessing environment variable ${key}, using default value`);
   }
   
   return defaultValue;

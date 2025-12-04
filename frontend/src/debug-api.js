@@ -3,7 +3,8 @@ console.log('Testing API connection...');
 
 const testApiCall = async () => {
   try {
-    const response = await fetch('http://localhost:8080/api/v1/bus-schedules/locations?lang=en');
+    const API_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8080';
+    const response = await fetch(`${API_URL}/api/v1/bus-schedules/locations?lang=en`);
     console.log('Response status:', response.status);
     
     if (response.ok) {
