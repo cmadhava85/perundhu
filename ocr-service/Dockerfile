@@ -11,10 +11,13 @@ FROM python:3.11-slim AS builder
 WORKDIR /build
 
 # Install build dependencies
+# libgl1 needed for OpenCV (used by PaddleOCR during model download)
 RUN rm -rf /var/lib/apt/lists/* && \
     apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends \
     build-essential \
+    libgl1 \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Create virtual environment for cleaner dependency management
