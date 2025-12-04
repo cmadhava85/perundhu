@@ -182,12 +182,13 @@ module "ocr_service" {
   service_account_email         = module.iam.backend_service_account_email
   backend_service_account_email = module.iam.backend_service_account_email
   
-  # PaddleOCR resource requirements
-  cpu_limit     = "2"
-  memory_limit  = "4Gi"
-  min_instances = 0
-  max_instances = 5
-  concurrency   = 10
+  # Cost optimization: Use lower resources for preprod
+  cpu_limit      = "1"       # Reduced from 2 for cost savings
+  memory_limit   = "2Gi"     # Reduced from 4Gi (test if sufficient)
+  min_instances  = 0         # Scale to zero when idle
+  max_instances  = 3         # Lower max for preprod
+  concurrency    = 10
+  cpu_throttling = true      # Only charge for CPU during requests
 
   depends_on = [module.iam]
 }
@@ -204,4 +205,16 @@ module "monitoring" {
   notification_email   = var.notification_email
 
   depends_on = [module.cloud_run, module.database]
+}
+
+# Budget Alerts for cost monitoring
+module "budget" {
+  source = "../../modules/budget"
+
+  project_id         = var.project_id
+  billing_account_id = var.billing_account_id
+  environment        = var.environment
+  app_name           = var.app_name
+  budget_amount      = var.monthly_budget_amount
+  notification_email = var.notification_email
 }

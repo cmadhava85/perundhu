@@ -9,6 +9,10 @@ resource "google_cloud_run_service" "ocr_service" {
       annotations = {
         "autoscaling.knative.dev/maxScale" = tostring(var.max_instances)
         "autoscaling.knative.dev/minScale" = tostring(var.min_instances)
+        # Cost optimization: Only charge for CPU during active requests
+        "run.googleapis.com/cpu-throttling" = "true"
+        # Startup CPU boost for faster cold starts (free)
+        "run.googleapis.com/startup-cpu-boost" = "true"
         # OCR service doesn't need VPC access or Cloud SQL
       }
     }

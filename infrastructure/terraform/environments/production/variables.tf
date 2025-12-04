@@ -97,3 +97,15 @@ variable "ocr_service_image" {
   description = "Container image for the OCR service (PaddleOCR)"
   type        = string
 }
+
+variable "billing_account_id" {
+  description = "GCP Billing Account ID for budget alerts"
+  type        = string
+  default     = ""
+}
+
+variable "monthly_budget_amount" {
+  description = "Monthly budget amount in USD for alerts"
+  type        = number
+  default     = 200  # $200/month for production
+}

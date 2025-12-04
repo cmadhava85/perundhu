@@ -64,3 +64,9 @@ variable "concurrency" {
   type        = number
   default     = 10
 }
+
+variable "cpu_throttling" {
+  description = "Enable CPU throttling to reduce costs (only charge during requests)"
+  type        = bool
+  default     = true
+}

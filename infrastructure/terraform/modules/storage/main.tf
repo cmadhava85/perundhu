@@ -46,6 +46,9 @@ resource "google_storage_bucket" "backup_bucket" {
   name     = "${var.app_name}-${var.environment}-backups-${random_string.bucket_suffix.result}"
   location = var.region
   
+  # Cost optimization: Use NEARLINE for backups (accessed < 1x/month)
+  storage_class = "NEARLINE"
+  
   # Prevent accidental deletion
   force_destroy = false
   
@@ -55,28 +58,20 @@ resource "google_storage_bucket" "backup_bucket" {
     enabled = true
   }
   
+  # Cost optimization: Delete old backups after 90 days
   lifecycle_rule {
     condition {
-      age = 365
+      age = 90
     }
     action {
       type = "Delete"
     }
   }
   
+  # Move to COLDLINE after 30 days for older backups
   lifecycle_rule {
     condition {
       age = 30
-    }
-    action {
-      type          = "SetStorageClass"
-      storage_class = "NEARLINE"
-    }
-  }
-  
-  lifecycle_rule {
-    condition {
-      age = 90
     }
     action {
       type          = "SetStorageClass"

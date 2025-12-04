@@ -93,3 +93,15 @@ variable "ocr_service_image" {
   type        = string
   default     = "gcr.io/PROJECT_ID/perundhu-ocr-service:latest"
 }
+
+variable "billing_account_id" {
+  description = "GCP Billing Account ID for budget alerts"
+  type        = string
+  default     = ""
+}
+
+variable "monthly_budget_amount" {
+  description = "Monthly budget amount in USD for alerts"
+  type        = number
+  default     = 50  # $50/month for preprod
+}
