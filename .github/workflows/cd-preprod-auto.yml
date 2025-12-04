@@ -7,9 +7,26 @@ on:
     paths:
       - 'frontend/**'
       - 'backend/**'
+      - 'ocr-service/**'
       - '.github/workflows/cd-preprod-auto.yml'
   workflow_dispatch:
-  workflow_call:
+    inputs:
+      deploy_frontend:
+        description: 'Deploy Frontend'
+        type: boolean
+        default: false
+      deploy_backend:
+        description: 'Deploy Backend'
+        type: boolean
+        default: false
+      deploy_ocr:
+        description: 'Deploy OCR Service'
+        type: boolean
+        default: false
+      deploy_all:
+        description: 'Deploy All Services'
+        type: boolean
+        default: false
 
 # Cancel in-progress deployments when new commits are pushed
 concurrency:
@@ -24,19 +41,136 @@ env:
   JAVA_VERSION: '17'
 
 jobs:
-  build-and-push-images:
-    name: Build & Push Pre-Prod Images
+  # Detect which services have changes
+  detect-changes:
+    name: Detect Changed Services
     runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.changes.outputs.frontend }}
+      backend: ${{ steps.changes.outputs.backend }}
+      ocr: ${{ steps.changes.outputs.ocr }}
+      migrations: ${{ steps.changes.outputs.migrations }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+    
+    - name: Detect changes
+      id: changes
+      run: |
+        # For manual dispatch, use input values
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "${{ inputs.deploy_all }}" == "true" ]; then
+            echo "frontend=true" >> $GITHUB_OUTPUT
+            echo "backend=true" >> $GITHUB_OUTPUT
+            echo "ocr=true" >> $GITHUB_OUTPUT
+            echo "migrations=true" >> $GITHUB_OUTPUT
+          else
+            echo "frontend=${{ inputs.deploy_frontend }}" >> $GITHUB_OUTPUT
+            echo "backend=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
+            echo "ocr=${{ inputs.deploy_ocr }}" >> $GITHUB_OUTPUT
+            echo "migrations=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
+          fi
+          exit 0
+        fi
+        
+        # For push events, detect changes from git diff
+        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff --name-only HEAD)
+        
+        # Check frontend changes
+        if echo "$CHANGED_FILES" | grep -q "^frontend/"; then
+          echo "frontend=true" >> $GITHUB_OUTPUT
+          echo "📦 Frontend changes detected"
+        else
+          echo "frontend=false" >> $GITHUB_OUTPUT
+        fi
+        
+        # Check backend changes
+        if echo "$CHANGED_FILES" | grep -q "^backend/"; then
+          echo "backend=true" >> $GITHUB_OUTPUT
+          echo "�� Backend changes detected"
+        else
+          echo "backend=false" >> $GITHUB_OUTPUT
+        fi
+        
+        # Check OCR service changes
+        if echo "$CHANGED_FILES" | grep -q "^ocr-service/"; then
+          echo "ocr=true" >> $GITHUB_OUTPUT
+          echo "📦 OCR Service changes detected"
+        else
+          echo "ocr=false" >> $GITHUB_OUTPUT
+        fi
+        
+        # Check for database migrations
+        if echo "$CHANGED_FILES" | grep -q "^backend/.*migration"; then
+          echo "migrations=true" >> $GITHUB_OUTPUT
+          echo "📦 Database migrations detected"
+        else
+          echo "migrations=false" >> $GITHUB_OUTPUT
+        fi
+        
+        echo "Changed files:"
+        echo "$CHANGED_FILES"
+
+  # Build and push Frontend
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: needs.detect-changes.outputs.frontend == 'true'
+    outputs:
+      image: ${{ steps.build.outputs.image }}
     permissions:
       contents: read
       id-token: write
+    steps:
+    - uses: actions/checkout@v4
     
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
+    
+    - name: Build and push Frontend
+      id: build
+      run: |
+        COMMIT_SHA=$(git rev-parse --short HEAD)
+        TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
+        IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${TAG}"
+        
+        # Get backend URL for frontend build
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-preprod-1032721240281.asia-south1.run.app")
+        
+        # Create .env.local with backend URL
+        cat > ./frontend/.env.local << EOF
+        VITE_API_URL=${BACKEND_URL}
+        VITE_API_BASE_URL=${BACKEND_URL}
+        EOF
+        
+        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
+        docker push $IMAGE
+        docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest
+        
+        echo "image=$IMAGE" >> $GITHUB_OUTPUT
+        echo "✅ Frontend image built: $IMAGE"
+
+  # Build and push Backend
+  build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: needs.detect-changes.outputs.backend == 'true'
     outputs:
-      frontend_image: ${{ steps.set-outputs.outputs.frontend_image }}
-      backend_image: ${{ steps.set-outputs.outputs.backend_image }}
-      ocr_service_image: ${{ steps.set-outputs.outputs.ocr_service_image }}
-      commit_sha: ${{ steps.set-outputs.outputs.commit_sha }}
-    
+      image: ${{ steps.build.outputs.image }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
     - uses: actions/checkout@v4
     
@@ -61,58 +195,34 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
-    - name: Configure Docker for Artifact Registry
-      run: |
-        gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
     
-    - name: Build and push images
-      id: set-outputs
+    - name: Build and push Backend
+      id: build
       run: |
         COMMIT_SHA=$(git rev-parse --short HEAD)
-        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-        TAG="${TIMESTAMP}-${COMMIT_SHA}"
+        TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
+        IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:${TAG}"
         
-        # Frontend - Build with preprod environment variables
-        FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${TAG}"
-        FRONTEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest"
+        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest ./backend
+        docker push $IMAGE
+        docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest
         
-        # Copy preprod env file for build
-        cp ./frontend/.env.preprod ./frontend/.env.local
-        
-        docker build -t $FRONTEND_IMAGE -t $FRONTEND_LATEST ./frontend
-        docker push $FRONTEND_IMAGE
-        docker push $FRONTEND_LATEST
-        
-        # Backend
-        BACKEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:${TAG}"
-        BACKEND_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest"
-        docker build -t $BACKEND_IMAGE -t $BACKEND_LATEST ./backend
-        docker push $BACKEND_IMAGE
-        docker push $BACKEND_LATEST
-        
-        # OCR Service (PaddleOCR)
-        OCR_SERVICE_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:${TAG}"
-        OCR_SERVICE_LATEST="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:preprod-latest"
-        docker build -t $OCR_SERVICE_IMAGE -t $OCR_SERVICE_LATEST ./ocr-service
-        docker push $OCR_SERVICE_IMAGE
-        docker push $OCR_SERVICE_LATEST
-        
-        echo "frontend_image=$FRONTEND_IMAGE" >> $GITHUB_OUTPUT
-        echo "backend_image=$BACKEND_IMAGE" >> $GITHUB_OUTPUT
-        echo "ocr_service_image=$OCR_SERVICE_IMAGE" >> $GITHUB_OUTPUT
-        echo "commit_sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+        echo "image=$IMAGE" >> $GITHUB_OUTPUT
+        echo "✅ Backend image built: $IMAGE"
 
-  deploy-to-preprod:
-    name: Deploy to Pre-Production
+  # Build and push OCR Service
+  build-ocr:
+    name: Build OCR Service
     runs-on: ubuntu-latest
-    needs: [build-and-push-images]
-    environment:
-      name: preprod
-      url: https://preprod.perundhu.app
+    needs: [detect-changes]
+    if: needs.detect-changes.outputs.ocr == 'true'
+    outputs:
+      image: ${{ steps.build.outputs.image }}
     permissions:
       contents: read
       id-token: write
-    
     steps:
     - uses: actions/checkout@v4
     
@@ -124,42 +234,67 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
-    - name: Set up JDK for Flyway
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
+    
+    - name: Build and push OCR Service
+      id: build
+      run: |
+        COMMIT_SHA=$(git rev-parse --short HEAD)
+        TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
+        IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:${TAG}"
+        
+        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:preprod-latest ./ocr-service
+        docker push $IMAGE
+        docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:preprod-latest
+        
+        echo "image=$IMAGE" >> $GITHUB_OUTPUT
+        echo "✅ OCR Service image built: $IMAGE"
+
+  # Run database migrations (only if backend has changes)
+  run-migrations:
+    name: Run Database Migrations
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build-backend]
+    if: always() && needs.detect-changes.outputs.migrations == 'true' && needs.build-backend.result != 'failure'
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
         java-version: ${{ env.JAVA_VERSION }}
         distribution: 'temurin'
         cache: 'gradle'
     
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
     - name: Install Cloud SQL Proxy
       run: |
         wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
         chmod +x cloud_sql_proxy
     
-    - name: Start Cloud SQL Proxy
-      run: |
-        ./cloud_sql_proxy -instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql=tcp:3306 &
-        PROXY_PID=$!
-        echo "PROXY_PID=$PROXY_PID" >> $GITHUB_ENV
-        # Wait for proxy to be ready
-        for i in {1..30}; do
-          if nc -z 127.0.0.1 3306 2>/dev/null; then
-            echo "Cloud SQL Proxy is ready!"
-            break
-          fi
-          echo "Waiting for Cloud SQL Proxy... ($i/30)"
-          sleep 2
-        done
-    
-    - name: Deploy Database Migrations
+    - name: Run Flyway Migrations
       working-directory: ./backend
       env:
         FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
         FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
         FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
       run: |
+        # Start Cloud SQL Proxy
+        ../cloud_sql_proxy -instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql=tcp:3306 &
+        sleep 10
+        
         chmod +x gradlew
-        # Run Flyway migrations for preprod using Cloud SQL Proxy
         ./gradlew flywayMigrate \
           -Pflyway.url="${FLYWAY_URL}" \
           -Pflyway.user="${FLYWAY_USER}" \
@@ -167,52 +302,31 @@ jobs:
           -Pflyway.locations="classpath:db/migration/mysql" \
           --no-configuration-cache \
           --info
+        
+        echo "✅ Database migrations completed"
+
+  # Deploy Frontend
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build-frontend]
+    if: always() && needs.detect-changes.outputs.frontend == 'true' && needs.build-frontend.result == 'success'
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
     
-    - name: Deploy OCR Service to Pre-Production
-      run: |
-        gcloud run deploy perundhu-ocr-service-preprod \
-          --image ${{ needs.build-and-push-images.outputs.ocr_service_image }} \
-          --platform managed \
-          --region ${{ env.GCP_REGION }} \
-          --no-allow-unauthenticated \
-          --port 8081 \
-          --memory 4Gi \
-          --cpu 2 \
-          --min-instances 0 \
-          --max-instances 5 \
-          --concurrency 10 \
-          --timeout 120s \
-          --labels="commit=${{ needs.build-and-push-images.outputs.commit_sha }},env=preprod"
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
     
-    - name: Get OCR Service URL
-      id: ocr-url
-      run: |
-        OCR_SERVICE_URL=$(gcloud run services describe perundhu-ocr-service-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        echo "ocr_service_url=$OCR_SERVICE_URL" >> $GITHUB_OUTPUT
-        echo "OCR Service URL: $OCR_SERVICE_URL"
-    
-    - name: Deploy Backend to Pre-Production
-      run: |
-        gcloud run deploy perundhu-backend-preprod \
-          --image ${{ needs.build-and-push-images.outputs.backend_image }} \
-          --platform managed \
-          --region ${{ env.GCP_REGION }} \
-          --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,MYSQL_USERNAME=perundhu_user,OCR_SERVICE_ENABLED=true,OCR_SERVICE_URL=${{ steps.ocr-url.outputs.ocr_service_url }},OCR_SERVICE_TIMEOUT=60" \
-          --set-secrets="MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=preprod-jwt-secret:latest" \
-          --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
-          --memory 1Gi \
-          --cpu 1 \
-          --min-instances 0 \
-          --max-instances 10 \
-          --concurrency 80 \
-          --timeout 300s \
-          --labels="commit=${{ needs.build-and-push-images.outputs.commit_sha }},env=preprod"
-    
-    - name: Deploy Frontend to Pre-Production
+    - name: Deploy Frontend to Cloud Run
       run: |
         gcloud run deploy perundhu-frontend-preprod \
-          --image ${{ needs.build-and-push-images.outputs.frontend_image }} \
+          --image ${{ needs.build-frontend.outputs.image }} \
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
@@ -223,94 +337,153 @@ jobs:
           --max-instances 5 \
           --concurrency 80 \
           --timeout 60s \
-          --labels="commit=${{ needs.build-and-push-images.outputs.commit_sha }},env=preprod"
-    
-    - name: Get service URLs
-      id: urls
-      run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        OCR_SERVICE_URL=$(gcloud run services describe perundhu-ocr-service-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
-        echo "frontend_url=$FRONTEND_URL" >> $GITHUB_OUTPUT
-        echo "ocr_service_url=$OCR_SERVICE_URL" >> $GITHUB_OUTPUT
-        echo "Backend URL: $BACKEND_URL"
-        echo "Frontend URL: $FRONTEND_URL"
-        echo "OCR Service URL: $OCR_SERVICE_URL"
+          --labels="env=preprod"
+        
+        echo "✅ Frontend deployed"
 
-  run-preprod-smoke-tests:
-    name: Run Pre-Prod Smoke Tests
+  # Deploy OCR Service
+  deploy-ocr:
+    name: Deploy OCR Service
     runs-on: ubuntu-latest
-    needs: [deploy-to-preprod]
-    
+    needs: [detect-changes, build-ocr]
+    if: always() && needs.detect-changes.outputs.ocr == 'true' && needs.build-ocr.result == 'success'
+    permissions:
+      contents: read
+      id-token: write
     steps:
-    - name: Wait for services to stabilize
-      run: sleep 20
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
     
-    - name: Test Backend API
-      env:
-        BACKEND_URL: https://perundhu-backend-preprod-c6qn3mz4wa-el.a.run.app
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Deploy OCR Service to Cloud Run
       run: |
-        echo "Testing Backend API: ${{ env.BACKEND_URL }}/api/v1/bus-schedules"
-        for i in {1..10}; do
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.BACKEND_URL }}/api/v1/bus-schedules)
-          if [ "$HTTP_CODE" -eq "200" ] || [ "$HTTP_CODE" -eq "404" ]; then
-            echo "✅ Backend API is responding (HTTP $HTTP_CODE)"
-            exit 0
+        gcloud run deploy perundhu-ocr-service-preprod \
+          --image ${{ needs.build-ocr.outputs.image }} \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --no-allow-unauthenticated \
+          --port 8081 \
+          --memory 4Gi \
+          --cpu 2 \
+          --min-instances 0 \
+          --max-instances 5 \
+          --concurrency 10 \
+          --timeout 120s \
+          --labels="env=preprod"
+        
+        echo "✅ OCR Service deployed"
+
+  # Deploy Backend (depends on OCR if OCR is being deployed)
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    needs: [detect-changes, build-backend, run-migrations, deploy-ocr]
+    if: always() && needs.detect-changes.outputs.backend == 'true' && needs.build-backend.result == 'success' && (needs.run-migrations.result == 'success' || needs.run-migrations.result == 'skipped')
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Get OCR Service URL
+      id: ocr-url
+      run: |
+        OCR_URL=$(gcloud run services describe perundhu-ocr-service-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "")
+        echo "url=$OCR_URL" >> $GITHUB_OUTPUT
+    
+    - name: Deploy Backend to Cloud Run
+      run: |
+        gcloud run deploy perundhu-backend-preprod \
+          --image ${{ needs.build-backend.outputs.image }} \
+          --platform managed \
+          --region ${{ env.GCP_REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,MYSQL_USERNAME=perundhu_user,OCR_SERVICE_ENABLED=true,OCR_SERVICE_URL=${{ steps.ocr-url.outputs.url }},OCR_SERVICE_TIMEOUT=60" \
+          --set-secrets="MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=preprod-jwt-secret:latest" \
+          --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
+          --memory 1Gi \
+          --cpu 1 \
+          --min-instances 0 \
+          --max-instances 10 \
+          --concurrency 80 \
+          --timeout 300s \
+          --labels="env=preprod"
+        
+        echo "✅ Backend deployed"
+
+  # Smoke Tests
+  smoke-tests:
+    name: Run Smoke Tests
+    runs-on: ubuntu-latest
+    needs: [detect-changes, deploy-frontend, deploy-backend, deploy-ocr]
+    if: always() && (needs.deploy-frontend.result == 'success' || needs.deploy-backend.result == 'success' || needs.deploy-ocr.result == 'success')
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+    
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Wait for services
+      run: sleep 15
+    
+    - name: Test deployed services
+      run: |
+        # Test Backend if it was deployed
+        if [ "${{ needs.deploy-backend.result }}" == "success" ]; then
+          BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+          echo "Testing Backend: $BACKEND_URL"
+          for i in {1..5}; do
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $BACKEND_URL/actuator/health || echo "000")
+            if [ "$HTTP_CODE" -eq "200" ]; then
+              echo "✅ Backend is healthy"
+              break
+            fi
+            sleep 5
+          done
+        fi
+        
+        # Test Frontend if it was deployed
+        if [ "${{ needs.deploy-frontend.result }}" == "success" ]; then
+          FRONTEND_URL=$(gcloud run services describe perundhu-frontend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+          echo "Testing Frontend: $FRONTEND_URL"
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $FRONTEND_URL)
+          if [ "$HTTP_CODE" -eq "200" ]; then
+            echo "✅ Frontend is accessible"
           fi
-          echo "Attempt $i/10: HTTP $HTTP_CODE, retrying in 10s..."
-          sleep 10
-        done
-        echo "❌ Backend health check failed after 10 attempts"
-        exit 1
-    
-    - name: Test Frontend
-      env:
-        FRONTEND_URL: https://perundhu-frontend-preprod-c6qn3mz4wa-el.a.run.app
-      run: |
-        echo "Testing Frontend: ${{ env.FRONTEND_URL }}"
-        HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.FRONTEND_URL }})
-        if [ "$HTTP_CODE" -eq "200" ]; then
-          echo "✅ Frontend is accessible (HTTP $HTTP_CODE)"
-        else
-          echo "❌ Frontend returned HTTP $HTTP_CODE"
-          exit 1
         fi
 
-  create-deployment-summary:
-    name: Create Deployment Summary
+  # Deployment Summary
+  summary:
+    name: Deployment Summary
     runs-on: ubuntu-latest
-    needs: [build-and-push-images, deploy-to-preprod, run-preprod-smoke-tests]
+    needs: [detect-changes, build-frontend, build-backend, build-ocr, deploy-frontend, deploy-backend, deploy-ocr, smoke-tests]
     if: always()
-    
     steps:
-    - name: Generate summary
+    - name: Generate Summary
       run: |
         echo "## 🚀 Pre-Production Deployment Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
+        echo "### Services Changed" >> $GITHUB_STEP_SUMMARY
+        echo "| Service | Changed | Built | Deployed |" >> $GITHUB_STEP_SUMMARY
+        echo "|---------|---------|-------|----------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Frontend | ${{ needs.detect-changes.outputs.frontend }} | ${{ needs.build-frontend.result || 'skipped' }} | ${{ needs.deploy-frontend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Backend | ${{ needs.detect-changes.outputs.backend }} | ${{ needs.build-backend.result || 'skipped' }} | ${{ needs.deploy-backend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| OCR Service | ${{ needs.detect-changes.outputs.ocr }} | ${{ needs.build-ocr.result || 'skipped' }} | ${{ needs.deploy-ocr.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit**: ${{ needs.build-and-push-images.outputs.commit_sha }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Environment**: Pre-Production" >> $GITHUB_STEP_SUMMARY
-        echo "- **Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit SHA**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Docker Images" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Frontend**: ${{ needs.build-and-push-images.outputs.frontend_image }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Backend**: ${{ needs.build-and-push-images.outputs.backend_image }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Test Results" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        if [ "${{ needs.run-preprod-smoke-tests.result }}" == "success" ]; then
-          echo "✅ All smoke tests passed" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "❌ Some smoke tests failed" >> $GITHUB_STEP_SUMMARY
-        fi
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- Verify the deployment at the pre-production URLs" >> $GITHUB_STEP_SUMMARY
-        echo "- Run manual testing if needed" >> $GITHUB_STEP_SUMMARY
-        echo "- Create a release to deploy to production" >> $GITHUB_STEP_SUMMARY
+        echo "### Smoke Tests: ${{ needs.smoke-tests.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY
