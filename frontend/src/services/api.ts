@@ -84,9 +84,7 @@ const getEnv = (key: string, defaultValue: string): string => {
   // Vite environment (browser) - check import.meta.env first
   // This is the primary way Vite exposes environment variables
   try {
-    // @ts-expect-error - import.meta.env is available in Vite
-    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
-      // @ts-expect-error - Get from Vite env
+    if (import.meta?.env?.[key]) {
       return import.meta.env[key];
     }
   } catch {
@@ -94,8 +92,8 @@ const getEnv = (key: string, defaultValue: string): string => {
   }
   
   // Jest environment (Node.js)
-  if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    return process.env[key] as string;
+  if (process?.env?.[key]) {
+    return process.env[key];
   }
   
   // Define type for global mocks in test environment
@@ -108,12 +106,9 @@ const getEnv = (key: string, defaultValue: string): string => {
   }
   
   // Support for Jest test environment with mocked import.meta
-  if (typeof global !== 'undefined' && 
-      (global as unknown as GlobalWithMeta).import && 
-      (global as unknown as GlobalWithMeta).import.meta && 
-      (global as unknown as GlobalWithMeta).import.meta.env && 
-      (global as unknown as GlobalWithMeta).import.meta.env[key]) {
-    return (global as unknown as GlobalWithMeta).import.meta.env[key];
+  const g = globalThis as unknown as GlobalWithMeta;
+  if (g?.import?.meta?.env?.[key]) {
+    return g.import.meta.env[key];
   }
   
   return defaultValue;
