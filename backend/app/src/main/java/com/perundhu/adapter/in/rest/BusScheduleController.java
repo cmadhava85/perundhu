@@ -25,10 +25,12 @@ import com.google.common.util.concurrent.RateLimiter;
 import com.perundhu.adapter.in.rest.dto.PaginatedResponse;
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusRouteDTO;
+import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.BusScheduleService;
+import com.perundhu.application.service.ConnectingRouteService;
 import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
 import com.perundhu.infrastructure.exception.RateLimitException;
@@ -43,16 +45,19 @@ public class BusScheduleController {
 
     private static final Logger log = LoggerFactory.getLogger(BusScheduleController.class);
     private final BusScheduleService busScheduleService;
+    private final ConnectingRouteService connectingRouteService;
     private final OpenStreetMapGeocodingService geocodingService;
     private final RateLimiter globalRateLimiter;
     private final ConcurrentHashMap<String, RateLimiter> userRateLimiters;
 
     public BusScheduleController(
             BusScheduleService busScheduleService,
+            ConnectingRouteService connectingRouteService,
             OpenStreetMapGeocodingService geocodingService,
             RateLimiter globalRateLimiter,
             ConcurrentHashMap<String, RateLimiter> userRateLimiters) {
         this.busScheduleService = busScheduleService;
+        this.connectingRouteService = connectingRouteService;
         this.geocodingService = geocodingService;
         this.globalRateLimiter = globalRateLimiter;
         this.userRateLimiters = userRateLimiters;
@@ -514,6 +519,49 @@ public class BusScheduleController {
             return ResponseEntity.ok(routes);
         } catch (Exception e) {
             log.error("Error discovering OSM routes", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Get connecting routes between two locations.
+     * Returns routes that may require one or more bus transfers.
+     * Uses BFS algorithm to find optimal paths through the bus network.
+     * For example: Chennai -> Madurai when there's no direct bus,
+     * it might return Chennai -> Trichy (Bus 1) + Trichy -> Madurai (Bus 2)
+     */
+    @GetMapping("/connecting-routes")
+    public ResponseEntity<List<ConnectingRouteDTO>> getConnectingRoutes(
+            @RequestParam("fromLocationId") Long fromLocationId,
+            @RequestParam("toLocationId") Long toLocationId,
+            @RequestParam(value = "maxTransfers", defaultValue = "2") int maxTransfers) {
+        log.info("Getting connecting routes from {} to {} with max {} transfers",
+                fromLocationId, toLocationId, maxTransfers);
+
+        // Validate input parameters
+        if (fromLocationId == null || toLocationId == null) {
+            log.warn("Invalid location IDs provided: from={}, to={}", fromLocationId, toLocationId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (fromLocationId.equals(toLocationId)) {
+            log.warn("Same location provided for from and to: {}", fromLocationId);
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Limit max transfers to prevent expensive searches
+        if (maxTransfers < 0 || maxTransfers > 3) {
+            maxTransfers = 2;
+        }
+
+        try {
+            List<ConnectingRouteDTO> connectingRoutes = connectingRouteService.findConnectingRoutes(fromLocationId,
+                    toLocationId, maxTransfers);
+
+            log.info("Returning {} connecting routes", connectingRoutes.size());
+            return ResponseEntity.ok(connectingRoutes);
+        } catch (Exception e) {
+            log.error("Error getting connecting routes from {} to {}", fromLocationId, toLocationId, e);
             return ResponseEntity.internalServerError().build();
         }
     }

@@ -32,6 +32,7 @@ import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.BusScheduleService;
+import com.perundhu.application.service.ConnectingRouteService;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -42,6 +43,9 @@ public class BusScheduleControllerTest {
 
         @Mock
         private BusScheduleService busScheduleService;
+
+        @Mock
+        private ConnectingRouteService connectingRouteService;
 
         @InjectMocks
         private BusScheduleController controller;
