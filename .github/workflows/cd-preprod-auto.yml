@@ -28,10 +28,10 @@ on:
         type: boolean
         default: false
 
-# Cancel in-progress deployments when new commits are pushed
+# Queue deployments instead of cancelling - let each deployment complete
 concurrency:
   group: preprod-deploy-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   GCP_PROJECT_ID: astute-strategy-406601
@@ -295,6 +295,17 @@ jobs:
         sleep 10
         
         chmod +x gradlew
+        
+        # First repair any failed migrations
+        ./gradlew flywayRepair \
+          -Pflyway.url="${FLYWAY_URL}" \
+          -Pflyway.user="${FLYWAY_USER}" \
+          -Pflyway.password="${FLYWAY_PASSWORD}" \
+          -Pflyway.locations="classpath:db/migration/mysql" \
+          --no-configuration-cache \
+          --info || true
+        
+        # Then run migrations
         ./gradlew flywayMigrate \
           -Pflyway.url="${FLYWAY_URL}" \
           -Pflyway.user="${FLYWAY_USER}" \
