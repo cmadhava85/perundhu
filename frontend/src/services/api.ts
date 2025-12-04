@@ -693,8 +693,14 @@ export const submitRouteContribution = async (data: RouteContribution) => {
 export const submitImageContribution = async (data: ImageContribution, file: File) => {
   try {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('data', JSON.stringify(data));
+    formData.append('image', file);
+    
+    // Append metadata as individual form fields instead of JSON
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined && value !== null) {
+        formData.append(key, String(value));
+      }
+    }
 
     const response = await api.post(
       `/api/v1/contributions/images`,

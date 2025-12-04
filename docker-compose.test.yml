@@ -1,0 +1,81 @@
+# Docker Compose - Test/CI Environment
+# Usage: docker-compose -f docker-compose.test.yml up -d
+
+version: '3.8'
+
+services:
+  # OCR Service (PaddleOCR) - Lightweight for testing
+  ocr-service:
+    build:
+      context: ./ocr-service
+      dockerfile: Dockerfile
+    container_name: perundhu-ocr-service-test
+    ports:
+      - "8081:8081"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8081
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - perundhu-test-network
+
+  # Java Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: perundhu-backend-test
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - OCR_SERVICE_ENABLED=true
+      - OCR_SERVICE_URL=http://ocr-service:8081
+      - OCR_SERVICE_TIMEOUT=30
+      # Test database (H2 in-memory or test PostgreSQL)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/perundhu_test
+      - SPRING_DATASOURCE_USERNAME=perundhu
+      - SPRING_DATASOURCE_PASSWORD=perundhu
+    depends_on:
+      ocr-service:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    networks:
+      - perundhu-test-network
+
+  # PostgreSQL for testing
+  db:
+    image: postgres:15-alpine
+    container_name: perundhu-db-test
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=perundhu_test
+      - POSTGRES_USER=perundhu
+      - POSTGRES_PASSWORD=perundhu
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U perundhu -d perundhu_test"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - perundhu-test-network
+
+networks:
+  perundhu-test-network:
+    name: perundhu-test-network
+    driver: bridge

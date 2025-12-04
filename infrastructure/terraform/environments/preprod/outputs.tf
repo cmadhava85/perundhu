@@ -49,6 +49,17 @@ output "backend_service_name" {
   value       = module.cloud_run.service_name
 }
 
+# OCR Service Outputs
+output "ocr_service_url" {
+  description = "OCR Service Cloud Run URL"
+  value       = module.ocr_service.service_url
+}
+
+output "ocr_service_name" {
+  description = "OCR Service Cloud Run name"
+  value       = module.ocr_service.service_name
+}
+
 # Storage Outputs
 output "images_bucket_name" {
   description = "Cloud Storage bucket for images"
@@ -129,6 +140,8 @@ output "application_config" {
     PUBSUB_TOPIC_IMAGE_PROCESSING = module.pubsub.image_processing_topic
     PUBSUB_TOPIC_NOTIFICATIONS = module.pubsub.notification_topic
     SERVICE_ACCOUNT_EMAIL      = module.iam.backend_service_account_email
+    OCR_SERVICE_URL            = module.ocr_service.service_url
+    OCR_SERVICE_ENABLED        = true
   }
   sensitive = true
 }

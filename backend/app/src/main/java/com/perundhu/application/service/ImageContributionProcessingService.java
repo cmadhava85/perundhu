@@ -263,15 +263,21 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             String userId,
             String errorMessage) {
 
+        // Truncate error message to fit database column (max 255 chars)
+        String truncatedError = errorMessage != null && errorMessage.length() > 200
+                ? errorMessage.substring(0, 200) + "..."
+                : errorMessage;
+
         return ImageContribution.builder()
                 .id(UUID.randomUUID().toString())
                 .userId(userId)
+                .imageUrl("failed-upload") // Placeholder for failed uploads
                 .description(metadata.getOrDefault("description", "Bus schedule image"))
                 .location(metadata.getOrDefault("location", ""))
                 .routeName(metadata.getOrDefault("routeName", ""))
                 .status("UPLOAD_FAILED")
                 .submissionDate(LocalDateTime.now())
-                .validationMessage("Upload failed: " + errorMessage)
+                .validationMessage("Upload failed: " + truncatedError)
                 .additionalNotes(String.format("Failed upload attempt - Original filename: %s, Size: %d bytes",
                         imageFile.getOriginalFilename(), imageFile.getSize()))
                 .build();

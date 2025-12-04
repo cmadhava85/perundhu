@@ -92,3 +92,8 @@ variable "container_image" {
   description = "Container image for Cloud Run deployment"
   type        = string
 }
+
+variable "ocr_service_image" {
+  description = "Container image for the OCR service (PaddleOCR)"
+  type        = string
+}

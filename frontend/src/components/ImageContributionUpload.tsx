@@ -363,57 +363,123 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '1.5rem' }}>
       {/* Enhanced Header */}
-      <div className="enhanced-header">
-        <div className="header-content">
-          <div className="flex items-center justify-center mb-6">
-            <h2 className="text-3xl font-bold text-gray-900 flex items-center">
-              <Camera className="w-8 h-8 mr-3 text-blue-600" />
-              {t('contribution.imageUpload.title', 'Image Upload')}
+      <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+            <Camera style={{ width: '2rem', height: '2rem', marginRight: '0.75rem', color: '#2563eb' }} />
+            <h2 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+              {t('contribution.imageUpload.title', 'Upload Bus Schedule Image')}
             </h2>
           </div>
-          <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+          <p style={{ 
+            color: '#4b5563', 
+            fontSize: '1rem', 
+            marginBottom: '2rem', 
+            maxWidth: '48rem', 
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            lineHeight: '1.6',
+            textAlign: 'center'
+          }}>
             {t('contribution.imageUpload.description', 
-              'Upload clear photos of bus schedules, timetables, or route information. We will process and extract the schedule data for you.')}
+              'Upload clear photos of bus schedules, timetables, or route information. Our AI will automatically extract the schedule data for you.')}
           </p>
           
           {/* Stats */}
-          <div className="header-stats">
-            <div className="stat-card">
-              <div className="stat-value text-blue-600">{uploadedImages.length}</div>
-              <div className="stat-label">Total Images</div>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            gap: '1.5rem', 
+            marginBottom: '2rem',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{
+              backgroundColor: 'white',
+              borderRadius: '0.75rem',
+              padding: '1rem',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              border: '1px solid #e5e7eb',
+              minWidth: '100px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '0.25rem', color: '#2563eb' }}>
+                {uploadedImages.length}
+              </div>
+              <div style={{ fontSize: '0.875rem', color: '#4b5563' }}>Total Images</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-value text-green-600">
+            <div style={{
+              backgroundColor: 'white',
+              borderRadius: '0.75rem',
+              padding: '1rem',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              border: '1px solid #e5e7eb',
+              minWidth: '100px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '0.25rem', color: '#059669' }}>
                 {uploadedImages.filter(img => img.status === 'PROCESSED').length}
               </div>
-              <div className="stat-label">Processed</div>
+              <div style={{ fontSize: '0.875rem', color: '#4b5563' }}>Processed</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-value text-yellow-600">
+            <div style={{
+              backgroundColor: 'white',
+              borderRadius: '0.75rem',
+              padding: '1rem',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              border: '1px solid #e5e7eb',
+              minWidth: '100px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '0.25rem', color: '#d97706' }}>
                 {uploadedImages.filter(img => img.processing).length}
               </div>
-              <div className="stat-label">Processing</div>
+              <div style={{ fontSize: '0.875rem', color: '#4b5563' }}>Processing</div>
             </div>
           </div>
           
           {/* Form Fields */}
-          <div className="form-fields-container">
-            <div className="form-field">
-              <label>
-                {t('contribution.imageUpload.description', 'Description')}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1rem',
+            maxWidth: '64rem',
+            margin: '0 auto 2rem auto'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ 
+                display: 'block', 
+                fontSize: '0.875rem', 
+                fontWeight: '600', 
+                color: '#374151'
+              }}>
+                {t('contribution.imageUpload.descriptionLabel', 'Description')}
               </label>
               <input
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g., Bus schedule at Kochi bus stand"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.5rem',
+                  fontSize: '0.875rem',
+                  transition: 'all 0.2s',
+                  boxSizing: 'border-box'
+                }}
               />
             </div>
             
-            <div className="form-field">
-              <label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ 
+                display: 'block', 
+                fontSize: '0.875rem', 
+                fontWeight: '600', 
+                color: '#374151'
+              }}>
                 {t('contribution.imageUpload.location', 'Location')}
               </label>
               <input
@@ -421,11 +487,25 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="e.g., Kochi, Ernakulam"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.5rem',
+                  fontSize: '0.875rem',
+                  transition: 'all 0.2s',
+                  boxSizing: 'border-box'
+                }}
               />
             </div>
             
-            <div className="form-field">
-              <label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ 
+                display: 'block', 
+                fontSize: '0.875rem', 
+                fontWeight: '600', 
+                color: '#374151'
+              }}>
                 {t('contribution.imageUpload.routeName', 'Route Name (Optional)')}
               </label>
               <input
@@ -433,6 +513,15 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                 value={routeName}
                 onChange={(e) => setRouteName(e.target.value)}
                 placeholder="e.g., Kochi-Alappuzha"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.5rem',
+                  fontSize: '0.875rem',
+                  transition: 'all 0.2s',
+                  boxSizing: 'border-box'
+                }}
               />
             </div>
           </div>
@@ -440,17 +529,31 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       </div>
 
       {/* Enhanced Upload Area */}
-      <div className="mb-8">
+      <div style={{ marginBottom: '2rem' }}>
         <div
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={() => document.getElementById('file-input')?.click()}
-          className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${
-            isDragActive 
-              ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg' 
-              : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
-          }`}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              document.getElementById('file-input')?.click();
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          style={{
+            border: '2px dashed',
+            borderColor: isDragActive ? '#3b82f6' : '#d1d5db',
+            borderRadius: '1rem',
+            padding: '3rem',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.3s',
+            backgroundColor: isDragActive ? '#eff6ff' : 'transparent',
+            transform: isDragActive ? 'scale(1.02)' : 'scale(1)',
+            boxShadow: isDragActive ? '0 10px 25px -5px rgba(0, 0, 0, 0.1)' : 'none'
+          }}
         >
           <input
             id="file-input"
@@ -458,25 +561,43 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             multiple
             accept="image/*"
             onChange={handleInputChange}
-            className="hidden"
+            style={{ display: 'none' }}
           />
-          <Upload className={`w-16 h-16 mx-auto mb-4 transition-colors ${
-            isDragActive ? 'text-blue-600' : 'text-gray-400'
-          }`} />
+          <Upload style={{
+            width: '4rem',
+            height: '4rem',
+            margin: '0 auto 1rem auto',
+            display: 'block',
+            color: isDragActive ? '#2563eb' : '#9ca3af'
+          }} />
           {isDragActive ? (
             <div>
-              <p className="text-blue-600 text-xl font-semibold mb-2">Drop the images here!</p>
-              <p className="text-blue-500">Release to upload your files</p>
+              <p style={{ 
+                color: '#2563eb', 
+                fontSize: '1.25rem', 
+                fontWeight: '600', 
+                marginBottom: '0.5rem' 
+              }}>
+                Drop the images here!
+              </p>
+              <p style={{ color: '#60a5fa', fontSize: '0.875rem' }}>
+                Release to upload your files
+              </p>
             </div>
           ) : (
             <div>
-              <p className="text-gray-700 text-xl font-semibold mb-2">
+              <p style={{ 
+                color: '#374151', 
+                fontSize: '1.125rem', 
+                fontWeight: '600', 
+                marginBottom: '0.5rem' 
+              }}>
                 Drag & drop bus schedule images here
               </p>
-              <p className="text-gray-600 mb-4">
+              <p style={{ color: '#6b7280', marginBottom: '1rem', fontSize: '0.875rem' }}>
                 or click to select files from your device
               </p>
-              <p className="text-sm text-gray-500">
+              <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
                 Supports JPEG, PNG, WebP, GIF up to 10MB each
               </p>
             </div>
@@ -484,41 +605,282 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         </div>
       </div>
 
+      {/* Uploaded Images Display */}
+      {uploadedImages.length > 0 && (
+        <div style={{ marginTop: '2rem' }}>
+          <div style={{ 
+            marginBottom: '1.5rem',
+            padding: '1rem',
+            backgroundColor: 'white',
+            borderRadius: '0.5rem',
+            border: '1px solid #e5e7eb'
+          }}>
+            <h3 style={{ 
+              fontSize: '1.125rem', 
+              fontWeight: '600', 
+              color: '#111827',
+              marginBottom: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              <FileImage style={{ width: '1.25rem', height: '1.25rem', color: '#2563eb' }} />
+              Uploaded Images ({uploadedImages.length})
+            </h3>
+          </div>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            {filteredAndSortedImages.map((image) => (
+              <div
+                key={image.id}
+                style={{
+                  backgroundColor: 'white',
+                  borderRadius: '0.75rem',
+                  border: '1px solid #e5e7eb',
+                  overflow: 'hidden',
+                  transition: 'all 0.3s',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)'
+                }}
+              >
+                <div style={{ position: 'relative', paddingTop: '75%', backgroundColor: '#f3f4f6' }}>
+                  <img
+                    src={image.preview}
+                    alt={image.file.name}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
+                
+                <div style={{ padding: '1rem' }}>
+                  <div style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#111827',
+                    marginBottom: '0.5rem',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    {image.file.name}
+                  </div>
+                  
+                  <div style={{ 
+                    fontSize: '0.75rem', 
+                    color: '#6b7280',
+                    marginBottom: '0.75rem'
+                  }}>
+                    {formatFileSize(image.file.size)}
+                  </div>
+                  
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.5rem',
+                    marginBottom: '0.75rem'
+                  }}>
+                    {getStatusIcon(image.status, image.processing, image.error)}
+                    <span style={{ fontSize: '0.75rem', color: '#4b5563' }}>
+                      {getStatusText(image.status, image.processing, image.error)}
+                    </span>
+                  </div>
+                  
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    {!image.contributionId && !image.processing && (
+                      <button
+                        onClick={() => submitImage(image.id)}
+                        style={{
+                          flex: 1,
+                          padding: '0.5rem',
+                          backgroundColor: '#2563eb',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '0.375rem',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        Upload
+                      </button>
+                    )}
+                    
+                    {image.error && image.contributionId && (
+                      <button
+                        onClick={() => retryProcessing(image.contributionId!, image.id)}
+                        style={{
+                          flex: 1,
+                          padding: '0.5rem',
+                          backgroundColor: '#d97706',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '0.375rem',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.25rem'
+                        }}
+                      >
+                        <RefreshCw style={{ width: '0.875rem', height: '0.875rem' }} />
+                        Retry
+                      </button>
+                    )}
+                    
+                    <button
+                      onClick={() => removeImageById(image.id)}
+                      style={{
+                        padding: '0.5rem',
+                        backgroundColor: '#f3f4f6',
+                        color: '#6b7280',
+                        border: 'none',
+                        borderRadius: '0.375rem',
+                        fontSize: '0.75rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Submit All Button */}
+          {uploadedImages.some(img => !img.contributionId && !img.processing) && (
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              marginTop: '2rem',
+              padding: '1.5rem',
+              background: 'linear-gradient(to right, #eff6ff, #eef2ff)',
+              borderRadius: '0.75rem',
+              border: '1px solid #bfdbfe'
+            }}>
+              <button
+                onClick={submitAllImages}
+                disabled={isSubmitting}
+                style={{
+                  padding: '1rem 2rem',
+                  backgroundColor: isSubmitting ? '#9ca3af' : '#2563eb',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '0.5rem',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Upload style={{ width: '1.25rem', height: '1.25rem' }} />
+                {isSubmitting ? 'Uploading...' : `Upload All (${uploadedImages.filter(img => !img.contributionId && !img.processing).length})`}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Processing Information */}
-      <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-100 border border-blue-200 rounded-xl p-6">
-        <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
-          <AlertCircle className="w-5 h-5 mr-2" />
+      <div style={{
+        marginTop: '2rem',
+        background: 'linear-gradient(to right, #eff6ff, #eef2ff)',
+        border: '1px solid #bfdbfe',
+        borderRadius: '0.75rem',
+        padding: '1.5rem'
+      }}>
+        <h4 style={{ 
+          fontWeight: '600', 
+          color: '#1e40af', 
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: '1rem'
+        }}>
+          <AlertCircle style={{ width: '1.25rem', height: '1.25rem', marginRight: '0.5rem' }} />
           AI Processing Information
         </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ul className="text-sm text-blue-800 space-y-2">
-            <li className="flex items-start">
-              <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
-              Automatic extraction of bus numbers, routes, and timing information
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
-              High-confidence extractions are processed automatically
-            </li>
-            <li className="flex items-start">
-              <Clock className="w-4 h-4 mr-2 mt-0.5 text-yellow-600" />
-              Medium/low confidence extractions are marked for manual review
-            </li>
-          </ul>
-          <ul className="text-sm text-blue-800 space-y-2">
-            <li className="flex items-start">
-              <Clock className="w-4 h-4 mr-2 mt-0.5 text-yellow-600" />
-              Processing typically takes 2-4 hours depending on image quality
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-green-600" />
-              You'll be notified when processing is complete
-            </li>
-            <li className="flex items-start">
-              <AlertCircle className="w-4 h-4 mr-2 mt-0.5 text-blue-600" />
-              Clear, well-lit images produce the best results
-            </li>
-          </ul>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          gap: '1rem'
+        }}>
+          <div>
+            <ul style={{ fontSize: '0.875rem', color: '#1e40af', listStyle: 'none', padding: 0, margin: 0 }}>
+              <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                <CheckCircle style={{ 
+                  width: '1rem', 
+                  height: '1rem', 
+                  marginRight: '0.5rem', 
+                  marginTop: '0.125rem',
+                  color: '#059669',
+                  flexShrink: 0
+                }} />
+                <span>Automatic extraction of bus numbers, routes, and timing information</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                <CheckCircle style={{ 
+                  width: '1rem', 
+                  height: '1rem', 
+                  marginRight: '0.5rem', 
+                  marginTop: '0.125rem',
+                  color: '#059669',
+                  flexShrink: 0
+                }} />
+                <span>High-confidence extractions are processed automatically</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                <Clock style={{ 
+                  width: '1rem', 
+                  height: '1rem', 
+                  marginRight: '0.5rem', 
+                  marginTop: '0.125rem',
+                  color: '#d97706',
+                  flexShrink: 0
+                }} />
+                <span>Processing typically takes 2-4 hours depending on image quality</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                <CheckCircle style={{ 
+                  width: '1rem', 
+                  height: '1rem', 
+                  marginRight: '0.5rem', 
+                  marginTop: '0.125rem',
+                  color: '#059669',
+                  flexShrink: 0
+                }} />
+                <span>You'll be notified when processing is complete</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start' }}>
+                <AlertCircle style={{ 
+                  width: '1rem', 
+                  height: '1rem', 
+                  marginRight: '0.5rem', 
+                  marginTop: '0.125rem',
+                  color: '#2563eb',
+                  flexShrink: 0
+                }} />
+                <span>Clear, well-lit images produce the best results</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

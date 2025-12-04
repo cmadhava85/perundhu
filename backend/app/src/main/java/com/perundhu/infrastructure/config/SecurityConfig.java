@@ -50,6 +50,7 @@ public class SecurityConfig {
             .requestMatchers("/api/v1/buses/**").permitAll()
             .requestMatchers("/api/v1/stops/**").permitAll()
             .requestMatchers("/api/v1/locations/**").permitAll()
+            .requestMatchers("/api/images/**").permitAll() // Allow public access to images
             .requestMatchers("/actuator/health").permitAll()
             // Protected endpoints - user management and admin
             .requestMatchers("/api/v1/contributions/manage/**").authenticated()

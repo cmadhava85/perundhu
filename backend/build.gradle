@@ -433,3 +433,8 @@ test {
     // Enable tests so we can run and fix BusTrackingServiceImplTest
     enabled = true
 }
+
+// Configure bootRun to set JNA library path for Tesseract
+bootRun {
+    systemProperty 'jna.library.path', '/opt/homebrew/lib'
+}

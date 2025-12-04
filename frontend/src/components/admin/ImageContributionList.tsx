@@ -78,7 +78,10 @@ const ImageContributionList: React.FC = () => {
 
   const openImagePreview = (imageUrl: string | undefined) => {
     if (imageUrl) {
+      console.log('Opening image preview for URL:', imageUrl);
       setPreviewImage(imageUrl);
+    } else {
+      console.error('No image URL provided');
     }
   };
 
@@ -136,7 +139,11 @@ const ImageContributionList: React.FC = () => {
                         src={contribution.imageUrl} 
                         alt="Bus" 
                         className="thumbnail"
-                        onClick={() => openImagePreview(contribution.imageUrl)} 
+                        onClick={() => openImagePreview(contribution.imageUrl)}
+                        onError={(e) => {
+                          console.error('Failed to load image:', contribution.imageUrl);
+                          e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><text x="10" y="30" fill="red">Error</text></svg>';
+                        }}
                       />
                     )}
                   </div>
@@ -153,6 +160,13 @@ const ImageContributionList: React.FC = () => {
                 </td>
                 <td>
                   <div className="action-buttons">
+                    <button 
+                      className="btn btn-view"
+                      onClick={() => openImagePreview(contribution.imageUrl)}
+                      title={t('admin.button.view', 'View Image')}
+                    >
+                      👁️
+                    </button>
                     {contribution.status === 'PENDING' && (
                       <>
                         <button 
@@ -202,7 +216,13 @@ const ImageContributionList: React.FC = () => {
       {previewImage && (
         <div className="modal-overlay" onClick={closeImagePreview}>
           <div className="image-preview" onClick={e => e.stopPropagation()}>
-            <img src={previewImage} alt="Preview" />
+            <img 
+              src={previewImage} 
+              alt="Preview" 
+              onError={(e) => {
+                console.error('Failed to load preview image:', previewImage);
+              }}
+            />
             <button className="close-button" onClick={closeImagePreview}>
               &times;
             </button>

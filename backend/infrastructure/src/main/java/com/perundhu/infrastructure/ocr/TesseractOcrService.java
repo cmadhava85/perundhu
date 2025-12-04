@@ -60,9 +60,15 @@ public class TesseractOcrService {
     }
 
     tesseract.setDatapath(tessDataPath);
-    tesseract.setLanguage("tam+eng"); // Tamil + English
-    tesseract.setPageSegMode(1); // Automatic page segmentation with OSD
+    // Prioritize English over Tamil for better accuracy on mixed-script images
+    tesseract.setLanguage("eng+tam"); // English first, then Tamil
+    tesseract.setPageSegMode(6); // Assume uniform block of text
     tesseract.setOcrEngineMode(1); // Neural nets LSTM engine only
+
+    // Configure to improve number and letter recognition
+    tesseract.setVariable("tessedit_char_whitelist",
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-!() /\n" +
+            "அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனஜஷஸஹக்ஷ்ாிீுூெேைொோௌ்ௐ");
   }
 
   /**
@@ -78,6 +84,15 @@ public class TesseractOcrService {
       String rawText = tesseract.doOCR(preprocessedImage);
       logger.info("Raw OCR text extracted: {} characters", rawText.length());
       logger.debug("Raw text: {}", rawText);
+
+      // Try to detect origin from header if not provided
+      if (originLocation == null || "Unknown".equals(originLocation)) {
+        String detectedOrigin = detectOriginFromHeader(rawText);
+        if (detectedOrigin != null) {
+          originLocation = detectedOrigin;
+          logger.info("Detected origin from header: {}", originLocation);
+        }
+      }
 
       // Parse the extracted text to structured timing data
       TimingExtractionResult result = parseTimingBoard(rawText, originLocation);
@@ -109,12 +124,17 @@ public class TesseractOcrService {
    * Preprocess image for better OCR accuracy
    */
   private BufferedImage preprocessImage(BufferedImage original) {
-    // Resize if too large (maintain aspect ratio)
-    int maxDimension = 2000;
+    // Resize to optimal size for OCR (larger is better for text recognition)
+    int maxDimension = 3000; // Increased from 2000
     BufferedImage resized = original;
     if (original.getWidth() > maxDimension || original.getHeight() > maxDimension) {
       resized = Scalr.resize(original, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_WIDTH,
           maxDimension, maxDimension, Scalr.OP_ANTIALIAS);
+    } else if (original.getWidth() < 1000 || original.getHeight() < 1000) {
+      // Upscale small images for better OCR
+      int scaleFactor = 2;
+      resized = Scalr.resize(original, Scalr.Method.QUALITY,
+          original.getWidth() * scaleFactor, original.getHeight() * scaleFactor);
     }
 
     // Convert to grayscale
@@ -124,13 +144,83 @@ public class TesseractOcrService {
     g.drawImage(resized, 0, 0, null);
     g.dispose();
 
-    // Increase contrast (simple approach)
-    return enhanceContrast(grayscale);
+    // Apply adaptive binarization for better text extraction
+    return applyAdaptiveBinarization(grayscale);
   }
 
   /**
-   * Enhance image contrast for better OCR
+   * Apply adaptive binarization (Otsu's method approximation) for better text
+   * extraction
+   * This converts grayscale image to pure black and white, improving OCR accuracy
    */
+  private BufferedImage applyAdaptiveBinarization(BufferedImage grayscale) {
+    int width = grayscale.getWidth();
+    int height = grayscale.getHeight();
+
+    // Calculate histogram
+    int[] histogram = new int[256];
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int pixel = grayscale.getRGB(x, y) & 0xFF;
+        histogram[pixel]++;
+      }
+    }
+
+    // Calculate optimal threshold using Otsu's method
+    int total = width * height;
+    float sum = 0;
+    for (int i = 0; i < 256; i++) {
+      sum += i * histogram[i];
+    }
+
+    float sumB = 0;
+    int wB = 0;
+    int wF = 0;
+    float varMax = 0;
+    int threshold = 0;
+
+    for (int t = 0; t < 256; t++) {
+      wB += histogram[t];
+      if (wB == 0)
+        continue;
+
+      wF = total - wB;
+      if (wF == 0)
+        break;
+
+      sumB += (float) (t * histogram[t]);
+
+      float mB = sumB / wB;
+      float mF = (sum - sumB) / wF;
+
+      float varBetween = (float) wB * (float) wF * (mB - mF) * (mB - mF);
+
+      if (varBetween > varMax) {
+        varMax = varBetween;
+        threshold = t;
+      }
+    }
+
+    logger.debug("Calculated Otsu threshold: {}", threshold);
+
+    // Apply threshold to create binary image
+    BufferedImage binary = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int pixel = grayscale.getRGB(x, y) & 0xFF;
+        int newPixel = pixel > threshold ? 0xFFFFFF : 0x000000;
+        binary.setRGB(x, y, newPixel);
+      }
+    }
+
+    return binary;
+  }
+
+  /**
+   * Enhance image contrast for better OCR (deprecated - using binarization
+   * instead)
+   */
+  @Deprecated
   private BufferedImage enhanceContrast(BufferedImage image) {
     // Simple contrast enhancement by adjusting brightness
     for (int y = 0; y < image.getHeight(); y++) {
@@ -147,6 +237,138 @@ public class TesseractOcrService {
       }
     }
     return image;
+  }
+
+  // Tamil Nadu location name mapping: Tamil -> English canonical name
+  private static final java.util.Map<String, String> TAMIL_TO_ENGLISH_LOCATIONS = java.util.Map.ofEntries(
+      java.util.Map.entry("ராமேஸ்வரம்", "RAMESHWARAM"),
+      java.util.Map.entry("ராமேஸ்வரம", "RAMESHWARAM"),
+      java.util.Map.entry("ரமேஸ்வரம்", "RAMESHWARAM"),
+      java.util.Map.entry("சென்னை", "CHENNAI"),
+      java.util.Map.entry("மதுரை", "MADURAI"),
+      java.util.Map.entry("கோயம்புத்தூர்", "COIMBATORE"),
+      java.util.Map.entry("திருச்சிராப்பள்ளி", "TRICHY"),
+      java.util.Map.entry("திருச்சி", "TRICHY"),
+      java.util.Map.entry("சேலம்", "SALEM"),
+      java.util.Map.entry("திருநெல்வேலி", "TIRUNELVELI"),
+      java.util.Map.entry("கன்னியாகுமரி", "KANYAKUMARI"),
+      java.util.Map.entry("தஞ்சாவூர்", "THANJAVUR"),
+      java.util.Map.entry("ஈரோடு", "ERODE"),
+      java.util.Map.entry("வேலூர்", "VELLORE"),
+      java.util.Map.entry("திருப்பூர்", "TIRUPPUR"),
+      java.util.Map.entry("கரூர்", "KARUR"),
+      java.util.Map.entry("கும்பகோணம்", "KUMBAKONAM"),
+      java.util.Map.entry("தூத்துக்குடி", "THOOTHUKUDI"),
+      java.util.Map.entry("பட்டுக்கோட்டை", "PATTUKKOTTAI"));
+
+  // Common English location names and their variations
+  private static final String[] KNOWN_ENGLISH_LOCATIONS = {
+      "RAMESHWARAM", "RAMESWARAM", "RAMANATHAPURAM",
+      "CHENNAI", "MADRAS",
+      "MADURAI",
+      "COIMBATORE", "KOVAI",
+      "TRICHY", "TIRUCHIRAPPALLI", "TIRUCHIRAPALLI",
+      "SALEM",
+      "TIRUNELVELI", "NELLAI",
+      "KANYAKUMARI", "CAPE COMORIN",
+      "THANJAVUR", "TANJORE",
+      "ERODE",
+      "VELLORE",
+      "TIRUPPUR",
+      "KARUR",
+      "KUMBAKONAM",
+      "THOOTHUKUDI", "TUTICORIN",
+      "DINDIGUL",
+      "PATTUKKOTTAI", "PATTUKOTTAI",
+      "BENGALURU", "BANGALORE"
+  };
+
+  /**
+   * Detect origin location from the header/title area of the timing board
+   * Focuses on English text for better reliability
+   */
+  private String detectOriginFromHeader(String rawText) {
+    if (rawText == null || rawText.trim().isEmpty()) {
+      return null;
+    }
+
+    // Get first 10 lines (header area) - location names usually appear early
+    String[] lines = rawText.split("\\r?\\n");
+    int linesToCheck = Math.min(10, lines.length);
+
+    // First, try to find English location names (more reliable)
+    for (int i = 0; i < linesToCheck; i++) {
+      String line = lines[i].trim().toUpperCase();
+
+      // Skip empty lines and very short lines
+      if (line.length() < 4) {
+        continue;
+      }
+
+      // Check for English location names
+      for (String location : KNOWN_ENGLISH_LOCATIONS) {
+        if (line.contains(location)) {
+          String normalized = normalizeLocationName(location);
+          logger.info("Found origin '{}' (normalized: {}) in header line: {}", location, normalized, line);
+          return normalized;
+        }
+      }
+    }
+
+    // If no English name found, try Tamil names and map to English
+    for (int i = 0; i < linesToCheck; i++) {
+      String line = lines[i].trim();
+
+      for (java.util.Map.Entry<String, String> entry : TAMIL_TO_ENGLISH_LOCATIONS.entrySet()) {
+        if (line.contains(entry.getKey())) {
+          logger.info("Found Tamil origin '{}' mapped to '{}' in header", entry.getKey(), entry.getValue());
+          return entry.getValue();
+        }
+      }
+    }
+
+    logger.debug("No origin location detected in header");
+    return null;
+  }
+
+  /**
+   * Normalize location name to canonical English form
+   * Handles common spelling variations
+   */
+  private String normalizeLocationName(String location) {
+    if (location == null) {
+      return null;
+    }
+
+    String upper = location.trim().toUpperCase();
+
+    // Normalize common variations to standard names
+    if (upper.contains("RAMESWAR") || upper.contains("RAMESHWAR")) {
+      return "RAMESHWARAM";
+    }
+    if (upper.equals("MADRAS")) {
+      return "CHENNAI";
+    }
+    if (upper.equals("KOVAI")) {
+      return "COIMBATORE";
+    }
+    if (upper.contains("TIRUCHIRAP") || upper.equals("TRICHY")) {
+      return "TRICHY";
+    }
+    if (upper.equals("TUTICORIN")) {
+      return "THOOTHUKUDI";
+    }
+    if (upper.equals("TANJORE")) {
+      return "THANJAVUR";
+    }
+    if (upper.equals("BANGALORE")) {
+      return "BENGALURU";
+    }
+    if (upper.contains("PATTUKOT")) {
+      return "PATTUKKOTTAI";
+    }
+
+    return upper;
   }
 
   /**
@@ -185,11 +407,40 @@ public class TesseractOcrService {
       }
 
       // Check if line contains a destination name (letters, not just times)
-      boolean hasLetters = line.matches(".*[a-zA-Z\\p{Tamil}]+.*");
+      // Tamil Unicode range: \u0B80-\u0BFF
+      boolean hasLetters = line.matches(".*[a-zA-Z\\u0B80-\\u0BFF]+.*");
       boolean hasTimes = TIME_PATTERN.matcher(line).find();
 
-      if (hasLetters && !hasTimes) {
-        // This is likely a destination name
+      if (hasLetters && hasTimes) {
+        // Line has both destination and times (common format in bus timing boards)
+        // Example: "CHENNAI TRICHY 17:00" or "COIMBATORE MADURAI 06:10 11:00"
+
+        // Save previous destination if exists
+        if (currentDestination != null) {
+          ExtractedTiming timing = new ExtractedTiming();
+          timing.setDestination(currentDestination);
+          timing.setMorningTimings(new ArrayList<>(currentMorning));
+          timing.setAfternoonTimings(new ArrayList<>(currentAfternoon));
+          timing.setNightTimings(new ArrayList<>(currentNight));
+          result.getTimings().add(timing);
+
+          currentMorning.clear();
+          currentAfternoon.clear();
+          currentNight.clear();
+        }
+
+        // Extract destination (text before times) and times
+        String lineBeforeTimes = line.replaceAll("\\d{1,2}:\\d{2}", "").trim();
+        currentDestination = cleanDestinationName(lineBeforeTimes);
+
+        // Extract and categorize times from this line
+        List<String> times = extractTimes(line);
+        for (String time : times) {
+          inferTimingCategory(time, currentMorning, currentAfternoon, currentNight);
+        }
+
+      } else if (hasLetters && !hasTimes) {
+        // This is likely a destination name only
         // Save previous destination if exists
         if (currentDestination != null) {
           ExtractedTiming timing = new ExtractedTiming();
@@ -207,7 +458,7 @@ public class TesseractOcrService {
         currentDestination = cleanDestinationName(line);
 
       } else if (hasTimes) {
-        // This line contains timing information
+        // This line contains timing information only
         List<String> times = extractTimes(line);
 
         // Add times to appropriate category
