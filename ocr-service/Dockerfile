@@ -29,9 +29,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Download PaddleOCR models at build time (Tamil + English)
-# Models are cached in /root/.paddleocr/
-RUN python -c "from paddleocr import PaddleOCR; PaddleOCR(lang='ta')"
+# Set explicit model directory and download PaddleOCR models at build time
+ENV PADDLEOCR_HOME=/opt/paddleocr_models
+RUN mkdir -p "$PADDLEOCR_HOME" && \
+    python -c "import os; os.environ['PADDLEOCR_HOME']='/opt/paddleocr_models'; from paddleocr import PaddleOCR; PaddleOCR(lang='ta', show_log=True)" && \
+    ls -la /opt/paddleocr_models/ || echo "Models may be in different location" && \
+    ls -la /root/.paddleocr/ 2>/dev/null || echo "No models in /root/.paddleocr"
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime - Minimal image with only runtime dependencies
@@ -41,9 +44,7 @@ FROM python:3.11-slim AS runtime
 WORKDIR /app
 
 # Install only runtime system dependencies (no build tools)
-# Use retry logic for apt-get to handle transient network failures
-# libgl1 (formerly libgl1-mesa-glx) needed for OpenCV
-# libglib2.0-0 needed for GLib, libgomp1 for OpenMP
+# libgl1 needed for OpenCV, libglib2.0-0 for GLib, libgomp1 for OpenMP
 RUN rm -rf /var/lib/apt/lists/* && \
     apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends \
@@ -61,12 +62,12 @@ RUN rm -rf /var/lib/apt/lists/* && \
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Create non-root user for security BEFORE copying models
+# Create non-root user for security
 RUN useradd --create-home --shell /bin/bash appuser
 
-# Copy pre-downloaded PaddleOCR models to appuser's home directory
-# PaddleOCR looks for models in ~/.paddleocr/
-COPY --from=builder /root/.paddleocr /home/appuser/.paddleocr
+# Copy pre-downloaded PaddleOCR models
+# Try both possible locations
+COPY --from=builder /opt/paddleocr_models /home/appuser/.paddleocr
 
 # Copy application code
 COPY main.py .
@@ -76,14 +77,15 @@ RUN chown -R appuser:appuser /app /home/appuser/.paddleocr
 
 USER appuser
 
-# Set HOME explicitly for PaddleOCR to find models
+# Set HOME and PADDLEOCR_HOME for PaddleOCR to find models
 ENV HOME=/home/appuser
+ENV PADDLEOCR_HOME=/home/appuser/.paddleocr
 
 # Expose port
 EXPOSE 8081
 
 # Health check with longer start period for model loading
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \
     CMD curl -f http://localhost:8081/health || exit 1
 
 # Run the service
