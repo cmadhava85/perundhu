@@ -415,8 +415,9 @@ jobs:
     - name: Get OCR Service URL
       id: ocr-url
       run: |
-        OCR_URL=$(gcloud run services describe perundhu-ocr-service-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "")
+        OCR_URL=$(gcloud run services describe perundhu-ocr-service-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-ocr-service-preprod-1032721240281.asia-south1.run.app")
         echo "url=$OCR_URL" >> $GITHUB_OUTPUT
+        echo "OCR Service URL: $OCR_URL"
     
     - name: Deploy Backend to Cloud Run
       run: |
@@ -425,7 +426,7 @@ jobs:
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,MYSQL_USERNAME=perundhu_user,OCR_SERVICE_ENABLED=true,OCR_SERVICE_URL=${{ steps.ocr-url.outputs.url }},OCR_SERVICE_TIMEOUT=60" \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,MYSQL_USERNAME=perundhu_user,OCR_SERVICE_ENABLED=true,OCR_SERVICE_URL=${{ steps.ocr-url.outputs.url }},OCR_SERVICE_TIMEOUT=60,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
           --set-secrets="MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=preprod-jwt-secret:latest" \
           --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
           --memory 1Gi \
