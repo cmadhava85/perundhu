@@ -24,7 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 @Configuration
 @EnableWebSecurity
-@Profile("!prod") // Only active in non-production environments (dev, test)
+@Profile("!prod") // Only active in non-production environments (dev, test, preprod)
 public class SecurityConfig {
 
   @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri:}")
@@ -32,6 +32,9 @@ public class SecurityConfig {
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:}")
   private String issuerUri;
+
+  @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:4173}")
+  private String allowedOrigins;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
@@ -100,12 +103,9 @@ public class SecurityConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
 
-    // Allow all origins for development
-    configuration.setAllowedOriginPatterns(List.of(
-        "https://perundhu.com",
-        "https://*.perundhu.com",
-        "https://localhost:*",
-        "http://localhost:*"));
+    // Parse allowed origins from configuration
+    List<String> origins = List.of(allowedOrigins.split(","));
+    configuration.setAllowedOriginPatterns(origins);
 
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
     configuration.setAllowedHeaders(List.of(
