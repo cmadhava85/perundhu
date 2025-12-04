@@ -39,13 +39,13 @@ WORKDIR /app
 
 # Install only runtime system dependencies (no build tools)
 # Use retry logic for apt-get to handle transient network failures
-# libgl1-mesa-glx, libglib2.0-0 needed for OpenCV (used by PaddleOCR)
-# libgomp1 needed for OpenMP parallel processing
+# libgl1 (formerly libgl1-mesa-glx) needed for OpenCV
+# libglib2.0-0 needed for GLib, libgomp1 for OpenMP
 RUN rm -rf /var/lib/apt/lists/* && \
     apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends \
     curl \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     libgomp1 \
     libsm6 \
