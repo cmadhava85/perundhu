@@ -14,12 +14,13 @@ export function useBusSearchEnhanced() {
   const [fromLocation, setFromLocation] = React.useState<Location | null>(null);
   const [toLocation, setToLocation] = React.useState<Location | null>(null);
   const [selectedBusId, setSelectedBusId] = React.useState<number | null>(null);
+  const [hasSearched, setHasSearched] = React.useState(false);
 
   // Use React Query hooks
   const busSearchQuery = useReactQueryBusSearch({
     fromLocationId: fromLocation?.id ?? null,
     toLocationId: toLocation?.id ?? null,
-    enabled: !!fromLocation && !!toLocation,
+    enabled: !!fromLocation && !!toLocation && hasSearched,
   });
 
   const busStopsQuery = useBusStops(
@@ -29,10 +30,11 @@ export function useBusSearchEnhanced() {
     !!selectedBusId
   );
 
+  // Only fetch connecting routes after search has been performed
   const connectingRoutesQuery = useConnectingRoutes(
     fromLocation?.id ?? null,
     toLocation?.id ?? null,
-    !!fromLocation && !!toLocation
+    !!fromLocation && !!toLocation && hasSearched
   );
 
   // Fetch stops for all buses in search results
@@ -130,6 +132,9 @@ export function useBusSearchEnhanced() {
     async (from: Location, to: Location) => {
       console.log(`🔍 Search triggered for: ${from.name} → ${to.name}`);
       
+      // Mark that search has been initiated
+      setHasSearched(true);
+      
       // Use functional updates to avoid stale closure
       let shouldRefetch = false;
       setFromLocation(prevFrom => {
@@ -156,6 +161,7 @@ export function useBusSearchEnhanced() {
     setFromLocation(null);
     setToLocation(null);
     setSelectedBusId(null);
+    setHasSearched(false);
   }, []);
 
   return {
