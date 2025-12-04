@@ -28,3 +28,29 @@ dist-ssr
 
 # Ignore Gradle build output directory
 build
+# Ignore nohup output files
+nohup.out
+**/nohup.out
+
+# Ignore test images
+**/test_image.png
+**/tamil_test.png
+
+# Ignore uploaded files (managed separately)
+**/uploads/images/
+
+# Terraform state and sensitive files
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+!*.tfvars.example
+
+# Python virtual environments
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Cloud SQL proxy
+cloud_sql_proxy

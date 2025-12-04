@@ -38,7 +38,7 @@ variable "db_version" {
 variable "db_instance_tier" {
   description = "Database instance tier"
   type        = string
-  default     = "db-f1-micro"
+  default     = "db-f1-micro"  # Smallest/cheapest tier for dev
 }
 
 variable "notification_email" {
@@ -104,4 +104,16 @@ variable "monthly_budget_amount" {
   description = "Monthly budget amount in USD for alerts"
   type        = number
   default     = 50  # $50/month for preprod
+}
+
+variable "enable_redis" {
+  description = "Enable Redis cache (disable to save ~$25/month for dev)"
+  type        = bool
+  default     = false  # Disabled by default for cost savings
+}
+
+variable "enable_high_availability" {
+  description = "Enable high availability features (disable for dev to save costs)"
+  type        = bool
+  default     = false
 }

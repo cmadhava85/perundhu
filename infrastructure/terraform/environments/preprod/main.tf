@@ -111,9 +111,10 @@ module "storage" {
   depends_on = [google_project_service.required_apis]
 }
 
-# Redis for caching
+# Redis for caching - OPTIONAL for preprod (set enable_redis = false to save ~$25/month)
 module "redis" {
   source = "../../modules/redis"
+  count  = var.enable_redis ? 1 : 0
 
   project_id        = var.project_id
   region            = var.region
@@ -121,6 +122,10 @@ module "redis" {
   app_name          = var.app_name
   vpc_network       = module.vpc.network_name
   authorized_network = module.vpc.network_self_link
+  
+  # Use smallest Redis for dev (1GB)
+  memory_size_gb = 1
+  tier           = "BASIC"  # No HA for preprod
 
   depends_on = [module.vpc]
 }
@@ -133,9 +138,9 @@ module "secrets" {
   environment  = var.environment
   app_name     = var.app_name
   db_password  = module.database.db_password
-  redis_auth   = module.redis.redis_auth_string
+  redis_auth   = var.enable_redis ? module.redis[0].redis_auth_string : ""
 
-  depends_on = [module.database, module.redis]
+  depends_on = [module.database]
 }
 
 # IAM and Service Accounts
@@ -163,11 +168,17 @@ module "cloud_run" {
   db_name                   = module.database.db_name
   db_user                   = module.database.db_user
   storage_bucket_name       = module.storage.images_bucket_name
-  redis_host                = module.redis.redis_host
-  redis_port                = module.redis.redis_port
-  # Backend uses default GCP Cloud Run URL
+  # Redis is optional for preprod - use empty string if disabled
+  redis_host                = var.enable_redis ? module.redis[0].redis_host : ""
+  redis_port                = var.enable_redis ? module.redis[0].redis_port : 6379
+  
+  # Cost optimization: Scale to zero, minimal resources
+  min_instances = 0          # Scale to zero when idle
+  max_instances = 2          # Low max for dev
+  cpu_limit     = "1000m"    # 1 CPU
+  memory_limit  = "512Mi"    # Minimal memory for dev
 
-  depends_on = [module.vpc, module.database, module.storage, module.redis, module.iam]
+  depends_on = [module.vpc, module.database, module.storage, module.iam]
 }
 
 # OCR Service (PaddleOCR) for text extraction from images
@@ -217,4 +228,16 @@ module "budget" {
   app_name           = var.app_name
   budget_amount      = var.monthly_budget_amount
   notification_email = var.notification_email
+}
+
+# Logging optimization - reduce retention to minimize costs
+module "logging" {
+  source = "../../modules/logging"
+
+  project_id              = var.project_id
+  environment             = var.environment
+  app_name                = var.app_name
+  log_retention_days      = 7     # Minimum retention for dev
+  exclude_debug_logs      = true  # Don't store debug logs
+  exclude_health_check_logs = true  # Don't store health check spam
 }
