@@ -1,22 +1,30 @@
 name: CD - Deploy to Production
 
+# Production deployments are triggered ONLY by:
+# 1. Published releases (GitHub Releases)
+# 2. Manual workflow dispatch with version tag
+# NOT triggered by regular commits to main/master
 on:
   release:
     types: [published]
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version tag to deploy'
+        description: 'Version tag to deploy (e.g., v1.2.3)'
         required: true
         type: string
-  push:
-    branches: [ main, master ]
-    tags:
-      - 'v*'
-    paths-ignore:
-      - 'infrastructure/terraform/**'
-      - '.github/workflows/terraform.yml'
-      - '**.md'
+      deploy_frontend:
+        description: 'Deploy Frontend'
+        type: boolean
+        default: true
+      deploy_backend:
+        description: 'Deploy Backend'
+        type: boolean
+        default: true
+      deploy_ocr:
+        description: 'Deploy OCR Service'
+        type: boolean
+        default: true
 
 # Prevent concurrent production deployments
 concurrency:
