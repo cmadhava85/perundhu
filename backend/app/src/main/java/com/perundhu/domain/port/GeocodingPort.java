@@ -8,43 +8,43 @@ import java.util.Optional;
  */
 public interface GeocodingPort {
 
+  /**
+   * Search for a location in Tamil Nadu
+   * 
+   * @param query The location name to search for
+   * @return Optional result with location details
+   */
+  Optional<GeocodingResult> searchTamilNadu(String query);
+
+  /**
+   * Get the current cache size
+   * 
+   * @return Number of cached entries
+   */
+  int getCacheSize();
+
+  /**
+   * Result from a geocoding lookup
+   */
+  interface GeocodingResult {
     /**
-     * Search for a location in Tamil Nadu
-     * 
-     * @param query The location name to search for
-     * @return Optional result with location details
+     * Get the canonical/standardized name
      */
-    Optional<GeocodingResult> searchTamilNadu(String query);
+    String getCanonicalName();
 
     /**
-     * Get the current cache size
-     * 
-     * @return Number of cached entries
+     * Get the latitude
      */
-    int getCacheSize();
+    double getLatitude();
 
     /**
-     * Result from a geocoding lookup
+     * Get the longitude
      */
-    interface GeocodingResult {
-        /**
-         * Get the canonical/standardized name
-         */
-        String getCanonicalName();
+    double getLongitude();
 
-        /**
-         * Get the latitude
-         */
-        double getLatitude();
-
-        /**
-         * Get the longitude
-         */
-        double getLongitude();
-
-        /**
-         * Get the display name (full address)
-         */
-        String getDisplayName();
-    }
+    /**
+     * Get the display name (full address)
+     */
+    String getDisplayName();
+  }
 }

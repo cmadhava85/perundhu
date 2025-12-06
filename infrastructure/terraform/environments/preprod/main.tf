@@ -181,29 +181,6 @@ module "cloud_run" {
   depends_on = [module.vpc, module.database, module.storage, module.iam]
 }
 
-# OCR Service (PaddleOCR) for text extraction from images
-module "ocr_service" {
-  source = "../../modules/ocr_service"
-
-  project_id                    = var.project_id
-  region                        = var.region
-  environment                   = var.environment
-  app_name                      = var.app_name
-  container_image               = var.ocr_service_image
-  service_account_email         = module.iam.backend_service_account_email
-  backend_service_account_email = module.iam.backend_service_account_email
-  
-  # Cost optimization: Use lower resources for preprod
-  cpu_limit      = "1"       # Reduced from 2 for cost savings
-  memory_limit   = "2Gi"     # Reduced from 4Gi (test if sufficient)
-  min_instances  = 0         # Scale to zero when idle
-  max_instances  = 3         # Lower max for preprod
-  concurrency    = 10
-  cpu_throttling = true      # Only charge for CPU during requests
-
-  depends_on = [module.iam]
-}
-
 # Monitoring and Alerting
 module "monitoring" {
   source = "../../modules/monitoring"

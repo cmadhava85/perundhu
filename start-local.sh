@@ -6,7 +6,8 @@
 # This script starts/restarts all services for local development:
 # - Backend (Spring Boot on port 8080)
 # - Frontend (Vite on port 5173)
-# - OCR Service (Python on port 8081)
+# 
+# Note: OCR processing is handled by Gemini Vision AI (no separate service needed)
 # =============================================================================
 
 # Don't exit on error - we want to continue even if some commands fail
@@ -23,14 +24,12 @@ NC='\033[0m' # No Color
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKEND_DIR="$PROJECT_ROOT/backend"
 FRONTEND_DIR="$PROJECT_ROOT/frontend"
-OCR_DIR="$PROJECT_ROOT/ocr-service"
 LOGS_DIR="$PROJECT_ROOT/logs"
 PID_DIR="$PROJECT_ROOT/.pids"
 
 # Ports
 BACKEND_PORT=8080
 FRONTEND_PORT=5173
-OCR_PORT=8081
 
 # Create directories if they don't exist
 mkdir -p "$LOGS_DIR"
@@ -115,38 +114,8 @@ stop_all_services() {
     kill_pattern "esbuild"
     kill_port $FRONTEND_PORT
     
-    # Kill OCR service
-    kill_pattern "ocr.*service"
-    kill_pattern "paddleocr"
-    kill_port $OCR_PORT
-    
     sleep 2
     log_success "All services stopped"
-}
-
-start_ocr_service() {
-    log_info "Starting OCR Service on port $OCR_PORT..."
-    
-    if [ -d "$OCR_DIR" ]; then
-        (
-            cd "$OCR_DIR"
-            
-            # Check if virtual environment exists
-            if [ -d "venv" ]; then
-                source venv/bin/activate
-            elif [ -d ".venv" ]; then
-                source .venv/bin/activate
-            fi
-            
-            # Start OCR service with nohup and redirect all output
-            nohup python app.py > "$LOGS_DIR/ocr-service.log" 2>&1 &
-            echo $! > "$PID_DIR/ocr.pid"
-        )
-        log_info "OCR Service starting... (logs: $LOGS_DIR/ocr-service.log)"
-    else
-        log_warning "OCR Service directory not found at $OCR_DIR - skipping"
-        log_info "OCR Service is optional. Backend will use mock data if OCR is unavailable."
-    fi
 }
 
 start_backend() {
@@ -157,8 +126,6 @@ start_backend() {
         
         # Set environment variables
         export SPRING_PROFILES_ACTIVE=dev
-        export OCR_SERVICE_ENABLED=true
-        export OCR_SERVICE_URL=http://localhost:$OCR_PORT
         
         # Start backend with nohup - completely detached
         nohup ./gradlew bootRun > "$LOGS_DIR/backend.log" 2>&1 &
@@ -191,14 +158,6 @@ check_services() {
     log_info "Checking service status..."
     echo "=================================="
     
-    # Check OCR Service
-    ocr_status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 "http://localhost:$OCR_PORT/health" 2>/dev/null || echo "000")
-    if [ "$ocr_status" = "200" ]; then
-        echo -e "OCR Service (port $OCR_PORT):     ${GREEN}✓ Running${NC}"
-    else
-        echo -e "OCR Service (port $OCR_PORT):     ${YELLOW}○ Not running (optional)${NC}"
-    fi
-    
     # Check Backend
     backend_status=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 "http://localhost:$BACKEND_PORT/api/v1/bus-schedules/buses" 2>/dev/null || echo "000")
     if [ "$backend_status" = "200" ]; then
@@ -228,13 +187,11 @@ show_urls() {
     echo "=================================="
     echo -e "  Frontend:    ${GREEN}http://localhost:$FRONTEND_PORT${NC}"
     echo -e "  Backend API: ${GREEN}http://localhost:$BACKEND_PORT${NC}"
-    echo -e "  OCR Service: ${GREEN}http://localhost:$OCR_PORT${NC}"
     echo "=================================="
     echo ""
     echo "Logs are available at: $LOGS_DIR/"
     echo "  - backend.log"
     echo "  - frontend.log"
-    echo "  - ocr-service.log"
     echo ""
 }
 
@@ -258,10 +215,7 @@ main() {
             log_info "Starting all services..."
             echo ""
             
-            # Start services in subshells to avoid blocking
-            start_ocr_service
-            sleep 1
-            
+            # Start services
             start_backend
             sleep 1
             
@@ -298,9 +252,6 @@ main() {
             echo ""
             echo "=== Frontend (last 10 lines) ==="
             tail -10 "$LOGS_DIR/frontend.log" 2>/dev/null || echo "No frontend logs found"
-            echo ""
-            echo "=== OCR Service (last 10 lines) ==="
-            tail -10 "$LOGS_DIR/ocr-service.log" 2>/dev/null || echo "No OCR service logs found"
             ;;
         
         backend)

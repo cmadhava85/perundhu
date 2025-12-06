@@ -88,7 +88,6 @@ public class ContributionProcessingService {
     private final BusRepository busRepository;
     private final LocationRepository locationRepository;
     private final StopRepository stopRepository;
-    private final com.perundhu.domain.port.OCRService ocrService;
     private final LocationValidationService locationValidationService;
     private final NotificationService notificationService;
     private final RouteContributionValidationService validationService;
@@ -396,52 +395,26 @@ public class ContributionProcessingService {
 
     /**
      * Process a single image contribution
+     * Note: Image processing with AI is handled by
+     * ImageContributionProcessingService.
+     * This method just marks contributions for processing by that service.
      */
     private void processImageContribution(ImageContribution contribution) {
-        log.info("Processing image contribution ID {}", contribution.getId());
+        log.info("Processing image contribution ID {} - delegating to ImageContributionProcessingService",
+                contribution.getId());
 
-        // 1. Extract text from image using OCR
-        var extractedText = ocrService.extractTextFromImage(contribution.getImageUrl());
-
-        if (extractedText == null || extractedText.isEmpty()) {
-            log.warn("No text could be extracted from image for contribution ID {}",
-                    contribution.getId());
+        // Image contributions are now processed asynchronously by
+        // ImageContributionProcessingService
+        // using Gemini Vision AI. This scheduled job just checks status.
+        if (contribution.getExtractedData() != null && !contribution.getExtractedData().isEmpty()) {
+            // Data has been extracted by Gemini Vision, mark as processed
             updateContributionStatus(
                     contribution,
-                    new RejectedStatus(),
-                    "Unable to extract text from the image. Please upload a clearer image.");
-            notificationService.notifyContributionRejected(contribution);
-            return;
-        }
-
-        // 2. Parse the extracted text to identify bus details
-        try {
-            var parsedContribution = ocrService.parseRouteFromText(extractedText);
-            contribution.setExtractedData(parsedContribution.toString());
-
-            // 3. Process the parsed contribution like a manual entry
-            processRouteContribution(parsedContribution);
-
-            // 4. Update image contribution status based on route processing
-            updateContributionStatus(
-                    contribution,
-                    switch (parsedContribution.getStatus()) {
-                        case "APPROVED" -> new ApprovedStatus();
-                        case "REJECTED" -> new RejectedStatus();
-                        case "DUPLICATE" -> new DuplicateStatus();
-                        case "FAILED" -> new FailedStatus();
-                        default -> new PendingStatus();
-                    },
-                    parsedContribution.getValidationMessage());
-
-        } catch (Exception e) {
-            log.error("Failed to parse extracted text from image contribution ID {}: {}",
-                    contribution.getId(), e.getMessage(), e);
-            updateContributionStatus(
-                    contribution,
-                    new FailedStatus(),
-                    "Could not interpret the schedule information. Error: " + e.getMessage());
-            notificationService.notifyContributionRejected(contribution);
+                    new ApprovedStatus(),
+                    "Image data extracted successfully. Pending integration.");
+        } else {
+            // Mark for manual entry if AI processing hasn't extracted data yet
+            log.info("Image contribution ID {} awaiting AI processing or manual entry", contribution.getId());
         }
 
         log.info("Completed processing image contribution ID {}", contribution.getId());
@@ -966,64 +939,64 @@ public class ContributionProcessingService {
         // Normalize location names for matching
         String from = fromLocation.toUpperCase().trim();
         String to = toLocation.toUpperCase().trim();
-        
+
         // Known route durations (in minutes) based on actual bus travel times
         // Sivakasi hub routes
         if ((from.contains("SIVAKASI") && to.contains("MADURAI")) ||
-            (from.contains("MADURAI") && to.contains("SIVAKASI"))) {
+                (from.contains("MADURAI") && to.contains("SIVAKASI"))) {
             return 120; // 2 hours
         }
         if ((from.contains("SIVAKASI") && to.contains("VIRUDHUNAGAR")) ||
-            (from.contains("VIRUDHUNAGAR") && to.contains("SIVAKASI"))) {
+                (from.contains("VIRUDHUNAGAR") && to.contains("SIVAKASI"))) {
             return 45; // 45 minutes
         }
         if ((from.contains("SIVAKASI") && to.contains("SATTUR")) ||
-            (from.contains("SATTUR") && to.contains("SIVAKASI"))) {
+                (from.contains("SATTUR") && to.contains("SIVAKASI"))) {
             return 40; // 40 minutes
         }
         if ((from.contains("SIVAKASI") && to.contains("KOVILPATTI")) ||
-            (from.contains("KOVILPATTI") && to.contains("SIVAKASI"))) {
+                (from.contains("KOVILPATTI") && to.contains("SIVAKASI"))) {
             return 60; // 1 hour
         }
         if ((from.contains("SIVAKASI") && to.contains("ARUPPUKOTTAI")) ||
-            (from.contains("ARUPPUKOTTAI") && to.contains("SIVAKASI"))) {
+                (from.contains("ARUPPUKOTTAI") && to.contains("SIVAKASI"))) {
             return 50; // 50 minutes
         }
         if ((from.contains("SIVAKASI") && to.contains("RAJAPALAYAM")) ||
-            (from.contains("RAJAPALAYAM") && to.contains("SIVAKASI"))) {
+                (from.contains("RAJAPALAYAM") && to.contains("SIVAKASI"))) {
             return 75; // 1 hour 15 min
         }
         if ((from.contains("SIVAKASI") && to.contains("SRIVILLIPUTHUR")) ||
-            (from.contains("SRIVILLIPUTHUR") && to.contains("SIVAKASI"))) {
+                (from.contains("SRIVILLIPUTHUR") && to.contains("SIVAKASI"))) {
             return 60; // 1 hour
         }
         if ((from.contains("SIVAKASI") && to.contains("TENKASI")) ||
-            (from.contains("TENKASI") && to.contains("SIVAKASI"))) {
+                (from.contains("TENKASI") && to.contains("SIVAKASI"))) {
             return 90; // 1.5 hours
         }
         if ((from.contains("SIVAKASI") && to.contains("TUTICORIN")) ||
-            (from.contains("TUTICORIN") && to.contains("SIVAKASI")) ||
-            (from.contains("SIVAKASI") && to.contains("THOOTHUKUDI")) ||
-            (from.contains("THOOTHUKUDI") && to.contains("SIVAKASI"))) {
+                (from.contains("TUTICORIN") && to.contains("SIVAKASI")) ||
+                (from.contains("SIVAKASI") && to.contains("THOOTHUKUDI")) ||
+                (from.contains("THOOTHUKUDI") && to.contains("SIVAKASI"))) {
             return 90; // 1.5 hours
         }
         if ((from.contains("SIVAKASI") && to.contains("CHENNAI")) ||
-            (from.contains("CHENNAI") && to.contains("SIVAKASI"))) {
+                (from.contains("CHENNAI") && to.contains("SIVAKASI"))) {
             return 480; // 8 hours
         }
         if ((from.contains("SIVAKASI") && to.contains("COIMBATORE")) ||
-            (from.contains("COIMBATORE") && to.contains("SIVAKASI"))) {
+                (from.contains("COIMBATORE") && to.contains("SIVAKASI"))) {
             return 300; // 5 hours
         }
         if ((from.contains("SIVAKASI") && to.contains("TIRUNELVELI")) ||
-            (from.contains("TIRUNELVELI") && to.contains("SIVAKASI"))) {
+                (from.contains("TIRUNELVELI") && to.contains("SIVAKASI"))) {
             return 120; // 2 hours
         }
         if ((from.contains("SIVAKASI") && to.contains("DINDIGUL")) ||
-            (from.contains("DINDIGUL") && to.contains("SIVAKASI"))) {
+                (from.contains("DINDIGUL") && to.contains("SIVAKASI"))) {
             return 150; // 2.5 hours
         }
-        
+
         // Default: estimate 90 minutes for unknown routes
         log.debug("Using default journey duration for unknown route: {} to {}", fromLocation, toLocation);
         return 90;

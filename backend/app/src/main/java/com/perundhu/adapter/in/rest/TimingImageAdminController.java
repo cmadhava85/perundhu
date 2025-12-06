@@ -8,7 +8,7 @@ import com.perundhu.domain.model.SkippedTimingRecord;
 import com.perundhu.domain.port.TimingImageContributionRepository;
 import com.perundhu.domain.port.BusTimingRecordRepository;
 import com.perundhu.domain.port.SkippedTimingRecordRepository;
-import com.perundhu.infrastructure.ocr.TesseractOcrService;
+import com.perundhu.domain.port.GeminiVisionService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class TimingImageAdminController {
   private final TimingImageContributionRepository timingImageRepository;
   private final BusTimingRecordRepository busTimingRecordRepository;
   private final SkippedTimingRecordRepository skippedTimingRecordRepository;
-  private final TesseractOcrService ocrService;
+  private final GeminiVisionService geminiVisionService;
 
   /**
    * Get all pending timing image contributions for admin review
@@ -60,11 +60,11 @@ public class TimingImageAdminController {
   }
 
   /**
-   * Extract timings from image using OCR
+   * Extract timings from image using Gemini Vision AI
    * POST /api/v1/admin/contributions/timing-images/{id}/extract
    */
   @PostMapping("/{id}/extract")
-  public ResponseEntity<TesseractOcrService.TimingExtractionResult> extractTimings(@PathVariable Long id) {
+  public ResponseEntity<Map<String, Object>> extractTimings(@PathVariable Long id) {
     try {
       log.info("Extracting timings from contribution: {}", id);
 
@@ -72,41 +72,41 @@ public class TimingImageAdminController {
       TimingImageContribution contribution = timingImageRepository.findById(id)
           .orElseThrow(() -> new RuntimeException("Contribution not found: " + id));
 
+      // Check if Gemini Vision is available
+      if (!geminiVisionService.isAvailable()) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+            .body(Map.of("error", "AI image processing service not available"));
+      }
+
       // Update status to PROCESSING
       contribution.setStatus(TimingImageStatus.PROCESSING);
       timingImageRepository.save(contribution);
 
-      // Run OCR extraction
-      TesseractOcrService.TimingExtractionResult result = ocrService.extractTimings(
-          contribution.getImageUrl(),
-          contribution.getOriginLocation());
+      // Run Gemini Vision extraction
+      Map<String, Object> result = geminiVisionService.extractBusScheduleFromImage(contribution.getImageUrl());
 
-      // Convert to domain model ExtractedBusTiming
-      List<ExtractedBusTiming> extractedTimings = new ArrayList<>();
-      for (TesseractOcrService.ExtractedTiming destTiming : result.getTimings()) {
-        ExtractedBusTiming timing = ExtractedBusTiming.builder()
-            .contributionId(id)
-            .destination(destTiming.getDestination())
-            .destinationTamil(null) // OCR ExtractedTiming doesn't have Tamil field
-            .morningTimings(destTiming.getMorningTimings())
-            .afternoonTimings(destTiming.getAfternoonTimings())
-            .nightTimings(destTiming.getNightTimings())
-            .build();
-        extractedTimings.add(timing);
+      if (result == null || result.isEmpty() || result.containsKey("error")) {
+        contribution.setStatus(TimingImageStatus.PENDING);
+        contribution
+            .setValidationMessage("AI extraction failed: " + (result != null ? result.get("error") : "empty response"));
+        timingImageRepository.save(contribution);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            .body(Map.of("error", "Could not extract timings from image"));
       }
+
+      // Convert Gemini result to ExtractedBusTiming list
+      List<ExtractedBusTiming> extractedTimings = convertGeminiResultToTimings(id, result);
 
       // Save extracted timings to contribution
       contribution.setExtractedTimings(extractedTimings);
-      if (result.getConfidence() != null) {
-        contribution.setOcrConfidence(result.getConfidence());
-        contribution.setRequiresManualReview(result.getConfidence().doubleValue() < 0.7);
-      } else {
-        contribution.setOcrConfidence(java.math.BigDecimal.ZERO);
-        contribution.setRequiresManualReview(true);
-      }
+      double confidence = result.containsKey("confidence")
+          ? ((Number) result.get("confidence")).doubleValue()
+          : 0.8;
+      contribution.setOcrConfidence(java.math.BigDecimal.valueOf(confidence));
+      contribution.setRequiresManualReview(confidence < 0.7);
       timingImageRepository.save(contribution);
 
-      log.info("OCR extraction completed with confidence: {}", result.getConfidence());
+      log.info("Gemini extraction completed with confidence: {}", confidence);
 
       return ResponseEntity.ok(result);
 
@@ -116,12 +116,67 @@ public class TimingImageAdminController {
       // Update status back to PENDING on error
       timingImageRepository.findById(id).ifPresent(c -> {
         c.setStatus(TimingImageStatus.PENDING);
-        c.setValidationMessage("OCR extraction failed: " + e.getMessage());
+        c.setValidationMessage("AI extraction failed: " + e.getMessage());
         timingImageRepository.save(c);
       });
 
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(Map.of("error", e.getMessage()));
     }
+  }
+
+  /**
+   * Convert Gemini Vision result to ExtractedBusTiming list
+   */
+  @SuppressWarnings("unchecked")
+  private List<ExtractedBusTiming> convertGeminiResultToTimings(Long contributionId, Map<String, Object> result) {
+    List<ExtractedBusTiming> timings = new ArrayList<>();
+
+    // Handle routes array from Gemini
+    if (result.containsKey("routes")) {
+      List<Map<String, Object>> routes = (List<Map<String, Object>>) result.get("routes");
+      for (Map<String, Object> route : routes) {
+        String destination = (String) route.getOrDefault("toLocation",
+            route.getOrDefault("destination", "Unknown"));
+        List<String> departureTimes = (List<String>) route.getOrDefault("departureTimes",
+            route.getOrDefault("timings", new ArrayList<>()));
+
+        ExtractedBusTiming timing = ExtractedBusTiming.builder()
+            .contributionId(contributionId)
+            .destination(destination)
+            .morningTimings(filterTimings(departureTimes, "MORNING"))
+            .afternoonTimings(filterTimings(departureTimes, "AFTERNOON"))
+            .nightTimings(filterTimings(departureTimes, "NIGHT"))
+            .build();
+        timings.add(timing);
+      }
+    }
+
+    return timings;
+  }
+
+  /**
+   * Filter timings by time of day
+   */
+  private List<String> filterTimings(List<String> allTimings, String period) {
+    List<String> filtered = new ArrayList<>();
+    for (String time : allTimings) {
+      try {
+        LocalTime parsed = parseTime(time);
+        int hour = parsed.getHour();
+        if (period.equals("MORNING") && hour >= 5 && hour < 12) {
+          filtered.add(time);
+        } else if (period.equals("AFTERNOON") && hour >= 12 && hour < 17) {
+          filtered.add(time);
+        } else if (period.equals("NIGHT") && (hour >= 17 || hour < 5)) {
+          filtered.add(time);
+        }
+      } catch (Exception e) {
+        // If can't parse, add to all periods
+        filtered.add(time);
+      }
+    }
+    return filtered;
   }
 
   /**
@@ -129,9 +184,10 @@ public class TimingImageAdminController {
    * POST /api/v1/admin/contributions/timing-images/{id}/approve
    */
   @PostMapping("/{id}/approve")
+  @SuppressWarnings("unchecked")
   public ResponseEntity<TimingImageContribution> approveContribution(
       @PathVariable Long id,
-      @RequestBody(required = false) TesseractOcrService.TimingExtractionResult extractedTimings) {
+      @RequestBody(required = false) Map<String, Object> extractedTimingsRequest) {
 
     try {
       log.info("Approving timing contribution: {}", id);
@@ -140,17 +196,18 @@ public class TimingImageAdminController {
       TimingImageContribution contribution = timingImageRepository.findById(id)
           .orElseThrow(() -> new RuntimeException("Contribution not found: " + id));
 
-      // If extracted timings provided, update them
-      if (extractedTimings != null && extractedTimings.getTimings() != null) {
+      // If extracted timings provided in request, update them
+      if (extractedTimingsRequest != null && extractedTimingsRequest.containsKey("timings")) {
+        List<Map<String, Object>> timingsData = (List<Map<String, Object>>) extractedTimingsRequest.get("timings");
         List<ExtractedBusTiming> timings = new ArrayList<>();
-        for (TesseractOcrService.ExtractedTiming destTiming : extractedTimings.getTimings()) {
+        for (Map<String, Object> destTiming : timingsData) {
           ExtractedBusTiming timing = ExtractedBusTiming.builder()
               .contributionId(id)
-              .destination(destTiming.getDestination())
-              .destinationTamil(null) // OCR ExtractedTiming doesn't have Tamil field
-              .morningTimings(destTiming.getMorningTimings())
-              .afternoonTimings(destTiming.getAfternoonTimings())
-              .nightTimings(destTiming.getNightTimings())
+              .destination((String) destTiming.get("destination"))
+              .destinationTamil((String) destTiming.get("destinationTamil"))
+              .morningTimings((List<String>) destTiming.getOrDefault("morningTimings", new ArrayList<>()))
+              .afternoonTimings((List<String>) destTiming.getOrDefault("afternoonTimings", new ArrayList<>()))
+              .nightTimings((List<String>) destTiming.getOrDefault("nightTimings", new ArrayList<>()))
               .build();
           timings.add(timing);
         }
@@ -160,7 +217,6 @@ public class TimingImageAdminController {
       // Process extracted timings and create bus timing records
       int createdCount = 0;
       int mergedCount = 0;
-      int skippedCount = 0;
 
       if (contribution.getExtractedTimings() != null) {
         for (ExtractedBusTiming extracted : contribution.getExtractedTimings()) {

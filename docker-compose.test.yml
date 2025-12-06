@@ -4,26 +4,6 @@
 version: '3.8'
 
 services:
-  # OCR Service (PaddleOCR) - Lightweight for testing
-  ocr-service:
-    build:
-      context: ./ocr-service
-      dockerfile: Dockerfile
-    container_name: perundhu-ocr-service-test
-    ports:
-      - "8081:8081"
-    environment:
-      - HOST=0.0.0.0
-      - PORT=8081
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-    networks:
-      - perundhu-test-network
-
   # Java Backend
   backend:
     build:
@@ -34,16 +14,12 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=test
-      - OCR_SERVICE_ENABLED=true
-      - OCR_SERVICE_URL=http://ocr-service:8081
-      - OCR_SERVICE_TIMEOUT=30
+      - GEMINI_API_ENABLED=true
       # Test database (H2 in-memory or test PostgreSQL)
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/perundhu_test
       - SPRING_DATASOURCE_USERNAME=perundhu
       - SPRING_DATASOURCE_PASSWORD=perundhu
     depends_on:
-      ocr-service:
-        condition: service_healthy
       db:
         condition: service_healthy
     healthcheck:

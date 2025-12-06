@@ -22,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Client for OpenStreetMap Nominatim API for geocoding location names.
- * Used to resolve unknown city/town names to standardized names and coordinates.
+ * Used to resolve unknown city/town names to standardized names and
+ * coordinates.
  * 
  * Rate limit: 1 request per second (Nominatim usage policy)
  * Results are cached to minimize API calls.
@@ -34,7 +35,7 @@ public class NominatimClient implements GeocodingPort {
     private static final String NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(10);
     private static final long RATE_LIMIT_MS = 1100; // 1.1 seconds between requests
-    
+
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final ConcurrentHashMap<String, NominatimResult> cache;
@@ -68,7 +69,7 @@ public class NominatimClient implements GeocodingPort {
         }
 
         String normalizedQuery = query.trim().toUpperCase();
-        
+
         // Check cache first
         if (cache.containsKey(normalizedQuery)) {
             log.debug("Nominatim cache hit for: {}", normalizedQuery);
@@ -90,9 +91,8 @@ public class NominatimClient implements GeocodingPort {
             String searchQuery = query + ", Tamil Nadu, India";
             String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
             String url = String.format(
-                "%s?q=%s&format=json&addressdetails=1&limit=5&accept-language=en",
-                NOMINATIM_BASE_URL, encodedQuery
-            );
+                    "%s?q=%s&format=json&addressdetails=1&limit=5&accept-language=en",
+                    NOMINATIM_BASE_URL, encodedQuery);
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
@@ -106,7 +106,7 @@ public class NominatimClient implements GeocodingPort {
 
             if (response.statusCode() == 200) {
                 JsonNode results = objectMapper.readTree(response.body());
-                
+
                 if (results.isArray() && results.size() > 0) {
                     // Find the best match (prefer cities/towns over other types)
                     for (JsonNode result : results) {
@@ -182,14 +182,15 @@ public class NominatimClient implements GeocodingPort {
     }
 
     private boolean isInTamilNadu(NominatimResult result) {
-        if (result == null) return false;
-        
+        if (result == null)
+            return false;
+
         String state = result.getState();
         if (state != null) {
             String stateLower = state.toLowerCase();
             return stateLower.contains("tamil") || stateLower.contains("nadu");
         }
-        
+
         // Fallback: check coordinates are within Tamil Nadu bounds
         // TN bounds: Lat 8.0-13.5, Lon 76.0-80.5
         double lat = result.getLatitude();

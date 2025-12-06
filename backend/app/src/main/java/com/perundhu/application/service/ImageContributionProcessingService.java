@@ -28,7 +28,6 @@ import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.FileStorageService;
 import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.ImageContributionOutputPort;
-import com.perundhu.domain.port.OCRService;
 import com.perundhu.domain.port.RouteContributionOutputPort;
 
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,6 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
     private static final Logger logger = LoggerFactory.getLogger(ImageContributionProcessingService.class);
 
-    private final OCRService ocrService;
     private final FileStorageService fileStorageService;
     private final ImageContributionOutputPort imageContributionOutputPort;
     private final RouteContributionOutputPort routeContributionOutputPort;
@@ -101,27 +99,38 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     }
 
     /**
-     * Process image with OCR and extract bus schedule data
+     * Process image with Gemini Vision AI to extract bus schedule data
      */
     private void processImageWithOCR(ImageContribution contribution, MultipartFile imageFile) {
-        logger.info("Starting OCR processing for contribution: {}", contribution.getId());
+        logger.info("Starting image processing for contribution: {}", contribution.getId());
 
         try {
-            // Try Gemini Vision first if available (provides better semantic understanding)
+            // Use Gemini Vision AI for image processing
             if (geminiVisionService.isAvailable()) {
                 logger.info("Using Gemini Vision AI for image processing");
                 processWithGeminiVision(contribution, imageFile);
                 return;
             }
 
-            // Fallback to traditional OCR pipeline
-            logger.info("Using traditional OCR pipeline (Gemini not available)");
-            processWithTraditionalOCR(contribution, imageFile);
+            // Gemini not available - mark for manual entry
+            logger.warn("Gemini Vision AI not available. Marking contribution for manual entry.");
+            markForManualEntry(contribution, "AI image processing not available. Please enter route details manually.");
 
         } catch (Exception e) {
-            logger.error("OCR processing failed for contribution {}: {}", contribution.getId(), e.getMessage(), e);
-            markProcessingFailed(contribution, "OCR processing failed: " + e.getMessage());
+            logger.error("Image processing failed for contribution {}: {}", contribution.getId(), e.getMessage(), e);
+            markProcessingFailed(contribution, "Image processing failed: " + e.getMessage());
         }
+    }
+
+    /**
+     * Mark contribution for manual entry when AI processing is not available
+     */
+    private void markForManualEntry(ImageContribution contribution, String message) {
+        contribution.setStatus("MANUAL_ENTRY_REQUIRED");
+        contribution.setProcessedDate(LocalDateTime.now());
+        contribution.setValidationMessage(message);
+        imageContributionOutputPort.save(contribution);
+        logger.info("Contribution {} marked for manual entry", contribution.getId());
     }
 
     /**
@@ -143,16 +152,17 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             Map<String, Object> extractedData = geminiVisionService.extractBusScheduleFromBase64(base64Image, mimeType);
 
             if (extractedData == null || extractedData.isEmpty()) {
-                logger.warn("Gemini Vision returned empty data, falling back to traditional OCR");
-                processWithTraditionalOCR(contribution, imageFile);
+                logger.warn("Gemini Vision returned empty data, marking for manual entry");
+                markForManualEntry(contribution,
+                        "AI could not extract data from image. Please enter route details manually.");
                 return;
             }
 
             // Check if extraction was successful
             if (extractedData.containsKey("error")) {
                 logger.error("Gemini Vision extraction error: {}", extractedData.get("error"));
-                // Fallback to traditional OCR
-                processWithTraditionalOCR(contribution, imageFile);
+                markForManualEntry(contribution, "AI extraction error: " + extractedData.get("error")
+                        + ". Please enter route details manually.");
                 return;
             }
 
@@ -184,12 +194,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         } catch (Exception e) {
             logger.error("Gemini Vision processing failed for contribution {}: {}",
                     contribution.getId(), e.getMessage(), e);
-            // Fallback to traditional OCR
-            try {
-                processWithTraditionalOCR(contribution, imageFile);
-            } catch (Exception fallbackError) {
-                markProcessingFailed(contribution, "Both Gemini and OCR processing failed: " + e.getMessage());
-            }
+            markProcessingFailed(contribution, "AI image processing failed: " + e.getMessage());
         }
     }
 
@@ -473,131 +478,6 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     }
 
     /**
-     * Process image with traditional OCR pipeline (PaddleOCR/Tesseract + regex
-     * parsing)
-     */
-    private void processWithTraditionalOCR(ImageContribution contribution, MultipartFile imageFile) {
-        logger.info("Starting OCR processing for contribution: {}", contribution.getId());
-
-        try {
-            // 1. Validate if image contains bus schedule
-            if (!ocrService.isValidBusScheduleImage(convertToFileUpload(imageFile))) {
-                markProcessingFailed(contribution, "Image does not appear to contain bus schedule information");
-                return;
-            }
-
-            // 2. Extract text using OCR
-            String extractedText = ocrService.extractTextFromImage(convertToFileUpload(imageFile));
-            if (extractedText == null || extractedText.trim().isEmpty()) {
-                markProcessingFailed(contribution, "Unable to extract text from image");
-                return;
-            }
-
-            double confidence = ocrService.getExtractionConfidence(convertToFileUpload(imageFile));
-            logger.info("OCR extraction confidence: {} for contribution: {}", confidence, contribution.getId());
-
-            // 3. Update contribution with extracted text
-            contribution.setExtractedData(extractedText);
-
-            // 4. Parse the extracted text into structured data
-            if (confidence >= 0.6) { // High confidence - auto-process
-                processHighConfidenceExtraction(contribution, extractedText);
-            } else if (confidence >= 0.3) { // Medium confidence - manual review needed
-                processMediumConfidenceExtraction(contribution, extractedText);
-            } else { // Low confidence - mark for manual review
-                processLowConfidenceExtraction(contribution, extractedText);
-            }
-
-        } catch (Exception e) {
-            logger.error("OCR processing failed for contribution {}: {}", contribution.getId(), e.getMessage(), e);
-            markProcessingFailed(contribution, "OCR processing failed: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Process high confidence OCR results - attempt auto-approval
-     */
-    private void processHighConfidenceExtraction(ImageContribution contribution, String extractedText) {
-        try {
-            // Try to parse extracted text into route contributions
-            List<RouteContribution> routes = ocrService.parseMultipleRoutes(extractedText);
-
-            if (!routes.isEmpty()) {
-                // Create route contributions from extracted data
-                List<String> createdRouteIds = new ArrayList<>();
-
-                for (RouteContribution route : routes) {
-                    route.setUserId(contribution.getUserId());
-                    route.setSubmissionDate(LocalDateTime.now());
-                    route.setStatus("PENDING_REVIEW"); // Still needs manual verification
-                    route.setAdditionalNotes("Auto-extracted from image contribution: " + contribution.getId());
-
-                    RouteContribution savedRoute = routeContributionOutputPort.save(route);
-                    createdRouteIds.add(savedRoute.getId());
-                }
-
-                // Update image contribution status
-                contribution.setStatus("PROCESSED");
-                contribution.setProcessedDate(LocalDateTime.now());
-                contribution.setValidationMessage(
-                        String.format("Successfully extracted %d route(s). Route IDs: %s",
-                                routes.size(), String.join(", ", createdRouteIds)));
-
-                logger.info("High confidence processing completed for contribution: {}, created {} routes",
-                        contribution.getId(), routes.size());
-            } else {
-                processMediumConfidenceExtraction(contribution, extractedText);
-            }
-
-        } catch (Exception e) {
-            logger.error("High confidence processing failed for contribution {}: {}",
-                    contribution.getId(), e.getMessage(), e);
-            processMediumConfidenceExtraction(contribution, extractedText);
-        }
-
-        imageContributionOutputPort.save(contribution);
-    }
-
-    /**
-     * Process medium confidence OCR results - store for manual review
-     */
-    private void processMediumConfidenceExtraction(ImageContribution contribution, String extractedText) {
-        try {
-            // Attempt to parse what we can
-            Map<String, Object> parsedData = ocrService.parseScheduleTextToMap(extractedText);
-
-            contribution.setStatus("MANUAL_REVIEW_NEEDED");
-            contribution.setProcessedDate(LocalDateTime.now());
-            contribution.setValidationMessage(
-                    "Medium confidence OCR extraction. Manual review required. " +
-                            "Parsed data: " + parsedData.toString());
-
-            logger.info("Medium confidence processing completed for contribution: {}", contribution.getId());
-
-        } catch (Exception e) {
-            logger.error("Medium confidence processing failed for contribution {}: {}",
-                    contribution.getId(), e.getMessage(), e);
-            processLowConfidenceExtraction(contribution, extractedText);
-        }
-
-        imageContributionOutputPort.save(contribution);
-    }
-
-    /**
-     * Process low confidence OCR results - mark for manual processing
-     */
-    private void processLowConfidenceExtraction(ImageContribution contribution, String extractedText) {
-        contribution.setStatus("LOW_CONFIDENCE_OCR");
-        contribution.setProcessedDate(LocalDateTime.now());
-        contribution.setValidationMessage(
-                "Low confidence OCR extraction. Manual processing required. " +
-                        "Raw extracted text available for review.");
-
-        logger.info("Low confidence processing completed for contribution: {}", contribution.getId());
-        imageContributionOutputPort.save(contribution);
-    }
-
-    /**
      * Mark image processing as failed
      */
     private void markProcessingFailed(ImageContribution contribution, String errorMessage) {
@@ -798,26 +678,25 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                         logger.warn("Gemini Vision extraction failed: {}, falling back to traditional OCR", errorMsg);
                     }
                 } else {
-                    logger.warn("Could not read image bytes from storage, falling back to traditional OCR");
+                    logger.warn("Could not read image bytes from storage");
                 }
+            } else {
+                logger.warn("Gemini Vision service not available");
             }
 
-            // Fallback to traditional OCR
-            logger.info("Using traditional OCR for extraction");
-            String extractedText = ocrService.extractTextFromImage(contribution.getImageUrl());
+            // If we reach here, Gemini Vision extraction failed
+            // Mark for manual entry instead of using OCR
+            logger.info("AI extraction failed, marking contribution {} for manual entry", contribution.getId());
 
-            // Parse the text into structured data
-            Map<String, Object> parsedData = ocrService.parseScheduleTextToMap(extractedText);
+            Map<String, Object> manualEntryResult = new HashMap<>();
+            manualEntryResult.put("error", "AI extraction failed - manual entry required");
+            manualEntryResult.put("requiresManualEntry", true);
+            manualEntryResult.put("confidence", 0.0);
+            manualEntryResult.put("extractedText", "");
+            manualEntryResult.put("extractedAt", LocalDateTime.now().toString());
+            manualEntryResult.put("extractionMethod", "manual-required");
 
-            // Add raw text and confidence information
-            Map<String, Object> result = new HashMap<>(parsedData);
-            result.put("extractedText", extractedText);
-            result.put("confidence", calculateConfidence(extractedText, parsedData));
-            result.put("extractedAt", LocalDateTime.now().toString());
-            result.put("extractionMethod", "traditional-ocr");
-
-            logger.info("Successfully extracted OCR data from contribution: {}", contribution.getId());
-            return result;
+            return manualEntryResult;
 
         } catch (Exception e) {
             logger.error("Failed to extract OCR data from contribution {}: {}",

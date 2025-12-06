@@ -26,7 +26,6 @@ import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.LocationValidationService;
 import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.StopRepository;
-import com.perundhu.domain.port.OCRService;
 
 @ExtendWith(MockitoExtension.class)
 class ContributionProcessingServiceTest {
@@ -45,9 +44,6 @@ class ContributionProcessingServiceTest {
 
         @Mock
         private StopRepository stopRepository;
-
-        @Mock
-        private OCRService ocrService;
 
         @Mock
         private LocationValidationService locationValidationService;

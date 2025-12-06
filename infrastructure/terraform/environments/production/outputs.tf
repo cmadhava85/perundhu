@@ -91,23 +91,11 @@ output "backend_service_account_email" {
   value       = module.iam.backend_service_account_email
 }
 
-# OCR Service Outputs
-output "ocr_service_url" {
-  description = "The OCR service URL"
-  value       = module.ocr_service.service_url
-}
-
-output "ocr_service_name" {
-  description = "The OCR service name"
-  value       = module.ocr_service.service_name
-}
-
 # Application Configuration (for CI/CD pipelines)
 output "application_config" {
   description = "Application configuration for deployment"
   value = {
     CLOUD_RUN_SERVICE_URL = module.cloud_run.service_url
-    OCR_SERVICE_URL       = module.ocr_service.service_url
     REDIS_HOST            = module.redis.redis_host
     REDIS_PORT            = module.redis.redis_port
     DB_CONNECTION_NAME    = module.database.db_connection_name

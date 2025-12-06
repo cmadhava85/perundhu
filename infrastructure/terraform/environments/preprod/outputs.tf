@@ -49,17 +49,6 @@ output "backend_service_name" {
   value       = module.cloud_run.service_name
 }
 
-# OCR Service Outputs
-output "ocr_service_url" {
-  description = "OCR Service Cloud Run URL"
-  value       = module.ocr_service.service_url
-}
-
-output "ocr_service_name" {
-  description = "OCR Service Cloud Run name"
-  value       = module.ocr_service.service_name
-}
-
 # Storage Outputs
 output "images_bucket_name" {
   description = "Cloud Storage bucket for images"
@@ -82,16 +71,16 @@ output "notification_topic" {
   value       = module.pubsub.notification_topic
 }
 
-# Redis Outputs
+# Redis Outputs (conditional - only when enable_redis = true)
 output "redis_host" {
   description = "Redis instance host"
-  value       = module.redis.redis_host
+  value       = var.enable_redis ? module.redis[0].redis_host : ""
   sensitive   = true
 }
 
 output "redis_port" {
   description = "Redis instance port"
-  value       = module.redis.redis_port
+  value       = var.enable_redis ? module.redis[0].redis_port : 6379
 }
 
 # VPC Outputs
@@ -133,15 +122,14 @@ output "application_config" {
     GCP_INSTANCE_CONNECTION_NAME = module.database.db_connection_name
     MYSQL_DATABASE             = module.database.db_name
     MYSQL_USERNAME             = module.database.db_user
-    REDIS_HOST                 = module.redis.redis_host
-    REDIS_PORT                 = module.redis.redis_port
+    REDIS_HOST                 = var.enable_redis ? module.redis[0].redis_host : ""
+    REDIS_PORT                 = var.enable_redis ? module.redis[0].redis_port : 6379
     STORAGE_BUCKET_IMAGES      = module.storage.images_bucket_name
     STORAGE_BUCKET_BACKUP      = module.storage.backup_bucket_name
     PUBSUB_TOPIC_IMAGE_PROCESSING = module.pubsub.image_processing_topic
     PUBSUB_TOPIC_NOTIFICATIONS = module.pubsub.notification_topic
     SERVICE_ACCOUNT_EMAIL      = module.iam.backend_service_account_email
-    OCR_SERVICE_URL            = module.ocr_service.service_url
-    OCR_SERVICE_ENABLED        = true
+    GEMINI_API_ENABLED         = true
   }
   sensitive = true
 }

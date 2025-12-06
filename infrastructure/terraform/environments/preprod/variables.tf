@@ -88,12 +88,6 @@ variable "container_image" {
   default     = "gcr.io/PROJECT_ID/perundhu-backend:latest"
 }
 
-variable "ocr_service_image" {
-  description = "Container image for the OCR service (PaddleOCR)"
-  type        = string
-  default     = "gcr.io/PROJECT_ID/perundhu-ocr-service:latest"
-}
-
 variable "billing_account_id" {
   description = "GCP Billing Account ID for budget alerts"
   type        = string

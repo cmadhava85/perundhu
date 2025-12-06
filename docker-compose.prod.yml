@@ -4,42 +4,6 @@
 version: '3.8'
 
 services:
-  # OCR Service (PaddleOCR)
-  ocr-service:
-    build:
-      context: ./ocr-service
-      dockerfile: Dockerfile
-    container_name: perundhu-ocr-service
-    ports:
-      - "8081:8081"
-    environment:
-      - HOST=0.0.0.0
-      - PORT=8081
-    volumes:
-      - ocr-models:/root/.paddleocr
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-          cpus: '2'
-        reservations:
-          memory: 2G
-          cpus: '1'
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
-    restart: always
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    networks:
-      - perundhu-network
-
   # Java Backend
   backend:
     build:
@@ -50,9 +14,7 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - OCR_SERVICE_ENABLED=true
-      - OCR_SERVICE_URL=http://ocr-service:8081
-      - OCR_SERVICE_TIMEOUT=60
+      - GEMINI_API_ENABLED=true
       # Production database (Cloud SQL)
       - SPRING_DATASOURCE_URL=${DATABASE_URL}
       - SPRING_DATASOURCE_USERNAME=${DATABASE_USER}
@@ -60,6 +22,8 @@ services:
       # Google Cloud settings
       - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
       - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
+      # Gemini API
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     deploy:
       resources:
         limits:
@@ -68,9 +32,6 @@ services:
         reservations:
           memory: 1G
           cpus: '1'
-    depends_on:
-      ocr-service:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 30s
@@ -85,10 +46,6 @@ services:
         max-file: "3"
     networks:
       - perundhu-network
-
-volumes:
-  ocr-models:
-    name: perundhu-ocr-models
 
 networks:
   perundhu-network:

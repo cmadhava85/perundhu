@@ -145,9 +145,8 @@ public class GeminiVisionTestController {
           "message", "Gemini Vision not available"));
     }
 
-    // Note: Traditional OCR comparison would need the OCRService injected
-    // For now, just return the Gemini result
-    comparison.put("note", "Traditional OCR comparison not implemented in this endpoint");
+    // Gemini Vision is the sole image extraction service
+    comparison.put("note", "Gemini Vision AI is used for intelligent schedule extraction");
 
     return ResponseEntity.ok(comparison);
   }

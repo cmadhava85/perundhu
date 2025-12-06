@@ -17,7 +17,8 @@ import com.perundhu.domain.port.LocationRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Service for resolving location names from OCR text to standardized location data.
+ * Service for resolving location names from OCR text to standardized location
+ * data.
  * 
  * Uses a multi-tier approach:
  * 1. Static pattern matching (fast, for common cities)
@@ -35,41 +36,40 @@ public class LocationResolutionService {
     private final LocationRepository locationRepository;
     private final FuzzyMatcherPort fuzzyMatcher;
     private final GeocodingPort geocodingClient;
-    
+
     // Cache for resolved locations
     private final ConcurrentHashMap<String, LocationResolution> resolutionCache;
-    
+
     // Static list of known Tamil Nadu cities for fuzzy matching
     private static final List<String> KNOWN_CITIES = List.of(
-        "CHENNAI", "COIMBATORE", "MADURAI", "TRICHY", "SALEM", "TIRUNELVELI",
-        "KANYAKUMARI", "THANJAVUR", "ERODE", "VELLORE", "TIRUPPUR", "KARUR",
-        "KUMBAKONAM", "THOOTHUKUDI", "PATTUKKOTTAI", "VIRUDHUNAGAR", "THENI",
-        "DINDIGUL", "PUDUKKOTTAI", "NAGERCOIL", "BENGALURU", "TIRUVANNAMALAI",
-        "ARIYALUR", "PERAMBALUR", "NAMAKKAL", "KRISHNAGIRI", "DHARMAPURI",
-        "HOSUR", "THIRUCHENDUR", "ARANI", "KANCHIPURAM", "RAMANATHAPURAM",
-        "RAMESHWARAM", "SIVAKASI", "SIVAGANGA", "CUDDALORE", "VILLUPURAM",
-        "TINDIVANAM", "CHIDAMBARAM", "NAGAPATTINAM", "MAYILADUTHURAI",
-        "TIRUVARUR", "KARAIKAL", "PONDICHERRY", "OOTY", "COONOOR", "METTUPALAYAM",
-        "POLLACHI", "UDUMALPET", "PALANI", "KODAIKANAL", "TENKASI", "SANKARANKOVIL",
-        "KOVILPATTI", "TUTICORIN", "TIRUCHENDUR", "ARUPPUKKOTTAI", "PARAMAKUDI",
-        "RAMESWARAM", "MANDAPAM", "PAMBAN", "DHANUSHKODI"
-    );
-    
+            "CHENNAI", "COIMBATORE", "MADURAI", "TRICHY", "SALEM", "TIRUNELVELI",
+            "KANYAKUMARI", "THANJAVUR", "ERODE", "VELLORE", "TIRUPPUR", "KARUR",
+            "KUMBAKONAM", "THOOTHUKUDI", "PATTUKKOTTAI", "VIRUDHUNAGAR", "THENI",
+            "DINDIGUL", "PUDUKKOTTAI", "NAGERCOIL", "BENGALURU", "TIRUVANNAMALAI",
+            "ARIYALUR", "PERAMBALUR", "NAMAKKAL", "KRISHNAGIRI", "DHARMAPURI",
+            "HOSUR", "THIRUCHENDUR", "ARANI", "KANCHIPURAM", "RAMANATHAPURAM",
+            "RAMESHWARAM", "SIVAKASI", "SIVAGANGA", "CUDDALORE", "VILLUPURAM",
+            "TINDIVANAM", "CHIDAMBARAM", "NAGAPATTINAM", "MAYILADUTHURAI",
+            "TIRUVARUR", "KARAIKAL", "PONDICHERRY", "OOTY", "COONOOR", "METTUPALAYAM",
+            "POLLACHI", "UDUMALPET", "PALANI", "KODAIKANAL", "TENKASI", "SANKARANKOVIL",
+            "KOVILPATTI", "TUTICORIN", "TIRUCHENDUR", "ARUPPUKKOTTAI", "PARAMAKUDI",
+            "RAMESWARAM", "MANDAPAM", "PAMBAN", "DHANUSHKODI");
+
     // Tamil patterns for common cities (for Tamil OCR text)
     private static final Map<String, String[]> TAMIL_PATTERNS = new HashMap<>();
-    
+
     static {
-        TAMIL_PATTERNS.put("RAMESHWARAM", new String[]{"இராமேஸ்வரம்", "ராமேஸ்வரம்", "ராமே", "இராமே"});
-        TAMIL_PATTERNS.put("CHENNAI", new String[]{"சென்னை", "செண்ணை"});
-        TAMIL_PATTERNS.put("MADURAI", new String[]{"மதுரை", "மதுரா"});
-        TAMIL_PATTERNS.put("COIMBATORE", new String[]{"கோயம்புத்தூர்", "கோவை"});
-        TAMIL_PATTERNS.put("TRICHY", new String[]{"திருச்சி", "திருச்சிராப்பள்ளி"});
-        TAMIL_PATTERNS.put("SALEM", new String[]{"சேலம்"});
-        TAMIL_PATTERNS.put("TIRUNELVELI", new String[]{"திருநெல்வேலி", "நெல்லை"});
-        TAMIL_PATTERNS.put("KANYAKUMARI", new String[]{"கன்னியாகுமரி", "குமரி"});
-        TAMIL_PATTERNS.put("THANJAVUR", new String[]{"தஞ்சாவூர்", "தஞ்சை"});
-        TAMIL_PATTERNS.put("THOOTHUKUDI", new String[]{"தூத்துக்குடி"});
-        TAMIL_PATTERNS.put("BENGALURU", new String[]{"பெங்களூரு", "பெங்களூர்"});
+        TAMIL_PATTERNS.put("RAMESHWARAM", new String[] { "இராமேஸ்வரம்", "ராமேஸ்வரம்", "ராமே", "இராமே" });
+        TAMIL_PATTERNS.put("CHENNAI", new String[] { "சென்னை", "செண்ணை" });
+        TAMIL_PATTERNS.put("MADURAI", new String[] { "மதுரை", "மதுரா" });
+        TAMIL_PATTERNS.put("COIMBATORE", new String[] { "கோயம்புத்தூர்", "கோவை" });
+        TAMIL_PATTERNS.put("TRICHY", new String[] { "திருச்சி", "திருச்சிராப்பள்ளி" });
+        TAMIL_PATTERNS.put("SALEM", new String[] { "சேலம்" });
+        TAMIL_PATTERNS.put("TIRUNELVELI", new String[] { "திருநெல்வேலி", "நெல்லை" });
+        TAMIL_PATTERNS.put("KANYAKUMARI", new String[] { "கன்னியாகுமரி", "குமரி" });
+        TAMIL_PATTERNS.put("THANJAVUR", new String[] { "தஞ்சாவூர்", "தஞ்சை" });
+        TAMIL_PATTERNS.put("THOOTHUKUDI", new String[] { "தூத்துக்குடி" });
+        TAMIL_PATTERNS.put("BENGALURU", new String[] { "பெங்களூரு", "பெங்களூர்" });
         // Add more as needed...
     }
 
@@ -96,7 +96,7 @@ public class LocationResolutionService {
         }
 
         String normalized = rawText.trim().toUpperCase();
-        
+
         // Check cache first
         if (resolutionCache.containsKey(normalized)) {
             return resolutionCache.get(normalized);
@@ -164,12 +164,11 @@ public class LocationResolutionService {
                 if (canonicalName != null && !canonicalName.isEmpty()) {
                     log.info("Geocoding resolved '{}' -> '{}'", rawText, canonicalName);
                     return LocationResolution.fromNominatim(
-                        canonicalName, 
-                        rawText, 
-                        result.getLatitude(), 
-                        result.getLongitude(),
-                        0.8
-                    );
+                            canonicalName,
+                            rawText,
+                            result.getLatitude(),
+                            result.getLongitude(),
+                            0.8);
                 }
             }
         } catch (Exception e) {
@@ -203,7 +202,8 @@ public class LocationResolutionService {
      * Check if a word is a keyword (not a location)
      */
     private boolean isKeyword(String word) {
-        return word.matches("ORDINARY|SEATER|SUPER|DELUXE|EXPRESS|ROUTE|TIME|VIA|DESTINATION|FAST|SLEEPER|VOLVO|LUXURY|DEPARTURE|ARRIVAL|FARE|BUS|STAND|STATION");
+        return word.matches(
+                "ORDINARY|SEATER|SUPER|DELUXE|EXPRESS|ROUTE|TIME|VIA|DESTINATION|FAST|SLEEPER|VOLVO|LUXURY|DEPARTURE|ARRIVAL|FARE|BUS|STAND|STATION");
     }
 
     /**
@@ -231,23 +231,23 @@ public class LocationResolutionService {
     @lombok.Data
     @lombok.Builder
     public static class LocationResolution {
-        private String resolvedName;      // The standardized name
-        private String originalText;       // Original OCR text
-        private double confidence;         // 0.0 to 1.0
-        private ResolutionSource source;   // How it was resolved
-        private Double latitude;           // Optional coordinates
+        private String resolvedName; // The standardized name
+        private String originalText; // Original OCR text
+        private double confidence; // 0.0 to 1.0
+        private ResolutionSource source; // How it was resolved
+        private Double latitude; // Optional coordinates
         private Double longitude;
-        private boolean verified;          // Whether this is a verified location
-        private String message;            // Optional message for UI
+        private boolean verified; // Whether this is a verified location
+        private String message; // Optional message for UI
 
         public enum ResolutionSource {
-            PATTERN,       // Matched Tamil pattern
-            EXACT,         // Exact match in known list
-            DATABASE,      // Found in database
-            FUZZY,         // Fuzzy string matching
-            NOMINATIM,     // OpenStreetMap lookup
-            UNVERIFIED,    // Accepted but needs verification
-            UNKNOWN        // Could not resolve
+            PATTERN, // Matched Tamil pattern
+            EXACT, // Exact match in known list
+            DATABASE, // Found in database
+            FUZZY, // Fuzzy string matching
+            NOMINATIM, // OpenStreetMap lookup
+            UNVERIFIED, // Accepted but needs verification
+            UNKNOWN // Could not resolve
         }
 
         public static LocationResolution exact(String name, String original) {
@@ -297,7 +297,7 @@ public class LocationResolutionService {
                     .build();
         }
 
-        public static LocationResolution fromNominatim(String name, String original, 
+        public static LocationResolution fromNominatim(String name, String original,
                 double lat, double lon, double confidence) {
             return LocationResolution.builder()
                     .resolvedName(name)

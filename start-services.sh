@@ -1,6 +1,8 @@
 #!/bin/bash
 # Start all Perundhu services locally (without Docker)
 # Usage: ./start-services.sh [dev|prod|test]
+# 
+# Note: Image processing is handled by Gemini Vision AI (no separate OCR service needed)
 
 set -e
 
@@ -16,6 +18,9 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
+
+# Create logs directory
+mkdir -p "$SCRIPT_DIR/logs"
 
 # Function to check if a port is in use
 check_port() {
@@ -50,16 +55,6 @@ wait_for_service() {
 echo ""
 echo "Checking for existing services..."
 
-if check_port 8081; then
-    echo -e "${YELLOW}OCR service already running on port 8081${NC}"
-    read -p "Kill existing OCR service? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        kill $(lsof -t -i:8081) 2>/dev/null || true
-        sleep 2
-    fi
-fi
-
 if check_port 8080; then
     echo -e "${YELLOW}Backend already running on port 8080${NC}"
     read -p "Kill existing backend? (y/n) " -n 1 -r
@@ -69,34 +64,6 @@ if check_port 8080; then
         sleep 2
     fi
 fi
-
-# Start OCR Service
-echo ""
-echo "=========================================="
-echo "  Starting OCR Service (PaddleOCR)"
-echo "=========================================="
-
-cd "$SCRIPT_DIR/ocr-service"
-
-# Create venv if it doesn't exist
-if [ ! -d "venv" ]; then
-    echo "Creating Python virtual environment..."
-    python3 -m venv venv
-fi
-
-# Activate venv and install dependencies
-echo "Installing dependencies..."
-source venv/bin/activate
-pip install -q -r requirements.txt
-
-# Start OCR service in background
-echo "Starting OCR service on port 8081..."
-nohup python main.py > ../logs/ocr-service.log 2>&1 &
-OCR_PID=$!
-echo "OCR service started with PID: $OCR_PID"
-
-# Wait for OCR service to be ready
-wait_for_service "http://localhost:8081/health" "OCR Service"
 
 # Start Java Backend
 echo ""
@@ -108,8 +75,6 @@ cd "$SCRIPT_DIR/backend"
 
 # Set Spring profile
 export SPRING_PROFILES_ACTIVE=$ENV
-export OCR_SERVICE_ENABLED=true
-export OCR_SERVICE_URL=http://localhost:8081
 
 echo "Starting backend with profile: $ENV"
 nohup ./gradlew bootRun > ../logs/backend.log 2>&1 &
@@ -125,14 +90,14 @@ echo "=========================================="
 echo "  Services Started Successfully"
 echo "=========================================="
 echo ""
-echo -e "${GREEN}OCR Service:${NC}  http://localhost:8081 (PID: $OCR_PID)"
 echo -e "${GREEN}Backend:${NC}      http://localhost:8080 (PID: $BACKEND_PID)"
 echo ""
 echo "Logs:"
-echo "  - OCR Service: $SCRIPT_DIR/logs/ocr-service.log"
-echo "  - Backend:     $SCRIPT_DIR/logs/backend.log"
+echo "  - Backend: $SCRIPT_DIR/logs/backend.log"
+echo ""
+echo "Note: Image processing is handled by Gemini Vision AI"
 echo ""
 echo "To stop services:"
-echo "  kill $OCR_PID $BACKEND_PID"
+echo "  kill $BACKEND_PID"
 echo ""
 echo "Or use: ./stop-services.sh"

@@ -93,11 +93,6 @@ variable "container_image" {
   type        = string
 }
 
-variable "ocr_service_image" {
-  description = "Container image for the OCR service (PaddleOCR)"
-  type        = string
-}
-
 variable "billing_account_id" {
   description = "GCP Billing Account ID for budget alerts"
   type        = string

@@ -7,7 +7,6 @@ on:
     paths:
       - 'frontend/**'
       - 'backend/**'
-      - 'ocr-service/**'
       - '.github/workflows/cd-preprod-auto.yml'
   workflow_dispatch:
     inputs:
@@ -17,10 +16,6 @@ on:
         default: false
       deploy_backend:
         description: 'Deploy Backend'
-        type: boolean
-        default: false
-      deploy_ocr:
-        description: 'Deploy OCR Service'
         type: boolean
         default: false
       deploy_all:
@@ -48,7 +43,6 @@ jobs:
     outputs:
       frontend: ${{ steps.changes.outputs.frontend }}
       backend: ${{ steps.changes.outputs.backend }}
-      ocr: ${{ steps.changes.outputs.ocr }}
       migrations: ${{ steps.changes.outputs.migrations }}
     steps:
     - uses: actions/checkout@v4
@@ -63,12 +57,10 @@ jobs:
           if [ "${{ inputs.deploy_all }}" == "true" ]; then
             echo "frontend=true" >> $GITHUB_OUTPUT
             echo "backend=true" >> $GITHUB_OUTPUT
-            echo "ocr=true" >> $GITHUB_OUTPUT
             echo "migrations=true" >> $GITHUB_OUTPUT
           else
             echo "frontend=${{ inputs.deploy_frontend }}" >> $GITHUB_OUTPUT
             echo "backend=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
-            echo "ocr=${{ inputs.deploy_ocr }}" >> $GITHUB_OUTPUT
             echo "migrations=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
           fi
           exit 0
@@ -88,17 +80,9 @@ jobs:
         # Check backend changes
         if echo "$CHANGED_FILES" | grep -q "^backend/"; then
           echo "backend=true" >> $GITHUB_OUTPUT
-          echo "�� Backend changes detected"
+          echo "📦 Backend changes detected"
         else
           echo "backend=false" >> $GITHUB_OUTPUT
-        fi
-        
-        # Check OCR service changes
-        if echo "$CHANGED_FILES" | grep -q "^ocr-service/"; then
-          echo "ocr=true" >> $GITHUB_OUTPUT
-          echo "📦 OCR Service changes detected"
-        else
-          echo "ocr=false" >> $GITHUB_OUTPUT
         fi
         
         # Check for database migrations
@@ -218,45 +202,6 @@ jobs:
         echo "image=$IMAGE" >> $GITHUB_OUTPUT
         echo "✅ Backend image built: $IMAGE"
 
-  # Build and push OCR Service
-  build-ocr:
-    name: Build OCR Service
-    runs-on: ubuntu-latest
-    needs: [detect-changes]
-    if: needs.detect-changes.outputs.ocr == 'true'
-    outputs:
-      image: ${{ steps.build.outputs.image }}
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCPSECRET }}
-    
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    
-    - name: Configure Docker
-      run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
-    
-    - name: Build and push OCR Service
-      id: build
-      run: |
-        COMMIT_SHA=$(git rev-parse --short HEAD)
-        TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
-        IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:${TAG}"
-        
-        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:preprod-latest ./ocr-service
-        docker push $IMAGE
-        docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/ocr-service:preprod-latest
-        
-        echo "image=$IMAGE" >> $GITHUB_OUTPUT
-        echo "✅ OCR Service image built: $IMAGE"
-
   # Run database migrations (only if backend has changes)
   run-migrations:
     name: Run Database Migrations
@@ -358,47 +303,11 @@ jobs:
         
         echo "✅ Frontend deployed"
 
-  # Deploy OCR Service
-  deploy-ocr:
-    name: Deploy OCR Service
-    runs-on: ubuntu-latest
-    needs: [detect-changes, build-ocr]
-    if: always() && needs.detect-changes.outputs.ocr == 'true' && needs.build-ocr.result == 'success'
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCPSECRET }}
-    
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    
-    - name: Deploy OCR Service to Cloud Run
-      run: |
-        gcloud run deploy perundhu-ocr-service-preprod \
-          --image ${{ needs.build-ocr.outputs.image }} \
-          --platform managed \
-          --region ${{ env.GCP_REGION }} \
-          --no-allow-unauthenticated \
-          --port 8081 \
-          --memory 4Gi \
-          --cpu 2 \
-          --min-instances 0 \
-          --max-instances 5 \
-          --concurrency 10 \
-          --timeout 120s \
-          --labels="env=preprod"
-        
-        echo "✅ OCR Service deployed"
-
-  # Deploy Backend (depends on OCR if OCR is being deployed)
+  # Deploy Backend
   deploy-backend:
     name: Deploy Backend
     runs-on: ubuntu-latest
-    needs: [detect-changes, build-backend, run-migrations, deploy-ocr]
+    needs: [detect-changes, build-backend, run-migrations]
     if: always() && needs.detect-changes.outputs.backend == 'true' && needs.build-backend.result == 'success' && (needs.run-migrations.result == 'success' || needs.run-migrations.result == 'skipped')
     permissions:
       contents: read
@@ -412,13 +321,6 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
-    - name: Get OCR Service URL
-      id: ocr-url
-      run: |
-        OCR_URL=$(gcloud run services describe perundhu-ocr-service-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-ocr-service-preprod-1032721240281.asia-south1.run.app")
-        echo "url=$OCR_URL" >> $GITHUB_OUTPUT
-        echo "OCR Service URL: $OCR_URL"
-    
     - name: Deploy Backend to Cloud Run
       run: |
         gcloud run deploy perundhu-backend-preprod \
@@ -426,8 +328,8 @@ jobs:
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,MYSQL_USERNAME=perundhu_user,OCR_SERVICE_ENABLED=true,OCR_SERVICE_URL=${{ steps.ocr-url.outputs.url }},OCR_SERVICE_TIMEOUT=60,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
-          --set-secrets="MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=preprod-jwt-secret:latest" \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,MYSQL_USERNAME=perundhu_user,GEMINI_API_ENABLED=true,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
+          --set-secrets="MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=preprod-jwt-secret:latest,GEMINI_API_KEY=gemini-api-key:latest" \
           --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
           --memory 1Gi \
           --cpu 1 \
@@ -443,8 +345,8 @@ jobs:
   smoke-tests:
     name: Run Smoke Tests
     runs-on: ubuntu-latest
-    needs: [detect-changes, deploy-frontend, deploy-backend, deploy-ocr]
-    if: always() && (needs.deploy-frontend.result == 'success' || needs.deploy-backend.result == 'success' || needs.deploy-ocr.result == 'success')
+    needs: [detect-changes, deploy-frontend, deploy-backend]
+    if: always() && (needs.deploy-frontend.result == 'success' || needs.deploy-backend.result == 'success')
     permissions:
       contents: read
       id-token: write
@@ -490,7 +392,7 @@ jobs:
   summary:
     name: Deployment Summary
     runs-on: ubuntu-latest
-    needs: [detect-changes, build-frontend, build-backend, build-ocr, deploy-frontend, deploy-backend, deploy-ocr, smoke-tests]
+    needs: [detect-changes, build-frontend, build-backend, deploy-frontend, deploy-backend, smoke-tests]
     if: always()
     steps:
     - name: Generate Summary
@@ -502,6 +404,5 @@ jobs:
         echo "|---------|---------|-------|----------|" >> $GITHUB_STEP_SUMMARY
         echo "| Frontend | ${{ needs.detect-changes.outputs.frontend }} | ${{ needs.build-frontend.result || 'skipped' }} | ${{ needs.deploy-frontend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
         echo "| Backend | ${{ needs.detect-changes.outputs.backend }} | ${{ needs.build-backend.result || 'skipped' }} | ${{ needs.deploy-backend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| OCR Service | ${{ needs.detect-changes.outputs.ocr }} | ${{ needs.build-ocr.result || 'skipped' }} | ${{ needs.deploy-ocr.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Smoke Tests: ${{ needs.smoke-tests.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY

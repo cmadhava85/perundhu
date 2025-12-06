@@ -1,7 +1,5 @@
 package com.perundhu.infrastructure.config;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +11,6 @@ import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.BusTimingRecordRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.LocationValidationService;
-import com.perundhu.domain.port.OCREngine;
-import com.perundhu.domain.port.OCRService;
 import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.SkippedTimingRecordRepository;
 import com.perundhu.domain.port.StopRepository;
@@ -24,7 +20,6 @@ import com.perundhu.domain.port.TranslationService;
 import com.perundhu.domain.service.RouteValidationService;
 import com.perundhu.infrastructure.adapter.geocoding.FuzzyMatcher;
 import com.perundhu.infrastructure.adapter.geocoding.NominatimClient;
-import com.perundhu.infrastructure.adapter.service.impl.OCRServiceImpl;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
@@ -130,11 +125,6 @@ public class HexagonalConfig {
       FuzzyMatcher fuzzyMatcher,
       NominatimClient geocodingClient) {
     return new LocationResolutionService(locationRepository, fuzzyMatcher, geocodingClient);
-  }
-
-  @Bean
-  public OCRService ocrService(Optional<OCREngine> ocrEngine, Optional<LocationResolutionService> locationResolutionService) {
-    return new OCRServiceImpl(ocrEngine.orElse(null), locationResolutionService.orElse(null));
   }
 
   @Bean
