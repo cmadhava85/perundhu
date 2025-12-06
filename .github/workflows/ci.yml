@@ -98,12 +98,12 @@ jobs:
       working-directory: ./frontend
       run: npm run build
     
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: frontend-dist
-        path: frontend/dist/
-        retention-days: 7
+    # Skip artifact upload to save storage quota - images are pushed to GCR during CD
+    - name: Verify build output
+      working-directory: ./frontend
+      run: |
+        echo "✅ Frontend build successful"
+        ls -la dist/
 
   backend-test:
     name: Backend Tests
@@ -132,21 +132,14 @@ jobs:
         SPRING_DATASOURCE_USERNAME: sa
         SPRING_DATASOURCE_PASSWORD: ""
     
-    - name: Upload test results
+    # Only upload test results on failure to save storage
+    - name: Upload test results on failure
       uses: actions/upload-artifact@v4
-      if: always()
+      if: failure()
       with:
         name: backend-test-results
         path: backend/build/reports/tests/
-        retention-days: 7
-    
-    - name: Upload coverage reports
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: backend-coverage
-        path: backend/build/reports/jacoco/
-        retention-days: 7
+        retention-days: 3
 
   backend-build:
     name: Backend Build
@@ -171,12 +164,12 @@ jobs:
       working-directory: ./backend
       run: ./gradlew build -x test
     
-    - name: Upload JAR artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: backend-jar
-        path: backend/build/libs/*.jar
-        retention-days: 7
+    # Skip artifact upload to save storage quota - JAR is rebuilt during CD
+    - name: Verify build output
+      working-directory: ./backend
+      run: |
+        echo "✅ Backend build successful"
+        ls -la build/libs/*.jar
 
   security-scan:
     name: Security Scan
