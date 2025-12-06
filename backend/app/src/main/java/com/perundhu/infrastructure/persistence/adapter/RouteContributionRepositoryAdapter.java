@@ -4,13 +4,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.infrastructure.persistence.entity.RouteContributionJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implementation of RouteContributionRepository that delegates to Spring Data
@@ -18,9 +25,11 @@ import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepositor
  */
 // Remove @Repository annotation - managed by HexagonalConfig
 @Transactional
+@Slf4j
 public class RouteContributionRepositoryAdapter implements RouteContributionRepository {
 
     private final RouteContributionJpaRepository repository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public RouteContributionRepositoryAdapter(
             @Qualifier("jpaPackageRouteContributionJpaRepository") RouteContributionJpaRepository repository) {
@@ -130,7 +139,41 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
                 .additionalNotes(contribution.getAdditionalNotes())
                 .validationMessage(contribution.getValidationMessage())
                 .submittedBy(contribution.getSubmittedBy())
+                .sourceImageId(contribution.getSourceImageId())
+                .routeGroupId(contribution.getRouteGroupId())
+                .stopsJson(serializeStops(contribution.getStops()))
                 .build();
+    }
+
+    /**
+     * Serialize stops list to JSON string for storage
+     */
+    private String serializeStops(List<StopContribution> stops) {
+        if (stops == null || stops.isEmpty()) {
+            return null;
+        }
+        try {
+            return objectMapper.writeValueAsString(stops);
+        } catch (JsonProcessingException e) {
+            log.warn("Failed to serialize stops to JSON: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Deserialize stops from JSON string
+     */
+    private List<StopContribution> deserializeStops(String stopsJson) {
+        if (stopsJson == null || stopsJson.isEmpty()) {
+            return new ArrayList<>();
+        }
+        try {
+            return objectMapper.readValue(stopsJson, new TypeReference<List<StopContribution>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.warn("Failed to deserialize stops from JSON: {}", e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     private RouteContribution mapToDomainModel(RouteContributionJpaEntity entity) {
@@ -154,7 +197,9 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
                 .additionalNotes(entity.getAdditionalNotes())
                 .validationMessage(entity.getValidationMessage())
                 .submittedBy(entity.getSubmittedBy())
-                .stops(new java.util.ArrayList<>()) // Initialize empty stops list
+                .sourceImageId(entity.getSourceImageId())
+                .routeGroupId(entity.getRouteGroupId())
+                .stops(deserializeStops(entity.getStopsJson()))
                 .build();
     }
 }

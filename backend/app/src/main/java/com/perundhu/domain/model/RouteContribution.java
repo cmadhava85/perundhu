@@ -29,6 +29,10 @@ public class RouteContribution {
     private String submittedBy;
     private List<StopContribution> stops;
 
+    // Fields for tracking OCR-extracted schedules
+    private String sourceImageId; // ID of the image contribution this came from
+    private String routeGroupId; // Groups related schedules (e.g., same route, different times)
+
     // Default constructor
     public RouteContribution() {
         this.status = "PENDING";
@@ -62,7 +66,9 @@ public class RouteContribution {
                 .additionalNotes(this.additionalNotes)
                 .validationMessage(this.validationMessage)
                 .submittedBy(this.submittedBy)
-                .stops(this.stops);
+                .stops(this.stops)
+                .sourceImageId(this.sourceImageId)
+                .routeGroupId(this.routeGroupId);
     }
 
     // Getters and setters
@@ -226,6 +232,22 @@ public class RouteContribution {
         this.stops = stops;
     }
 
+    public String getSourceImageId() {
+        return sourceImageId;
+    }
+
+    public void setSourceImageId(String sourceImageId) {
+        this.sourceImageId = sourceImageId;
+    }
+
+    public String getRouteGroupId() {
+        return routeGroupId;
+    }
+
+    public void setRouteGroupId(String routeGroupId) {
+        this.routeGroupId = routeGroupId;
+    }
+
     // Builder class
     public static class RouteContributionBuilder {
         private final RouteContribution contribution = new RouteContribution();
@@ -327,6 +349,16 @@ public class RouteContribution {
 
         public RouteContributionBuilder stops(List<StopContribution> stops) {
             contribution.setStops(stops);
+            return this;
+        }
+
+        public RouteContributionBuilder sourceImageId(String sourceImageId) {
+            contribution.setSourceImageId(sourceImageId);
+            return this;
+        }
+
+        public RouteContributionBuilder routeGroupId(String routeGroupId) {
+            contribution.setRouteGroupId(routeGroupId);
             return this;
         }
 

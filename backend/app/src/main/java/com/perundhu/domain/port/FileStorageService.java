@@ -69,4 +69,20 @@ public interface FileStorageService {
      * @return FileResource for the file
      */
     FileResource loadAsResource(String userId, String filename);
+
+    /**
+     * Get image bytes from storage
+     * 
+     * @param imageUrl The image URL to read
+     * @return byte array of the image, or null if not found
+     */
+    byte[] getImageBytes(String imageUrl);
+
+    /**
+     * Get content type of an image
+     * 
+     * @param imageUrl The image URL
+     * @return MIME type string (e.g., "image/jpeg")
+     */
+    String getImageContentType(String imageUrl);
 }

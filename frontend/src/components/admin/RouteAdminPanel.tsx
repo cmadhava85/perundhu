@@ -376,6 +376,26 @@ ${result.sqlExample}`;
         </div>
         
         <div className="route-meta">
+          {/* Timing Information */}
+          {(route.departureTime || route.arrivalTime) && (
+            <div className="route-timing">
+              <span className="meta-icon">🕐</span>
+              <div className="timing-details">
+                {route.departureTime && (
+                  <span className="timing-item">
+                    <span className="timing-label">Dep:</span>
+                    <span className="timing-value">{route.departureTime}</span>
+                  </span>
+                )}
+                {route.arrivalTime && (
+                  <span className="timing-item">
+                    <span className="timing-label">Arr:</span>
+                    <span className="timing-value">{route.arrivalTime}</span>
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
           <div className="route-stops">
             {route.stops && route.stops.length > 0 && (
               <>
@@ -652,6 +672,8 @@ ${result.sqlExample}`;
                   <th>{t('admin.routes.busNumber')}</th>
                   <th>{t('admin.routes.fromLocation')}</th>
                   <th>{t('admin.routes.toLocation')}</th>
+                  <th>{t('admin.routes.departure', 'Departure')}</th>
+                  <th>{t('admin.routes.arrival', 'Arrival')}</th>
                   <th>{t('admin.routes.stops')}</th>
                   <th>{t('admin.routes.submittedBy')}</th>
                   <th>{t('admin.routes.date')}</th>
@@ -685,6 +707,20 @@ ${result.sqlExample}`;
                           <div className="tamil-name">{route.toLocationTaName}</div>
                         )}
                       </div>
+                    </td>
+                    <td className="timing-cell">
+                      {route.departureTime ? (
+                        <span className="timing-badge departure">{route.departureTime}</span>
+                      ) : (
+                        <span className="no-timing">-</span>
+                      )}
+                    </td>
+                    <td className="timing-cell">
+                      {route.arrivalTime ? (
+                        <span className="timing-badge arrival">{route.arrivalTime}</span>
+                      ) : (
+                        <span className="no-timing">-</span>
+                      )}
                     </td>
                     <td className="stops-cell">
                       {route.stops && route.stops.length > 0 ? (

@@ -317,6 +317,53 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
   }
 
+  @Override
+  public byte[] getImageBytes(String imageUrl) {
+    try {
+      String imagePath = getImagePath(imageUrl);
+      if (imagePath != null) {
+        Path path = Paths.get(imagePath);
+        if (Files.exists(path)) {
+          log.debug("Reading image bytes from: {}", imagePath);
+          return Files.readAllBytes(path);
+        }
+      }
+      log.warn("Image not found for reading bytes: {}", imageUrl);
+      return null;
+    } catch (Exception e) {
+      log.error("Error reading image bytes for {}: {}", imageUrl, e.getMessage(), e);
+      return null;
+    }
+  }
+
+  @Override
+  public String getImageContentType(String imageUrl) {
+    try {
+      String imagePath = getImagePath(imageUrl);
+      if (imagePath != null) {
+        Path path = Paths.get(imagePath);
+        if (Files.exists(path)) {
+          String contentType = Files.probeContentType(path);
+          if (contentType != null) {
+            return contentType;
+          }
+          // Fallback based on extension
+          String pathStr = imagePath.toLowerCase();
+          if (pathStr.endsWith(".png"))
+            return "image/png";
+          if (pathStr.endsWith(".gif"))
+            return "image/gif";
+          if (pathStr.endsWith(".webp"))
+            return "image/webp";
+        }
+      }
+      return "image/jpeg"; // Default
+    } catch (Exception e) {
+      log.error("Error getting content type for {}: {}", imageUrl, e.getMessage());
+      return "image/jpeg";
+    }
+  }
+
   // Helper methods
 
   private String getFileExtension(String filename) {

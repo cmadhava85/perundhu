@@ -149,16 +149,13 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
     >
       {/* Card Header */}
       <div className="transit-card-header">
-        {/* Bus Info Row - Number, Type, Name on same line */}
+        {/* Bus Info Row - Number and Type on same line (removed duplicate name) */}
         <div className="bus-info-row">
           <div className="bus-number-display">
-            {bus.busNumber || 'Bus'}
+            {bus.busNumber || bus.busName || 'Bus'}
           </div>
           <div className="bus-type-display" style={{ backgroundColor: `${busTypeInfo.color}20`, color: busTypeInfo.color }}>
             {busTypeInfo.icon} {busTypeInfo.label}
-          </div>
-          <div className="bus-name-display">
-            {bus.busName || 'Transit Service'}
           </div>
         </div>
 

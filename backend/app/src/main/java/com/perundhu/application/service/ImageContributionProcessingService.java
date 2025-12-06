@@ -2,6 +2,7 @@ package com.perundhu.application.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,9 @@ import com.perundhu.application.port.input.ImageContributionInputPort;
 import com.perundhu.domain.model.FileUpload;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.FileStorageService;
+import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.OCRService;
 import com.perundhu.domain.port.RouteContributionOutputPort;
@@ -40,6 +43,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     private final FileStorageService fileStorageService;
     private final ImageContributionOutputPort imageContributionOutputPort;
     private final RouteContributionOutputPort routeContributionOutputPort;
+    private final LocationResolutionService locationResolutionService;
+    private final GeminiVisionService geminiVisionService;
 
     // Thread pool for async processing
     private final ExecutorService asyncExecutor = Executors.newFixedThreadPool(5);
@@ -99,6 +104,379 @@ public class ImageContributionProcessingService implements ImageContributionInpu
      * Process image with OCR and extract bus schedule data
      */
     private void processImageWithOCR(ImageContribution contribution, MultipartFile imageFile) {
+        logger.info("Starting OCR processing for contribution: {}", contribution.getId());
+
+        try {
+            // Try Gemini Vision first if available (provides better semantic understanding)
+            if (geminiVisionService.isAvailable()) {
+                logger.info("Using Gemini Vision AI for image processing");
+                processWithGeminiVision(contribution, imageFile);
+                return;
+            }
+
+            // Fallback to traditional OCR pipeline
+            logger.info("Using traditional OCR pipeline (Gemini not available)");
+            processWithTraditionalOCR(contribution, imageFile);
+
+        } catch (Exception e) {
+            logger.error("OCR processing failed for contribution {}: {}", contribution.getId(), e.getMessage(), e);
+            markProcessingFailed(contribution, "OCR processing failed: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Process image using Gemini Vision AI for semantic understanding
+     */
+    private void processWithGeminiVision(ImageContribution contribution, MultipartFile imageFile) {
+        try {
+            // Convert image to base64
+            byte[] imageBytes = imageFile.getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+            // Determine MIME type
+            String mimeType = imageFile.getContentType();
+            if (mimeType == null || mimeType.isEmpty()) {
+                mimeType = "image/jpeg"; // Default
+            }
+
+            // Extract structured data using Gemini Vision
+            Map<String, Object> extractedData = geminiVisionService.extractBusScheduleFromBase64(base64Image, mimeType);
+
+            if (extractedData == null || extractedData.isEmpty()) {
+                logger.warn("Gemini Vision returned empty data, falling back to traditional OCR");
+                processWithTraditionalOCR(contribution, imageFile);
+                return;
+            }
+
+            // Check if extraction was successful
+            if (extractedData.containsKey("error")) {
+                logger.error("Gemini Vision extraction error: {}", extractedData.get("error"));
+                // Fallback to traditional OCR
+                processWithTraditionalOCR(contribution, imageFile);
+                return;
+            }
+
+            // Get confidence from Gemini response
+            double confidence = extractedData.containsKey("confidence")
+                    ? ((Number) extractedData.get("confidence")).doubleValue()
+                    : 0.8; // Default high confidence for Gemini
+
+            logger.info("Gemini Vision extraction confidence: {} for contribution: {}", confidence,
+                    contribution.getId());
+
+            // Store extracted data as JSON string
+            try {
+                com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                contribution.setExtractedData(mapper.writeValueAsString(extractedData));
+            } catch (Exception e) {
+                contribution.setExtractedData(extractedData.toString());
+            }
+
+            // Process based on confidence
+            if (confidence >= 0.6) {
+                processHighConfidenceGeminiExtraction(contribution, extractedData);
+            } else if (confidence >= 0.3) {
+                processMediumConfidenceGeminiExtraction(contribution, extractedData);
+            } else {
+                processLowConfidenceGeminiExtraction(contribution, extractedData);
+            }
+
+        } catch (Exception e) {
+            logger.error("Gemini Vision processing failed for contribution {}: {}",
+                    contribution.getId(), e.getMessage(), e);
+            // Fallback to traditional OCR
+            try {
+                processWithTraditionalOCR(contribution, imageFile);
+            } catch (Exception fallbackError) {
+                markProcessingFailed(contribution, "Both Gemini and OCR processing failed: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Process high confidence Gemini Vision extraction
+     */
+    private void processHighConfidenceGeminiExtraction(ImageContribution contribution,
+            Map<String, Object> extractedData) {
+        try {
+            List<RouteContribution> routes = createRouteContributionsFromGeminiData(contribution, extractedData);
+
+            if (!routes.isEmpty()) {
+                List<String> createdRouteIds = new ArrayList<>();
+                for (RouteContribution route : routes) {
+                    RouteContribution savedRoute = routeContributionOutputPort.save(route);
+                    createdRouteIds.add(savedRoute.getId());
+                }
+
+                contribution.setStatus("PROCESSED");
+                contribution.setProcessedDate(LocalDateTime.now());
+                contribution.setValidationMessage(
+                        String.format("[Gemini AI] Successfully extracted %d route(s). Route IDs: %s",
+                                routes.size(), String.join(", ", createdRouteIds)));
+
+                logger.info("Gemini high confidence processing completed for contribution: {}, created {} routes",
+                        contribution.getId(), routes.size());
+            } else {
+                processMediumConfidenceGeminiExtraction(contribution, extractedData);
+            }
+
+        } catch (Exception e) {
+            logger.error("Gemini high confidence processing failed: {}", e.getMessage(), e);
+            processMediumConfidenceGeminiExtraction(contribution, extractedData);
+        }
+
+        imageContributionOutputPort.save(contribution);
+    }
+
+    /**
+     * Process medium confidence Gemini Vision extraction
+     */
+    private void processMediumConfidenceGeminiExtraction(ImageContribution contribution,
+            Map<String, Object> extractedData) {
+        contribution.setStatus("MANUAL_REVIEW_NEEDED");
+        contribution.setProcessedDate(LocalDateTime.now());
+        contribution.setValidationMessage(
+                "[Gemini AI] Medium confidence extraction. Manual review required. " +
+                        "Extracted data available for verification.");
+
+        logger.info("Gemini medium confidence processing completed for contribution: {}", contribution.getId());
+        imageContributionOutputPort.save(contribution);
+    }
+
+    /**
+     * Process low confidence Gemini Vision extraction
+     */
+    private void processLowConfidenceGeminiExtraction(ImageContribution contribution,
+            Map<String, Object> extractedData) {
+        contribution.setStatus("LOW_CONFIDENCE_OCR");
+        contribution.setProcessedDate(LocalDateTime.now());
+        contribution.setValidationMessage(
+                "[Gemini AI] Low confidence extraction. Manual processing required. " +
+                        "Extracted data may be incomplete or inaccurate.");
+
+        logger.info("Gemini low confidence processing completed for contribution: {}", contribution.getId());
+        imageContributionOutputPort.save(contribution);
+    }
+
+    /**
+     * Create route contributions from Gemini extracted data
+     */
+    @SuppressWarnings("unchecked")
+    private List<RouteContribution> createRouteContributionsFromGeminiData(
+            ImageContribution contribution, Map<String, Object> extractedData) {
+
+        List<RouteContribution> routes = new ArrayList<>();
+
+        try {
+            String origin = (String) extractedData.get("origin");
+
+            // Handle grouped routes (routes grouped by destination)
+            List<Map<String, Object>> groupedRoutes = (List<Map<String, Object>>) extractedData.get("groupedRoutes");
+            if (groupedRoutes != null && !groupedRoutes.isEmpty()) {
+                for (Map<String, Object> group : groupedRoutes) {
+                    String destination = (String) group.get("destination");
+                    List<Map<String, Object>> routesList = (List<Map<String, Object>>) group.get("routes");
+
+                    if (routesList != null) {
+                        for (Map<String, Object> routeData : routesList) {
+                            // Create one route per departure time
+                            List<RouteContribution> expandedRoutes = createExpandedRoutesFromGeminiData(
+                                    contribution, origin, destination, routeData);
+                            routes.addAll(expandedRoutes);
+                        }
+                    }
+                }
+            }
+
+            // Handle routes from 'routes' array (from Gemini pipe-delimited format)
+            List<Map<String, Object>> routesArray = (List<Map<String, Object>>) extractedData.get("routes");
+            if (routesArray != null && !routesArray.isEmpty()) {
+                for (Map<String, Object> routeData : routesArray) {
+                    String fromLocation = (String) routeData.get("fromLocation");
+                    String toLocation = (String) routeData.get("toLocation");
+
+                    // Create one route per departure time
+                    List<RouteContribution> expandedRoutes = createExpandedRoutesFromGeminiData(
+                            contribution,
+                            fromLocation != null ? fromLocation : origin,
+                            toLocation,
+                            routeData);
+                    routes.addAll(expandedRoutes);
+                }
+            }
+
+            // Handle multiple routes (flat list) - legacy format
+            List<Map<String, Object>> multipleRoutes = (List<Map<String, Object>>) extractedData.get("multipleRoutes");
+            if (multipleRoutes != null && !multipleRoutes.isEmpty()) {
+                for (Map<String, Object> routeData : multipleRoutes) {
+                    String fromLocation = (String) routeData.get("fromLocation");
+                    String toLocation = (String) routeData.get("toLocation");
+
+                    // Create one route per departure time
+                    List<RouteContribution> expandedRoutes = createExpandedRoutesFromGeminiData(
+                            contribution,
+                            fromLocation != null ? fromLocation : origin,
+                            toLocation,
+                            routeData);
+                    routes.addAll(expandedRoutes);
+                }
+            }
+
+            logger.info(
+                    "Created {} route contributions from Gemini data for contribution: {} (expanded from departure times)",
+                    routes.size(), contribution.getId());
+
+        } catch (Exception e) {
+            logger.error("Error creating route contributions from Gemini data: {}", e.getMessage(), e);
+        }
+
+        return routes;
+    }
+
+    /**
+     * Create expanded route contributions - one per departure time.
+     * If a route has 97 departure times (like Madurai), this creates 97
+     * RouteContribution entries.
+     */
+    @SuppressWarnings("unchecked")
+    private List<RouteContribution> createExpandedRoutesFromGeminiData(
+            ImageContribution contribution,
+            String origin,
+            String destination,
+            Map<String, Object> routeData) {
+
+        List<RouteContribution> routes = new ArrayList<>();
+
+        try {
+            String routeNumber = (String) routeData.get("routeNumber");
+            String via = (String) routeData.get("via");
+
+            // Get all departure times
+            List<String> departureTimes = (List<String>) routeData.get("departureTimes");
+            if (departureTimes == null) {
+                departureTimes = (List<String>) routeData.get("timings");
+            }
+
+            // Fallback to single departureTime
+            String singleDepartureTime = (String) routeData.get("departureTime");
+            if ((departureTimes == null || departureTimes.isEmpty()) && singleDepartureTime != null) {
+                departureTimes = List.of(singleDepartureTime);
+            }
+
+            // Validate locations
+            String validatedFrom = validateAndResolveLocation(origin);
+            String validatedTo = validateAndResolveLocation(destination);
+
+            if (validatedFrom == null || validatedTo == null || validatedFrom.equals(validatedTo)) {
+                logger.warn("Skipping Gemini route: invalid locations - from='{}', to='{}'", origin, destination);
+                return routes;
+            }
+
+            // Generate route group ID for grouping related schedules
+            String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, via);
+
+            // Create one route contribution per departure time
+            if (departureTimes != null && !departureTimes.isEmpty()) {
+                int totalSchedules = departureTimes.size();
+                int scheduleIndex = 0;
+
+                for (String departureTime : departureTimes) {
+                    scheduleIndex++;
+
+                    RouteContribution route = RouteContribution.builder()
+                            .id(UUID.randomUUID().toString())
+                            .userId(contribution.getUserId())
+                            .busNumber(routeNumber != null ? routeNumber : "UNKNOWN")
+                            .fromLocationName(validatedFrom)
+                            .toLocationName(validatedTo)
+                            .departureTime(departureTime)
+                            .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
+                            .submissionDate(LocalDateTime.now())
+                            .status("PENDING_REVIEW")
+                            .sourceImageId(contribution.getId())
+                            .routeGroupId(routeGroupId)
+                            .additionalNotes(String.format("[Gemini AI] Schedule %d of %d from image: %s",
+                                    scheduleIndex, totalSchedules, contribution.getId()))
+                            .build();
+
+                    routes.add(route);
+                }
+
+                logger.debug("Created {} routes for {} -> {} (departures: {})",
+                        routes.size(), validatedFrom, validatedTo, totalSchedules);
+            } else {
+                logger.warn("No departure times found for route {} -> {}", origin, destination);
+            }
+
+        } catch (Exception e) {
+            logger.error("Error creating expanded routes from Gemini data: {}", e.getMessage(), e);
+        }
+
+        return routes;
+    }
+
+    /**
+     * Create a single route contribution from Gemini route data
+     */
+    @SuppressWarnings("unchecked")
+    private RouteContribution createRouteFromGeminiRouteData(
+            ImageContribution contribution,
+            String origin,
+            String destination,
+            Map<String, Object> routeData) {
+
+        try {
+            String routeNumber = (String) routeData.get("routeNumber");
+            String via = (String) routeData.get("via");
+            String departureTime = (String) routeData.get("departureTime");
+            List<String> departureTimes = (List<String>) routeData.get("departureTimes");
+
+            // Validate locations
+            String validatedFrom = validateAndResolveLocation(origin);
+            String validatedTo = validateAndResolveLocation(destination);
+
+            if (validatedFrom == null || validatedTo == null || validatedFrom.equals(validatedTo)) {
+                logger.warn("Skipping Gemini route: invalid locations - from='{}', to='{}'", origin, destination);
+                return null;
+            }
+
+            // Build timing list - use the first departure time for this contribution
+            String primaryDepartureTime = null;
+            if (departureTime != null && !departureTime.isEmpty()) {
+                primaryDepartureTime = departureTime;
+            } else if (departureTimes != null && !departureTimes.isEmpty()) {
+                primaryDepartureTime = departureTimes.get(0);
+            }
+
+            // Generate route group ID for grouping related schedules
+            String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, via);
+
+            return RouteContribution.builder()
+                    .id(UUID.randomUUID().toString())
+                    .userId(contribution.getUserId())
+                    .busNumber(routeNumber != null ? routeNumber : "UNKNOWN")
+                    .fromLocationName(validatedFrom)
+                    .toLocationName(validatedTo)
+                    .departureTime(primaryDepartureTime)
+                    .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
+                    .submissionDate(LocalDateTime.now())
+                    .status("PENDING_REVIEW")
+                    .sourceImageId(contribution.getId())
+                    .routeGroupId(routeGroupId)
+                    .additionalNotes("[Gemini AI] Auto-extracted from image contribution: " + contribution.getId())
+                    .build();
+
+        } catch (Exception e) {
+            logger.error("Error creating route from Gemini data: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
+     * Process image with traditional OCR pipeline (PaddleOCR/Tesseract + regex
+     * parsing)
+     */
+    private void processWithTraditionalOCR(ImageContribution contribution, MultipartFile imageFile) {
         logger.info("Starting OCR processing for contribution: {}", contribution.getId());
 
         try {
@@ -384,7 +762,48 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         logger.info("Extracting OCR data from image contribution: {}", contribution.getId());
 
         try {
-            // Extract text from the image URL
+            // Try Gemini Vision first if available (provides better semantic understanding)
+            if (geminiVisionService.isAvailable()) {
+                logger.info("Using Gemini Vision AI for OCR extraction");
+
+                // Read image bytes directly from storage (not via HTTP URL)
+                byte[] imageBytes = fileStorageService.getImageBytes(contribution.getImageUrl());
+
+                if (imageBytes != null && imageBytes.length > 0) {
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                    String mimeType = fileStorageService.getImageContentType(contribution.getImageUrl());
+
+                    logger.info("Sending image to Gemini Vision (size: {} bytes, type: {})",
+                            imageBytes.length, mimeType);
+
+                    Map<String, Object> geminiResult = geminiVisionService.extractBusScheduleFromBase64(base64Image,
+                            mimeType);
+
+                    if (geminiResult != null && !geminiResult.containsKey("error")) {
+                        // Add metadata
+                        geminiResult.put("extractedAt", LocalDateTime.now().toString());
+                        geminiResult.put("extractionMethod", "gemini-vision");
+
+                        // Calculate confidence if not present
+                        if (!geminiResult.containsKey("confidence")) {
+                            geminiResult.put("confidence", 0.85); // Default high confidence for Gemini
+                        }
+
+                        logger.info("Successfully extracted OCR data using Gemini Vision for contribution: {}",
+                                contribution.getId());
+                        return geminiResult;
+                    } else {
+                        String errorMsg = geminiResult != null ? String.valueOf(geminiResult.get("message"))
+                                : "Unknown error";
+                        logger.warn("Gemini Vision extraction failed: {}, falling back to traditional OCR", errorMsg);
+                    }
+                } else {
+                    logger.warn("Could not read image bytes from storage, falling back to traditional OCR");
+                }
+            }
+
+            // Fallback to traditional OCR
+            logger.info("Using traditional OCR for extraction");
             String extractedText = ocrService.extractTextFromImage(contribution.getImageUrl());
 
             // Parse the text into structured data
@@ -394,7 +813,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             Map<String, Object> result = new HashMap<>(parsedData);
             result.put("extractedText", extractedText);
             result.put("confidence", calculateConfidence(extractedText, parsedData));
-            result.put("extractedAt", LocalDateTime.now());
+            result.put("extractedAt", LocalDateTime.now().toString());
+            result.put("extractionMethod", "traditional-ocr");
 
             logger.info("Successfully extracted OCR data from contribution: {}", contribution.getId());
             return result;
@@ -423,10 +843,30 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     public List<RouteContribution> createRouteDataFromOCR(
             ImageContribution contribution,
             Map<String, Object> extractedData) {
+        // Default: routes need review (PENDING_REVIEW status)
+        return createRouteDataFromOCR(contribution, extractedData, false);
+    }
+
+    /**
+     * Create route data from OCR extracted text with optional auto-approval.
+     * When autoApprove is true, routes are created with APPROVED status directly.
+     * 
+     * @param contribution  The original image contribution
+     * @param extractedData The OCR extracted data
+     * @param autoApprove   If true, routes are created as APPROVED (admin has
+     *                      approved)
+     * @return List of created route contributions
+     */
+    public List<RouteContribution> createRouteDataFromOCR(
+            ImageContribution contribution,
+            Map<String, Object> extractedData,
+            boolean autoApprove) {
+        String status = autoApprove ? "APPROVED" : "PENDING_REVIEW";
 
         logger.info("Creating route data from OCR for contribution: {}", contribution.getId());
 
         List<RouteContribution> createdRoutes = new ArrayList<>();
+        int skippedRoutes = 0;
 
         try {
             // Extract route information from OCR data
@@ -438,40 +878,185 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             @SuppressWarnings("unchecked")
             List<String> timings = (List<String>) extractedData.get("timing");
 
-            // Create route contribution for the main route
+            // Validate and resolve locations for the main route
             if (routeNumber != null && fromLocation != null && toLocation != null) {
-                RouteContribution routeContribution = createRouteContribution(
-                        contribution, routeNumber, fromLocation, toLocation,
-                        operatorName, fare, timings);
+                String validatedFrom = validateAndResolveLocation(fromLocation);
+                String validatedTo = validateAndResolveLocation(toLocation);
 
-                RouteContribution savedRoute = routeContributionOutputPort.save(routeContribution);
-                createdRoutes.add(savedRoute);
+                if (validatedFrom != null && validatedTo != null && !validatedFrom.equals(validatedTo)) {
+                    RouteContribution routeContribution = createRouteContribution(
+                            contribution, routeNumber, validatedFrom, validatedTo,
+                            operatorName, fare, timings, status);
 
-                logger.info("Created route contribution: {} -> {} (Route: {})",
-                        fromLocation, toLocation, routeNumber);
-            }
+                    RouteContribution savedRoute = routeContributionOutputPort.save(routeContribution);
+                    createdRoutes.add(savedRoute);
 
-            // If there are multiple routes detected, create additional entries
-            @SuppressWarnings("unchecked")
-            List<Map<String, Object>> multipleRoutes = (List<Map<String, Object>>) extractedData.get("multipleRoutes");
-
-            if (multipleRoutes != null) {
-                for (Map<String, Object> routeData : multipleRoutes) {
-                    RouteContribution additionalRoute = createRouteContribution(
-                            contribution,
-                            (String) routeData.get("routeNumber"),
-                            (String) routeData.get("fromLocation"),
-                            (String) routeData.get("toLocation"),
-                            (String) routeData.get("operatorName"),
-                            (String) routeData.get("fare"),
-                            (List<String>) routeData.get("timing"));
-
-                    RouteContribution savedAdditionalRoute = routeContributionOutputPort.save(additionalRoute);
-                    createdRoutes.add(savedAdditionalRoute);
+                    logger.info("Created route contribution: {} -> {} (Route: {})",
+                            validatedFrom, validatedTo, routeNumber);
+                } else {
+                    logger.warn(
+                            "Skipping main route: invalid locations - from='{}' (resolved: {}), to='{}' (resolved: {})",
+                            fromLocation, validatedFrom, toLocation, validatedTo);
+                    skippedRoutes++;
                 }
             }
 
-            logger.info("Successfully created {} route entries from OCR data", createdRoutes.size());
+            // Handle 'routes' array from Gemini (routes with multiple departureTimes each)
+            // Each route needs to be EXPANDED: one DB entry per departure time
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> routesArray = (List<Map<String, Object>>) extractedData.get("routes");
+
+            if (routesArray != null && !routesArray.isEmpty()) {
+                logger.info("Processing {} routes from Gemini data for expansion", routesArray.size());
+
+                for (Map<String, Object> routeData : routesArray) {
+                    String routeFrom = (String) routeData.get("fromLocation");
+                    String routeTo = (String) routeData.get("toLocation");
+                    if (routeTo == null) {
+                        routeTo = (String) routeData.get("destination");
+                    }
+                    String via = (String) routeData.get("via");
+
+                    // Validate locations
+                    String validatedFrom = validateAndResolveLocation(routeFrom);
+                    String validatedTo = validateAndResolveLocation(routeTo);
+
+                    if (validatedFrom == null || validatedTo == null || validatedFrom.equals(validatedTo)) {
+                        logger.warn("Skipping route: invalid locations - from='{}', to='{}'", routeFrom, routeTo);
+                        skippedRoutes++;
+                        continue;
+                    }
+
+                    // Get ALL departure times for this route
+                    @SuppressWarnings("unchecked")
+                    List<String> departureTimes = (List<String>) routeData.get("departureTimes");
+                    if (departureTimes == null) {
+                        departureTimes = (List<String>) routeData.get("timings");
+                    }
+
+                    // If no times found, use single departureTime
+                    if (departureTimes == null || departureTimes.isEmpty()) {
+                        String singleTime = (String) routeData.get("departureTime");
+                        if (singleTime != null) {
+                            departureTimes = List.of(singleTime);
+                        }
+                    }
+
+                    if (departureTimes == null || departureTimes.isEmpty()) {
+                        logger.warn("Skipping route {} -> {}: no departure times found", validatedFrom, validatedTo);
+                        skippedRoutes++;
+                        continue;
+                    }
+
+                    // EXPAND: Create one RouteContribution per departure time
+                    logger.info("Expanding route {} -> {} with {} departure times",
+                            validatedFrom, validatedTo, departureTimes.size());
+
+                    String busNumber = (String) routeData.get("routeNumber");
+                    if (busNumber == null || busNumber.isBlank()) {
+                        busNumber = "TNSTC"; // Default bus operator for Tamil Nadu routes
+                    }
+
+                    for (String departureTime : departureTimes) {
+                        RouteContribution route = createRouteContributionWithDepartureTime(
+                                contribution,
+                                busNumber,
+                                validatedFrom,
+                                validatedTo,
+                                via,
+                                null, // operatorName
+                                null, // fare
+                                departureTime,
+                                List.of(departureTime), // single timing
+                                null, // stops
+                                status);
+
+                        RouteContribution savedRoute = routeContributionOutputPort.save(route);
+                        createdRoutes.add(savedRoute);
+                    }
+
+                    logger.info("Created {} route entries for {} -> {}",
+                            departureTimes.size(), validatedFrom, validatedTo);
+                }
+            }
+
+            // If there are multiple routes detected (already expanded - one per departure
+            // time)
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> multipleRoutes = (List<Map<String, Object>>) extractedData.get("multipleRoutes");
+
+            if (multipleRoutes != null && !multipleRoutes.isEmpty()) {
+                for (Map<String, Object> routeData : multipleRoutes) {
+                    String routeFrom = (String) routeData.get("fromLocation");
+                    String routeTo = (String) routeData.get("toLocation");
+                    String via = (String) routeData.get("via");
+
+                    // Validate origin and destination
+                    String validatedFrom = validateAndResolveLocation(routeFrom);
+                    String validatedTo = validateAndResolveLocation(routeTo);
+
+                    // Skip route if either location is invalid or if they are the same
+                    if (validatedFrom == null || validatedTo == null) {
+                        logger.warn(
+                                "Skipping route: invalid locations - from='{}' (resolved: {}), to='{}' (resolved: {})",
+                                routeFrom, validatedFrom, routeTo, validatedTo);
+                        skippedRoutes++;
+                        continue;
+                    }
+
+                    if (validatedFrom.equals(validatedTo)) {
+                        logger.warn("Skipping route: origin equals destination - from='{}', to='{}'",
+                                validatedFrom, validatedTo);
+                        skippedRoutes++;
+                        continue;
+                    }
+
+                    // Check if destination is actually a VIA city (should not be a destination)
+                    if (isViaCity(validatedTo, via)) {
+                        logger.warn("Skipping route: destination '{}' is a VIA city in route pattern", validatedTo);
+                        skippedRoutes++;
+                        continue;
+                    }
+
+                    // Get intermediate stops (extracted from VIA column)
+                    @SuppressWarnings("unchecked")
+                    List<Map<String, String>> stopsData = (List<Map<String, String>>) routeData.get("stops");
+
+                    // Validate and resolve stop locations
+                    List<Map<String, String>> validatedStops = validateStops(stopsData);
+
+                    // Get the single departure time (from expanded routes)
+                    String departureTime = (String) routeData.get("departureTime");
+
+                    // Fallback to timings array if departureTime not set
+                    @SuppressWarnings("unchecked")
+                    List<String> routeTimings = (List<String>) routeData.get("timings");
+
+                    // Create one route per entry (each entry now has a single departure time)
+                    RouteContribution additionalRoute = createRouteContributionWithDepartureTime(
+                            contribution,
+                            (String) routeData.get("routeNumber"),
+                            validatedFrom,
+                            validatedTo,
+                            via,
+                            (String) routeData.get("operatorName"),
+                            (String) routeData.get("fare"),
+                            departureTime,
+                            routeTimings,
+                            validatedStops,
+                            status);
+
+                    RouteContribution savedAdditionalRoute = routeContributionOutputPort.save(additionalRoute);
+                    createdRoutes.add(savedAdditionalRoute);
+
+                    int stopCount = validatedStops != null ? validatedStops.size() : 0;
+                    logger.info("Created route: {} -> {} via {} at {} with {} intermediate stops",
+                            validatedFrom, validatedTo, via, departureTime, stopCount);
+                }
+            }
+
+            logger.info("Successfully created {} route entries from OCR data ({} skipped due to invalid locations)",
+                    createdRoutes.size(), skippedRoutes);
 
         } catch (Exception e) {
             logger.error("Failed to create route data from OCR for contribution {}: {}",
@@ -479,6 +1064,188 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         }
 
         return createdRoutes;
+    }
+
+    /**
+     * Validate and resolve a location name using LocationResolutionService.
+     * Returns the resolved name if valid, null if invalid.
+     */
+    private String validateAndResolveLocation(String locationName) {
+        if (locationName == null || locationName.trim().isEmpty()) {
+            return null;
+        }
+
+        String cleaned = locationName.trim().toUpperCase();
+
+        // Skip if it's a non-location keyword
+        if (isNonLocationKeyword(cleaned)) {
+            logger.debug("Rejecting non-location keyword: {}", cleaned);
+            return null;
+        }
+
+        // Use LocationResolutionService to validate and resolve the location
+        LocationResolutionService.LocationResolution resolution = locationResolutionService.resolve(cleaned);
+
+        if (resolution.getResolvedName() != null && resolution.getConfidence() >= 0.5) {
+            logger.debug("Resolved location '{}' -> '{}' (confidence: {}, source: {})",
+                    locationName, resolution.getResolvedName(), resolution.getConfidence(), resolution.getSource());
+            return resolution.getResolvedName();
+        }
+
+        // If resolution failed but the name looks like a valid location (4+ chars, not
+        // a keyword)
+        if (cleaned.length() >= 4 && !isNonLocationKeyword(cleaned)) {
+            logger.debug("Accepting unresolved location as-is: {} (needs verification)", cleaned);
+            return cleaned;
+        }
+
+        logger.debug("Rejecting invalid location: {} (too short or keyword)", locationName);
+        return null;
+    }
+
+    /**
+     * Check if a word is a non-location keyword (bus type, service class, etc.)
+     */
+    private boolean isNonLocationKeyword(String word) {
+        if (word == null)
+            return true;
+        String upper = word.toUpperCase();
+        return upper.matches(
+                "ORDINARY|SEATER|SUPER|DELUXE|EXPRESS|ROUTE|TIME|VIA|DESTINATION|FAST|SLEEPER|VOLVO|LUXURY|DEPARTURE|ARRIVAL|FARE|BUS|STAND|STATION|AC|NON-AC|SEMI|3X2|2X2");
+    }
+
+    /**
+     * Check if a destination is actually listed in the VIA column (should not be a
+     * destination)
+     */
+    private boolean isViaCity(String destination, String via) {
+        if (destination == null || via == null || via.isEmpty()) {
+            return false;
+        }
+        String destUpper = destination.toUpperCase().trim();
+        String viaUpper = via.toUpperCase();
+
+        // Split via into individual city names and check if destination matches any
+        for (String viaCity : viaUpper.split("[,\\s]+")) {
+            if (viaCity.trim().equals(destUpper)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Validate and resolve stop locations
+     */
+    private List<Map<String, String>> validateStops(List<Map<String, String>> stopsData) {
+        if (stopsData == null || stopsData.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<Map<String, String>> validatedStops = new ArrayList<>();
+        for (Map<String, String> stop : stopsData) {
+            String stopName = stop.get("name");
+            String validatedName = validateAndResolveLocation(stopName);
+
+            if (validatedName != null) {
+                Map<String, String> validatedStop = new HashMap<>(stop);
+                validatedStop.put("name", validatedName);
+                validatedStops.add(validatedStop);
+            } else {
+                logger.debug("Skipping invalid stop: {}", stopName);
+            }
+        }
+        return validatedStops;
+    }
+
+    /**
+     * Create a route contribution with a specific departure time and intermediate
+     * stops
+     */
+    private RouteContribution createRouteContributionWithDepartureTime(
+            ImageContribution imageContribution,
+            String routeNumber,
+            String fromLocation,
+            String toLocation,
+            String via,
+            String operatorName,
+            String fare,
+            String departureTime,
+            List<String> timings,
+            List<Map<String, String>> stopsData,
+            String status) {
+
+        // Generate route group ID for grouping related schedules
+        String routeGroupId = generateRouteGroupId(fromLocation, toLocation, via);
+
+        RouteContribution.RouteContributionBuilder builder = RouteContribution.builder()
+                .id(UUID.randomUUID().toString())
+                .userId(imageContribution.getUserId())
+                .busNumber(routeNumber)
+                .fromLocationName(fromLocation)
+                .toLocationName(toLocation)
+                .departureTime(departureTime) // Set the specific departure time
+                .submissionDate(LocalDateTime.now())
+                .status(status)
+                .sourceImageId(imageContribution.getId()) // Track source image
+                .routeGroupId(routeGroupId) // Group related schedules
+                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId());
+
+        // Add via information
+        if (via != null && !via.isBlank()) {
+            builder.scheduleInfo("Via: " + via);
+        }
+
+        // Add operator information if available
+        if (operatorName != null && !operatorName.isBlank()) {
+            builder.additionalNotes(builder.build().getAdditionalNotes() +
+                    ". Operator: " + operatorName);
+        }
+
+        // Add fare information if available
+        if (fare != null && !fare.isBlank()) {
+            builder.additionalNotes(builder.build().getAdditionalNotes() +
+                    ". Fare: " + fare);
+        }
+
+        // Convert intermediate stops data to StopContribution objects
+        if (stopsData != null && !stopsData.isEmpty()) {
+            List<StopContribution> stops = new ArrayList<>();
+            for (Map<String, String> stopData : stopsData) {
+                String stopName = stopData.get("name");
+                String stopOrderStr = stopData.get("stopOrder");
+                Integer stopOrder = stopOrderStr != null ? Integer.parseInt(stopOrderStr) : null;
+
+                StopContribution stop = StopContribution.builder()
+                        .name(stopName)
+                        .stopOrder(stopOrder)
+                        .build();
+                stops.add(stop);
+
+                logger.debug("Added intermediate stop: {} (order: {})", stopName, stopOrder);
+            }
+            builder.stops(stops);
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Generate a route group ID for grouping related schedules
+     */
+    private String generateRouteGroupId(String from, String to, String via) {
+        StringBuilder groupId = new StringBuilder();
+        if (from != null) {
+            groupId.append(from.toUpperCase().trim());
+        }
+        groupId.append("-");
+        if (to != null) {
+            groupId.append(to.toUpperCase().trim());
+        }
+        if (via != null && !via.isBlank()) {
+            groupId.append("-").append(via.toUpperCase().trim());
+        }
+        return groupId.toString();
     }
 
     /**
@@ -491,7 +1258,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             String toLocation,
             String operatorName,
             String fare,
-            List<String> timings) {
+            List<String> timings,
+            String status) {
 
         RouteContribution.RouteContributionBuilder builder = RouteContribution.builder()
                 .id(UUID.randomUUID().toString())
@@ -500,7 +1268,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .fromLocationName(fromLocation)
                 .toLocationName(toLocation)
                 .submissionDate(LocalDateTime.now())
-                .status("PENDING_REVIEW") // Routes created from images need review
+                .status(status)
                 .additionalNotes("Auto-created from image contribution: " + imageContribution.getId());
 
         // Add operator information if available

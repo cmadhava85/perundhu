@@ -66,5 +66,15 @@ public interface StopRepository {
 
     Stop save(Stop stop);
 
+    /**
+     * Save a stop with a bus association.
+     * This is used when creating stops from route contributions.
+     * 
+     * @param stop  The stop domain model to save
+     * @param busId The bus ID to associate the stop with
+     * @return The saved stop
+     */
+    Stop saveWithBus(Stop stop, BusId busId);
+
     void delete(StopId id);
 }

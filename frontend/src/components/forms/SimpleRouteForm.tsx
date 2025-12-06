@@ -19,7 +19,6 @@ interface FormData {
   origin: string;
   destination: string;
   stops: string;
-  operatingHours: string;
   departureTime: string;
   arrivalTime: string;
 }
@@ -36,7 +35,6 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     origin: '',
     destination: '',
     stops: '',
-    operatingHours: '',
     departureTime: '',
     arrivalTime: ''
   });
@@ -448,15 +446,6 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
           </div>
         )}
       </div>
-      
-      <FormInput
-        id="operatingHours"
-        name="operatingHours"
-        value={formData.operatingHours}
-        onChange={handleChange}
-        label={t('route.operatingHours', 'Operating Hours')}
-        placeholder={t('route.operatingHoursPlaceholder', 'e.g., 6:00 AM - 10:00 PM')}
-      />
       
       <div className="form-actions">
         <button type="submit" className="submit-button modern-submit-btn">

@@ -237,6 +237,9 @@ dependencies {
     // implementation 'org.apache.httpcomponents.core5:httpcore5-h2:5.2.2'
     // implementation 'org.apache.httpcomponents.core5:httpcore5:5.2.2'
     
+    // Google Gemini AI SDK for Vision-based OCR
+    implementation 'com.google.cloud:google-cloud-vertexai:1.14.0'
+    
     // Scheduling (already included via Spring Boot, but explicitly added for clarity)
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -161,9 +162,12 @@ public class AdminController {
 
             if (extractOCRData) {
                 // Extract OCR data and create route entries
+                // Pass autoApprove=true since admin is explicitly approving the image
+                // contribution
+                // This creates routes with APPROVED status directly, visible in search results
                 Map<String, Object> extractedData = imageProcessingService.extractOCRData(contribution);
                 List<RouteContribution> createdRoutes = imageProcessingService.createRouteDataFromOCR(
-                        contribution, extractedData);
+                        contribution, extractedData, true);
 
                 // Update contribution
                 contribution.setExtractedData(extractedData.toString());
@@ -264,6 +268,49 @@ public class AdminController {
             log.error("Error extracting OCR from contribution {}: {}", id, e.getMessage(), e);
             return ResponseEntity.internalServerError()
                     .body(Map.of("error", "Failed to extract OCR data: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Update the extracted OCR data for an image contribution with manual
+     * corrections.
+     * Allows admins to fix OCR errors before approving the contribution.
+     * 
+     * @param id            The ID of the contribution to update
+     * @param correctedData The manually corrected OCR data
+     * @return Success response or error
+     */
+    @PutMapping("/contributions/images/{id}/update-extracted-data")
+    public ResponseEntity<Map<String, Object>> updateExtractedData(
+            @PathVariable String id,
+            @RequestBody Map<String, Object> correctedData) {
+        try {
+            log.info("Request to update extracted data for contribution: {}", id);
+
+            // Get the image contribution
+            ImageContribution contribution = imageContributionOutputPort.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Image contribution not found: " + id));
+
+            // Mark as manually corrected
+            correctedData.put("manuallyCorrected", true);
+            correctedData.put("correctedAt", LocalDateTime.now().toString());
+
+            // Update the contribution with corrected data
+            contribution.setExtractedData(correctedData.toString());
+            contribution.setStatus("MANUAL_REVIEW_NEEDED");
+            contribution.setValidationMessage("OCR data manually corrected by admin");
+            contribution.setProcessedDate(LocalDateTime.now());
+            imageContributionOutputPort.save(contribution);
+
+            log.info("Successfully updated extracted data for contribution: {}", id);
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Extracted data updated successfully",
+                    "contributionId", id));
+        } catch (Exception e) {
+            log.error("Error updating extracted data for contribution {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to update extracted data: " + e.getMessage()));
         }
     }
 

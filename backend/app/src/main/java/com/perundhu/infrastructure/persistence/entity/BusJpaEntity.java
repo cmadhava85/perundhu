@@ -73,8 +73,14 @@ public class BusJpaEntity {
         if (bus == null)
             return null;
 
+        // If ID is 1 (placeholder for new entity), set to null for auto-generation
+        Long id = bus.id().value();
+        if (id != null && id <= 1L) {
+            id = null; // Let JPA auto-generate the ID
+        }
+
         return BusJpaEntity.builder()
-                .id(bus.id().value())
+                .id(id)
                 .name(bus.name())
                 .busNumber(bus.number())
                 .departureTime(bus.departureTime())

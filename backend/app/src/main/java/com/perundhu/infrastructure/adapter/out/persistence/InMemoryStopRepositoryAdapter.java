@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Stop;
 import com.perundhu.domain.port.StopRepository;
 
@@ -44,6 +45,12 @@ public class InMemoryStopRepositoryAdapter implements StopRepository {
 
   @Override
   public Stop save(Stop stop) {
+    return stop;
+  }
+
+  @Override
+  public Stop saveWithBus(Stop stop, BusId busId) {
+    // In-memory implementation just returns the stop as-is
     return stop;
   }
 

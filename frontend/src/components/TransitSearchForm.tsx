@@ -203,13 +203,13 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     top: '100%',
                     left: 0,
                     right: 0,
-                    background: 'var(--transit-surface)',
-                    border: '1px solid var(--transit-divider)',
-                    borderRadius: 'var(--radius-md)',
-                    marginTop: 'var(--space-1)',
-                    boxShadow: 'var(--shadow-lg)',
-                    zIndex: 1000,
-                    maxHeight: '200px',
+                    background: 'var(--transit-surface, #fff)',
+                    border: '1px solid var(--transit-divider, #e5e7eb)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    marginTop: 'var(--space-1, 4px)',
+                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+                    zIndex: 9999,
+                    maxHeight: '250px',
                     overflowY: 'auto',
                     listStyle: 'none',
                     padding: 0,
@@ -349,13 +349,13 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     top: '100%',
                     left: 0,
                     right: 0,
-                    background: 'var(--transit-surface)',
-                    border: '1px solid var(--transit-divider)',
-                    borderRadius: 'var(--radius-md)',
-                    marginTop: 'var(--space-1)',
-                    boxShadow: 'var(--shadow-lg)',
-                    zIndex: 1000,
-                    maxHeight: '200px',
+                    background: 'var(--transit-surface, #fff)',
+                    border: '1px solid var(--transit-divider, #e5e7eb)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    marginTop: 'var(--space-1, 4px)',
+                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+                    zIndex: 9999,
+                    maxHeight: '250px',
                     overflowY: 'auto',
                     listStyle: 'none',
                     padding: 0,
@@ -432,23 +432,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
         </div>
       </div>
 
-      {/* Click overlay to close suggestions */}
-      {(showFromSuggestions || showToSuggestions) && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 999
-          }}
-          onClick={() => {
-            setShowFromSuggestions(false);
-            setShowToSuggestions(false);
-          }}
-        />
-      )}
     </div>
   );
 };

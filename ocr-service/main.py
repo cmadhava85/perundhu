@@ -43,6 +43,82 @@ ocr = PaddleOCR(
 )
 logger.info("PaddleOCR initialized successfully")
 
+# Tamil OCR correction dictionary for common misrecognitions
+# Maps incorrect OCR output -> correct Tamil text
+TAMIL_CORRECTIONS = {
+    # City names
+    'தம்ழ்நாடு': 'தமிழ்நாடு',
+    'தம்ழ்': 'தமிழ்',
+    'கருச்சி': 'திருச்சி',
+    'தஇிறுச்சி': 'திருச்சி',
+    'தஇருச்சி': 'திருச்சி',
+    'திருச்ச': 'திருச்சி',
+    'பெங்களுூரு': 'பெங்களூரு',
+    'பெங்களூ®ரு': 'பெங்களூரு',
+    'மஙுரை': 'மதுரை',
+    'மாதுரை': 'மதுரை',
+    'Lமரை': 'மதுரை',
+    'Lமகரை': 'மதுரை',
+    'சலம்': 'சேலம்',
+    'ும்பகொணம்': 'கும்பகோணம்',
+    'கும்பகொணம்': 'கும்பகோணம்',
+    'ஃம்பகொணம்': 'கும்பகோணம்',
+    'காயம்புத்கூார்': 'கோயம்புத்தூர்',
+    'காயம்புத்கூர்': 'கோயம்புத்தூர்',
+    'கிகசசெந்கார்': 'திருச்செந்தூர்',
+    'கிறுச்செந்கூர்': 'திருச்செந்தூர்',
+    'திருநெல்வெலி': 'திருநெல்வேலி',
+    'கன்னியாகுமரி': 'கன்னியாகுமரி',  # already correct but ensure
+    'Bறபரம': 'தாராபுரம்',
+    'Bாறாபுரம்': 'தாராபுரம்',
+    'ாறாபுரம்': 'தாராபுரம்',
+    'கககுக்குiட': 'தூத்துக்குடி',
+    'BBகக19': 'தூத்துக்குடி',
+    'ஒent': 'ஒசூர்',
+    'இராமேஸ்வேம்': 'இராமேஸ்வரம்',
+    'பேதுந்து': 'பேருந்து',
+    'பேதற்துகள்': 'பேருந்துகள்',
+    'பேதுந்துகள்': 'பேருந்துகள்',
+    'நலையைம்': 'நிலையம்',
+    'தெொலைதூமர்': 'தொலைதூரம்',
+    'போக்குவரத்துக்': 'போக்குவரத்துக்',  # keep as is
+    'கழகம்': 'கழகம்',  # keep as is
+    'அரசப்': 'அரசு',
+    # Common OCR noise patterns
+    '@tristcl': '',
+    '@tnstcl': '',
+    '@tr': '',
+    '@tnetohlaoin': '',
+    '@bstcbloelim': '',
+    'tcblog.in': '',
+    'stcblog': '',
+    'tnstcbl': '',
+    'bg-in': '',
+    'log.in': '',
+    'astcbloLin': '',
+    'ccblog.in': '',
+    'gOhgah': '',
+    'Lin': '',
+    'LDCU': '',
+    'LC': '',
+    'கa்': 'கரூர்',
+    'கCt': 'கரூர்',
+    'Lர': 'மதுரை',
+}
+
+
+def correct_tamil_text(text: str) -> str:
+    """Apply Tamil OCR corrections to fix common misrecognitions"""
+    if not text:
+        return text
+    
+    corrected = text
+    for wrong, correct in TAMIL_CORRECTIONS.items():
+        if wrong in corrected:
+            corrected = corrected.replace(wrong, correct)
+    
+    return corrected
+
 
 def parse_ocr_result(result):
     """Parse PaddleOCR 3.3+ result format into lines, details, and confidence"""
@@ -61,14 +137,20 @@ def parse_ocr_result(result):
             confidence = rec_scores[i] if i < len(rec_scores) else 0.0
             bbox = rec_polys[i].tolist() if i < len(rec_polys) else []
             
-            lines.append(text)
-            details.append({
-                "text": text,
-                "confidence": round(confidence, 4),
-                "bbox": [[int(coord) for coord in point] for point in bbox] if bbox else []
-            })
-            total_confidence += confidence
-            count += 1
+            # Apply Tamil text corrections
+            corrected_text = correct_tamil_text(text)
+            
+            # Skip empty lines after correction (noise removal)
+            if corrected_text.strip():
+                lines.append(corrected_text)
+                details.append({
+                    "text": corrected_text,
+                    "original_text": text if text != corrected_text else None,
+                    "confidence": round(confidence, 4),
+                    "bbox": [[int(coord) for coord in point] for point in bbox] if bbox else []
+                })
+                total_confidence += confidence
+                count += 1
     
     avg_confidence = total_confidence / count if count > 0 else 0
     extracted_text = "\n".join(lines)

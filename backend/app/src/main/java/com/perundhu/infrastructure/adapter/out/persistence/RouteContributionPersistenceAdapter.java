@@ -1,6 +1,7 @@
 package com.perundhu.infrastructure.adapter.out.persistence;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +9,17 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.RouteContributionOutputPort;
 import com.perundhu.infrastructure.persistence.entity.RouteContributionJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Outbound adapter for route contribution persistence.
@@ -23,9 +29,11 @@ import lombok.RequiredArgsConstructor;
 @Primary
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class RouteContributionPersistenceAdapter implements RouteContributionOutputPort {
 
   private final RouteContributionJpaRepository repository;
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Override
   public RouteContribution save(RouteContribution contribution) {
@@ -121,7 +129,41 @@ public class RouteContributionPersistenceAdapter implements RouteContributionOut
         .additionalNotes(contribution.getAdditionalNotes())
         .validationMessage(contribution.getValidationMessage())
         .submittedBy(contribution.getSubmittedBy())
+        .sourceImageId(contribution.getSourceImageId())
+        .routeGroupId(contribution.getRouteGroupId())
+        .stopsJson(serializeStops(contribution.getStops()))
         .build();
+  }
+
+  /**
+   * Serialize stops list to JSON string for storage
+   */
+  private String serializeStops(List<StopContribution> stops) {
+    if (stops == null || stops.isEmpty()) {
+      return null;
+    }
+    try {
+      return objectMapper.writeValueAsString(stops);
+    } catch (JsonProcessingException e) {
+      log.warn("Failed to serialize stops to JSON: {}", e.getMessage());
+      return null;
+    }
+  }
+
+  /**
+   * Deserialize stops from JSON string
+   */
+  private List<StopContribution> deserializeStops(String stopsJson) {
+    if (stopsJson == null || stopsJson.isEmpty()) {
+      return new ArrayList<>();
+    }
+    try {
+      return objectMapper.readValue(stopsJson, new TypeReference<List<StopContribution>>() {
+      });
+    } catch (JsonProcessingException e) {
+      log.warn("Failed to deserialize stops from JSON: {}", e.getMessage());
+      return new ArrayList<>();
+    }
   }
 
   private RouteContribution mapToDomainModel(RouteContributionJpaEntity entity) {
@@ -145,6 +187,9 @@ public class RouteContributionPersistenceAdapter implements RouteContributionOut
         .additionalNotes(entity.getAdditionalNotes())
         .validationMessage(entity.getValidationMessage())
         .submittedBy(entity.getSubmittedBy())
+        .sourceImageId(entity.getSourceImageId())
+        .routeGroupId(entity.getRouteGroupId())
+        .stops(deserializeStops(entity.getStopsJson()))
         .build();
   }
 }

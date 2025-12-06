@@ -86,4 +86,18 @@ public class RouteContributionJpaEntity {
 
     @Column(name = "submitted_by")
     private String submittedBy;
+
+    @Column(name = "source_image_id")
+    private String sourceImageId;
+
+    @Column(name = "route_group_id")
+    private String routeGroupId;
+
+    /**
+     * Intermediate stops stored as JSON string.
+     * Format: [{"name":"STOP1","stopOrder":1},{"name":"STOP2","stopOrder":2}]
+     * These are the VIA cities extracted from OCR.
+     */
+    @Column(name = "stops_json", columnDefinition = "TEXT")
+    private String stopsJson;
 }

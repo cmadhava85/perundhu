@@ -34,8 +34,16 @@ public class AdminService implements AdminUseCase {
 
   @Override
   public List<RouteContribution> getPendingRouteContributions() {
-    log.debug("Getting pending route contributions");
-    return routeContributionPort.findRouteContributionsByStatus("PENDING");
+    log.debug("Getting pending route contributions (PENDING and PENDING_REVIEW)");
+    List<RouteContribution> pending = routeContributionPort.findRouteContributionsByStatus("PENDING");
+    List<RouteContribution> pendingReview = routeContributionPort.findRouteContributionsByStatus("PENDING_REVIEW");
+
+    // Combine both lists
+    List<RouteContribution> allPending = new java.util.ArrayList<>(pending);
+    allPending.addAll(pendingReview);
+
+    log.debug("Found {} PENDING and {} PENDING_REVIEW contributions", pending.size(), pendingReview.size());
+    return allPending;
   }
 
   @Override
