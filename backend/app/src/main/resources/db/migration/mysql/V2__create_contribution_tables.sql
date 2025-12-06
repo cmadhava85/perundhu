@@ -27,9 +27,10 @@ CREATE TABLE IF NOT EXISTS image_contributions (
 );
 
 -- Add index on status for faster querying
-CREATE INDEX idx_route_contributions_status ON route_contributions(status);
-CREATE INDEX idx_image_contributions_status ON image_contributions(status);
+CREATE INDEX IF NOT EXISTS idx_route_contributions_status ON route_contributions(status);
+CREATE INDEX IF NOT EXISTS idx_image_contributions_status ON image_contributions(status);
 
 -- Add index on bus_number for faster lookups
-CREATE INDEX idx_route_contributions_bus_number ON route_contributions(bus_number);
-CREATE INDEX idx_image_contributions_bus_number ON image_contributions(bus_number);
+CREATE INDEX IF NOT EXISTS idx_route_contributions_bus_number ON route_contributions(bus_number);
+CREATE INDEX IF NOT EXISTS idx_image_contributions_bus_number ON image_contributions(bus_number);
+
