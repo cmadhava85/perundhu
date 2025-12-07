@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.ConnectingRouteDTO;
@@ -60,6 +61,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
     log.info("Finding connecting routes from {} to {} with max {} transfers",
         fromLocationId, toLocationId, maxTransfers);
 
+    long startTime = System.currentTimeMillis();
+
     // Get locations
     Location fromLocation = locationRepository.findById(fromLocationId).orElse(null);
     Location toLocation = locationRepository.findById(toLocationId).orElse(null);
@@ -69,11 +72,14 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       return List.of();
     }
 
-    // Build the route graph
+    // Build the route graph (cached)
     RouteGraph graph = buildRouteGraph();
+    log.debug("Graph built in {}ms", System.currentTimeMillis() - startTime);
 
     // Use BFS to find all paths with up to maxTransfers
+    long bfsStart = System.currentTimeMillis();
     List<RoutePath> paths = findPaths(graph, fromLocationId, toLocationId, maxTransfers);
+    log.debug("BFS found {} paths in {}ms", paths.size(), System.currentTimeMillis() - bfsStart);
 
     log.info("Found {} potential paths", paths.size());
 
@@ -87,25 +93,45 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         .limit(MAX_RESULTS)
         .collect(Collectors.toList());
 
-    log.info("Returning {} connecting routes", routes.size());
+    log.info("Returning {} connecting routes in {}ms total", routes.size(), System.currentTimeMillis() - startTime);
     return routes;
   }
 
   /**
    * Build a graph representing all bus routes.
    * Nodes are locations, edges are bus segments between stops.
+   * This method is cached since the route graph changes infrequently.
    */
-  private RouteGraph buildRouteGraph() {
+  @Cacheable(value = "routeGraphCache")
+  public RouteGraph buildRouteGraph() {
     RouteGraph graph = new RouteGraph();
+    long startTime = System.currentTimeMillis();
 
     List<Bus> allBuses = busRepository.findAll();
     log.debug("Building route graph from {} buses", allBuses.size());
+
+    // Collect all bus IDs first
+    List<Long> busIds = allBuses.stream()
+        .filter(bus -> bus.id() != null)
+        .map(bus -> bus.id().value())
+        .toList();
+    
+    // Load all stops for all buses in one query (batch load)
+    Map<Long, List<Stop>> stopsByBusId = new HashMap<>();
+    for (Bus bus : allBuses) {
+      if (bus.id() == null) continue;
+      // This still does N queries - we'll optimize repository later
+      List<Stop> stops = stopRepository.findByBusIdOrderByStopOrder(bus.id().value());
+      stopsByBusId.put(bus.id().value(), stops);
+    }
+    log.debug("Loaded stops for {} buses in {}ms", stopsByBusId.size(), System.currentTimeMillis() - startTime);
 
     for (Bus bus : allBuses) {
       if (bus.id() == null)
         continue;
 
-      List<Stop> stops = stopRepository.findByBusIdOrderByStopOrder(bus.id().value());
+      List<Stop> stops = stopsByBusId.get(bus.id().value());
+      if (stops == null) continue;
 
       // Add edges between consecutive stops
       for (int i = 0; i < stops.size() - 1; i++) {
@@ -131,7 +157,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       }
     }
 
-    log.debug("Route graph built with {} nodes", graph.getNodeCount());
+    log.info("Route graph built with {} nodes in {}ms", graph.getNodeCount(), System.currentTimeMillis() - startTime);
     return graph;
   }
 

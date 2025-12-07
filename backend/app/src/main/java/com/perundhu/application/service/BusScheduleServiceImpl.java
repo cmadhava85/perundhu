@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.BusDTO;
@@ -28,6 +29,8 @@ import com.perundhu.domain.port.TranslationRepository;
 
 @Service
 public class BusScheduleServiceImpl implements BusScheduleService {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BusScheduleServiceImpl.class);
 
     // Constants to avoid string duplication
     private static final String ENTITY_TYPE_LOCATION = "location";
@@ -53,9 +56,12 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     }
 
     @Override
+    @Cacheable(value = "allBusesCache")
     public List<BusDTO> getAllBuses() {
+        long startTime = System.currentTimeMillis();
         // Get all buses from the repository
         List<Bus> buses = busRepository.findAll();
+        log.debug("Fetched {} buses in {}ms", buses.size(), System.currentTimeMillis() - startTime);
 
         // Convert the Bus entities to DTOs using the static factory method
         return buses.stream()
@@ -70,29 +76,37 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     }
 
     @Override
+    @Cacheable(value = "locationsCache", key = "#languageCode")
     public List<LocationDTO> getAllLocations(String languageCode) {
+        long startTime = System.currentTimeMillis();
         List<Location> locations = locationRepository.findAll();
+        log.debug("Fetched {} locations in {}ms", locations.size(), System.currentTimeMillis() - startTime);
+
+        // Batch load all translations for locations in one query to avoid N+1
+        Map<Long, String> translationMap = new java.util.HashMap<>();
+        if (languageCode != null && !languageCode.isEmpty()) {
+            long transStart = System.currentTimeMillis();
+            List<Translation> translations = translationRepository.findByEntityTypeAndLanguage(ENTITY_TYPE_LOCATION, languageCode);
+            for (Translation t : translations) {
+                if (FIELD_NAME.equals(t.getFieldName())) {
+                    translationMap.put(t.getEntityId(), t.getTranslatedValue());
+                }
+            }
+            log.debug("Batch loaded {} translations in {}ms", translations.size(), System.currentTimeMillis() - transStart);
+        }
 
         return locations.stream().map(location -> {
-            var translatedName = location.name();
-
-            // If language code is provided, try to get translation
-            if (languageCode != null && !languageCode.isEmpty() && location.id() != null) {
-                // Using Java 17's map/orElse pattern for cleaner Optional handling
-                translatedName = translationRepository
-                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
-                                ENTITY_TYPE_LOCATION, location.id().value(), FIELD_NAME, languageCode)
-                        .map(Translation::getTranslatedValue)
-                        .orElse(location.name());
+            String translatedName = location.name();
+            if (location.id() != null && translationMap.containsKey(location.id().value())) {
+                translatedName = translationMap.get(location.id().value());
             }
-
             return new LocationDTO(
                     location.id() != null ? location.id().value() : null,
                     location.name(),
                     translatedName,
                     location.latitude(),
                     location.longitude());
-        }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
+        }).toList();
     }
 
     @Override
@@ -109,6 +123,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
     @Override
     public List<StopDTO> getStopsForBus(Long busId, String languageCode) {
+        long startTime = System.currentTimeMillis();
         Optional<Bus> busOptional = busRepository.findById(new BusId(busId));
 
         if (busOptional.isEmpty()) {
@@ -117,32 +132,35 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
         Bus bus = busOptional.get();
         List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
+        log.debug("Loaded {} stops for bus {} in {}ms", stops.size(), busId, System.currentTimeMillis() - startTime);
+
+        // Batch load translations for all location IDs to avoid N+1 queries
+        Map<Long, String> translationMap = new java.util.HashMap<>();
+        if (languageCode != null && !languageCode.isEmpty()) {
+            long transStart = System.currentTimeMillis();
+            List<Translation> translations = translationRepository.findByEntityTypeAndLanguage(ENTITY_TYPE_LOCATION, languageCode);
+            for (Translation t : translations) {
+                if (FIELD_NAME.equals(t.getFieldName())) {
+                    translationMap.put(t.getEntityId(), t.getTranslatedValue());
+                }
+            }
+            log.debug("Batch loaded {} translations in {}ms", translations.size(), System.currentTimeMillis() - transStart);
+        }
 
         return stops.stream().map(stop -> {
-            // Create a final copy of the name for use in lambda - using record accessor
-            final String stopName = stop.name();
-            final String[] translatedNameHolder = { stopName };
-
-            // If language code is provided, try to get translation
-            // Note: Stops use location names, so we translate using the location's
-            // translation
-            if (languageCode != null && !languageCode.isEmpty() && stop.location() != null) {
-                // Get translation for the stop's location name
-                translationRepository
-                        .findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
-                                ENTITY_TYPE_LOCATION, stop.location().id().value(), FIELD_NAME, languageCode)
-                        .ifPresent(translation -> {
-                            // Using var for local variable type inference (Java 10+)
-                            var translatedValue = translation.getTranslatedValue();
-                            if (translatedValue != null && !translatedValue.isEmpty()) {
-                                translatedNameHolder[0] = translatedValue;
-                            }
-                        });
+            String translatedName = stop.name();
+            
+            // Look up translation from batch-loaded map
+            if (stop.location() != null && stop.location().id() != null) {
+                String translated = translationMap.get(stop.location().id().value());
+                if (translated != null && !translated.isEmpty()) {
+                    translatedName = translated;
+                }
             }
 
             return new StopDTO(
                     stop.id().value(), // Long id
-                    translatedNameHolder[0], // String name (translated)
+                    translatedName, // String name (translated)
                     stop.location() != null ? stop.location().id().value() : null, // Long locationId
                     stop.arrivalTime(), // LocalTime arrivalTime
                     stop.departureTime(), // LocalTime departureTime
@@ -151,7 +169,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                     stop.location() != null ? stop.location().latitude() : null, // Double latitude
                     stop.location() != null ? stop.location().longitude() : null // Double longitude
             );
-        }).toList(); // Using Java 17's toList() instead of collect(Collectors.toList())
+        }).toList();
     }
 
     @Override
@@ -218,39 +236,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
     @Override
     public List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId) {
-        List<Bus> buses = busRepository.findAll();
-        List<Bus> resultBuses = new ArrayList<>();
+        // Use the optimized repository query that does a single JOIN query
+        // instead of loading all buses and querying stops for each one (N+1 problem)
+        long startTime = System.currentTimeMillis();
+        List<Bus> buses = busRepository.findBusesPassingThroughLocations(fromLocationId, toLocationId);
+        log.debug("Found {} buses passing through locations in {}ms", buses.size(), System.currentTimeMillis() - startTime);
 
-        for (Bus bus : buses) {
-            List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
-
-            boolean hasFromLocation = false;
-            boolean hasToLocation = false;
-
-            for (Stop stop : stops) {
-                // First check if the location itself is not null before accessing its id
-                if (stop.location() != null && stop.location().id() != null) {
-                    Long stopLocationId = stop.location().id().value();
-
-                    // Check if this is the from location
-                    if (stopLocationId.equals(fromLocationId)) {
-                        hasFromLocation = true;
-                    }
-
-                    // Check if this is the to location AND we've already passed the from location
-                    if (stopLocationId.equals(toLocationId) && hasFromLocation) {
-                        hasToLocation = true;
-                        break;
-                    }
-                }
-            }
-
-            if (hasFromLocation && hasToLocation) {
-                resultBuses.add(bus);
-            }
-        }
-
-        return resultBuses.stream()
+        return buses.stream()
                 .map(BusDTO::fromDomain)
                 .toList();
     }
@@ -261,38 +253,9 @@ public class BusScheduleServiceImpl implements BusScheduleService {
      * internally
      */
     public boolean hasDirectRoute(Long fromLocationId, Long toLocationId) {
-        List<Bus> buses = busRepository.findAll();
-
-        for (Bus bus : buses) {
-            List<Stop> stops = stopRepository.findByBusOrderByStopOrder(bus);
-
-            boolean hasFromLocation = false;
-            boolean hasToLocation = false;
-
-            for (Stop stop : stops) {
-                // First check if the location itself is not null before accessing its id
-                if (stop.location() != null && stop.location().id() != null) {
-                    Long stopLocationId = stop.location().id().value();
-
-                    // Check if this is the from location
-                    if (stopLocationId.equals(fromLocationId)) {
-                        hasFromLocation = true;
-                    }
-
-                    // Check if this is the to location AND we've already passed the from location
-                    if (stopLocationId.equals(toLocationId) && hasFromLocation) {
-                        hasToLocation = true;
-                        break;
-                    }
-                }
-            }
-
-            if (hasFromLocation && hasToLocation) {
-                return true;
-            }
-        }
-
-        return false;
+        // Use the optimized query instead of loading all buses and stops
+        List<Bus> buses = busRepository.findBusesPassingThroughLocations(fromLocationId, toLocationId);
+        return !buses.isEmpty();
     }
 
     // Missing method implementations

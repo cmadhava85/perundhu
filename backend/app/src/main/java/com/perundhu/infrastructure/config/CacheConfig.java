@@ -21,6 +21,11 @@ public class CacheConfig {
     public static final String LATEST_BUS_LOCATIONS_CACHE = "latestBusLocationsCache";
     public static final String BUS_LOCATION_HISTORY_CACHE = "busLocationHistoryCache";
     public static final String NEARBY_BUSES_CACHE = "nearbyBusesCache";
+    public static final String LOCATIONS_CACHE = "locationsCache";
+    public static final String ALL_BUSES_CACHE = "allBusesCache";
+    public static final String TRANSLATIONS_CACHE = "translationsCache";
+    public static final String ROUTE_GRAPH_CACHE = "routeGraphCache";
+    public static final String SEARCH_RESULTS_CACHE = "searchResultsCache";
 
     @Bean
     @Primary
@@ -31,7 +36,12 @@ public class CacheConfig {
         cacheManager.setCacheNames(Arrays.asList(
                 LATEST_BUS_LOCATIONS_CACHE,
                 BUS_LOCATION_HISTORY_CACHE,
-                NEARBY_BUSES_CACHE));
+                NEARBY_BUSES_CACHE,
+                LOCATIONS_CACHE,
+                ALL_BUSES_CACHE,
+                TRANSLATIONS_CACHE,
+                ROUTE_GRAPH_CACHE,
+                SEARCH_RESULTS_CACHE));
 
         return cacheManager;
     }
