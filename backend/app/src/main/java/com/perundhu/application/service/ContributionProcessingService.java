@@ -286,7 +286,13 @@ public class ContributionProcessingService {
             log.info("Processing {} intermediate stops for bus ID: {}",
                     contribution.getStops().size(), savedBus.id().value());
 
+            // Get existing stops for this bus to avoid duplicates
+            List<Stop> existingStops = stopRepository.findByBusId(savedBus.id());
+
             int stopOrder = 1;
+            int createdCount = 0;
+            int skippedCount = 0;
+
             for (var stopContribution : contribution.getStops()) {
                 try {
                     // Get or create the location for this stop
@@ -294,6 +300,20 @@ public class ContributionProcessingService {
                             stopContribution.getName(),
                             stopContribution.getLatitude(),
                             stopContribution.getLongitude());
+
+                    // Check if this stop already exists for this bus (by location)
+                    boolean stopExists = existingStops.stream()
+                            .anyMatch(existing -> existing.location() != null
+                                    && existing.location().id() != null
+                                    && existing.location().id().equals(stopLocation.id()));
+
+                    if (stopExists) {
+                        log.debug("Stop at location '{}' already exists for bus ID: {}, skipping",
+                                stopContribution.getName(), savedBus.id().value());
+                        skippedCount++;
+                        stopOrder++;
+                        continue;
+                    }
 
                     // Parse arrival and departure times if provided
                     LocalTime arrivalTime = null;
@@ -335,6 +355,7 @@ public class ContributionProcessingService {
                     log.info("Created stop: {} (order: {}) for bus ID: {}",
                             stopContribution.getName(), order, savedBus.id().value());
 
+                    createdCount++;
                     stopOrder++;
                 } catch (Exception e) {
                     log.error("Failed to create stop '{}' for bus ID {}: {}",
@@ -342,8 +363,8 @@ public class ContributionProcessingService {
                 }
             }
 
-            log.info("Successfully processed {} stops for bus ID: {}",
-                    stopOrder - 1, savedBus.id().value());
+            log.info("Processed stops for bus ID {}: {} created, {} skipped (already existed)",
+                    savedBus.id().value(), createdCount, skippedCount);
         }
     }
 
@@ -838,20 +859,9 @@ public class ContributionProcessingService {
             LocalTime arrivalTime;
 
             try {
-                // Handle different time formats (HH:MM or HH:MM:SS)
-                String depTime = contribution.getDepartureTime().trim();
-                String arrTime = contribution.getArrivalTime().trim();
-
-                // If only HH:MM format, add :00 for seconds
-                if (depTime.length() == 5 && depTime.matches("\\d{2}:\\d{2}")) {
-                    depTime += ":00";
-                }
-                if (arrTime.length() == 5 && arrTime.matches("\\d{2}:\\d{2}")) {
-                    arrTime += ":00";
-                }
-
-                departureTime = LocalTime.parse(depTime);
-                arrivalTime = LocalTime.parse(arrTime);
+                // Normalize and parse time formats
+                departureTime = parseTimeFlexible(contribution.getDepartureTime());
+                arrivalTime = parseTimeFlexible(contribution.getArrivalTime());
             } catch (Exception timeParseError) {
                 throw new IllegalArgumentException("Invalid time format. Expected HH:MM or HH:MM:SS. Departure: '"
                         + contribution.getDepartureTime() + "', Arrival: '" + contribution.getArrivalTime() + "'");
@@ -1000,5 +1010,58 @@ public class ContributionProcessingService {
         // Default: estimate 90 minutes for unknown routes
         log.debug("Using default journey duration for unknown route: {} to {}", fromLocation, toLocation);
         return 90;
+    }
+
+    /**
+     * Parse time flexibly, handling various formats from OCR/user input:
+     * - "HH:MM" (e.g., "06:30")
+     * - "H:MM" (e.g., "6:30")
+     * - "HH:MM:SS" (e.g., "06:30:00")
+     * - "HH.MM" (e.g., "06.30")
+     * - "HHMM" (e.g., "0630")
+     * 
+     * @param timeStr The time string to parse
+     * @return Parsed LocalTime
+     * @throws IllegalArgumentException if time cannot be parsed
+     */
+    private LocalTime parseTimeFlexible(String timeStr) {
+        if (timeStr == null || timeStr.isBlank()) {
+            throw new IllegalArgumentException("Time string cannot be null or empty");
+        }
+
+        String normalized = timeStr.trim();
+
+        // Replace period with colon (common OCR mistake)
+        normalized = normalized.replace(".", ":");
+
+        // Remove AM/PM if present (assume 24-hour format from Gemini)
+        normalized = normalized.toUpperCase()
+                .replace(" AM", "")
+                .replace(" PM", "")
+                .replace("AM", "")
+                .replace("PM", "");
+        normalized = normalized.trim();
+
+        // Handle HHMM format (e.g., "0630" -> "06:30")
+        if (normalized.matches("\\d{4}")) {
+            normalized = normalized.substring(0, 2) + ":" + normalized.substring(2);
+        }
+
+        // Handle H:MM format (e.g., "6:30" -> "06:30")
+        if (normalized.matches("\\d:\\d{2}(:\\d{2})?")) {
+            normalized = "0" + normalized;
+        }
+
+        // Ensure HH:MM format has seconds
+        if (normalized.matches("\\d{2}:\\d{2}")) {
+            normalized += ":00";
+        }
+
+        try {
+            return LocalTime.parse(normalized);
+        } catch (Exception e) {
+            log.warn("Failed to parse time '{}' (normalized: '{}'): {}", timeStr, normalized, e.getMessage());
+            throw new IllegalArgumentException("Cannot parse time: " + timeStr);
+        }
     }
 }

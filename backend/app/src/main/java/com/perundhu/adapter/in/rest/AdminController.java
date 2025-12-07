@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perundhu.application.port.in.AdminUseCase;
+import com.perundhu.application.service.ContributionProcessingService;
 import com.perundhu.application.service.ImageContributionProcessingService;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.RouteContribution;
@@ -46,6 +47,7 @@ public class AdminController {
 
     private final AdminUseCase adminUseCase;
     private final ImageContributionProcessingService imageProcessingService;
+    private final ContributionProcessingService contributionProcessingService;
     private final ImageContributionOutputPort imageContributionOutputPort;
     private final Optional<SocialMediaMonitoringInputPort> socialMediaMonitoringService;
 
@@ -169,12 +171,37 @@ public class AdminController {
                 List<RouteContribution> createdRoutes = imageProcessingService.createRouteDataFromOCR(
                         contribution, extractedData, true);
 
+                // IMPORTANT: Integrate the created routes into the main bus/location/stops
+                // tables
+                // This is the missing step that was causing approved routes not to appear in
+                // search
+                int integratedCount = 0;
+                int failedCount = 0;
+                for (RouteContribution route : createdRoutes) {
+                    try {
+                        contributionProcessingService.integrateApprovedContribution(route);
+                        integratedCount++;
+                    } catch (Exception integrationError) {
+                        log.error("Failed to integrate route {} into bus tables: {}",
+                                route.getId(), integrationError.getMessage());
+                        failedCount++;
+                    }
+                }
+
+                log.info("Integrated {}/{} routes into bus tables ({} failed)",
+                        integratedCount, createdRoutes.size(), failedCount);
+
                 // Update contribution
                 contribution.setExtractedData(extractedData.toString());
                 contribution.setStatus("APPROVED");
                 contribution.setProcessedDate(LocalDateTime.now());
-                contribution.setValidationMessage("Approved with OCR extraction. Created " +
-                        createdRoutes.size() + " route entries.");
+                String validationMsg = String.format(
+                        "Approved with OCR extraction. Created %d route entries, integrated %d into bus database.",
+                        createdRoutes.size(), integratedCount);
+                if (failedCount > 0) {
+                    validationMsg += String.format(" (%d integration failures)", failedCount);
+                }
+                contribution.setValidationMessage(validationMsg);
                 if (approvalNotes != null && !approvalNotes.isBlank()) {
                     contribution.setAdditionalNotes(approvalNotes);
                 }
@@ -184,10 +211,12 @@ public class AdminController {
                 result.put("contribution", savedContribution);
                 result.put("extractedData", extractedData);
                 result.put("createdRoutes", createdRoutes.size());
+                result.put("integratedRoutes", integratedCount);
+                result.put("failedIntegrations", failedCount);
                 result.put("routeIds", createdRoutes.stream().map(RouteContribution::getId).toList());
 
-                log.info("Successfully approved image contribution {} and created {} route entries",
-                        id, createdRoutes.size());
+                log.info("Successfully approved image contribution {} and created {} route entries ({} integrated)",
+                        id, createdRoutes.size(), integratedCount);
             } else {
                 // Simple approval without OCR
                 ImageContribution approved = adminUseCase.approveImageContribution(id);

@@ -54,7 +54,10 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
 
     @Override
     public Optional<Location> findByExactName(String name) {
-        return jpaRepository.findByNameEquals(name)
+        // Use case-insensitive matching to avoid duplicate locations with different
+        // cases
+        // (e.g., "SIVAKASI" vs "Sivakasi" should return the same location)
+        return jpaRepository.findFirstByNameEqualsIgnoreCase(name)
                 .map(LocationJpaEntity::toDomainModel);
     }
 
