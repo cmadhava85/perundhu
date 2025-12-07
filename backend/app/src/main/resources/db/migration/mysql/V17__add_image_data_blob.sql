@@ -3,12 +3,10 @@
 -- Essential for Cloud Run where the filesystem is ephemeral
 
 -- Add image_data column to store actual image bytes
+-- Using simple ALTER TABLE - if column already exists, the migration will need manual cleanup
 ALTER TABLE image_contributions 
-ADD COLUMN IF NOT EXISTS image_data LONGBLOB COMMENT 'Binary image data for persistent storage';
+ADD COLUMN image_data LONGBLOB COMMENT 'Binary image data for persistent storage';
 
 -- Add content_type column to store the MIME type
 ALTER TABLE image_contributions 
-ADD COLUMN IF NOT EXISTS image_content_type VARCHAR(100) DEFAULT 'image/jpeg' COMMENT 'MIME type of the image';
-
--- Add index on status for faster queries (if not exists)
--- Note: Index already exists from V10, but we ensure it's there
+ADD COLUMN image_content_type VARCHAR(100) DEFAULT 'image/jpeg' COMMENT 'MIME type of the image';
