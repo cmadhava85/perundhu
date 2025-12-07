@@ -175,10 +175,21 @@ public class AdminController {
                 // tables
                 // This is the missing step that was causing approved routes not to appear in
                 // search
+                // NOTE: Routes missing departure/arrival time or from/to location will be 
+                // skipped and marked as PENDING_REVIEW
                 int integratedCount = 0;
+                int skippedCount = 0;
                 int failedCount = 0;
                 for (RouteContribution route : createdRoutes) {
                     try {
+                        // Check if route has required data before integration
+                        var validationResult = contributionProcessingService.validateForIntegration(route);
+                        if (!validationResult.isValid()) {
+                            log.warn("Skipping route {} - missing required data: {}", 
+                                    route.getId(), validationResult.message());
+                            skippedCount++;
+                            continue;
+                        }
                         contributionProcessingService.integrateApprovedContribution(route);
                         integratedCount++;
                     } catch (Exception integrationError) {
@@ -188,8 +199,8 @@ public class AdminController {
                     }
                 }
 
-                log.info("Integrated {}/{} routes into bus tables ({} failed)",
-                        integratedCount, createdRoutes.size(), failedCount);
+                log.info("Integrated {}/{} routes into bus tables ({} skipped due to missing data, {} failed)",
+                        integratedCount, createdRoutes.size(), skippedCount, failedCount);
 
                 // Update contribution
                 contribution.setExtractedData(extractedData.toString());
@@ -198,6 +209,9 @@ public class AdminController {
                 String validationMsg = String.format(
                         "Approved with OCR extraction. Created %d route entries, integrated %d into bus database.",
                         createdRoutes.size(), integratedCount);
+                if (skippedCount > 0) {
+                    validationMsg += String.format(" (%d skipped - missing departure/arrival time or locations)", skippedCount);
+                }
                 if (failedCount > 0) {
                     validationMsg += String.format(" (%d integration failures)", failedCount);
                 }
@@ -212,6 +226,7 @@ public class AdminController {
                 result.put("extractedData", extractedData);
                 result.put("createdRoutes", createdRoutes.size());
                 result.put("integratedRoutes", integratedCount);
+                result.put("skippedRoutes", skippedCount);
                 result.put("failedIntegrations", failedCount);
                 result.put("routeIds", createdRoutes.stream().map(RouteContribution::getId).toList());
 
@@ -409,6 +424,158 @@ public class AdminController {
             log.error("Error triggering social media monitoring: {}", e.getMessage(), e);
             return ResponseEntity.internalServerError()
                     .body(Map.of("error", "Failed to trigger monitoring: " + e.getMessage()));
+        }
+    }
+
+    // ==================== Reprocessing Endpoints ====================
+
+    /**
+     * Reprocess failed and pending route contributions
+     * This is useful when fixing issues with previous failed integrations.
+     * Note: Routes missing departure/arrival time or from/to locations will be skipped.
+     * 
+     * @return Summary of reprocessing results
+     */
+    @PostMapping("/contributions/routes/reprocess")
+    public ResponseEntity<Map<String, Object>> reprocessFailedContributions() {
+        log.info("Request to reprocess failed and pending route contributions");
+
+        try {
+            Map<String, Object> result = new HashMap<>();
+            int successCount = 0;
+            int skippedCount = 0;
+            int failedCount = 0;
+            List<Map<String, String>> errors = new java.util.ArrayList<>();
+            List<Map<String, String>> skipped = new java.util.ArrayList<>();
+
+            // Get contributions that need reprocessing
+            List<String> statusesToReprocess = List.of(
+                    "FAILED", "INTEGRATION_FAILED", "PENDING_REVIEW", "APPROVED");
+
+            for (String status : statusesToReprocess) {
+                List<RouteContribution> contributions = contributionProcessingService
+                        .getRouteContributionsByStatus(status);
+
+                log.info("Found {} contributions with status {} to reprocess", contributions.size(), status);
+
+                for (RouteContribution contribution : contributions) {
+                    try {
+                        // Skip if already integrated
+                        if ("INTEGRATED".equals(contribution.getStatus())) {
+                            continue;
+                        }
+
+                        // Check if route has required data before integration
+                        var validationResult = contributionProcessingService.validateForIntegration(contribution);
+                        if (!validationResult.isValid()) {
+                            skippedCount++;
+                            skipped.add(Map.of(
+                                    "id", contribution.getId(),
+                                    "busNumber", contribution.getBusNumber() != null ? contribution.getBusNumber() : "N/A",
+                                    "route", (contribution.getFromLocationName() != null ? contribution.getFromLocationName() : "?") 
+                                            + " → " + (contribution.getToLocationName() != null ? contribution.getToLocationName() : "?"),
+                                    "reason", validationResult.message()));
+                            log.warn("Skipping contribution {} - {}", contribution.getId(), validationResult.message());
+                            continue;
+                        }
+
+                        // Try to integrate
+                        contributionProcessingService.integrateApprovedContribution(contribution);
+                        successCount++;
+                        log.info("Successfully reprocessed contribution {}", contribution.getId());
+                    } catch (Exception e) {
+                        failedCount++;
+                        errors.add(Map.of(
+                                "id", contribution.getId(),
+                                "busNumber", contribution.getBusNumber() != null ? contribution.getBusNumber() : "N/A",
+                                "route", contribution.getFromLocationName() + " → " + contribution.getToLocationName(),
+                                "error", e.getMessage() != null ? e.getMessage() : "Unknown error"));
+                        log.error("Failed to reprocess contribution {}: {}", contribution.getId(), e.getMessage());
+                    }
+                }
+            }
+
+            result.put("success", true);
+            result.put("successCount", successCount);
+            result.put("skippedCount", skippedCount);
+            result.put("failedCount", failedCount);
+            result.put("skipped", skipped);
+            result.put("errors", errors);
+            result.put("timestamp", LocalDateTime.now());
+
+            log.info("Reprocessing complete: {} success, {} skipped (missing data), {} failed", 
+                    successCount, skippedCount, failedCount);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error during reprocessing: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to reprocess contributions: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Reprocess a single route contribution by ID
+     * 
+     * @param id The ID of the contribution to reprocess
+     * @return The reprocessed contribution result
+     */
+    @PostMapping("/contributions/routes/{id}/reprocess")
+    public ResponseEntity<Map<String, Object>> reprocessSingleContribution(@PathVariable String id) {
+        log.info("Request to reprocess route contribution: {}", id);
+
+        try {
+            RouteContribution contribution = contributionProcessingService.getRouteContributionById(id);
+            if (contribution == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            contributionProcessingService.integrateApprovedContribution(contribution);
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", true);
+            result.put("id", id);
+            result.put("newStatus", contribution.getStatus());
+            result.put("message", "Successfully integrated into bus database");
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to reprocess contribution {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of(
+                            "success", false,
+                            "id", id,
+                            "error", e.getMessage() != null ? e.getMessage() : "Unknown error"));
+        }
+    }
+
+    /**
+     * Get statistics about route contributions by status
+     * 
+     * @return Counts of contributions by status
+     */
+    @GetMapping("/contributions/routes/stats")
+    public ResponseEntity<Map<String, Object>> getContributionStats() {
+        log.info("Request to get route contribution statistics");
+
+        try {
+            Map<String, Object> stats = new HashMap<>();
+
+            List<String> statuses = List.of(
+                    "PENDING", "PENDING_REVIEW", "APPROVED", "INTEGRATED",
+                    "FAILED", "INTEGRATION_FAILED", "REJECTED", "DUPLICATE");
+
+            for (String status : statuses) {
+                List<RouteContribution> contributions = contributionProcessingService
+                        .getRouteContributionsByStatus(status);
+                stats.put(status, contributions.size());
+            }
+
+            stats.put("timestamp", LocalDateTime.now());
+            return ResponseEntity.ok(stats);
+        } catch (Exception e) {
+            log.error("Error getting contribution stats: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to get statistics: " + e.getMessage()));
         }
     }
 

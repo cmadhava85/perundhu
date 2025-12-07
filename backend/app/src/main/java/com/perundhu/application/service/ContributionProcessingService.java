@@ -798,7 +798,72 @@ public class ContributionProcessingService {
     }
 
     /**
-     * Integrate an approved contribution into the main bus database
+     * Get route contributions by status
+     * 
+     * @param status The status to filter by
+     * @return List of route contributions with the given status
+     */
+    public List<RouteContribution> getRouteContributionsByStatus(String status) {
+        return routeContributionRepository.findByStatus(status);
+    }
+
+    /**
+     * Get a route contribution by ID
+     * 
+     * @param id The contribution ID
+     * @return The route contribution or null if not found
+     */
+    public RouteContribution getRouteContributionById(String id) {
+        return routeContributionRepository.findById(id).orElse(null);
+    }
+
+    /**
+     * Validate that a route contribution has all required data for integration.
+     * Requirements:
+     * - Both from and to location names must be present
+     * - Both departure and arrival times must be present
+     * 
+     * @param contribution The contribution to validate
+     * @return Validation result with isValid flag and message
+     */
+    public record IntegrationValidationResult(boolean isValid, String message) {
+    }
+
+    public IntegrationValidationResult validateForIntegration(RouteContribution contribution) {
+        // Check from location
+        if (contribution.getFromLocationName() == null || contribution.getFromLocationName().isBlank()) {
+            return new IntegrationValidationResult(false, "From location name is required for integration");
+        }
+
+        // Check to location
+        if (contribution.getToLocationName() == null || contribution.getToLocationName().isBlank()) {
+            return new IntegrationValidationResult(false, "To location name is required for integration");
+        }
+
+        // Check departure time - REQUIRED
+        if (contribution.getDepartureTime() == null || contribution.getDepartureTime().isBlank()) {
+            return new IntegrationValidationResult(false, "Departure time is required for integration");
+        }
+
+        // Check arrival time - REQUIRED (no estimation)
+        if (contribution.getArrivalTime() == null || contribution.getArrivalTime().isBlank()) {
+            return new IntegrationValidationResult(false, "Arrival time is required for integration");
+        }
+
+        return new IntegrationValidationResult(true, "Valid for integration");
+    }
+
+    /**
+     * Integrate an approved contribution into the main bus database.
+     * This method requires all mandatory fields to be present:
+     * - From location name
+     * - To location name
+     * - Departure time
+     * - Arrival time
+     * 
+     * If any of these are missing, the integration will be skipped and the
+     * contribution
+     * will be marked as PENDING_REVIEW for manual data completion.
      */
     public void integrateApprovedContribution(RouteContribution contribution) {
         log.info("Integrating approved route contribution ID {}", contribution.getId());
@@ -807,33 +872,19 @@ public class ContributionProcessingService {
         // into the main bus database as a permanent route
 
         try {
-            // Validate required data before integration
-            if (contribution.getFromLocationName() == null || contribution.getFromLocationName().isBlank()) {
-                throw new IllegalArgumentException("From location name is required for integration");
+            // Validate required data before integration - ALL fields must be present
+            IntegrationValidationResult validationResult = validateForIntegration(contribution);
+            if (!validationResult.isValid()) {
+                log.warn("Skipping integration for contribution ID {} - {}", 
+                        contribution.getId(), validationResult.message());
+                contribution.setStatus("PENDING_REVIEW");
+                contribution.setValidationMessage("Cannot integrate: " + validationResult.message() + 
+                        ". Please complete the missing data before approval.");
+                contribution.setProcessedDate(LocalDateTime.now());
+                routeContributionRepository.save(contribution);
+                return;
             }
-            if (contribution.getToLocationName() == null || contribution.getToLocationName().isBlank()) {
-                throw new IllegalArgumentException("To location name is required for integration");
-            }
-            if (contribution.getDepartureTime() == null || contribution.getDepartureTime().isBlank()) {
-                throw new IllegalArgumentException("Departure time is required for integration");
-            }
-            // Arrival time is optional - estimate if missing
-            if (contribution.getArrivalTime() == null || contribution.getArrivalTime().isBlank()) {
-                // Estimate arrival time based on typical journey duration (default 2 hours)
-                int estimatedMinutes = estimateJourneyDuration(
-                        contribution.getFromLocationName(),
-                        contribution.getToLocationName());
-                String departureStr = contribution.getDepartureTime().trim();
-                if (departureStr.length() == 5) {
-                    departureStr += ":00";
-                }
-                LocalTime depTime = LocalTime.parse(departureStr);
-                LocalTime estimatedArrival = depTime.plusMinutes(estimatedMinutes);
-                contribution.setArrivalTime(estimatedArrival.toString());
-                log.info("Estimated arrival time {} for route {} to {} ({}min journey)",
-                        estimatedArrival, contribution.getFromLocationName(),
-                        contribution.getToLocationName(), estimatedMinutes);
-            }
+
             // Bus number is optional - generate one if missing
             if (contribution.getBusNumber() == null || contribution.getBusNumber().isBlank()) {
                 // Generate placeholder bus number from route (e.g., "SIV-VIR-001")
