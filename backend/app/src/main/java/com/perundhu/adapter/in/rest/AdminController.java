@@ -1,6 +1,7 @@
 package com.perundhu.adapter.in.rest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -171,35 +172,16 @@ public class AdminController {
                 List<RouteContribution> createdRoutes = imageProcessingService.createRouteDataFromOCR(
                         contribution, extractedData, true);
 
-                // IMPORTANT: Integrate the created routes into the main bus/location/stops
-                // tables
-                // This is the missing step that was causing approved routes not to appear in
-                // search
-                // NOTE: Routes missing departure/arrival time or from/to location will be 
+                // IMPORTANT: Use batch integration for better performance
+                // This integrates all routes in a single transaction with location caching
+                // Routes missing departure/arrival time or from/to location will be 
                 // skipped and marked as PENDING_REVIEW
-                int integratedCount = 0;
-                int skippedCount = 0;
-                int failedCount = 0;
-                for (RouteContribution route : createdRoutes) {
-                    try {
-                        // Check if route has required data before integration
-                        var validationResult = contributionProcessingService.validateForIntegration(route);
-                        if (!validationResult.isValid()) {
-                            log.warn("Skipping route {} - missing required data: {}", 
-                                    route.getId(), validationResult.message());
-                            skippedCount++;
-                            continue;
-                        }
-                        contributionProcessingService.integrateApprovedContribution(route);
-                        integratedCount++;
-                    } catch (Exception integrationError) {
-                        log.error("Failed to integrate route {} into bus tables: {}",
-                                route.getId(), integrationError.getMessage());
-                        failedCount++;
-                    }
-                }
+                var batchResult = contributionProcessingService.integrateApprovedContributionsBatch(createdRoutes);
+                int integratedCount = batchResult.integratedCount();
+                int skippedCount = batchResult.skippedCount();
+                int failedCount = batchResult.failedCount();
 
-                log.info("Integrated {}/{} routes into bus tables ({} skipped due to missing data, {} failed)",
+                log.info("Batch integrated {}/{} routes into bus tables ({} skipped due to missing data, {} failed)",
                         integratedCount, createdRoutes.size(), skippedCount, failedCount);
 
                 // Update contribution
@@ -433,6 +415,7 @@ public class AdminController {
      * Reprocess failed and pending route contributions
      * This is useful when fixing issues with previous failed integrations.
      * Note: Routes missing departure/arrival time or from/to locations will be skipped.
+     * Uses batch integration for better performance.
      * 
      * @return Summary of reprocessing results
      */
@@ -442,11 +425,7 @@ public class AdminController {
 
         try {
             Map<String, Object> result = new HashMap<>();
-            int successCount = 0;
-            int skippedCount = 0;
-            int failedCount = 0;
-            List<Map<String, String>> errors = new java.util.ArrayList<>();
-            List<Map<String, String>> skipped = new java.util.ArrayList<>();
+            List<RouteContribution> allToReprocess = new ArrayList<>();
 
             // Get contributions that need reprocessing
             List<String> statusesToReprocess = List.of(
@@ -458,53 +437,29 @@ public class AdminController {
 
                 log.info("Found {} contributions with status {} to reprocess", contributions.size(), status);
 
+                // Filter out already integrated and add to batch list
                 for (RouteContribution contribution : contributions) {
-                    try {
-                        // Skip if already integrated
-                        if ("INTEGRATED".equals(contribution.getStatus())) {
-                            continue;
-                        }
-
-                        // Check if route has required data before integration
-                        var validationResult = contributionProcessingService.validateForIntegration(contribution);
-                        if (!validationResult.isValid()) {
-                            skippedCount++;
-                            skipped.add(Map.of(
-                                    "id", contribution.getId(),
-                                    "busNumber", contribution.getBusNumber() != null ? contribution.getBusNumber() : "N/A",
-                                    "route", (contribution.getFromLocationName() != null ? contribution.getFromLocationName() : "?") 
-                                            + " → " + (contribution.getToLocationName() != null ? contribution.getToLocationName() : "?"),
-                                    "reason", validationResult.message()));
-                            log.warn("Skipping contribution {} - {}", contribution.getId(), validationResult.message());
-                            continue;
-                        }
-
-                        // Try to integrate
-                        contributionProcessingService.integrateApprovedContribution(contribution);
-                        successCount++;
-                        log.info("Successfully reprocessed contribution {}", contribution.getId());
-                    } catch (Exception e) {
-                        failedCount++;
-                        errors.add(Map.of(
-                                "id", contribution.getId(),
-                                "busNumber", contribution.getBusNumber() != null ? contribution.getBusNumber() : "N/A",
-                                "route", contribution.getFromLocationName() + " → " + contribution.getToLocationName(),
-                                "error", e.getMessage() != null ? e.getMessage() : "Unknown error"));
-                        log.error("Failed to reprocess contribution {}: {}", contribution.getId(), e.getMessage());
+                    if (!"INTEGRATED".equals(contribution.getStatus())) {
+                        allToReprocess.add(contribution);
                     }
                 }
             }
 
+            log.info("Total {} contributions to reprocess in batch", allToReprocess.size());
+
+            // Use batch integration for performance
+            var batchResult = contributionProcessingService.integrateApprovedContributionsBatch(allToReprocess);
+
             result.put("success", true);
-            result.put("successCount", successCount);
-            result.put("skippedCount", skippedCount);
-            result.put("failedCount", failedCount);
-            result.put("skipped", skipped);
-            result.put("errors", errors);
+            result.put("successCount", batchResult.integratedCount());
+            result.put("skippedCount", batchResult.skippedCount());
+            result.put("failedCount", batchResult.failedCount());
+            result.put("skippedReasons", batchResult.skippedReasons());
+            result.put("failedReasons", batchResult.failedReasons());
             result.put("timestamp", LocalDateTime.now());
 
             log.info("Reprocessing complete: {} success, {} skipped (missing data), {} failed", 
-                    successCount, skippedCount, failedCount);
+                    batchResult.integratedCount(), batchResult.skippedCount(), batchResult.failedCount());
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error during reprocessing: {}", e.getMessage(), e);

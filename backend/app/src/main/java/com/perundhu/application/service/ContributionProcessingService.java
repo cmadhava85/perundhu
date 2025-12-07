@@ -829,6 +829,17 @@ public class ContributionProcessingService {
     public record IntegrationValidationResult(boolean isValid, String message) {
     }
 
+    /**
+     * Result of batch integration operation
+     */
+    public record BatchIntegrationResult(
+            int integratedCount,
+            int skippedCount,
+            int failedCount,
+            List<String> skippedReasons,
+            List<String> failedReasons) {
+    }
+
     public IntegrationValidationResult validateForIntegration(RouteContribution contribution) {
         // Check from location
         if (contribution.getFromLocationName() == null || contribution.getFromLocationName().isBlank()) {
@@ -851,6 +862,186 @@ public class ContributionProcessingService {
         }
 
         return new IntegrationValidationResult(true, "Valid for integration");
+    }
+
+    /**
+     * Batch integrate multiple route contributions with performance optimizations.
+     * Uses location caching to avoid repeated database lookups.
+     * Runs in a single transaction for better performance.
+     * 
+     * @param contributions List of route contributions to integrate
+     * @return BatchIntegrationResult with counts and error details
+     */
+    @Transactional
+    public BatchIntegrationResult integrateApprovedContributionsBatch(List<RouteContribution> contributions) {
+        log.info("Starting batch integration of {} route contributions", contributions.size());
+        long startTime = System.currentTimeMillis();
+
+        int integratedCount = 0;
+        int skippedCount = 0;
+        int failedCount = 0;
+        List<String> skippedReasons = new ArrayList<>();
+        List<String> failedReasons = new ArrayList<>();
+
+        // Location cache to avoid repeated database lookups
+        Map<String, Location> locationCache = new HashMap<>();
+
+        for (RouteContribution contribution : contributions) {
+            try {
+                // Validate first
+                IntegrationValidationResult validationResult = validateForIntegration(contribution);
+                if (!validationResult.isValid()) {
+                    skippedCount++;
+                    skippedReasons.add(contribution.getId() + ": " + validationResult.message());
+                    contribution.setStatus("PENDING_REVIEW");
+                    contribution.setValidationMessage("Cannot integrate: " + validationResult.message());
+                    contribution.setProcessedDate(LocalDateTime.now());
+                    routeContributionRepository.save(contribution);
+                    continue;
+                }
+
+                // Integrate with cached locations
+                integrateWithCache(contribution, locationCache);
+                integratedCount++;
+
+            } catch (Exception e) {
+                failedCount++;
+                failedReasons.add(contribution.getId() + ": " + e.getMessage());
+                log.error("Failed to integrate contribution {}: {}", contribution.getId(), e.getMessage());
+            }
+        }
+
+        long duration = System.currentTimeMillis() - startTime;
+        log.info("Batch integration completed in {}ms: {} integrated, {} skipped, {} failed",
+                duration, integratedCount, skippedCount, failedCount);
+
+        return new BatchIntegrationResult(integratedCount, skippedCount, failedCount, skippedReasons, failedReasons);
+    }
+
+    /**
+     * Integrate a single contribution using a shared location cache for performance
+     */
+    private void integrateWithCache(RouteContribution contribution, Map<String, Location> locationCache) {
+        // Generate bus number if missing
+        if (contribution.getBusNumber() == null || contribution.getBusNumber().isBlank()) {
+            String generatedBusNumber = generateBusNumberFromRoute(
+                    contribution.getFromLocationName(),
+                    contribution.getToLocationName());
+            contribution.setBusNumber(generatedBusNumber);
+        }
+
+        // Get or create locations using cache
+        String fromKey = contribution.getFromLocationName().toLowerCase().trim();
+        String toKey = contribution.getToLocationName().toLowerCase().trim();
+
+        Location fromLocation = locationCache.computeIfAbsent(fromKey, k -> 
+                getOrCreateLocation(contribution.getFromLocationName(),
+                        contribution.getFromLatitude(), contribution.getFromLongitude()));
+
+        Location toLocation = locationCache.computeIfAbsent(toKey, k ->
+                getOrCreateLocation(contribution.getToLocationName(),
+                        contribution.getToLatitude(), contribution.getToLongitude()));
+
+        // Parse times
+        LocalTime departureTime = parseTimeFlexible(contribution.getDepartureTime());
+        LocalTime arrivalTime = parseTimeFlexible(contribution.getArrivalTime());
+
+        // Check for duplicate (same route + timing)
+        List<Bus> routeBuses = busRepository.findBusesBetweenLocations(
+                fromLocation.getId().getValue(),
+                toLocation.getId().getValue());
+
+        boolean isDuplicate = routeBuses.stream()
+                .anyMatch(bus -> bus.getDepartureTime().equals(departureTime)
+                        && bus.getArrivalTime().equals(arrivalTime));
+
+        Bus savedBus;
+        if (isDuplicate) {
+            savedBus = routeBuses.stream()
+                    .filter(bus -> bus.getDepartureTime().equals(departureTime)
+                            && bus.getArrivalTime().equals(arrivalTime))
+                    .findFirst()
+                    .orElseThrow();
+        } else {
+            var newBus = Bus.create(
+                    new BusId(1L),
+                    contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
+                    contribution.getBusNumber(),
+                    fromLocation,
+                    toLocation,
+                    departureTime,
+                    arrivalTime);
+            savedBus = busRepository.save(newBus);
+        }
+
+        // Process stops with the same cache
+        processStopsWithCache(contribution, savedBus, locationCache);
+
+        // Mark as integrated
+        contribution.setStatus("INTEGRATED");
+        contribution.setValidationMessage(isDuplicate 
+                ? "Duplicate timing skipped - already exists" 
+                : "Successfully integrated into bus database");
+        contribution.setProcessedDate(LocalDateTime.now());
+        routeContributionRepository.save(contribution);
+    }
+
+    /**
+     * Process stops using location cache for better performance
+     */
+    private void processStopsWithCache(RouteContribution contribution, Bus savedBus, 
+            Map<String, Location> locationCache) {
+        if (contribution.getStops() == null || contribution.getStops().isEmpty()) {
+            return;
+        }
+
+        List<Stop> existingStops = stopRepository.findByBusId(savedBus.getId());
+        int stopOrder = 1;
+
+        for (var stopContribution : contribution.getStops()) {
+            try {
+                String stopKey = stopContribution.getName().toLowerCase().trim();
+                Location stopLocation = locationCache.computeIfAbsent(stopKey, k ->
+                        getOrCreateLocation(stopContribution.getName(),
+                                stopContribution.getLatitude(), stopContribution.getLongitude()));
+
+                // Check for duplicate stop
+                boolean stopExists = existingStops.stream()
+                        .anyMatch(existing -> existing.getLocation() != null
+                                && existing.getLocation().getId() != null
+                                && existing.getLocation().getId().equals(stopLocation.getId()));
+
+                if (!stopExists) {
+                    LocalTime arrivalTime = null;
+                    LocalTime departureTime = null;
+
+                    if (stopContribution.getArrivalTime() != null && !stopContribution.getArrivalTime().isBlank()) {
+                        try {
+                            arrivalTime = parseTimeFlexible(stopContribution.getArrivalTime());
+                        } catch (Exception ignored) {}
+                    }
+                    if (stopContribution.getDepartureTime() != null && !stopContribution.getDepartureTime().isBlank()) {
+                        try {
+                            departureTime = parseTimeFlexible(stopContribution.getDepartureTime());
+                        } catch (Exception ignored) {}
+                    }
+
+                    int order = stopOrder;
+                    var newStop = Stop.create(
+                            null,  // ID will be generated by persistence layer
+                            stopContribution.getName(),
+                            stopLocation,
+                            arrivalTime != null ? arrivalTime : departureTime,
+                            departureTime != null ? departureTime : arrivalTime,
+                            order);
+
+                    stopRepository.saveWithBus(newStop, savedBus.getId());
+                }
+                stopOrder++;
+            } catch (Exception e) {
+                log.warn("Failed to create stop '{}': {}", stopContribution.getName(), e.getMessage());
+            }
+        }
     }
 
     /**
