@@ -85,4 +85,11 @@ public interface FileStorageService {
      * @return MIME type string (e.g., "image/jpeg")
      */
     String getImageContentType(String imageUrl);
+
+    /**
+     * Get the base URL for image storage
+     * 
+     * @return Base URL (e.g., "http://localhost:8080" or "https://backend.run.app")
+     */
+    String getBaseUrl();
 }

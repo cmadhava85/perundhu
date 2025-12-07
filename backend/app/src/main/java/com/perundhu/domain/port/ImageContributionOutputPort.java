@@ -64,4 +64,9 @@ public interface ImageContributionOutputPort {
   default List<ImageContribution> findByStatus(String status, int page, int size) {
     return findByStatus(status); // Default implementation for backward compatibility
   }
+
+  /**
+   * Find image contribution by image URL
+   */
+  Optional<ImageContribution> findByImageUrl(String imageUrl);
 }

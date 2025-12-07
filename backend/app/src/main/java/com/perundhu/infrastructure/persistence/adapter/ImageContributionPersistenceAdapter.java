@@ -75,4 +75,10 @@ public class ImageContributionPersistenceAdapter implements ImageContributionOut
     public long countByStatus(String status) {
         return repository.countByStatus(status);
     }
+
+    @Override
+    public Optional<ImageContribution> findByImageUrl(String imageUrl) {
+        return repository.findByImageUrl(imageUrl)
+                .map(mapper::toDomain);
+    }
 }

@@ -7,7 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.port.FileStorageService;
+import com.perundhu.domain.port.ImageContributionOutputPort;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +37,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ImageController {
 
   private final FileStorageService fileStorageService;
+  private final ImageContributionOutputPort imageContributionOutputPort;
 
   /**
-   * Serve an image file
+   * Serve an image file - tries filesystem first, then database
    */
   @GetMapping("/{userId}/{filename:.+}")
   public ResponseEntity<Resource> serveImage(
@@ -45,36 +50,50 @@ public class ImageController {
     try {
       // Construct the image URL that would be stored in the database
       String imageUrl = "/api/images/" + userId + "/" + filename;
+      String fullImageUrl = fileStorageService.getBaseUrl() + imageUrl;
 
-      // Get the actual file path from the storage service
+      // First try to serve from filesystem
       String filePath = fileStorageService.getImagePath(imageUrl);
 
-      if (filePath == null) {
-        log.warn("Image not found: {}", imageUrl);
-        return ResponseEntity.notFound().build();
+      if (filePath != null) {
+        Path file = Paths.get(filePath);
+        if (Files.exists(file) && Files.isReadable(file)) {
+          Resource resource = new UrlResource(file.toUri());
+          String contentType = Files.probeContentType(file);
+          if (contentType == null || !contentType.startsWith("image/")) {
+            log.warn("Attempted to serve non-image file: {}", filePath);
+            return ResponseEntity.badRequest().build();
+          }
+          log.debug("Serving image from filesystem: {}", filePath);
+          return ResponseEntity.ok()
+              .contentType(MediaType.parseMediaType(contentType))
+              .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
+              .body(resource);
+        }
       }
 
-      Path file = Paths.get(filePath);
-      Resource resource = new UrlResource(file.toUri());
-
-      if (!resource.exists() || !resource.isReadable()) {
-        log.warn("Image file not readable: {}", filePath);
-        return ResponseEntity.notFound().build();
+      // Filesystem not available, try database
+      log.info("Image not in filesystem, trying database for: {}", fullImageUrl);
+      Optional<ImageContribution> contribution = imageContributionOutputPort.findByImageUrl(fullImageUrl);
+      
+      if (contribution.isPresent() && contribution.get().getImageData() != null) {
+        byte[] imageData = contribution.get().getImageData();
+        String contentType = contribution.get().getImageContentType();
+        if (contentType == null) {
+          contentType = "image/jpeg";
+        }
+        
+        log.debug("Serving image from database: {} bytes", imageData.length);
+        ByteArrayResource resource = new ByteArrayResource(imageData);
+        return ResponseEntity.ok()
+            .contentType(MediaType.parseMediaType(contentType))
+            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
+            .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(imageData.length))
+            .body(resource);
       }
 
-      // Security check: ensure the file is actually an image
-      String contentType = Files.probeContentType(file);
-      if (contentType == null || !contentType.startsWith("image/")) {
-        log.warn("Attempted to serve non-image file: {}", filePath);
-        return ResponseEntity.badRequest().build();
-      }
-
-      log.debug("Serving image: {}", filePath);
-
-      return ResponseEntity.ok()
-          .contentType(MediaType.parseMediaType(contentType))
-          .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
-          .body(resource);
+      log.warn("Image not found in filesystem or database: {}", imageUrl);
+      return ResponseEntity.notFound().build();
 
     } catch (MalformedURLException e) {
       log.error("Invalid URL for image: {}/{}", userId, filename, e);

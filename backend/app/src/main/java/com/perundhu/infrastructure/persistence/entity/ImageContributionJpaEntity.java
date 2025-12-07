@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 
 import com.perundhu.domain.model.ImageContribution;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 /**
  * JPA entity for image contributions
  */
@@ -53,6 +56,14 @@ public class ImageContributionJpaEntity {
     @Column(name = "extracted_data", columnDefinition = "TEXT")
     private String extractedData;
 
+    @Lob
+    @Column(name = "image_data", columnDefinition = "LONGBLOB")
+    @JdbcTypeCode(SqlTypes.BLOB)
+    private byte[] imageData;
+
+    @Column(name = "image_content_type", length = 100)
+    private String imageContentType;
+
     /**
      * Convert JPA entity to domain model
      */
@@ -70,6 +81,8 @@ public class ImageContributionJpaEntity {
         model.setAdditionalNotes(this.additionalNotes);
         model.setValidationMessage(this.validationMessage);
         model.setExtractedData(this.extractedData);
+        model.setImageData(this.imageData);
+        model.setImageContentType(this.imageContentType);
         return model;
     }
 
@@ -90,6 +103,8 @@ public class ImageContributionJpaEntity {
         entity.setAdditionalNotes(model.getAdditionalNotes());
         entity.setValidationMessage(model.getValidationMessage());
         entity.setExtractedData(model.getExtractedData());
+        entity.setImageData(model.getImageData());
+        entity.setImageContentType(model.getImageContentType());
         return entity;
     }
 }

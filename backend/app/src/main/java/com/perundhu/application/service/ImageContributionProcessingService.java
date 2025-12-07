@@ -498,6 +498,17 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             String userId,
             String imageUrl) {
 
+        // Store image bytes directly in database for persistent storage (Cloud Run compatible)
+        byte[] imageData = null;
+        String contentType = "image/jpeg";
+        try {
+            imageData = imageFile.getBytes();
+            contentType = imageFile.getContentType() != null ? imageFile.getContentType() : "image/jpeg";
+            logger.info("Storing image data in database: {} bytes, type: {}", imageData.length, contentType);
+        } catch (Exception e) {
+            logger.warn("Failed to read image bytes for database storage: {}", e.getMessage());
+        }
+
         return ImageContribution.builder()
                 .id(UUID.randomUUID().toString())
                 .userId(userId)
@@ -509,6 +520,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .submissionDate(LocalDateTime.now())
                 .additionalNotes(String.format("Original filename: %s, Size: %d bytes",
                         imageFile.getOriginalFilename(), imageFile.getSize()))
+                .imageData(imageData)
+                .imageContentType(contentType)
                 .build();
     }
 
@@ -646,12 +659,22 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             if (geminiVisionService.isAvailable()) {
                 logger.info("Using Gemini Vision AI for OCR extraction");
 
-                // Read image bytes directly from storage (not via HTTP URL)
-                byte[] imageBytes = fileStorageService.getImageBytes(contribution.getImageUrl());
+                // First try to read image bytes from database (persistent storage for Cloud Run)
+                byte[] imageBytes = contribution.getImageData();
+                String mimeType = contribution.getImageContentType();
+                
+                // If not in database, try filesystem (for backward compatibility)
+                if (imageBytes == null || imageBytes.length == 0) {
+                    logger.info("Image data not in database, trying filesystem...");
+                    imageBytes = fileStorageService.getImageBytes(contribution.getImageUrl());
+                    mimeType = fileStorageService.getImageContentType(contribution.getImageUrl());
+                }
 
                 if (imageBytes != null && imageBytes.length > 0) {
                     String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-                    String mimeType = fileStorageService.getImageContentType(contribution.getImageUrl());
+                    if (mimeType == null || mimeType.isEmpty()) {
+                        mimeType = "image/jpeg";
+                    }
 
                     logger.info("Sending image to Gemini Vision (size: {} bytes, type: {})",
                             imageBytes.length, mimeType);

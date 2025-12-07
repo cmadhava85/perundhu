@@ -430,4 +430,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     return false;
   }
+
+  @Override
+  public String getBaseUrl() {
+    return baseUrl;
+  }
 }
