@@ -143,7 +143,11 @@ jobs:
         echo "Created .env.local and .env.production.local with VITE_API_URL=$BACKEND_URL"
         cat ./frontend/.env.local
         
-        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
+        # Clear Docker BuildKit cache to avoid corrupted layer issues
+        docker builder prune -f --filter "until=24h" || true
+        
+        # Build with --no-cache to avoid cache corruption issues
+        docker build --no-cache -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
         docker push $IMAGE
         docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest
         
@@ -195,7 +199,11 @@ jobs:
         TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
         IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:${TAG}"
         
-        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest ./backend
+        # Clear Docker BuildKit cache to avoid corrupted layer issues
+        docker builder prune -f --filter "until=24h" || true
+        
+        # Build with --no-cache to avoid cache corruption issues
+        docker build --no-cache -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest ./backend
         docker push $IMAGE
         docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest
         
