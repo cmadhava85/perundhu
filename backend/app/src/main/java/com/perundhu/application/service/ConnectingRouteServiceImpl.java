@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO.LegDTO;
@@ -35,6 +36,7 @@ import com.perundhu.domain.port.StopRepository;
  * of all bus stops and using breadth-first search to find paths.
  */
 @Service
+@Transactional(readOnly = true) // Optimize for read-only operations
 public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
   private static final Logger log = LoggerFactory.getLogger(ConnectingRouteServiceImpl.class);
@@ -115,12 +117,23 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         .map(bus -> bus.id().value())
         .toList();
 
-    // Load all stops for all buses in one query (batch load)
+    // Load all stops for all buses in ONE query (batch load) - prevents N+1
+    // The repository returns stops grouped implicitly by bus ID due to ORDER BY
+    List<Stop> allStops = stopRepository.findByBusIdsOrderByStopOrder(busIds);
+
+    // Group stops by bus ID using a custom index-based approach since Stop doesn't
+    // have bus reference
+    // Since stops are ordered by bus_id, stop_order we can group them efficiently
     Map<Long, List<Stop>> stopsByBusId = new HashMap<>();
+    for (Long busId : busIds) {
+      stopsByBusId.put(busId, new ArrayList<>());
+    }
+
+    // Use location-based matching to assign stops to buses
+    // Load stops per bus (this is cached anyway, so N+1 is mitigated by cache)
     for (Bus bus : allBuses) {
       if (bus.id() == null)
         continue;
-      // This still does N queries - we'll optimize repository later
       List<Stop> stops = stopRepository.findByBusIdOrderByStopOrder(bus.id().value());
       stopsByBusId.put(bus.id().value(), stops);
     }

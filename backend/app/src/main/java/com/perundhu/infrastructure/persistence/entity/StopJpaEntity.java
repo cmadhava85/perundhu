@@ -11,6 +11,7 @@ import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -50,12 +51,12 @@ public class StopJpaEntity {
     private Integer stopOrder;
 
     @NotNull(message = "Bus must not be null")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id")
     private BusJpaEntity bus;
 
     @NotNull(message = "Location must not be null")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private LocationJpaEntity location;
 

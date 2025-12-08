@@ -64,6 +64,15 @@ public interface StopRepository {
      */
     List<Stop> findByLocationId(Long locationId);
 
+    /**
+     * Batch load stops for multiple buses in a single query.
+     * Prevents N+1 query issue when building route graphs.
+     * 
+     * @param busIds List of bus IDs to load stops for
+     * @return List of stops ordered by bus ID and stop order
+     */
+    List<Stop> findByBusIdsOrderByStopOrder(List<Long> busIds);
+
     Stop save(Stop stop);
 
     /**

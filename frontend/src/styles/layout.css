@@ -270,7 +270,11 @@ html, body {
 /* Mobile specific adjustments */
 @media (max-width: 767px) {
   .app-main {
-    padding-bottom: 80px; /* Space for bottom navigation */
+    padding-bottom: 100px !important; /* Increased space for bottom navigation + iOS safe area */
+  }
+  
+  main {
+    padding-bottom: 100px !important;
   }
   
   .search-section,

@@ -56,12 +56,16 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
 
         /**
          * Find buses between two locations using location IDs
+         * Uses JOIN FETCH to load locations in single query (prevents N+1)
          * 
          * @param fromLocationId The ID of the origin location
          * @param toLocationId   The ID of the destination location
          * @return List of buses between the specified locations
          */
-        @Query("SELECT b FROM BusJpaEntity b WHERE b.fromLocation.id = :fromLocationId AND b.toLocation.id = :toLocationId")
+        @Query("SELECT b FROM BusJpaEntity b " +
+                        "JOIN FETCH b.fromLocation " +
+                        "JOIN FETCH b.toLocation " +
+                        "WHERE b.fromLocation.id = :fromLocationId AND b.toLocation.id = :toLocationId")
         List<BusJpaEntity> findBusesBetweenLocations(@Param("fromLocationId") Long fromLocationId,
                         @Param("toLocationId") Long toLocationId);
 
@@ -70,12 +74,15 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * stops)
          * This finds buses where the fromLocation and toLocation appear as stops in the
          * correct order
+         * Uses JOIN FETCH to load locations in single query (prevents N+1)
          * 
          * @param fromLocationId The ID of the origin location
          * @param toLocationId   The ID of the destination location
          * @return List of buses that have stops at both locations in the correct order
          */
         @Query("SELECT DISTINCT b FROM BusJpaEntity b " +
+                        "JOIN FETCH b.fromLocation " +
+                        "JOIN FETCH b.toLocation " +
                         "JOIN StopJpaEntity s1 ON s1.bus.id = b.id " +
                         "JOIN StopJpaEntity s2 ON s2.bus.id = b.id " +
                         "WHERE s1.location.id = :fromLocationId " +

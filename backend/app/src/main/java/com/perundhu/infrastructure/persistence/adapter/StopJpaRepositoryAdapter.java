@@ -89,4 +89,14 @@ public class StopJpaRepositoryAdapter implements StopRepository {
                 .map(StopJpaEntity::toDomainModel)
                 .toList();
     }
+
+    @Override
+    public List<Stop> findByBusIdsOrderByStopOrder(List<Long> busIds) {
+        if (busIds == null || busIds.isEmpty()) {
+            return List.of();
+        }
+        return jpaRepository.findByBusIdsOrderByStopOrder(busIds).stream()
+                .map(StopJpaEntity::toDomainModel)
+                .toList();
+    }
 }

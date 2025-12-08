@@ -9,6 +9,7 @@ import com.perundhu.domain.model.BusId;
 import com.perundhu.domain.model.Location;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,12 +54,12 @@ public class BusJpaEntity {
     private LocalTime arrivalTime;
 
     @NotNull(message = "From location must not be null")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_location_id")
     private LocationJpaEntity fromLocation;
 
     @NotNull(message = "To location must not be null")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_location_id")
     private LocationJpaEntity toLocation;
 

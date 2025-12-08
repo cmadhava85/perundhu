@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusRouteDTO;
@@ -28,6 +29,7 @@ import com.perundhu.domain.port.StopRepository;
 import com.perundhu.domain.port.TranslationRepository;
 
 @Service
+@Transactional(readOnly = true) // Default to read-only for all methods (optimize read queries)
 public class BusScheduleServiceImpl implements BusScheduleService {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BusScheduleServiceImpl.class);
@@ -112,6 +114,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     }
 
     @Override
+    @Cacheable(value = "busSearchCache", key = "#fromLocationId + '-' + #toLocationId")
     public List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId) {
         LocationId fromId = new LocationId(fromLocationId);
         LocationId toId = new LocationId(toLocationId);

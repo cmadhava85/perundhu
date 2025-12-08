@@ -71,6 +71,7 @@
   .app-footer {
     padding: 10px 10px;
     margin-top: 20px;
+    margin-bottom: 80px; /* Space for bottom navigation */
   }
 
   .footer-logo {
@@ -85,6 +86,7 @@
 @media (max-width: 640px) {
   .app-footer {
     padding: 8px 10px;
+    margin-bottom: 90px; /* More space for iOS safe area */
   }
 
   .footer-content {
