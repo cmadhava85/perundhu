@@ -12,7 +12,6 @@ COPY gradle/ gradle/
 # Copy all source modules
 COPY app/ app/
 COPY infrastructure/ infrastructure/
-COPY src/ src/
 
 # Copy health check script
 COPY health-check.sh ./
@@ -59,5 +58,5 @@ ENV JAVA_OPTS="-Xmx1536m -Xms512m -XX:+UseG1GC -XX:+UseStringDeduplication" \
     SPRING_PROFILES_ACTIVE=preprod \
     SERVER_PORT=8080
 
-# Run application
-CMD java $JAVA_OPTS -jar app.jar
+# Run application (using shell form for variable expansion)
+CMD ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

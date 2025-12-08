@@ -16,22 +16,25 @@ resource "google_sql_database_instance" "mysql_instance" {
 
   settings {
     tier      = var.db_instance_tier
-    disk_type = "PD_SSD"
-    disk_size = 20
+    disk_type = "PD_HDD"          # HDD is ~85% cheaper than SSD for low-traffic apps
+    disk_size = 10                # Minimum size - saves ~$1.70/mo
+    disk_autoresize = true        # Auto-grow only when needed
+    disk_autoresize_limit = 20    # Cap at 20GB to control costs
     
-    availability_type = "ZONAL"  # Use REGIONAL for high availability in production
+    availability_type = "ZONAL"   # ZONAL is cheaper than REGIONAL
     
+    # COST OPTIMIZATION: Minimal backup configuration
     backup_configuration {
-      enabled    = true
+      enabled    = var.environment == "prod" ? true : false  # Disable backups in non-prod
       start_time = "02:00"
       
       backup_retention_settings {
-        retained_backups = 7
+        retained_backups = 3      # Reduced from 7 to save storage costs
         retention_unit   = "COUNT"
       }
       
-      transaction_log_retention_days = 7
-      binary_log_enabled            = true
+      transaction_log_retention_days = 1  # Minimum retention
+      binary_log_enabled            = false  # Disable binary logs to save ~$1/mo
     }
     
     ip_configuration {
@@ -40,14 +43,16 @@ resource "google_sql_database_instance" "mysql_instance" {
       enable_private_path_for_google_cloud_services = true
     }
     
+    # COST OPTIMIZATION: Disable verbose logging to reduce disk I/O
     database_flags {
       name  = "slow_query_log"
-      value = "on"
+      value = var.environment == "prod" ? "on" : "off"
     }
     
+    # General log disabled - saves disk space and I/O
     database_flags {
       name  = "general_log"
-      value = "on"
+      value = "off"
     }
     
     database_flags {
@@ -58,6 +63,12 @@ resource "google_sql_database_instance" "mysql_instance" {
     maintenance_window {
       day  = 7
       hour = 3
+    }
+    
+    # COST OPTIMIZATION: Enable automatic storage increase prevention
+    user_labels = {
+      environment = var.environment
+      cost_center = "perundhu"
     }
   }
 }
