@@ -2,26 +2,58 @@
 -- V21: Additional Performance Optimization Indexes
 -- ============================================
 -- Adds indexes for query patterns identified in repository analysis
+-- Uses MySQL-compatible procedure for safe index creation
+
+DELIMITER //
+
+-- Helper procedure to safely create an index if it doesn't exist
+DROP PROCEDURE IF EXISTS CreateIndexIfNotExists//
+CREATE PROCEDURE CreateIndexIfNotExists(
+    IN tableName VARCHAR(128),
+    IN indexName VARCHAR(128),
+    IN indexColumns VARCHAR(256)
+)
+BEGIN
+    DECLARE index_exists INT DEFAULT 0;
+    
+    SELECT COUNT(*) INTO index_exists
+    FROM INFORMATION_SCHEMA.STATISTICS
+    WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = tableName
+    AND INDEX_NAME = indexName;
+    
+    IF index_exists = 0 THEN
+        SET @sql = CONCAT('CREATE INDEX ', indexName, ' ON ', tableName, '(', indexColumns, ')');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    END IF;
+END//
+
+DELIMITER ;
 
 -- Route contributions table indexes
-CREATE INDEX IF NOT EXISTS idx_rc_user ON route_contributions(user_id);
-CREATE INDEX IF NOT EXISTS idx_rc_status_date ON route_contributions(status, submission_date DESC);
-CREATE INDEX IF NOT EXISTS idx_rc_submitter_date ON route_contributions(submitted_by, submission_date DESC);
+CALL CreateIndexIfNotExists('route_contributions', 'idx_rc_user', 'user_id');
+CALL CreateIndexIfNotExists('route_contributions', 'idx_rc_status_date', 'status, submission_date DESC');
+CALL CreateIndexIfNotExists('route_contributions', 'idx_rc_submitter_date', 'submitted_by, submission_date DESC');
 
 -- Image contributions table indexes  
-CREATE INDEX IF NOT EXISTS idx_ic_user ON image_contributions(user_id);
-CREATE INDEX IF NOT EXISTS idx_ic_status_date ON image_contributions(status, submission_date DESC);
+CALL CreateIndexIfNotExists('image_contributions', 'idx_ic_user', 'user_id');
+CALL CreateIndexIfNotExists('image_contributions', 'idx_ic_status_date', 'status, submission_date DESC');
 
 -- Buses table composite indexes for join queries
-CREATE INDEX IF NOT EXISTS idx_bus_locations ON buses(from_location_id, to_location_id);
-CREATE INDEX IF NOT EXISTS idx_bus_category ON buses(category);
-CREATE INDEX IF NOT EXISTS idx_bus_number ON buses(bus_number);
-CREATE INDEX IF NOT EXISTS idx_bus_active ON buses(active);
+CALL CreateIndexIfNotExists('buses', 'idx_bus_locations', 'from_location_id, to_location_id');
+CALL CreateIndexIfNotExists('buses', 'idx_bus_category', 'category');
+CALL CreateIndexIfNotExists('buses', 'idx_bus_number', 'bus_number');
+CALL CreateIndexIfNotExists('buses', 'idx_bus_active', 'active');
 
 -- Translations - field lookup optimization
-CREATE INDEX IF NOT EXISTS idx_trans_entity_field ON translations(entity_type, field_name);
+CALL CreateIndexIfNotExists('translations', 'idx_trans_entity_field', 'entity_type, field_name');
 
 -- User tracking sessions
-CREATE INDEX IF NOT EXISTS idx_uts_session ON user_tracking_sessions(session_id);
-CREATE INDEX IF NOT EXISTS idx_uts_user_bus ON user_tracking_sessions(user_id, bus_id);
-CREATE INDEX IF NOT EXISTS idx_uts_active ON user_tracking_sessions(end_time, start_time);
+CALL CreateIndexIfNotExists('user_tracking_sessions', 'idx_uts_session', 'session_id');
+CALL CreateIndexIfNotExists('user_tracking_sessions', 'idx_uts_user_bus', 'user_id, bus_id');
+CALL CreateIndexIfNotExists('user_tracking_sessions', 'idx_uts_active', 'end_time, start_time');
+
+-- Cleanup: Drop the helper procedure
+DROP PROCEDURE IF EXISTS CreateIndexIfNotExists;
