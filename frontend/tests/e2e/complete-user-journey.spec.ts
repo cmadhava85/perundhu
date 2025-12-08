@@ -192,14 +192,14 @@ test.describe('Sorting Features', () => {
       
       if (sortButtonCount > 0) {
         // Get first bus details before sorting
-        const firstBusBefore = await busCards.first().textContent();
+        const _firstBusBefore = await busCards.first().textContent();
         
         // Click first sort button
         await sortButtons.first().click();
         await page.waitForTimeout(500);
         
         // Get first bus details after sorting
-        const firstBusAfter = await busCards.first().textContent();
+        const _firstBusAfter = await busCards.first().textContent();
         
         // Buses should potentially have reordered (might be same if already sorted)
         // Just verify the list is still present
@@ -294,7 +294,7 @@ test.describe('Edit Search and Refetch', () => {
         
         // Verify URL or results updated
         const currentUrl = page.url();
-        const urlHasNewParams = currentUrl.includes('Mumbai') || currentUrl.includes('Pune');
+        const _urlHasNewParams = currentUrl.includes('Mumbai') || currentUrl.includes('Pune');
         
         // Verify inputs still have new values
         const fromValue = await fromInput.inputValue();
@@ -338,7 +338,7 @@ test.describe('Additional User Scenarios', () => {
     const filterCount = await filterButtons.count();
     
     if (filterCount > 0) {
-      const busCardsBefore = await page.locator('.transit-bus-card, .bus-card').count();
+      const _busCardsBefore = await page.locator('.transit-bus-card, .bus-card').count();
       
       // Click first enabled filter
       const firstButton = filterButtons.first();

@@ -55,8 +55,15 @@ export interface ChartProps {
   formatTime: (time: string) => string;
 }
 
+export interface TooltipPayloadItem {
+  name: string;
+  value: number | string;
+  color?: string;
+  dataKey?: string;
+}
+
 export interface CustomTooltipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: TooltipPayloadItem[];
   label?: string;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CombinedMapTracker from '../CombinedMapTracker';
-import type { Location, Bus, Stop, BusLocation } from '../../types';
+import type { BusLocation } from '../../types';
 import { getCurrentBusLocations } from '../../services/api';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as api from '../../services/api';
@@ -15,10 +15,10 @@ vi.mock('../../services/api', () => ({
 
 // Mock Google Maps API
 vi.mock('@react-google-maps/api', () => ({
-  GoogleMap: ({ children }: any) => <div data-testid="google-map">{children}</div>,
-  LoadScript: ({ children }: any) => <div data-testid="load-script">{children}</div>,
+  GoogleMap: ({ children }: { children?: React.ReactNode }) => <div data-testid="google-map">{children}</div>,
+  LoadScript: ({ children }: { children?: React.ReactNode }) => <div data-testid="load-script">{children}</div>,
   useJsApiLoader: () => ({ isLoaded: true, loadError: null }),
-  MarkerF: ({ position, onClick }: any) => (
+  MarkerF: ({ position, onClick }: { position?: { lat: number; lng: number }; onClick?: () => void }) => (
     <div 
       data-testid="map-marker" 
       onClick={onClick}
@@ -28,14 +28,14 @@ vi.mock('@react-google-maps/api', () => ({
       Marker
     </div>
   ),
-  InfoWindowF: ({ children }: any) => (
+  InfoWindowF: ({ children }: { children?: React.ReactNode }) => (
     <div data-testid="info-window">{children}</div>
   ),
-  DirectionsRenderer: ({ directions }: any) => (
+  DirectionsRenderer: ({ directions }: { directions?: unknown }) => (
     <div data-testid="directions-renderer">Directions: {directions ? 'Available' : 'None'}</div>
   ),
   DirectionsService: vi.fn().mockImplementation(() => ({
-    route: vi.fn((callback) => {
+    route: vi.fn((callback: (result: unknown, status: string) => void) => {
       // Use setTimeout to prevent immediate callback loops
       setTimeout(() => {
         const mockResult = {
@@ -121,32 +121,33 @@ vi.mock('react-i18next', () => ({
 
 // Mock the MapComponent
 vi.mock('../MapComponent', () => {
-  return {
-    __esModule: true,
-    default: ({ onBusClick, onMapProviderChange }: any) => {
-      // Simulate map load and provider change
-      React.useEffect(() => {
-        if (onMapProviderChange) {
-          onMapProviderChange('Leaflet');
-        }
-      }, [onMapProviderChange]);
+  const MockMapComponent = ({ onBusClick, onMapProviderChange }: { onBusClick?: (bus: { busId: number }) => void; onMapProviderChange?: (provider: string) => void }) => {
+    // Simulate map load and provider change
+    React.useEffect(() => {
+      if (onMapProviderChange) {
+        onMapProviderChange('Leaflet');
+      }
+    }, [onMapProviderChange]);
 
-      return (
-        <div data-testid="map-container" style={{ width: '100%', height: '450px', borderRadius: '10px' }}>
-          <div className="leaflet-container" data-testid="leaflet-map">
-            <div className="leaflet-marker-pane">
-              <div 
-                className="leaflet-marker" 
-                data-testid="leaflet-marker"
-                onClick={() => onBusClick && onBusClick({ busId: 1 })}
-              >
-                Bus Marker
-              </div>
+    return (
+      <div data-testid="map-container" style={{ width: '100%', height: '450px', borderRadius: '10px' }}>
+        <div className="leaflet-container" data-testid="leaflet-map">
+          <div className="leaflet-marker-pane">
+            <div 
+              className="leaflet-marker" 
+              data-testid="leaflet-marker"
+              onClick={() => onBusClick && onBusClick({ busId: 1 })}
+            >
+              Bus Marker
             </div>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
+  };
+  return {
+    __esModule: true,
+    default: MockMapComponent
   };
 });
 
@@ -233,8 +234,8 @@ describe.skip('CombinedMapTracker Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Reset API mocks with proper resolved values
-    (api.getCurrentBusLocations as any).mockResolvedValue(mockBusLocations);
-    (api.getStops as any).mockResolvedValue(mockStops);
+    (api.getCurrentBusLocations as ReturnType<typeof vi.fn>).mockResolvedValue(mockBusLocations);
+    (api.getStops as ReturnType<typeof vi.fn>).mockResolvedValue(mockStops);
   });
 
   it('renders the map when showLiveTracking is true', async () => {

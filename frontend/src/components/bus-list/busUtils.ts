@@ -38,12 +38,18 @@ export const getBusStatusColor = (departureTime: string) => {
   return 'text-gray-600 bg-gray-50';
 };
 
-export const sortBuses = (buses: any[], sortBy: 'time' | 'duration' | 'price') => {
+interface BusItem {
+  departureTime: string;
+  arrivalTime: string;
+  fare?: number;
+}
+
+export const sortBuses = (buses: BusItem[], sortBy: 'time' | 'duration' | 'price') => {
   return [...buses].sort((a, b) => {
     switch (sortBy) {
       case 'time':
         return a.departureTime.localeCompare(b.departureTime);
-      case 'duration':
+      case 'duration': {
         const getDuration = (dep: string, arr: string) => {
           try {
             const depTime = new Date(`2000-01-01T${dep}`);
@@ -54,6 +60,7 @@ export const sortBuses = (buses: any[], sortBy: 'time' | 'duration' | 'price') =
           }
         };
         return getDuration(a.departureTime, a.arrivalTime) - getDuration(b.departureTime, b.arrivalTime);
+      }
       case 'price':
         return (a.fare || 0) - (b.fare || 0);
       default:
@@ -62,7 +69,11 @@ export const sortBuses = (buses: any[], sortBy: 'time' | 'duration' | 'price') =
   });
 };
 
-export const filterBuses = (buses: any[], filterBy: 'all' | 'ac' | 'non-ac') => {
+interface FilterableBus {
+  category?: string;
+}
+
+export const filterBuses = (buses: FilterableBus[], filterBy: 'all' | 'ac' | 'non-ac') => {
   if (filterBy === 'all') return buses;
   
   return buses.filter(bus => 

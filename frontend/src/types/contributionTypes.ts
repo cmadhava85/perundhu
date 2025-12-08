@@ -12,7 +12,7 @@ export interface StopContribution {
   translations?: {
     [key: string]: {
       name: string;
-      [key: string]: any;
+      [key: string]: string | undefined;
     };
   };
   latitude?: number;

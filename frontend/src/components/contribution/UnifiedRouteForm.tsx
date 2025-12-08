@@ -350,7 +350,12 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     const hasDepartureTime = !!formData.departureTime;
     const hasArrivalTime = !!formData.arrivalTime;
     
-    const newErrors: any = {};
+    const newErrors: {
+      busIdentifier?: string;
+      fromLocation?: string;
+      toLocation?: string;
+      timeRequired?: string;
+    } = {};
     
     if (!hasBusName && !hasBusNumber) {
       newErrors.busIdentifier = t(

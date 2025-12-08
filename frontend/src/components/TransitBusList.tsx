@@ -187,7 +187,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
 
   // Filter and sort buses
   const filteredAndSortedBuses = useMemo(() => {
-    let filtered = buses.filter(bus => {
+    const filtered = buses.filter(bus => {
       // Search filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -568,9 +568,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
         <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
           {filteredAndSortedBuses.map((bus) => {
             const busStops = stopsMap[bus.id] || stops.filter(stop => stop.busId === bus.id);
-            console.log(`TransitBusList: Bus ${bus.id} stops from map:`, stopsMap[bus.id]);
-            console.log(`TransitBusList: Bus ${bus.id} filtered stops:`, stops.filter(stop => stop.busId === bus.id));
-            console.log(`TransitBusList: Bus ${bus.id} final stops:`, busStops);
             
             return (
               <TransitBusCard

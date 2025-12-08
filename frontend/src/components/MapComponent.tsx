@@ -44,23 +44,16 @@ const MapComponent: React.FC<MapComponentProps> = ({
   useEffect(() => {
     const initMap = async () => {
       try {
-        console.log('Initializing map with container:', mapContainerId);
-        console.log('Map container ref:', mapContainerRef.current);
-        
         // Initialize the map service - no need to pass element anymore
         await mapService.init();
 
         // Create the map with the element ID
         if (mapContainerRef.current) {
-          console.log('Creating map with ID:', mapContainerId);
           mapService.createMap(mapContainerId);
           setIsMapInitialized(true);
-          console.log('Map initialized successfully');
-        } else {
-          console.error('Map container ref is null');
         }
-      } catch (error) {
-        console.error('Error initializing map:', error);
+      } catch (_error) {
+        // Map initialization failed
         setMapError('Failed to load map. Please try again later.');
       }
     };
@@ -82,8 +75,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
     const updateMap = async () => {
       try {
-        console.log('Updating map with locations:', { fromLocation, toLocation });
-        
         // Clear existing markers
         mapService.clearMarkers();
 
@@ -91,24 +82,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
         // Add origin marker
         if (fromLocation && fromLocation.latitude && fromLocation.longitude) {
-          console.log('Adding origin marker:', fromLocation);
           mapService.addMarker([fromLocation.latitude, fromLocation.longitude], {
             title: fromLocation.name
           });
           coordinates.push({ lat: fromLocation.latitude, lng: fromLocation.longitude });
-        } else {
-          console.warn('fromLocation missing coordinates:', fromLocation);
         }
 
         // Add destination marker
         if (toLocation && toLocation.latitude && toLocation.longitude) {
-          console.log('Adding destination marker:', toLocation);
           mapService.addMarker([toLocation.latitude, toLocation.longitude], {
             title: toLocation.name
           });
           coordinates.push({ lat: toLocation.latitude, lng: toLocation.longitude });
-        } else {
-          console.warn('toLocation missing coordinates:', toLocation);
         }
 
         // Add stop markers
@@ -150,14 +135,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
         // Fit map to show all markers
         if (coordinates.length > 0) {
-          console.log('Fitting map to coordinates:', coordinates);
           const formattedCoords = coordinates.map(coord => [coord.lat, coord.lng] as [number, number]);
           mapService.fitBounds(formattedCoords);
-        } else {
-          console.warn('No coordinates to fit map to');
         }
-      } catch (error) {
-        console.error('Error updating map:', error);
+      } catch (_error) {
+        // Error updating map
         setMapError('Error updating map');
       }
     };

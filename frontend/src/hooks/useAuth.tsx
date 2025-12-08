@@ -93,12 +93,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const updateProfile = async (userData: Partial<User>) => {
-    try {
-      const updatedUser = await AuthService.updateProfile(userData);
-      setUser(updatedUser);
-    } catch (error) {
-      throw error;
-    }
+    const updatedUser = await AuthService.updateProfile(userData);
+    setUser(updatedUser);
   };
 
   const refreshUser = async () => {

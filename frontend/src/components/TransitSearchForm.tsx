@@ -11,6 +11,7 @@ interface TransitSearchFormProps {
   locations?: AppLocation[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface SearchOptions {
   // Simplified interface - only essential search parameters remain
 }
@@ -24,9 +25,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   
-  const [searchOptions, setSearchOptions] = useState<SearchOptions>({
-    // Simplified search options - removed date, time, travelers, and accessibility options
-  });
+  // Simplified search options - removed date, time, travelers, and accessibility options
+  const searchOptions: SearchOptions = {};
 
   const [fromQuery, setFromQuery] = useState(fromLocation?.name || '');
   const [toQuery, setToQuery] = useState(toLocation?.name || '');

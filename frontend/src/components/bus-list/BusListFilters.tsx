@@ -27,7 +27,7 @@ const BusListFilters: React.FC<BusListFiltersProps> = ({
             </label>
             <select
               value={sortBy}
-              onChange={(e) => onSortChange(e.target.value as any)}
+              onChange={(e) => onSortChange(e.target.value as 'time' | 'duration' | 'price')}
               className="form-control text-sm py-1 px-2 w-auto"
             >
               <option value="time">{t('busList.sortTime', 'Departure Time')}</option>

@@ -29,7 +29,7 @@ export const Select: React.FC<SelectProps> = ({ children }) => {
     <div className="relative">
       {React.Children.map(children, child => {
         if (React.isValidElement(child) && child.type === SelectTrigger) {
-          return React.cloneElement(child as React.ReactElement<any>, { 
+          return React.cloneElement(child as React.ReactElement<{ onClick?: () => void }>, { 
             onClick: () => {
               // Simple implementation - you could enhance this with proper dropdown
             }

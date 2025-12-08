@@ -67,7 +67,7 @@ export interface SyncQueueItem {
   id: string;
   action: 'create' | 'update' | 'delete';
   entity: 'route' | 'stop' | 'schedule' | 'favorite';
-  data: any;
+  data: unknown;
   timestamp: number;
 }
 

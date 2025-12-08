@@ -18,7 +18,7 @@ interface SearchResultsProps {
   stops: Stop[];  // Keep this for compatibility, but also add stopsMap
   stopsMap?: Record<number, Stop[]>;  // Add this for the complete stops data
   error?: Error | ApiError | null;
-  connectingRoutes?: any[];
+  connectingRoutes?: unknown[];
   loading?: boolean;  // Add loading prop
 }
 
@@ -29,7 +29,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   stops,
   stopsMap = {},
   error,
-  connectingRoutes = [],
+  connectingRoutes: _connectingRoutes = [],
   loading = false
 }) => {
   const { t, i18n } = useTranslation();
@@ -266,7 +266,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         </div>
         
         <div className="map-section">
-          {typeof globalThis !== 'undefined' && (globalThis as any).L ? (
+          {typeof globalThis !== 'undefined' && (globalThis as unknown as { L?: unknown }).L ? (
             <OpenStreetMapComponent
               fromLocation={fromLocation}
               toLocation={toLocation}

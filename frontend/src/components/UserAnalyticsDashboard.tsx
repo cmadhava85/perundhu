@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import analyticsService from '../services/analyticsService';
-import type { 
-  AnalyticsData,
-  RouteAnalytics,
-  UserBehaviorAnalytics,
-  PerformanceMetrics
-} from '../services/analyticsService';
 import './UserAnalyticsDashboard.css';
 
 interface UserAnalyticsDashboardProps {
@@ -91,8 +85,7 @@ const UserAnalyticsDashboard: React.FC<UserAnalyticsDashboardProps> = ({ userId 
         setAnalytics(completeAnalytics);
         setTravelPatterns(transformedPatterns);
         setPopularRoutes(transformedRoutes);
-      } catch (err) {
-        console.error('Error fetching analytics data:', err);
+      } catch (_err) {
         setError(t('analytics.fetchError', 'Failed to load analytics data. Please try again later.'));
       } finally {
         setLoading(false);
@@ -123,8 +116,7 @@ const UserAnalyticsDashboard: React.FC<UserAnalyticsDashboardProps> = ({ userId 
       anchor.click();
       
       URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Error exporting data:', err);
+    } catch (_err) {
       setError(t('analytics.exportError', 'Failed to export analytics data. Please try again.'));
     } finally {
       setExportLoading(false);

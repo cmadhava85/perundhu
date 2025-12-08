@@ -22,7 +22,7 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
   const { t } = useTranslation();
 
   // Handle stop name change from autocomplete
-  const handleStopNameChange = (value: string, location?: any) => {
+  const handleStopNameChange = (value: string, _location?: unknown) => {
     // Create a synthetic event that mimics the standard input onChange event
     const syntheticEvent = {
       target: {
@@ -32,8 +32,6 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
     } as React.ChangeEvent<HTMLInputElement>;
     
     onChange(syntheticEvent);
-    
-    console.log('Selected stop name:', value, location);
   };
 
   return (

@@ -1,10 +1,9 @@
 import React from 'react';
 import { useBusSearch as useReactQueryBusSearch, useBusStops, useConnectingRoutes } from './queries/useBusSearch';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { api } from '../services/api';
-import type { Location, Stop } from '../types';
+import type { Location, Stop, Bus } from '../types';
 
 /**
  * Enhanced bus search hook that uses React Query under the hood
@@ -39,11 +38,25 @@ export function useBusSearchEnhanced() {
 
   // Fetch stops for all buses in search results
   const { i18n } = useTranslation();
-  const [isLoadingStops, setIsLoadingStops] = React.useState(false);
   const [stopsMap, setStopsMap] = React.useState<Record<number, Stop[]>>({});
 
+  // Define raw stop response interface
+  interface RawStopResponse {
+    id: number;
+    name: string;
+    translatedName?: string;
+    arrivalTime?: string;
+    departureTime?: string;
+    sequence?: number;
+    platform?: string;
+    status?: string;
+    locationId?: number;
+    latitude?: number;
+    longitude?: number;
+  }
+
   // Helper function to transform stop data (reduces nesting)
-  const transformStop = (stop: any, busId: number): Stop => ({
+  const transformStop = (stop: RawStopResponse, busId: number): Stop => ({
     id: stop.id,
     name: stop.name,
     translatedName: stop.translatedName || stop.name,
@@ -61,7 +74,7 @@ export function useBusSearchEnhanced() {
 
   // Helper function to fetch stops for a single bus (reduces nesting)
   const fetchBusStops = async (
-    bus: any, 
+    bus: Bus, 
     signal: AbortSignal
   ): Promise<{ busId: number; stops: Stop[] } | null> => {
     try {
@@ -72,14 +85,15 @@ export function useBusSearchEnhanced() {
           params: { lang: i18n.language }
         }
       );
-      const stops = response.data || [];
+      const stops = (response.data || []) as RawStopResponse[];
       return {
         busId: bus.id,
-        stops: stops.map((stop: any) => transformStop(stop, bus.id))
+        stops: stops.map((stop: RawStopResponse) => transformStop(stop, bus.id))
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Ignore aborted requests
-      if (error.name === 'AbortError' || error.name === 'CanceledError') {
+      const errorObj = error as { name?: string };
+      if (errorObj.name === 'AbortError' || errorObj.name === 'CanceledError') {
         return null;
       }
       console.warn(`Failed to fetch stops for bus ${bus.id}:`, error);
@@ -130,7 +144,7 @@ export function useBusSearchEnhanced() {
   // Backward compatible search function
   const searchBuses = React.useCallback(
     async (from: Location, to: Location) => {
-      console.log(`🔍 Search triggered for: ${from.name} → ${to.name}`);
+      // Search triggered
       
       // Mark that search has been initiated
       setHasSearched(true);
@@ -150,7 +164,7 @@ export function useBusSearchEnhanced() {
       
       // Force refetch if locations are already set (user clicked search again)
       if (shouldRefetch) {
-        console.log('🔄 Locations unchanged, forcing refetch...');
+        // Locations unchanged, forcing refetch
         await busSearchQuery.refetch();
       }
     },

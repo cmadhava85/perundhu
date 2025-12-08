@@ -5,6 +5,17 @@ import AuthService from './authService';
 // API URL from environment variable
 const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
+// Integration result types
+export interface IntegrationResult {
+  manualIntegrationRequired?: boolean;
+  message?: string;
+  instructions?: string[];
+  sqlExample?: string;
+  recommendedAction?: string;
+  error?: string;
+  successCount?: number;
+}
+
 /**
  * Service to handle admin operations with development admin authentication
  */
@@ -65,7 +76,7 @@ const AdminService = {
   },
 
   // Integration methods - for syncing approved contributions to main database
-  integrateApprovedRoutes: async (): Promise<any> => {
+  integrateApprovedRoutes: async (): Promise<IntegrationResult> => {
     const token = AdminService.getAdminToken();
     try {
       const response = await axios.post(
@@ -74,7 +85,7 @@ const AdminService = {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return response.data;
-    } catch (error) {
+    } catch {
       console.error('Integration endpoint not available - using manual integration guidance');
       
       // Since the backend integration endpoint isn't available yet,
@@ -104,7 +115,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     }
   },
 
-  integrateSpecificRoute: async (id: number): Promise<any> => {
+  integrateSpecificRoute: async (id: number): Promise<IntegrationResult> => {
     const token = AdminService.getAdminToken();
     try {
       const response = await axios.post(
@@ -113,20 +124,20 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return response.data;
-    } catch (error) {
+    } catch {
       console.error('Integration endpoint not available for specific route');
       throw new Error('Integration service not available for this route.');
     }
   },
 
-  getIntegrationStatus: async (): Promise<any> => {
+  getIntegrationStatus: async (): Promise<unknown> => {
     const token = AdminService.getAdminToken();
     try {
       const response = await axios.get(`${API_URL}/api/admin/integration/status`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return response.data;
-    } catch (error) {
+    } catch {
       console.error('Integration status endpoint not available');
       return { error: 'Integration status not available' };
     }

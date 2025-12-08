@@ -1,11 +1,11 @@
-import { test, expect, Browser, Page } from '@playwright/test';
+import { test as _test, expect as _expect, Browser as _Browser, Page as _Page } from '@playwright/test';
 
 /**
  * Global setup for E2E tests
  * This runs once before all tests
  */
 async function globalSetup() {
-  console.log('🚀 Starting E2E test suite...');
+  console.warn('🚀 Starting E2E test suite...');
   
   // You can add global setup logic here like:
   // - Database seeding
@@ -13,7 +13,7 @@ async function globalSetup() {
   // - API mocking setup
   
   return async () => {
-    console.log('🧹 Cleaning up after E2E tests...');
+    console.warn('🧹 Cleaning up after E2E tests...');
     // Global cleanup logic
   };
 }

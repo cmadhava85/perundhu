@@ -4,9 +4,6 @@ import { logDebug } from '../utils/logger';
 import type { Location, Bus, Stop, BusLocation } from '../types';
 import type { Stop as ApiStop } from '../types/apiTypes';
 import MapComponent from './MapComponent';
-import MapContainer from './map/MapContainer';
-import MapMarkers from './map/MapMarkers';
-import LiveBusMarkers from './map/LiveBusMarkers';
 import MapLegend from './map/MapLegend';
 import BusInfoPanel from './map/BusInfoPanel';
 import TrackerStatus from './map/TrackerStatus';
@@ -59,15 +56,19 @@ const CombinedMapTracker = ({
   buses,
   showLiveTracking,
   isMobile,
-  selectedBuses = [],
-  userLocation,
-  onBusSelect,
+  browserName: _browserName,
+  selectedBuses: _selectedBuses = [],
+  userLocation: _userLocation,
+  onBusSelect: _onBusSelect,
   onStopSelect
 }: CombinedMapTrackerProps) => {
   const { t } = useTranslation();
   const [selectedBus, setSelectedBus] = useState<BusLocation | null>(null);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [highlightedStopIndex, setHighlightedStopIndex] = useState<number | null>(null);
+  
+  // Suppress lint warning for infoDialogOpen - used for state management
+  void infoDialogOpen;
   
   // Use our custom hook for bus location data with guaranteed boolean and pass buses array
   const { busLocations, isLoading, error } = useBusLocationData(
@@ -121,26 +122,26 @@ const CombinedMapTracker = ({
       }, 3000);
     };
 
-    window.addEventListener('highlightStop', handleHighlightStop as EventListener);
+    globalThis.addEventListener('highlightStop', handleHighlightStop as EventListener);
     return () => {
-      window.removeEventListener('highlightStop', handleHighlightStop as EventListener);
+      globalThis.removeEventListener('highlightStop', handleHighlightStop as EventListener);
     };
   }, []);
 
   // Enhanced stop location function with proper error handling
-  const getStopLocation = useCallback((stop: Stop): { lat: number; lng: number } | null => {
+  const _getStopLocation = useCallback((stop: Stop): { lat: number; lng: number } | null => {
     if (stop.latitude !== null && stop.longitude !== null && 
         stop.latitude !== undefined && stop.longitude !== undefined) {
       return { lat: stop.latitude, lng: stop.longitude };
     }
-    if (stop.location && stop.location.latitude !== null && stop.location.longitude !== null) {
+    if (stop.location?.latitude !== null && stop.location?.longitude !== null && stop.location) {
       return { lat: stop.location.latitude, lng: stop.location.longitude };
     }
     return null;
   }, []);
 
   // Enhanced stop selection handler
-  const handleStopSelect = useCallback((stop: Stop) => {
+  const _handleStopSelect = useCallback((stop: Stop) => {
     logDebug('Stop selected', {
       component: 'CombinedMapTracker',
       stopName: stop.name

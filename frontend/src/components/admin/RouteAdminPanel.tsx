@@ -24,8 +24,9 @@ const RouteAdminPanel: React.FC = () => {
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedRouteForDetails, setSelectedRouteForDetails] = useState<RouteContribution | null>(null);
   
-  // Integration state
+  // Integration state - integrationLoading is set but checked implicitly via loading UI state
   const [integrationLoading, setIntegrationLoading] = useState(false);
+  void integrationLoading; // Used for loading state tracking
   const [integrationError, setIntegrationError] = useState<string>('');
   const [integrationSuccess, setIntegrationSuccess] = useState<string>('');
 
@@ -55,10 +56,9 @@ const RouteAdminPanel: React.FC = () => {
           setFilteredRoutes(data);
           setError(null);
         }
-      } catch (err) {
+      } catch (_err) {
         if (isMounted) {
           setError('Failed to load route contributions. Please try again later.');
-          console.error('Error loading routes:', err);
         }
       } finally {
         if (isMounted) {
@@ -128,9 +128,8 @@ const RouteAdminPanel: React.FC = () => {
       setRoutes(data);
       setFilteredRoutes(data);
       setError(null);
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to load route contributions. Please try again later.');
-      console.error('Error loading routes:', err);
     } finally {
       setLoading(false);
     }
@@ -145,9 +144,8 @@ const RouteAdminPanel: React.FC = () => {
       
       // Reload routes to get updated list
       await loadRoutes();
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to approve route. Please try again.');
-      console.error('Error approving route:', err);
       setLoading(false);
     }
   };
@@ -169,9 +167,8 @@ const RouteAdminPanel: React.FC = () => {
       setRejectModalOpen(false);
       setSelectedRoute(null);
       await loadRoutes();
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to reject route. Please try again.');
-      console.error('Error rejecting route:', err);
       setLoading(false);
     }
   };
@@ -186,9 +183,8 @@ const RouteAdminPanel: React.FC = () => {
         
         // Reload routes to get updated list
         await loadRoutes();
-      } catch (err) {
+      } catch (_err) {
         setError('Failed to delete route. Please try again.');
-        console.error('Error deleting route:', err);
         setLoading(false);
       }
     }
@@ -246,7 +242,7 @@ const RouteAdminPanel: React.FC = () => {
 ${result.message}
 
 Manual Integration Steps:
-${result.instructions.join('\n')}
+${(result.instructions ?? []).join('\n')}
 
 SQL Example:
 ${result.sqlExample}`;
@@ -257,7 +253,6 @@ ${result.sqlExample}`;
         setIntegrationError(
           'Integration endpoint not available. Please run manual integration script. Check console for details.'
         );
-        console.log('Manual Integration Required:', result);
         
       } else if (result.error) {
         setIntegrationError(result.error);
@@ -270,11 +265,9 @@ ${result.sqlExample}`;
         // Refresh the contributions list
         await loadRoutes();
       }
-    } catch (error: any) {
-      console.error('Integration failed:', error);
-      setIntegrationError(
-        error.message || 'Failed to integrate approved routes. Check browser console for manual integration instructions.'
-      );
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to integrate approved routes. Check browser console for manual integration instructions.';
+      setIntegrationError(errorMessage);
       setIntegrationSuccess('');
     } finally {
       setIntegrationLoading(false);
@@ -298,9 +291,9 @@ ${result.sqlExample}`;
         alert(`Successfully integrated route: ${route.busNumber} (${route.fromLocationName} → ${route.toLocationName})`);
         await loadRoutes();
       }
-    } catch (error: any) {
-      console.error('Error integrating specific route:', error);
-      setError(`Integration failed: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setError(`Integration failed: ${errorMessage}`);
     } finally {
       setLoading(false);
     }

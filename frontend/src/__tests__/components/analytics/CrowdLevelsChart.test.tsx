@@ -1,17 +1,30 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { vi, beforeEach, describe, it, expect } from 'vitest';
+import { vi, describe, it, expect } from 'vitest';
 import CrowdLevelsChart, { type CrowdLevelsData } from '../../../components/analytics/CrowdLevelsChart';
+
+interface MockContainerProps {
+  children: React.ReactNode;
+}
+
+interface MockAreaProps {
+  dataKey: string;
+}
+
+interface MockBarProps {
+  dataKey: string;
+}
 
 // Mock the recharts components
 vi.mock('recharts', () => {
   const OriginalModule = vi.importActual('recharts');
   return {
     ...OriginalModule,
-    ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
-    AreaChart: ({ children }: any) => <div data-testid="area-chart">{children}</div>,
-    Area: (props: any) => <div data-testid={`area-${props.dataKey}`} />,
-    BarChart: ({ children }: any) => <div data-testid="bar-chart">{children}</div>,
-    Bar: (props: any) => <div data-testid={`bar-${props.dataKey}`} />,
+    ResponsiveContainer: ({ children }: MockContainerProps) => <div data-testid="responsive-container">{children}</div>,
+    AreaChart: ({ children }: MockContainerProps) => <div data-testid="area-chart">{children}</div>,
+    Area: (props: MockAreaProps) => <div data-testid={`area-${props.dataKey}`} />,
+    BarChart: ({ children }: MockContainerProps) => <div data-testid="bar-chart">{children}</div>,
+    Bar: (props: MockBarProps) => <div data-testid={`bar-${props.dataKey}`} />,
     XAxis: () => <div data-testid="xaxis" />,
     YAxis: () => <div data-testid="yaxis" />,
     CartesianGrid: () => <div data-testid="cartesian-grid" />,

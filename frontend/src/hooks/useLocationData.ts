@@ -53,11 +53,12 @@ const useLocationData = (language?: string) => {
             setDestinations(data);
           }
         }
-      } catch (err: any) {
-        if (err.name === 'AbortError' || err.name === 'CanceledError') {
+      } catch (err: unknown) {
+        const error = err as { name?: string };
+        if (error.name === 'AbortError' || error.name === 'CanceledError') {
           return; // Ignore aborted requests
         }
-        console.error('useLocationData: Error in fetchLocations:', err);
+        // Error logged for debugging fetchLocations issues
         if (isMounted) {
           setError(err instanceof Error ? err : new Error('Failed to fetch location data'));
         }

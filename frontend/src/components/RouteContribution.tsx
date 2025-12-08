@@ -40,10 +40,19 @@ export const RouteContribution: React.FC = () => {
     }
   }, [contributionMethod]);
 
-  const handleSecureSubmission = async (data: any, isImage: boolean) => {
+  interface ContributionData {
+    busName?: string;
+    busNumber?: string;
+    fromLocationName?: string;
+    toLocationName?: string;
+    description?: string;
+    file?: File;
+  }
+
+  const handleSecureSubmission = async (data: ContributionData, isImage: boolean) => {
     setSubmissionStatus('submitting');
     try {
-      if (isImage) {
+      if (isImage && data.file) {
         const contributionData = {
           busName: data.busName || 'Unknown Bus',
           busNumber: data.busNumber || 'N/A',
@@ -52,13 +61,23 @@ export const RouteContribution: React.FC = () => {
           notes: data.description || 'Route contribution image'
         };
         await submitImageContribution(contributionData, data.file);
-      } else {
-        await submitRouteContribution(data);
+      } else if (!isImage) {
+        // For non-image contributions, we need to pass the full route data
+        // The data should include all required RouteContribution fields
+        await submitRouteContribution({
+          busName: data.busName || '',
+          busNumber: data.busNumber || '',
+          fromLocationName: data.fromLocationName || '',
+          toLocationName: data.toLocationName || '',
+          departureTime: '',
+          arrivalTime: '',
+          stops: []
+        });
       }
       setSubmissionStatus('success');
       setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
-    } catch (error) {
-      console.error('Submission error:', error);
+    } catch (_error) {
+      // Submission failed
       setSubmissionStatus('error');
       setStatusMessage(
         t('contribution.errorMessage', 'Failed to submit contribution. Please try again.')
@@ -92,8 +111,8 @@ export const RouteContribution: React.FC = () => {
       setSubmissionStatus('success');
       setStatusMessage(t('contribution.voice.successMessage', 'Voice contribution submitted successfully!'));
       setVoiceTranscription('');
-    } catch (error) {
-      console.error('Voice submission error:', error);
+    } catch (_error) {
+      // Voice submission failed
       setSubmissionStatus('error');
       setStatusMessage(
         t('contribution.voice.errorMessage', 'Failed to submit voice contribution. Please try again.')
@@ -176,7 +195,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'paste' && (
             <div>
               <TextPasteContribution
-                onSubmit={(contributionId: string) => {
+                onSubmit={(_contributionId: string) => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
                 }}
@@ -191,7 +210,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'image' && (
             <div>
               <ImageContributionUpload 
-                onSuccess={(contributionId: string) => {
+                onSuccess={(_contributionId: string) => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
                 }}

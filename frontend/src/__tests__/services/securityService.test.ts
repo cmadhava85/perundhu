@@ -137,7 +137,7 @@ describe('SecurityService', () => {
     });
 
     it('should handle non-string input', () => {
-      const result = securityService.sanitizeInput(null as any);
+      const result = securityService.sanitizeInput(null as unknown as string);
       expect(result).toBe('');
     });
 

@@ -21,7 +21,7 @@ interface ThemeProviderProps {
 }
 
 // Check if window is defined (so if in the browser or in node.js)
-const isBrowser = typeof window !== 'undefined';
+const _isBrowser = typeof window !== 'undefined';
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Initialize with a default value that will be consistent for both server and client rendering

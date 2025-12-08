@@ -69,7 +69,7 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
         </p>
       </div>
       
-      {connectingRoutes.map((route, index) => {
+      {connectingRoutes.map((route) => {
         const isFastest = route.id === fastestRoute.id;
         return (
         <div 

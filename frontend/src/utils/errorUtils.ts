@@ -101,8 +101,11 @@ export function isClientError(error: unknown): boolean {
 export function formatValidationErrors(error: AxiosError): Record<string, string> {
   try {
     // Add type assertion for error.response.data to handle potential errors property
-    if (error.response?.status === 400 && (error.response.data as any)?.errors) {
-      return (error.response.data as any).errors;
+    interface ValidationErrorResponse {
+      errors?: Record<string, string>;
+    }
+    if (error.response?.status === 400 && (error.response.data as ValidationErrorResponse)?.errors) {
+      return (error.response.data as ValidationErrorResponse).errors ?? {};
     }
     return {};
   } catch (e) {

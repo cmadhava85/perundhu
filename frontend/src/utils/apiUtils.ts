@@ -17,11 +17,6 @@ export async function apiRequest<T>(
       ...options.headers,
     };
 
-    const config = {
-      ...options,
-      headers,
-    };
-
     const response = await apiClient.request({
       url: endpoint,
       method: options.method || 'GET',
@@ -46,7 +41,7 @@ export async function isOnline(): Promise<boolean> {
     // Make a lightweight request to check connectivity
     await apiClient.head('/health/status');
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 }

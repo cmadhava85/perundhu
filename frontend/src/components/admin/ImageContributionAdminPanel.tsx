@@ -87,14 +87,11 @@ export const ImageContributionAdminPanel: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedRoutes, setEditedRoutes] = useState<EditableRoute[]>([]);
   const [editingRouteIndex, setEditingRouteIndex] = useState<number | null>(null);
+  void editingRouteIndex; // Index tracked for future edit UI features
   const [savingCorrections, setSavingCorrections] = useState(false);
 
   useEffect(() => {
-    console.log('showOCRModal changed:', showOCRModal);
-    console.log('ocrData:', ocrData);
-    if (showOCRModal && ocrData) {
-      console.log('Modal should be visible now!');
-    }
+    // Monitor modal state for debugging
   }, [showOCRModal, ocrData]);
 
   useEffect(() => {
@@ -112,8 +109,8 @@ export const ImageContributionAdminPanel: React.FC = () => {
       });
       const data = await response.json();
       setContributions(data);
-    } catch (error) {
-      console.error('Error fetching image contributions:', error);
+    } catch (_error) {
+      // Failed to fetch image contributions
     } finally {
       setLoading(false);
     }
@@ -121,12 +118,10 @@ export const ImageContributionAdminPanel: React.FC = () => {
 
   const extractOCRData = async (contribution: ImageContribution) => {
     try {
-      console.log('Starting OCR extraction for contribution:', contribution.id);
       setExtractingOCRId(contribution.id);
       setSelectedContribution(contribution);
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
       const url = `${API_BASE_URL}/api/admin/contributions/images/${contribution.id}/extract-ocr`;
-      console.log('Making request to:', url);
       
       const response = await fetch(url, {
         method: 'POST',
@@ -135,16 +130,12 @@ export const ImageContributionAdminPanel: React.FC = () => {
         }
       });
       
-      console.log('Response status:', response.status);
-      
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}: ${errorText}`);
       }
       
       const data = await response.json();
-      console.log('OCR Response Data:', data);
       
       // Map backend field names to frontend field names
       // Backend returns 'routes' but frontend expects 'multipleRoutes'
@@ -163,16 +154,12 @@ export const ImageContributionAdminPanel: React.FC = () => {
         multipleRoutes: data.multipleRoutes || data.routes || []  // Backend returns 'routes'
       };
       
-      console.log('Mapped OCR Data:', mappedData);
-      console.log('Setting showOCRModal to true');
       setOcrData(mappedData);
       setManualOrigin(''); // Reset manual origin when loading new OCR data
       setIsEditMode(false); // Reset edit mode
       setEditedRoutes([]); // Clear any previous edits
       setShowOCRModal(true);
-      console.log('Modal state should be updated now');
     } catch (error) {
-      console.error('Error extracting OCR data:', error);
       alert('Failed to extract text from image. Please try again. Error: ' + error);
     } finally {
       setExtractingOCRId(null);
@@ -266,8 +253,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       } else {
         throw new Error('Failed to save corrections');
       }
-    } catch (error) {
-      console.error('Error saving corrections:', error);
+    } catch (_error) {
       alert('Failed to save corrections. Please try again.');
     } finally {
       setSavingCorrections(false);
@@ -309,8 +295,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       } else {
         throw new Error('Failed to approve contribution');
       }
-    } catch (error) {
-      console.error('Error approving contribution:', error);
+    } catch (_error) {
       alert('Failed to approve contribution. Please try again.');
     } finally {
       setProcessingId(null);
@@ -338,8 +323,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       } else {
         throw new Error('Failed to reject contribution');
       }
-    } catch (error) {
-      console.error('Error rejecting contribution:', error);
+    } catch (_error) {
       alert('Failed to reject contribution. Please try again.');
     } finally {
       setProcessingId(null);

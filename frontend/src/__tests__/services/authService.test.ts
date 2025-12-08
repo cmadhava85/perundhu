@@ -76,9 +76,9 @@ vi.mock('../../services/securityService', () => ({
 import SecurityService from '../../services/securityService';
 
 describe('AuthService', () => {
-  let authService: any;
-  let mockAxiosInstance: any;
-  let originalLocalStorage: any;
+  let authService: typeof AuthService;
+  let mockAxiosInstance: ReturnType<typeof vi.fn> & { get: ReturnType<typeof vi.fn>; post: ReturnType<typeof vi.fn>; put: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn>; interceptors: { request: { use: ReturnType<typeof vi.fn> }; response: { use: ReturnType<typeof vi.fn> } } };
+  let originalLocalStorage: Storage;
 
   beforeEach(() => {
     // Reset all mocks
@@ -117,7 +117,7 @@ describe('AuthService', () => {
     mockedAxios.create = vi.fn(() => mockAxiosInstance);
 
     // Create new AuthService instance
-    const AuthServiceClass = AuthService.constructor as any;
+    const AuthServiceClass = AuthService.constructor as new () => typeof AuthService;
     authService = new AuthServiceClass();
   });
 

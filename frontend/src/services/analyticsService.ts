@@ -6,7 +6,7 @@ interface OfflineCachedData {
   toLocationId: number;
   busId?: number;
   dataType: string;
-  data: any;
+  data: unknown;
   timestamp: number;
 }
 
@@ -18,7 +18,7 @@ const offlineService = {
     try {
       await api.head('/api/v1/health/status');
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   },
@@ -32,7 +32,7 @@ const saveHistoricalDataOffline = async (
   toLocationId: number,
   busId: number | undefined,
   dataType: string,
-  data: any
+  data: unknown
 ): Promise<void> => {
   try {
     const key = `historical-${fromLocationId}-${toLocationId}-${busId || 'all'}-${dataType}`;
@@ -58,7 +58,7 @@ const getHistoricalDataOffline = async (
   toLocationId: number,
   busId: number | undefined,
   dataType: string
-): Promise<any> => {
+): Promise<unknown> => {
   try {
     const key = `historical-${fromLocationId}-${toLocationId}-${busId || 'all'}-${dataType}`;
     const cachedData = localStorage.getItem(key);
@@ -93,6 +93,7 @@ export const getHistoricalData = async (
   dataType: string = 'punctuality',
   page: number = 1,
   pageSize: number = 10
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> => {
   try {
     // Check if we're online
@@ -143,7 +144,7 @@ export interface AnalyticsData {
   timestamp: string;
   userId?: string;
   sessionId: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 export interface RouteAnalytics {
@@ -225,7 +226,7 @@ class AnalyticsService {
     }
   }
 
-  async trackEvent(eventType: string, data: Record<string, any>): Promise<void> {
+  async trackEvent(eventType: string, data: Record<string, unknown>): Promise<void> {
     try {
       const payload = {
         eventType,
@@ -339,7 +340,7 @@ class AnalyticsService {
     });
   }
 
-  trackUserAction(action: string, details?: Record<string, any>): void {
+  trackUserAction(action: string, details?: Record<string, unknown>): void {
     this.trackEvent('USER_ACTION', {
       action,
       ...details,

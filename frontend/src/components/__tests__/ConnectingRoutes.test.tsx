@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, expect, vi, beforeEach } from 'vitest';
+import { describe, expect, vi, beforeEach, test } from 'vitest';
 import ConnectingRoutes from '../ConnectingRoutes';
 import * as apiService from '../../services/api';
 
@@ -72,7 +72,7 @@ describe('ConnectingRoutes Component', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (apiService.getStops as any).mockResolvedValue(mockStops);
+    (apiService.getStops as ReturnType<typeof vi.fn>).mockResolvedValue(mockStops);
   });
 
   test('renders connecting routes title when routes exist', () => {

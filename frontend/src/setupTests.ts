@@ -108,7 +108,7 @@ vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
-      t: (str: string, options?: any) => {
+      t: (str: string, options?: { leg?: string }) => {
         // Handle interpolation for specific keys
         if (str === 'connectingRoutes.stops' && options?.leg) {
           return `Stops for ${options.leg}`;

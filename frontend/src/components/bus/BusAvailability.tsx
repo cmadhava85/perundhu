@@ -1,9 +1,14 @@
 import React from 'react';
 
+interface AvailabilityUpdate {
+  isAvailable: boolean;
+  lastUpdated: Date;
+}
+
 interface BusAvailabilityProps {
   stopsCount: number;
   isLiveTracking: boolean;
-  onUpdate?: (availability: any) => void;
+  onUpdate?: (availability: AvailabilityUpdate) => void;
 }
 
 const BusAvailability: React.FC<BusAvailabilityProps> = ({ stopsCount, isLiveTracking }) => {

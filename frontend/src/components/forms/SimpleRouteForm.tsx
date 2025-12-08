@@ -5,6 +5,12 @@ import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
 import './SimpleRouteForm.css';
 
+interface LocationData {
+  lat?: number;
+  lng?: number;
+  name?: string;
+}
+
 interface Stop {
   id: string;
   name: string;
@@ -23,8 +29,16 @@ interface FormData {
   arrivalTime: string;
 }
 
+interface EnhancedFormData extends FormData {
+  fromLocationName: string;
+  toLocationName: string;
+  busName: string;
+  intermediateStops: Stop[];
+  stopsData: Stop[] | string;
+}
+
 interface SimpleRouteFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: EnhancedFormData) => void;
 }
 
 export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) => {
@@ -82,13 +96,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
   };
 
   // Handle stop name autocomplete
-  const updateStopName = (id: string, value: string, location?: any) => {
+  const updateStopName = (id: string, value: string, _location?: LocationData) => {
     setIntermediateStops(prev => 
       prev.map(stop => 
         stop.id === id ? { ...stop, name: value } : stop
       )
     );
-    console.log('Stop name selected:', value, location);
+    // Stop name selected with location data
   };
 
   const removeStop = (id: string) => {
@@ -99,7 +113,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     setShowStopForm(!showStopForm);
   };
 
-  const getBusIdentificationValidation = () => {
+  const _getBusIdentificationValidation = () => {
     const busNumber = formData.busNumber?.trim();
     const routeName = formData.route?.trim();
     
@@ -117,20 +131,20 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
   };
 
   // Handle location autocomplete changes - Memoized to prevent refresh issues
-  const handleOriginChange = useCallback((value: string, location?: any) => {
+  const handleOriginChange = useCallback((value: string, _location?: LocationData) => {
     setFormData(prev => ({
       ...prev,
       origin: value
     }));
-    console.log('Origin selected:', value, location);
+    // Origin selected with location data
   }, []);
 
-  const handleDestinationChange = useCallback((value: string, location?: any) => {
+  const handleDestinationChange = useCallback((value: string, _location?: LocationData) => {
     setFormData(prev => ({
       ...prev,
       destination: value
     }));
-    console.log('Destination selected:', value, location);
+    // Destination selected with location data
   }, []);
 
   // Helper function to calculate journey duration

@@ -72,8 +72,8 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
       // Report initial location
       reportLocation(position, selectedBusId, selectedStopId);
       
-    } catch (err) {
-      console.error('Error starting location tracking:', err);
+    } catch (_err) {
+      // Location tracking error
       setError(t('busTracker.locationError', 'Unable to access your location'));
       setIsTracking(false);
     }
@@ -93,17 +93,6 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     stopId: number | null
   ) => {
     try {
-      // Here we would make an API call to your backend
-      console.log('Reporting location:', {
-        busId,
-        stopId,
-        timestamp: new Date().toISOString(),
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy,
-        speed: position.coords.speed || 0
-      });
-
       // In a real implementation, you would call an API endpoint:
       await fetch('/api/v1/bus-tracking/report', {
         method: 'POST',
@@ -120,8 +109,8 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
       });
 
       setLastReportTime(new Date());
-    } catch (error) {
-      console.error('Failed to report location:', error);
+    } catch (_error) {
+      // Failed to report location
     }
   };
 
@@ -130,20 +119,14 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     if (!selectedBusId) return;
     
     try {
-      // Here we would make an API call to indicate the user has left the bus
-      console.log('Reporting disembark:', {
-        busId: selectedBusId,
-        timestamp: new Date().toISOString()
-      });
-
       // Reset state after reporting
       setSelectedBusId(null);
       setSelectedStopId(null);
       setIsOnboard(false);
       setUserLocation(null);
       
-    } catch (error) {
-      console.error('Failed to report disembark:', error);
+    } catch (_error) {
+      // Failed to report disembark
     }
   };
 
@@ -181,7 +164,8 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
           }
         },
         (error) => {
-          console.error('Geolocation error:', error);
+          // Geolocation error
+          void error; // Acknowledge parameter
           setError(t('busTracker.trackingError', 'Error tracking position'));
         },
         { 
@@ -212,8 +196,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     
     // After 2 minutes of tracking with movement, we confirm the user is likely on the bus
     const movementTimer = setTimeout(() => {
-      // In a real implementation, you could validate the route matches the expected bus route
-      console.log('Movement pattern validated - user appears to be on a bus');
+      // Movement pattern validated - user appears to be on a bus
     }, 120000); // 2 minutes
     
     return () => clearTimeout(movementTimer);

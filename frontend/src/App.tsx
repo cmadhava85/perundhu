@@ -29,7 +29,6 @@ import BottomNavigation from './components/BottomNavigation';
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
 import { useBusSearchEnhanced } from './hooks/useBusSearchEnhanced';
-import useBrowserDetection from './hooks/useBrowserDetection';
 import { LoadingSkeleton } from './components/LoadingSkeleton';
 
 // Context providers
@@ -190,8 +189,6 @@ function AppContent() {
     resetResults();
 
     try {
-      console.log(`Searching for buses from ${searchFrom.name} to ${searchTo.name}`);
-      
       await searchBuses(searchFrom, searchTo);
       
       // Navigate to search results page with query parameters

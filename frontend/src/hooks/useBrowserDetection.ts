@@ -35,14 +35,14 @@ export const useBrowserDetection = (): BrowserInfo => {
 
   useEffect(() => {
     const detectBrowser = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+      const userAgent = navigator.userAgent || navigator.vendor || (window as unknown as { opera?: string }).opera || '';
       
       // Detect if mobile
       const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
       const isMobile = mobileRegex.test(userAgent);
       
       // Detect specific platforms
-      const isIOS = /iPhone|iPad|iPod/i.test(userAgent) && !(window as any).MSStream;
+      const isIOS = /iPhone|iPad|iPod/i.test(userAgent) && !(window as unknown as { MSStream?: unknown }).MSStream;
       const isAndroid = /Android/i.test(userAgent);
       
       // Detect specific browsers

@@ -70,7 +70,7 @@ export class LocationAutocompleteService {
           }
         });
 
-        return (response.data || []).map((item: any) => ({
+        return (response.data || []).map((item: LocationSuggestion) => ({
           id: item.id,
           name: item.name,
           translatedName: item.translatedName,
@@ -89,7 +89,7 @@ export class LocationAutocompleteService {
    * Database-first search: prioritize database, only use Nominatim if DB returns no results
    * This prevents unnecessary Nominatim API calls when we have data in the database
    */
-  private async searchDatabaseAndNominatimParallel(query: string, limit: number): Promise<any[]> {
+  private async searchDatabaseAndNominatimParallel(query: string, limit: number): Promise<LocationSuggestion[]> {
     console.log(`🚀 Starting database-first search for "${query}"`);
     
     try {
@@ -133,7 +133,7 @@ export class LocationAutocompleteService {
   /**
    * Fast database search with timeout
    */
-  private async searchDatabase(query: string): Promise<any[]> {
+  private async searchDatabase(query: string): Promise<LocationSuggestion[]> {
     try {
       console.log(`📊 Fast database search for "${query}"`);
       
@@ -168,7 +168,7 @@ export class LocationAutocompleteService {
   /**
    * Fast Nominatim search with minimal delays and single query
    */
-  private async searchNominatimFast(query: string, limit: number): Promise<any[]> {
+  private async searchNominatimFast(query: string, limit: number): Promise<LocationSuggestion[]> {
     try {
       console.log(`🌍 Fast Nominatim search for "${query}"`);
       
@@ -203,7 +203,16 @@ export class LocationAutocompleteService {
       console.log(`🌍 Nominatim returned ${data.length} results`);
       
       // Quick filtering for cities/towns only
-      const cityResults = data.filter((result: any) => {
+      interface NominatimResult {
+        type: string;
+        addresstype: string;
+        class: string;
+        address?: { state_district?: string };
+        display_name: string;
+        lat: string;
+        lon: string;
+      }
+      const cityResults = data.filter((result: NominatimResult) => {
         // Accept various place types
         const isValidPlace = (
           ['city', 'town', 'village', 'hamlet'].includes(result.type) ||
@@ -225,7 +234,7 @@ export class LocationAutocompleteService {
       
       console.log(`🌍 Filtered to ${cityResults.length} city results`);
       
-      return cityResults.map((result: any) => ({
+      return cityResults.map((result: NominatimResult) => ({
         id: -(Math.random() * 1000000), // Unique negative ID
         name: this.formatLocationNameSimple(result.display_name),
         latitude: parseFloat(result.lat),
@@ -246,8 +255,8 @@ export class LocationAutocompleteService {
   /**
    * Remove duplicate locations based on name similarity
    */
-  private deduplicateResults(locations: any[]): any[] {
-    const filtered: any[] = [];
+  private deduplicateResults(locations: LocationSuggestion[]): LocationSuggestion[] {
+    const filtered: LocationSuggestion[] = [];
     
     for (const location of locations) {
       const isDuplicate = filtered.some(existing => {
@@ -269,11 +278,11 @@ export class LocationAutocompleteService {
   /**
    * Convert Location objects to LocationSuggestion format
    */
-  private convertToSuggestions(locations: any[]): LocationSuggestion[] {
+  private convertToSuggestions(locations: LocationSuggestion[]): LocationSuggestion[] {
     return locations.map(location => ({
       id: location.id,
       name: location.name,
-      translatedName: location.translatedName || location.taName,
+      translatedName: location.translatedName,
       latitude: location.latitude,
       longitude: location.longitude,
       source: location.source

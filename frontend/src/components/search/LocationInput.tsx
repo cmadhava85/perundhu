@@ -29,7 +29,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
   onSuggestionSelect,
   onSearch,
   onSelect,
-  error,
+  error: _error,
   onInputFocus,
   onInputBlur
 }) => {

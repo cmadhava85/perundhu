@@ -1,4 +1,5 @@
-import { getCityCoordinates, getStopCoordinatesAsync, geocodeCity } from '../cityCoordinates';
+import { describe, test, expect } from 'vitest';
+import { getCityCoordinates, getStopCoordinatesAsync } from '../cityCoordinates';
 
 describe('Geocoding Functions', () => {
   test('should find Villupuram coordinates', () => {

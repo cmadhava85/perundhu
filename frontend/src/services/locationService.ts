@@ -34,11 +34,11 @@ export const searchLocations = async (query: string, limit: number = 10, localLo
     
     // Final fallback to offline locations
     try {
-      const offlineLocations = await getLocationsOffline();
+      const offlineLocations = (await getLocationsOffline()) as Location[];
       const filtered = offlineLocations
-        .filter((location: Location) => location.name.toLowerCase().includes(query.toLowerCase()))
+        .filter((location) => location.name.toLowerCase().includes(query.toLowerCase()))
         .slice(0, limit)
-        .map((loc: Location) => ({ ...loc, source: 'offline' as const }));
+        .map((loc) => ({ ...loc, source: 'offline' as const }));
       
       console.log(`Offline fallback for "${query}" returned ${filtered.length} results`);
       return filtered;

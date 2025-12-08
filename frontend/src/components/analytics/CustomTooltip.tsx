@@ -1,5 +1,5 @@
 import '../../styles/AnalyticsComponents.css';
-import type { CustomTooltipProps } from './types';
+import type { CustomTooltipProps, TooltipPayloadItem } from './types';
 
 /**
  * Custom tooltip component for recharts
@@ -9,7 +9,7 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     return (
       <div className="analytics-custom-tooltip">
         <p className="tooltip-label">{`${label}`}</p>
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry: TooltipPayloadItem, index: number) => (
           <p key={`tooltip-${index}`} style={{ color: entry.color }}>
             {`${entry.name}: ${entry.value}`}
           </p>

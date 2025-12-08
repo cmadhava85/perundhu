@@ -1,18 +1,26 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { vi, beforeEach, describe, it, expect } from 'vitest';
+import { vi, describe, it, expect } from 'vitest';
 import BusUtilizationChart, { type BusUtilizationData } from '../../../components/analytics/BusUtilizationChart';
+
+interface MockContainerProps {
+  children: React.ReactNode;
+}
+
+interface MockBarProps {
+  dataKey?: string;
+}
 
 // Mock the recharts components
 vi.mock('recharts', () => {
   const OriginalModule = vi.importActual('recharts');
   return {
     ...OriginalModule,
-    ResponsiveContainer: ({ children }: any) => <div data-testid="responsive-container">{children}</div>,
-    LineChart: ({ children }: any) => <div data-testid="line-chart">{children}</div>,
-    BarChart: ({ children }: any) => <div data-testid="bar-chart">{children}</div>,
-    Bar: (props: any) => <div data-testid={`bar-${props.dataKey || 'default'}`} />,
-    RadialBarChart: ({ children }: any) => <div data-testid="radial-bar-chart">{children}</div>,
+    ResponsiveContainer: ({ children }: MockContainerProps) => <div data-testid="responsive-container">{children}</div>,
+    LineChart: ({ children }: MockContainerProps) => <div data-testid="line-chart">{children}</div>,
+    BarChart: ({ children }: MockContainerProps) => <div data-testid="bar-chart">{children}</div>,
+    Bar: (props: MockBarProps) => <div data-testid={`bar-${props.dataKey || 'default'}`} />,
+    RadialBarChart: ({ children }: MockContainerProps) => <div data-testid="radial-bar-chart">{children}</div>,
     RadialBar: () => <div data-testid="radial-bar" />,
     Line: () => <div data-testid="line" />,
     XAxis: () => <div data-testid="x-axis" />,

@@ -31,7 +31,7 @@ export const getEnv = (key: string, defaultValue: string = ''): string => {
       if (env && typeof env[key] !== 'undefined') {
         return env[key];
       }
-    } catch (e) {
+    } catch {
       // Fallback if import.meta is not available
     }
   }

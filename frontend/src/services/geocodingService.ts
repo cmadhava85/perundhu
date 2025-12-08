@@ -7,6 +7,30 @@ interface CacheEntry {
   timestamp: number;
 }
 
+// Nominatim API response type
+interface NominatimResult {
+  place_id: number;
+  licence: string;
+  osm_type: string;
+  osm_id: number;
+  lat: string;
+  lon: string;
+  display_name: string;
+  class: string;
+  type: string;
+  importance: number;
+  addresstype?: string;
+  address?: {
+    city?: string;
+    town?: string;
+    village?: string;
+    state?: string;
+    state_district?: string;
+    country?: string;
+    country_code?: string;
+  };
+}
+
 /**
  * Hybrid geocoding service that uses database first, then external APIs
  * Enhanced to support all Indian cities with improved city name formatting
@@ -82,7 +106,7 @@ export class GeocodingService {
    * Smart search that uses instant suggestions first, then API calls
    */
   static async smartSearch(query: string, limit: number = 10): Promise<Location[]> {
-    console.log(`Smart search for: "${query}"`);
+    // Smart search for query
     
     // For short queries (1-2 chars), return instant suggestions only
     if (query.length <= 2) {
@@ -156,7 +180,7 @@ export class GeocodingService {
    * Search locations using database first, then Nominatim fallback with caching
    */
   static async searchLocations(query: string, limit: number = 10): Promise<Location[]> {
-    console.log(`Geocoding search for: "${query}"`);
+    // Geocoding search for query
     
     // Check cache first
     const cacheKey = `${query.toLowerCase().trim()}_${limit}`;
@@ -178,7 +202,6 @@ export class GeocodingService {
       });
       
       databaseResults = response.data || [];
-      console.log(`Database returned ${databaseResults.length} results for "${query}"`);
       
       // If database has enough results, return early to improve performance
       if (databaseResults.length >= limit) {
@@ -281,7 +304,7 @@ export class GeocodingService {
         );
       }
 
-      let allResults: any[] = [];
+      let allResults: NominatimResult[] = [];
 
       for (const searchQuery of searchQueries) {
         const params = new URLSearchParams({
@@ -306,17 +329,17 @@ export class GeocodingService {
           continue;
         }
 
-        const data = await response.json();
+        const data: NominatimResult[] = await response.json();
         console.log(`🔍 Nominatim raw response for "${searchQuery}":`, data.length, 'results');
         
         if (data.length > 0) {
           // Log all results for debugging
-          data.forEach((result: any, index: number) => {
+          data.forEach((result: NominatimResult, index: number) => {
             console.log(`  ${index + 1}. ${result.display_name} [class: ${result.class}, type: ${result.type}]`);
           });
           
           // Filter to only include cities, towns, villages - exclude roads, highways, etc.
-          const cityResults = data.filter((result: any) => {
+          const cityResults = data.filter((result: NominatimResult) => {
             // More comprehensive filtering to include state districts and counties
             const isValidPlace = (
               result.type === 'city' || 
@@ -345,7 +368,7 @@ export class GeocodingService {
           });
           
           console.log(`✅ Filtered to ${cityResults.length} valid city/town results out of ${data.length} total`);
-          cityResults.forEach((result: any, index: number) => {
+          cityResults.forEach((result: NominatimResult, index: number) => {
             console.log(`    ${index + 1}. ✓ ${result.display_name}`);
           });
           
@@ -365,7 +388,7 @@ export class GeocodingService {
       }
 
       // Sort by city importance and type
-      const getScore = (result: any) => {
+      const getScore = (result: NominatimResult) => {
         let score = 0;
         if (result.type === 'city') score += 100;
         if (result.type === 'town') score += 90;
@@ -432,7 +455,7 @@ export class GeocodingService {
         );
       }
 
-      let allResults: any[] = [];
+      let allResults: NominatimResult[] = [];
 
       for (const searchQuery of searchQueries) {
         const params = new URLSearchParams({
@@ -458,12 +481,12 @@ export class GeocodingService {
           continue;
         }
 
-        const data = await response.json();
+        const data: NominatimResult[] = await response.json();
         if (data.length > 0) {
-          console.log(`🏙️ Found ${data.length} results for "${searchQuery}":`, data.map((r: any) => r.display_name));
+          console.log(`🏙️ Found ${data.length} results for "${searchQuery}":`, data.map((r: NominatimResult) => r.display_name));
           
           // Check if any result contains Aruppukottai/Aruppukkottai (both spellings)
-          const hasAruppukottai = data.some((item: any) =>
+          const hasAruppukottai = data.some((item: NominatimResult) =>
             item.display_name?.toLowerCase().includes('aruppukottai') || 
             item.display_name?.toLowerCase().includes('aruppukkottai')
           );
@@ -493,7 +516,7 @@ export class GeocodingService {
         })
         .sort((a, b) => {
           // Simple priority scoring
-          const getScore = (result: any) => {
+          const getScore = (result: NominatimResult) => {
             let score = 0;
             if (result.type === 'city' || result.addresstype === 'city') score += 100;
             if (result.type === 'town' || result.addresstype === 'town') score += 90;
@@ -804,5 +827,5 @@ export const testSrivilliputhurGeocoding = async (): Promise<void> => {
 
 // Make test function available globally for debugging
 if (typeof window !== 'undefined') {
-  (window as any).testSrivilliputhurGeocoding = testSrivilliputhurGeocoding;
+  (window as Window & { testSrivilliputhurGeocoding?: typeof testSrivilliputhurGeocoding }).testSrivilliputhurGeocoding = testSrivilliputhurGeocoding;
 }

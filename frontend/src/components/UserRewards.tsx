@@ -37,8 +37,8 @@ const UserRewards: React.FC<UserRewardsProps> = ({ userId: propUserId }) => {
         const data = await apiService.getUserRewardPoints(userId);
         setRewards(data);
         setError(null);
-      } catch (err) {
-        console.error('Error fetching user rewards:', err);
+      } catch (_err) {
+        // Failed to fetch rewards
         setError(t('rewards.error', 'Failed to load your rewards. Please try again later.'));
       } finally {
         setLoading(false);
@@ -58,7 +58,7 @@ const UserRewards: React.FC<UserRewardsProps> = ({ userId: propUserId }) => {
         hour: '2-digit', 
         minute: '2-digit' 
       });
-    } catch (e) {
+    } catch (_e) {
       return timestamp;
     }
   };

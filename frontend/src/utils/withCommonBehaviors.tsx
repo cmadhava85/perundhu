@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary';
 import Loading from '../components/Loading';
 import { useTranslation } from 'react-i18next';
-import { performanceMonitor, PerformanceMark } from './performanceMonitor';
+import { performanceMonitor, PerformanceMark as _PerformanceMark } from './performanceMonitor';
 
 // Types for behavior configuration
 export interface CommonBehaviorOptions {
@@ -35,7 +35,7 @@ export function withCommonBehaviors<P extends object>(
   // Create the enhanced component
   const EnhancedComponent: React.FC<P & { isLoading?: boolean }> = (props) => {
     const { t } = useTranslation();
-    const [isRendered, setIsRendered] = useState(false);
+    const [_isRendered, setIsRendered] = useState(false);
     
     // Start performance tracking when component mounts
     useEffect(() => {
@@ -81,7 +81,7 @@ export function withCommonBehaviors<P extends object>(
  * @param componentName Name of the component
  * @param dependencies Dependencies array to track re-renders
  */
-export function useComponentPerformance(componentName: string, dependencies: any[] = []) {
+export function useComponentPerformance(componentName: string, dependencies: unknown[] = []) {
   useEffect(() => {
     // Track initial render
     const markName = `${componentName}_render`;

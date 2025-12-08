@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from '../App';
 import '@testing-library/jest-dom';
 
+import type { Location } from '../types';
+
 // Create a test query client
 const createTestQueryClient = () => new QueryClient({
   defaultOptions: {
@@ -123,13 +125,20 @@ vi.mock('../components/Header', () => ({
 vi.mock('../components/Footer', () => ({ 
   default: () => <footer data-testid="mock-footer">Footer</footer> 
 }));
+interface MockTransitSearchFormProps {
+  onSearch?: (from: Location | null, to: Location | null, options: Record<string, unknown>) => void;
+  onLocationChange?: (from: Location | null, to: Location | null) => void;
+  fromLocation?: Location | null;
+  toLocation?: Location | null;
+}
+
 vi.mock('../components/TransitSearchForm', () => ({
   default: function MockTransitSearchForm({
     onSearch,
     onLocationChange,
     fromLocation,
     toLocation,
-  }: any) {
+  }: MockTransitSearchFormProps) {
     const locationData = [
       { id: 1, name: 'Chennai', latitude: 13.0827, longitude: 80.2707 },
       { id: 2, name: 'Coimbatore', latitude: 11.0168, longitude: 76.9558 },
@@ -189,8 +198,14 @@ vi.mock('../components/TransitSearchForm', () => ({
   }
 }));
 
+interface MockSearchResultsProps {
+  buses: unknown[];
+  error: Error | null;
+  connectingRoutes: unknown[];
+}
+
 vi.mock('../components/SearchResults', () => ({
-  default: ({ buses, error, connectingRoutes }: any) => (
+  default: ({ buses, error, connectingRoutes }: MockSearchResultsProps) => (
     <div data-testid="search-results">
       {error ? (
         <div data-testid="error-display">Error: {error.message}</div>
@@ -205,13 +220,13 @@ vi.mock('../components/SearchResults', () => ({
 }));
 
 vi.mock('../components/BusList', () => ({
-  default: ({ buses }: { buses: any[] }) => (
+  default: ({ buses }: { buses: unknown[] }) => (
     <div data-testid="bus-list">Bus List: {buses.length} buses</div>
   )
 }));
 
 vi.mock('../components/ConnectingRoutes', () => ({
-  default: ({ connectingRoutes }: { connectingRoutes: any[] }) => (
+  default: ({ connectingRoutes }: { connectingRoutes: unknown[] }) => (
     <div data-testid="connecting-routes">Connecting Routes: {connectingRoutes.length} routes</div>
   ),
 }));
@@ -233,7 +248,7 @@ vi.mock('../components/Loading', () => ({
 }));
 
 vi.mock('../components/BottomNavigation', () => ({
-  default: ({ onTabChange, activeTab }: any) => (
+  default: ({ onTabChange, activeTab }: { onTabChange: (tab: string) => void; activeTab: string }) => (
     <nav data-testid="bottom-navigation">
       <button onClick={() => onTabChange('search')} className={activeTab === 'search' ? 'active' : ''}>
         Search
@@ -261,8 +276,8 @@ const mockLocationData = {
 };
 
 const mockBusSearchData = {
-  buses: [] as any[],
-  connectingRoutes: [] as any[],
+  buses: [] as unknown[],
+  connectingRoutes: [] as unknown[],
   loading: false,
   error: null as Error | null,
   selectedBusId: null,

@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor as _waitFor } from '@testing-library/react';
 import { vi, beforeEach, describe, it, expect, afterEach } from 'vitest';
 import { useBusLocationData } from '../useBusLocationData';
 import type { Location } from '../../types';
@@ -38,7 +38,7 @@ describe('useBusLocationData Hook', () => {
   
   beforeEach(() => {
     // Create spies for interval methods
-    vi.spyOn(globalThis, 'setInterval').mockImplementation(() => 123 as any);
+    vi.spyOn(globalThis, 'setInterval').mockImplementation(() => 123 as unknown as NodeJS.Timeout);
     vi.spyOn(globalThis, 'clearInterval').mockImplementation(() => {});
   });
   

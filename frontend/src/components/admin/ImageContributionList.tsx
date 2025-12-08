@@ -29,8 +29,8 @@ const ImageContributionList: React.FC = () => {
       }
       setContributions(filter === 'ALL' ? data : data.filter(c => c.status === filter));
       setLoading(false);
-    } catch (error) {
-      console.error('Error fetching image contributions:', error);
+    } catch (_error) {
+      // Failed to fetch image contributions
       setLoading(false);
     }
   };
@@ -40,8 +40,8 @@ const ImageContributionList: React.FC = () => {
     try {
       await AdminService.approveImageContribution(Number(id));
       fetchContributions();
-    } catch (error) {
-      console.error('Error approving image contribution:', error);
+    } catch (_error) {
+      // Failed to approve image contribution
     }
   };
 
@@ -53,8 +53,8 @@ const ImageContributionList: React.FC = () => {
       setRejectModalOpen(false);
       setSelectedContribution(null);
       fetchContributions();
-    } catch (error) {
-      console.error('Error rejecting image contribution:', error);
+    } catch (_error) {
+      // Failed to reject image contribution
     }
   };
 
@@ -65,8 +65,8 @@ const ImageContributionList: React.FC = () => {
       try {
         await AdminService.deleteImageContribution(Number(id));
         fetchContributions();
-      } catch (error) {
-        console.error('Error deleting image contribution:', error);
+      } catch (_error) {
+        // Failed to delete image contribution
       }
     }
   };
@@ -78,10 +78,7 @@ const ImageContributionList: React.FC = () => {
 
   const openImagePreview = (imageUrl: string | undefined) => {
     if (imageUrl) {
-      console.log('Opening image preview for URL:', imageUrl);
       setPreviewImage(imageUrl);
-    } else {
-      console.error('No image URL provided');
     }
   };
 
@@ -219,7 +216,7 @@ const ImageContributionList: React.FC = () => {
             <img 
               src={previewImage} 
               alt="Preview" 
-              onError={(e) => {
+              onError={() => {
                 console.error('Failed to load preview image:', previewImage);
               }}
             />

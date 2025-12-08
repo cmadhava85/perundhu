@@ -119,7 +119,7 @@ export class BusListPage {
       // Verify all information is on single line (no wrapping)
       const quickInfoContainer = busItem.locator('.quick-info').first();
       if (await quickInfoContainer.isVisible()) {
-        const boundingBox = await quickInfoContainer.boundingBox();
+        const _boundingBox = await quickInfoContainer.boundingBox();
         const infoItems = await busItem.locator('.info-item').all();
         
         // Check that all info items are roughly on the same horizontal line

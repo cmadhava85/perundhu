@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUserSessions } from '../services/userRewardsService';
-
-interface UserSession {
-  id: number;
-  busId: number;
-  startTime: string;
-  endTime?: string;
-  startLocationId: number;
-  endLocationId?: number;
-  pointsEarned: number;
-  distanceTracked: number;
-  status: string;
-}
+import { getUserSessions, type UserSession } from '../services/userRewardsService';
 
 const UserSessionHistory: React.FC<{ userId: string }> = ({ userId }) => {
   const [sessions, setSessions] = useState<UserSession[]>([]);
@@ -32,7 +20,7 @@ const UserSessionHistory: React.FC<{ userId: string }> = ({ userId }) => {
           setSessions(data);
           setError(null);
         }
-      } catch (err) {
+      } catch {
         if (isMounted) {
           setError('Failed to load session history');
         }
@@ -60,23 +48,19 @@ const UserSessionHistory: React.FC<{ userId: string }> = ({ userId }) => {
       <table>
         <thead>
           <tr>
-            <th>Bus ID</th>
-            <th>Start Time</th>
-            <th>End Time</th>
+            <th>Date</th>
+            <th>Buses Tracked</th>
+            <th>Duration</th>
             <th>Points</th>
-            <th>Distance (km)</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {sessions.map(session => (
             <tr key={session.id}>
-              <td>{session.busId}</td>
-              <td>{new Date(session.startTime).toLocaleString()}</td>
-              <td>{session.endTime ? new Date(session.endTime).toLocaleString() : '-'}</td>
+              <td>{new Date(session.sessionDate).toLocaleString()}</td>
+              <td>{session.busesTracked}</td>
+              <td>{session.duration}</td>
               <td>{session.pointsEarned}</td>
-              <td>{(session.distanceTracked / 1000).toFixed(2)}</td>
-              <td>{session.status}</td>
             </tr>
           ))}
         </tbody>

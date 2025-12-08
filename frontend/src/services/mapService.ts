@@ -31,7 +31,7 @@ export interface RouteOptions {
 }
 
 export interface MarkerOptions {
-  icon?: any;
+  icon?: L.Icon | L.DivIcon;
   title?: string;
   alt?: string;
   zIndexOffset?: number;
@@ -41,8 +41,8 @@ export interface MarkerOptions {
 export interface IMapService {
   init(): Promise<void>;
   createMap(elementId: string, options?: MapOptions): void;
-  drawRoute(points: [number, number][], options?: RouteOptions): any;
-  addMarker(position: [number, number], options?: MarkerOptions): any;
+  drawRoute(points: [number, number][], options?: RouteOptions): L.Polyline | google.maps.Polyline | null;
+  addMarker(position: [number, number], options?: MarkerOptions): L.Marker | google.maps.Marker | null;
   clearMarkers(): void;
   clearRoutes(): void;
   cleanup(): void;
@@ -152,7 +152,7 @@ class LeafletMapService implements IMapService {
       L.control.scale().addTo(this.map);
       
       // Add error handling for map events
-      this.map.on('error', (e: any) => {
+      this.map.on('error', (e: L.LeafletEvent) => {
         console.error('Leaflet map error:', e);
       });
       

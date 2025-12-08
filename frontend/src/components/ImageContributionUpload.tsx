@@ -28,7 +28,7 @@ interface FilterOptions {
 }
 
 type SortOption = 'name' | 'size' | 'date' | 'status';
-type ViewMode = 'grid' | 'list' | 'compact';
+type _ViewMode = 'grid' | 'list' | 'compact';
 
 const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuccess, onError }) => {
   const { t } = useTranslation();
@@ -42,11 +42,9 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   // Use stable counter for image IDs to prevent re-renders
   const imageIdCounterRef = useRef(1);
   
-  // RIA Enhancement State
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  // RIA Enhancement State - removed unused viewMode and showFilters
   const [sortBy, setSortBy] = useState<SortOption>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     status: [],
     fileType: [],
@@ -75,7 +73,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   }, []);
 
   const filteredAndSortedImages = useMemo(() => {
-    let filtered = uploadedImages.filter(image => {
+    const filtered = uploadedImages.filter(image => {
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
         const fileName = image.file.name.toLowerCase();
@@ -99,39 +97,43 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       let result = 0;
       
       switch (sortBy) {
-        case 'name':
-          result = a.file.name.localeCompare(b.file.name);
-          break;
-        case 'size':
-          result = a.file.size - b.file.size;
-          break;
-        case 'date':
-          result = a.timestamp.getTime() - b.timestamp.getTime();
-          break;
-        case 'status':
-          const statusA = a.status || 'pending';
-          const statusB = b.status || 'pending';
-          result = statusA.localeCompare(statusB);
-          break;
-      }
-      
-      return sortOrder === 'desc' ? -result : result;
-    });
+          case 'name': {
+            result = a.file.name.localeCompare(b.file.name);
+            break;
+          }
+          case 'size': {
+            result = a.file.size - b.file.size;
+            break;
+          }
+          case 'date': {
+            result = a.timestamp.getTime() - b.timestamp.getTime();
+            break;
+          }
+          case 'status': {
+            const statusA = a.status || 'pending';
+            const statusB = b.status || 'pending';
+            result = statusA.localeCompare(statusB);
+            break;
+          }
+        }
+        
+        return sortOrder === 'desc' ? -result : result;
+      });
 
     return filtered;
   }, [uploadedImages, filters, sortBy, sortOrder]);
 
-  const availableFileTypes = useMemo(() => {
+  const _availableFileTypes = useMemo(() => {
     const types = [...new Set(uploadedImages.map(img => img.file.type.split('/')[1]))];
     return types;
   }, [uploadedImages]);
 
-  const availableStatuses = useMemo(() => {
+  const _availableStatuses = useMemo(() => {
     const statuses = [...new Set(uploadedImages.map(img => img.status || 'pending'))];
     return statuses;
   }, [uploadedImages]);
 
-  const handleSortChange = (newSortBy: SortOption) => {
+  const _handleSortChange = (newSortBy: SortOption) => {
     if (sortBy === newSortBy) {
       setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
     } else {
@@ -140,19 +142,19 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     }
   };
 
-  const getSortIcon = (option: SortOption) => {
+  const _getSortIcon = (option: SortOption) => {
     if (sortBy !== option) return '↕️';
     return sortOrder === 'asc' ? '↑' : '↓';
   };
 
-  const handleFilterChange = (filterType: keyof FilterOptions, value: any) => {
+  const _handleFilterChange = (filterType: keyof FilterOptions, value: unknown) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: value
     }));
   };
 
-  const clearFilters = () => {
+  const _clearFilters = () => {
     setFilters({
       status: [],
       fileType: [],

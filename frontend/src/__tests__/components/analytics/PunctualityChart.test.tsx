@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { vi, beforeEach, describe, it, expect } from 'vitest';
+import { vi, describe, it, expect } from 'vitest';
 import PunctualityChart from '../../../components/analytics/PunctualityChart';
 
 // Mock i18n
@@ -14,24 +14,32 @@ vi.mock('../../../i18n', () => ({
   }),
 }));
 
+interface MockContainerProps {
+  children: React.ReactNode;
+}
+
+interface MockBarProps {
+  dataKey: string;
+}
+
 // Mock recharts components
 vi.mock('recharts', () => {
   const OriginalModule = vi.importActual('recharts');
   return {
     ...OriginalModule,
-    ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
+    ResponsiveContainer: ({ children }: MockContainerProps) => (
       <div data-testid="responsive-container">{children}</div>
     ),
-    PieChart: ({ children }: { children: React.ReactNode }) => (
+    PieChart: ({ children }: MockContainerProps) => (
       <div data-testid="pie-chart">{children}</div>
     ),
-    Pie: ({ children }: { children: React.ReactNode }) => (
+    Pie: ({ children }: MockContainerProps) => (
       <div data-testid="pie">{children}</div>
     ),
-    BarChart: ({ children }: { children: React.ReactNode }) => (
+    BarChart: ({ children }: MockContainerProps) => (
       <div data-testid="bar-chart">{children}</div>
     ),
-    Bar: (props: any) => <div data-testid={`bar-${props.dataKey}`}>{props.dataKey}</div>,
+    Bar: (props: MockBarProps) => <div data-testid={`bar-${props.dataKey}`}>{props.dataKey}</div>,
     Cell: () => <div data-testid="cell" />,
     XAxis: () => <div data-testid="xaxis" />,
     YAxis: () => <div data-testid="yaxis" />,

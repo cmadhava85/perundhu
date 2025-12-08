@@ -4,7 +4,6 @@ import {
   XCircle, 
   Clock, 
   Eye, 
-  Filter, 
   Search,
   Download,
   MapPin,
@@ -13,7 +12,7 @@ import {
   Calendar,
   AlertTriangle
 } from 'lucide-react';
-import type { RouteContribution, ImageContribution } from '../../types/contributionTypes';
+import type { RouteContribution } from '../../types/contributionTypes';
 import AuthService from '../../services/authService';
 import './ContributionAdminPanel.css';
 
@@ -64,11 +63,9 @@ const ContributionAdminPanel: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setContributions(data);
-      } else {
-        console.error('Failed to fetch contributions');
       }
-    } catch (error) {
-      console.error('Error fetching contributions:', error);
+    } catch (_error) {
+      // Failed to fetch contributions
     } finally {
       setLoading(false);
     }
@@ -87,8 +84,8 @@ const ContributionAdminPanel: React.FC = () => {
         const data = await response.json();
         setStats(data);
       }
-    } catch (error) {
-      console.error('Error fetching stats:', error);
+    } catch (_error) {
+      // Failed to fetch stats
     }
   };
 
@@ -112,11 +109,9 @@ const ContributionAdminPanel: React.FC = () => {
         await fetchStats();
         setShowModal(false);
         setSelectedContribution(null);
-      } else {
-        console.error('Failed to approve contribution');
       }
-    } catch (error) {
-      console.error('Error approving contribution:', error);
+    } catch (_error) {
+      // Failed to approve contribution
     } finally {
       setActionLoading(false);
     }
@@ -143,11 +138,9 @@ const ContributionAdminPanel: React.FC = () => {
         await fetchStats();
         setShowModal(false);
         setSelectedContribution(null);
-      } else {
-        console.error('Failed to reject contribution');
       }
-    } catch (error) {
-      console.error('Error rejecting contribution:', error);
+    } catch (_error) {
+      // Failed to reject contribution
     } finally {
       setActionLoading(false);
     }
@@ -260,7 +253,7 @@ const ContributionAdminPanel: React.FC = () => {
         <div className="filters">
           <select 
             value={filter} 
-            onChange={(e) => setFilter(e.target.value as any)}
+            onChange={(e) => setFilter(e.target.value as 'all' | 'pending' | 'approved' | 'rejected')}
             className="filter-select"
           >
             <option value="all">All Status</option>
@@ -271,7 +264,7 @@ const ContributionAdminPanel: React.FC = () => {
           
           <select 
             value={typeFilter} 
-            onChange={(e) => setTypeFilter(e.target.value as any)}
+            onChange={(e) => setTypeFilter(e.target.value as 'all' | 'route' | 'image')}
             className="filter-select"
           >
             <option value="all">All Types</option>

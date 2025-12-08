@@ -137,9 +137,6 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   const statusInfo = getBusStatus();
   const busTypeInfo = getBusTypeInfo();
 
-  // Debug logging for stops
-  console.log(`TransitBusCard: Bus ${bus.id} has ${stops.length} stops:`, stops);
-
   return (
     <button 
       className={`transit-bus-card ${isSelected ? 'selected' : ''} ${isCompact ? 'compact' : ''} fade-in`}
@@ -299,7 +296,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             </div>
             
             {/* Try OpenStreetMap first, fallback to static map */}
-            {typeof window !== 'undefined' && (window as any).L ? (
+            {typeof window !== 'undefined' && (window as unknown as { L?: unknown }).L ? (
               <OpenStreetMapComponent
                 fromLocation={mapFromLocation}
                 toLocation={mapToLocation}

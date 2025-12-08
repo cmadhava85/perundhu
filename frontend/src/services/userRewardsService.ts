@@ -96,10 +96,19 @@ export const getUserLevel = (points: number): number => {
   return 1;
 };
 
+export interface UserSession {
+  id: number;
+  userId: string;
+  sessionDate: string;
+  busesTracked: number;
+  pointsEarned: number;
+  duration: string;
+}
+
 /**
  * Get user session history
  */
-export const getUserSessions = async (userId: string): Promise<any[]> => {
+export const getUserSessions = async (userId: string): Promise<UserSession[]> => {
   // Mock implementation for testing
   return [
     {

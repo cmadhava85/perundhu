@@ -6,7 +6,7 @@ interface MapMarkersProps {
   fromLocation: Location;
   toLocation: Location;
   stops?: Stop[];
-  onStopLocation?: (stop: any) => { lat: number; lng: number } | null;
+  onStopLocation?: (stop: Stop) => { lat: number; lng: number } | null;
   onStopSelect?: (stop: Stop) => void;
   highlightedStopIndex?: number | null;
 }
@@ -22,7 +22,7 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
   // Listen for stop highlight events from the bus list
   React.useEffect(() => {
     const handleHighlightStop = (event: CustomEvent) => {
-      const { stop, index } = event.detail;
+      const { stop, index: _index } = event.detail;
       if (onStopSelect) {
         onStopSelect(stop);
       }
@@ -88,7 +88,7 @@ const MapMarkers: React.FC<MapMarkersProps> = ({
       {stops.length > 0 && onStopLocation && (
         <>
           {stops
-            .map((stop: any, index) => ({ stop, location: onStopLocation(stop), originalIndex: index }))
+            .map((stop: Stop, index) => ({ stop, location: onStopLocation(stop), originalIndex: index }))
             .filter(item => item.location !== null)
             .map((item) => {
               const isHighlighted = highlightedStopIndex === item.originalIndex + 1;

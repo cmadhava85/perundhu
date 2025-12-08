@@ -14,10 +14,10 @@ describe('Geolocation E2E Tests', () => {
   });
 
   it('should detect geolocation support', () => {
-    (geolocation.getGeolocationSupport as any).mockReturnValue(true);
+    (geolocation.getGeolocationSupport as ReturnType<typeof vi.fn>).mockReturnValue(true);
     expect(geolocation.getGeolocationSupport()).toBe(true);
 
-    (geolocation.getGeolocationSupport as any).mockReturnValue(false);
+    (geolocation.getGeolocationSupport as ReturnType<typeof vi.fn>).mockReturnValue(false);
     expect(geolocation.getGeolocationSupport()).toBe(false);
   });
 
@@ -31,7 +31,7 @@ describe('Geolocation E2E Tests', () => {
       timestamp: Date.now(),
     };
 
-    (geolocation.getCurrentPosition as any).mockResolvedValue(mockPosition);
+    (geolocation.getCurrentPosition as ReturnType<typeof vi.fn>).mockResolvedValue(mockPosition);
 
     const result = await geolocation.getCurrentPosition();
     expect(result).toEqual(mockPosition);
@@ -40,7 +40,7 @@ describe('Geolocation E2E Tests', () => {
 
   it('should handle geolocation errors', async () => {
     const mockError = new Error('Location access denied');
-    (geolocation.getCurrentPosition as any).mockRejectedValue(mockError);
+    (geolocation.getCurrentPosition as ReturnType<typeof vi.fn>).mockRejectedValue(mockError);
 
     await expect(geolocation.getCurrentPosition()).rejects.toThrow('Location access denied');
   });
@@ -56,7 +56,7 @@ describe('Geolocation E2E Tests', () => {
       timestamp: Date.now(),
     };
 
-    (geolocation.watchPosition as any).mockImplementation((callback: Function) => {
+    (geolocation.watchPosition as ReturnType<typeof vi.fn>).mockImplementation((callback: (position: typeof mockPosition) => void) => {
       // Simulate position update
       setTimeout(() => callback(mockPosition), 100);
       return 1; // Mock watch ID

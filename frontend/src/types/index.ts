@@ -18,7 +18,7 @@ export interface Location {
   translations?: {
     [key: string]: {
       name: string;
-      [key: string]: any;
+      [key: string]: unknown;
     };
   };
   translatedNames?: {
@@ -87,7 +87,7 @@ export interface Stop {
   translations?: {
     [key: string]: {
       name: string;
-      [key: string]: any;
+      [key: string]: unknown;
     };
   };
   translatedNames?: {
@@ -197,6 +197,7 @@ export interface RewardPoints {
   userRank: string;
   leaderboardPosition: number;
   recentActivities: RewardActivity[];
+  lastReportedStopName?: string;
 }
 
 /**

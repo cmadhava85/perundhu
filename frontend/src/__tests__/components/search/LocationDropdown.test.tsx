@@ -12,7 +12,7 @@ vi.mock('../../../services/locationService', () => ({
 // Mock react-i18next
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string, params: any) => {
+    t: (key: string, _params?: Record<string, string>) => {
       if (key === 'locationDropdown.invalidLocation') {
         return 'Invalid location selected';
       }
@@ -110,7 +110,7 @@ describe('LocationDropdown Component', () => {
     
     (searchLocations as vi.Mock).mockResolvedValue(mockResults);
 
-    const { container } = render(
+    const { container: _container } = render(
       <LocationDropdown
         id="test-dropdown"
         label="Test Label"
@@ -191,7 +191,7 @@ describe('LocationDropdown Component', () => {
       return Promise.resolve(locationName !== 'Invalid Location');
     });
 
-    const { container } = render(
+    const { container: _container } = render(
       <LocationDropdown
         id="test-dropdown"
         label="Test Label"
@@ -219,8 +219,8 @@ describe('LocationDropdown Component', () => {
 
   it.skip('shows loading indicator while searching', async () => {
     // Use a controlled promise that we'll resolve manually
-    let resolvePromise: (value: any) => void;
-    const searchPromise = new Promise<any[]>((resolve) => {
+    let resolvePromise: (value: unknown) => void;
+    const searchPromise = new Promise<unknown[]>((resolve) => {
       resolvePromise = resolve;
     });
     

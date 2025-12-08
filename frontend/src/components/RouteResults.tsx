@@ -4,11 +4,18 @@
  */
 import React from 'react';
 
+interface RouteItem {
+  id?: string | number;
+  name?: string;
+  routeNumber?: string;
+  description?: string;
+}
+
 interface RouteResultsProps {
-  results: any[];
+  results: RouteItem[];
   isSearching: boolean;
-  selectedRoute: any | null;
-  setSelectedRoute: (route: any | null) => void;
+  selectedRoute: RouteItem | null;
+  setSelectedRoute: (route: RouteItem | null) => void;
   browserInfo: {
     deviceType: string;
     isLandscape: boolean;
@@ -20,7 +27,7 @@ const RouteResults: React.FC<RouteResultsProps> = ({
   isSearching,
   selectedRoute,
   setSelectedRoute,
-  browserInfo
+  browserInfo: _browserInfo
 }) => {
   if (isSearching) {
     return (

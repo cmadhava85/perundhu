@@ -4,7 +4,7 @@ import '../styles/Footer.css';
 
 const Footer: React.FC = () => {
   const { t } = useTranslation();
-  const year = new Date().getFullYear();
+  const _year = new Date().getFullYear();
   
   return (
     <footer className="app-footer">

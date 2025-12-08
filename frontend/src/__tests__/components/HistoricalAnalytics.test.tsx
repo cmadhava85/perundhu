@@ -9,9 +9,14 @@ vi.mock('../../services/analyticsService', () => ({
   getHistoricalData: vi.fn()
 }));
 
+interface MockFilterControlsProps {
+  onTimeRangeChange: (range: string) => void;
+  onDataTypeChange: (type: string) => void;
+}
+
 // Mock the child components to simplify testing
 vi.mock('../../components/analytics/AnalyticsFilterControls', () => ({
-  default: (props: any) => (
+  default: (props: MockFilterControlsProps) => (
     <div data-testid="filter-controls">
       <button 
         data-testid="time-range-selector" 
@@ -41,8 +46,13 @@ vi.mock('../../components/analytics/BusUtilizationChart', () => ({
   default: () => <div data-testid="bus-utilization-chart">Bus Utilization Chart</div>
 }));
 
+interface MockContinueIterationProps {
+  onContinue: () => void;
+  isLoading: boolean;
+}
+
 vi.mock('../../components/analytics/ContinueIteration', () => ({
-  default: (props: any) => (
+  default: (props: MockContinueIterationProps) => (
     <div data-testid="continue-iteration">
       <button 
         data-testid="load-more" 
@@ -55,8 +65,12 @@ vi.mock('../../components/analytics/ContinueIteration', () => ({
   )
 }));
 
+interface MockExportSectionProps {
+  onExport: () => void;
+}
+
 vi.mock('../../components/analytics/ExportSection', () => ({
-  default: (props: any) => (
+  default: (props: MockExportSectionProps) => (
     <div data-testid="export-section">
       <button 
         data-testid="export-button" 
@@ -72,8 +86,13 @@ vi.mock('../../components/analytics/AnalyticsLoading', () => ({
   default: () => <div data-testid="analytics-loading">Loading...</div>
 }));
 
+interface MockAnalyticsErrorProps {
+  error: string;
+  onRetry: () => void;
+}
+
 vi.mock('../../components/analytics/AnalyticsError', () => ({
-  default: (props: any) => (
+  default: (props: MockAnalyticsErrorProps) => (
     <div data-testid="analytics-error">
       <p>Error: {props.error}</p>
       <button data-testid="retry-button" onClick={props.onRetry}>Retry</button>
@@ -148,7 +167,7 @@ describe('HistoricalAnalytics Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Mock a successful API response
-    (getHistoricalData as any).mockResolvedValue(mockAnalyticsData);
+    vi.mocked(getHistoricalData).mockResolvedValue(mockAnalyticsData);
   });
 
   it('should show loading state initially', async () => {
@@ -182,7 +201,7 @@ describe('HistoricalAnalytics Component', () => {
     vi.clearAllMocks();
     
     // Mock different API responses for different calls
-    (getHistoricalData as any)
+    vi.mocked(getHistoricalData)
       .mockResolvedValueOnce(mockAnalyticsData) // First call for punctuality
       .mockResolvedValueOnce(mockCrowdLevelsData); // Second call for crowd levels
 
@@ -198,7 +217,7 @@ describe('HistoricalAnalytics Component', () => {
     });
 
     // Get initial call count
-    const initialCallCount = (getHistoricalData as any).mock.calls.length;
+    const initialCallCount = vi.mocked(getHistoricalData).mock.calls.length;
 
     // Click data type selector to change to crowd levels
     fireEvent.click(screen.getByTestId('data-type-selector'));
@@ -210,7 +229,7 @@ describe('HistoricalAnalytics Component', () => {
     });
 
     // Verify API was called at least one more time after the initial load
-    expect((getHistoricalData as any).mock.calls.length).toBeGreaterThan(initialCallCount);
+    expect(vi.mocked(getHistoricalData).mock.calls.length).toBeGreaterThan(initialCallCount);
   });
 
   it('should handle loading more data when load more is clicked', async () => {
@@ -220,7 +239,7 @@ describe('HistoricalAnalytics Component', () => {
     // Mock initial data with exactly 10 items to simulate hasMore = true
     const initialData = {
       ...mockAnalyticsData,
-      data: Array(10).fill(0).map((_, i) => ({
+      data: [...Array(10)].map((_, i) => ({
         date: `2025-06-${String(i + 1).padStart(2, '0')}`,
         early: 10,
         onTime: 80,
@@ -237,7 +256,7 @@ describe('HistoricalAnalytics Component', () => {
       ]
     };
 
-    (getHistoricalData as any)
+    vi.mocked(getHistoricalData)
       .mockResolvedValueOnce(initialData)
       .mockResolvedValueOnce(additionalData);
 
@@ -253,18 +272,18 @@ describe('HistoricalAnalytics Component', () => {
 
     // Clear call history after initial load to focus on load more behavior
     vi.clearAllMocks();
-    (getHistoricalData as any).mockResolvedValueOnce(additionalData);
+    vi.mocked(getHistoricalData).mockResolvedValueOnce(additionalData);
 
     // Click load more button
     fireEvent.click(screen.getByTestId('load-more'));
 
     // Verify API was called for load more
     await waitFor(() => {
-      expect((getHistoricalData as any).mock.calls.length).toBeGreaterThan(0);
+      expect(vi.mocked(getHistoricalData).mock.calls.length).toBeGreaterThan(0);
     });
 
     // Verify the call was made with page 2 - correct parameter indices
-    const calls = (getHistoricalData as any).mock.calls;
+    const calls = vi.mocked(getHistoricalData).mock.calls;
     const lastCall = calls[calls.length - 1];
     expect(lastCall[6]).toBe(2); // page parameter is at index 6
     expect(lastCall[7]).toBe(10); // pageSize parameter is at index 7
@@ -279,7 +298,7 @@ describe('HistoricalAnalytics Component', () => {
     vi.clearAllMocks();
     
     // Mock API failure for the first call
-    (getHistoricalData as any).mockRejectedValueOnce(new Error('API Error'));
+    vi.mocked(getHistoricalData).mockRejectedValueOnce(new Error('API Error'));
 
     render(<HistoricalAnalytics 
       fromLocation={mockLocation}
@@ -297,7 +316,7 @@ describe('HistoricalAnalytics Component', () => {
 
     // Clear call history and setup success response for retry
     vi.clearAllMocks();
-    (getHistoricalData as any).mockResolvedValueOnce(mockAnalyticsData);
+    vi.mocked(getHistoricalData).mockResolvedValueOnce(mockAnalyticsData);
 
     // Click retry button
     fireEvent.click(screen.getByTestId('retry-button'));
@@ -309,6 +328,6 @@ describe('HistoricalAnalytics Component', () => {
     }, { timeout: 5000 });
 
     // Verify the retry call was made
-    expect((getHistoricalData as any).mock.calls.length).toBe(1);
+    expect(vi.mocked(getHistoricalData).mock.calls.length).toBe(1);
   });
 });

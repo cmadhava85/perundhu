@@ -14,7 +14,7 @@ const Toast: React.FC<ToastProps> = ({
   onClose, 
   duration = 4000 
 }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, _setIsVisible] = useState(true);
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {

@@ -2,6 +2,52 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './VoiceContributionRecorder.css';
 
+// Type declarations for Web Speech API
+interface SpeechRecognitionResultItem {
+  transcript: string;
+  confidence: number;
+}
+
+interface SpeechRecognitionResult {
+  readonly length: number;
+  readonly isFinal: boolean;
+  item(index: number): SpeechRecognitionResultItem;
+  [index: number]: SpeechRecognitionResultItem;
+}
+
+interface SpeechRecognitionResultList {
+  readonly length: number;
+  item(index: number): SpeechRecognitionResult;
+  [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionEventType {
+  readonly resultIndex: number;
+  readonly results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionErrorEventType {
+  readonly error: string;
+  readonly message: string;
+}
+
+interface SpeechRecognitionType {
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  lang: string;
+  onresult: ((event: SpeechRecognitionEventType) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEventType) => void) | null;
+  onend: (() => void) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+interface SpeechRecognitionConstructor {
+  new(): SpeechRecognitionType;
+}
+
 interface VoiceContributionRecorderProps {
   onTranscription: (transcribedText: string, audioBlob: Blob) => void;
   language?: 'en-IN' | 'ta-IN' | 'auto';
@@ -11,8 +57,8 @@ interface VoiceContributionRecorderProps {
 // Extend Window interface for Web Speech API
 declare global {
   interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
+    SpeechRecognition: SpeechRecognitionConstructor;
+    webkitSpeechRecognition: SpeechRecognitionConstructor;
   }
 }
 
@@ -36,7 +82,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognitionType | null>(null);
 
   // Check browser support for both MediaRecorder and Web Speech API
   const isBrowserSupported = () => {
@@ -66,7 +112,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       }
 
       // Handle recognition results
-      recognitionRef.current.onresult = (event: any) => {
+      recognitionRef.current.onresult = (event: SpeechRecognitionEventType) => {
         let interim = '';
         let final = '';
 
@@ -86,8 +132,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       };
 
       // Handle recognition errors
-      recognitionRef.current.onerror = (event: any) => {
-        console.error('Speech recognition error:', event.error);
+      recognitionRef.current.onerror = (event: SpeechRecognitionErrorEventType) => {
+        // Speech recognition error occurred
         if (event.error === 'no-speech') {
           // Ignore no-speech errors during recording
           return;
@@ -101,7 +147,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
         if (isRecording && !isPaused && recognitionRef.current) {
           try {
             recognitionRef.current.start();
-          } catch (e) {
+          } catch {
             // Ignore if already started
           }
         }
@@ -118,7 +164,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {
+        } catch {
           // Ignore errors on cleanup
         }
       }
@@ -167,8 +213,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       if (isSpeechRecognitionSupported() && recognitionRef.current) {
         try {
           recognitionRef.current.start();
-        } catch (e) {
-          console.warn('Speech recognition start failed:', e);
+        } catch {
+          // Speech recognition start failed silently
         }
       }
 
@@ -183,8 +229,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
           return newTime;
         });
       }, 1000);
-    } catch (err) {
-      console.error('Error accessing microphone:', err);
+    } catch {
+      // Error accessing microphone
       setError(t('voice.error.microphoneAccess', 'Could not access microphone. Please check permissions.'));
     }
   };
@@ -198,8 +244,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {
-          console.warn('Speech recognition stop failed:', e);
+        } catch {
+          // Speech recognition stop failed silently
         }
       }
       
@@ -218,8 +264,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       if (recognitionRef.current) {
         try {
           recognitionRef.current.start();
-        } catch (e) {
-          console.warn('Speech recognition start failed:', e);
+        } catch {
+          // Speech recognition start failed silently
         }
       }
       
@@ -247,8 +293,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {
-          console.warn('Speech recognition stop failed:', e);
+        } catch {
+          // Speech recognition stop failed silently
         }
       }
       
@@ -298,8 +344,8 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
       setTranscribedText('');
       setInterimTranscript('');
       audioChunksRef.current = [];
-    } catch (err) {
-      console.error('Error processing recording:', err);
+    } catch {
+      // Error processing recording
       setError(t('voice.error.processing', 'Failed to process recording. Please try again.'));
     } finally {
       setIsProcessing(false);

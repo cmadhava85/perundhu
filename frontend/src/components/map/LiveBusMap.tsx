@@ -4,6 +4,14 @@ import type { Location, BusLocation } from '../../types';
 import { getEnv } from '../../utils/environment';
 import BusInfoWindow from './BusInfoWindow';
 
+interface MarkerIcon {
+  path: google.maps.SymbolPath;
+  fillColor: string;
+  fillOpacity: number;
+  strokeWeight: number;
+  scale: number;
+}
+
 interface LiveBusMapProps {
   fromLocation: Location;
   toLocation: Location;
@@ -12,7 +20,7 @@ interface LiveBusMapProps {
   mapCenter: { lat: number; lng: number };
   onBusClick: (bus: BusLocation) => void;
   onInfoClose: () => void;
-  getBusMarkerIcon: (confidence: number) => any;
+  getBusMarkerIcon: (confidence: number) => MarkerIcon;
 }
 
 const libraries = ['places'] as ("places" | "drawing" | "geometry" | "visualization")[];

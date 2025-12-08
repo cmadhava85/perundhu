@@ -39,6 +39,7 @@ export interface RewardPoints {
   lifetimePoints: number;
   userRank: string;
   leaderboardPosition: number;
+  lastReportedStopName?: string;
   recentActivities: Array<{
     activityType: string;
     pointsEarned: number;
@@ -73,9 +74,8 @@ export const reportBusLocationSimple = async (locationReport: {
   heading: number;
   timestamp: string;
   deviceInfo: string;
-}): Promise<any> => {
+}): Promise<RewardPoints> => {
   try {
-    console.log('Reporting bus location (simplified):', locationReport);
     const response = await api.post('/api/v1/bus-tracking/report-simple', locationReport);
     return response.data;
   } catch (error) {

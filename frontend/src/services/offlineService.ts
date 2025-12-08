@@ -19,14 +19,12 @@ const STORES = {
   SYNC_TIMESTAMPS: 'syncTimestamps'
 };
 
-interface PerundhuDB extends IDBPDatabase {
-  [key: string]: any;
-}
-
 class OfflineService {
-  private db: PerundhuDB | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private db: IDBPDatabase<any> | null = null;
 
-  async initDB(): Promise<PerundhuDB> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async initDB(): Promise<IDBPDatabase<any>> {
     if (this.db) return this.db;
 
     try {
@@ -73,7 +71,6 @@ class OfflineService {
         }
       });
       
-      console.log('Offline database initialized successfully');
       return this.db;
     } catch (error) {
       console.error('Failed to initialize offline database:', error);
@@ -151,7 +148,7 @@ class OfflineService {
     await db.add(STORES.USER_SEARCHES, search);
   }
 
-  async getRecentSearches(limit = 5): Promise<any[]> {
+  async getRecentSearches(limit = 5): Promise<{ from: string; to: string; timestamp: number }[]> {
     const db = await this.initDB();
     const tx = db.transaction(STORES.USER_SEARCHES, 'readonly');
     const store = tx.objectStore(STORES.USER_SEARCHES);
@@ -244,7 +241,7 @@ class OfflineService {
     return navigator.onLine;
   }
 
-  async saveLocationsOffline(locations: any[]): Promise<void> {
+  async saveLocationsOffline(locations: unknown[]): Promise<void> {
     const db = await this.initDB();
     const tx = db.transaction(STORES.LOCATIONS, 'readwrite');
     const store = tx.objectStore(STORES.LOCATIONS);
@@ -252,7 +249,7 @@ class OfflineService {
     await store.put({ id: 'allLocations', data: locations, timestamp: new Date().toISOString() });
   }
 
-  async getLocationsOffline(): Promise<any[]> {
+  async getLocationsOffline(): Promise<unknown[]> {
     try {
       const db = await this.initDB();
       const result = await db.get(STORES.LOCATIONS, 'allLocations');
@@ -263,7 +260,7 @@ class OfflineService {
     }
   }
 
-  async saveBusesOffline(fromLocationId: number, toLocationId: number, buses: any[]): Promise<void> {
+  async saveBusesOffline(fromLocationId: number, toLocationId: number, buses: unknown[]): Promise<void> {
     const db = await this.initDB();
     const tx = db.transaction(STORES.BUSES, 'readwrite');
     const store = tx.objectStore(STORES.BUSES);
@@ -272,7 +269,7 @@ class OfflineService {
     await store.put({ id: key, data: buses, timestamp: new Date().toISOString() });
   }
 
-  async getBusesOffline(fromLocationId: number, toLocationId: number): Promise<any[]> {
+  async getBusesOffline(fromLocationId: number, toLocationId: number): Promise<unknown[]> {
     try {
       const db = await this.initDB();
       const key = `${fromLocationId}_${toLocationId}`;
@@ -284,7 +281,7 @@ class OfflineService {
     }
   }
 
-  async saveStopsOffline(busId: number, stops: any[]): Promise<void> {
+  async saveStopsOffline(busId: number, stops: unknown[]): Promise<void> {
     const db = await this.initDB();
     const tx = db.transaction(STORES.STOPS, 'readwrite');
     const store = tx.objectStore(STORES.STOPS);
@@ -292,7 +289,7 @@ class OfflineService {
     await store.put({ id: busId.toString(), data: stops, timestamp: new Date().toISOString() });
   }
 
-  async getStopsOffline(busId: number): Promise<any[]> {
+  async getStopsOffline(busId: number): Promise<unknown[]> {
     try {
       const db = await this.initDB();
       const result = await db.get(STORES.STOPS, busId.toString());
@@ -303,7 +300,7 @@ class OfflineService {
     }
   }
 
-  async saveConnectingRoutesOffline(fromLocationId: number, toLocationId: number, routes: any[]): Promise<void> {
+  async saveConnectingRoutesOffline(fromLocationId: number, toLocationId: number, routes: unknown[]): Promise<void> {
     const db = await this.initDB();
     const tx = db.transaction(STORES.CONNECTING_ROUTES, 'readwrite');
     const store = tx.objectStore(STORES.CONNECTING_ROUTES);
@@ -312,7 +309,7 @@ class OfflineService {
     await store.put({ id: key, data: routes, timestamp: new Date().toISOString() });
   }
 
-  async getConnectingRoutesOffline(fromLocationId: number, toLocationId: number): Promise<any[]> {
+  async getConnectingRoutesOffline(fromLocationId: number, toLocationId: number): Promise<unknown[]> {
     try {
       const db = await this.initDB();
       const key = `${fromLocationId}_${toLocationId}`;
@@ -324,7 +321,7 @@ class OfflineService {
     }
   }
 
-  async saveBusLocationsOffline(fromLocationId: number, toLocationId: number, locations: any[]): Promise<void> {
+  async saveBusLocationsOffline(fromLocationId: number, toLocationId: number, locations: unknown[]): Promise<void> {
     const db = await this.initDB();
     const tx = db.transaction(STORES.BUS_LOCATIONS, 'readwrite');
     const store = tx.objectStore(STORES.BUS_LOCATIONS);
@@ -333,7 +330,7 @@ class OfflineService {
     await store.put({ id: key, data: locations, timestamp: new Date().toISOString() });
   }
 
-  async getBusLocationsOffline(fromLocationId: number, toLocationId: number): Promise<any[]> {
+  async getBusLocationsOffline(fromLocationId: number, toLocationId: number): Promise<unknown[]> {
     try {
       const db = await this.initDB();
       const key = `${fromLocationId}_${toLocationId}`;
@@ -424,7 +421,7 @@ class OfflineService {
         }
       }
       
-      console.log('Completed cleanup of old offline data');
+      // Completed cleanup of old offline data
     } catch (error) {
       console.error('Error cleaning up old data:', error);
     }
@@ -462,21 +459,21 @@ export default offlineService;
 
 // Re-export required methods with the correct signatures for api.ts
 export const isOnline = () => offlineService.isOnline();
-export const saveLocationsOffline = (locations: any[]) => offlineService.saveLocationsOffline(locations);
+export const saveLocationsOffline = (locations: unknown[]) => offlineService.saveLocationsOffline(locations);
 export const getLocationsOffline = () => offlineService.getLocationsOffline();
-export const saveBusesOffline = (fromLocationId: number, toLocationId: number, buses: any[]) =>
+export const saveBusesOffline = (fromLocationId: number, toLocationId: number, buses: unknown[]) =>
   offlineService.saveBusesOffline(fromLocationId, toLocationId, buses);
 export const getBusesOffline = (fromLocationId: number, toLocationId: number) =>
   offlineService.getBusesOffline(fromLocationId, toLocationId);
-export const saveStopsOffline = (busId: number, stops: any[]) =>
+export const saveStopsOffline = (busId: number, stops: unknown[]) =>
   offlineService.saveStopsOffline(busId, stops);
 export const getStopsOffline = (busId: number) =>
   offlineService.getStopsOffline(busId);
-export const saveConnectingRoutesOffline = (fromLocationId: number, toLocationId: number, routes: any[]) =>
+export const saveConnectingRoutesOffline = (fromLocationId: number, toLocationId: number, routes: unknown[]) =>
   offlineService.saveConnectingRoutesOffline(fromLocationId, toLocationId, routes);
 export const getConnectingRoutesOffline = (fromLocationId: number, toLocationId: number) =>
   offlineService.getConnectingRoutesOffline(fromLocationId, toLocationId);
-export const saveBusLocationsOffline = (fromLocationId: number, toLocationId: number, locations: any[]) =>
+export const saveBusLocationsOffline = (fromLocationId: number, toLocationId: number, locations: unknown[]) =>
   offlineService.saveBusLocationsOffline(fromLocationId, toLocationId, locations);
 export const getBusLocationsOffline = (fromLocationId: number, toLocationId: number) =>
   offlineService.getBusLocationsOffline(fromLocationId, toLocationId);

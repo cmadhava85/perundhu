@@ -44,7 +44,7 @@ Arrival: 2:00 PM
 Stops: Tambaram, Chengalpattu, Villupuram`;
 
       // Expected normalized output after processing
-      const expectedNormalized = {
+      const _expectedNormalized = {
         formatDetected: 'WHATSAPP',
         extracted: {
           busNumber: '27D',
@@ -110,7 +110,7 @@ Evening: 5:00 PM
 
       // City abbreviations should be expanded
       const abbreviations = ['CBE', 'SLM', 'ERD'];
-      const expansions = ['Coimbatore', 'Salem', 'Erode'];
+      const _expansions = ['Coimbatore', 'Salem', 'Erode'];
 
       abbreviations.forEach((abbr) => {
         expect(abbreviatedText).toContain(abbr);

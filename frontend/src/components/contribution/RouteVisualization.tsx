@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { StopContribution, Location } from '../../types';
+import type { LocationSuggestion } from '../../services/locationAutocompleteService';
 import LocationAutocompleteInput from '../LocationAutocompleteInput';
 
 interface RouteVisualizationProps {
@@ -31,8 +32,8 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
   onChangeTo,
   onChangeTimes,
   onRemoveStop,
-  fromError = false,
-  toError = false,
+  fromError: _fromError = false,
+  toError: _toError = false,
   timeError = false
 }) => {
   const { t } = useTranslation();
@@ -40,7 +41,7 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
   const [toLocationData, setToLocationData] = useState<Location | null>(null);
 
   // Handle location selection from the autocomplete input - Memoized to prevent refresh issues
-  const handleFromLocationChange = useCallback((value: string, location?: any) => {
+  const handleFromLocationChange = useCallback((value: string, location?: LocationSuggestion) => {
     // Store the full location data for future reference
     if (location) {
       setFromLocationData({
@@ -65,7 +66,7 @@ const RouteVisualization: React.FC<RouteVisualizationProps> = ({
     console.log('Selected origin location:', value, location);
   }, [onChangeFrom]);
 
-  const handleToLocationChange = useCallback((value: string, location?: any) => {
+  const handleToLocationChange = useCallback((value: string, location?: LocationSuggestion) => {
     // Store the full location data for future reference
     if (location) {
       setToLocationData({

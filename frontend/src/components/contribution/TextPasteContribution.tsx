@@ -81,9 +81,9 @@ Morning 7:30 AM, Evening 5:00 PM`,
       if (!response.data.isValid) {
         onError(response.data.reason || t('paste.errors.invalidText', 'Text validation failed'));
       }
-    } catch (error: any) {
-      console.error('Validation error:', error);
-      onError(error.response?.data?.message || t('paste.errors.validationFailed', 'Validation failed'));
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      onError(axiosError.response?.data?.message || t('paste.errors.validationFailed', 'Validation failed'));
     } finally {
       setIsValidating(false);
     }
@@ -119,22 +119,22 @@ Morning 7:30 AM, Evening 5:00 PM`,
       } else {
         onError(response.data.message || t('paste.errors.submitFailed', 'Submission failed'));
       }
-    } catch (error: any) {
-      console.error('Submit error:', error);
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { status?: number; data?: { message?: string } } };
       
-      if (error.response?.status === 429) {
+      if (axiosError.response?.status === 429) {
         onError(t('paste.errors.rateLimit', 'Too many submissions. Please try again later.'));
-      } else if (error.response?.status === 401) {
+      } else if (axiosError.response?.status === 401) {
         onError(t('paste.errors.loginRequired', 'Please login to submit paste contributions'));
       } else {
-        onError(error.response?.data?.message || t('paste.errors.submitFailed', 'Submission failed'));
+        onError(axiosError.response?.data?.message || t('paste.errors.submitFailed', 'Submission failed'));
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const getConfidenceLevel = (confidence: number): string => {
+  const _getConfidenceLevel = (confidence: number): string => {
     if (confidence >= 0.8) return 'high';
     if (confidence >= 0.6) return 'medium';
     return 'low';

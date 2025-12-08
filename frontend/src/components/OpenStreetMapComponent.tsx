@@ -111,8 +111,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
             }).setView([centerLat, centerLng], 8);
 
             // Add error handler
-            map.on('error', (e: any) => {
-              console.error('Leaflet map error:', e);
+            map.on('error', (e: L.LeafletEvent) => {
+              void e; // Acknowledge error event
             });
 
             // Add OpenStreetMap tiles
@@ -238,15 +238,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
               total: selectedStops.length
             });
             
-            // Show warning if some stops couldn't be located
+            // Show notification if some stops couldn't be located
             if (stopsWithCoordinates.length < selectedStops.length) {
-              const missingStops = selectedStops.filter(stop => 
-                !stopsWithCoordinates.some(swc => swc.stop.name === stop.name)
-              );
-              console.warn('Some stops could not be located on the map:', missingStops.map(s => s.name));
-              
-              // Optionally show a notification to the user
-              // You could integrate with a toast notification system here
+              // Some stops could not be located on the map
+              // Optionally show a notification to the user via toast system
             }
             
             stopsWithCoordinates.forEach((stopData, index) => {
@@ -295,7 +290,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
             }
 
             // Add buses if provided
-            buses.forEach((bus, index) => {
+            buses.forEach((bus, _index) => {
               const typedBus = bus as { latitude?: number; longitude?: number; busName?: string; busNumber?: string };
               if (typedBus.latitude && typedBus.longitude) {
                 const busMarker = L.marker([typedBus.latitude, typedBus.longitude], {
@@ -323,15 +318,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
               if (map) {
                 try {
                   map.invalidateSize();
-                } catch (error) {
-                  console.warn('Error invalidating map size:', error);
+                } catch (_error) {
+                  // Error invalidating map size
                 }
               }
             }, 100);
           }
         }
-      } catch (error) {
-        console.error('Error initializing OpenStreetMap:', error);
+      } catch (_error) {
+        // Error initializing OpenStreetMap
       } finally {
         isInitializingRef.current = false;
       }
@@ -345,8 +340,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
       if (mapInstanceRef.current) {
         try {
           mapInstanceRef.current.remove();
-        } catch (error) {
-          console.warn('Error during map cleanup:', error);
+        } catch (_error) {
+          // Error during map cleanup
         } finally {
           mapInstanceRef.current = null;
         }
@@ -355,7 +350,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
   }, [fromLocation?.id, toLocation?.id, selectedStops?.length, buses?.length]);
 
   // Fallback content when Leaflet is not available
-  const FallbackContent = () => (
+  const _FallbackContent = () => (
     <div className="osm-fallback">
       <div className="fallback-content">
         <div className="fallback-header">

@@ -6,7 +6,7 @@ type ClassValue =
   | undefined 
   | null 
   | ClassValue[] 
-  | Record<string, any>;
+  | Record<string, boolean | undefined | null>;
 
 export function cn(...inputs: ClassValue[]): string {
   const classes: string[] = [];

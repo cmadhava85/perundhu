@@ -143,8 +143,9 @@ class AuthService {
       this.storeAuthData(user, token);
 
       return { user, token };
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Login failed');
     }
   }
 
@@ -164,8 +165,9 @@ class AuthService {
       this.storeAuthData(user, token);
 
       return { user, token };
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Registration failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Registration failed');
     }
   }
 
@@ -222,8 +224,9 @@ class AuthService {
   async requestPasswordReset(email: string): Promise<void> {
     try {
       await this.api.post('/api/auth/forgot-password', { email });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to send reset email');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to send reset email');
     }
   }
 
@@ -237,24 +240,27 @@ class AuthService {
         token: data.token,
         newPassword: data.newPassword,
       });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Password reset failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Password reset failed');
     }
   }
 
   async verifyEmail(token: string): Promise<void> {
     try {
       await this.api.post('/api/auth/verify-email', { token });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Email verification failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Email verification failed');
     }
   }
 
   async resendVerificationEmail(): Promise<void> {
     try {
       await this.api.post('/api/auth/resend-verification');
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to resend verification email');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to resend verification email');
     }
   }
 
@@ -265,8 +271,9 @@ class AuthService {
       const updatedUser = response.data;
       this.storeUser(updatedUser);
       return updatedUser;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Profile update failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Profile update failed');
     }
   }
 
@@ -276,8 +283,9 @@ class AuthService {
         currentPassword,
         newPassword,
       });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Password change failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Password change failed');
     }
   }
 
@@ -285,8 +293,9 @@ class AuthService {
     try {
       await this.api.delete('/api/auth/account');
       this.clearAuthData();
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Account deletion failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Account deletion failed');
     }
   }
 
@@ -373,7 +382,7 @@ class AuthService {
       // Verify token with backend
       await this.api.get('/api/auth/validate');
       return true;
-    } catch (error) {
+    } catch (_error) {
       this.clearAuthData();
       return false;
     }
@@ -386,8 +395,9 @@ class AuthService {
       const { user, token: authToken } = response.data;
       this.storeAuthData(user, authToken);
       return { user, token: authToken };
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Google login failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Google login failed');
     }
   }
 
@@ -397,8 +407,9 @@ class AuthService {
       const { user, token: authToken } = response.data;
       this.storeAuthData(user, authToken);
       return { user, token: authToken };
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Facebook login failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Facebook login failed');
     }
   }
 
@@ -407,24 +418,27 @@ class AuthService {
     try {
       const response = await this.api.post('/api/auth/2fa/enable');
       return response.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to enable 2FA');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to enable 2FA');
     }
   }
 
   async confirmTwoFactor(code: string): Promise<void> {
     try {
       await this.api.post('/api/auth/2fa/confirm', { code });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Invalid 2FA code');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Invalid 2FA code');
     }
   }
 
   async disableTwoFactor(code: string): Promise<void> {
     try {
       await this.api.post('/api/auth/2fa/disable', { code });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to disable 2FA');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to disable 2FA');
     }
   }
 
@@ -433,8 +447,9 @@ class AuthService {
     try {
       const response = await this.api.get(`/api/admin/users?page=${page}&size=${size}`);
       return response.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch users');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to fetch users');
     }
   }
 
@@ -442,24 +457,27 @@ class AuthService {
     try {
       const response = await this.api.put(`/api/admin/users/${userId}/role`, { role });
       return response.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to update user role');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to update user role');
     }
   }
 
   async banUser(userId: string, reason: string): Promise<void> {
     try {
       await this.api.post(`/api/admin/users/${userId}/ban`, { reason });
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to ban user');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to ban user');
     }
   }
 
   async unbanUser(userId: string): Promise<void> {
     try {
       await this.api.post(`/api/admin/users/${userId}/unban`);
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to unban user');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      throw new Error(axiosError.response?.data?.message || 'Failed to unban user');
     }
   }
 }

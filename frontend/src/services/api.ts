@@ -276,7 +276,7 @@ interface BusDTO {
 }
 
 // Generate sample stops for demonstration purposes
-const generateSampleStops = (busId: number, fromLocation: Location, toLocation: Location): Stop[] => {
+const _generateSampleStops = (busId: number, fromLocation: Location, toLocation: Location): Stop[] => {
   const sampleStopNames = [
     'Central Station', 'City Mall', 'Airport Junction', 'Tech Park', 'University Campus',
     'Bus Terminal', 'Railway Station', 'Government Hospital', 'Market Square', 'Shopping Complex'
@@ -487,7 +487,21 @@ export const searchBusesViaStops = async (
 /**
  * Transform backend StopDTO to frontend Stop object
  */
-const transformStopDTOToStop = (stopDTO: any, busId: number): Stop => {
+interface StopDTO {
+  id: number;
+  name: string;
+  translatedName?: string;
+  arrivalTime?: string;
+  departureTime?: string;
+  sequence?: number;
+  platform?: string;
+  latitude?: number;
+  longitude?: number;
+  status?: string;
+  locationId?: number;
+}
+
+const transformStopDTOToStop = (stopDTO: StopDTO, busId: number): Stop => {
   return {
     id: stopDTO.id,
     name: stopDTO.name,
@@ -517,7 +531,7 @@ export const getStops = async (busId: number, languageCode: string = 'en'): Prom
     console.log('Stops API response:', response.data);
     
     // Transform the backend response to frontend Stop objects
-    const stopDTOs: any[] = response.data;
+    const stopDTOs: StopDTO[] = response.data;
     const stops: Stop[] = stopDTOs.map(stopDTO => 
       transformStopDTOToStop(stopDTO, busId)
     );
@@ -619,14 +633,15 @@ export const getUserRewardPoints = async (userId: string): Promise<RewardPoints>
   try {
     const response = await api.get(`/api/v1/bus-tracking/rewards/${userId}`);
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching reward points:', error);
     // Using our ApiError class for better error handling
-    if (error.response) {
+    const axiosError = error as { response?: { status: number; data?: { errorCode?: string } } };
+    if (axiosError.response) {
       throw new ApiError(
         'Failed to fetch reward points',
-        error.response.status,
-        error.response.data?.errorCode
+        axiosError.response.status,
+        axiosError.response.data?.errorCode
       );
     }
     throw new ApiError('Failed to fetch reward points. Please try again.');
@@ -917,7 +932,7 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
     // Try offline data as last resort
     if (isOfflineMode) {
       try {
-        const offlineLocations = await getLocationsOffline();
+        const offlineLocations = (await getLocationsOffline()) as Location[];
         console.log(`searchLocations: Using offline data for "${query}"`);
         // Filter locations based on query
         return offlineLocations.filter(location => 

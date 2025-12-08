@@ -68,10 +68,10 @@ export const queryKeys = {
   
   // Analytics queries
   analytics: ['analytics'] as const,
-  analyticsDelay: (params: any) => ['analytics', 'delay', params] as const,
-  analyticsPunctuality: (params: any) => ['analytics', 'punctuality', params] as const,
-  analyticsPerformance: (params: any) => ['analytics', 'performance', params] as const,
-  analyticsCrowding: (params: any) => ['analytics', 'crowding', params] as const,
+  analyticsDelay: (params: unknown) => ['analytics', 'delay', params] as const,
+  analyticsPunctuality: (params: unknown) => ['analytics', 'punctuality', params] as const,
+  analyticsPerformance: (params: unknown) => ['analytics', 'performance', params] as const,
+  analyticsCrowding: (params: unknown) => ['analytics', 'crowding', params] as const,
   
   // User data
   userRewards: (userId: string) => ['user', 'rewards', userId] as const,

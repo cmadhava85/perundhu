@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 import '../styles/Header.css';
 
@@ -11,13 +10,11 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ 
-  autoLocationEnabled = false, 
-  onToggleAutoLocation,
+  autoLocationEnabled: _autoLocationEnabled = false, 
+  onToggleAutoLocation: _onToggleAutoLocation,
   isAdmin = false
 }) => {
   const { t } = useTranslation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
   
   return (
     <header className="app-header">
@@ -31,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({
           </h1>
         </div>
         
-        <div className={`header-actions ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+        <div className="header-actions">
           
           {isAdmin && (
             <a href="/" className="home-link modern-button">

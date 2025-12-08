@@ -3,10 +3,18 @@ import MapComponent from './MapComponent';
 import type { Location } from '../types/apiTypes';
 import '../styles/RouteMap.css';
 
+interface SelectedRoute {
+  name?: string;
+  distance?: number | string;
+  duration?: number | string;
+  fromLocation?: { name?: string; lat?: number; lng?: number };
+  toLocation?: { name?: string; lat?: number; lng?: number };
+}
+
 interface RouteMapProps {
-  selectedRoute: any;
+  selectedRoute: SelectedRoute | null;
   userLocation: { lat: number; lng: number; } | null;
-  routes: any[];
+  routes: SelectedRoute[];
   fromLocation?: Location;
   toLocation?: Location;
 }
@@ -16,8 +24,8 @@ interface RouteMapProps {
  */
 const RouteMap: React.FC<RouteMapProps> = ({
   selectedRoute,
-  userLocation,
-  routes,
+  userLocation: _userLocation,
+  routes: _routes,
   fromLocation,
   toLocation
 }) => {

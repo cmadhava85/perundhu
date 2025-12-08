@@ -82,7 +82,7 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       
       return `${hours}h ${minutes}m`;
-    } catch (error) {
+    } catch {
       return 'N/A';
     }
   };

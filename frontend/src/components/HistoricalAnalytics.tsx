@@ -19,8 +19,35 @@ import ExportSection from './analytics/ExportSection';
 import type { TimeRange, DataType, AnalyticsData } from './analytics/types';
 import { formatDate, formatTime } from './analytics/formatters';
 
+interface PunctualityChartData {
+  data: Array<{
+    date: string;
+    early: number;
+    onTime: number;
+    delayed: number;
+    veryDelayed: number;
+  }>;
+  pieData: Array<{
+    name: string;
+    value: number;
+  }>;
+  summary: {
+    title: string;
+    description: string;
+    dataPoints: number;
+  };
+  bestDays: Array<{
+    date: string;
+    onTimePercentage: number;
+  }>;
+  worstDays: Array<{
+    date: string;
+    delayedPercentage: number;
+  }>;
+}
+
 // Adapter functions to transform data for specific chart components
-const adaptDataForPunctualityChart = (data: AnalyticsData): any => {
+const adaptDataForPunctualityChart = (data: AnalyticsData): PunctualityChartData => {
   return {
     data: data.data.map(item => ({
       date: String(item.date || ''),
@@ -29,14 +56,23 @@ const adaptDataForPunctualityChart = (data: AnalyticsData): any => {
       delayed: Number(item.delayed || 0),
       veryDelayed: Number(item.veryDelayed || 0)
     })) || [],
-    pieData: data.pieData || [],
+    pieData: (data.pieData || []).map(item => ({
+      name: String(item.name || ''),
+      value: Number(item.value || 0)
+    })),
     summary: {
       title: data.summary.title,
       description: data.summary.description,
       dataPoints: data.summary.dataPoints
     },
-    bestDays: Array.isArray(data.bestDays) ? data.bestDays : [],
-    worstDays: Array.isArray(data.worstDays) ? data.worstDays : []
+    bestDays: Array.isArray(data.bestDays) ? data.bestDays.map(d => ({
+      date: d.date,
+      onTimePercentage: d.onTimePercentage ?? 0
+    })) : [],
+    worstDays: Array.isArray(data.worstDays) ? data.worstDays.map(d => ({
+      date: d.date,
+      delayedPercentage: d.delayedPercentage ?? 0
+    })) : []
   };
 };
 
@@ -186,8 +222,7 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
       } else {
         setAnalyticsData(data);
       }
-    } catch (err) {
-      console.error('Error fetching historical data:', err);
+    } catch (_err) {
       setError(t('analytics.error', 'Failed to load historical data'));
     } finally {
       setLoading(false);

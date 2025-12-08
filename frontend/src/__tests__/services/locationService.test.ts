@@ -2,7 +2,6 @@ import { vi, beforeEach, describe, test, expect } from 'vitest';
 import { searchLocations } from '../../services/locationService';
 import * as offlineServiceModule from '../../services/offlineService';
 import * as geocodingModule from '../../services/geocodingService';
-import type { Location } from '../../types';
 
 // Mock i18n
 vi.mock('../../i18n', () => ({

@@ -50,8 +50,9 @@ const Login: React.FC = () => {
     try {
       await login(formData);
       navigate(from, { replace: true });
-    } catch (error: any) {
-      setLoginError(error.message || t('auth.errors.loginFailed'));
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : t('auth.errors.loginFailed');
+      setLoginError(errorMessage);
     }
   };
 
