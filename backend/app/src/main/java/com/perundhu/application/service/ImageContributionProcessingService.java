@@ -1,6 +1,9 @@
 package com.perundhu.application.service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -388,6 +391,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 for (String departureTime : departureTimes) {
                     scheduleIndex++;
 
+                    // Estimate arrival time based on departure and route
+                    String estimatedArrival = estimateArrivalTime(departureTime, validatedFrom, validatedTo);
+
                     RouteContribution route = RouteContribution.builder()
                             .id(UUID.randomUUID().toString())
                             .userId(contribution.getUserId())
@@ -395,12 +401,13 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             .fromLocationName(validatedFrom)
                             .toLocationName(validatedTo)
                             .departureTime(departureTime)
+                            .arrivalTime(estimatedArrival)
                             .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
                             .submissionDate(LocalDateTime.now())
                             .status("PENDING_REVIEW")
                             .sourceImageId(contribution.getId())
                             .routeGroupId(routeGroupId)
-                            .additionalNotes(String.format("[Gemini AI] Schedule %d of %d from image: %s",
+                            .additionalNotes(String.format("[Gemini AI] Schedule %d of %d from image: %s (arrival estimated)",
                                     scheduleIndex, totalSchedules, contribution.getId()))
                             .build();
 
@@ -1079,6 +1086,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         // Generate route group ID for grouping related schedules
         String routeGroupId = generateRouteGroupId(fromLocation, toLocation, via);
+        
+        // Estimate arrival time based on departure and route
+        String estimatedArrival = estimateArrivalTime(departureTime, fromLocation, toLocation);
 
         RouteContribution.RouteContributionBuilder builder = RouteContribution.builder()
                 .id(UUID.randomUUID().toString())
@@ -1087,11 +1097,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .fromLocationName(fromLocation)
                 .toLocationName(toLocation)
                 .departureTime(departureTime) // Set the specific departure time
+                .arrivalTime(estimatedArrival) // Set the estimated arrival time
                 .submissionDate(LocalDateTime.now())
                 .status(status)
                 .sourceImageId(imageContribution.getId()) // Track source image
                 .routeGroupId(routeGroupId) // Group related schedules
-                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId());
+                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId() + " (arrival estimated)");
 
         // Add via information
         if (via != null && !via.isBlank()) {
@@ -1273,5 +1284,136 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             asyncExecutor.shutdownNow();
             Thread.currentThread().interrupt();
         }
+    }
+
+    /**
+     * Estimate arrival time based on departure time and typical travel duration.
+     * Uses distance-based estimates for Tamil Nadu bus routes:
+     * - Within district: ~1-2 hours
+     * - Cross-district: ~2-4 hours
+     * - Long distance: ~4-6 hours
+     * 
+     * @param departureTime The departure time string (HH:mm or HH:mm:ss format)
+     * @param fromLocation  Origin location name
+     * @param toLocation    Destination location name
+     * @return Estimated arrival time string, or null if calculation fails
+     */
+    private String estimateArrivalTime(String departureTime, String fromLocation, String toLocation) {
+        if (departureTime == null || departureTime.isBlank()) {
+            return null;
+        }
+
+        try {
+            // Parse departure time flexibly
+            LocalTime departure = parseTimeFlexible(departureTime);
+            if (departure == null) {
+                return null;
+            }
+
+            // Estimate travel duration based on known routes
+            int travelMinutes = estimateTravelDuration(fromLocation, toLocation);
+            
+            // Calculate arrival time
+            LocalTime arrival = departure.plusMinutes(travelMinutes);
+            
+            return arrival.format(DateTimeFormatter.ofPattern("HH:mm"));
+            
+        } catch (Exception e) {
+            logger.warn("Failed to estimate arrival time for departure '{}': {}", departureTime, e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Estimate travel duration in minutes between two locations.
+     * Uses hardcoded estimates for common Tamil Nadu routes.
+     */
+    private int estimateTravelDuration(String from, String to) {
+        if (from == null || to == null) {
+            return 90; // Default 1.5 hours
+        }
+        
+        String fromUpper = from.toUpperCase().trim();
+        String toUpper = to.toUpperCase().trim();
+        
+        // Known route duration estimates (in minutes)
+        // Sivakasi to Madurai: ~60 km, takes about 1.5-2 hours by local bus
+        if ((fromUpper.contains("SIVAKASI") && toUpper.contains("MADURAI")) ||
+            (fromUpper.contains("MADURAI") && toUpper.contains("SIVAKASI"))) {
+            return 120; // 2 hours
+        }
+        
+        // Sivakasi to Virudhunagar: ~15 km, about 30-45 min
+        if ((fromUpper.contains("SIVAKASI") && toUpper.contains("VIRUDHUNAGAR")) ||
+            (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("SIVAKASI"))) {
+            return 45; // 45 min
+        }
+        
+        // Madurai to Virudhunagar: ~45 km, about 1-1.5 hours
+        if ((fromUpper.contains("MADURAI") && toUpper.contains("VIRUDHUNAGAR")) ||
+            (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("MADURAI"))) {
+            return 90; // 1.5 hours
+        }
+        
+        // Chennai routes (long distance)
+        if (fromUpper.contains("CHENNAI") || toUpper.contains("CHENNAI")) {
+            return 360; // 6 hours average
+        }
+        
+        // Coimbatore/Tirupur routes
+        if (fromUpper.contains("COIMBATORE") || toUpper.contains("COIMBATORE") ||
+            fromUpper.contains("TIRUPUR") || toUpper.contains("TIRUPUR")) {
+            return 240; // 4 hours average
+        }
+        
+        // Default estimate based on typical intercity route
+        return 120; // 2 hours default
+    }
+
+    /**
+     * Parse time string flexibly, handling various formats.
+     */
+    private LocalTime parseTimeFlexible(String timeStr) {
+        if (timeStr == null || timeStr.isBlank()) {
+            return null;
+        }
+        
+        String normalized = timeStr.trim();
+        
+        // Handle various time formats
+        DateTimeFormatter[] formatters = {
+            DateTimeFormatter.ofPattern("HH:mm"),
+            DateTimeFormatter.ofPattern("H:mm"),
+            DateTimeFormatter.ofPattern("HH:mm:ss"),
+            DateTimeFormatter.ofPattern("h:mm a"),
+            DateTimeFormatter.ofPattern("h:mma"),
+            DateTimeFormatter.ofPattern("hh:mm a"),
+            DateTimeFormatter.ofPattern("hh:mma")
+        };
+        
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalTime.parse(normalized, formatter);
+            } catch (DateTimeParseException e) {
+                // Try next format
+            }
+        }
+        
+        // Try simple HH:mm extraction
+        if (normalized.matches("\\d{1,2}:\\d{2}.*")) {
+            try {
+                String timeOnly = normalized.substring(0, 5);
+                if (normalized.length() > 5) {
+                    timeOnly = normalized.replaceAll("[^0-9:]", "").substring(0, 
+                        Math.min(5, normalized.replaceAll("[^0-9:]", "").length()));
+                }
+                return LocalTime.parse(timeOnly, DateTimeFormatter.ofPattern("HH:mm"));
+            } catch (Exception ex) {
+                // Ignore
+            }
+        }
+        
+        logger.debug("Could not parse time: {}", timeStr);
+        return null;
     }
 }
