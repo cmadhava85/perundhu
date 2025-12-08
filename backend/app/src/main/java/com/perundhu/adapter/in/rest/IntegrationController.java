@@ -1,5 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
+import com.perundhu.application.service.BusTimingRecordIntegrationService;
 import com.perundhu.application.service.ContributionProcessingService;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.port.RouteContributionPort;
@@ -32,6 +33,7 @@ public class IntegrationController {
   private final RouteContributionPort routeContributionPort;
   private final RouteContributionOutputPort routeContributionOutputPort;
   private final ContributionProcessingService contributionProcessingService;
+  private final BusTimingRecordIntegrationService busTimingRecordIntegrationService;
 
   /**
    * Manually integrate all approved route contributions into the main bus
@@ -370,5 +372,88 @@ public class IntegrationController {
 
     log.debug("Could not parse time: {}", timeStr);
     return null;
+  }
+
+  /**
+   * Integrate all approved BusTimingRecords (from image contributions) into the
+   * main buses table.
+   * This is the key fix for when image contributions don't appear in search
+   * results.
+   */
+  @PostMapping("/timing-records")
+  public ResponseEntity<Map<String, Object>> integrateTimingRecords() {
+    log.info("Manual integration request for BusTimingRecords (image contributions)");
+
+    Map<String, Object> result = new HashMap<>();
+
+    try {
+      var integrationResult = busTimingRecordIntegrationService.integrateAllPendingRecords();
+
+      result.put("integratedCount", integrationResult.integratedCount());
+      result.put("skippedDuplicates", integrationResult.skippedDuplicates());
+      result.put("failedCount", integrationResult.failedCount());
+      result.put("errors", integrationResult.errors());
+      result.put("message", String.format(
+          "Integration completed: %d new buses created, %d duplicates linked, %d failed",
+          integrationResult.integratedCount(),
+          integrationResult.skippedDuplicates(),
+          integrationResult.failedCount()));
+
+      log.info("Timing records integration completed: {} integrated, {} duplicates, {} failed",
+          integrationResult.integratedCount(),
+          integrationResult.skippedDuplicates(),
+          integrationResult.failedCount());
+
+      return ResponseEntity.ok(result);
+
+    } catch (Exception e) {
+      log.error("Error integrating timing records: {}", e.getMessage(), e);
+      result.put("error", "Integration failed: " + e.getMessage());
+      return ResponseEntity.internalServerError().body(result);
+    }
+  }
+
+  /**
+   * Integrate BusTimingRecords for a specific route.
+   * Use this when you want to integrate timings for a specific origin-destination
+   * pair.
+   */
+  @PostMapping("/timing-records/route")
+  public ResponseEntity<Map<String, Object>> integrateTimingRecordsForRoute(
+      @RequestBody Map<String, String> request) {
+    String fromLocation = request.get("fromLocation");
+    String toLocation = request.get("toLocation");
+
+    log.info("Integration request for route: {} -> {}", fromLocation, toLocation);
+
+    Map<String, Object> result = new HashMap<>();
+
+    if (fromLocation == null || toLocation == null) {
+      result.put("error", "Both fromLocation and toLocation are required");
+      return ResponseEntity.badRequest().body(result);
+    }
+
+    try {
+      var integrationResult = busTimingRecordIntegrationService
+          .integrateRecordsForRoute(fromLocation, toLocation);
+
+      result.put("route", fromLocation + " -> " + toLocation);
+      result.put("integratedCount", integrationResult.integratedCount());
+      result.put("skippedDuplicates", integrationResult.skippedDuplicates());
+      result.put("failedCount", integrationResult.failedCount());
+      result.put("errors", integrationResult.errors());
+      result.put("message", String.format(
+          "Route integration completed: %d new buses, %d duplicates, %d failed",
+          integrationResult.integratedCount(),
+          integrationResult.skippedDuplicates(),
+          integrationResult.failedCount()));
+
+      return ResponseEntity.ok(result);
+
+    } catch (Exception e) {
+      log.error("Error integrating route {} -> {}: {}", fromLocation, toLocation, e.getMessage(), e);
+      result.put("error", "Integration failed: " + e.getMessage());
+      return ResponseEntity.internalServerError().body(result);
+    }
   }
 }

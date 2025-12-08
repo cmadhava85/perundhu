@@ -8,7 +8,8 @@ import {
   AlertCircle,
   Loader2,
   Calendar,
-  User
+  User,
+  RefreshCw
 } from 'lucide-react';
 
 interface ImageContribution {
@@ -89,6 +90,15 @@ export const ImageContributionAdminPanel: React.FC = () => {
   const [editingRouteIndex, setEditingRouteIndex] = useState<number | null>(null);
   void editingRouteIndex; // Index tracked for future edit UI features
   const [savingCorrections, setSavingCorrections] = useState(false);
+  
+  // Integration state
+  const [integrating, setIntegrating] = useState(false);
+  const [integrationResult, setIntegrationResult] = useState<{
+    integratedCount: number;
+    skippedDuplicates: number;
+    failedCount: number;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     // Monitor modal state for debugging
@@ -113,6 +123,42 @@ export const ImageContributionAdminPanel: React.FC = () => {
       // Failed to fetch image contributions
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Integrate all approved timing records into buses table for search
+  const integrateTimingRecords = async () => {
+    try {
+      setIntegrating(true);
+      setIntegrationResult(null);
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const response = await fetch(`${API_BASE_URL}/api/admin/integration/timing-records`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Integration failed: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      setIntegrationResult({
+        integratedCount: result.integratedCount || 0,
+        skippedDuplicates: result.skippedDuplicates || 0,
+        failedCount: result.failedCount || 0,
+        message: result.message || 'Integration completed'
+      });
+      
+      // Show success alert
+      alert(`✅ Integration Complete!\n\n${result.message}`);
+      
+    } catch (error) {
+      alert(`❌ Integration failed: ${error}`);
+    } finally {
+      setIntegrating(false);
     }
   };
 
@@ -369,7 +415,62 @@ export const ImageContributionAdminPanel: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">Image Contributions</h2>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="text-3xl font-bold text-gray-900">Image Contributions</h2>
+        
+        {/* Integration Button */}
+        <button
+          onClick={integrateTimingRecords}
+          disabled={integrating}
+          className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-md hover:shadow-lg transition-all duration-200"
+          title="Integrate approved timing records into the buses table so they appear in search results"
+        >
+          {integrating ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              Integrating...
+            </>
+          ) : (
+            <>
+              <RefreshCw className="w-5 h-5 mr-2" />
+              Integrate to Search
+            </>
+          )}
+        </button>
+      </div>
+      
+      {/* Integration Result Banner */}
+      {integrationResult && (
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg p-4 shadow-sm">
+          <div className="flex items-start gap-3">
+            <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-semibold text-green-800">Integration Complete</h4>
+              <p className="text-green-700 text-sm mt-1">{integrationResult.message}</p>
+              <div className="flex gap-4 mt-2 text-sm">
+                <span className="text-green-700">
+                  <span className="font-bold">{integrationResult.integratedCount}</span> new buses added
+                </span>
+                <span className="text-blue-700">
+                  <span className="font-bold">{integrationResult.skippedDuplicates}</span> duplicates linked
+                </span>
+                {integrationResult.failedCount > 0 && (
+                  <span className="text-red-700">
+                    <span className="font-bold">{integrationResult.failedCount}</span> failed
+                  </span>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() => setIntegrationResult(null)}
+              className="ml-auto text-green-600 hover:text-green-800"
+              title="Dismiss"
+            >
+              <XCircle className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
       
       {/* Statistics Table */}
       <div className="bg-white rounded-lg border-2 border-gray-200 overflow-hidden shadow-sm">

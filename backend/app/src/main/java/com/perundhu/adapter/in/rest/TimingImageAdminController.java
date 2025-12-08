@@ -1,5 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
+import com.perundhu.application.service.BusTimingRecordIntegrationService;
 import com.perundhu.domain.model.TimingImageContribution;
 import com.perundhu.domain.model.TimingImageContribution.TimingImageStatus;
 import com.perundhu.domain.model.ExtractedBusTiming;
@@ -38,6 +39,7 @@ public class TimingImageAdminController {
   private final BusTimingRecordRepository busTimingRecordRepository;
   private final SkippedTimingRecordRepository skippedTimingRecordRepository;
   private final GeminiVisionService geminiVisionService;
+  private final BusTimingRecordIntegrationService busTimingRecordIntegrationService;
 
   /**
    * Get all pending timing image contributions for admin review
@@ -238,6 +240,28 @@ public class TimingImageAdminController {
       TimingImageContribution saved = timingImageRepository.save(contribution);
 
       log.info("Timing contribution approved - created: {}, merged: {}", createdCount, mergedCount);
+
+      // CRITICAL FIX: Integrate the timing records into the buses table
+      // so they appear in search results
+      try {
+        log.info("Triggering integration of timing records into buses table...");
+        var integrationResult = busTimingRecordIntegrationService.integrateAllPendingRecords();
+        log.info("Integration complete: {} buses created, {} duplicates linked, {} failed",
+            integrationResult.integratedCount(),
+            integrationResult.skippedDuplicates(),
+            integrationResult.failedCount());
+        
+        // Update validation message with integration result
+        saved.setValidationMessage(String.format(
+            "Approved and integrated: %d timing records created, %d buses added to search",
+            createdCount, integrationResult.integratedCount()));
+        saved = timingImageRepository.save(saved);
+      } catch (Exception ie) {
+        log.error("Integration failed after approval: {}", ie.getMessage(), ie);
+        // Don't fail the approval, just log the error
+        saved.setValidationMessage("Approved but integration pending: " + ie.getMessage());
+        saved = timingImageRepository.save(saved);
+      }
 
       return ResponseEntity.ok(saved);
 
