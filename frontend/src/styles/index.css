@@ -11,7 +11,7 @@
 @import './Footer.css';
 @import './MapComponent.css';
 @import './BusTracker.css';
-@import './ErrorDisplay.css';
+@import '../components/ErrorDisplay.css';
 @import './StopsList.css';
 @import './LiveBusTracker.css';
 @import './design-system.css';

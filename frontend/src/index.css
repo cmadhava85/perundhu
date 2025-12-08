@@ -34,7 +34,10 @@ html, body {
     background-color: white;
     border-top: 1px solid #e5e7eb;
     z-index: 50;
-    padding-bottom: env(safe-area-inset-bottom, 0);
+    /* iOS safe area padding - use max() for better compatibility */
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   }
 
@@ -42,8 +45,9 @@ html, body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 2px 4px;
+    padding: 4px 8px;
     max-width: 100%;
+    min-height: 56px;
   }
 
   .bottom-nav-item {
@@ -52,13 +56,15 @@ html, body {
     align-items: center;
     justify-content: center;
     gap: 2px;
-    padding: 6px 8px;
+    padding: 8px 10px;
     background: transparent;
     border: 0;
     cursor: pointer;
     transition: all 200ms;
     position: relative;
-    min-width: 60px;
+    min-width: 56px;
+    flex: 1;
+    max-width: 80px;
     border-radius: 8px;
     color: #6b7280;
     text-decoration: none;

@@ -273,22 +273,56 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   };
 
   if (buses.length === 0) {
+    // Check if either location was a user-input (not from database)
+    const isFromUserInput = fromLocationObj?.source === 'user-input' || fromLocationObj?.id === -1;
+    const isToUserInput = toLocationObj?.source === 'user-input' || toLocationObj?.id === -1;
+    const hasInvalidLocation = isFromUserInput || isToUserInput;
+    
     return (
       <div className="container-sm" style={{ paddingTop: 'var(--space-8)' }}>
         <div className="transit-card elevated" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-          <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>🚌</div>
-          <h3 className="text-title-2" style={{ marginBottom: 'var(--space-2)' }}>
-            {t('busList.noBusesFound', 'No buses found')}
+          <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>
+            {hasInvalidLocation ? '🔍' : '🚌'}
+          </div>
+          <h3 className="text-title-2" style={{ marginBottom: 'var(--space-2)', color: 'var(--transit-error, #EF4444)' }}>
+            {hasInvalidLocation 
+              ? t('busList.locationNotFound', 'Location Not Found')
+              : t('busList.noBusesFound', 'No buses found')}
           </h3>
           <p className="text-body" style={{ color: 'var(--transit-text-secondary)', marginBottom: 'var(--space-4)' }}>
-            {t('busList.noBusesMessage', "We couldn't find any buses for your selected route.")}
+            {hasInvalidLocation ? (
+              <>
+                {isFromUserInput && (
+                  <span style={{ display: 'block', marginBottom: '8px' }}>
+                    ❌ {t('busList.originNotInDatabase', 'Origin "{{location}}" is not in our database.', { location: fromLocation })}
+                  </span>
+                )}
+                {isToUserInput && (
+                  <span style={{ display: 'block', marginBottom: '8px' }}>
+                    ❌ {t('busList.destinationNotInDatabase', 'Destination "{{location}}" is not in our database.', { location: toLocation })}
+                  </span>
+                )}
+              </>
+            ) : (
+              t('busList.noBusesMessage', "We couldn't find any buses for your selected route.")
+            )}
           </p>
           <div className="stack stack-sm" style={{ maxWidth: '300px', margin: '0 auto' }}>
             <div className="text-caption">{t('busList.suggestions', 'Suggestions:')}</div>
             <ul style={{ textAlign: 'left', color: 'var(--transit-text-secondary)' }}>
-              <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
-              <li>{t('busList.suggestionTimes', 'Check different times of day')}</li>
-              <li>{t('busList.suggestionSupport', 'Contact support for assistance')}</li>
+              {hasInvalidLocation ? (
+                <>
+                  <li>{t('busList.suggestionSelectFromList', 'Select a location from the dropdown suggestions')}</li>
+                  <li>{t('busList.suggestionCheckSpelling', 'Check the spelling of your location')}</li>
+                  <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
+                </>
+              ) : (
+                <>
+                  <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
+                  <li>{t('busList.suggestionTimes', 'Check different times of day')}</li>
+                  <li>{t('busList.suggestionSupport', 'Contact support for assistance')}</li>
+                </>
+              )}
             </ul>
           </div>
         </div>

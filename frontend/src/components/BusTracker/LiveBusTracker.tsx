@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../../types';
-import { getCurrentPosition, watchPosition, clearWatch } from '../../services/geolocation';
+import { getCurrentPositionCallback, watchPosition, clearWatch } from '../../services/geolocation';
 import { reportBusLocationSimple } from '../../services/busTrackingService';
 
 interface LiveBusTrackerProps {
@@ -65,7 +65,7 @@ const LiveBusTracker: React.FC<LiveBusTrackerProps> = ({
     setHasStartedTracking(true);
 
     // Get initial position and auto-detect stop
-    getCurrentPosition(
+    getCurrentPositionCallback(
       (position) => {
         console.log('Initial position:', position);
         

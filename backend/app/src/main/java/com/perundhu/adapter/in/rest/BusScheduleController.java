@@ -146,7 +146,8 @@ public class BusScheduleController {
 
     /**
      * Autocomplete endpoint for location search - public access for contribution
-     * forms
+     * forms. Does not return coordinates for privacy. Falls back to OpenStreetMap
+     * if location not found in database.
      */
     @GetMapping("/locations/autocomplete")
     public ResponseEntity<List<LocationDTO>> getLocationAutocomplete(
@@ -163,18 +164,25 @@ public class BusScheduleController {
         try {
             List<Location> locations = busScheduleService.searchLocationsByName(query.trim());
 
-            List<LocationDTO> result = locations.stream()
-                    .map(location -> new LocationDTO(
-                            location.id().value(),
-                            location.name(),
-                            // For autocomplete, we can use a simple translation lookup
-                            location.name(), // translatedName - could be enhanced later
-                            location.latitude(),
-                            location.longitude()))
-                    .toList();
+            // If locations found in database, return them without coordinates
+            if (!locations.isEmpty()) {
+                List<LocationDTO> result = locations.stream()
+                        .map(location -> LocationDTO.of(
+                                location.id().value(),
+                                location.name()))
+                        .toList();
 
-            log.info("Found {} locations for query '{}'", result.size(), query);
-            return ResponseEntity.ok(result);
+                log.info("Found {} locations in database for query '{}'", result.size(), query);
+                return ResponseEntity.ok(result);
+            }
+
+            // Fallback to OpenStreetMap if no locations in database
+            log.info("No locations in database for '{}', falling back to OpenStreetMap", query);
+            List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10);
+            
+            log.info("Found {} locations from OpenStreetMap for query '{}'", osmResults.size(), query);
+            return ResponseEntity.ok(osmResults);
+            
         } catch (Exception e) {
             log.error("Error in location autocomplete search for query: '{}'", query, e);
             return ResponseEntity.internalServerError().build();
@@ -652,6 +660,49 @@ public class BusScheduleController {
         } catch (Exception e) {
             log.warn("Error calculating duration for bus {}: {}", bus.id(), e.getMessage());
             return 9999; // Put buses with invalid time format at end
+        }
+    }
+    
+    /**
+     * Get all locations with duplicate location names grouped together.
+     * Shows district/nearby city for disambiguation.
+     * 
+     * @param lang Language code for translations
+     * @return List of locations with disambiguation info for duplicates
+     */
+    @GetMapping("/locations/with-disambiguation")
+    public ResponseEntity<List<LocationDTO>> getLocationsWithDisambiguation(
+            @RequestParam(name = "lang", defaultValue = "en") String lang) {
+        log.info("Getting locations with disambiguation info, lang: {}", lang);
+        
+        try {
+            List<LocationDTO> locations = busScheduleService.getAllLocations(lang);
+            
+            // Group by name to find duplicates
+            java.util.Map<String, List<LocationDTO>> byName = new java.util.HashMap<>();
+            for (LocationDTO loc : locations) {
+                byName.computeIfAbsent(loc.getName(), k -> new ArrayList<>()).add(loc);
+            }
+            
+            // Mark duplicates with disambiguation info
+            List<LocationDTO> result = new ArrayList<>();
+            for (LocationDTO loc : locations) {
+                List<LocationDTO> sameName = byName.get(loc.getName());
+                if (sameName != null && sameName.size() > 1) {
+                    // This is a duplicate - add disambiguation info with district/nearby city
+                    result.add(LocationDTO.withDistrict(
+                            loc.getId(), loc.getName(), loc.getTranslatedName(),
+                            loc.getLatitude(), loc.getLongitude(),
+                            loc.getDistrict(), loc.getNearbyCity()));
+                } else {
+                    result.add(loc);
+                }
+            }
+            
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error getting locations with disambiguation", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 }

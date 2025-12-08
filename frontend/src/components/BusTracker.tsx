@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../types';
-import { getCurrentPosition } from '../utils/geolocation';
+import { getCurrentPosition } from '../services/geolocation';
 import '../styles/BusTracker.css';
 
 interface BusTrackerProps {

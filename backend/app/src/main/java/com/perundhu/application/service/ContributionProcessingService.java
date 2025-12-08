@@ -442,32 +442,115 @@ public class ContributionProcessingService {
     }
 
     /**
-     * Get an existing location or create a new one
+     * Get an existing location or create a new one.
+     * This method uses multiple strategies to find existing locations and avoid duplicates:
+     * 1. Case-insensitive exact name match
+     * 2. Normalized name match (trimmed, standardized case)
+     * 3. Nearby coordinates match (if provided)
+     * 4. Only creates new location if no match found
      */
     private Location getOrCreateLocation(String name, Double latitude, Double longitude) {
-        // First try to find by exact name
-        var existingByName = locationRepository.findByExactName(name);
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Location name cannot be null or empty");
+        }
+        
+        // Normalize the name: trim whitespace and standardize case
+        String normalizedName = normalizePlaceName(name);
+        
+        // Strategy 1: Try exact name match (case-insensitive)
+        var existingByName = locationRepository.findByExactName(normalizedName);
         if (existingByName.isPresent()) {
+            log.debug("Found existing location by exact name: {} (ID: {})", 
+                    normalizedName, existingByName.get().id().value());
+            return existingByName.get();
+        }
+        
+        // Strategy 2: Try with original name (case might differ)
+        existingByName = locationRepository.findByExactName(name.trim());
+        if (existingByName.isPresent()) {
+            log.debug("Found existing location by trimmed name: {} (ID: {})", 
+                    name.trim(), existingByName.get().id().value());
+            return existingByName.get();
+        }
+        
+        // Strategy 3: Try uppercase version (for OCR-extracted names like "SIVAKASI")
+        existingByName = locationRepository.findByExactName(name.trim().toUpperCase());
+        if (existingByName.isPresent()) {
+            log.debug("Found existing location by uppercase name: {} (ID: {})", 
+                    name.trim().toUpperCase(), existingByName.get().id().value());
             return existingByName.get();
         }
 
-        // If lat/long provided, try to find nearby location
+        // Strategy 4: If lat/long provided, try to find nearby location
         if (latitude != null && longitude != null) {
             var nearbyLocation = locationRepository.findNearbyLocation(latitude, longitude, 0.01); // ~1km radius
 
             if (nearbyLocation.isPresent()) {
+                log.debug("Found existing location by coordinates: {} (ID: {})", 
+                        nearbyLocation.get().name(), nearbyLocation.get().id().value());
                 return nearbyLocation.get();
             }
         }
+        
+        // Strategy 5: Search for partial matches to catch variations
+        var partialMatches = locationRepository.findByName(normalizedName);
+        if (!partialMatches.isEmpty()) {
+            // Return the first match (most likely the correct one)
+            Location matched = partialMatches.get(0);
+            log.debug("Found existing location by partial match: {} (ID: {})", 
+                    matched.name(), matched.id().value());
+            return matched;
+        }
 
-        // Create new location
+        // No existing location found - create new one with normalized name
+        log.info("Creating new location: {} (lat: {}, lon: {})", normalizedName, latitude, longitude);
         var newLocation = Location.withCoordinates(
                 null, // ID will be generated
-                name,
+                normalizedName,
                 latitude,
                 longitude);
 
         return locationRepository.save(newLocation);
+    }
+    
+    /**
+     * Normalize place names to Title Case for consistency.
+     * Examples:
+     * - "SIVAKASI" -> "Sivakasi"
+     * - "  madurai  " -> "Madurai"
+     * - "ARUPPUKKOTTAI" -> "Aruppukkottai"
+     */
+    private String normalizePlaceName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return name;
+        }
+        
+        String trimmed = name.trim();
+        
+        // If already looks like Title Case, keep it
+        if (Character.isUpperCase(trimmed.charAt(0)) && 
+            trimmed.length() > 1 && 
+            Character.isLowerCase(trimmed.charAt(1))) {
+            return trimmed;
+        }
+        
+        // Convert to Title Case
+        StringBuilder result = new StringBuilder();
+        boolean capitalizeNext = true;
+        
+        for (char c : trimmed.toCharArray()) {
+            if (Character.isWhitespace(c) || c == '-') {
+                capitalizeNext = true;
+                result.append(c);
+            } else if (capitalizeNext) {
+                result.append(Character.toUpperCase(c));
+                capitalizeNext = false;
+            } else {
+                result.append(Character.toLowerCase(c));
+            }
+        }
+        
+        return result.toString();
     }
 
     /**

@@ -24,7 +24,7 @@ export interface Location {
   translatedNames?: {
     [key: string]: string;
   };
-  source?: 'database' | 'map' | 'local' | 'offline' | 'nominatim' | 'google'; // Added google to fix geocoding service
+  source?: 'database' | 'map' | 'local' | 'offline' | 'nominatim' | 'google' | 'user-input'; // Added user-input for manual entries
   state?: string; // Added state property
 }
 

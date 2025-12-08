@@ -13,9 +13,32 @@ export const getGeolocationSupport = (): boolean => {
 };
 
 /**
- * Get the current user position
+ * Get the current user position (Promise-based version)
+ * Returns native GeolocationPosition for compatibility with BusTracker
  */
-export const getCurrentPosition = (
+export const getCurrentPosition = (): Promise<GeolocationPosition> => {
+  return new Promise((resolve, reject) => {
+    if (!getGeolocationSupport()) {
+      reject(new Error('Geolocation is not supported by this browser'));
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => resolve(position),
+      (err) => reject(err),
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      }
+    );
+  });
+};
+
+/**
+ * Get the current user position (callback-based version)
+ */
+export const getCurrentPositionCallback = (
   success: PositionCallback, 
   error?: ErrorCallback
 ): void => {

@@ -88,15 +88,46 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     setShowToSuggestions(false);
   };
 
-  // Handle search
+  // Handle search - allow any location but try to match with database
   const handleSearch = useCallback(() => {
-    const selectedFrom = selectedFromLocation || locations.find(loc => loc.name === fromQuery) || fromLocation;
-    const selectedTo = selectedToLocation || locations.find(loc => loc.name === toQuery) || toLocation;
+    // Try to find matching locations from the database
+    const selectedFrom = selectedFromLocation || locations.find(loc => 
+      loc.name.toLowerCase() === fromQuery.toLowerCase() ||
+      loc.translatedName?.toLowerCase() === fromQuery.toLowerCase() ||
+      loc.name.toLowerCase().includes(fromQuery.toLowerCase()) ||
+      fromQuery.toLowerCase().includes(loc.name.toLowerCase())
+    );
+    const selectedTo = selectedToLocation || locations.find(loc => 
+      loc.name.toLowerCase() === toQuery.toLowerCase() ||
+      loc.translatedName?.toLowerCase() === toQuery.toLowerCase() ||
+      loc.name.toLowerCase().includes(toQuery.toLowerCase()) ||
+      toQuery.toLowerCase().includes(loc.name.toLowerCase())
+    );
     
+    // If we found matching locations, use them
+    // If not, the search will proceed and show "no results" on the results page
     if (selectedFrom && selectedTo && onSearch) {
       onSearch(selectedFrom, selectedTo, searchOptions);
+    } else if (onSearch) {
+      // Create temporary location objects for locations not in database
+      // This allows the search to proceed and show appropriate error on results page
+      const fromLoc: AppLocation = selectedFrom || {
+        id: -1,
+        name: fromQuery.trim(),
+        latitude: 0,
+        longitude: 0,
+        source: 'user-input' as const
+      };
+      const toLoc: AppLocation = selectedTo || {
+        id: -1,
+        name: toQuery.trim(),
+        latitude: 0,
+        longitude: 0,
+        source: 'user-input' as const
+      };
+      onSearch(fromLoc, toLoc, searchOptions);
     }
-  }, [selectedFromLocation, selectedToLocation, fromQuery, toQuery, searchOptions, locations, fromLocation, toLocation, onSearch]);
+  }, [selectedFromLocation, selectedToLocation, fromQuery, toQuery, searchOptions, locations, onSearch]);
 
   // Swap locations
   const handleSwapLocations = () => {
@@ -192,6 +223,32 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               />
               
               {/* From Suggestions */}
+              {showFromSuggestions && fromQuery.trim().length >= 2 && fromSuggestions.length === 0 && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: 'var(--transit-surface, #fff)',
+                    border: '1px solid var(--transit-divider, #e5e7eb)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    marginTop: 'var(--space-1, 4px)',
+                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+                    zIndex: 9999,
+                    padding: 'var(--space-4)',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{ color: 'var(--transit-error, #EF4444)', marginBottom: 'var(--space-2)' }}>❌</div>
+                  <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
+                    {t('search.noLocationFound', 'Location not found')}
+                  </div>
+                  <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)', marginTop: 'var(--space-1)' }}>
+                    {t('search.tryDifferentSearch', 'Try a different search term or check spelling')}
+                  </div>
+                </div>
+              )}
               {showFromSuggestions && fromSuggestions.length > 0 && (
                 <ul
                   ref={fromSuggestionsRef}
@@ -338,6 +395,32 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               />
               
               {/* To Suggestions */}
+              {showToSuggestions && toQuery.trim().length >= 2 && toSuggestions.length === 0 && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: 'var(--transit-surface, #fff)',
+                    border: '1px solid var(--transit-divider, #e5e7eb)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    marginTop: 'var(--space-1, 4px)',
+                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+                    zIndex: 9999,
+                    padding: 'var(--space-4)',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{ color: 'var(--transit-error, #EF4444)', marginBottom: 'var(--space-2)' }}>❌</div>
+                  <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
+                    {t('search.noLocationFound', 'Location not found')}
+                  </div>
+                  <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)', marginTop: 'var(--space-1)' }}>
+                    {t('search.tryDifferentSearch', 'Try a different search term or check spelling')}
+                  </div>
+                </div>
+              )}
               {showToSuggestions && toSuggestions.length > 0 && (
                 <ul
                   ref={toSuggestionsRef}

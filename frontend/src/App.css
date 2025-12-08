@@ -115,7 +115,9 @@
   }
   
   .bottom-navigation {
-    padding-bottom: max(var(--space-xs), env(safe-area-inset-bottom));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
   }
 }
 

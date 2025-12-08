@@ -15,7 +15,9 @@ CREATE TABLE locations (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     latitude DOUBLE,
-    longitude DOUBLE
+    longitude DOUBLE,
+    district VARCHAR(255),
+    nearby_city VARCHAR(255)
 );
 
 -- Create table for buses

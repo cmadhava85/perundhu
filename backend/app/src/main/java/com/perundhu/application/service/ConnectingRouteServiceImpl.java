@@ -115,11 +115,12 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         .filter(bus -> bus.id() != null)
         .map(bus -> bus.id().value())
         .toList();
-    
+
     // Load all stops for all buses in one query (batch load)
     Map<Long, List<Stop>> stopsByBusId = new HashMap<>();
     for (Bus bus : allBuses) {
-      if (bus.id() == null) continue;
+      if (bus.id() == null)
+        continue;
       // This still does N queries - we'll optimize repository later
       List<Stop> stops = stopRepository.findByBusIdOrderByStopOrder(bus.id().value());
       stopsByBusId.put(bus.id().value(), stops);
@@ -131,7 +132,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         continue;
 
       List<Stop> stops = stopsByBusId.get(bus.id().value());
-      if (stops == null) continue;
+      if (stops == null)
+        continue;
 
       // Add edges between consecutive stops
       for (int i = 0; i < stops.size() - 1; i++) {

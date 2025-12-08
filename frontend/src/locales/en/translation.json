@@ -30,7 +30,17 @@
     "searchButton": "Search Buses",
     "clickSearch": "Click Search to find buses from {{from}} to {{to}}",
     "fromSuggestions": "From location suggestions",
-    "toSuggestions": "To location suggestions"
+    "toSuggestions": "To location suggestions",
+    "noLocationFound": "Location not found",
+    "tryDifferentSearch": "Try a different search term or check spelling",
+    "fromLocationNotFound": "Origin location \"{{location}}\" not found. Please select from suggestions.",
+    "toLocationNotFound": "Destination location \"{{location}}\" not found. Please select from suggestions.",
+    "selectBothLocations": "Please select both origin and destination from the suggestions",
+    "error": {
+      "title": "Search Error",
+      "retry": "Try Again",
+      "adjustSearch": "Adjust Search"
+    }
   },
   "searchForm": {
     "title": "Find Your Bus",
@@ -64,10 +74,15 @@
     "noBuses": "No buses available for the selected route",
     "noBusesFound": "No buses found",
     "noBusesMessage": "We couldn't find any buses for your selected route.",
+    "locationNotFound": "Location Not Found",
+    "originNotInDatabase": "Origin \"{{location}}\" is not in our database.",
+    "destinationNotInDatabase": "Destination \"{{location}}\" is not in our database.",
     "suggestions": "Suggestions:",
     "suggestionNearby": "Try searching for nearby locations",
     "suggestionTimes": "Check different times of day",
     "suggestionSupport": "Contact support for assistance",
+    "suggestionSelectFromList": "Select a location from the dropdown suggestions",
+    "suggestionCheckSpelling": "Check the spelling of your location",
     "bus": "bus",
     "buses": "buses",
     "showingFastest": "Showing fastest routes first",

@@ -162,4 +162,16 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     public long countByCategory(String category) {
         return jpaRepository.countByCategory(category);
     }
+    
+    @Override
+    public List<Bus> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds) {
+        if (fromLocationIds == null || fromLocationIds.isEmpty() || 
+            toLocationIds == null || toLocationIds.isEmpty()) {
+            return List.of();
+        }
+        return jpaRepository.findBusesPassingThroughAnyLocations(fromLocationIds, toLocationIds)
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
+    }
 }

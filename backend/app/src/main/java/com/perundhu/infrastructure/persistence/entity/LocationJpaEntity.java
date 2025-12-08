@@ -44,6 +44,14 @@ public class LocationJpaEntity {
     @Min(value = -180, message = "Longitude must be >= -180")
     @Max(value = 180, message = "Longitude must be <= 180")
     private Double longitude;
+    
+    // District/Taluk for disambiguation of duplicate village names
+    @Column(name = "district")
+    private String district;
+    
+    // Nearby major city/town for disambiguation
+    @Column(name = "nearby_city")
+    private String nearbyCity;
 
     // OSM-specific fields for enhanced integration
     @Column(name = "osm_node_id")
@@ -67,6 +75,8 @@ public class LocationJpaEntity {
                 .name(location.name())
                 .latitude(location.latitude())
                 .longitude(location.longitude())
+                .district(location.district())
+                .nearbyCity(location.nearbyCity())
                 .build();
     }
 
@@ -75,8 +85,10 @@ public class LocationJpaEntity {
                 new LocationId(id),
                 name,
                 null, // nameLocalLanguage - not in JPA entity
-                latitude, // Keep as nullable Double
-                longitude // Keep as nullable Double
+                latitude,
+                longitude,
+                district,
+                nearbyCity
         );
     }
 }

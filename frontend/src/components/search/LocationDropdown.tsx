@@ -245,6 +245,16 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
             </ul>
           ) : isLoading ? (
             <div className="dropdown-message">{t('common.loading', 'Loading...')}</div>
+          ) : searchQuery.trim().length >= 2 ? (
+            <div className="dropdown-message dropdown-no-results">
+              <div style={{ color: 'var(--transit-error, #EF4444)', marginBottom: '8px', fontSize: '1.5em' }}>❌</div>
+              <div style={{ fontWeight: 500, color: 'var(--transit-text-secondary)' }}>
+                {t('search.noLocationFound', 'Location not found')}
+              </div>
+              <div style={{ fontSize: '0.9em', color: 'var(--transit-text-tertiary)', marginTop: '4px' }}>
+                {t('search.tryDifferentSearch', 'Try a different search term or check spelling')}
+              </div>
+            </div>
           ) : (
             <div className="dropdown-message">{t('common.noLocationsFound', 'No locations found matching your search')}</div>
           )}

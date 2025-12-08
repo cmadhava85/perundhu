@@ -20,6 +20,8 @@ CREATE TABLE locations (
     name VARCHAR(255) NOT NULL,
     latitude DOUBLE,
     longitude DOUBLE,
+    district VARCHAR(255),
+    nearby_city VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
