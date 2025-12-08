@@ -250,7 +250,7 @@ public class TimingImageAdminController {
             integrationResult.integratedCount(),
             integrationResult.skippedDuplicates(),
             integrationResult.failedCount());
-        
+
         // Update validation message with integration result
         saved.setValidationMessage(String.format(
             "Approved and integrated: %d timing records created, %d buses added to search",
