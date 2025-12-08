@@ -3,12 +3,16 @@ package com.perundhu.adapter.in.rest;
 import com.perundhu.application.service.ContributionProcessingService;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.port.RouteContributionPort;
+import com.perundhu.domain.port.RouteContributionOutputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +30,7 @@ import java.util.Map;
 public class IntegrationController {
 
   private final RouteContributionPort routeContributionPort;
+  private final RouteContributionOutputPort routeContributionOutputPort;
   private final ContributionProcessingService contributionProcessingService;
 
   /**
@@ -132,11 +137,20 @@ public class IntegrationController {
       List<RouteContribution> approvedContributions = routeContributionPort.findRouteContributionsByStatus("APPROVED");
       List<RouteContribution> integratedContributions = routeContributionPort
           .findRouteContributionsByStatus("INTEGRATED");
+      List<RouteContribution> pendingReviewContributions = routeContributionPort
+          .findRouteContributionsByStatus("PENDING_REVIEW");
 
       result.put("approvedCount", approvedContributions.size());
       result.put("integratedCount", integratedContributions.size());
+      result.put("pendingReviewCount", pendingReviewContributions.size());
       result.put("pendingIntegrationCount", approvedContributions.size());
       result.put("needsIntegration", approvedContributions.size() > 0);
+      
+      // Count how many are missing arrival time
+      long missingArrivalTime = approvedContributions.stream()
+          .filter(c -> c.getArrivalTime() == null || c.getArrivalTime().isBlank())
+          .count();
+      result.put("missingArrivalTimeCount", missingArrivalTime);
 
       return ResponseEntity.ok(result);
 
@@ -145,5 +159,213 @@ public class IntegrationController {
       result.put("error", "Failed to get integration status: " + e.getMessage());
       return ResponseEntity.internalServerError().body(result);
     }
+  }
+
+  /**
+   * Fix routes that are missing arrival times by estimating based on departure time
+   * and typical travel duration. Then attempt to integrate them.
+   * This is a one-time fix for routes created before arrival time estimation was added.
+   */
+  @PostMapping("/fix-missing-arrival-times")
+  public ResponseEntity<Map<String, Object>> fixMissingArrivalTimes() {
+    log.info("Request to fix routes with missing arrival times");
+
+    Map<String, Object> result = new HashMap<>();
+    int fixedCount = 0;
+    int integratedCount = 0;
+    int failedCount = 0;
+
+    try {
+      // Get all approved and pending_review contributions
+      List<RouteContribution> approvedContributions = routeContributionPort.findRouteContributionsByStatus("APPROVED");
+      List<RouteContribution> pendingContributions = routeContributionPort.findRouteContributionsByStatus("PENDING_REVIEW");
+      
+      // Combine both lists
+      approvedContributions.addAll(pendingContributions);
+      
+      log.info("Found {} total contributions to check for missing arrival times", approvedContributions.size());
+
+      for (RouteContribution contribution : approvedContributions) {
+        try {
+          // Check if arrival time is missing
+          if (contribution.getArrivalTime() == null || contribution.getArrivalTime().isBlank()) {
+            // Estimate arrival time
+            String estimatedArrival = estimateArrivalTime(
+                contribution.getDepartureTime(),
+                contribution.getFromLocationName(),
+                contribution.getToLocationName());
+            
+            if (estimatedArrival != null) {
+              contribution.setArrivalTime(estimatedArrival);
+              contribution.setStatus("APPROVED"); // Set to approved for integration
+              contribution.setValidationMessage(
+                  (contribution.getValidationMessage() != null ? contribution.getValidationMessage() + " | " : "") +
+                  "Arrival time estimated by system fix");
+              
+              // Save the updated contribution
+              routeContributionOutputPort.save(contribution);
+              fixedCount++;
+              
+              log.info("Fixed contribution {} with estimated arrival: {}", 
+                  contribution.getId(), estimatedArrival);
+              
+              // Now try to integrate it
+              try {
+                contributionProcessingService.integrateApprovedContribution(contribution);
+                integratedCount++;
+              } catch (Exception ie) {
+                log.warn("Could not integrate fixed contribution {}: {}", 
+                    contribution.getId(), ie.getMessage());
+              }
+            }
+          } else if ("APPROVED".equals(contribution.getStatus())) {
+            // Already has arrival time, try to integrate
+            try {
+              contributionProcessingService.integrateApprovedContribution(contribution);
+              integratedCount++;
+            } catch (Exception ie) {
+              log.warn("Could not integrate contribution {}: {}", 
+                  contribution.getId(), ie.getMessage());
+            }
+          }
+        } catch (Exception e) {
+          log.error("Failed to process contribution {}: {}", contribution.getId(), e.getMessage());
+          failedCount++;
+        }
+      }
+
+      result.put("totalProcessed", approvedContributions.size());
+      result.put("fixedCount", fixedCount);
+      result.put("integratedCount", integratedCount);
+      result.put("failedCount", failedCount);
+      result.put("message", String.format(
+          "Fixed %d routes with missing arrival times. Integrated %d into bus database. %d failures.",
+          fixedCount, integratedCount, failedCount));
+
+      log.info("Fix completed: {} fixed, {} integrated, {} failed", fixedCount, integratedCount, failedCount);
+      return ResponseEntity.ok(result);
+
+    } catch (Exception e) {
+      log.error("Error during fix operation: {}", e.getMessage(), e);
+      result.put("error", "Fix failed: " + e.getMessage());
+      return ResponseEntity.internalServerError().body(result);
+    }
+  }
+
+  /**
+   * Estimate arrival time based on departure time and typical travel duration.
+   */
+  private String estimateArrivalTime(String departureTime, String fromLocation, String toLocation) {
+    if (departureTime == null || departureTime.isBlank()) {
+      return null;
+    }
+
+    try {
+      // Parse departure time flexibly
+      LocalTime departure = parseTimeFlexible(departureTime);
+      if (departure == null) {
+        return null;
+      }
+
+      // Estimate travel duration based on known routes
+      int travelMinutes = estimateTravelDuration(fromLocation, toLocation);
+      
+      // Calculate arrival time
+      LocalTime arrival = departure.plusMinutes(travelMinutes);
+      
+      return arrival.format(DateTimeFormatter.ofPattern("HH:mm"));
+      
+    } catch (Exception e) {
+      log.warn("Failed to estimate arrival time for departure '{}': {}", departureTime, e.getMessage());
+      return null;
+    }
+  }
+
+  /**
+   * Estimate travel duration in minutes between two locations.
+   */
+  private int estimateTravelDuration(String from, String to) {
+    if (from == null || to == null) {
+      return 90; // Default 1.5 hours
+    }
+    
+    String fromUpper = from.toUpperCase().trim();
+    String toUpper = to.toUpperCase().trim();
+    
+    // Known route duration estimates (in minutes)
+    // Sivakasi to Madurai: ~60 km, takes about 1.5-2 hours by local bus
+    if ((fromUpper.contains("SIVAKASI") && toUpper.contains("MADURAI")) ||
+        (fromUpper.contains("MADURAI") && toUpper.contains("SIVAKASI"))) {
+      return 120; // 2 hours
+    }
+    
+    // Sivakasi to Virudhunagar: ~15 km, about 30-45 min
+    if ((fromUpper.contains("SIVAKASI") && toUpper.contains("VIRUDHUNAGAR")) ||
+        (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("SIVAKASI"))) {
+      return 45; // 45 min
+    }
+    
+    // Madurai to Virudhunagar: ~45 km, about 1-1.5 hours
+    if ((fromUpper.contains("MADURAI") && toUpper.contains("VIRUDHUNAGAR")) ||
+        (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("MADURAI"))) {
+      return 90; // 1.5 hours
+    }
+    
+    // Chennai routes (long distance)
+    if (fromUpper.contains("CHENNAI") || toUpper.contains("CHENNAI")) {
+      return 360; // 6 hours average
+    }
+    
+    // Coimbatore/Tirupur routes
+    if (fromUpper.contains("COIMBATORE") || toUpper.contains("COIMBATORE") ||
+        fromUpper.contains("TIRUPUR") || toUpper.contains("TIRUPUR")) {
+      return 240; // 4 hours average
+    }
+    
+    // Default estimate based on typical intercity route
+    return 120; // 2 hours default
+  }
+
+  /**
+   * Parse time string flexibly, handling various formats.
+   */
+  private LocalTime parseTimeFlexible(String timeStr) {
+    if (timeStr == null || timeStr.isBlank()) {
+      return null;
+    }
+    
+    String normalized = timeStr.trim();
+    
+    // Handle various time formats
+    DateTimeFormatter[] formatters = {
+      DateTimeFormatter.ofPattern("HH:mm"),
+      DateTimeFormatter.ofPattern("H:mm"),
+      DateTimeFormatter.ofPattern("HH:mm:ss"),
+      DateTimeFormatter.ofPattern("h:mm a"),
+      DateTimeFormatter.ofPattern("h:mma"),
+      DateTimeFormatter.ofPattern("hh:mm a"),
+      DateTimeFormatter.ofPattern("hh:mma")
+    };
+    
+    for (DateTimeFormatter formatter : formatters) {
+      try {
+        return LocalTime.parse(normalized, formatter);
+      } catch (DateTimeParseException e) {
+        // Try next format
+      }
+    }
+    
+    // Try simple HH:mm extraction
+    if (normalized.matches("\\d{1,2}:\\d{2}.*")) {
+      try {
+        String timeOnly = normalized.substring(0, 5);
+        return LocalTime.parse(timeOnly, DateTimeFormatter.ofPattern("HH:mm"));
+      } catch (Exception ex) {
+        // Ignore
+      }
+    }
+    
+    log.debug("Could not parse time: {}", timeStr);
+    return null;
   }
 }
