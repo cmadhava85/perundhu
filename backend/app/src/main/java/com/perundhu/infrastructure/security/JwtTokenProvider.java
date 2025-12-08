@@ -3,7 +3,6 @@ package com.perundhu.infrastructure.security;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +84,7 @@ public class JwtTokenProvider {
 
     return roles.stream()
         .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

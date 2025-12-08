@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +90,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
             .comparingInt(ConnectingRouteDTO::transfers)
             .thenComparingInt(ConnectingRouteDTO::totalDuration))
         .limit(MAX_RESULTS)
-        .collect(Collectors.toList());
+        .toList();
 
     log.info("Returning {} connecting routes in {}ms total", routes.size(), System.currentTimeMillis() - startTime);
     return routes;

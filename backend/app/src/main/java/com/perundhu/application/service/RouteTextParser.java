@@ -232,34 +232,23 @@ public class RouteTextParser {
   private String normalizeTamilTime(String period, String hour) {
     int hourInt = Integer.parseInt(hour);
 
-    // Convert Tamil time period to AM/PM
-    String ampm;
-    switch (period) {
-      case "காலை": // Morning
-        ampm = "AM";
-        if (hourInt >= 1 && hourInt <= 11) {
-          return String.format("%d:00 %s", hourInt, ampm);
-        }
-        break;
-      case "மாலை": // Evening
-        ampm = "PM";
-        if (hourInt >= 1 && hourInt <= 11) {
-          return String.format("%d:00 %s", hourInt, ampm);
-        }
-        break;
-      case "இரவு": // Night
-        ampm = "PM";
+    // Convert Tamil time period to AM/PM using Java 17 switch expression
+    return switch (period) {
+      case "காலை" -> // Morning
+        (hourInt >= 1 && hourInt <= 11) ? String.format("%d:00 AM", hourInt) : null;
+      case "மாலை" -> // Evening
+        (hourInt >= 1 && hourInt <= 11) ? String.format("%d:00 PM", hourInt) : null;
+      case "இரவு" -> { // Night
         if (hourInt >= 6 && hourInt <= 11) {
-          return String.format("%d:00 %s", hourInt, ampm);
+          yield String.format("%d:00 PM", hourInt);
         } else if (hourInt >= 1 && hourInt <= 5) {
-          return String.format("%d:00 AM", hourInt);
+          yield String.format("%d:00 AM", hourInt);
         }
-        break;
-      case "நண்பகல்": // Noon
-        return "12:00 PM";
-    }
-
-    return null;
+        yield null;
+      }
+      case "நண்பகல்" -> "12:00 PM"; // Noon
+      default -> null;
+    };
   }
 
   /**

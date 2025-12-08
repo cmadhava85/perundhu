@@ -111,14 +111,18 @@ public interface BusRepository {
         List<Bus> findInService();
 
         long countByCategory(String category);
-        
+
         /**
-         * Find buses that pass through any combination of from locations and to locations.
-         * This is useful for handling duplicate location names (e.g., villages with same name
+         * Find buses that pass through any combination of from locations and to
+         * locations.
+         * This is useful for handling duplicate location names (e.g., villages with
+         * same name
          * near different cities).
          * 
-         * @param fromLocationIds List of possible origin location IDs (for same-named locations)
-         * @param toLocationIds   List of possible destination location IDs (for same-named locations)
+         * @param fromLocationIds List of possible origin location IDs (for same-named
+         *                        locations)
+         * @param toLocationIds   List of possible destination location IDs (for
+         *                        same-named locations)
          * @return List of buses that pass through any from location to any to location
          */
         List<Bus> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds);

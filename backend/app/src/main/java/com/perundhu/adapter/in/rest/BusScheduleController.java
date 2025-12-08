@@ -179,10 +179,10 @@ public class BusScheduleController {
             // Fallback to OpenStreetMap if no locations in database
             log.info("No locations in database for '{}', falling back to OpenStreetMap", query);
             List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10);
-            
+
             log.info("Found {} locations from OpenStreetMap for query '{}'", osmResults.size(), query);
             return ResponseEntity.ok(osmResults);
-            
+
         } catch (Exception e) {
             log.error("Error in location autocomplete search for query: '{}'", query, e);
             return ResponseEntity.internalServerError().build();
@@ -662,7 +662,7 @@ public class BusScheduleController {
             return 9999; // Put buses with invalid time format at end
         }
     }
-    
+
     /**
      * Get all locations with duplicate location names grouped together.
      * Shows district/nearby city for disambiguation.
@@ -674,16 +674,16 @@ public class BusScheduleController {
     public ResponseEntity<List<LocationDTO>> getLocationsWithDisambiguation(
             @RequestParam(name = "lang", defaultValue = "en") String lang) {
         log.info("Getting locations with disambiguation info, lang: {}", lang);
-        
+
         try {
             List<LocationDTO> locations = busScheduleService.getAllLocations(lang);
-            
+
             // Group by name to find duplicates
             java.util.Map<String, List<LocationDTO>> byName = new java.util.HashMap<>();
             for (LocationDTO loc : locations) {
                 byName.computeIfAbsent(loc.getName(), k -> new ArrayList<>()).add(loc);
             }
-            
+
             // Mark duplicates with disambiguation info
             List<LocationDTO> result = new ArrayList<>();
             for (LocationDTO loc : locations) {
@@ -698,7 +698,7 @@ public class BusScheduleController {
                     result.add(loc);
                 }
             }
-            
+
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error getting locations with disambiguation", e);

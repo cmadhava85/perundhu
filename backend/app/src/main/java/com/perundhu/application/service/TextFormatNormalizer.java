@@ -44,25 +44,14 @@ public class TextFormatNormalizer {
 
     log.debug("Normalizing text format");
 
-    // Detect and normalize based on format
+    // Detect and normalize based on format using Java 17 switch expression
     FormatType format = detectFormat(text);
-    String normalized = text;
-
-    switch (format) {
-      case WHATSAPP:
-        normalized = normalizeWhatsApp(text);
-        break;
-      case FACEBOOK:
-        normalized = normalizeFacebook(text);
-        break;
-      case TWITTER:
-        normalized = normalizeTwitter(text);
-        break;
-      case PLAIN:
-      default:
-        normalized = normalizePlainText(text);
-        break;
-    }
+    String normalized = switch (format) {
+      case WHATSAPP -> normalizeWhatsApp(text);
+      case FACEBOOK -> normalizeFacebook(text);
+      case TWITTER -> normalizeTwitter(text);
+      case PLAIN -> normalizePlainText(text);
+    };
 
     log.info("Normalized {} format text", format);
     return normalized;

@@ -118,10 +118,11 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
         List<BusJpaEntity> findByActiveTrue();
 
         long countByCategory(String category);
-        
+
         /**
          * Find buses that pass through any combination of from/to locations.
-         * Used for handling duplicate location names (villages with same name near different cities).
+         * Used for handling duplicate location names (villages with same name near
+         * different cities).
          * 
          * @param fromLocationIds List of possible origin location IDs
          * @param toLocationIds   List of possible destination location IDs

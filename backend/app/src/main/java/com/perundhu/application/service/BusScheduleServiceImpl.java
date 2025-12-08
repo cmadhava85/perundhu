@@ -241,24 +241,25 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     @Override
     public List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId) {
         // Enhanced: Automatically handle duplicate location names
-        // If a village has the same name near different cities, search across all of them
+        // If a village has the same name near different cities, search across all of
+        // them
         long startTime = System.currentTimeMillis();
-        
+
         // Get all location IDs that share the same name as the selected locations
         List<Long> fromLocationIds = findDuplicateLocationIds(fromLocationId);
         List<Long> toLocationIds = findDuplicateLocationIds(toLocationId);
-        
+
         List<Bus> buses;
         if (fromLocationIds.size() > 1 || toLocationIds.size() > 1) {
             // Multiple locations with same name - use multi-ID search
-            log.info("Searching across duplicate locations: from {} IDs, to {} IDs", 
+            log.info("Searching across duplicate locations: from {} IDs, to {} IDs",
                     fromLocationIds.size(), toLocationIds.size());
             buses = busRepository.findBusesPassingThroughAnyLocations(fromLocationIds, toLocationIds);
         } else {
             // Single location - use optimized single-ID query
             buses = busRepository.findBusesPassingThroughLocations(fromLocationId, toLocationId);
         }
-        
+
         log.debug("Found {} buses passing through locations in {}ms", buses.size(),
                 System.currentTimeMillis() - startTime);
 
@@ -266,7 +267,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 .map(BusDTO::fromDomain)
                 .toList();
     }
-    
+
     /**
      * Find all location IDs that have the same name as the given location.
      * This helps handle duplicate village names near different cities.
@@ -278,21 +279,21 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         if (locationId == null) {
             return List.of();
         }
-        
+
         // First, get the location name
         Optional<Location> locationOpt = locationRepository.findById(locationId);
         if (locationOpt.isEmpty()) {
             return List.of(locationId);
         }
-        
+
         String locationName = locationOpt.get().name();
-        
+
         // Find all locations with the same name
         List<Location> sameNameLocations = locationRepository.findByName(locationName);
         if (sameNameLocations.isEmpty() || sameNameLocations.size() == 1) {
             return List.of(locationId);
         }
-        
+
         // Return all IDs including the original
         return sameNameLocations.stream()
                 .map(loc -> loc.id().value())
@@ -384,31 +385,31 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         // TODO: Implement actual logic to get stops for route
         return new ArrayList<>();
     }
-    
+
     @Override
     public List<BusDTO> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds) {
-        if (fromLocationIds == null || fromLocationIds.isEmpty() || 
-            toLocationIds == null || toLocationIds.isEmpty()) {
+        if (fromLocationIds == null || fromLocationIds.isEmpty() ||
+                toLocationIds == null || toLocationIds.isEmpty()) {
             return new ArrayList<>();
         }
-        
+
         long startTime = System.currentTimeMillis();
         List<Bus> buses = busRepository.findBusesPassingThroughAnyLocations(fromLocationIds, toLocationIds);
-        log.debug("Found {} buses passing through any of {} from locations to any of {} to locations in {}ms", 
-                buses.size(), fromLocationIds.size(), toLocationIds.size(), 
+        log.debug("Found {} buses passing through any of {} from locations to any of {} to locations in {}ms",
+                buses.size(), fromLocationIds.size(), toLocationIds.size(),
                 System.currentTimeMillis() - startTime);
-        
+
         return buses.stream()
                 .map(BusDTO::fromDomain)
                 .toList();
     }
-    
+
     @Override
     public List<Long> findLocationIdsByName(String locationName) {
         if (locationName == null || locationName.trim().isEmpty()) {
             return new ArrayList<>();
         }
-        
+
         List<Location> locations = locationRepository.findByName(locationName.trim());
         return locations.stream()
                 .map(loc -> loc.id().getValue())

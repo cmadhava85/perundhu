@@ -17,14 +17,14 @@ public record LocationDTO(
         @JsonProperty("district") String district,
         @JsonProperty("nearbyCity") String nearbyCity,
         @JsonProperty("displayName") String displayName) {
-    
+
     /**
      * Constructor without translation for non-language methods
      */
     public LocationDTO(Long id, String name, Double latitude, Double longitude) {
         this(id, name, name, latitude, longitude, null, null, name);
     }
-    
+
     /**
      * Constructor with translation but without district info
      */
@@ -51,10 +51,10 @@ public record LocationDTO(
      */
     public static LocationDTO withTranslation(Long id, String name, String translatedName,
             Double latitude, Double longitude) {
-        return new LocationDTO(id, name, translatedName, latitude, longitude, null, null, 
+        return new LocationDTO(id, name, translatedName, latitude, longitude, null, null,
                 translatedName != null ? translatedName : name);
     }
-    
+
     /**
      * Factory method with district/nearby city info for disambiguation
      */
@@ -63,7 +63,7 @@ public record LocationDTO(
         String display = buildDisplayName(translatedName != null ? translatedName : name, district, nearbyCity);
         return new LocationDTO(id, name, translatedName, latitude, longitude, district, nearbyCity, display);
     }
-    
+
     /**
      * Build display name with district/nearby city for disambiguation
      * e.g., "Kovilpatti (near Thoothukudi)" or "Kovilpatti, Virudhunagar District"
@@ -100,15 +100,15 @@ public record LocationDTO(
     public Double getLongitude() {
         return longitude;
     }
-    
+
     public String getDistrict() {
         return district;
     }
-    
+
     public String getNearbyCity() {
         return nearbyCity;
     }
-    
+
     public String getDisplayName() {
         return displayName;
     }

@@ -2,7 +2,6 @@ package com.perundhu.infrastructure.adapter.geocoding;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -56,7 +55,7 @@ public class FuzzyMatcher implements FuzzyMatcherPort {
                 .filter(m -> m.distance <= maxDistance)
                 .sorted(Comparator.comparingInt(m -> m.distance))
                 .map(m -> m.candidate)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**

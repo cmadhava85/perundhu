@@ -44,11 +44,11 @@ public class LocationJpaEntity {
     @Min(value = -180, message = "Longitude must be >= -180")
     @Max(value = 180, message = "Longitude must be <= 180")
     private Double longitude;
-    
+
     // District/Taluk for disambiguation of duplicate village names
     @Column(name = "district")
     private String district;
-    
+
     // Nearby major city/town for disambiguation
     @Column(name = "nearby_city")
     private String nearbyCity;
@@ -88,7 +88,6 @@ public class LocationJpaEntity {
                 latitude,
                 longitude,
                 district,
-                nearbyCity
-        );
+                nearbyCity);
     }
 }

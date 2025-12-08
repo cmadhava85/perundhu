@@ -407,8 +407,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             .status("PENDING_REVIEW")
                             .sourceImageId(contribution.getId())
                             .routeGroupId(routeGroupId)
-                            .additionalNotes(String.format("[Gemini AI] Schedule %d of %d from image: %s (arrival estimated)",
-                                    scheduleIndex, totalSchedules, contribution.getId()))
+                            .additionalNotes(
+                                    String.format("[Gemini AI] Schedule %d of %d from image: %s (arrival estimated)",
+                                            scheduleIndex, totalSchedules, contribution.getId()))
                             .build();
 
                     routes.add(route);
@@ -505,7 +506,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             String userId,
             String imageUrl) {
 
-        // Store image bytes directly in database for persistent storage (Cloud Run compatible)
+        // Store image bytes directly in database for persistent storage (Cloud Run
+        // compatible)
         byte[] imageData = null;
         String contentType = "image/jpeg";
         try {
@@ -666,10 +668,11 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             if (geminiVisionService.isAvailable()) {
                 logger.info("Using Gemini Vision AI for OCR extraction");
 
-                // First try to read image bytes from database (persistent storage for Cloud Run)
+                // First try to read image bytes from database (persistent storage for Cloud
+                // Run)
                 byte[] imageBytes = contribution.getImageData();
                 String mimeType = contribution.getImageContentType();
-                
+
                 // If not in database, try filesystem (for backward compatibility)
                 if (imageBytes == null || imageBytes.length == 0) {
                     logger.info("Image data not in database, trying filesystem...");
@@ -1086,7 +1089,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         // Generate route group ID for grouping related schedules
         String routeGroupId = generateRouteGroupId(fromLocation, toLocation, via);
-        
+
         // Estimate arrival time based on departure and route
         String estimatedArrival = estimateArrivalTime(departureTime, fromLocation, toLocation);
 
@@ -1102,7 +1105,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .status(status)
                 .sourceImageId(imageContribution.getId()) // Track source image
                 .routeGroupId(routeGroupId) // Group related schedules
-                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId() + " (arrival estimated)");
+                .additionalNotes(
+                        "Auto-created from image contribution: " + imageContribution.getId() + " (arrival estimated)");
 
         // Add via information
         if (via != null && !via.isBlank()) {
@@ -1312,12 +1316,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
             // Estimate travel duration based on known routes
             int travelMinutes = estimateTravelDuration(fromLocation, toLocation);
-            
+
             // Calculate arrival time
             LocalTime arrival = departure.plusMinutes(travelMinutes);
-            
+
             return arrival.format(DateTimeFormatter.ofPattern("HH:mm"));
-            
+
         } catch (Exception e) {
             logger.warn("Failed to estimate arrival time for departure '{}': {}", departureTime, e.getMessage());
             return null;
@@ -1332,40 +1336,40 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         if (from == null || to == null) {
             return 90; // Default 1.5 hours
         }
-        
+
         String fromUpper = from.toUpperCase().trim();
         String toUpper = to.toUpperCase().trim();
-        
+
         // Known route duration estimates (in minutes)
         // Sivakasi to Madurai: ~60 km, takes about 1.5-2 hours by local bus
         if ((fromUpper.contains("SIVAKASI") && toUpper.contains("MADURAI")) ||
-            (fromUpper.contains("MADURAI") && toUpper.contains("SIVAKASI"))) {
+                (fromUpper.contains("MADURAI") && toUpper.contains("SIVAKASI"))) {
             return 120; // 2 hours
         }
-        
+
         // Sivakasi to Virudhunagar: ~15 km, about 30-45 min
         if ((fromUpper.contains("SIVAKASI") && toUpper.contains("VIRUDHUNAGAR")) ||
-            (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("SIVAKASI"))) {
+                (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("SIVAKASI"))) {
             return 45; // 45 min
         }
-        
+
         // Madurai to Virudhunagar: ~45 km, about 1-1.5 hours
         if ((fromUpper.contains("MADURAI") && toUpper.contains("VIRUDHUNAGAR")) ||
-            (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("MADURAI"))) {
+                (fromUpper.contains("VIRUDHUNAGAR") && toUpper.contains("MADURAI"))) {
             return 90; // 1.5 hours
         }
-        
+
         // Chennai routes (long distance)
         if (fromUpper.contains("CHENNAI") || toUpper.contains("CHENNAI")) {
             return 360; // 6 hours average
         }
-        
+
         // Coimbatore/Tirupur routes
         if (fromUpper.contains("COIMBATORE") || toUpper.contains("COIMBATORE") ||
-            fromUpper.contains("TIRUPUR") || toUpper.contains("TIRUPUR")) {
+                fromUpper.contains("TIRUPUR") || toUpper.contains("TIRUPUR")) {
             return 240; // 4 hours average
         }
-        
+
         // Default estimate based on typical intercity route
         return 120; // 2 hours default
     }
@@ -1377,20 +1381,20 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         if (timeStr == null || timeStr.isBlank()) {
             return null;
         }
-        
+
         String normalized = timeStr.trim();
-        
+
         // Handle various time formats
         DateTimeFormatter[] formatters = {
-            DateTimeFormatter.ofPattern("HH:mm"),
-            DateTimeFormatter.ofPattern("H:mm"),
-            DateTimeFormatter.ofPattern("HH:mm:ss"),
-            DateTimeFormatter.ofPattern("h:mm a"),
-            DateTimeFormatter.ofPattern("h:mma"),
-            DateTimeFormatter.ofPattern("hh:mm a"),
-            DateTimeFormatter.ofPattern("hh:mma")
+                DateTimeFormatter.ofPattern("HH:mm"),
+                DateTimeFormatter.ofPattern("H:mm"),
+                DateTimeFormatter.ofPattern("HH:mm:ss"),
+                DateTimeFormatter.ofPattern("h:mm a"),
+                DateTimeFormatter.ofPattern("h:mma"),
+                DateTimeFormatter.ofPattern("hh:mm a"),
+                DateTimeFormatter.ofPattern("hh:mma")
         };
-        
+
         for (DateTimeFormatter formatter : formatters) {
             try {
                 return LocalTime.parse(normalized, formatter);
@@ -1398,21 +1402,21 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 // Try next format
             }
         }
-        
+
         // Try simple HH:mm extraction
         if (normalized.matches("\\d{1,2}:\\d{2}.*")) {
             try {
                 String timeOnly = normalized.substring(0, 5);
                 if (normalized.length() > 5) {
-                    timeOnly = normalized.replaceAll("[^0-9:]", "").substring(0, 
-                        Math.min(5, normalized.replaceAll("[^0-9:]", "").length()));
+                    timeOnly = normalized.replaceAll("[^0-9:]", "").substring(0,
+                            Math.min(5, normalized.replaceAll("[^0-9:]", "").length()));
                 }
                 return LocalTime.parse(timeOnly, DateTimeFormatter.ofPattern("HH:mm"));
             } catch (Exception ex) {
                 // Ignore
             }
         }
-        
+
         logger.debug("Could not parse time: {}", timeStr);
         return null;
     }

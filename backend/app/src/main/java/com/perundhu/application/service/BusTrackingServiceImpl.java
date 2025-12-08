@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +104,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
             List<String> inactiveTrackers = busTrackers.entrySet().stream()
                     .filter(entry -> entry.getValue().isBefore(LocalDateTime.now().minusMinutes(5)))
                     .map(Map.Entry::getKey)
-                    .collect(Collectors.toList());
+                    .toList();
 
             inactiveTrackers.forEach(busTrackers::remove);
         }
@@ -463,7 +462,7 @@ public class BusTrackingServiceImpl implements BusTrackingService {
         // Sort stops by their order
         List<Stop> sortedStops = stops.stream()
                 .sorted((s1, s2) -> Integer.compare(s1.getStopOrder(), s2.getStopOrder()))
-                .collect(Collectors.toList());
+                .toList();
 
         // Find the current stop in the sorted list
         for (int i = 0; i < sortedStops.size() - 1; i++) {

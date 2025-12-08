@@ -149,18 +149,20 @@ public interface BusScheduleService {
      * @return List of buses that pass through the destination and continue further
      */
     List<BusDTO> findBusesContinuingBeyondDestination(Long fromLocationId, Long toLocationId);
-    
+
     /**
      * Find buses passing through any of the given location IDs.
      * This is useful for handling duplicate location names (villages with same name
      * near different cities/towns).
      * 
-     * @param fromLocationIds List of possible origin location IDs (same-named locations)
-     * @param toLocationIds   List of possible destination location IDs (same-named locations)
+     * @param fromLocationIds List of possible origin location IDs (same-named
+     *                        locations)
+     * @param toLocationIds   List of possible destination location IDs (same-named
+     *                        locations)
      * @return List of buses that pass through any from location to any to location
      */
     List<BusDTO> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds);
-    
+
     /**
      * Find all location IDs that match a given location name.
      * Used for handling duplicate village names near different cities.

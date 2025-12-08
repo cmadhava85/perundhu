@@ -443,7 +443,8 @@ public class ContributionProcessingService {
 
     /**
      * Get an existing location or create a new one.
-     * This method uses multiple strategies to find existing locations and avoid duplicates:
+     * This method uses multiple strategies to find existing locations and avoid
+     * duplicates:
      * 1. Case-insensitive exact name match
      * 2. Normalized name match (trimmed, standardized case)
      * 3. Nearby coordinates match (if provided)
@@ -453,30 +454,30 @@ public class ContributionProcessingService {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Location name cannot be null or empty");
         }
-        
+
         // Normalize the name: trim whitespace and standardize case
         String normalizedName = normalizePlaceName(name);
-        
+
         // Strategy 1: Try exact name match (case-insensitive)
         var existingByName = locationRepository.findByExactName(normalizedName);
         if (existingByName.isPresent()) {
-            log.debug("Found existing location by exact name: {} (ID: {})", 
+            log.debug("Found existing location by exact name: {} (ID: {})",
                     normalizedName, existingByName.get().id().value());
             return existingByName.get();
         }
-        
+
         // Strategy 2: Try with original name (case might differ)
         existingByName = locationRepository.findByExactName(name.trim());
         if (existingByName.isPresent()) {
-            log.debug("Found existing location by trimmed name: {} (ID: {})", 
+            log.debug("Found existing location by trimmed name: {} (ID: {})",
                     name.trim(), existingByName.get().id().value());
             return existingByName.get();
         }
-        
+
         // Strategy 3: Try uppercase version (for OCR-extracted names like "SIVAKASI")
         existingByName = locationRepository.findByExactName(name.trim().toUpperCase());
         if (existingByName.isPresent()) {
-            log.debug("Found existing location by uppercase name: {} (ID: {})", 
+            log.debug("Found existing location by uppercase name: {} (ID: {})",
                     name.trim().toUpperCase(), existingByName.get().id().value());
             return existingByName.get();
         }
@@ -486,18 +487,18 @@ public class ContributionProcessingService {
             var nearbyLocation = locationRepository.findNearbyLocation(latitude, longitude, 0.01); // ~1km radius
 
             if (nearbyLocation.isPresent()) {
-                log.debug("Found existing location by coordinates: {} (ID: {})", 
+                log.debug("Found existing location by coordinates: {} (ID: {})",
                         nearbyLocation.get().name(), nearbyLocation.get().id().value());
                 return nearbyLocation.get();
             }
         }
-        
+
         // Strategy 5: Search for partial matches to catch variations
         var partialMatches = locationRepository.findByName(normalizedName);
         if (!partialMatches.isEmpty()) {
             // Return the first match (most likely the correct one)
             Location matched = partialMatches.get(0);
-            log.debug("Found existing location by partial match: {} (ID: {})", 
+            log.debug("Found existing location by partial match: {} (ID: {})",
                     matched.name(), matched.id().value());
             return matched;
         }
@@ -512,32 +513,32 @@ public class ContributionProcessingService {
 
         return locationRepository.save(newLocation);
     }
-    
+
     /**
      * Normalize place names to Title Case for consistency.
      * Examples:
      * - "SIVAKASI" -> "Sivakasi"
-     * - "  madurai  " -> "Madurai"
+     * - " madurai " -> "Madurai"
      * - "ARUPPUKKOTTAI" -> "Aruppukkottai"
      */
     private String normalizePlaceName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return name;
         }
-        
+
         String trimmed = name.trim();
-        
+
         // If already looks like Title Case, keep it
-        if (Character.isUpperCase(trimmed.charAt(0)) && 
-            trimmed.length() > 1 && 
-            Character.isLowerCase(trimmed.charAt(1))) {
+        if (Character.isUpperCase(trimmed.charAt(0)) &&
+                trimmed.length() > 1 &&
+                Character.isLowerCase(trimmed.charAt(1))) {
             return trimmed;
         }
-        
+
         // Convert to Title Case
         StringBuilder result = new StringBuilder();
         boolean capitalizeNext = true;
-        
+
         for (char c : trimmed.toCharArray()) {
             if (Character.isWhitespace(c) || c == '-') {
                 capitalizeNext = true;
@@ -549,7 +550,7 @@ public class ContributionProcessingService {
                 result.append(Character.toLowerCase(c));
             }
         }
-        
+
         return result.toString();
     }
 
@@ -843,16 +844,17 @@ public class ContributionProcessingService {
         }
 
         try {
-            if (value instanceof Double) {
-                return (Double) value;
-            } else if (value instanceof Float) {
-                return ((Float) value).doubleValue();
-            } else if (value instanceof Integer) {
-                return ((Integer) value).doubleValue();
-            } else if (value instanceof Long) {
-                return ((Long) value).doubleValue();
-            } else if (value instanceof String) {
-                String strValue = ((String) value).trim();
+            // Java 17 pattern matching for instanceof
+            if (value instanceof Double d) {
+                return d;
+            } else if (value instanceof Float f) {
+                return f.doubleValue();
+            } else if (value instanceof Integer i) {
+                return i.doubleValue();
+            } else if (value instanceof Long l) {
+                return l.doubleValue();
+            } else if (value instanceof String s) {
+                String strValue = s.trim();
                 if (strValue.isEmpty()) {
                     log.warn("Empty string value for coordinate field: {}", fieldName);
                     return null;
@@ -1017,12 +1019,12 @@ public class ContributionProcessingService {
         String fromKey = contribution.getFromLocationName().toLowerCase().trim();
         String toKey = contribution.getToLocationName().toLowerCase().trim();
 
-        Location fromLocation = locationCache.computeIfAbsent(fromKey, k -> 
-                getOrCreateLocation(contribution.getFromLocationName(),
+        Location fromLocation = locationCache.computeIfAbsent(fromKey,
+                k -> getOrCreateLocation(contribution.getFromLocationName(),
                         contribution.getFromLatitude(), contribution.getFromLongitude()));
 
-        Location toLocation = locationCache.computeIfAbsent(toKey, k ->
-                getOrCreateLocation(contribution.getToLocationName(),
+        Location toLocation = locationCache.computeIfAbsent(toKey,
+                k -> getOrCreateLocation(contribution.getToLocationName(),
                         contribution.getToLatitude(), contribution.getToLongitude()));
 
         // Parse times
@@ -1062,8 +1064,8 @@ public class ContributionProcessingService {
 
         // Mark as integrated
         contribution.setStatus("INTEGRATED");
-        contribution.setValidationMessage(isDuplicate 
-                ? "Duplicate timing skipped - already exists" 
+        contribution.setValidationMessage(isDuplicate
+                ? "Duplicate timing skipped - already exists"
                 : "Successfully integrated into bus database");
         contribution.setProcessedDate(LocalDateTime.now());
         routeContributionRepository.save(contribution);
@@ -1072,7 +1074,7 @@ public class ContributionProcessingService {
     /**
      * Process stops using location cache for better performance
      */
-    private void processStopsWithCache(RouteContribution contribution, Bus savedBus, 
+    private void processStopsWithCache(RouteContribution contribution, Bus savedBus,
             Map<String, Location> locationCache) {
         if (contribution.getStops() == null || contribution.getStops().isEmpty()) {
             return;
@@ -1084,8 +1086,8 @@ public class ContributionProcessingService {
         for (var stopContribution : contribution.getStops()) {
             try {
                 String stopKey = stopContribution.getName().toLowerCase().trim();
-                Location stopLocation = locationCache.computeIfAbsent(stopKey, k ->
-                        getOrCreateLocation(stopContribution.getName(),
+                Location stopLocation = locationCache.computeIfAbsent(stopKey,
+                        k -> getOrCreateLocation(stopContribution.getName(),
                                 stopContribution.getLatitude(), stopContribution.getLongitude()));
 
                 // Check for duplicate stop
@@ -1101,17 +1103,19 @@ public class ContributionProcessingService {
                     if (stopContribution.getArrivalTime() != null && !stopContribution.getArrivalTime().isBlank()) {
                         try {
                             arrivalTime = parseTimeFlexible(stopContribution.getArrivalTime());
-                        } catch (Exception ignored) {}
+                        } catch (Exception ignored) {
+                        }
                     }
                     if (stopContribution.getDepartureTime() != null && !stopContribution.getDepartureTime().isBlank()) {
                         try {
                             departureTime = parseTimeFlexible(stopContribution.getDepartureTime());
-                        } catch (Exception ignored) {}
+                        } catch (Exception ignored) {
+                        }
                     }
 
                     int order = stopOrder;
                     var newStop = Stop.create(
-                            null,  // ID will be generated by persistence layer
+                            null, // ID will be generated by persistence layer
                             stopContribution.getName(),
                             stopLocation,
                             arrivalTime != null ? arrivalTime : departureTime,
@@ -1149,10 +1153,10 @@ public class ContributionProcessingService {
             // Validate required data before integration - ALL fields must be present
             IntegrationValidationResult validationResult = validateForIntegration(contribution);
             if (!validationResult.isValid()) {
-                log.warn("Skipping integration for contribution ID {} - {}", 
+                log.warn("Skipping integration for contribution ID {} - {}",
                         contribution.getId(), validationResult.message());
                 contribution.setStatus("PENDING_REVIEW");
-                contribution.setValidationMessage("Cannot integrate: " + validationResult.message() + 
+                contribution.setValidationMessage("Cannot integrate: " + validationResult.message() +
                         ". Please complete the missing data before approval.");
                 contribution.setProcessedDate(LocalDateTime.now());
                 routeContributionRepository.save(contribution);

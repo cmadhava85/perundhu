@@ -146,8 +146,7 @@ public class ContributionAdminService {
     public RouteContribution updateRouteContributionStatus(String id, String status, String notes) {
         var contributionStatus = ContributionStatus.fromString(status);
 
-        // Convert pattern matching switch to traditional switch for Java 17
-        // compatibility
+        // Java 17 pattern matching for instanceof
         if (contributionStatus instanceof ApprovedStatus) {
             return approveRouteContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Route contribution not found with id: " + id));
@@ -156,9 +155,8 @@ public class ContributionAdminService {
                     .orElseThrow(() -> new IllegalArgumentException("Route contribution not found with id: " + id));
         } else if (contributionStatus instanceof PendingStatus) {
             throw new IllegalArgumentException("Cannot set status back to PENDING");
-        } else {
-            throw new IllegalArgumentException("Unknown status: " + status);
         }
+        throw new IllegalArgumentException("Unknown status: " + status);
     }
 
     /**
@@ -173,8 +171,7 @@ public class ContributionAdminService {
     public ImageContribution updateImageContributionStatus(String id, String status, String notes) {
         var contributionStatus = ContributionStatus.fromString(status);
 
-        // Convert pattern matching switch to traditional if-else for Java 17
-        // compatibility
+        // Java 17 pattern matching for instanceof
         if (contributionStatus instanceof ApprovedStatus) {
             return approveImageContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Image contribution not found with id: " + id));
@@ -183,9 +180,8 @@ public class ContributionAdminService {
                     .orElseThrow(() -> new IllegalArgumentException("Image contribution not found with id: " + id));
         } else if (contributionStatus instanceof PendingStatus) {
             throw new IllegalArgumentException("Cannot set status back to PENDING");
-        } else {
-            throw new IllegalArgumentException("Unknown status: " + status);
         }
+        throw new IllegalArgumentException("Unknown status: " + status);
     }
 
     /**

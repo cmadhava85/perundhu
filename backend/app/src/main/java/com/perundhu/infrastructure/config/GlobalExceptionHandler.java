@@ -19,8 +19,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.perundhu.domain.port.MessageService;
+import com.perundhu.exception.BusinessException;
 import com.perundhu.exception.InvalidRequestException;
 import com.perundhu.exception.ResourceNotFoundException;
+import com.perundhu.infrastructure.exception.RateLimitException;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -54,7 +56,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Not Found");
+        body.put("errorCode", "RESOURCE_NOT_FOUND");
         body.put("message", messageService.getMessage("resource.not.found"));
+        body.put("userMessage",
+                "The requested item could not be found. It may have been removed or the link is incorrect.");
         body.put("details", ex.getMessage());
 
         return createJsonResponse(body, HttpStatus.NOT_FOUND);
@@ -72,9 +77,54 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Bad Request");
         body.put("message", messageService.getMessage("validation.failed"));
+        body.put("userMessage", "Please check your input and try again.");
         body.put("details", ex.getMessage());
 
         return createJsonResponse(body, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle BusinessException - return 422 Unprocessable Entity
+     */
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Object> handleBusinessException(
+            BusinessException ex, WebRequest request) {
+
+        logger.error("Business rule violation: {}", ex.getErrorCode(), ex);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Business Rule Violation");
+        body.put("errorCode", ex.getErrorCode());
+        body.put("message", ex.getMessage());
+        body.put("userMessage", getUserFriendlyBusinessMessage(ex.getErrorCode(), ex.getMessage()));
+        if (!ex.getDetails().isEmpty()) {
+            body.put("details", ex.getDetails());
+        }
+
+        return createJsonResponse(body, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * Handle RateLimitException - return 429 Too Many Requests
+     */
+    @ExceptionHandler(RateLimitException.class)
+    public ResponseEntity<Object> handleRateLimitException(
+            RateLimitException ex, WebRequest request) {
+
+        logger.warn("Rate limit exceeded: {}", ex.getMessage());
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Too Many Requests");
+        body.put("errorCode", "RATE_LIMIT_EXCEEDED");
+        body.put("message", ex.getMessage());
+        body.put("userMessage", "You're making too many requests. Please wait a moment and try again.");
+        body.put("retryAfter", 60); // Suggest retry after 60 seconds
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Retry-After", "60");
+
+        return new ResponseEntity<>(body, headers, HttpStatus.TOO_MANY_REQUESTS);
     }
 
     /**
@@ -136,10 +186,30 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Internal Server Error");
+        body.put("errorCode", "INTERNAL_ERROR");
         body.put("message", messageService.getMessage("server.error"));
-        body.put("details", ex.getClass().getName() + ": " + ex.getMessage());
+        body.put("userMessage",
+                "Something went wrong on our end. Please try again later or contact support if the problem persists.");
+        // Only include technical details in non-production environments
+        if (logger.isDebugEnabled()) {
+            body.put("details", ex.getClass().getName() + ": " + ex.getMessage());
+        }
 
         return createJsonResponse(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Get user-friendly message for business exceptions
+     */
+    private String getUserFriendlyBusinessMessage(String errorCode, String defaultMessage) {
+        return switch (errorCode) {
+            case "DUPLICATE_ENTRY" -> "This item already exists. Please use a different value.";
+            case "INVALID_OPERATION" -> "This operation is not allowed at this time.";
+            case "QUOTA_EXCEEDED" -> "You've reached your limit. Please try again later.";
+            case "DATA_INTEGRITY_ERROR" -> "The data you provided conflicts with existing records.";
+            case "VALIDATION_ERROR" -> "Please check your input and correct any errors.";
+            default -> defaultMessage != null ? defaultMessage : "A business rule prevented this action.";
+        };
     }
 
     /**

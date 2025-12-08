@@ -2,7 +2,6 @@ package com.perundhu.infrastructure.persistence.adapter;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -42,7 +41,7 @@ public class ImageContributionPersistenceAdapter implements ImageContributionOut
         return repository.findByUserId(userId)
                 .stream()
                 .map(mapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -50,7 +49,7 @@ public class ImageContributionPersistenceAdapter implements ImageContributionOut
         return repository.findByStatus(status)
                 .stream()
                 .map(mapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -63,7 +62,7 @@ public class ImageContributionPersistenceAdapter implements ImageContributionOut
         return repository.findAll()
                 .stream()
                 .map(mapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

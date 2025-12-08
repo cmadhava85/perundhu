@@ -1,6 +1,7 @@
 package com.perundhu.adapter.in.rest;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,10 @@ public class BusTrackingController {
     }
 
     // Response records
-    public record ErrorResponse(String error) {
+    public record ErrorResponse(String error, String userMessage, String errorCode) {
+        public ErrorResponse(String error) {
+            this(error, error, "UNKNOWN_ERROR");
+        }
     }
 
     public record DisembarkationRequest(Long busId, String userId, LocalDateTime timestamp) {
@@ -47,12 +51,36 @@ public class BusTrackingController {
      * Report a bus location
      */
     @PostMapping("/report")
-    public ResponseEntity<RewardPointsDTO> reportBusLocation(@RequestBody BusLocationReportDTO report) {
+    public ResponseEntity<?> reportBusLocation(@RequestBody BusLocationReportDTO report) {
         log.info("Received bus location report from user: {} for bus: {}",
-                report.userId(), report.busId());
+                report.getUserId(), report.getBusId());
 
-        RewardPointsDTO points = busTrackingService.processLocationReport(report);
-        return ResponseEntity.ok(points);
+        try {
+            // Validate required fields
+            if (report.getBusId() == null) {
+                return ResponseEntity.badRequest()
+                        .body(createErrorResponse("VALIDATION_ERROR", "Bus ID is required",
+                                "Please select a bus before reporting location."));
+            }
+            if (report.getUserId() == null || report.getUserId().trim().isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body(createErrorResponse("VALIDATION_ERROR", "User ID is required",
+                                "Please log in to report bus locations."));
+            }
+
+            RewardPointsDTO points = busTrackingService.processLocationReport(report);
+            return ResponseEntity.ok(points);
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid location report: {}", e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(createErrorResponse("INVALID_REPORT", e.getMessage(),
+                            "Please check your location data and try again."));
+        } catch (Exception e) {
+            log.error("Error processing bus location report", e);
+            return ResponseEntity.internalServerError()
+                    .body(createErrorResponse("PROCESSING_ERROR", "Failed to process location report",
+                            "Something went wrong. Please try again later."));
+        }
     }
 
     /**
@@ -146,11 +174,41 @@ public class BusTrackingController {
      * Report user disembarkation (when they get off the bus)
      */
     @PostMapping("/disembark")
-    public ResponseEntity<Void> reportDisembarkation(@RequestBody DisembarkationRequest request) {
+    public ResponseEntity<?> reportDisembarkation(@RequestBody DisembarkationRequest request) {
         log.info("Received disembarkation report from user: {} for bus: {}",
                 request.userId(), request.busId());
 
-        busTrackingService.processDisembarkation(request.busId(), request.timestamp());
-        return ResponseEntity.ok().build();
+        try {
+            if (request.busId() == null) {
+                return ResponseEntity.badRequest()
+                        .body(createErrorResponse("VALIDATION_ERROR", "Bus ID is required",
+                                "Please select a bus before reporting disembarkation."));
+            }
+
+            busTrackingService.processDisembarkation(request.busId(), request.timestamp());
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid disembarkation request: {}", e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(createErrorResponse("INVALID_REQUEST", e.getMessage(),
+                            "Please check your request and try again."));
+        } catch (Exception e) {
+            log.error("Error processing disembarkation report", e);
+            return ResponseEntity.internalServerError()
+                    .body(createErrorResponse("PROCESSING_ERROR", "Failed to process disembarkation",
+                            "Something went wrong. Please try again later."));
+        }
+    }
+
+    /**
+     * Creates a standardized error response map
+     */
+    private Map<String, Object> createErrorResponse(String errorCode, String message, String userMessage) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("errorCode", errorCode);
+        error.put("message", message);
+        error.put("userMessage", userMessage);
+        error.put("success", false);
+        return error;
     }
 }

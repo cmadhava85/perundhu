@@ -29,7 +29,7 @@ public class OpenStreetMapGeocodingService {
   private static final String NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
   private static final String USER_AGENT = "PerundhuBusApp/1.0 (contact@perundhu.com)";
   private static final String ADDRESS_KEY = "address";
-  
+
   private final HttpClient httpClient;
   private final ObjectMapper objectMapper;
 
@@ -42,6 +42,7 @@ public class OpenStreetMapGeocodingService {
 
   /**
    * Search for locations in Tamil Nadu using OSM Nominatim API
+   * 
    * @param query Search query (location name)
    * @param limit Maximum number of results
    * @return List of LocationDTO without coordinates (for privacy/simplicity)
@@ -104,16 +105,17 @@ public class OpenStreetMapGeocodingService {
       if (locations.size() >= limit) {
         break;
       }
-      
+
       String displayName = result.has("display_name") ? result.get("display_name").asText() : "";
-      
+
       // Skip if not in Tamil Nadu
       if (!isInTamilNadu(result, displayName)) {
         continue;
       }
 
       String name = extractPlaceName(result, displayName);
-      // Create LocationDTO without coordinates for search display (ID is null since not from DB)
+      // Create LocationDTO without coordinates for search display (ID is null since
+      // not from DB)
       locations.add(LocationDTO.of((Long) null, name));
     }
 
@@ -132,7 +134,7 @@ public class OpenStreetMapGeocodingService {
         return placeName;
       }
     }
-    
+
     // Fallback: use first part of display name
     if (displayName.contains(",")) {
       return displayName.split(",")[0].trim();
@@ -141,10 +143,11 @@ public class OpenStreetMapGeocodingService {
   }
 
   /**
-   * Extract place name from address node with priority: village > town > city > county
+   * Extract place name from address node with priority: village > town > city >
+   * county
    */
   private String extractFromAddress(JsonNode address) {
-    String[] placeTypes = {"village", "town", "city", "county"};
+    String[] placeTypes = { "village", "town", "city", "county" };
     for (String type : placeTypes) {
       if (address.has(type)) {
         return address.get(type).asText();
@@ -161,7 +164,7 @@ public class OpenStreetMapGeocodingService {
     if (lowerDisplay.contains("tamil nadu") || lowerDisplay.contains("tamilnadu")) {
       return true;
     }
-    
+
     if (result.has(ADDRESS_KEY)) {
       JsonNode address = result.get(ADDRESS_KEY);
       if (address.has("state")) {
@@ -169,7 +172,7 @@ public class OpenStreetMapGeocodingService {
         return state.contains("tamil nadu") || state.contains("tamilnadu");
       }
     }
-    
+
     return false;
   }
 
@@ -225,10 +228,10 @@ public class OpenStreetMapGeocodingService {
         JsonNode first = results.get(0);
         double lat = first.get("lat").asDouble();
         double lon = first.get("lon").asDouble();
-        return new double[]{lat, lon};
+        return new double[] { lat, lon };
       }
     }
-    
+
     return null;
   }
 
@@ -243,6 +246,7 @@ public class OpenStreetMapGeocodingService {
    * Update missing coordinates for locations in database
    */
   public void updateMissingCoordinates() {
-    log.info("OpenStreetMapGeocodingService.updateMissingCoordinates - use LocationRepository to find locations with null coordinates");
+    log.info(
+        "OpenStreetMapGeocodingService.updateMissingCoordinates - use LocationRepository to find locations with null coordinates");
   }
 }

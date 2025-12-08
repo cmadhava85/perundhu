@@ -126,34 +126,33 @@ public class SocialMediaMonitoringService implements SocialMediaMonitoringInputP
     LocalDateTime since = LocalDateTime.now().minusMinutes(DEFAULT_LOOKBACK_MINUTES);
 
     try {
-      switch (platform) {
-        case TWITTER:
+      posts.addAll(switch (platform) {
+        case TWITTER -> {
           if (twitterApi.isConfigured()) {
-            posts.addAll(monitorTwitter(since));
-          } else {
-            log.warn("Twitter API not configured, skipping");
+            yield monitorTwitter(since);
           }
-          break;
-
-        case FACEBOOK:
+          log.warn("Twitter API not configured, skipping");
+          yield List.of();
+        }
+        case FACEBOOK -> {
           if (facebookApi.isConfigured()) {
-            posts.addAll(monitorFacebook(since));
-          } else {
-            log.warn("Facebook API not configured, skipping");
+            yield monitorFacebook(since);
           }
-          break;
-
-        case INSTAGRAM:
+          log.warn("Facebook API not configured, skipping");
+          yield List.of();
+        }
+        case INSTAGRAM -> {
           if (instagramApi.isConfigured()) {
-            posts.addAll(monitorInstagram(since));
-          } else {
-            log.warn("Instagram API not configured, skipping");
+            yield monitorInstagram(since);
           }
-          break;
-
-        default:
-          log.warn("Unsupported platform: {}", platform);
-      }
+          log.warn("Instagram API not configured, skipping");
+          yield List.of();
+        }
+        case YOUTUBE -> {
+          log.warn("YouTube monitoring not yet implemented, skipping");
+          yield List.of();
+        }
+      });
     } catch (Exception e) {
       log.error("Error monitoring platform {}: {}", platform, e.getMessage(), e);
     }

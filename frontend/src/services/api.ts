@@ -45,13 +45,15 @@ export class ApiError extends Error {
   status?: number;
   code?: string;
   errorCode?: string;
+  userMessage?: string;
   
-  constructor(message: string, status?: number, code?: string) {
+  constructor(message: string, status?: number, code?: string, userMessage?: string) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.code = code;
     this.errorCode = code; // Set errorCode as alias for code
+    this.userMessage = userMessage; // User-friendly message from backend
     
     // This is needed for instanceof to work correctly in TypeScript
     Object.setPrototypeOf(this, ApiError.prototype);
@@ -639,6 +641,10 @@ export interface ApiErrorResponse {
   data?: {
     message?: string;
     errorCode?: string;
+    userMessage?: string;
+    error?: string;
+    details?: string;
+    retryAfter?: number;
     [key: string]: unknown;
   };
   [key: string]: unknown;
@@ -652,10 +658,15 @@ export const handleApiError = (error: unknown): never => {
   const axiosError = error as { response?: ApiErrorResponse };
   
   if (axiosError.response) {
+    const data = axiosError.response.data;
+    // Prefer userMessage (user-friendly) over message (technical)
+    const displayMessage = data?.userMessage || data?.message || 'An error occurred with the API request';
+    
     throw new ApiError(
-      axiosError.response.data?.message || 'An error occurred with the API request',
+      displayMessage,
       axiosError.response.status,
-      axiosError.response.data?.errorCode
+      data?.errorCode,
+      data?.userMessage
     );
   }
   

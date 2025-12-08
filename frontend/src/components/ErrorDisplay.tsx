@@ -27,11 +27,56 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error, reset }) => {
   
   // Determine error type for specific styling
   const isNoRoutesFound = apiError?.code === 'NO_ROUTES_FOUND' || apiError?.status === 404;
-  const isNetworkError = apiError?.status === 0 || message.includes('Network error');
+  const isNetworkError = apiError?.status === 0 || message.includes('Network error') || message.includes('Unable to connect');
   const isServerError = apiError?.status && apiError.status >= 500;
+  const isRateLimitError = apiError?.status === 429 || apiError?.code === 'RATE_LIMIT_EXCEEDED';
+  const isDuplicateError = apiError?.status === 409 || apiError?.code === 'DUPLICATE_ENTRY';
+  const isTimeoutError = message.includes('timeout') || message.includes('took too long');
   
   // Get error-specific content
   const getErrorContent = () => {
+    if (isRateLimitError) {
+      return {
+        icon: '⏱️',
+        title: t('error.rateLimit.title', 'Slow Down'),
+        message: t('error.rateLimit.message', 'You\'re making too many requests.'),
+        suggestions: [
+          t('error.rateLimit.suggestion1', 'Wait about a minute before trying again'),
+          t('error.rateLimit.suggestion2', 'Avoid refreshing the page repeatedly')
+        ],
+        actionText: t('error.rateLimit.action', 'Try Again'),
+        type: 'rate-limit'
+      };
+    }
+
+    if (isDuplicateError) {
+      return {
+        icon: '📋',
+        title: t('error.duplicate.title', 'Already Exists'),
+        message: t('error.duplicate.message', 'This item already exists in our system.'),
+        suggestions: [
+          t('error.duplicate.suggestion1', 'Check if this has already been submitted'),
+          t('error.duplicate.suggestion2', 'Try with different details')
+        ],
+        actionText: t('error.duplicate.action', 'Modify'),
+        type: 'duplicate'
+      };
+    }
+
+    if (isTimeoutError) {
+      return {
+        icon: '⏳',
+        title: t('error.timeout.title', 'Request Timed Out'),
+        message: t('error.timeout.message', 'The request took too long to complete.'),
+        suggestions: [
+          t('error.timeout.suggestion1', 'Check your internet connection'),
+          t('error.timeout.suggestion2', 'Try again in a moment')
+        ],
+        actionText: t('error.timeout.action', 'Retry'),
+        type: 'timeout'
+      };
+    }
+
     if (isNoRoutesFound) {
       return {
         icon: '🔍',

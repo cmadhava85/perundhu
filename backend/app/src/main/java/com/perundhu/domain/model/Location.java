@@ -1,7 +1,8 @@
 package com.perundhu.domain.model;
 
 /**
- * Domain entity representing a location (city, town, or village) using Java 17 record
+ * Domain entity representing a location (city, town, or village) using Java 17
+ * record
  * Enhanced to support duplicate village names near different cities/towns
  */
 public record Location(
@@ -12,14 +13,15 @@ public record Location(
         Double longitude,
         String district,
         String nearbyCity) {
-    
+
     /**
-     * Constructor with validation (backward compatible - without district/nearbyCity)
+     * Constructor with validation (backward compatible - without
+     * district/nearbyCity)
      */
     public Location(LocationId id, String name, String nameLocalLanguage, Double latitude, Double longitude) {
         this(id, name, nameLocalLanguage, latitude, longitude, null, null);
     }
-    
+
     /**
      * Full constructor with validation
      */
@@ -49,15 +51,15 @@ public record Location(
     public Double getLongitude() {
         return longitude;
     }
-    
+
     public String getDistrict() {
         return district;
     }
-    
+
     public String getNearbyCity() {
         return nearbyCity;
     }
-    
+
     /**
      * Get display name with disambiguation info
      */
@@ -84,11 +86,11 @@ public record Location(
     public static Location withCoordinates(LocationId id, String name, Double latitude, Double longitude) {
         return new Location(id, name, null, latitude, longitude, null, null);
     }
-    
+
     /**
      * Factory method to create a location with district info for disambiguation
      */
-    public static Location withDistrict(LocationId id, String name, Double latitude, Double longitude, 
+    public static Location withDistrict(LocationId id, String name, Double latitude, Double longitude,
             String district, String nearbyCity) {
         return new Location(id, name, null, latitude, longitude, district, nearbyCity);
     }
@@ -101,13 +103,14 @@ public record Location(
                 latitude >= -90.0 && latitude <= 90.0 &&
                 longitude >= -180.0 && longitude <= 180.0;
     }
-    
+
     /**
-     * Check if this location needs disambiguation (has district or nearby city info)
+     * Check if this location needs disambiguation (has district or nearby city
+     * info)
      */
     public boolean needsDisambiguation() {
-        return (district != null && !district.isBlank()) || 
-               (nearbyCity != null && !nearbyCity.isBlank());
+        return (district != null && !district.isBlank()) ||
+                (nearbyCity != null && !nearbyCity.isBlank());
     }
 
     /**
