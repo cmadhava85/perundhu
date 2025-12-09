@@ -1,7 +1,9 @@
 package com.perundhu.application.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -121,8 +123,54 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
         List<Bus> buses = busRepository.findBusesBetweenLocations(fromId.value(), toId.value());
 
-        return buses.stream()
+        // Sort buses by departure time with smart ordering:
+        // 1. Current/upcoming buses first (based on current time)
+        // 2. Past buses at the end (for today's reference)
+        return sortBusesByCurrentTime(buses).stream()
                 .map(BusDTO::fromDomain)
+                .toList();
+    }
+
+    /**
+     * Sort buses so that current/upcoming buses appear first, followed by past buses.
+     * This provides users with the most relevant departures at the top.
+     * 
+     * Sorting logic:
+     * - Buses departing now or in the future are shown first (sorted by departure time ascending)
+     * - Buses that have already departed today are shown after (sorted by departure time ascending)
+     * - Buses without departure time are shown at the end
+     */
+    private List<Bus> sortBusesByCurrentTime(List<Bus> buses) {
+        if (buses == null || buses.isEmpty()) {
+            return buses;
+        }
+
+        LocalTime currentTime = LocalTime.now();
+        
+        // Custom comparator that prioritizes upcoming buses
+        Comparator<Bus> smartTimeComparator = (bus1, bus2) -> {
+            LocalTime time1 = bus1.getDepartureTime();
+            LocalTime time2 = bus2.getDepartureTime();
+            
+            // Handle null departure times - put them at the end
+            if (time1 == null && time2 == null) return 0;
+            if (time1 == null) return 1;
+            if (time2 == null) return -1;
+            
+            boolean isUpcoming1 = time1.isAfter(currentTime) || time1.equals(currentTime);
+            boolean isUpcoming2 = time2.isAfter(currentTime) || time2.equals(currentTime);
+            
+            // If both are upcoming or both are past, sort by time ascending
+            if (isUpcoming1 == isUpcoming2) {
+                return time1.compareTo(time2);
+            }
+            
+            // Upcoming buses come before past buses
+            return isUpcoming1 ? -1 : 1;
+        };
+        
+        return buses.stream()
+                .sorted(smartTimeComparator)
                 .toList();
     }
 

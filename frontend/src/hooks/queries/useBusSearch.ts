@@ -16,6 +16,67 @@ interface BusSearchResponse {
 }
 
 /**
+ * Parse a time string (HH:MM or HH:MM:SS) to minutes since midnight
+ */
+function parseTimeToMinutes(timeStr: string | undefined | null): number | null {
+  if (!timeStr) return null;
+  
+  const parts = timeStr.split(':');
+  if (parts.length < 2) return null;
+  
+  const hours = Number.parseInt(parts[0], 10);
+  const minutes = Number.parseInt(parts[1], 10);
+  
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return null;
+  
+  return hours * 60 + minutes;
+}
+
+/**
+ * Get current time as minutes since midnight
+ */
+function getCurrentTimeMinutes(): number {
+  const now = new Date();
+  return now.getHours() * 60 + now.getMinutes();
+}
+
+/**
+ * Sort buses so that current/upcoming buses appear first, followed by past buses.
+ * This provides users with the most relevant departures at the top.
+ * 
+ * Sorting logic:
+ * - Buses departing now or in the future are shown first (sorted by departure time ascending)
+ * - Buses that have already departed today are shown after (sorted by departure time ascending)
+ * - Buses without departure time are shown at the end
+ */
+function sortBusesByCurrentTime(buses: Bus[]): Bus[] {
+  if (!buses || buses.length === 0) return buses;
+  
+  const currentTimeMinutes = getCurrentTimeMinutes();
+  
+  return [...buses].sort((bus1, bus2) => {
+    const time1 = parseTimeToMinutes(bus1.departureTime);
+    const time2 = parseTimeToMinutes(bus2.departureTime);
+    
+    // Handle null departure times - put them at the end
+    if (time1 === null && time2 === null) return 0;
+    if (time1 === null) return 1;
+    if (time2 === null) return -1;
+    
+    const isUpcoming1 = time1 >= currentTimeMinutes;
+    const isUpcoming2 = time2 >= currentTimeMinutes;
+    
+    // If both are upcoming or both are past, sort by time ascending
+    if (isUpcoming1 === isUpcoming2) {
+      return time1 - time2;
+    }
+    
+    // Upcoming buses come before past buses
+    return isUpcoming1 ? -1 : 1;
+  });
+}
+
+/**
  * React Query hook for bus search
  * Provides automatic caching, background refetching, and loading states
  */
@@ -42,8 +103,11 @@ export function useBusSearch({
         },
       });
       
+      // Sort buses by current time - upcoming buses first
+      const sortedBuses = sortBusesByCurrentTime(response.data?.items || []);
+      
       return {
-        buses: response.data?.items || [],
+        buses: sortedBuses,
         totalCount: response.data?.totalItems || 0,
         hasConnectingRoutes: false, // Will be updated with connecting routes logic
       };

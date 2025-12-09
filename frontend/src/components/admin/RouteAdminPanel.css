@@ -808,3 +808,176 @@
     display: none;
   }
 }
+
+/* Time Edit Modal Styles */
+.time-edit-modal {
+  max-width: 450px;
+}
+
+.time-edit-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
+
+.time-edit-modal .modal-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.1rem;
+  color: #92400e;
+}
+
+.time-edit-modal .modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #92400e;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.time-edit-modal .modal-close:hover {
+  color: #78350f;
+}
+
+.time-edit-modal .modal-body {
+  padding: 1.5rem;
+}
+
+.time-edit-modal .modal-description {
+  color: #4b5563;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.time-edit-modal .route-summary {
+  background: #f3f4f6;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.time-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.time-edit-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.time-edit-form label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.time-edit-form .required {
+  color: #ef4444;
+}
+
+.time-edit-form .optional {
+  color: #6b7280;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.time-edit-form .time-input {
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.time-edit-form .time-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.time-edit-modal .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.time-edit-modal .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.time-edit-modal .btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.time-edit-modal .btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+.time-edit-modal .btn-primary {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.time-edit-modal .btn-primary:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+}
+
+.time-edit-modal .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Warning indicators for missing time */
+.timing-missing {
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.timing-missing .warning-icon {
+  color: #f59e0b;
+}
+
+.action-btn.has-warning {
+  position: relative;
+}
+
+.action-btn .btn-warning {
+  color: #f59e0b;
+  margin-left: 0.25rem;
+}
+
+.btn.btn-approve.has-warning {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.warning-icon {
+  color: #f59e0b;
+}

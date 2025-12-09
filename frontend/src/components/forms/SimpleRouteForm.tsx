@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { AlertTriangle } from 'lucide-react';
 import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
@@ -55,9 +56,68 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
 
   const [intermediateStops, setIntermediateStops] = useState<Stop[]>([]);
   const [showStopForm, setShowStopForm] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  
+  // Track if locations were selected from autocomplete suggestions
+  const [locationVerified, setLocationVerified] = useState<{
+    origin: boolean;
+    destination: boolean;
+  }>({ origin: false, destination: false });
+  
+  // Track location warnings (unverified locations)
+  const [locationWarnings, setLocationWarnings] = useState<{[key: string]: string}>({});
+
+  // Validate form before submission
+  const validateForm = (): boolean => {
+    const errors: {[key: string]: string} = {};
+    const warnings: {[key: string]: string} = {};
+    
+    // Either bus number or route name is required
+    if (!formData.busNumber?.trim() && !formData.route?.trim()) {
+      errors.busNumber = 'Either Bus Number or Route Name is required';
+    }
+    
+    // Origin is required
+    if (!formData.origin?.trim()) {
+      errors.origin = 'Departure location is required';
+    } else if (!locationVerified.origin) {
+      // Warn if origin was typed but not selected from autocomplete
+      warnings.origin = 'Location not recognized. Select from suggestions for better accuracy.';
+    }
+    
+    // Destination is required
+    if (!formData.destination?.trim()) {
+      errors.destination = 'Arrival location is required';
+    } else if (!locationVerified.destination) {
+      // Warn if destination was typed but not selected from autocomplete
+      warnings.destination = 'Location not recognized. Select from suggestions for better accuracy.';
+    }
+    
+    // Departure time is required
+    if (!formData.departureTime?.trim()) {
+      errors.departureTime = 'Departure time is required';
+    }
+    
+    // Arrival time is optional but show a hint
+    // No error for missing arrival time - it will be estimated by backend
+    
+    setValidationErrors(errors);
+    setLocationWarnings(warnings);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate before submission
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstErrorField = document.querySelector('.field-error');
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
     
     const enhancedData = {
       ...formData,
@@ -131,20 +191,42 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
   };
 
   // Handle location autocomplete changes - Memoized to prevent refresh issues
-  const handleOriginChange = useCallback((value: string, _location?: LocationData) => {
+  const handleOriginChange = useCallback((value: string, location?: LocationData) => {
     setFormData(prev => ({
       ...prev,
       origin: value
     }));
-    // Origin selected with location data
+    
+    // Track if location was selected from autocomplete (has lat/lng data)
+    const wasSelected = !!(location?.lat && location?.lng);
+    setLocationVerified(prev => ({ ...prev, origin: wasSelected }));
+    
+    // Clear warning if location was verified, or if value is empty
+    if (wasSelected || !value.trim()) {
+      setLocationWarnings(prev => {
+        const { origin: _, ...rest } = prev;
+        return rest;
+      });
+    }
   }, []);
 
-  const handleDestinationChange = useCallback((value: string, _location?: LocationData) => {
+  const handleDestinationChange = useCallback((value: string, location?: LocationData) => {
     setFormData(prev => ({
       ...prev,
       destination: value
     }));
-    // Destination selected with location data
+    
+    // Track if location was selected from autocomplete (has lat/lng data)
+    const wasSelected = !!(location?.lat && location?.lng);
+    setLocationVerified(prev => ({ ...prev, destination: wasSelected }));
+    
+    // Clear warning if location was verified, or if value is empty
+    if (wasSelected || !value.trim()) {
+      setLocationWarnings(prev => {
+        const { destination: _, ...rest } = prev;
+        return rest;
+      });
+    }
   }, []);
 
   // Helper function to calculate journey duration
@@ -175,17 +257,73 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
 
   return (
     <form onSubmit={handleSubmit} className="route-form">
-      <FormInput
-        id="busNumber"
-        name="busNumber"
-        value={formData.busNumber}
-        onChange={handleChange}
-        label={t('route.busNumber', 'Bus Number')}
-        placeholder="e.g., 27D, 570, MTC-123"
-        icon="🚌"
-        hint="Enter the bus number OR route name below"
-        required
-      />
+      {/* Validation Error Summary */}
+      {Object.keys(validationErrors).length > 0 && (
+        <div className="validation-error-summary" style={{
+          background: 'linear-gradient(135deg, #fef2f2, #fecaca)',
+          border: '2px solid #ef4444',
+          borderRadius: '12px',
+          padding: '1rem',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '0.75rem'
+        }}>
+          <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+          <div>
+            <h4 style={{ margin: 0, color: '#dc2626', fontSize: '1rem', fontWeight: '600' }}>
+              Please fix the following errors:
+            </h4>
+            <ul style={{ margin: '0.5rem 0 0 0', paddingLeft: '1.25rem', color: '#991b1b', fontSize: '0.9rem' }}>
+              {Object.values(validationErrors).map((error, idx) => (
+                <li key={idx}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+      
+      {/* Location Warnings Summary */}
+      {Object.keys(locationWarnings).length > 0 && Object.keys(validationErrors).length === 0 && (
+        <div className="validation-warning-summary" style={{
+          background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
+          border: '2px solid #f59e0b',
+          borderRadius: '12px',
+          padding: '1rem',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '0.75rem'
+        }}>
+          <AlertTriangle size={24} style={{ color: '#d97706', flexShrink: 0 }} />
+          <div>
+            <h4 style={{ margin: 0, color: '#b45309', fontSize: '1rem', fontWeight: '600' }}>
+              Location Warning
+            </h4>
+            <p style={{ margin: '0.5rem 0 0 0', color: '#92400e', fontSize: '0.9rem' }}>
+              Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy.
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className={`form-field-wrapper ${validationErrors.busNumber ? 'field-error' : ''}`}>
+        <FormInput
+          id="busNumber"
+          name="busNumber"
+          value={formData.busNumber}
+          onChange={handleChange}
+          label={t('route.busNumber', 'Bus Number')}
+          placeholder="e.g., 27D, 570, MTC-123"
+          icon="🚌"
+          hint="Enter the bus number OR route name below"
+        />
+        {validationErrors.busNumber && (
+          <span className="error-text" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '0.25rem', display: 'block' }}>
+            {validationErrors.busNumber}
+          </span>
+        )}
+      </div>
       
       <FormInput
         id="route"
@@ -196,7 +334,6 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         placeholder="e.g., Chennai Central - Tambaram Express"
         icon="🛣️"
         hint="Enter the route name OR bus number above"
-        required
       />
       
       <div className="form-section route-details">
@@ -206,25 +343,38 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         </h3>
         
         <div className="form-row">
-          <div className="form-group departure-group">
+          <div className={`form-group departure-group ${validationErrors.origin ? 'field-error' : ''} ${locationWarnings.origin ? 'field-warning' : ''}`}>
             <label htmlFor="origin">
               <span className="field-icon">📍</span>
-              {t('route.departure', 'Departure')}
+              {t('route.departure', 'Departure')} <span style={{ color: '#dc2626' }}>*</span>
+              {locationVerified.origin && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title="Location verified">✓</span>}
             </label>
             <div className="location-time-container">
-              <LocationAutocompleteInput
-                id="origin"
-                name="origin"
-                value={formData.origin}
-                onChange={handleOriginChange}
-                placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
-                label=""
-                required
-              />
-              <div className="time-input-group">
+              <div style={{ flex: 1 }}>
+                <LocationAutocompleteInput
+                  id="origin"
+                  name="origin"
+                  value={formData.origin}
+                  onChange={handleOriginChange}
+                  placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
+                  label=""
+                  required
+                />
+                {validationErrors.origin && (
+                  <span className="error-text" style={{ color: '#dc2626', fontSize: '0.8rem', display: 'block', marginTop: '0.25rem' }}>
+                    {validationErrors.origin}
+                  </span>
+                )}
+                {locationWarnings.origin && !validationErrors.origin && (
+                  <span className="warning-text" style={{ color: '#d97706', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
+                    <AlertTriangle size={12} /> {locationWarnings.origin}
+                  </span>
+                )}
+              </div>
+              <div className={`time-input-group ${validationErrors.departureTime ? 'time-error' : ''}`}>
                 <label htmlFor="departureTime" className="time-label">
                   <span className="time-icon">🕐</span>
-                  Time
+                  Time <span style={{ color: '#dc2626' }}>*</span>
                 </label>
                 <input
                   type="time"
@@ -232,32 +382,51 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                   name="departureTime"
                   value={formData.departureTime}
                   onChange={handleChange}
-                  className="time-input"
+                  className={`time-input ${validationErrors.departureTime ? 'input-error' : ''}`}
                   placeholder="--:--"
+                  style={validationErrors.departureTime ? { borderColor: '#dc2626', backgroundColor: '#fef2f2' } : {}}
                 />
+                {validationErrors.departureTime && (
+                  <span className="error-text" style={{ color: '#dc2626', fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>
+                    Required
+                  </span>
+                )}
               </div>
             </div>
           </div>
           
-          <div className="form-group arrival-group">
+          <div className={`form-group arrival-group ${validationErrors.destination ? 'field-error' : ''} ${locationWarnings.destination ? 'field-warning' : ''}`}>
             <label htmlFor="destination">
               <span className="field-icon">🏁</span>
-              {t('route.arrival', 'Arrival')}
+              {t('route.arrival', 'Arrival')} <span style={{ color: '#dc2626' }}>*</span>
+              {locationVerified.destination && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title="Location verified">✓</span>}
             </label>
             <div className="location-time-container">
-              <LocationAutocompleteInput
-                id="destination"
-                name="destination"
-                value={formData.destination}
-                onChange={handleDestinationChange}
-                placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
-                label=""
-                required
-              />
+              <div style={{ flex: 1 }}>
+                <LocationAutocompleteInput
+                  id="destination"
+                  name="destination"
+                  value={formData.destination}
+                  onChange={handleDestinationChange}
+                  placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
+                  label=""
+                  required
+                />
+                {validationErrors.destination && (
+                  <span className="error-text" style={{ color: '#dc2626', fontSize: '0.8rem', display: 'block', marginTop: '0.25rem' }}>
+                    {validationErrors.destination}
+                  </span>
+                )}
+                {locationWarnings.destination && !validationErrors.destination && (
+                  <span className="warning-text" style={{ color: '#d97706', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
+                    <AlertTriangle size={12} /> {locationWarnings.destination}
+                  </span>
+                )}
+              </div>
               <div className="time-input-group">
                 <label htmlFor="arrivalTime" className="time-label">
                   <span className="time-icon">🕑</span>
-                  Time
+                  Time <span style={{ color: '#6b7280', fontSize: '0.75rem' }}>(optional)</span>
                 </label>
                 <input
                   type="time"

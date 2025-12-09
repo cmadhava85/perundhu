@@ -70,6 +70,7 @@ interface EditableRoute {
   via?: string;
   timings: string[];
   departureTime?: string;
+  arrivalTime?: string;  // Added for time edit popup
   isEditing?: boolean;
 }
 
@@ -99,6 +100,16 @@ export const ImageContributionAdminPanel: React.FC = () => {
     failedCount: number;
     message: string;
   } | null>(null);
+  
+  // Time edit popup state for routes with missing departure/arrival times
+  const [showTimeEditPopup, setShowTimeEditPopup] = useState(false);
+  const [routesWithMissingTimes, setRoutesWithMissingTimes] = useState<{
+    index: number;
+    route: EditableRoute;
+    missingDeparture: boolean;
+    missingArrival: boolean;
+  }[]>([]);
+  const [pendingApprovalContributionId, setPendingApprovalContributionId] = useState<string | null>(null);
 
   useEffect(() => {
     // Monitor modal state for debugging
@@ -311,6 +322,176 @@ export const ImageContributionAdminPanel: React.FC = () => {
     setIsEditMode(false);
     setEditedRoutes([]);
     setEditingRouteIndex(null);
+  };
+
+  // Check if any routes have missing departure or arrival times
+  const checkRoutesForMissingTimes = (): { index: number; route: EditableRoute; missingDeparture: boolean; missingArrival: boolean; }[] => {
+    const routesToCheck = isEditMode ? editedRoutes : (ocrData?.multipleRoutes || []).map(r => ({
+      routeNumber: r.routeNumber,
+      fromLocation: r.fromLocation,
+      toLocation: r.toLocation,
+      via: r.via,
+      timings: r.timings,
+      departureTime: r.departureTime,
+    }));
+    
+    const routesWithIssues: { index: number; route: EditableRoute; missingDeparture: boolean; missingArrival: boolean; }[] = [];
+    
+    routesToCheck.forEach((route, index) => {
+      const hasDeparture = route.departureTime || (route.timings && route.timings.length > 0);
+      // For arrival time, we consider it missing if not explicitly set
+      // Note: Backend will estimate or leave null, but we want admin to have the option to set it
+      
+      if (!hasDeparture) {
+        routesWithIssues.push({
+          index,
+          route,
+          missingDeparture: true,
+          missingArrival: true // If departure is missing, arrival definitely is too
+        });
+      }
+    });
+    
+    return routesWithIssues;
+  };
+
+  // Handle approval with validation
+  const handleApproveWithRoutes = (contributionId: string) => {
+    // Check for routes with missing times
+    const routesWithIssues = checkRoutesForMissingTimes();
+    
+    if (routesWithIssues.length > 0) {
+      // Show the time edit popup
+      setRoutesWithMissingTimes(routesWithIssues);
+      setPendingApprovalContributionId(contributionId);
+      setShowTimeEditPopup(true);
+    } else {
+      // All routes have required times, proceed with approval
+      setShowOCRModal(false);
+      approveContribution(contributionId, true);
+    }
+  };
+
+  // Update time for a route in the popup
+  const updateRouteTimeInPopup = (index: number, field: 'departureTime' | 'arrivalTime', value: string) => {
+    setRoutesWithMissingTimes(prev => prev.map(item => 
+      item.index === index 
+        ? { ...item, route: { ...item.route, [field]: value } }
+        : item
+    ));
+  };
+
+  // Save times from popup and continue with approval
+  const saveTimesAndApprove = async () => {
+    if (!pendingApprovalContributionId || !selectedContribution || !ocrData) return;
+    
+    // Update the OCR data with the corrected times
+    const updatedRoutes = [...(ocrData.multipleRoutes || [])];
+    routesWithMissingTimes.forEach(item => {
+      if (updatedRoutes[item.index]) {
+        updatedRoutes[item.index] = {
+          ...updatedRoutes[item.index],
+          departureTime: item.route.departureTime,
+          // Add arrival time if it was set
+          ...(item.route.arrivalTime ? { arrivalTime: item.route.arrivalTime } : {})
+        } as typeof updatedRoutes[0];
+        
+        // Also update timings array if departure time was set
+        if (item.route.departureTime && (!updatedRoutes[item.index].timings || updatedRoutes[item.index].timings.length === 0)) {
+          updatedRoutes[item.index].timings = [item.route.departureTime];
+        }
+      }
+    });
+
+    // Save the corrected data to backend first
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const correctedData = {
+        ...ocrData,
+        multipleRoutes: updatedRoutes
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/api/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          },
+          body: JSON.stringify(correctedData)
+        }
+      );
+
+      if (response.ok) {
+        // Update local state
+        setOcrData(correctedData as OCRData);
+        
+        // Close popups and proceed with approval
+        setShowTimeEditPopup(false);
+        setRoutesWithMissingTimes([]);
+        setShowOCRModal(false);
+        
+        // Now approve with updated data
+        await approveContribution(pendingApprovalContributionId, true);
+      } else {
+        throw new Error('Failed to save corrected times');
+      }
+    } catch (error) {
+      alert('Failed to save times: ' + error);
+    } finally {
+      setPendingApprovalContributionId(null);
+    }
+  };
+
+  // Skip routes with missing times (don't integrate them)
+  const skipRoutesWithMissingTimes = async () => {
+    if (!pendingApprovalContributionId || !selectedContribution || !ocrData) return;
+    
+    // Remove routes with missing departure times from the data
+    const validRoutes = (ocrData.multipleRoutes || []).filter((_, index) => 
+      !routesWithMissingTimes.some(item => item.index === index)
+    );
+    
+    if (validRoutes.length === 0) {
+      alert('No routes with valid departure times. Please edit at least one route with a departure time.');
+      return;
+    }
+    
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const correctedData = {
+        ...ocrData,
+        multipleRoutes: validRoutes
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/api/admin/contributions/images/${selectedContribution.id}/update-extracted-data`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          },
+          body: JSON.stringify(correctedData)
+        }
+      );
+
+      if (response.ok) {
+        setOcrData(correctedData as OCRData);
+        setShowTimeEditPopup(false);
+        setRoutesWithMissingTimes([]);
+        setShowOCRModal(false);
+        
+        await approveContribution(pendingApprovalContributionId, true);
+      } else {
+        throw new Error('Failed to save');
+      }
+    } catch (error) {
+      alert('Failed: ' + error);
+    } finally {
+      setPendingApprovalContributionId(null);
+    }
   };
 
   const approveContribution = async (contributionId: string, createRoute: boolean = false) => {
@@ -936,16 +1117,89 @@ export const ImageContributionAdminPanel: React.FC = () => {
                                     />
                                   </div>
                                   
-                                  {/* Departure Time Row */}
+                                  {/* Timings Row - Editable list of all departure times */}
                                   <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Departure Time</label>
-                                    <input
-                                      type="text"
-                                      value={route.departureTime || ''}
-                                      onChange={(e) => updateRoute(index, 'departureTime', e.target.value)}
-                                      className="w-40 px-2 py-1.5 text-sm border border-amber-300 rounded focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                                      placeholder="e.g., 08:30"
-                                    />
+                                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                                      Departure Times ({route.timings?.length || 0})
+                                      <span className="text-gray-400 ml-2">- comma separated</span>
+                                    </label>
+                                    <div className="space-y-2">
+                                      <textarea
+                                        value={(route.timings || []).join(', ')}
+                                        onChange={(e) => {
+                                          const timingsStr = e.target.value;
+                                          const timingsArray = timingsStr
+                                            .split(/[,\n]/)
+                                            .map(t => t.trim())
+                                            .filter(t => t.length > 0);
+                                          updateRoute(index, 'timings', timingsArray);
+                                          // Also update departureTime to first timing
+                                          if (timingsArray.length > 0) {
+                                            updateRoute(index, 'departureTime', timingsArray[0]);
+                                          }
+                                        }}
+                                        className="w-full px-2 py-1.5 text-sm border border-amber-300 rounded focus:ring-2 focus:ring-amber-500 focus:border-amber-500 min-h-[60px] resize-y"
+                                        placeholder="e.g., 06:00, 08:30, 10:15, 14:00, 18:30"
+                                        rows={2}
+                                      />
+                                      {/* Display individual time chips for easy editing */}
+                                      {route.timings && route.timings.length > 0 && (
+                                        <div className="flex flex-wrap gap-1.5">
+                                          {route.timings.map((time, timeIdx) => (
+                                            <span 
+                                              key={`time-${index}-${timeIdx}`} 
+                                              className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded border border-blue-200 flex items-center gap-1"
+                                            >
+                                              🕐 {time}
+                                              <button
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  const newTimings = route.timings.filter((_, idx) => idx !== timeIdx);
+                                                  updateRoute(index, 'timings', newTimings);
+                                                  if (newTimings.length > 0 && timeIdx === 0) {
+                                                    updateRoute(index, 'departureTime', newTimings[0]);
+                                                  }
+                                                }}
+                                                className="ml-1 text-red-500 hover:text-red-700 font-bold"
+                                                title="Remove this time"
+                                              >
+                                                ×
+                                              </button>
+                                            </span>
+                                          ))}
+                                        </div>
+                                      )}
+                                      {/* Quick add time button */}
+                                      <div className="flex gap-2 items-center">
+                                        <input
+                                          type="text"
+                                          id={`add-time-${index}`}
+                                          className="w-28 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                                          placeholder="HH:MM"
+                                        />
+                                        <button
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const input = document.getElementById(`add-time-${index}`) as HTMLInputElement;
+                                            const newTime = input.value.trim();
+                                            if (newTime) {
+                                              const newTimings = [...(route.timings || []), newTime];
+                                              updateRoute(index, 'timings', newTimings);
+                                              if (newTimings.length === 1) {
+                                                updateRoute(index, 'departureTime', newTime);
+                                              }
+                                              input.value = '';
+                                            }
+                                          }}
+                                          className="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                                        >
+                                          <svg style={{ width: '12px', height: '12px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                          </svg>
+                                          Add Time
+                                        </button>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                                 
@@ -1159,8 +1413,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                 <button
                   onClick={() => {
                     if (selectedContribution) {
-                      setShowOCRModal(false);
-                      approveContribution(selectedContribution.id, true);
+                      handleApproveWithRoutes(selectedContribution.id);
                     }
                   }}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-all shadow-sm hover:shadow flex items-center gap-2"
@@ -1178,6 +1431,148 @@ export const ImageContributionAdminPanel: React.FC = () => {
                     </>
                   )}
                 </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Time Edit Popup - shown when routes have missing departure/arrival times */}
+      {showTimeEditPopup && routesWithMissingTimes.length > 0 && (
+        <div 
+          className="fixed inset-0 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 10000, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+          onClick={() => {
+            setShowTimeEditPopup(false);
+            setRoutesWithMissingTimes([]);
+            setPendingApprovalContributionId(null);
+          }}
+        >
+          <div 
+            className="bg-white rounded-xl w-full max-w-2xl shadow-2xl overflow-hidden"
+            style={{ maxHeight: '80vh' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div 
+              className="px-6 py-4 flex justify-between items-center border-b-4"
+              style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', borderColor: '#b45309' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-white bg-opacity-20 rounded-lg p-2">
+                  <AlertCircle style={{ width: '24px', height: '24px' }} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">Missing Time Information</h3>
+                  <p className="text-amber-100 text-xs">{routesWithMissingTimes.length} route(s) need departure time</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setShowTimeEditPopup(false);
+                  setRoutesWithMissingTimes([]);
+                  setPendingApprovalContributionId(null);
+                }}
+                className="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-all"
+                title="Close"
+              >
+                <XCircle style={{ width: '24px', height: '24px' }} />
+              </button>
+            </div>
+
+            {/* Info Banner */}
+            <div className="px-6 py-3 bg-amber-50 border-b border-amber-200">
+              <p className="text-sm text-amber-800">
+                ⚠️ The following routes are missing departure time. Please enter the departure time to integrate them, 
+                or skip these routes to integrate only the valid ones.
+              </p>
+            </div>
+
+            {/* Routes List */}
+            <div className="p-6 max-h-96 overflow-y-auto space-y-4">
+              {routesWithMissingTimes.map((item) => (
+                <div key={item.index} className="p-4 rounded-lg border-2 border-amber-300 bg-amber-50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 bg-amber-600">
+                      <span className="text-white font-bold text-xs">{item.index + 1}</span>
+                    </div>
+                    <div className="font-semibold text-gray-900">
+                      {item.route.fromLocation || '?'} → {item.route.toLocation || '?'}
+                    </div>
+                    {item.route.routeNumber && (
+                      <span className="px-2 py-0.5 text-xs bg-purple-100 text-purple-800 rounded font-bold border border-purple-300">
+                        {item.route.routeNumber}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Departure Time <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={item.route.departureTime || ''}
+                        onChange={(e) => updateRouteTimeInPopup(item.index, 'departureTime', e.target.value)}
+                        placeholder="e.g., 08:30 or 14:45"
+                        className={`w-full px-3 py-2 border-2 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 ${
+                          item.missingDeparture && !item.route.departureTime 
+                            ? 'border-red-400 bg-red-50' 
+                            : 'border-gray-300'
+                        }`}
+                      />
+                      {item.missingDeparture && !item.route.departureTime && (
+                        <p className="text-xs text-red-600 mt-1">Departure time is required</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Arrival Time <span className="text-gray-400">(optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={(item.route as EditableRoute & { arrivalTime?: string }).arrivalTime || ''}
+                        onChange={(e) => updateRouteTimeInPopup(item.index, 'arrivalTime', e.target.value)}
+                        placeholder="e.g., 12:00 or 18:30"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Will be estimated if not provided</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-gray-200 bg-gray-50 px-6 py-4">
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={skipRoutesWithMissingTimes}
+                  className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 font-medium transition-all"
+                >
+                  Skip These Routes
+                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setShowTimeEditPopup(false);
+                      setRoutesWithMissingTimes([]);
+                      setPendingApprovalContributionId(null);
+                    }}
+                    className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={saveTimesAndApprove}
+                    disabled={routesWithMissingTimes.some(item => !item.route.departureTime)}
+                    className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed font-medium transition-all shadow-sm hover:shadow flex items-center gap-2"
+                  >
+                    <CheckCircle style={{ width: '16px', height: '16px' }} />
+                    Save & Approve
+                  </button>
                 </div>
               </div>
             </div>
