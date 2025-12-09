@@ -941,10 +941,8 @@ public class ContributionProcessingService {
             return new IntegrationValidationResult(false, "Departure time is required for integration");
         }
 
-        // Check arrival time - REQUIRED (no estimation)
-        if (contribution.getArrivalTime() == null || contribution.getArrivalTime().isBlank()) {
-            return new IntegrationValidationResult(false, "Arrival time is required for integration");
-        }
+        // Arrival time is optional - will be estimated or left empty during integration
+        // Departure time is the important field for bus schedules
 
         return new IntegrationValidationResult(true, "Valid for integration");
     }
@@ -1031,20 +1029,52 @@ public class ContributionProcessingService {
         LocalTime departureTime = parseTimeFlexible(contribution.getDepartureTime());
         LocalTime arrivalTime = parseTimeFlexible(contribution.getArrivalTime());
 
+        // If arrival time is missing, try to estimate from existing routes on same
+        // route pair
+        // Otherwise leave as null - departure time is the important field
+        if (arrivalTime == null && departureTime != null) {
+            arrivalTime = estimateArrivalTimeFromExistingRoutes(
+                    fromLocation.getId().getValue(),
+                    toLocation.getId().getValue(),
+                    departureTime);
+            if (arrivalTime != null) {
+                log.info("Estimated arrival time for contribution {}: {} (based on existing routes)",
+                        contribution.getId(), arrivalTime);
+            } else {
+                log.info("No arrival time available for contribution {} - saving with null arrival time",
+                        contribution.getId());
+            }
+        }
+
         // Check for duplicate (same route + timing)
         List<Bus> routeBuses = busRepository.findBusesBetweenLocations(
                 fromLocation.getId().getValue(),
                 toLocation.getId().getValue());
 
+        // For duplicate check, only compare departure times if arrival is null
+        final LocalTime finalArrivalTime = arrivalTime;
         boolean isDuplicate = routeBuses.stream()
-                .anyMatch(bus -> bus.getDepartureTime().equals(departureTime)
-                        && bus.getArrivalTime().equals(arrivalTime));
+                .anyMatch(bus -> {
+                    boolean departureSame = bus.getDepartureTime() != null
+                            && bus.getDepartureTime().equals(departureTime);
+                    if (finalArrivalTime == null) {
+                        // If our arrival is null, only check departure time for duplicates
+                        return departureSame;
+                    }
+                    return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
+                });
 
         Bus savedBus;
         if (isDuplicate) {
             savedBus = routeBuses.stream()
-                    .filter(bus -> bus.getDepartureTime().equals(departureTime)
-                            && bus.getArrivalTime().equals(arrivalTime))
+                    .filter(bus -> {
+                        boolean departureSame = bus.getDepartureTime() != null
+                                && bus.getDepartureTime().equals(departureTime);
+                        if (finalArrivalTime == null) {
+                            return departureSame;
+                        }
+                        return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
+                    })
                     .findFirst()
                     .orElseThrow();
         } else {
@@ -1191,6 +1221,22 @@ public class ContributionProcessingService {
                 // Normalize and parse time formats
                 departureTime = parseTimeFlexible(contribution.getDepartureTime());
                 arrivalTime = parseTimeFlexible(contribution.getArrivalTime());
+
+                // If arrival time is missing, try to estimate from existing routes
+                // Otherwise leave as null - departure time is the important field
+                if (arrivalTime == null && departureTime != null) {
+                    arrivalTime = estimateArrivalTimeFromExistingRoutes(
+                            fromLocation.getId().getValue(),
+                            toLocation.getId().getValue(),
+                            departureTime);
+                    if (arrivalTime != null) {
+                        log.info("Estimated arrival time for contribution {}: {} (based on existing routes)",
+                                contribution.getId(), arrivalTime);
+                    } else {
+                        log.info("No arrival time available for contribution {} - saving with null arrival time",
+                                contribution.getId());
+                    }
+                }
             } catch (Exception timeParseError) {
                 throw new IllegalArgumentException("Invalid time format. Expected HH:MM or HH:MM:SS. Departure: '"
                         + contribution.getDepartureTime() + "', Arrival: '" + contribution.getArrivalTime() + "'");
@@ -1200,6 +1246,8 @@ public class ContributionProcessingService {
             // Note: For user-contributed routes without bus number, we check by
             // route+timing only
             Optional<Bus> existingBusWithTiming = Optional.empty();
+            final LocalTime finalDepartureTime = departureTime;
+            final LocalTime finalArrivalTime = arrivalTime;
 
             if (contribution.getBusNumber() != null && !contribution.getBusNumber().startsWith("GEN-")) {
                 // Real bus number - check for exact match (bus number + route + timing)
@@ -1207,16 +1255,28 @@ public class ContributionProcessingService {
                         contribution.getBusNumber(),
                         fromLocation.getId(),
                         toLocation.getId())
-                        .filter(bus -> bus.getDepartureTime().equals(departureTime)
-                                && bus.getArrivalTime().equals(arrivalTime));
+                        .filter(bus -> {
+                            boolean departureSame = bus.getDepartureTime() != null
+                                    && bus.getDepartureTime().equals(finalDepartureTime);
+                            if (finalArrivalTime == null) {
+                                return departureSame;
+                            }
+                            return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
+                        });
             } else {
                 // Generated bus number - check by route + timing only
                 List<Bus> routeBuses = busRepository.findBusesBetweenLocations(
                         fromLocation.getId().getValue(),
                         toLocation.getId().getValue());
                 existingBusWithTiming = routeBuses.stream()
-                        .filter(bus -> bus.getDepartureTime().equals(departureTime)
-                                && bus.getArrivalTime().equals(arrivalTime))
+                        .filter(bus -> {
+                            boolean departureSame = bus.getDepartureTime() != null
+                                    && bus.getDepartureTime().equals(finalDepartureTime);
+                            if (finalArrivalTime == null) {
+                                return departureSame;
+                            }
+                            return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
+                        })
                         .findFirst();
             }
 
@@ -1391,6 +1451,70 @@ public class ContributionProcessingService {
         } catch (Exception e) {
             log.warn("Failed to parse time '{}' (normalized: '{}'): {}", timeStr, normalized, e.getMessage());
             throw new IllegalArgumentException("Cannot parse time: " + timeStr);
+        }
+    }
+
+    /**
+     * Estimates arrival time based on existing buses on the same route.
+     * Looks up buses with the same from/to locations and calculates average journey
+     * duration.
+     * 
+     * @param fromLocationId The source location ID
+     * @param toLocationId   The destination location ID
+     * @param departureTime  The departure time
+     * @return Estimated arrival time, or null if no existing routes found
+     */
+    private LocalTime estimateArrivalTimeFromExistingRoutes(Long fromLocationId, Long toLocationId,
+            LocalTime departureTime) {
+        try {
+            // Find existing buses on the same route
+            List<Bus> existingBuses = busRepository.findBusesBetweenLocations(fromLocationId, toLocationId);
+
+            if (existingBuses.isEmpty()) {
+                log.debug("No existing buses found for route {} -> {} to estimate arrival time",
+                        fromLocationId, toLocationId);
+                return null;
+            }
+
+            // Calculate average journey duration from buses that have both departure and
+            // arrival times
+            List<Long> durations = existingBuses.stream()
+                    .filter(bus -> bus.getDepartureTime() != null && bus.getArrivalTime() != null)
+                    .map(bus -> {
+                        LocalTime dep = bus.getDepartureTime();
+                        LocalTime arr = bus.getArrivalTime();
+                        // Handle overnight journeys
+                        long minutes = java.time.Duration.between(dep, arr).toMinutes();
+                        if (minutes < 0) {
+                            minutes += 24 * 60; // Add 24 hours for overnight
+                        }
+                        return minutes;
+                    })
+                    .filter(minutes -> minutes > 0 && minutes < 24 * 60) // Valid durations only
+                    .toList();
+
+            if (durations.isEmpty()) {
+                log.debug("No buses with valid timing data found for route {} -> {} to estimate arrival time",
+                        fromLocationId, toLocationId);
+                return null;
+            }
+
+            // Calculate average duration
+            long avgDurationMinutes = durations.stream()
+                    .mapToLong(Long::longValue)
+                    .sum() / durations.size();
+
+            // Calculate estimated arrival time
+            LocalTime estimatedArrival = departureTime.plusMinutes(avgDurationMinutes);
+
+            log.debug("Estimated arrival time based on {} existing buses, avg duration {} minutes",
+                    durations.size(), avgDurationMinutes);
+
+            return estimatedArrival;
+        } catch (Exception e) {
+            log.warn("Error estimating arrival time for route {} -> {}: {}",
+                    fromLocationId, toLocationId, e.getMessage());
+            return null;
         }
     }
 }
