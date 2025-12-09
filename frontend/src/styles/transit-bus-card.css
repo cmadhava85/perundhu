@@ -181,14 +181,27 @@
 /* Stops Row */
 .stops-row {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
+  gap: 8px;
 }
 
 .stops-info {
   font-size: var(--text-sm);
   color: var(--transit-text-secondary);
   font-weight: var(--font-medium);
+}
+
+/* Add Stops CTA Button */
+.add-stops-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+}
+
+.add-stops-cta:focus {
+  outline: 2px solid #10B981;
+  outline-offset: 2px;
 }
 
 /* Progress Bar Updates */

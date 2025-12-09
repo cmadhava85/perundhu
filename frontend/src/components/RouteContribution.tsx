@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import { submitRouteContribution, submitImageContribution } from "../services/api";
 import AuthService from '../services/authService';
 import { SimpleRouteForm } from './forms/SimpleRouteForm';
@@ -8,26 +9,44 @@ import { ContributionMethodSelector } from './contribution/ContributionMethodSel
 import { VoiceContributionRecorder } from './contribution/VoiceContributionRecorder';
 import { TextPasteContribution } from './contribution/TextPasteContribution';
 import { RouteVerification } from './contribution/RouteVerification';
+import { AddStopsToRoute } from './contribution/AddStopsToRoute';
 import { featureFlags } from '../config/featureFlags';
+import type { Bus } from '../types';
 import './RouteContribution.css';
 
 export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  
+  // Get pre-selected bus from navigation state (from search results "Add Stops" button)
+  const navigationState = location.state as { 
+    selectedBus?: Bus; 
+    method?: string;
+    fromSearch?: boolean;
+  } | null;
   
   // Initialize with first available method
-  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' | 'verify' => {
+  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' => {
+    // If coming from search results with "Add Stops", use addStops method
+    if (navigationState?.method === 'add-stops' && featureFlags.enableAddStops) {
+      return 'addStops';
+    }
     if (featureFlags.enableManualContribution) return 'manual';
     if (featureFlags.enablePasteContribution) return 'paste';
     if (featureFlags.enableImageContribution) return 'image';
     if (featureFlags.enableVoiceContribution) return 'voice';
     if (featureFlags.enableRouteVerification) return 'verify';
+    if (featureFlags.enableAddStops) return 'addStops';
     return 'manual'; // Fallback
   };
   
-  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste' | 'verify'>(getDefaultMethod());
+  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops'>(getDefaultMethod());
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
   const [voiceTranscription, setVoiceTranscription] = useState<string>('');
+  
+  // Store pre-selected bus for AddStopsToRoute component
+  const preSelectedBus = navigationState?.selectedBus || null;
 
   // Update selected method if current method becomes disabled
   useEffect(() => {
@@ -36,7 +55,8 @@ export const RouteContribution: React.FC = () => {
       (contributionMethod === 'image' && featureFlags.enableImageContribution) ||
       (contributionMethod === 'voice' && featureFlags.enableVoiceContribution) ||
       (contributionMethod === 'paste' && featureFlags.enablePasteContribution) ||
-      (contributionMethod === 'verify' && featureFlags.enableRouteVerification);
+      (contributionMethod === 'verify' && featureFlags.enableRouteVerification) ||
+      (contributionMethod === 'addStops' && featureFlags.enableAddStops);
     
     if (!isCurrentMethodEnabled) {
       setContributionMethod(getDefaultMethod());
@@ -231,6 +251,22 @@ export const RouteContribution: React.FC = () => {
                 onVerificationSubmit={() => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.verificationSuccess', 'Thank you for verifying this route!'));
+                }}
+                onError={(error: string) => {
+                  setSubmissionStatus('error');
+                  setStatusMessage(error);
+                }}
+              />
+            </div>
+          )}
+          
+          {contributionMethod === 'addStops' && (
+            <div>
+              <AddStopsToRoute
+                preSelectedBus={preSelectedBus}
+                onSubmit={() => {
+                  setSubmissionStatus('success');
+                  setStatusMessage(t('contribution.addStopsSuccess', 'Thank you for adding stops to this route!'));
                 }}
                 onError={(error: string) => {
                   setSubmissionStatus('error');

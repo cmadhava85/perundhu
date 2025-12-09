@@ -4,8 +4,8 @@ import { featureFlags } from "../../config/featureFlags";
 import './ContributionMethodSelector.css';
 
 interface ContributionMethodSelectorProps {
-  selectedMethod: 'manual' | 'image' | 'voice' | 'paste' | 'verify';
-  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify') => void;
+  selectedMethod: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops';
+  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops') => void;
 }
 
 export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProps> = ({
@@ -14,7 +14,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
 }) => {
   const { t } = useTranslation();
 
-  const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify') => (e: React.KeyboardEvent) => {
+  const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops') => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onMethodChange(method);
@@ -111,6 +111,24 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             <h3 className="method-title">{t('method.verify.title', 'Verify Routes')}</h3>
             <p className="method-description">{t('method.verify.desc', 'Help verify existing route information')}</p>
             <div className="method-badge secondary">{t('badges.helpful', 'Helpful!')}</div>
+          </div>
+        )}
+
+        {featureFlags.enableAddStops && (
+          <div 
+            className={`method-card ${selectedMethod === 'addStops' ? 'active' : ''}`}
+            onClick={() => onMethodChange('addStops')}
+            onKeyDown={handleKeyDown('addStops')}
+            role="radio"
+            aria-checked={selectedMethod === 'addStops'}
+            tabIndex={0}
+          >
+            <div className="method-icon-wrapper">
+              <div className="method-icon">📍</div>
+            </div>
+            <h3 className="method-title">{t('method.addStops.title', 'Add Stops')}</h3>
+            <p className="method-description">{t('method.addStops.desc', 'Add intermediate stops to existing routes')}</p>
+            <div className="method-badge new">{t('badges.new', 'New!')}</div>
           </div>
         )}
       </div>

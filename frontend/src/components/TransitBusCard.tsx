@@ -17,6 +17,7 @@ interface TransitBusCardProps {
   isNextBus?: boolean;
   isFastest?: boolean;
   isCheapest?: boolean;
+  onAddStops?: (bus: Bus) => void;
 }
 
 const TransitBusCard: React.FC<TransitBusCardProps> = ({
@@ -29,7 +30,8 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   isCompact = false,
   isNextBus = false,
   isFastest = false,
-  isCheapest = false
+  isCheapest = false,
+  onAddStops
 }) => {
 
   const { i18n } = useTranslation();
@@ -354,6 +356,43 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             <div className="stops-info">
               🛑 {stops.length} stops
             </div>
+            {/* Add Stops CTA for buses with no/few stops */}
+            {stops.length < 2 && onAddStops && (
+              <button
+                type="button"
+                className="add-stops-cta"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddStops(bus);
+                }}
+                aria-label="Add stops to this route"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '4px 10px',
+                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                  color: 'white',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 3px rgba(16, 185, 129, 0.3)',
+                  transition: 'transform 0.2s, box-shadow 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLButtonElement).style.transform = 'scale(1.05)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 2px 6px rgba(16, 185, 129, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLButtonElement).style.transform = 'scale(1)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 1px 3px rgba(16, 185, 129, 0.3)';
+                }}
+              >
+                ➕ Add Stops
+              </button>
+            )}
           </div>
         </div>
       </div>

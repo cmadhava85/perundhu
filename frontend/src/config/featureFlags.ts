@@ -7,6 +7,7 @@ export interface FeatureFlags {
   enableManualContribution: boolean;
   enablePasteContribution: boolean;
   enableRouteVerification: boolean;
+  enableAddStops: boolean;
 }
 
 export const featureFlags: FeatureFlags = {
@@ -65,6 +66,16 @@ export const featureFlags: FeatureFlags = {
    * Status: STABLE (Enabled by default)
    */
   enableRouteVerification: getEnv('VITE_ENABLE_ROUTE_VERIFICATION') !== 'false',
+  
+  /**
+   * Add Stops to Route Feature
+   * 
+   * Enables users to add intermediate stops to existing routes.
+   * Helps fill in missing stop data for routes that only have from/to.
+   * 
+   * Status: STABLE (Enabled by default)
+   */
+  enableAddStops: getEnv('VITE_ENABLE_ADD_STOPS') !== 'false',
 };
 
 /**

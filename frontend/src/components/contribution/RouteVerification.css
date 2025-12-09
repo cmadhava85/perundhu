@@ -698,25 +698,6 @@
     font-size: 1.1rem;
   }
 }
-  font-weight: 800;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.stat-label {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-item.highlight .stat-value {
-  color: #10B981;
-  background: white;
-  border-radius: 8px;
-  padding: 0.25rem 0.5rem;
-}
 
 /* Section Styling */
 .verification-section {

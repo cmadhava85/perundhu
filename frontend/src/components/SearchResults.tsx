@@ -74,6 +74,18 @@ const SearchResults: React.FC<SearchResultsProps> = ({
     setSelectedBusId(bus.id);
   };
 
+  // Handle Add Stops - navigate to contribute page with bus pre-selected
+  const handleAddStops = (bus: Bus) => {
+    // Navigate to contribute page with bus info in state
+    navigate('/contribute', { 
+      state: { 
+        selectedBus: bus,
+        method: 'add-stops',
+        fromSearch: true
+      }
+    });
+  };
+
   // Show loading skeleton while searching
   if (loading) {
     return (
@@ -261,6 +273,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               toLocation={getLocationDisplayName(toLocation)}
               fromLocationObj={fromLocation}
               toLocationObj={toLocation}
+              onAddStops={handleAddStops}
             />
           )}
         </div>
