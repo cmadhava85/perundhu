@@ -984,3 +984,35 @@
     transition: none;
   }
 }
+
+/* ===== Time Until Departure Badges ===== */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+/* Next Bus Highlight */
+.transit-bus-card.next-bus-highlight {
+  border-left: 4px solid #10B981;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+}
+
+.transit-bus-card.next-bus-highlight:hover {
+  border-left-color: #059669;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+}
+
+/* Special badges animation */
+.special-badges-row span {
+  transition: transform 0.2s ease;
+}
+
+.special-badges-row span:hover {
+  transform: scale(1.05);
+}

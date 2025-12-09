@@ -103,8 +103,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     
     // If times are very close (within 15 minutes), sort by bus quality/rating
     if (Math.abs(minutesA - minutesB) <= 15) {
-      const ratingA = a.rating || 4.0;
-      const ratingB = b.rating || 4.0;
+      const ratingA = a.rating || 4;
+      const ratingB = b.rating || 4;
       return ratingB - ratingA; // Higher rating first
     }
     
@@ -134,8 +134,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     
     // If prices are very similar (within ₹50), prefer better ratings
     if (Math.abs(fareA - fareB) <= 50) {
-      const ratingA = a.rating || 4.0;
-      const ratingB = b.rating || 4.0;
+      const ratingA = a.rating || 4;
+      const ratingB = b.rating || 4;
       return ratingB - ratingA;
     }
     
@@ -163,8 +163,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   };
 
   const sortByRating = (a: Bus, b: Bus): number => {
-    const ratingA = a.rating || 4.0;
-    const ratingB = b.rating || 4.0;
+    const ratingA = a.rating || 4;
+    const ratingB = b.rating || 4;
     
     // If ratings are similar, prefer more reasonable price
     if (Math.abs(ratingA - ratingB) <= 0.2) {
@@ -183,6 +183,55 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   const priceRange = useMemo(() => {
     const prices = buses.map(bus => bus.fare || 0).filter(p => p > 0);
     return prices.length > 0 ? [Math.min(...prices), Math.max(...prices)] : [0, 2000];
+  }, [buses]);
+
+  // Find special buses: next bus, fastest, cheapest
+  const specialBuses = useMemo(() => {
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    let nextBusId: number | null = null;
+    let fastestBusId: number | null = null;
+    let cheapestBusId: number | null = null;
+    let minTimeUntilDeparture = Infinity;
+    let minDuration = Infinity;
+    let minFare = Infinity;
+    
+    for (const bus of buses) {
+      // Find next bus (soonest upcoming departure)
+      if (bus.departureTime) {
+        const [hours, minutes] = bus.departureTime.split(':').map(Number);
+        const busMinutes = hours * 60 + minutes;
+        const timeUntil = busMinutes - currentMinutes;
+        
+        // Only consider buses that haven't departed yet
+        if (timeUntil >= 0 && timeUntil < minTimeUntilDeparture) {
+          minTimeUntilDeparture = timeUntil;
+          nextBusId = bus.id;
+        }
+      }
+      
+      // Find fastest bus (shortest duration)
+      if (bus.departureTime && bus.arrivalTime) {
+        const [depH, depM] = bus.departureTime.split(':').map(Number);
+        const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
+        let duration = (arrH * 60 + arrM) - (depH * 60 + depM);
+        if (duration < 0) duration += 24 * 60; // Handle overnight
+        
+        if (duration > 0 && duration < minDuration) {
+          minDuration = duration;
+          fastestBusId = bus.id;
+        }
+      }
+      
+      // Find cheapest bus
+      if (bus.fare && bus.fare > 0 && bus.fare < minFare) {
+        minFare = bus.fare;
+        cheapestBusId = bus.id;
+      }
+    }
+    
+    return { nextBusId, fastestBusId, cheapestBusId };
   }, [buses]);
 
   // Filter and sort buses
@@ -362,12 +411,19 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 </div>
               )}
 
-              {/* Sorting Info Badge */}
-              <div className="flex items-center justify-center gap-2 mt-2 px-3 py-2 bg-green-50 border border-green-200 rounded-lg">
-                <span className="text-green-600 text-xs sm:text-sm">⚡</span>
-                <span className="text-green-700 text-xs sm:text-sm font-medium">
-                  {t('busList.showingFastest', 'Showing fastest routes first')}
+              {/* Smart Sorting Info Badge */}
+              <div className="flex items-center justify-center gap-2 mt-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg">
+                <span className="text-blue-600 text-xs sm:text-sm">🎯</span>
+                <span className="text-blue-700 text-xs sm:text-sm font-medium">
+                  {t('busList.smartSorted', 'Sorted by time - upcoming buses shown first')}
                 </span>
+              </div>
+
+              {/* Legend for badges */}
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-2 text-xs text-gray-500">
+                <span className="flex items-center gap-1"><span style={{ color: '#10B981' }}>🚀</span> Next departing</span>
+                <span className="flex items-center gap-1"><span style={{ color: '#8B5CF6' }}>⚡</span> Fastest route</span>
+                <span className="flex items-center gap-1"><span style={{ color: '#F59E0B' }}>💰</span> Best value</span>
               </div>
             </div>
 
@@ -584,6 +640,9 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 fromLocation={fromLocationObj}
                 toLocation={toLocationObj}
                 isCompact={true}
+                isNextBus={bus.id === specialBuses.nextBusId}
+                isFastest={bus.id === specialBuses.fastestBusId}
+                isCheapest={bus.id === specialBuses.cheapestBusId}
               />
             );
           })}
