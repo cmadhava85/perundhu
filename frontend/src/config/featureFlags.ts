@@ -6,6 +6,7 @@ export interface FeatureFlags {
   enableImageContribution: boolean;
   enableManualContribution: boolean;
   enablePasteContribution: boolean;
+  enableRouteVerification: boolean;
 }
 
 export const featureFlags: FeatureFlags = {
@@ -54,6 +55,16 @@ export const featureFlags: FeatureFlags = {
    * To enable: Set VITE_ENABLE_PASTE_CONTRIBUTION=true in .env
    */
   enablePasteContribution: getEnv('VITE_ENABLE_PASTE_CONTRIBUTION') === 'true',
+  
+  /**
+   * Route Verification Feature
+   * 
+   * Enables users to verify and validate existing routes.
+   * Crowdsourced accuracy improvement for route data.
+   * 
+   * Status: STABLE (Enabled by default)
+   */
+  enableRouteVerification: getEnv('VITE_ENABLE_ROUTE_VERIFICATION') !== 'false',
 };
 
 /**

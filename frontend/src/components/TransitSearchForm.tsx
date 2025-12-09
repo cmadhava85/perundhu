@@ -3,6 +3,16 @@ import { useTranslation } from 'react-i18next';
 import type { Location as AppLocation } from '../types';
 import '../styles/transit-design-system.css';
 
+// Recent search interface
+interface RecentSearch {
+  from: { id: number; name: string };
+  to: { id: number; name: string };
+  timestamp: number;
+}
+
+const RECENT_SEARCHES_KEY = 'perundhu_recent_searches';
+const MAX_RECENT_SEARCHES = 5;
+
 interface TransitSearchFormProps {
   fromLocation?: AppLocation;
   toLocation?: AppLocation;
@@ -36,6 +46,81 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   const [highlightedToIndex, setHighlightedToIndex] = useState(-1);
   const [selectedFromLocation, setSelectedFromLocation] = useState<AppLocation | null>(fromLocation || null);
   const [selectedToLocation, setSelectedToLocation] = useState<AppLocation | null>(toLocation || null);
+  const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  
+  // Load recent searches from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(RECENT_SEARCHES_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as RecentSearch[];
+        setRecentSearches(parsed);
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, []);
+
+  // Save recent search to localStorage
+  const saveRecentSearch = useCallback((from: AppLocation, to: AppLocation) => {
+    if (from.id === -1 || to.id === -1) return; // Don't save invalid searches
+    
+    const newSearch: RecentSearch = {
+      from: { id: from.id, name: from.name },
+      to: { id: to.id, name: to.name },
+      timestamp: Date.now()
+    };
+    
+    setRecentSearches(prev => {
+      // Remove duplicates
+      const filtered = prev.filter(
+        s => !(s.from.id === from.id && s.to.id === to.id)
+      );
+      const updated = [newSearch, ...filtered].slice(0, MAX_RECENT_SEARCHES);
+      
+      try {
+        localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
+      } catch {
+        // Ignore localStorage errors
+      }
+      
+      return updated;
+    });
+  }, []);
+
+  // Format relative time
+  const getRelativeTime = (timestamp: number): string => {
+    const now = Date.now();
+    const diff = now - timestamp;
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    if (days === 1) return 'Yesterday';
+    return `${days}d ago`;
+  };
+
+  // Handle recent search click
+  const handleRecentSearchClick = (search: RecentSearch) => {
+    const fromLoc = locations.find(l => l.id === search.from.id);
+    const toLoc = locations.find(l => l.id === search.to.id);
+    
+    if (fromLoc && toLoc) {
+      setFromQuery(getLocationDisplayName(fromLoc));
+      setToQuery(getLocationDisplayName(toLoc));
+      setSelectedFromLocation(fromLoc);
+      setSelectedToLocation(toLoc);
+      
+      // Auto-search after selecting recent search
+      if (onSearch) {
+        onSearch(fromLoc, toLoc, searchOptions);
+      }
+    }
+  };
   
   // Refs to track if we're clicking on suggestions
   const fromSuggestionsRef = useRef<HTMLUListElement>(null);
@@ -90,6 +175,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
   // Handle search - allow any location but try to match with database
   const handleSearch = useCallback(() => {
+    setIsSearching(true);
+    
     // Try to find matching locations from the database
     const selectedFrom = selectedFromLocation || locations.find(loc => 
       loc.name.toLowerCase() === fromQuery.toLowerCase() ||
@@ -107,6 +194,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     // If we found matching locations, use them
     // If not, the search will proceed and show "no results" on the results page
     if (selectedFrom && selectedTo && onSearch) {
+      saveRecentSearch(selectedFrom, selectedTo);
       onSearch(selectedFrom, selectedTo, searchOptions);
     } else if (onSearch) {
       // Create temporary location objects for locations not in database
@@ -127,7 +215,10 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       };
       onSearch(fromLoc, toLoc, searchOptions);
     }
-  }, [selectedFromLocation, selectedToLocation, fromQuery, toQuery, searchOptions, locations, onSearch]);
+    
+    // Reset searching state after a short delay
+    setTimeout(() => setIsSearching(false), 500);
+  }, [selectedFromLocation, selectedToLocation, fromQuery, toQuery, searchOptions, locations, onSearch, saveRecentSearch]);
 
   // Swap locations
   const handleSwapLocations = () => {
@@ -164,9 +255,39 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               <label 
                 htmlFor="from-location-input"
                 className="text-caption" 
-                style={{ display: 'block', marginBottom: 'var(--space-2)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}
               >
-                🟢 {t('search.from', 'From')}
+                <span>🟢 {t('search.from', 'From')}</span>
+                {selectedFromLocation && selectedFromLocation.id !== -1 && (
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '2px 8px',
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    color: 'white',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: '600'
+                  }}>
+                    ✓ Verified
+                  </span>
+                )}
+                {fromQuery && !selectedFromLocation && fromQuery.length >= 2 && (
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '2px 8px',
+                    background: '#FEF3C7',
+                    color: '#D97706',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: '600'
+                  }}>
+                    ⚠ Select from list
+                  </span>
+                )}
               </label>
               <input
                 id="from-location-input"
@@ -336,9 +457,39 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               <label 
                 htmlFor="to-location-input"
                 className="text-caption" 
-                style={{ display: 'block', marginBottom: 'var(--space-2)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}
               >
-                🔴 {t('search.to', 'To')}
+                <span>🔴 {t('search.to', 'To')}</span>
+                {selectedToLocation && selectedToLocation.id !== -1 && (
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '2px 8px',
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    color: 'white',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: '600'
+                  }}>
+                    ✓ Verified
+                  </span>
+                )}
+                {toQuery && !selectedToLocation && toQuery.length >= 2 && (
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '2px 8px',
+                    background: '#FEF3C7',
+                    color: '#D97706',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: '600'
+                  }}>
+                    ⚠ Select from list
+                  </span>
+                )}
               </label>
               <input
                 id="to-location-input"
@@ -493,12 +644,157 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             style={{ 
               fontSize: 'var(--text-lg)', 
               fontWeight: 'var(--font-semibold)',
-              padding: 'var(--space-4) var(--space-6)'
+              padding: 'var(--space-4) var(--space-6)',
+              position: 'relative',
+              overflow: 'hidden'
             }}
-            disabled={!fromQuery || !toQuery}
+            disabled={!fromQuery || !toQuery || isSearching}
           >
-            🔍 {t('search.searchButton', 'Find Buses')}
+            {isSearching ? (
+              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{
+                  width: '18px',
+                  height: '18px',
+                  border: '2px solid rgba(255,255,255,0.3)',
+                  borderTopColor: 'white',
+                  borderRadius: '50%',
+                  animation: 'spin 0.8s linear infinite'
+                }} />
+                {t('search.searching', 'Searching...')}
+              </span>
+            ) : (
+              <>
+                🔍 {t('search.searchButton', 'Find Buses')}
+              </>
+            )}
           </button>
+          
+          {/* Keyboard hint */}
+          {fromQuery && toQuery && selectedFromLocation && selectedToLocation && (
+            <div style={{
+              textAlign: 'center',
+              fontSize: '12px',
+              color: 'var(--transit-text-tertiary)',
+              marginTop: '-8px'
+            }}>
+              💡 Press <kbd style={{
+                padding: '2px 6px',
+                background: '#f3f4f6',
+                borderRadius: '4px',
+                border: '1px solid #e5e7eb',
+                fontSize: '11px'
+              }}>Enter</kbd> to search
+            </div>
+          )}
+
+          {/* Recent Searches */}
+          {recentSearches.length > 0 && (
+            <div style={{
+              background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+              borderRadius: 'var(--radius-lg)',
+              padding: 'var(--space-4)',
+              border: '1px solid #e2e8f0'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 'var(--space-3)'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: 'var(--transit-text-secondary)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  🕐 {t('search.recentSearches', 'Recent Searches')}
+                </span>
+                <button
+                  onClick={() => {
+                    setRecentSearches([]);
+                    localStorage.removeItem(RECENT_SEARCHES_KEY);
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '12px',
+                    color: '#94a3b8',
+                    cursor: 'pointer',
+                    padding: '4px 8px',
+                    borderRadius: '4px'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.background = '#f1f5f9'}
+                  onMouseOut={(e) => e.currentTarget.style.background = 'none'}
+                  onFocus={(e) => e.currentTarget.style.background = '#f1f5f9'}
+                  onBlur={(e) => e.currentTarget.style.background = 'none'}
+                >
+                  {t('search.clearAll', 'Clear all')}
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {recentSearches.map((search, index) => (
+                  <button
+                    key={`${search.from.id}-${search.to.id}-${index}`}
+                    onClick={() => handleRecentSearchClick(search)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '10px 14px',
+                      background: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '10px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      width: '100%',
+                      textAlign: 'left'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.background = '#eff6ff';
+                      e.currentTarget.style.transform = 'translateX(4px)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.background = 'white';
+                      e.currentTarget.style.transform = 'translateX(0)';
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.background = '#eff6ff';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.background = 'white';
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ color: '#10B981' }}>●</span>
+                      <span style={{ fontWeight: '500', color: '#374151', fontSize: '14px' }}>
+                        {search.from.name}
+                      </span>
+                      <span style={{ color: '#9ca3af' }}>→</span>
+                      <span style={{ color: '#EF4444' }}>●</span>
+                      <span style={{ fontWeight: '500', color: '#374151', fontSize: '14px' }}>
+                        {search.to.name}
+                      </span>
+                    </div>
+                    <span style={{
+                      fontSize: '11px',
+                      color: '#9ca3af',
+                      background: '#f3f4f6',
+                      padding: '2px 8px',
+                      borderRadius: '10px'
+                    }}>
+                      {getRelativeTime(search.timestamp)}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Quick Action Buttons */}
           <div className="row row-sm" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>

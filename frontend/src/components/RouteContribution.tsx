@@ -7,6 +7,7 @@ import ImageContributionUpload from './ImageContributionUpload';
 import { ContributionMethodSelector } from './contribution/ContributionMethodSelector';
 import { VoiceContributionRecorder } from './contribution/VoiceContributionRecorder';
 import { TextPasteContribution } from './contribution/TextPasteContribution';
+import { RouteVerification } from './contribution/RouteVerification';
 import { featureFlags } from '../config/featureFlags';
 import './RouteContribution.css';
 
@@ -14,15 +15,16 @@ export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
   
   // Initialize with first available method
-  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' => {
+  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' | 'verify' => {
     if (featureFlags.enableManualContribution) return 'manual';
     if (featureFlags.enablePasteContribution) return 'paste';
     if (featureFlags.enableImageContribution) return 'image';
     if (featureFlags.enableVoiceContribution) return 'voice';
+    if (featureFlags.enableRouteVerification) return 'verify';
     return 'manual'; // Fallback
   };
   
-  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste'>(getDefaultMethod());
+  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste' | 'verify'>(getDefaultMethod());
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
   const [voiceTranscription, setVoiceTranscription] = useState<string>('');
@@ -33,7 +35,8 @@ export const RouteContribution: React.FC = () => {
       (contributionMethod === 'manual' && featureFlags.enableManualContribution) ||
       (contributionMethod === 'image' && featureFlags.enableImageContribution) ||
       (contributionMethod === 'voice' && featureFlags.enableVoiceContribution) ||
-      (contributionMethod === 'paste' && featureFlags.enablePasteContribution);
+      (contributionMethod === 'paste' && featureFlags.enablePasteContribution) ||
+      (contributionMethod === 'verify' && featureFlags.enableRouteVerification);
     
     if (!isCurrentMethodEnabled) {
       setContributionMethod(getDefaultMethod());
@@ -213,6 +216,21 @@ export const RouteContribution: React.FC = () => {
                 onSuccess={(_contributionId: string) => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
+                }}
+                onError={(error: string) => {
+                  setSubmissionStatus('error');
+                  setStatusMessage(error);
+                }}
+              />
+            </div>
+          )}
+          
+          {contributionMethod === 'verify' && (
+            <div>
+              <RouteVerification
+                onVerificationSubmit={() => {
+                  setSubmissionStatus('success');
+                  setStatusMessage(t('contribution.verificationSuccess', 'Thank you for verifying this route!'));
                 }}
                 onError={(error: string) => {
                   setSubmissionStatus('error');

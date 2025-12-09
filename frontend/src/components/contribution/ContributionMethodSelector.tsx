@@ -4,8 +4,8 @@ import { featureFlags } from "../../config/featureFlags";
 import './ContributionMethodSelector.css';
 
 interface ContributionMethodSelectorProps {
-  selectedMethod: 'manual' | 'image' | 'voice' | 'paste';
-  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste') => void;
+  selectedMethod: 'manual' | 'image' | 'voice' | 'paste' | 'verify';
+  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify') => void;
 }
 
 export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProps> = ({
@@ -14,13 +14,24 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
 }) => {
   const { t } = useTranslation();
 
+  const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify') => (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onMethodChange(method);
+    }
+  };
+
   return (
     <div className="enhanced-method-selector">
-      <div className="method-cards">
+      <div className="method-cards" role="radiogroup" aria-label={t('method.selectMethod', 'Select contribution method')}>
         {featureFlags.enableManualContribution && (
           <div 
             className={`method-card ${selectedMethod === 'manual' ? 'active' : ''}`}
             onClick={() => onMethodChange('manual')}
+            onKeyDown={handleKeyDown('manual')}
+            role="radio"
+            aria-checked={selectedMethod === 'manual'}
+            tabIndex={0}
           >
             <div className="method-icon-wrapper">
               <div className="method-icon">📝</div>
@@ -35,6 +46,10 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           <div 
             className={`method-card ${selectedMethod === 'voice' ? 'active' : ''}`}
             onClick={() => onMethodChange('voice')}
+            onKeyDown={handleKeyDown('voice')}
+            role="radio"
+            aria-checked={selectedMethod === 'voice'}
+            tabIndex={0}
           >
             <div className="method-icon-wrapper">
               <div className="method-icon">🎤</div>
@@ -49,6 +64,10 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           <div 
             className={`method-card ${selectedMethod === 'image' ? 'active' : ''}`}
             onClick={() => onMethodChange('image')}
+            onKeyDown={handleKeyDown('image')}
+            role="radio"
+            aria-checked={selectedMethod === 'image'}
+            tabIndex={0}
           >
             <div className="method-icon-wrapper">
               <div className="method-icon">📷</div>
@@ -63,6 +82,10 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           <div 
             className={`method-card ${selectedMethod === 'paste' ? 'active' : ''}`}
             onClick={() => onMethodChange('paste')}
+            onKeyDown={handleKeyDown('paste')}
+            role="radio"
+            aria-checked={selectedMethod === 'paste'}
+            tabIndex={0}
           >
             <div className="method-icon-wrapper">
               <div className="method-icon">📋</div>
@@ -70,6 +93,24 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             <h3 className="method-title">{t('method.paste.title', 'Paste Text')}</h3>
             <p className="method-description">{t('method.paste.desc', 'Copy-paste route info from WhatsApp, Facebook, etc.')}</p>
             <div className="method-badge new">{t('badges.fastest', 'Fastest!')}</div>
+          </div>
+        )}
+
+        {featureFlags.enableRouteVerification && (
+          <div 
+            className={`method-card ${selectedMethod === 'verify' ? 'active' : ''}`}
+            onClick={() => onMethodChange('verify')}
+            onKeyDown={handleKeyDown('verify')}
+            role="radio"
+            aria-checked={selectedMethod === 'verify'}
+            tabIndex={0}
+          >
+            <div className="method-icon-wrapper">
+              <div className="method-icon">✅</div>
+            </div>
+            <h3 className="method-title">{t('method.verify.title', 'Verify Routes')}</h3>
+            <p className="method-description">{t('method.verify.desc', 'Help verify existing route information')}</p>
+            <div className="method-badge secondary">{t('badges.helpful', 'Helpful!')}</div>
           </div>
         )}
       </div>
