@@ -64,7 +64,8 @@
     "newSearch": "New Search",
     "new": "New",
     "error": {
-      "title": "Search Error",
+      "title": "No Routes Found",
+      "message": "No routes found for this selection. Please try different locations.",
       "home": "Back to Search"
     }
   },
@@ -171,6 +172,189 @@
     "english": "English",
     "tamil": "தமிழ்"
   },
+  "nav": {
+    "search": "Search",
+    "searchSubtitle": "Find Routes",
+    "contribute": "Contribute",
+    "contributeSubtitle": "Share Routes",
+    "searchTabDescription": "Switch to search for bus routes",
+    "contributeTabDescription": "Switch to contribute route data",
+    "searchContext": "Discover bus routes across Tamil Nadu",
+    "contributeContext": "Help improve our database by sharing route information"
+  },
+  "method": {
+    "selectMethod": "Select contribution method",
+    "manual": {
+      "title": "Manual Entry",
+      "desc": "Fill out detailed route information"
+    },
+    "voice": {
+      "title": "Voice Recording",
+      "desc": "Speak route details naturally"
+    },
+    "image": {
+      "title": "Upload Schedule",
+      "desc": "Share photos of official bus schedules"
+    },
+    "paste": {
+      "title": "Paste Text",
+      "desc": "Copy-paste route info from WhatsApp, Facebook, etc."
+    },
+    "verify": {
+      "title": "Verify Routes",
+      "desc": "Help verify existing route information"
+    },
+    "addStops": {
+      "title": "Add Stops",
+      "desc": "Add intermediate stops to existing routes"
+    }
+  },
+  "badges": {
+    "recommended": "Recommended",
+    "new": "New!",
+    "easy": "Easy",
+    "fastest": "Fastest!",
+    "helpful": "Helpful!"
+  },
+  "welcome": {
+    "title": "Welcome, Guest!",
+    "message": "No account needed! Start contributing right away."
+  },
+  "status": {
+    "submitting": {
+      "title": "Processing Your Contribution",
+      "message": "Please wait..."
+    },
+    "success": {
+      "title": "Contribution Successful!"
+    },
+    "error": {
+      "title": "Submission Failed"
+    }
+  },
+  "actions": {
+    "addAnother": "Add Another Route",
+    "tryAgain": "Try Again"
+  },
+  "voice": {
+    "transcription": "Transcribed Text:",
+    "language": "Recording Language",
+    "auto": "Auto Detect",
+    "showGuide": "How to Use Voice Input?",
+    "hideGuide": "Hide Guide",
+    "helpTitle": "Voice Input Guide",
+    "whatToSay": "What to Say",
+    "busNumber": "Bus Number",
+    "busNumberExample": "\"Bus 27D\" or \"Route 570\"",
+    "locations": "Locations",
+    "locationsExample": "\"From Chennai to Madurai\"",
+    "timings": "Timings",
+    "timingsExample": "\"Leaves at 6 AM, arrives at 2 PM\"",
+    "stops": "Stops",
+    "stopsExample": "\"Stops at Tambaram, Chengalpattu\"",
+    "examplePhrases": "Example Phrases",
+    "tipsTitle": "Recording Tips",
+    "tip": {
+      "quiet": "Find a quiet place",
+      "close": "Speak close to mic",
+      "clear": "Speak clearly & slowly",
+      "volume": "Use normal volume",
+      "pause": "Pause between sections",
+      "numbers": "Say numbers clearly"
+    },
+    "browserCompatibility": "Browser Compatibility",
+    "startRecording": "Start Recording",
+    "recording": "Recording...",
+    "pause": "Pause",
+    "resume": "Resume",
+    "stop": "Stop",
+    "cancel": "Cancel",
+    "maxDuration": "Maximum duration: {{minutes}} minutes",
+    "recordingComplete": "Recording Complete!",
+    "recordAgain": "Record Again",
+    "submit": "Transcribe & Continue",
+    "processing": "Processing...",
+    "tip1": "Speak clearly and at a normal pace",
+    "tip2": "Mention: Bus number, from location, to location, and timings",
+    "tip3": "Example: \"Bus 27D from Chennai to Madurai, leaves at 6 AM, arrives at 2 PM\"",
+    "tip4": "You can speak in English, Tamil, or both",
+    "tip5": "Find a quiet place for better accuracy",
+    "speechRecognitionEnabled": "Real-time transcription enabled (FREE)",
+    "speechRecognitionNotSupported": "Real-time transcription not supported in this browser. Try Chrome or Edge.",
+    "error": {
+      "notSupported": "Your browser does not support audio recording",
+      "microphoneAccess": "Could not access microphone. Please check permissions.",
+      "noRecording": "No recording available",
+      "noTranscription": "No transcription available. Please try recording again.",
+      "processing": "Failed to process recording. Please try again.",
+      "recognitionFailed": "Speech recognition failed. Please try again."
+    },
+    "audioNotSupported": "Your browser does not support the audio element."
+  },
+  "paste": {
+    "label": "Paste route information here:",
+    "placeholder": "Paste bus route information here...\n\nExample:\nBus 27D from Chennai to Madurai\nDeparts 6:00 AM, arrives 2:00 PM\nStops: Tambaram, Chengalpattu, Villupuram",
+    "characters": "characters",
+    "validating": "Analyzing...",
+    "validate": "🔍 Analyze Text",
+    "submitting": "Submitting...",
+    "submit": "✅ Submit for Review",
+    "confidence": "Confidence",
+    "formatDetected": "Format Detected",
+    "good": {
+      "title": "Good Examples to Paste:",
+      "official": "Official bus schedules",
+      "tnstc": "Route information from TNSTC website",
+      "whatsapp": "WhatsApp messages about bus routes",
+      "social": "Facebook/Twitter route announcements"
+    },
+    "bad": {
+      "title": "Don't Paste:",
+      "personal": "Personal travel plans (\"I'm going to...\")",
+      "conversations": "Entire WhatsApp conversations",
+      "spam": "Spam or advertisements",
+      "questions": "Questions about routes"
+    },
+    "examples": {
+      "title": "Click to use example:",
+      "whatsapp": "WhatsApp Format",
+      "simple": "Simple Format",
+      "tamil": "Tamil Format"
+    },
+    "validation": {
+      "failed": "Validation Failed",
+      "extracted": "Extracted Information"
+    },
+    "fields": {
+      "busNumber": "Bus Number",
+      "from": "From",
+      "to": "To",
+      "timings": "Timings",
+      "stops": "Stops",
+      "none": "None"
+    },
+    "warnings": {
+      "title": "Warnings:",
+      "lowConfidence": "Low confidence - likely to be rejected by admin. Consider adding more details."
+    },
+    "source": {
+      "label": "Where did you get this information? *",
+      "placeholder": "e.g., TNSTC WhatsApp group, Facebook page, official website",
+      "help": "This helps us verify the information"
+    },
+    "terms": "I confirm this information is publicly available, not copyrighted, and accurate to the best of my knowledge",
+    "errors": {
+      "emptyText": "Please paste some text",
+      "invalidText": "Text validation failed",
+      "validationFailed": "Validation failed",
+      "validateFirst": "Please validate text first",
+      "agreeTerms": "Please agree to the terms",
+      "lowConfidence": "Extracted information has low confidence. Please add more details.",
+      "submitFailed": "Submission failed",
+      "rateLimit": "Too many submissions. Please try again later.",
+      "loginRequired": "Please login to submit paste contributions"
+    }
+  },
   "loading": {
     "message": "Loading, please wait..."
   },
@@ -179,6 +363,135 @@
   },
   "busItem": {
     "noStops": "This is a direct bus with no intermediate stops"
+  },
+  "route": {
+    "busNumber": "Bus Number",
+    "busNumberHint": "Enter the bus number OR route name below",
+    "routeName": "Route Name",
+    "routeNameHint": "Enter the route name OR bus number above",
+    "routeInformation": "Route Information",
+    "departure": "Departure",
+    "arrival": "Arrival",
+    "time": "Time",
+    "timeOptional": "(optional)",
+    "timeRequired": "Required",
+    "originPlaceholder": "e.g., Chennai Central",
+    "destinationPlaceholder": "e.g., Madurai",
+    "intermediateStops": "Intermediate Stops",
+    "stops": "Stops",
+    "addStop": "Add Stop",
+    "addFirstStop": "Add First Stop",
+    "noStopsYet": "No stops added yet",
+    "noStopsDescription": "Add intermediate stops with specific timings for better route tracking",
+    "simpleView": "Simple View",
+    "detailedView": "Detailed View",
+    "stopName": "Stop Name",
+    "arrivalTime": "Arrival Time",
+    "departureTime": "Departure Time",
+    "notes": "Notes (Optional)",
+    "notesPlaceholder": "e.g., Platform 2, Main entrance",
+    "stopNamePlaceholder": "e.g., Central Metro Station",
+    "quickAddStops": "Or quickly add stops (comma-separated)",
+    "stopsPlaceholder": "e.g., Central Station, City Mall, University",
+    "simpleStopsHint": "Quick entry for stop names only",
+    "journeyDuration": "Journey Duration",
+    "stop": "Stop",
+    "fixErrors": "Please fix the following errors:",
+    "locationWarning": "Location Warning",
+    "locationWarningDescription": "Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy."
+  },
+  "contribution": {
+    "communityPowered": "Community Powered",
+    "heroTitle": "Share Your Route Knowledge",
+    "heroDescription": "Help fellow travelers by contributing accurate bus route information. Your local knowledge makes a difference!",
+    "cardTitle": "Add Route Information",
+    "cardSubtitle": "Choose your preferred method to contribute",
+    "successMessage": "Thank you for your contribution!",
+    "errorMessage": "Failed to submit contribution. Please try again.",
+    "verificationSuccess": "Thank you for verifying this route!",
+    "addStopsSuccess": "Thank you for adding stops to this route!",
+    "submitRoute": "Submit Route Information",
+    "busDetails": "Bus Details",
+    "busName": "Bus Name",
+    "busNamePlaceholder": "e.g. SETC Chennai Express",
+    "busNumber": "Bus Number",
+    "busNumberPlaceholder": "e.g. TN-01-1234",
+    "origin": "Origin",
+    "destination": "Destination",
+    "fromLocation": "Origin",
+    "toLocation": "Destination",
+    "routeDetails": "Route Information",
+    "departureTime": "Departure Time",
+    "arrivalTime": "Arrival Time",
+    "time": "Timing",
+    "routeLogic": "Route Logic",
+    "addStops": "Add Stops",
+    "stopsDescription": "If you know intermediate stops on this route, you can add them here. This information is optional but very helpful.",
+    "stopName": "Stop Name",
+    "stopNameHint": "Name of the bus stop or location",
+    "stopNamePlaceholder": "e.g. Vellore Bus Stand",
+    "arrivalTimeHint": "When bus arrives at this stop",
+    "departureTimeHint": "When bus leaves this stop",
+    "addStop": "Add Stop",
+    "addThisStop": "Add this stop to the route",
+    "enterStopName": "Enter stop name first",
+    "stopTimingNote": "Provide at least one time (arrival or departure). Both times help users plan better!",
+    "stopsAdded": "Stops Added",
+    "stop": "Stop",
+    "stopSequence": "Stop Sequence",
+    "optional": "(Optional)",
+    "eitherRequired": "(Either required)",
+    "whenBusLeaves": "When bus leaves origin",
+    "whenBusArrives": "When bus reaches destination",
+    "departs": "Departs",
+    "arrives": "Arrives",
+    "stopDuration": "Stop duration",
+    "removeStop": "Remove this stop",
+    "totalJourneyTime": "Total Journey Time",
+    "totalStops": "Total Stops",
+    "minutes": "mins",
+    "voice": {
+      "successMessage": "Voice contribution submitted successfully!",
+      "errorMessage": "Failed to submit voice contribution. Please try again."
+    },
+    "imageUpload": {
+      "title": "Upload Bus Schedule Image",
+      "description": "Upload a photo of a bus schedule board or timetable. We'll extract the route information automatically.",
+      "descriptionLabel": "Description",
+      "location": "Location",
+      "routeName": "Route Name (Optional)"
+    },
+    "methods": {
+      "manual": "Manual Entry",
+      "manualDesc": "Type bus route details manually",
+      "photo": "Photo Upload",
+      "photoDesc": "Upload bus schedule image",
+      "voice": "Voice Input",
+      "voiceDesc": "Speak the route details",
+      "verify": "Verify Routes",
+      "verifyDesc": "Confirm existing route info",
+      "addStops": "Add Stops",
+      "addStopsDesc": "Add stops to existing routes"
+    }
+  },
+  "addStops": {
+    "title": "Add Stops to Route",
+    "step1": "Select Route",
+    "step2": "Select a Bus",
+    "step3": "Add Stops",
+    "from": "From",
+    "to": "To",
+    "fromPlaceholder": "Enter starting location",
+    "toPlaceholder": "Enter destination",
+    "findBuses": "Find Buses",
+    "stopLocation": "Stop Location",
+    "enterStopName": "Enter stop name",
+    "arrivalTime": "Arrival",
+    "departureTime": "Departure",
+    "addAnotherStop": "Add Another Stop",
+    "submitStops": "Submit Stops",
+    "existingStops": "Existing Stops",
+    "newStops": "New Stops to Add"
   },
   "busTracker": {
     "title": "Help Track Buses",

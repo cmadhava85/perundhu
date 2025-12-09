@@ -272,7 +272,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
           <span style={{ fontSize: '1.5rem' }}>⚠️</span>
           <div>
             <h4 style={{ margin: 0, color: '#dc2626', fontSize: '1rem', fontWeight: '600' }}>
-              Please fix the following errors:
+              {t('route.fixErrors', 'Please fix the following errors:')}
             </h4>
             <ul style={{ margin: '0.5rem 0 0 0', paddingLeft: '1.25rem', color: '#991b1b', fontSize: '0.9rem' }}>
               {Object.values(validationErrors).map((error, idx) => (
@@ -298,10 +298,10 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
           <AlertTriangle size={24} style={{ color: '#d97706', flexShrink: 0 }} />
           <div>
             <h4 style={{ margin: 0, color: '#b45309', fontSize: '1rem', fontWeight: '600' }}>
-              Location Warning
+              {t('route.locationWarning', 'Location Warning')}
             </h4>
             <p style={{ margin: '0.5rem 0 0 0', color: '#92400e', fontSize: '0.9rem' }}>
-              Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy.
+              {t('route.locationWarningDescription', 'Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy.')}
             </p>
           </div>
         </div>
@@ -314,9 +314,9 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
           value={formData.busNumber}
           onChange={handleChange}
           label={t('route.busNumber', 'Bus Number')}
-          placeholder="e.g., 27D, 570, MTC-123"
+          placeholder={t('route.busNumberPlaceholder', 'e.g., 27D, 570, MTC-123')}
           icon="🚌"
-          hint="Enter the bus number OR route name below"
+          hint={t('route.busNumberHint', 'Enter the bus number OR route name below')}
         />
         {validationErrors.busNumber && (
           <span className="error-text" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '0.25rem', display: 'block' }}>
@@ -331,15 +331,15 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         value={formData.route}
         onChange={handleChange}
         label={t('route.routeName', 'Route Name')}
-        placeholder="e.g., Chennai Central - Tambaram Express"
+        placeholder={t('route.routeNamePlaceholder', 'e.g., Chennai Central - Tambaram Express')}
         icon="🛣️"
-        hint="Enter the route name OR bus number above"
+        hint={t('route.routeNameHint', 'Enter the route name OR bus number above')}
       />
       
       <div className="form-section route-details">
         <h3 className="section-title">
           <span className="section-icon">🚌</span>
-          Route Information
+          {t('route.routeInformation', 'Route Information')}
         </h3>
         
         <div className="form-row">
@@ -347,7 +347,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
             <label htmlFor="origin">
               <span className="field-icon">📍</span>
               {t('route.departure', 'Departure')} <span style={{ color: '#dc2626' }}>*</span>
-              {locationVerified.origin && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title="Location verified">✓</span>}
+              {locationVerified.origin && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title={t('route.locationVerified', 'Location verified')}>✓</span>}
             </label>
             <div className="location-time-container">
               <div style={{ flex: 1 }}>
@@ -374,7 +374,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               <div className={`time-input-group ${validationErrors.departureTime ? 'time-error' : ''}`}>
                 <label htmlFor="departureTime" className="time-label">
                   <span className="time-icon">🕐</span>
-                  Time <span style={{ color: '#dc2626' }}>*</span>
+                  {t('route.time', 'Time')} <span style={{ color: '#dc2626' }}>*</span>
                 </label>
                 <input
                   type="time"
@@ -388,7 +388,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                 />
                 {validationErrors.departureTime && (
                   <span className="error-text" style={{ color: '#dc2626', fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>
-                    Required
+                    {t('route.timeRequired', 'Required')}
                   </span>
                 )}
               </div>
@@ -399,7 +399,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
             <label htmlFor="destination">
               <span className="field-icon">🏁</span>
               {t('route.arrival', 'Arrival')} <span style={{ color: '#dc2626' }}>*</span>
-              {locationVerified.destination && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title="Location verified">✓</span>}
+              {locationVerified.destination && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title={t('route.locationVerified', 'Location verified')}>✓</span>}
             </label>
             <div className="location-time-container">
               <div style={{ flex: 1 }}>
@@ -426,7 +426,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               <div className="time-input-group">
                 <label htmlFor="arrivalTime" className="time-label">
                   <span className="time-icon">🕑</span>
-                  Time <span style={{ color: '#6b7280', fontSize: '0.75rem' }}>(optional)</span>
+                  {t('route.time', 'Time')} <span style={{ color: '#6b7280', fontSize: '0.75rem' }}>{t('route.timeOptional', '(optional)')}</span>
                 </label>
                 <input
                   type="time"
@@ -448,7 +448,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
             <div className="duration-card">
               <span className="duration-icon">⏱️</span>
               <div className="duration-info">
-                <span className="duration-label">Journey Duration</span>
+                <span className="duration-label">{t('route.journeyDuration', 'Journey Duration')}</span>
                 <span className="duration-value">
                   {calculateJourneyDuration(formData.departureTime, formData.arrivalTime)}
                 </span>
@@ -463,7 +463,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         <div className="section-header">
           <h3 className="section-title">
             <span className="section-icon">🚏</span>
-            Intermediate Stops ({intermediateStops.length} stops)
+            {t('route.intermediateStops', 'Intermediate Stops')} ({intermediateStops.length} {t('route.stops', 'stops')})
           </h3>
           <div className="stops-actions">
             <button 
@@ -472,7 +472,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               className="add-stop-btn"
             >
               <span className="btn-icon">➕</span>
-              Add Stop
+              {t('route.addStop', 'Add Stop')}
             </button>
             {intermediateStops.length > 0 && (
               <button 
@@ -481,7 +481,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                 className="toggle-view-btn"
               >
                 <span className="btn-icon">{showStopForm ? '📋' : '📝'}</span>
-                {showStopForm ? 'Simple View' : 'Detailed View'}
+                {showStopForm ? t('route.simpleView', 'Simple View') : t('route.detailedView', 'Detailed View')}
               </button>
             )}
           </div>
@@ -490,15 +490,15 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         {intermediateStops.length === 0 ? (
           <div className="empty-stops-state">
             <div className="empty-icon">🚏</div>
-            <h4>No stops added yet</h4>
-            <p>Add intermediate stops with specific timings for better route tracking</p>
+            <h4>{t('route.noStopsYet', 'No stops added yet')}</h4>
+            <p>{t('route.noStopsDescription', 'Add intermediate stops with specific timings for better route tracking')}</p>
             <button 
               type="button" 
               onClick={addStop}
               className="add-first-stop-btn"
             >
               <span className="btn-icon">➕</span>
-              Add First Stop
+              {t('route.addFirstStop', 'Add First Stop')}
             </button>
           </div>
         ) : (
@@ -509,12 +509,12 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                 {intermediateStops.map((stop, index) => (
                   <div key={stop.id} className="stop-card">
                     <div className="stop-header">
-                      <div className="stop-number">Stop {index + 1}</div>
+                      <div className="stop-number">{t('route.stop', 'Stop')} {index + 1}</div>
                       <button 
                         type="button" 
                         onClick={() => removeStop(stop.id)}
                         className="remove-stop-btn"
-                        title="Remove stop"
+                        title={t('route.removeStop', 'Remove stop')}
                       >
                         <span className="btn-icon">❌</span>
                       </button>
@@ -524,7 +524,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                       <div className="stop-name-field">
                         <label>
                           <span className="field-icon">📍</span>
-                          Stop Name
+                          {t('route.stopName', 'Stop Name')}
                           <span className="field-requirement">*</span>
                         </label>
                         <LocationAutocompleteInput
@@ -532,7 +532,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                           name="stopName"
                           value={stop.name}
                           onChange={(value, location) => updateStopName(stop.id, value, location)}
-                          placeholder="e.g., Central Metro Station"
+                          placeholder={t('route.stopNamePlaceholder', 'e.g., Central Metro Station')}
                           label=""
                           required
                         />
@@ -542,7 +542,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                         <div className="timing-field">
                           <label>
                             <span className="field-icon">🕐</span>
-                            Arrival Time
+                            {t('route.arrivalTime', 'Arrival Time')}
                           </label>
                           <input
                             type="time"
@@ -555,7 +555,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                         <div className="timing-field">
                           <label>
                             <span className="field-icon">🕑</span>
-                            Departure Time
+                            {t('route.departureTime', 'Departure Time')}
                           </label>
                           <input
                             type="time"
@@ -569,13 +569,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                       <div className="stop-notes-field">
                         <label>
                           <span className="field-icon">📝</span>
-                          Notes (Optional)
+                          {t('route.notes', 'Notes (Optional)')}
                         </label>
                         <input
                           type="text"
                           value={stop.notes || ''}
                           onChange={(e) => updateStop(stop.id, 'notes', e.target.value)}
-                          placeholder="e.g., Platform 2, Main entrance"
+                          placeholder={t('route.notesPlaceholder', 'e.g., Platform 2, Main entrance')}
                           className="stop-input"
                         />
                       </div>
@@ -589,7 +589,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                 {intermediateStops.map((stop, index) => (
                   <div key={stop.id} className="stop-item">
                     <span className="stop-bullet">•</span>
-                    <span className="stop-name">{stop.name || `Stop ${index + 1}`}</span>
+                    <span className="stop-name">{stop.name || `${t('route.stop', 'Stop')} ${index + 1}`}</span>
                     {stop.arrivalTime && (
                       <span className="stop-time">
                         📍 {stop.arrivalTime}
@@ -621,7 +621,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               name="stops"
               value={formData.stops}
               onChange={handleChange}
-              label={t('route.stops', 'Or quickly add stops (comma-separated)')}
+              label={t('route.quickAddStops', 'Or quickly add stops (comma-separated)')}
               placeholder={t('route.stopsPlaceholder', 'e.g., Central Station, City Mall, University')}
               hint={t('route.simpleStopsHint', 'Quick entry for stop names only')}
               rows={2}
