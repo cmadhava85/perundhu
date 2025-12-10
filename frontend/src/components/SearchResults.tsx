@@ -109,7 +109,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               {t('searchResults.error.title', 'Search Error')}
             </h2>
             <p className="text-body" style={{ color: 'var(--transit-text-secondary)', marginBottom: 'var(--space-4)' }}>
-              {error.message}
+              {t('searchResults.error.message', "We couldn't complete your search right now. Please try again in a moment.")}
             </p>
             <Link to="/" className="transit-button primary">
               {t('searchResults.error.home', 'Back to Search')}

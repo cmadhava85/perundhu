@@ -44,10 +44,55 @@ const ContributionAdminPanel: React.FC = () => {
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
-    if (AuthService.isAdmin() || AuthService.isModerator()) {
-      fetchContributions();
-      fetchStats();
-    }
+    let isMounted = true;
+
+    const loadData = async () => {
+      if (AuthService.isAdmin() || AuthService.isModerator()) {
+        try {
+          setLoading(true);
+          const response = await fetch('/api/v1/admin/contributions', {
+            headers: {
+              'Authorization': `Bearer ${AuthService.getToken()}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (response.ok && isMounted) {
+            const data = await response.json();
+            setContributions(data);
+          }
+        } catch (_error) {
+          // Failed to fetch contributions
+        } finally {
+          if (isMounted) {
+            setLoading(false);
+          }
+        }
+
+        // Fetch stats
+        try {
+          const statsResponse = await fetch('/api/v1/contributions/statistics', {
+            headers: {
+              'Authorization': `Bearer ${AuthService.getToken()}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (statsResponse.ok && isMounted) {
+            const statsData = await statsResponse.json();
+            setStats(statsData);
+          }
+        } catch (_error) {
+          // Failed to fetch stats
+        }
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [filter, typeFilter]);
 
   const fetchContributions = async () => {

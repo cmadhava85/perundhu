@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.ImageContributionOutputPort;

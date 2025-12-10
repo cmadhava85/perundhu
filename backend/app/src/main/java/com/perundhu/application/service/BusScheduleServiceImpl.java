@@ -130,6 +130,29 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 .map(BusDTO::fromDomain)
                 .toList();
     }
+    
+    @Override
+    @Cacheable(value = "busSearchCache", key = "#fromLocationId + '-' + #toLocationId + '-' + #languageCode")
+    public List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId, String languageCode) {
+        LocationId fromId = new LocationId(fromLocationId);
+        LocationId toId = new LocationId(toLocationId);
+
+        List<Bus> buses = busRepository.findBusesBetweenLocations(fromId.value(), toId.value());
+
+        // If English or no language specified, use standard method
+        if (languageCode == null || "en".equals(languageCode)) {
+            return findBusesBetweenLocations(fromLocationId, toLocationId);
+        }
+
+        // Get translations for from and to locations
+        String fromTranslation = getLocationTranslation(fromLocationId, languageCode);
+        String toTranslation = getLocationTranslation(toLocationId, languageCode);
+
+        // Sort and convert to DTO with translations
+        return sortBusesByCurrentTime(buses).stream()
+                .map(bus -> BusDTO.fromDomainWithTranslations(bus, fromTranslation, toTranslation))
+                .toList();
+    }
 
     /**
      * Sort buses so that current/upcoming buses appear first, followed by past
@@ -324,6 +347,42 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 .map(BusDTO::fromDomain)
                 .toList();
     }
+    
+    @Override
+    public List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId, String languageCode) {
+        // If English or no language specified, use standard method
+        if (languageCode == null || "en".equals(languageCode)) {
+            return findBusesPassingThroughLocations(fromLocationId, toLocationId);
+        }
+
+        long startTime = System.currentTimeMillis();
+
+        // Get all location IDs that share the same name as the selected locations
+        List<Long> fromLocationIds = findDuplicateLocationIds(fromLocationId);
+        List<Long> toLocationIds = findDuplicateLocationIds(toLocationId);
+
+        List<Bus> buses;
+        if (fromLocationIds.size() > 1 || toLocationIds.size() > 1) {
+            // Multiple locations with same name - use multi-ID search
+            log.info("Searching across duplicate locations: from {} IDs, to {} IDs",
+                    fromLocationIds.size(), toLocationIds.size());
+            buses = busRepository.findBusesPassingThroughAnyLocations(fromLocationIds, toLocationIds);
+        } else {
+            // Single location - use optimized single-ID query
+            buses = busRepository.findBusesPassingThroughLocations(fromLocationId, toLocationId);
+        }
+
+        log.debug("Found {} buses passing through locations in {}ms", buses.size(),
+                System.currentTimeMillis() - startTime);
+
+        // Get translations for from and to locations
+        String fromTranslation = getLocationTranslation(fromLocationId, languageCode);
+        String toTranslation = getLocationTranslation(toLocationId, languageCode);
+
+        return buses.stream()
+                .map(bus -> BusDTO.fromDomainWithTranslations(bus, fromTranslation, toTranslation))
+                .toList();
+    }
 
     /**
      * Find all location IDs that have the same name as the given location.
@@ -405,12 +464,51 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
     @Override
     public List<Location> searchLocationsByName(String query) {
-        if (query == null || query.trim().length() < 3) {
+        if (query == null || query.trim().length() < 2) {
             return new ArrayList<>();
         }
 
-        // Use the repository method to search for locations by name pattern
-        return locationRepository.findByNameContaining(query.trim());
+        String trimmedQuery = query.trim();
+        List<Location> results = new ArrayList<>();
+        
+        // Detect if query is Tamil text
+        boolean isTamilQuery = trimmedQuery.matches(".*[\\u0B80-\\u0BFF].*");
+        
+        if (isTamilQuery) {
+            log.debug("Tamil search query detected: {}", trimmedQuery);
+            
+            // Search in translations table for Tamil names
+            List<Translation> tamilTranslations = translationRepository.findByEntityTypeAndLanguage(
+                ENTITY_TYPE_LOCATION, "ta");
+            
+            for (Translation translation : tamilTranslations) {
+                String tamilName = translation.getTranslatedValue();
+                if (tamilName != null && tamilName.toLowerCase().contains(trimmedQuery.toLowerCase())) {
+                    // Found a matching Tamil translation - get the location
+                    Optional<Location> location = locationRepository.findById(translation.getEntityId());
+                    if (location.isPresent() && !results.contains(location.get())) {
+                        results.add(location.get());
+                        log.debug("Found location by Tamil search: {} -> {}", 
+                            tamilName, location.get().getName());
+                    }
+                }
+            }
+            
+            // Also try to translate Tamil to English and search in English names
+            // This handles cases where the Tamil name might match an English location
+            // that has a translation stored
+        }
+        
+        // Also search by English name (standard search)
+        List<Location> englishResults = locationRepository.findByNameContaining(trimmedQuery);
+        for (Location loc : englishResults) {
+            if (!results.contains(loc)) {
+                results.add(loc);
+            }
+        }
+        
+        log.debug("Location search for '{}' returned {} results", trimmedQuery, results.size());
+        return results;
     }
 
     @Override
@@ -471,5 +569,25 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         return locations.stream()
                 .map(loc -> loc.id().getValue())
                 .toList();
+    }
+
+    @Override
+    public String getLocationTranslation(Long locationId, String languageCode) {
+        if (locationId == null || languageCode == null) {
+            return null;
+        }
+        
+        // If requesting English, just return the location name directly
+        if ("en".equals(languageCode)) {
+            return locationRepository.findById(locationId)
+                    .map(Location::getName)
+                    .orElse(null);
+        }
+        
+        // Look up translation in translations table
+        Optional<Translation> translation = translationRepository.findTranslation(
+                ENTITY_TYPE_LOCATION, locationId, languageCode, FIELD_NAME);
+        
+        return translation.map(Translation::getTranslatedValue).orElse(null);
     }
 }

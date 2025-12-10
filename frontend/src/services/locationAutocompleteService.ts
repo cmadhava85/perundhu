@@ -86,8 +86,8 @@ export class LocationAutocompleteService {
   }
 
   /**
-   * Database-first search: prioritize database, only use Nominatim if DB returns no results
-   * This prevents unnecessary Nominatim API calls when we have data in the database
+   * Database-first search: prioritize database, then local cities, then Nominatim
+   * This prevents unnecessary Nominatim API calls when we have data locally
    */
   private async searchDatabaseAndNominatimParallel(query: string, limit: number): Promise<LocationSuggestion[]> {
     console.log(`🚀 Starting database-first search for "${query}"`);
@@ -104,7 +104,14 @@ export class LocationAutocompleteService {
         return databaseResults.map(loc => ({ ...loc, source: 'database' }));
       }
       
-      // Only call Nominatim if database is empty
+      // Check instant suggestions (local cities list) before Nominatim
+      const instantResults = GeocodingService.getInstantSuggestions(query, limit);
+      if (instantResults.length > 0) {
+        console.log(`⚡ Using instant suggestions (${instantResults.length}) - skipping Nominatim`);
+        return this.convertToSuggestions(instantResults).map(loc => ({ ...loc, source: 'local' }));
+      }
+      
+      // Only call Nominatim if database and local are empty
       console.log(`⚠️ Database empty, falling back to Nominatim for "${query}"`);
       const nominatimResults = await this.searchNominatimFast(query, limit);
       
@@ -113,12 +120,17 @@ export class LocationAutocompleteService {
         return nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }));
       }
       
-      console.log(`❌ No results found from database or Nominatim`);
+      console.log(`❌ No results found from database, local, or Nominatim`);
       return [];
       
     } catch (error) {
       console.error('Database-first search failed:', error);
-      // Fallback to Nominatim only if database completely fails
+      // Fallback to instant suggestions, then Nominatim
+      const instantResults = GeocodingService.getInstantSuggestions(query, limit);
+      if (instantResults.length > 0) {
+        return this.convertToSuggestions(instantResults).map(loc => ({ ...loc, source: 'local' }));
+      }
+      
       try {
         console.log(`🔄 Fallback: Trying Nominatim only for "${query}"`);
         const nominatimFallback = await this.searchNominatimFast(query, limit);

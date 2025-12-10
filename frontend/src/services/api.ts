@@ -408,7 +408,8 @@ export const searchBuses = async (
       params: {
         fromLocationId: fromLocation.id,
         toLocationId: toLocation.id,
-        includeContinuing
+        includeContinuing,
+        lang: languageCode
       }
     });
     

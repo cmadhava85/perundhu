@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location as AppLocation } from '../types';
+import { locationAutocompleteService, type LocationSuggestion } from '../services/locationAutocompleteService';
 import '../styles/transit-design-system.css';
 
 // Recent search interface
@@ -48,6 +49,12 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   const [selectedToLocation, setSelectedToLocation] = useState<AppLocation | null>(toLocation || null);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  
+  // Dynamic suggestions from autocomplete service (DB + OpenStreetMap)
+  const [dynamicFromSuggestions, setDynamicFromSuggestions] = useState<LocationSuggestion[]>([]);
+  const [dynamicToSuggestions, setDynamicToSuggestions] = useState<LocationSuggestion[]>([]);
+  const [isLoadingFrom, setIsLoadingFrom] = useState(false);
+  const [isLoadingTo, setIsLoadingTo] = useState(false);
   
   // Load recent searches from localStorage
   useEffect(() => {
@@ -146,8 +153,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     }
   }, [i18n.language, locations, selectedFromLocation, selectedToLocation]);
 
-  // Filter locations based on search query
-  const filterLocations = (query: string) => {
+  // Filter locations based on search query - combines static locations with dynamic suggestions
+  const filterLocations = useCallback((query: string): AppLocation[] => {
     if (!query.trim()) return [];
     return locations.filter(location => {
       const displayName = getLocationDisplayName(location);
@@ -155,10 +162,74 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       return displayName.toLowerCase().includes(query.toLowerCase()) ||
              englishName.toLowerCase().includes(query.toLowerCase());
     });
-  };
+  }, [locations]);
 
-  const fromSuggestions = filterLocations(fromQuery);
-  const toSuggestions = filterLocations(toQuery);
+  // Fetch dynamic suggestions when query changes (DB-first, OpenStreetMap fallback)
+  const fetchDynamicSuggestions = useCallback((query: string, isFromField: boolean) => {
+    if (query.trim().length < 3) {
+      if (isFromField) setDynamicFromSuggestions([]);
+      else setDynamicToSuggestions([]);
+      return;
+    }
+    
+    if (isFromField) setIsLoadingFrom(true);
+    else setIsLoadingTo(true);
+    
+    locationAutocompleteService.getDebouncedSuggestions(
+      query,
+      (suggestions) => {
+        if (isFromField) {
+          setDynamicFromSuggestions(suggestions);
+          setIsLoadingFrom(false);
+        } else {
+          setDynamicToSuggestions(suggestions);
+          setIsLoadingTo(false);
+        }
+      },
+      i18n.language
+    );
+  }, [i18n.language]);
+
+  // Convert LocationSuggestion to AppLocation
+  const suggestionToLocation = useCallback((suggestion: LocationSuggestion): AppLocation => ({
+    id: suggestion.id,
+    name: suggestion.name,
+    translatedName: suggestion.translatedName,
+    latitude: suggestion.latitude || 0,
+    longitude: suggestion.longitude || 0,
+    source: (suggestion.source as 'database' | 'nominatim') || 'database'
+  }), []);
+
+  // Combine static and dynamic suggestions, removing duplicates
+  const getCombinedSuggestions = useCallback((query: string, dynamicSuggestions: LocationSuggestion[]): AppLocation[] => {
+    const staticResults = filterLocations(query);
+    const dynamicResults = dynamicSuggestions.map(suggestionToLocation);
+    
+    // Combine and dedupe by ID, preferring database results
+    const seen = new Set<number>();
+    const combined: AppLocation[] = [];
+    
+    // Add static (database) results first
+    for (const loc of staticResults) {
+      if (!seen.has(loc.id)) {
+        seen.add(loc.id);
+        combined.push(loc);
+      }
+    }
+    
+    // Add dynamic results (from autocomplete service)
+    for (const loc of dynamicResults) {
+      if (!seen.has(loc.id)) {
+        seen.add(loc.id);
+        combined.push(loc);
+      }
+    }
+    
+    return combined.slice(0, 10); // Limit to 10 suggestions
+  }, [filterLocations, suggestionToLocation]);
+
+  const fromSuggestions = getCombinedSuggestions(fromQuery, dynamicFromSuggestions);
+  const toSuggestions = getCombinedSuggestions(toQuery, dynamicToSuggestions);
 
   // Handle location selection
     const handleFromSelect = (location: AppLocation) => {
@@ -298,6 +369,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   setSelectedFromLocation(null);
                   setShowFromSuggestions(true);
                   setHighlightedFromIndex(-1);
+                  // Trigger dynamic autocomplete (DB + OpenStreetMap)
+                  fetchDynamicSuggestions(e.target.value, true);
                 }}
                 onFocus={() => setShowFromSuggestions(true)}
                 onBlur={() => {
@@ -344,7 +417,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               />
               
               {/* From Suggestions */}
-              {showFromSuggestions && fromQuery.trim().length >= 2 && fromSuggestions.length === 0 && (
+              {showFromSuggestions && fromQuery.trim().length >= 2 && fromSuggestions.length === 0 && !isLoadingFrom && (
                 <div
                   style={{
                     position: 'absolute',
@@ -367,6 +440,29 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   </div>
                   <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)', marginTop: 'var(--space-1)' }}>
                     {t('search.tryDifferentSearch', 'Try a different search term or check spelling')}
+                  </div>
+                </div>
+              )}
+              {showFromSuggestions && fromQuery.trim().length >= 3 && isLoadingFrom && fromSuggestions.length === 0 && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: 'var(--transit-surface, #fff)',
+                    border: '1px solid var(--transit-divider, #e5e7eb)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    marginTop: 'var(--space-1, 4px)',
+                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+                    zIndex: 9999,
+                    padding: 'var(--space-4)',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{ color: 'var(--transit-primary, #6366F1)', marginBottom: 'var(--space-2)' }}>🔍</div>
+                  <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
+                    {t('search.searching', 'Searching locations...')}
                   </div>
                 </div>
               )}
@@ -423,9 +519,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     >
                       <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit' }}>
                         {getLocationDisplayName(location)}
-                      </div>
-                      <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)' }}>
-                        📍 {location.latitude?.toFixed(4) || 'N/A'}, {location.longitude?.toFixed(4) || 'N/A'}
                       </div>
                     </li>
                   );
@@ -500,6 +593,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   setSelectedToLocation(null);
                   setShowToSuggestions(true);
                   setHighlightedToIndex(-1);
+                  // Trigger dynamic autocomplete (DB + OpenStreetMap)
+                  fetchDynamicSuggestions(e.target.value, false);
                 }}
                 onFocus={() => setShowToSuggestions(true)}
                 onBlur={() => {
@@ -546,7 +641,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               />
               
               {/* To Suggestions */}
-              {showToSuggestions && toQuery.trim().length >= 2 && toSuggestions.length === 0 && (
+              {showToSuggestions && toQuery.trim().length >= 2 && toSuggestions.length === 0 && !isLoadingTo && (
                 <div
                   style={{
                     position: 'absolute',
@@ -569,6 +664,29 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   </div>
                   <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)', marginTop: 'var(--space-1)' }}>
                     {t('search.tryDifferentSearch', 'Try a different search term or check spelling')}
+                  </div>
+                </div>
+              )}
+              {showToSuggestions && toQuery.trim().length >= 3 && isLoadingTo && toSuggestions.length === 0 && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: 'var(--transit-surface, #fff)',
+                    border: '1px solid var(--transit-divider, #e5e7eb)',
+                    borderRadius: 'var(--radius-md, 8px)',
+                    marginTop: 'var(--space-1, 4px)',
+                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+                    zIndex: 9999,
+                    padding: 'var(--space-4)',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{ color: 'var(--transit-primary, #6366F1)', marginBottom: 'var(--space-2)' }}>🔍</div>
+                  <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
+                    {t('search.searching', 'Searching locations...')}
                   </div>
                 </div>
               )}
@@ -625,9 +743,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     >
                       <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit' }}>
                         {getLocationDisplayName(location)}
-                      </div>
-                      <div className="text-footnote" style={{ color: 'var(--transit-text-tertiary)' }}>
-                        📍 {location.latitude?.toFixed(4) || 'N/A'}, {location.longitude?.toFixed(4) || 'N/A'}
                       </div>
                     </li>
                   );

@@ -116,7 +116,38 @@ export const ImageContributionAdminPanel: React.FC = () => {
   }, [showOCRModal, ocrData]);
 
   useEffect(() => {
-    fetchImageContributions();
+    let isMounted = true;
+
+    const loadImageContributions = async () => {
+      try {
+        if (isMounted) {
+          setLoading(true);
+        }
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+        const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          }
+        });
+        const data = await response.json();
+        
+        if (isMounted) {
+          setContributions(data);
+        }
+      } catch (_error) {
+        // Failed to fetch image contributions
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadImageContributions();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const fetchImageContributions = async () => {

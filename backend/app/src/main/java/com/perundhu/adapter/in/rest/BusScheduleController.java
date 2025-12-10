@@ -147,7 +147,7 @@ public class BusScheduleController {
     /**
      * Autocomplete endpoint for location search - public access for contribution
      * forms. Does not return coordinates for privacy. Falls back to OpenStreetMap
-     * if location not found in database.
+     * if location not found in database. Supports Tamil and English search.
      */
     @GetMapping("/locations/autocomplete")
     public ResponseEntity<List<LocationDTO>> getLocationAutocomplete(
@@ -155,8 +155,8 @@ public class BusScheduleController {
             @RequestParam(defaultValue = "en") String language) {
         log.info("Location autocomplete search: '{}' with language: {}", query, language);
 
-        // Validate minimum query length
-        if (query == null || query.trim().length() < 3) {
+        // Validate minimum query length (reduced to 2 to support shorter Tamil words)
+        if (query == null || query.trim().length() < 2) {
             log.warn("Query too short for autocomplete: '{}'", query);
             return ResponseEntity.badRequest().build();
         }
@@ -164,15 +164,35 @@ public class BusScheduleController {
         try {
             List<Location> locations = busScheduleService.searchLocationsByName(query.trim());
 
-            // If locations found in database, return them without coordinates
+            // If locations found in database, return them with appropriate translations
             if (!locations.isEmpty()) {
                 List<LocationDTO> result = locations.stream()
-                        .map(location -> LocationDTO.of(
-                                location.id().value(),
-                                location.name()))
+                        .map(location -> {
+                            String englishName = location.name();
+                            String displayName = englishName;
+                            String translatedName = englishName;
+                            
+                            // If user is searching in Tamil, include Tamil translation in display
+                            if ("ta".equals(language)) {
+                                // Try to get Tamil translation
+                                String tamilName = busScheduleService.getLocationTranslation(
+                                    location.id().value(), "ta");
+                                if (tamilName != null && !tamilName.isEmpty()) {
+                                    translatedName = tamilName;
+                                    displayName = tamilName;  // Show Tamil name
+                                }
+                            }
+                            
+                            return LocationDTO.withTranslation(
+                                    location.id().value(),
+                                    englishName,
+                                    translatedName,
+                                    null, null);  // Don't expose coordinates for privacy
+                        })
                         .toList();
 
-                log.info("Found {} locations in database for query '{}'", result.size(), query);
+                log.info("Found {} locations in database for query '{}' (language: {})", 
+                    result.size(), query, language);
                 return ResponseEntity.ok(result);
             }
 
@@ -192,6 +212,7 @@ public class BusScheduleController {
     /**
      * Public search endpoint with comprehensive results including continuing buses
      * Rate limited to prevent abuse
+     * Enhanced with language support for Tamil and other languages
      */
     @GetMapping("/search")
     public ResponseEntity<PaginatedResponse<BusDTO>> searchPublicRoutes(
@@ -201,14 +222,15 @@ public class BusScheduleController {
             @RequestParam(required = false) String toLocation,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "true") boolean includeContinuing) {
+            @RequestParam(defaultValue = "true") boolean includeContinuing,
+            @RequestParam(defaultValue = "en") String lang) {
 
         // Apply rate limiting
         checkRateLimit(getUserId());
 
         log.info(
-                "Comprehensive search: fromLocationId={}, toLocationId={}, fromLocation='{}', toLocation='{}', page={}, size={}",
-                fromLocationId, toLocationId, fromLocation, toLocation, page, size);
+                "Comprehensive search: fromLocationId={}, toLocationId={}, fromLocation='{}', toLocation='{}', page={}, size={}, lang={}",
+                fromLocationId, toLocationId, fromLocation, toLocation, page, size, lang);
 
         // Limit search results for public access (max 50 per page)
         if (size > 50) {
@@ -226,13 +248,13 @@ public class BusScheduleController {
                     return ResponseEntity.badRequest().build();
                 }
 
-                // Get direct buses
-                List<BusDTO> directBuses = busScheduleService.findBusesBetweenLocations(fromLocationId, toLocationId);
+                // Get direct buses with language support
+                List<BusDTO> directBuses = busScheduleService.findBusesBetweenLocations(fromLocationId, toLocationId, lang);
                 log.info("Found {} direct buses", directBuses.size());
 
-                // Get buses passing through (intermediate stops)
+                // Get buses passing through (intermediate stops) with language support
                 List<BusDTO> viaBuses = busScheduleService.findBusesPassingThroughLocations(fromLocationId,
-                        toLocationId);
+                        toLocationId, lang);
                 log.info("Found {} buses via intermediate stops", viaBuses.size());
 
                 // Get continuing buses if enabled

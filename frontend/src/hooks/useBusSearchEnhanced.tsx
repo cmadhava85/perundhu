@@ -15,10 +15,12 @@ export function useBusSearchEnhanced() {
   const [selectedBusId, setSelectedBusId] = React.useState<number | null>(null);
   const [hasSearched, setHasSearched] = React.useState(false);
 
-  // Use React Query hooks
+  // Use React Query hooks - pass full location objects for proper transformation
   const busSearchQuery = useReactQueryBusSearch({
     fromLocationId: fromLocation?.id ?? null,
     toLocationId: toLocation?.id ?? null,
+    fromLocation: fromLocation,
+    toLocation: toLocation,
     enabled: !!fromLocation && !!toLocation && hasSearched,
   });
 

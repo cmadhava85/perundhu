@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location } from '../../types';
 import { searchBuses, getStops, getLocations } from '../../services/api';
+import { locationAutocompleteService, type LocationSuggestion } from '../../services/locationAutocompleteService';
 import './AddStopsToRoute.css';
 
 interface AddStopsToRouteProps {
@@ -27,7 +28,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   onCancel,
   onError
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   // State for route selection (when not pre-selected)
   const [locations, setLocations] = useState<Location[]>([]);
@@ -49,6 +50,14 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const [newStops, setNewStops] = useState<StopEntry[]>([]);
   const [stopLocationQuery, setStopLocationQuery] = useState('');
   const [showStopSuggestions, setShowStopSuggestions] = useState(false);
+  
+  // Dynamic autocomplete state (DB + local + OpenStreetMap)
+  const [dynamicFromSuggestions, setDynamicFromSuggestions] = useState<LocationSuggestion[]>([]);
+  const [dynamicToSuggestions, setDynamicToSuggestions] = useState<LocationSuggestion[]>([]);
+  const [dynamicStopSuggestions, setDynamicStopSuggestions] = useState<LocationSuggestion[]>([]);
+  const [isLoadingFrom, setIsLoadingFrom] = useState(false);
+  const [isLoadingTo, setIsLoadingTo] = useState(false);
+  const [isLoadingStopSuggestions, setIsLoadingStopSuggestions] = useState(false);
   
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -94,7 +103,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     }
   };
 
-  // Filter locations for suggestions
+  // Filter locations for suggestions (static from pre-loaded locations)
   const filterLocations = useCallback((query: string): Location[] => {
     if (!query || query.length < 2) return [];
     const lowerQuery = query.toLowerCase();
@@ -105,6 +114,83 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       )
       .slice(0, 8);
   }, [locations]);
+
+  // Convert LocationSuggestion to Location
+  const suggestionToLocation = useCallback((suggestion: LocationSuggestion): Location => ({
+    id: suggestion.id,
+    name: suggestion.name,
+    translatedName: suggestion.translatedName,
+    latitude: suggestion.latitude || 0,
+    longitude: suggestion.longitude || 0,
+    source: (suggestion.source as 'database' | 'nominatim' | 'local') || 'database'
+  }), []);
+
+  // Fetch dynamic suggestions (DB + local + OpenStreetMap)
+  const fetchDynamicSuggestions = useCallback((
+    query: string, 
+    type: 'from' | 'to' | 'stop'
+  ) => {
+    if (query.trim().length < 3) {
+      if (type === 'from') setDynamicFromSuggestions([]);
+      else if (type === 'to') setDynamicToSuggestions([]);
+      else setDynamicStopSuggestions([]);
+      return;
+    }
+    
+    if (type === 'from') setIsLoadingFrom(true);
+    else if (type === 'to') setIsLoadingTo(true);
+    else setIsLoadingStopSuggestions(true);
+    
+    locationAutocompleteService.getDebouncedSuggestions(
+      query,
+      (suggestions) => {
+        if (type === 'from') {
+          setDynamicFromSuggestions(suggestions);
+          setIsLoadingFrom(false);
+        } else if (type === 'to') {
+          setDynamicToSuggestions(suggestions);
+          setIsLoadingTo(false);
+        } else {
+          setDynamicStopSuggestions(suggestions);
+          setIsLoadingStopSuggestions(false);
+        }
+      },
+      i18n.language
+    );
+  }, [i18n.language]);
+
+  // Combine static and dynamic suggestions
+  const getCombinedSuggestions = useCallback((
+    query: string, 
+    dynamicSuggestions: LocationSuggestion[]
+  ): Location[] => {
+    const staticResults = filterLocations(query);
+    const dynamicResults = dynamicSuggestions.map(suggestionToLocation);
+    
+    const seen = new Set<number>();
+    const combined: Location[] = [];
+    
+    for (const loc of staticResults) {
+      if (!seen.has(loc.id)) {
+        seen.add(loc.id);
+        combined.push(loc);
+      }
+    }
+    
+    for (const loc of dynamicResults) {
+      if (!seen.has(loc.id)) {
+        seen.add(loc.id);
+        combined.push(loc);
+      }
+    }
+    
+    return combined.slice(0, 10);
+  }, [filterLocations, suggestionToLocation]);
+
+  // Get suggestions for each field
+  const fromSuggestions = getCombinedSuggestions(fromQuery, dynamicFromSuggestions);
+  const toSuggestions = getCombinedSuggestions(toQuery, dynamicToSuggestions);
+  const stopSuggestions = getCombinedSuggestions(stopLocationQuery, dynamicStopSuggestions);
 
   // Search for buses
   const handleSearchBuses = async () => {
@@ -222,10 +308,6 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     }
   };
 
-  const fromSuggestions = filterLocations(fromQuery);
-  const toSuggestions = filterLocations(toQuery);
-  const stopSuggestions = filterLocations(stopLocationQuery);
-
   // Check if bus has missing stops
   const hasMissingStops = selectedBus && existingStops.length < 2;
 
@@ -277,12 +359,14 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                     setFromQuery(e.target.value);
                     setSelectedFrom(null);
                     setShowFromSuggestions(true);
+                    fetchDynamicSuggestions(e.target.value, 'from');
                   }}
                   onFocus={() => setShowFromSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowFromSuggestions(false), 200)}
                   placeholder={t('addStops.fromPlaceholder', 'Enter starting location')}
                   className="location-input"
                 />
+                {isLoadingFrom && <span className="loading-indicator">⏳</span>}
                 {selectedFrom && <span className="verified-badge">✓</span>}
                 {showFromSuggestions && fromSuggestions.length > 0 && (
                   <ul className="suggestions-list" role="listbox">
@@ -324,12 +408,14 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                     setToQuery(e.target.value);
                     setSelectedTo(null);
                     setShowToSuggestions(true);
+                    fetchDynamicSuggestions(e.target.value, 'to');
                   }}
                   onFocus={() => setShowToSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowToSuggestions(false), 200)}
                   placeholder={t('addStops.toPlaceholder', 'Enter destination')}
                   className="location-input"
                 />
+                {isLoadingTo && <span className="loading-indicator">⏳</span>}
                 {selectedTo && <span className="verified-badge">✓</span>}
                 {showToSuggestions && toSuggestions.length > 0 && (
                   <ul className="suggestions-list" role="listbox">
@@ -549,6 +635,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                           handleUpdateStop(index, 'locationName', e.target.value);
                           setStopLocationQuery(e.target.value);
                           setShowStopSuggestions(true);
+                          fetchDynamicSuggestions(e.target.value, 'stop');
                         }}
                         onFocus={() => {
                           setStopLocationQuery(stop.locationName);
@@ -558,6 +645,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                         placeholder={t('addStops.enterStopName', 'Enter stop name')}
                         className="stop-input"
                       />
+                      {isLoadingStopSuggestions && <span className="loading-indicator">⏳</span>}
                       {showStopSuggestions && stopSuggestions.length > 0 && (
                         <ul className="suggestions-list" role="listbox">
                           {stopSuggestions.map(loc => (

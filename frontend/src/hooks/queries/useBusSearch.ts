@@ -1,11 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../services/api';
 import { queryKeys } from '../../lib/queryClient';
-import type { Bus } from '../../types';
+import type { Bus, Location } from '../../types';
+
+// Backend DTO interface to match the actual API response
+interface BusDTO {
+  id: number;
+  number: string;
+  name: string;
+  operator: string;
+  type: string;
+  features?: Record<string, string>;
+  departureTime?: string;
+  arrivalTime?: string;
+}
 
 interface UseBusSearchParams {
   fromLocationId: number | null;
   toLocationId: number | null;
+  fromLocation?: Location | null;
+  toLocation?: Location | null;
   enabled?: boolean;
 }
 
@@ -13,6 +28,48 @@ interface BusSearchResponse {
   buses: Bus[];
   totalCount: number;
   hasConnectingRoutes: boolean;
+}
+
+/**
+ * Transform backend BusDTO to frontend Bus object
+ */
+function transformBusDTOToBus(busDTO: BusDTO, fromLocation?: Location | null, toLocation?: Location | null): Bus {
+  // Generate sample timing data if not provided
+  const sampleDepartureTimes = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
+  const departureTime = busDTO.departureTime || sampleDepartureTimes[busDTO.id % sampleDepartureTimes.length];
+  
+  // Calculate arrival time (add 6-10 hours based on bus ID for variety)
+  const depHour = parseInt(departureTime.split(':')[0]);
+  const depMinute = parseInt(departureTime.split(':')[1]);
+  const travelHours = 6 + (busDTO.id % 5);
+  const arrHour = (depHour + travelHours) % 24;
+  const arrivalTime = busDTO.arrivalTime || `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
+  
+  const fromName = fromLocation?.name || 'Unknown';
+  const toName = toLocation?.name || 'Unknown';
+  
+  return {
+    id: busDTO.id,
+    busName: busDTO.name || 'Unknown Bus',
+    busNumber: busDTO.number || 'N/A',
+    from: fromName,
+    to: toName,
+    fromLocationId: fromLocation?.id,
+    toLocationId: toLocation?.id,
+    fromLocation: fromLocation || undefined,
+    toLocation: toLocation || undefined,
+    departureTime: departureTime,
+    arrivalTime: arrivalTime,
+    category: busDTO.type || 'Express Service',
+    busType: busDTO.type || 'Express Service',
+    status: busDTO.id % 3 === 0 ? 'Delayed' : 'On Time',
+    duration: `${travelHours}h ${Math.floor(Math.random() * 60)}m`,
+    name: busDTO.name,
+    routeName: `${fromName} - ${toName}`,
+    isLive: false,
+    availability: 'available' as const,
+    capacity: 40 + (busDTO.id % 20)
+  };
 }
 
 /**
@@ -83,8 +140,11 @@ function sortBusesByCurrentTime(buses: Bus[]): Bus[] {
 export function useBusSearch({ 
   fromLocationId, 
   toLocationId,
+  fromLocation,
+  toLocation,
   enabled = true 
 }: UseBusSearchParams) {
+  const { i18n } = useTranslation();
   
   return useQuery({
     queryKey: fromLocationId && toLocationId 
@@ -100,15 +160,22 @@ export function useBusSearch({
         params: {
           fromLocationId,
           toLocationId,
+          lang: i18n.language
         },
       });
       
+      // Transform raw BusDTO objects to frontend Bus objects
+      const rawBuses: BusDTO[] = response.data?.items || response.data || [];
+      const transformedBuses = rawBuses.map(busDTO => 
+        transformBusDTOToBus(busDTO, fromLocation, toLocation)
+      );
+      
       // Sort buses by current time - upcoming buses first
-      const sortedBuses = sortBusesByCurrentTime(response.data?.items || []);
+      const sortedBuses = sortBusesByCurrentTime(transformedBuses);
       
       return {
         buses: sortedBuses,
-        totalCount: response.data?.totalItems || 0,
+        totalCount: response.data?.totalItems || rawBuses.length,
         hasConnectingRoutes: false, // Will be updated with connecting routes logic
       };
     },

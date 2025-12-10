@@ -46,7 +46,7 @@ export const RouteContribution: React.FC = () => {
   const [voiceTranscription, setVoiceTranscription] = useState<string>('');
   
   // Store pre-selected bus for AddStopsToRoute component
-  const preSelectedBus = navigationState?.selectedBus || null;
+  const preSelectedBus = navigationState?.selectedBus || undefined;
 
   // Update selected method if current method becomes disabled
   useEffect(() => {

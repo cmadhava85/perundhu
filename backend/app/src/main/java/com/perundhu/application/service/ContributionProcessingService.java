@@ -91,6 +91,7 @@ public class ContributionProcessingService {
     private final LocationValidationService locationValidationService;
     private final NotificationService notificationService;
     private final RouteContributionValidationService validationService;
+    private final LocationTranslationService locationTranslationService;
 
     /**
      * Scheduled job to process pending route contributions
@@ -445,40 +446,69 @@ public class ContributionProcessingService {
      * Get an existing location or create a new one.
      * This method uses multiple strategies to find existing locations and avoid
      * duplicates:
-     * 1. Case-insensitive exact name match
-     * 2. Normalized name match (trimmed, standardized case)
-     * 3. Nearby coordinates match (if provided)
-     * 4. Only creates new location if no match found
+     * 1. Check if input is Tamil and try to find by translation
+     * 2. Case-insensitive exact name match
+     * 3. Normalized name match (trimmed, standardized case)
+     * 4. Nearby coordinates match (if provided)
+     * 5. Only creates new location if no match found
+     * 6. Stores both English and Tamil translations when creating
      */
     private Location getOrCreateLocation(String name, Double latitude, Double longitude) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Location name cannot be null or empty");
         }
 
-        // Normalize the name: trim whitespace and standardize case
-        String normalizedName = normalizePlaceName(name);
+        String originalName = name.trim();
+        String detectedLanguage = locationTranslationService.detectLanguage(originalName);
+        boolean isTamilInput = "ta".equals(detectedLanguage);
+        
+        log.debug("getOrCreateLocation called with: {} (detected language: {})", originalName, detectedLanguage);
+
+        // Strategy 0: If Tamil text, try to find existing location by translation lookup
+        if (isTamilInput) {
+            Optional<Location> translatedMatch = locationTranslationService.findLocationByAnyLanguage(originalName);
+            if (translatedMatch.isPresent()) {
+                log.info("Found existing location by Tamil translation: {} -> {} (ID: {})",
+                        originalName, translatedMatch.get().name(), translatedMatch.get().id().value());
+                return translatedMatch.get();
+            }
+        }
+
+        // Get the English name for database storage
+        String englishName = locationTranslationService.getEnglishName(originalName);
+        String normalizedName = normalizePlaceName(englishName);
 
         // Strategy 1: Try exact name match (case-insensitive)
         var existingByName = locationRepository.findByExactName(normalizedName);
         if (existingByName.isPresent()) {
             log.debug("Found existing location by exact name: {} (ID: {})",
                     normalizedName, existingByName.get().id().value());
+            // If original input was Tamil, ensure translation is saved
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(existingByName.get(), originalName);
+            }
             return existingByName.get();
         }
 
         // Strategy 2: Try with original name (case might differ)
-        existingByName = locationRepository.findByExactName(name.trim());
+        existingByName = locationRepository.findByExactName(englishName);
         if (existingByName.isPresent()) {
             log.debug("Found existing location by trimmed name: {} (ID: {})",
-                    name.trim(), existingByName.get().id().value());
+                    englishName, existingByName.get().id().value());
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(existingByName.get(), originalName);
+            }
             return existingByName.get();
         }
 
         // Strategy 3: Try uppercase version (for OCR-extracted names like "SIVAKASI")
-        existingByName = locationRepository.findByExactName(name.trim().toUpperCase());
+        existingByName = locationRepository.findByExactName(englishName.toUpperCase());
         if (existingByName.isPresent()) {
             log.debug("Found existing location by uppercase name: {} (ID: {})",
-                    name.trim().toUpperCase(), existingByName.get().id().value());
+                    englishName.toUpperCase(), existingByName.get().id().value());
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(existingByName.get(), originalName);
+            }
             return existingByName.get();
         }
 
@@ -489,6 +519,9 @@ public class ContributionProcessingService {
             if (nearbyLocation.isPresent()) {
                 log.debug("Found existing location by coordinates: {} (ID: {})",
                         nearbyLocation.get().name(), nearbyLocation.get().id().value());
+                if (isTamilInput) {
+                    locationTranslationService.saveLocationTranslation(nearbyLocation.get(), originalName);
+                }
                 return nearbyLocation.get();
             }
         }
@@ -500,18 +533,32 @@ public class ContributionProcessingService {
             Location matched = partialMatches.get(0);
             log.debug("Found existing location by partial match: {} (ID: {})",
                     matched.name(), matched.id().value());
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(matched, originalName);
+            }
             return matched;
         }
 
-        // No existing location found - create new one with normalized name
-        log.info("Creating new location: {} (lat: {}, lon: {})", normalizedName, latitude, longitude);
-        var newLocation = Location.withCoordinates(
-                null, // ID will be generated
-                normalizedName,
-                latitude,
-                longitude);
-
-        return locationRepository.save(newLocation);
+        // No existing location found - create new one with English name and Tamil translation
+        log.info("Creating new location: {} (original input: {}, lat: {}, lon: {})", 
+                normalizedName, originalName, latitude, longitude);
+        
+        // Determine Tamil name to store
+        String tamilName = null;
+        if (isTamilInput) {
+            tamilName = originalName; // Original was Tamil
+        } else {
+            // Try to get Tamil translation for English name
+            Optional<String> translatedTamil = locationTranslationService.getTamilName(normalizedName);
+            tamilName = translatedTamil.orElse(null);
+        }
+        
+        // Create location with English name
+        Location newLocation = locationTranslationService.createLocationWithTranslation(
+                normalizedName, latitude, longitude, tamilName);
+        
+        log.info("Created new location: {} with Tamil translation: {}", normalizedName, tamilName);
+        return newLocation;
     }
 
     /**

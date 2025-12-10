@@ -13,7 +13,11 @@ public class RouteContribution {
     private String busName;
     private String busNumber;
     private String fromLocationName;
+    private String fromLocationTranslatedName; // Translation in user's preferred language
+    private String fromLocationTaName; // Tamil name for the from location
     private String toLocationName;
+    private String toLocationTranslatedName; // Translation in user's preferred language
+    private String toLocationTaName; // Tamil name for the to location
     private Double fromLatitude;
     private Double fromLongitude;
     private Double toLatitude;
@@ -52,7 +56,11 @@ public class RouteContribution {
                 .busName(this.busName)
                 .busNumber(this.busNumber)
                 .fromLocationName(this.fromLocationName)
+                .fromLocationTranslatedName(this.fromLocationTranslatedName)
+                .fromLocationTaName(this.fromLocationTaName)
                 .toLocationName(this.toLocationName)
+                .toLocationTranslatedName(this.toLocationTranslatedName)
+                .toLocationTaName(this.toLocationTaName)
                 .fromLatitude(this.fromLatitude)
                 .fromLongitude(this.fromLongitude)
                 .toLatitude(this.toLatitude)
@@ -112,12 +120,44 @@ public class RouteContribution {
         this.fromLocationName = fromLocationName;
     }
 
+    public String getFromLocationTranslatedName() {
+        return fromLocationTranslatedName;
+    }
+
+    public void setFromLocationTranslatedName(String fromLocationTranslatedName) {
+        this.fromLocationTranslatedName = fromLocationTranslatedName;
+    }
+
+    public String getFromLocationTaName() {
+        return fromLocationTaName;
+    }
+
+    public void setFromLocationTaName(String fromLocationTaName) {
+        this.fromLocationTaName = fromLocationTaName;
+    }
+
     public String getToLocationName() {
         return toLocationName;
     }
 
     public void setToLocationName(String toLocationName) {
         this.toLocationName = toLocationName;
+    }
+
+    public String getToLocationTranslatedName() {
+        return toLocationTranslatedName;
+    }
+
+    public void setToLocationTranslatedName(String toLocationTranslatedName) {
+        this.toLocationTranslatedName = toLocationTranslatedName;
+    }
+
+    public String getToLocationTaName() {
+        return toLocationTaName;
+    }
+
+    public void setToLocationTaName(String toLocationTaName) {
+        this.toLocationTaName = toLocationTaName;
     }
 
     public Double getFromLatitude() {
@@ -277,8 +317,28 @@ public class RouteContribution {
             return this;
         }
 
+        public RouteContributionBuilder fromLocationTranslatedName(String fromLocationTranslatedName) {
+            contribution.setFromLocationTranslatedName(fromLocationTranslatedName);
+            return this;
+        }
+
+        public RouteContributionBuilder fromLocationTaName(String fromLocationTaName) {
+            contribution.setFromLocationTaName(fromLocationTaName);
+            return this;
+        }
+
         public RouteContributionBuilder toLocationName(String toLocationName) {
             contribution.setToLocationName(toLocationName);
+            return this;
+        }
+
+        public RouteContributionBuilder toLocationTranslatedName(String toLocationTranslatedName) {
+            contribution.setToLocationTranslatedName(toLocationTranslatedName);
+            return this;
+        }
+
+        public RouteContributionBuilder toLocationTaName(String toLocationTaName) {
+            contribution.setToLocationTaName(toLocationTaName);
             return this;
         }
 

@@ -18,23 +18,29 @@ export const useBusLocationData = (
   const [busLocations, setBusLocations] = useState<BusLocation[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const intervalRef = useRef<number | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     // Skip fetching if live tracking is disabled OR buses array is empty
-    if (!showLiveTracking || (buses !== undefined && buses.length === 0)) return;
+    if (!showLiveTracking || buses?.length === 0) return;
+    
+    let isMounted = true;
     
     // Check for test environment to prevent infinite loops
     const isTestEnvironment = 
       typeof process !== 'undefined' && 
-      process.env && 
-      process.env.NODE_ENV === 'test';
+      process.env?.NODE_ENV === 'test';
     
     const loadBusLocations = async () => {
+      if (!isMounted) return;
+      
       try {
         setIsLoading(true);
         // Get all current bus locations
         const locations = await getCurrentBusLocations();
+        
+        // Only update state if component is still mounted
+        if (!isMounted) return;
         
         // Filter locations based on fromLocation and toLocation with exact matching
         const filteredLocations = locations.filter(loc => 
@@ -47,10 +53,14 @@ export const useBusLocationData = (
         setBusLocations(filteredLocations);
         setError(null);
       } catch (err) {
+        // Only update error state if still mounted
+        if (!isMounted) return;
         console.error('Error loading bus locations:', err);
         setError(t('liveTracker.loadError', 'Could not load bus locations'));
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
@@ -61,15 +71,16 @@ export const useBusLocationData = (
     if (!isTestEnvironment) {
       // Clear any existing interval
       if (intervalRef.current !== null) {
-        window.clearInterval(intervalRef.current);
+        globalThis.clearInterval(intervalRef.current);
       }
       // Set new interval
-      intervalRef.current = window.setInterval(loadBusLocations, refreshInterval);
+      intervalRef.current = globalThis.setInterval(loadBusLocations, refreshInterval);
     }
 
     return () => {
+      isMounted = false;
       if (intervalRef.current !== null) {
-        window.clearInterval(intervalRef.current);
+        globalThis.clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
     };

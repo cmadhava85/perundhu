@@ -63,19 +63,19 @@ export const featureFlags: FeatureFlags = {
    * Enables users to verify and validate existing routes.
    * Crowdsourced accuracy improvement for route data.
    * 
-   * Status: STABLE (Enabled by default)
+   * Status: DISABLED - Not needed on contribution page
    */
-  enableRouteVerification: getEnv('VITE_ENABLE_ROUTE_VERIFICATION') !== 'false',
+  enableRouteVerification: false,
   
   /**
    * Add Stops to Route Feature
    * 
    * Enables users to add intermediate stops to existing routes.
-   * Helps fill in missing stop data for routes that only have from/to.
+   * Note: This is accessible from search results via "Add Stops" button.
    * 
-   * Status: STABLE (Enabled by default)
+   * Status: DISABLED - Accessible from search results instead
    */
-  enableAddStops: getEnv('VITE_ENABLE_ADD_STOPS') !== 'false',
+  enableAddStops: false,
 };
 
 /**

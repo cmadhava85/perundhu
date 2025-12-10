@@ -48,6 +48,16 @@ public interface BusScheduleService {
      * @return List of buses that travel directly between the locations
      */
     List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId);
+    
+    /**
+     * Find direct buses between two locations with translated location names
+     * 
+     * @param fromLocationId Starting location ID
+     * @param toLocationId   Destination location ID
+     * @param languageCode   Language code for translations (e.g., "ta" for Tamil)
+     * @return List of buses with translated location names
+     */
+    List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId, String languageCode);
 
     /**
      * Find buses that pass through both locations as stops (including intermediate
@@ -60,6 +70,16 @@ public interface BusScheduleService {
      * @return List of buses that pass through both locations
      */
     List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId);
+    
+    /**
+     * Find buses that pass through both locations with translated location names
+     * 
+     * @param fromLocationId Starting location ID
+     * @param toLocationId   Destination location ID
+     * @param languageCode   Language code for translations (e.g., "ta" for Tamil)
+     * @return List of buses with translated location names
+     */
+    List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId, String languageCode);
 
     /**
      * Get stops for a specific bus with language support
@@ -171,4 +191,13 @@ public interface BusScheduleService {
      * @return List of location IDs matching the name
      */
     List<Long> findLocationIdsByName(String locationName);
+
+    /**
+     * Get location translation for a specific language.
+     * 
+     * @param locationId The location ID
+     * @param languageCode The language code (e.g., "ta" for Tamil, "en" for English)
+     * @return The translated name, or null if not found
+     */
+    String getLocationTranslation(Long locationId, String languageCode);
 }

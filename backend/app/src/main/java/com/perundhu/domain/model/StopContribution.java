@@ -6,6 +6,8 @@ package com.perundhu.domain.model;
  */
 public class StopContribution {
     private String name;
+    private String translatedName; // Translation in user's preferred language
+    private String taName; // Tamil name for the stop
     private Double latitude;
     private Double longitude;
     private String arrivalTime;
@@ -17,9 +19,11 @@ public class StopContribution {
     }
 
     // Full constructor
-    public StopContribution(String name, Double latitude, Double longitude,
+    public StopContribution(String name, String translatedName, String taName, Double latitude, Double longitude,
             String arrivalTime, String departureTime, Integer stopOrder) {
         this.name = name;
+        this.translatedName = translatedName;
+        this.taName = taName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.arrivalTime = arrivalTime;
@@ -27,6 +31,12 @@ public class StopContribution {
         this.stopOrder = stopOrder;
 
         validateCoordinates();
+    }
+
+    // Backward compatible constructor (without translation fields)
+    public StopContribution(String name, Double latitude, Double longitude,
+            String arrivalTime, String departureTime, Integer stopOrder) {
+        this(name, null, null, latitude, longitude, arrivalTime, departureTime, stopOrder);
     }
 
     // Validation method
@@ -49,6 +59,22 @@ public class StopContribution {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTranslatedName() {
+        return translatedName;
+    }
+
+    public void setTranslatedName(String translatedName) {
+        this.translatedName = translatedName;
+    }
+
+    public String getTaName() {
+        return taName;
+    }
+
+    public void setTaName(String taName) {
+        this.taName = taName;
     }
 
     public Double getLatitude() {
@@ -101,6 +127,8 @@ public class StopContribution {
 
     public static class Builder {
         private String name;
+        private String translatedName;
+        private String taName;
         private Double latitude;
         private Double longitude;
         private String arrivalTime;
@@ -109,6 +137,16 @@ public class StopContribution {
 
         public Builder name(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder translatedName(String translatedName) {
+            this.translatedName = translatedName;
+            return this;
+        }
+
+        public Builder taName(String taName) {
+            this.taName = taName;
             return this;
         }
 
@@ -138,7 +176,7 @@ public class StopContribution {
         }
 
         public StopContribution build() {
-            return new StopContribution(name, latitude, longitude, arrivalTime, departureTime, stopOrder);
+            return new StopContribution(name, translatedName, taName, latitude, longitude, arrivalTime, departureTime, stopOrder);
         }
     }
 
@@ -146,6 +184,8 @@ public class StopContribution {
     public String toString() {
         return "StopContribution{" +
                 "name='" + name + '\'' +
+                ", translatedName='" + translatedName + '\'' +
+                ", taName='" + taName + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", arrivalTime='" + arrivalTime + '\'' +
