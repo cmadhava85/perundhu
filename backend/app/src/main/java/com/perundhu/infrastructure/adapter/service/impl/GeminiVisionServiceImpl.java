@@ -55,39 +55,69 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   // The prompt template for extracting bus schedule information
   // Using compact pipe-delimited format to minimize token usage
   private static final String BUS_SCHEDULE_PROMPT = """
-      Extract bus schedule from this Tamil Nadu bus timing board image.
+      Extract ALL bus routes and schedules from this Tamil Nadu bus timing board image.
+      The text in the image may be in Tamil (தமிழ்), English, or mixed.
+      IMPORTANT: Extract EVERY SINGLE route visible in the image. Do not skip any routes.
+
+      TAMIL TEXT HANDLING:
+      - If text is in Tamil script (e.g., மதுரை, சென்னை, சிவகாசி), convert to English transliteration
+      - Use standard English spellings for Tamil place names:
+        * சென்னை → Chennai, மதுரை → Madurai, கோயம்புத்தூர் → Coimbatore
+        * திருச்சி → Trichy, சேலம் → Salem, திருநெல்வேலி → Tirunelveli
+        * சிவகாசி → Sivakasi, அருப்புக்கோட்டை → Aruppukkottai, ராமேஸ்வரம் → Rameswaram
+        * விருதுநகர் → Virudhunagar, தேனி → Theni, திண்டுக்கல் → Dindigul
+        * நாகர்கோவில் → Nagercoil, கன்னியாகுமரி → Kanyakumari
+      - For Tamil text not recognized, provide best phonetic English transliteration
 
       Return ONLY in this compact format (no markdown, no explanation):
 
-      ORIGIN:station_name
-      TYPE:departure_board|route_schedule|destination_table
-      TIMES:HH:MM,HH:MM,HH:MM,...
+      ORIGIN:station_name (the bus stand or station where this board is located)
+      TYPE:departure_board|route_schedule|destination_table|arrival_board
       ROUTES:
-      bus_num|destination|via1,via2|time1,time2|bus_type
-      bus_num|destination|via1,via2|time1,time2|bus_type
+      bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+      bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+      (list ALL routes, one per line)
       END
 
-      Example for departure times board:
-      ORIGIN:SIVAKASI
-      TYPE:departure_board
-      TIMES:01:10,01:20,02:00,03:30,04:15
-      ROUTES:
-      END
+      FIELD DEFINITIONS:
+      - bus_num: Route number or bus number (e.g., 166UD, 42A, 520)
+      - from_location: Departure/origin station in English (use ORIGIN if same as board location)
+      - to_location: Final destination station in English
+      - via_stops: Intermediate stops in English, separated by commas (e.g., Dindigul,Trichy,Salem)
+      - dep_time: Departure times in 24-hour format, comma-separated (e.g., 06:00,14:30,22:00)
+      - arr_time: Arrival times if shown, comma-separated (use - if not available)
+      - bus_type: Type of bus (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, etc.)
 
-      Example for route schedule:
+      EXAMPLE 1 - Tamil text board (மதுரை பேருந்து நிலையம்):
       ORIGIN:MADURAI
       TYPE:route_schedule
-      TIMES:
       ROUTES:
-      166UD|CHENNAI|Dindigul,Trichy|06:00,14:30|EXPRESS
-      520UD|BANGALORE|Salem,Krishnagiri|08:00,20:00|DELUXE
+      166UD|MADURAI|CHENNAI|Dindigul,Trichy,Villupuram|06:00,14:30|12:00,20:30|EXPRESS
+      520UD|MADURAI|BANGALORE|Theni,Cumbum,Salem,Krishnagiri|08:00,20:00|14:00,02:00|DELUXE
+      42|MADURAI|COIMBATORE|Palani,Pollachi|07:30,09:00,15:00|-|ORDINARY
+      88A|MADURAI|TIRUNELVELI|Virudhunagar,Kovilpatti|10:00,16:30|12:30,19:00|EXPRESS
+      17|MADURAI|RAMESHWARAM|Paramakudi,Ramanathapuram|05:30,11:00,17:00|09:00,14:30,20:30|ORDINARY
       END
 
-      RULES:
-      - Use 24-hour HH:MM format
-      - Use English names (e.g., Chennai not சென்னை)
-      - Leave field empty if not visible (use - as placeholder)
-      - List ALL times you can read from the image
+      EXAMPLE 2 - Departure times only board:
+      ORIGIN:SIVAKASI
+      TYPE:departure_board
+      ROUTES:
+      101|SIVAKASI|CHENNAI|-|06:00,18:00|-|EXPRESS
+      202|SIVAKASI|MADURAI|-|07:00,09:00,11:00,14:00,17:00,20:00|-|ORDINARY
+      END
+
+      CRITICAL RULES:
+      - Extract EVERY route visible in the image - do not summarize or skip any
+      - Convert ALL Tamil text to English transliteration (e.g., சென்னை → Chennai)
+      - Use 24-hour HH:MM format for all times
+      - Use - as placeholder for missing/unavailable information
+      - List ALL departure times for each route, separated by commas
+      - List ALL arrival times if shown, matching the order of departure times
+      - Include ALL intermediate stops/via points in order (in English)
+      - Preserve the exact bus type shown (EXPRESS, DELUXE, SUPER DELUXE, AC SLEEPER, etc.)
+      - If origin is shown on the board, use it as from_location for all routes
+      - Count the routes in the image and ensure you output that exact count
       """;
 
   @Value("${gemini.api.key:}")
@@ -201,7 +231,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     // Add generation config for JSON output
     ObjectNode generationConfig = objectMapper.createObjectNode();
     generationConfig.put("temperature", 0.1); // Low temperature for consistent output
-    generationConfig.put("maxOutputTokens", 4096); // Increased for longer bus schedule responses
+    generationConfig.put("maxOutputTokens", 8192); // Increased for extracting all routes
     root.set("generationConfig", generationConfig);
 
     return objectMapper.writeValueAsString(root);
@@ -339,81 +369,162 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       } else if (line.equals("ROUTES:")) {
         inRoutes = true;
       } else if (inRoutes && line.contains("|")) {
-        // Parse route: bus_num|destination|via1,via2|time1,time2|bus_type
+        // Parse route: bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+        // Also supports legacy format: bus_num|destination|via1,via2|time1,time2|bus_type
         String[] parts = line.split("\\|", -1);
         if (parts.length >= 2) {
           Map<String, Object> route = new HashMap<>();
 
-          if (parts.length > 0 && !parts[0].trim().equals("-")) {
+          // Field 0: Route/Bus number
+          if (parts.length > 0 && !parts[0].trim().equals("-") && !parts[0].trim().isEmpty()) {
             route.put("routeNumber", parts[0].trim());
           }
-          if (parts.length > 1 && !parts[1].trim().equals("-")) {
-            route.put("destination", normalizeLocationName(parts[1].trim()));
-            route.put("toLocation", normalizeLocationName(parts[1].trim()));
-          }
-          if (parts.length > 2 && !parts[2].trim().equals("-") && !parts[2].trim().isEmpty()) {
-            List<String> via = new ArrayList<>();
-            for (String v : parts[2].split(",")) {
-              v = v.trim();
-              if (!v.isEmpty())
-                via.add(normalizeLocationName(v));
-            }
-            if (!via.isEmpty())
-              route.put("via", via);
-          }
 
-          // Parse times from field 3 (expected position)
-          List<String> times = new ArrayList<>();
-          if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
-            for (String t : parts[3].split(",")) {
-              t = t.trim();
-              if (t.matches("\\d{1,2}:\\d{2}")) {
-                times.add(normalizeTime(t));
+          // Detect format based on number of fields
+          boolean isNewFormat = parts.length >= 6;
+          
+          if (isNewFormat) {
+            // NEW FORMAT: bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+            
+            // Field 1: From location
+            if (parts.length > 1 && !parts[1].trim().equals("-") && !parts[1].trim().isEmpty()) {
+              String fromLoc = parts[1].trim();
+              // Handle "ORIGIN" keyword - use the board origin
+              if (fromLoc.equalsIgnoreCase("ORIGIN") && result.containsKey("fromLocation")) {
+                route.put("fromLocation", result.get("fromLocation"));
+              } else {
+                route.put("fromLocation", normalizeLocationName(fromLoc));
+              }
+            } else if (result.containsKey("fromLocation")) {
+              route.put("fromLocation", result.get("fromLocation"));
+            }
+            
+            // Field 2: To location (destination)
+            if (parts.length > 2 && !parts[2].trim().equals("-") && !parts[2].trim().isEmpty()) {
+              route.put("destination", normalizeLocationName(parts[2].trim()));
+              route.put("toLocation", normalizeLocationName(parts[2].trim()));
+            }
+            
+            // Field 3: Via stops (intermediate stops)
+            if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
+              List<String> via = new ArrayList<>();
+              for (String v : parts[3].split(",")) {
+                v = v.trim();
+                if (!v.isEmpty()) {
+                  via.add(normalizeLocationName(v));
+                }
+              }
+              if (!via.isEmpty()) {
+                route.put("via", via);
+                route.put("intermediateStops", via);
               }
             }
-          }
+            
+            // Field 4: Departure times
+            List<String> depTimes = new ArrayList<>();
+            if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
+              for (String t : parts[4].split(",")) {
+                t = t.trim();
+                if (t.matches("\\d{1,2}:\\d{2}")) {
+                  depTimes.add(normalizeTime(t));
+                }
+              }
+            }
+            if (!depTimes.isEmpty()) {
+              route.put("departureTimes", depTimes);
+              route.put("timings", depTimes);
+              route.put("departureTime", depTimes.get(0));
+            }
+            
+            // Field 5: Arrival times
+            List<String> arrTimes = new ArrayList<>();
+            if (parts.length > 5 && !parts[5].trim().equals("-") && !parts[5].trim().isEmpty()) {
+              for (String t : parts[5].split(",")) {
+                t = t.trim();
+                if (t.matches("\\d{1,2}:\\d{2}")) {
+                  arrTimes.add(normalizeTime(t));
+                }
+              }
+            }
+            if (!arrTimes.isEmpty()) {
+              route.put("arrivalTimes", arrTimes);
+              route.put("arrivalTime", arrTimes.get(0));
+            }
+            
+            // Field 6: Bus type
+            if (parts.length > 6 && !parts[6].trim().equals("-") && !parts[6].trim().isEmpty()) {
+              route.put("busType", parts[6].trim().toUpperCase());
+            }
+            
+          } else {
+            // LEGACY FORMAT: bus_num|destination|via1,via2|time1,time2|bus_type
+            
+            if (parts.length > 1 && !parts[1].trim().equals("-")) {
+              route.put("destination", normalizeLocationName(parts[1].trim()));
+              route.put("toLocation", normalizeLocationName(parts[1].trim()));
+            }
+            if (parts.length > 2 && !parts[2].trim().equals("-") && !parts[2].trim().isEmpty()) {
+              List<String> via = new ArrayList<>();
+              for (String v : parts[2].split(",")) {
+                v = v.trim();
+                if (!v.isEmpty())
+                  via.add(normalizeLocationName(v));
+              }
+              if (!via.isEmpty()) {
+                route.put("via", via);
+                route.put("intermediateStops", via);
+              }
+            }
 
-          // If no times found in field 3, check field 4 (sometimes Gemini puts times
-          // here)
-          if (times.isEmpty() && parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
-            String field4 = parts[4].trim();
-            // Check if field4 looks like comma-separated times (e.g., "18:15,20:15")
-            if (field4.matches(".*\\d{1,2}:\\d{2}.*")) {
-              for (String t : field4.split(",")) {
+            // Parse times from field 3 (expected position)
+            List<String> times = new ArrayList<>();
+            if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
+              for (String t : parts[3].split(",")) {
                 t = t.trim();
                 if (t.matches("\\d{1,2}:\\d{2}")) {
                   times.add(normalizeTime(t));
                 }
               }
-              // If we extracted times from field 4, don't set busType from field 4
-              if (!times.isEmpty()) {
-                log.debug("Extracted {} times from field 4 (busType position) for route to {}",
-                    times.size(), parts[1].trim());
+            }
+
+            // If no times found in field 3, check field 4
+            if (times.isEmpty() && parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
+              String field4 = parts[4].trim();
+              if (field4.matches(".*\\d{1,2}:\\d{2}.*")) {
+                for (String t : field4.split(",")) {
+                  t = t.trim();
+                  if (t.matches("\\d{1,2}:\\d{2}")) {
+                    times.add(normalizeTime(t));
+                  }
+                }
               }
             }
-          }
 
-          if (!times.isEmpty()) {
-            route.put("departureTimes", times);
-            route.put("timings", times);
-            route.put("departureTime", times.get(0));
-          }
-
-          // Only set busType if field 4 is NOT a time list
-          if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
-            String field4 = parts[4].trim();
-            // Only use as busType if it doesn't look like times
-            if (!field4.matches(".*\\d{1,2}:\\d{2}.*")) {
-              route.put("busType", field4.toUpperCase());
+            if (!times.isEmpty()) {
+              route.put("departureTimes", times);
+              route.put("timings", times);
+              route.put("departureTime", times.get(0));
             }
-          }
 
-          // Set from location from origin
-          if (result.containsKey("fromLocation")) {
-            route.put("fromLocation", result.get("fromLocation"));
+            // Bus type from field 4 if not times
+            if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
+              String field4 = parts[4].trim();
+              if (!field4.matches(".*\\d{1,2}:\\d{2}.*")) {
+                route.put("busType", field4.toUpperCase());
+              }
+            }
+
+            // Set from location from origin
+            if (result.containsKey("fromLocation")) {
+              route.put("fromLocation", result.get("fromLocation"));
+            }
           }
 
           routes.add(route);
+          log.debug("Parsed route {}: {} ({} -> {}) via {} at {}", 
+              routes.size(), route.get("routeNumber"), 
+              route.get("fromLocation"), route.get("destination"),
+              route.get("via"), route.get("departureTimes"));
         }
       }
     }
@@ -428,6 +539,14 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
     if (!routes.isEmpty()) {
       result.put("routes", routes);
+      // Log details of each route for debugging
+      for (int i = 0; i < routes.size(); i++) {
+        Map<String, Object> r = routes.get(i);
+        log.info("Route {}: {} - {} -> {} via {} (dep: {}, arr: {}, type: {})", 
+            i + 1, r.get("routeNumber"), r.get("fromLocation"), 
+            r.get("destination"), r.get("via"),
+            r.get("departureTimes"), r.get("arrivalTimes"), r.get("busType"));
+      }
     }
 
     log.info("Parsed {} times and {} routes from Gemini response", allTimes.size(), routes.size());

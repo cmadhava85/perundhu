@@ -34,11 +34,14 @@ interface OCRData {
   destination?: string;
   departureTime?: string;
   arrivalTime?: string;
+  departureTimes?: string[];     // All departure times from backend
+  arrivalTimes?: string[];       // All arrival times from backend
   stops?: Array<{
     name: string;
     arrivalTime?: string;
     departureTime?: string;
   }>;
+  intermediateStops?: string[];   // Via stops as array
   confidence?: number;
   originRequired?: boolean;
   originHint?: string;
@@ -47,12 +50,17 @@ interface OCRData {
     routeNumber?: string;        // Bus/Route number like 166UD, 159UD
     fromLocation: string;
     toLocation: string;
-    via?: string;
+    via?: string | string[];     // Can be string or array of stops
+    intermediateStops?: string[]; // Via stops as array
     timings: string[];
+    departureTimes?: string[];   // All departure times
+    arrivalTimes?: string[];     // All arrival times
     departureTime?: string;      // Single departure time for this schedule entry
+    arrivalTime?: string;        // Single arrival time for this schedule entry
     scheduleIndex?: number;      // Index within the group (1, 2, 3...)
     totalSchedules?: number;     // Total number of schedules for this route
     routeGroupId?: string;       // Identifier to group related schedules
+    busType?: string;            // EXPRESS, REGULAR, SLEEPER, etc.
   }>;
   groupedRoutes?: Array<{        // Original grouped routes before expansion
     fromLocation: string;
@@ -67,10 +75,12 @@ interface EditableRoute {
   routeNumber?: string;  // Bus/Route number like 166UD, 159UD
   fromLocation: string;
   toLocation: string;
-  via?: string;
+  via?: string;          // Comma-separated string for editing
   timings: string[];
   departureTime?: string;
   arrivalTime?: string;  // Added for time edit popup
+  arrivalTimes?: string[]; // All arrival times
+  busType?: string;      // EXPRESS, REGULAR, SLEEPER, etc.
   isEditing?: boolean;
 }
 
@@ -227,19 +237,42 @@ export const ImageContributionAdminPanel: React.FC = () => {
       
       // Map backend field names to frontend field names
       // Backend returns 'routes' but frontend expects 'multipleRoutes'
+      const routes = data.multipleRoutes || data.routes || [];
+      
+      // Map each route to include all timing fields
+      const mappedRoutes = routes.map((route: Record<string, unknown>) => ({
+        routeNumber: route.routeNumber,
+        fromLocation: route.fromLocation || data.origin || data.fromLocation,
+        toLocation: route.toLocation || route.destination,
+        via: route.via || route.intermediateStops,
+        intermediateStops: route.intermediateStops || (Array.isArray(route.via) ? route.via : undefined),
+        timings: route.timings || route.departureTimes || [],
+        departureTimes: route.departureTimes || route.timings || [],
+        arrivalTimes: route.arrivalTimes || [],
+        departureTime: route.departureTime || (route.departureTimes as string[])?.[0] || (route.timings as string[])?.[0],
+        arrivalTime: route.arrivalTime || (route.arrivalTimes as string[])?.[0],
+        busType: route.busType,
+        scheduleIndex: route.scheduleIndex,
+        totalSchedules: route.totalSchedules,
+        routeGroupId: route.routeGroupId
+      }));
+      
       const mappedData = {
         extractedText: data.extractedText || '',
         busNumber: data.busNumber || data.routeNumber,
         origin: data.origin || data.fromLocation,
         destination: data.destination || data.toLocation,
-        departureTime: data.departureTime,
-        arrivalTime: data.arrivalTime,
+        departureTime: data.departureTime || data.departureTimes?.[0],
+        arrivalTime: data.arrivalTime || data.arrivalTimes?.[0],
+        departureTimes: data.departureTimes || data.allDepartureTimes || [],
+        arrivalTimes: data.arrivalTimes || [],
         confidence: data.confidence,
         stops: data.stops || [],
+        intermediateStops: data.intermediateStops || [],
         originRequired: data.originRequired || false,
         originHint: data.originHint,
         boardFormat: data.boardFormat || data.boardType,
-        multipleRoutes: data.multipleRoutes || data.routes || []  // Backend returns 'routes'
+        multipleRoutes: mappedRoutes
       };
       
       setOcrData(mappedData);
@@ -261,9 +294,12 @@ export const ImageContributionAdminPanel: React.FC = () => {
         routeNumber: route.routeNumber || '',
         fromLocation: route.fromLocation || ocrData.origin || '',
         toLocation: route.toLocation,
-        via: route.via,
+        via: Array.isArray(route.via) ? route.via.join(', ') : route.via,
         timings: route.timings || [],
         departureTime: route.departureTime,
+        arrivalTime: route.arrivalTime,
+        arrivalTimes: route.arrivalTimes || [],
+        busType: route.busType,
         isEditing: false
       })));
       setIsEditMode(true);
@@ -361,9 +397,12 @@ export const ImageContributionAdminPanel: React.FC = () => {
       routeNumber: r.routeNumber,
       fromLocation: r.fromLocation,
       toLocation: r.toLocation,
-      via: r.via,
+      via: Array.isArray(r.via) ? r.via.join(', ') : r.via,
       timings: r.timings,
       departureTime: r.departureTime,
+      arrivalTime: r.arrivalTime,
+      arrivalTimes: r.arrivalTimes || [],
+      busType: r.busType,
     }));
     
     const routesWithIssues: { index: number; route: EditableRoute; missingDeparture: boolean; missingArrival: boolean; }[] = [];
@@ -1048,6 +1087,11 @@ export const ImageContributionAdminPanel: React.FC = () => {
                                     {route.routeNumber}
                                   </span>
                                 )}
+                                {route.busType && (
+                                  <span className="px-2 py-0.5 text-xs bg-indigo-100 text-indigo-800 rounded font-bold border border-indigo-300">
+                                    {route.busType}
+                                  </span>
+                                )}
                                 <div className="flex-1 font-semibold text-gray-900 text-sm flex items-center gap-2">
                                   <span>{route.fromLocation || ocrData.origin || '?'}</span>
                                   <span className="text-blue-500">→</span>
@@ -1065,24 +1109,46 @@ export const ImageContributionAdminPanel: React.FC = () => {
                               </div>
                               {route.via && (
                                 <div className="text-xs text-gray-600 ml-8 mb-1">
-                                  via <span className="font-medium">{route.via}</span>
+                                  via <span className="font-medium">{Array.isArray(route.via) ? route.via.join(', ') : route.via}</span>
                                 </div>
                               )}
-                              {/* Show all timings */}
-                              {route.timings && route.timings.length > 0 && (
-                                <div className="ml-8 mt-2">
-                                  <div className="text-xs text-gray-600 mb-1 font-medium">Departure Times ({route.timings.length}):</div>
-                                  <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
-                                    {route.timings.map((time) => (
-                                      <span key={`${route.toLocation}-${time}`} className="px-2 py-0.5 text-xs bg-blue-50 text-blue-700 rounded border border-blue-200">
-                                        {time}
-                                      </span>
-                                    ))}
+                              {/* Show departure and arrival times */}
+                              <div className="ml-8 mt-2 space-y-2">
+                                {/* Departure Times */}
+                                {(route.timings && route.timings.length > 0) || (route.departureTimes && route.departureTimes.length > 0) ? (
+                                  <div>
+                                    <div className="text-xs text-gray-600 mb-1 font-medium">🚌 Departure ({(route.timings || route.departureTimes || []).length}):</div>
+                                    <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                                      {(route.timings || route.departureTimes || []).map((time) => (
+                                        <span key={`dep-${route.toLocation}-${time}`} className="px-2 py-0.5 text-xs bg-green-50 text-green-700 rounded border border-green-200">
+                                          {time}
+                                        </span>
+                                      ))}
+                                    </div>
                                   </div>
-                                </div>
-                              )}
+                                ) : null}
+                                {/* Arrival Times */}
+                                {route.arrivalTimes && route.arrivalTimes.length > 0 && (
+                                  <div>
+                                    <div className="text-xs text-gray-600 mb-1 font-medium">🏁 Arrival ({route.arrivalTimes.length}):</div>
+                                    <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                                      {route.arrivalTimes.map((time) => (
+                                        <span key={`arr-${route.toLocation}-${time}`} className="px-2 py-0.5 text-xs bg-orange-50 text-orange-700 rounded border border-orange-200">
+                                          {time}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                {/* Single arrival time if no array */}
+                                {!route.arrivalTimes?.length && route.arrivalTime && (
+                                  <div className="text-xs text-gray-600">
+                                    🏁 Arrival: <span className="font-medium text-orange-700">{route.arrivalTime}</span>
+                                  </div>
+                                )}
+                              </div>
                               {route.totalSchedules && route.totalSchedules > 1 && (
-                                <div className="text-xs text-blue-600 ml-8 mb-1">
+                                <div className="text-xs text-blue-600 ml-8 mt-1">
                                   Schedule {route.scheduleIndex} of {route.totalSchedules} for this route
                                 </div>
                               )}
