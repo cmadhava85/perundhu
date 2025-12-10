@@ -82,4 +82,4 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   );
 };
 
-export default BottomNavigation;
+export default React.memo(BottomNavigation);

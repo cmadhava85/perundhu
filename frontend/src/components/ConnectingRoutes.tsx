@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../styles/ConnectingRoutes.css';
 
@@ -170,4 +170,4 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
   );
 };
 
-export default ConnectingRoutes;
+export default React.memo(ConnectingRoutes);

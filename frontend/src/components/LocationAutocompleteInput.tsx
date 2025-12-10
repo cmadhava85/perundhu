@@ -242,4 +242,4 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   );
 };
 
-export default LocationAutocompleteInput;
+export default React.memo(LocationAutocompleteInput);

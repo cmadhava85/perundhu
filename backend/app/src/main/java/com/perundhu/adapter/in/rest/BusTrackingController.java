@@ -19,6 +19,11 @@ import com.perundhu.application.dto.BusLocationReportDTO;
 import com.perundhu.application.dto.RewardPointsDTO;
 import com.perundhu.application.service.BusTrackingService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +33,7 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("/api/v1/bus-tracking")
 @CrossOrigin(origins = "*")
+@Tag(name = "Bus Tracking", description = "Crowd-sourced bus location tracking and real-time updates")
 public class BusTrackingController {
 
     private static final Logger log = LoggerFactory.getLogger(BusTrackingController.class);

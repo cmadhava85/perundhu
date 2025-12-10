@@ -35,12 +35,21 @@ import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
 import com.perundhu.infrastructure.exception.RateLimitException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * REST API Controller for bus schedules with enhanced security
  */
 @RestController
 @RequestMapping("/api/v1/bus-schedules")
 @CrossOrigin(origins = "*")
+@Tag(name = "Bus Schedules", description = "Bus search and schedule operations")
 public class BusScheduleController {
 
     private static final Logger log = LoggerFactory.getLogger(BusScheduleController.class);
@@ -95,6 +104,11 @@ public class BusScheduleController {
     /**
      * Get all buses in the system - requires authentication for detailed data
      */
+    @Operation(summary = "Get all buses", description = "Retrieves all buses in the system. Sensitive data may be obfuscated for non-premium users.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all buses"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/buses")
     public ResponseEntity<List<BusDTO>> getAllBuses() {
         log.info("Getting all buses for authenticated user");
@@ -114,8 +128,15 @@ public class BusScheduleController {
     /**
      * Get a specific bus by its ID - premium access required for full details
      */
+    @Operation(summary = "Get bus by ID", description = "Retrieves bus details for a specific bus ID. Premium access required for full details.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved bus details"),
+            @ApiResponse(responseCode = "404", description = "Bus not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/buses/{busId}")
-    public ResponseEntity<BusDTO> getBusById(@PathVariable Long busId) {
+    public ResponseEntity<BusDTO> getBusById(
+            @Parameter(description = "The bus ID to retrieve") @PathVariable Long busId) {
         log.info("Getting bus details for ID: {} (premium access)", busId);
         try {
             Optional<BusDTO> bus = busScheduleService.getBusById(busId);
@@ -130,9 +151,14 @@ public class BusScheduleController {
     /**
      * Get all locations with language support - limited access for guests
      */
+    @Operation(summary = "Get all locations", description = "Retrieves all locations with language support. Supports Tamil and English.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all locations"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/locations")
     public ResponseEntity<List<LocationDTO>> getAllLocations(
-            @RequestParam(name = "lang", defaultValue = "en") String language) {
+            @Parameter(description = "Language code (en or ta)") @RequestParam(name = "lang", defaultValue = "en") String language) {
         log.info("Getting all locations with language: {} (public access)", language);
         try {
             List<LocationDTO> locations = busScheduleService.getAllLocations(language);
@@ -149,10 +175,16 @@ public class BusScheduleController {
      * forms. Does not return coordinates for privacy. Falls back to OpenStreetMap
      * if location not found in database. Supports Tamil and English search.
      */
+    @Operation(summary = "Location autocomplete", description = "Search locations with autocomplete. Falls back to OpenStreetMap if not found in database. Supports Tamil and English.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved location suggestions"),
+            @ApiResponse(responseCode = "400", description = "Query too short (minimum 2 characters)", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/locations/autocomplete")
     public ResponseEntity<List<LocationDTO>> getLocationAutocomplete(
-            @RequestParam("q") String query,
-            @RequestParam(defaultValue = "en") String language) {
+            @Parameter(description = "Search query (minimum 2 characters)") @RequestParam("q") String query,
+            @Parameter(description = "Language code (en or ta)") @RequestParam(defaultValue = "en") String language) {
         log.info("Location autocomplete search: '{}' with language: {}", query, language);
 
         // Validate minimum query length (reduced to 2 to support shorter Tamil words)
@@ -171,28 +203,28 @@ public class BusScheduleController {
                             String englishName = location.name();
                             String displayName = englishName;
                             String translatedName = englishName;
-                            
+
                             // If user is searching in Tamil, include Tamil translation in display
                             if ("ta".equals(language)) {
                                 // Try to get Tamil translation
                                 String tamilName = busScheduleService.getLocationTranslation(
-                                    location.id().value(), "ta");
+                                        location.id().value(), "ta");
                                 if (tamilName != null && !tamilName.isEmpty()) {
                                     translatedName = tamilName;
-                                    displayName = tamilName;  // Show Tamil name
+                                    displayName = tamilName; // Show Tamil name
                                 }
                             }
-                            
+
                             return LocationDTO.withTranslation(
                                     location.id().value(),
                                     englishName,
                                     translatedName,
-                                    null, null);  // Don't expose coordinates for privacy
+                                    null, null); // Don't expose coordinates for privacy
                         })
                         .toList();
 
-                log.info("Found {} locations in database for query '{}' (language: {})", 
-                    result.size(), query, language);
+                log.info("Found {} locations in database for query '{}' (language: {})",
+                        result.size(), query, language);
                 return ResponseEntity.ok(result);
             }
 
@@ -214,16 +246,23 @@ public class BusScheduleController {
      * Rate limited to prevent abuse
      * Enhanced with language support for Tamil and other languages
      */
+    @Operation(summary = "Search bus routes", description = "Search for buses between locations. Supports location IDs or names. Rate limited to prevent abuse.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved bus routes"),
+            @ApiResponse(responseCode = "400", description = "Invalid search parameters", content = @Content),
+            @ApiResponse(responseCode = "429", description = "Rate limit exceeded", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/search")
     public ResponseEntity<PaginatedResponse<BusDTO>> searchPublicRoutes(
-            @RequestParam(required = false) Long fromLocationId,
-            @RequestParam(required = false) Long toLocationId,
-            @RequestParam(required = false) String fromLocation,
-            @RequestParam(required = false) String toLocation,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "true") boolean includeContinuing,
-            @RequestParam(defaultValue = "en") String lang) {
+            @Parameter(description = "Source location ID") @RequestParam(required = false) Long fromLocationId,
+            @Parameter(description = "Destination location ID") @RequestParam(required = false) Long toLocationId,
+            @Parameter(description = "Source location name") @RequestParam(required = false) String fromLocation,
+            @Parameter(description = "Destination location name") @RequestParam(required = false) String toLocation,
+            @Parameter(description = "Page number (0-indexed)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size (max 50)") @RequestParam(defaultValue = "20") int size,
+            @Parameter(description = "Include continuing buses") @RequestParam(defaultValue = "true") boolean includeContinuing,
+            @Parameter(description = "Language code (en or ta)") @RequestParam(defaultValue = "en") String lang) {
 
         // Apply rate limiting
         checkRateLimit(getUserId());
@@ -249,7 +288,8 @@ public class BusScheduleController {
                 }
 
                 // Get direct buses with language support
-                List<BusDTO> directBuses = busScheduleService.findBusesBetweenLocations(fromLocationId, toLocationId, lang);
+                List<BusDTO> directBuses = busScheduleService.findBusesBetweenLocations(fromLocationId, toLocationId,
+                        lang);
                 log.info("Found {} direct buses", directBuses.size());
 
                 // Get buses passing through (intermediate stops) with language support
@@ -362,10 +402,16 @@ public class BusScheduleController {
      * For example: Chennai to Madurai bus via Trichy will appear when searching
      * Chennai to Trichy
      */
+    @Operation(summary = "Search buses via stops", description = "Find buses that pass through both locations as intermediate stops. For example: Chennai to Madurai bus via Trichy will appear when searching Chennai to Trichy.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved buses via stops"),
+            @ApiResponse(responseCode = "400", description = "Invalid location IDs", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/search-via-stops")
     public ResponseEntity<List<BusDTO>> searchBusesViaStops(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId) {
+            @Parameter(description = "Source location ID", required = true) @RequestParam("fromLocationId") Long fromLocationId,
+            @Parameter(description = "Destination location ID", required = true) @RequestParam("toLocationId") Long toLocationId) {
         log.info("Searching buses via stops between locations: {} and {}", fromLocationId, toLocationId);
 
         // Validate input parameters
@@ -399,10 +445,16 @@ public class BusScheduleController {
      * For example: Chennai to Trichy search will show Chennai->Madurai bus (via
      * Trichy)
      */
+    @Operation(summary = "Search buses continuing beyond destination", description = "Find buses that continue beyond the destination. For example: Chennai to Trichy search will show Chennai->Madurai bus (via Trichy).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved continuing buses"),
+            @ApiResponse(responseCode = "400", description = "Invalid location IDs", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/search-continuing-beyond")
     public ResponseEntity<List<BusDTO>> searchBusesContinuingBeyondDestination(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId) {
+            @Parameter(description = "Source location ID", required = true) @RequestParam("fromLocationId") Long fromLocationId,
+            @Parameter(description = "Destination location ID", required = true) @RequestParam("toLocationId") Long toLocationId) {
         log.info("Searching buses continuing beyond destination: from {} via {} to further cities",
                 fromLocationId, toLocationId);
 
@@ -435,10 +487,16 @@ public class BusScheduleController {
     /**
      * Get stops for a specific bus - premium feature
      */
+    @Operation(summary = "Get bus stops", description = "Retrieves all stops for a specific bus. Premium feature with encrypted stop details.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved bus stops"),
+            @ApiResponse(responseCode = "400", description = "Invalid bus ID", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/buses/{busId}/stops")
     public ResponseEntity<List<StopDTO>> getBusStops(
-            @PathVariable Long busId,
-            @RequestParam(name = "lang", defaultValue = "en") String language) {
+            @Parameter(description = "The bus ID") @PathVariable Long busId,
+            @Parameter(description = "Language code (en or ta)") @RequestParam(name = "lang", defaultValue = "en") String language) {
         log.info("Getting stops for bus {} with language: {} (premium access)", busId, language);
 
         if (busId == null || busId <= 0) {
@@ -463,10 +521,16 @@ public class BusScheduleController {
     /**
      * Get basic stops for a specific bus - public access for search functionality
      */
+    @Operation(summary = "Get basic bus stops", description = "Retrieves basic stop information for a specific bus. Public access for search functionality.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved basic bus stops"),
+            @ApiResponse(responseCode = "400", description = "Invalid bus ID", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/buses/{busId}/stops/basic")
     public ResponseEntity<List<StopDTO>> getBusStopsBasic(
-            @PathVariable Long busId,
-            @RequestParam(name = "lang", defaultValue = "en") String language) {
+            @Parameter(description = "The bus ID") @PathVariable Long busId,
+            @Parameter(description = "Language code (en or ta)") @RequestParam(name = "lang", defaultValue = "en") String language) {
         log.info("Getting basic stops for bus {} with language: {} (public access)", busId, language);
 
         if (busId == null || busId <= 0) {
@@ -492,6 +556,11 @@ public class BusScheduleController {
      * Manually trigger coordinate updates for locations missing them
      * This endpoint uses OpenStreetMap to fetch coordinates
      */
+    @Operation(summary = "Update missing coordinates", description = "Manually trigger coordinate updates for locations missing them using OpenStreetMap.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Coordinate update process completed"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/locations/update-coordinates")
     public ResponseEntity<Map<String, Object>> updateMissingCoordinates() {
         log.info("Manual trigger to update missing coordinates");
@@ -515,11 +584,16 @@ public class BusScheduleController {
      * Discover intermediate bus stops between two locations using OSM data
      * This endpoint finds actual bus stops that could be used as intermediate stops
      */
+    @Operation(summary = "Discover intermediate stops", description = "Discover intermediate bus stops between two locations using OpenStreetMap data.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully discovered intermediate stops"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/discover-stops")
     public ResponseEntity<List<OSMBusStopDTO>> discoverIntermediateStops(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId,
-            @RequestParam(defaultValue = "25.0") Double radiusKm) {
+            @Parameter(description = "Source location ID", required = true) @RequestParam("fromLocationId") Long fromLocationId,
+            @Parameter(description = "Destination location ID", required = true) @RequestParam("toLocationId") Long toLocationId,
+            @Parameter(description = "Search radius in kilometers") @RequestParam(defaultValue = "25.0") Double radiusKm) {
         log.info("Discovering intermediate stops between {} and {} within {}km",
                 fromLocationId, toLocationId, radiusKm);
 
@@ -537,10 +611,15 @@ public class BusScheduleController {
      * Discover actual bus routes using OSM data
      * This finds real-world bus routes that might connect the locations
      */
+    @Operation(summary = "Discover OSM routes", description = "Discover actual bus routes using OpenStreetMap data that might connect the locations.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully discovered OSM routes"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/discover-routes")
     public ResponseEntity<List<BusRouteDTO>> discoverOSMRoutes(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId) {
+            @Parameter(description = "Source location ID", required = true) @RequestParam("fromLocationId") Long fromLocationId,
+            @Parameter(description = "Destination location ID", required = true) @RequestParam("toLocationId") Long toLocationId) {
         log.info("Discovering OSM routes between {} and {}", fromLocationId, toLocationId);
 
         try {
@@ -560,11 +639,17 @@ public class BusScheduleController {
      * For example: Chennai -> Madurai when there's no direct bus,
      * it might return Chennai -> Trichy (Bus 1) + Trichy -> Madurai (Bus 2)
      */
+    @Operation(summary = "Get connecting routes", description = "Find routes that may require bus transfers. Uses BFS algorithm to find optimal paths through the bus network.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved connecting routes"),
+            @ApiResponse(responseCode = "400", description = "Invalid location IDs", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/connecting-routes")
     public ResponseEntity<List<ConnectingRouteDTO>> getConnectingRoutes(
-            @RequestParam("fromLocationId") Long fromLocationId,
-            @RequestParam("toLocationId") Long toLocationId,
-            @RequestParam(value = "maxTransfers", defaultValue = "2") int maxTransfers) {
+            @Parameter(description = "Source location ID", required = true) @RequestParam("fromLocationId") Long fromLocationId,
+            @Parameter(description = "Destination location ID", required = true) @RequestParam("toLocationId") Long toLocationId,
+            @Parameter(description = "Maximum number of transfers (0-3)") @RequestParam(value = "maxTransfers", defaultValue = "2") int maxTransfers) {
         log.info("Getting connecting routes from {} to {} with max {} transfers",
                 fromLocationId, toLocationId, maxTransfers);
 
@@ -692,9 +777,14 @@ public class BusScheduleController {
      * @param lang Language code for translations
      * @return List of locations with disambiguation info for duplicates
      */
+    @Operation(summary = "Get locations with disambiguation", description = "Get all locations with duplicate names grouped together. Shows district/nearby city for disambiguation.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved locations with disambiguation"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @GetMapping("/locations/with-disambiguation")
     public ResponseEntity<List<LocationDTO>> getLocationsWithDisambiguation(
-            @RequestParam(name = "lang", defaultValue = "en") String lang) {
+            @Parameter(description = "Language code (en or ta)") @RequestParam(name = "lang", defaultValue = "en") String lang) {
         log.info("Getting locations with disambiguation info, lang: {}", lang);
 
         try {

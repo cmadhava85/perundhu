@@ -214,4 +214,4 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error, reset }) => {
   );
 };
 
-export default ErrorDisplay;
+export default React.memo(ErrorDisplay);
