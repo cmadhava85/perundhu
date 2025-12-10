@@ -1,5 +1,5 @@
 import { vi, describe, test, expect, beforeEach, afterEach } from 'vitest';
-import { LocationAutocompleteService, locationAutocompleteService, type LocationSuggestion } from '../../services/locationAutocompleteService';
+import { LocationAutocompleteService, locationAutocompleteService } from '../../services/locationAutocompleteService';
 import { GeocodingService } from '../../services/geocodingService';
 import * as apiModule from '../../services/api';
 

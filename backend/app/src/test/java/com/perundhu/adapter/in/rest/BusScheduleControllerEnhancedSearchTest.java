@@ -86,9 +86,10 @@ class BusScheduleControllerEnhancedSearchTest {
         @Test
         void testEnhancedSearch_WithContinuingBuses_Success() throws Exception {
                 // Mock the three service methods that the enhanced search endpoint calls
-                when(busScheduleService.findBusesBetweenLocations(1L, 2L))
+                // Note: Controller now uses language-aware methods with 3 parameters
+                when(busScheduleService.findBusesBetweenLocations(1L, 2L, "en"))
                                 .thenReturn(testDirectBuses);
-                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
+                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L, "en"))
                                 .thenReturn(testViaBuses);
                 when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
                                 .thenReturn(testContinuingBuses);
@@ -107,9 +108,9 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Test
         void testEnhancedSearch_WithoutContinuingBuses_Success() throws Exception {
-                when(busScheduleService.findBusesBetweenLocations(1L, 2L))
+                when(busScheduleService.findBusesBetweenLocations(1L, 2L, "en"))
                                 .thenReturn(testDirectBuses);
-                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
+                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L, "en"))
                                 .thenReturn(testViaBuses);
 
                 mockMvc.perform(get("/api/v1/bus-schedules/search")
@@ -133,9 +134,9 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Test
         void testEnhancedSearch_EmptyResults_Success() throws Exception {
-                when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong()))
+                when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong(), any()))
                                 .thenReturn(Collections.emptyList());
-                when(busScheduleService.findBusesPassingThroughLocations(anyLong(), anyLong()))
+                when(busScheduleService.findBusesPassingThroughLocations(anyLong(), anyLong(), any()))
                                 .thenReturn(Collections.emptyList());
                 when(busScheduleService.findBusesContinuingBeyondDestination(anyLong(), anyLong()))
                                 .thenReturn(Collections.emptyList());
@@ -150,7 +151,7 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Test
         void testEnhancedSearch_ServiceException_InternalServerError() throws Exception {
-                when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong()))
+                when(busScheduleService.findBusesBetweenLocations(anyLong(), anyLong(), any()))
                                 .thenThrow(new RuntimeException("Database error"));
 
                 mockMvc.perform(get("/api/v1/bus-schedules/search")
@@ -176,9 +177,9 @@ class BusScheduleControllerEnhancedSearchTest {
 
         @Test
         void testEnhancedSearch_PaginationLimit_Success() throws Exception {
-                when(busScheduleService.findBusesBetweenLocations(1L, 2L))
+                when(busScheduleService.findBusesBetweenLocations(1L, 2L, "en"))
                                 .thenReturn(testDirectBuses.subList(0, 1));
-                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L))
+                when(busScheduleService.findBusesPassingThroughLocations(1L, 2L, "en"))
                                 .thenReturn(Collections.emptyList());
                 when(busScheduleService.findBusesContinuingBeyondDestination(1L, 2L))
                                 .thenReturn(Collections.emptyList());
