@@ -103,7 +103,8 @@ describe('API Service', () => {
         params: {
           fromLocationId: fromLocation.id,
           toLocationId: toLocation.id,
-          includeContinuing: false
+          includeContinuing: false,
+          lang: 'en'
         }
       });
       expect(buses).toBeDefined();

@@ -26,7 +26,7 @@ import java.util.Map;
 @RequestMapping("/api/admin/integration")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+
 @PreAuthorize("hasRole('ADMIN')")
 public class IntegrationController {
 

@@ -28,7 +28,7 @@ import java.util.HashMap;
 @RequestMapping("/api/v1/contributions/timing-images")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+
 public class TimingImageContributionController {
 
   private final TimingImageContributionRepository timingImageRepository;
@@ -166,11 +166,20 @@ public class TimingImageContributionController {
   /**
    * Get all timing image contributions for a specific user
    * GET /api/v1/contributions/timing-images/user/{userId}
+   * SECURITY: Users can only view their own contributions
    */
   @GetMapping("/user/{userId}")
-  public ResponseEntity<List<TimingImageContribution>> getMyContributions(@PathVariable String userId) {
+  public ResponseEntity<?> getMyContributions(@PathVariable String userId) {
     try {
       log.info("Fetching timing contributions for user: {}", userId);
+
+      // IDOR Protection: Verify the requesting user matches the userId parameter
+      String currentUserId = authenticationService.getCurrentUserId();
+      if (currentUserId == null || (!currentUserId.equals(userId) && !userId.startsWith("anonymous_"))) {
+        log.warn("IDOR attempt: User {} tried to access contributions of user {}", currentUserId, userId);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            .body(Map.of("error", "Access denied. You can only view your own contributions."));
+      }
 
       List<TimingImageContribution> contributions = timingImageRepository.findByUserId(userId);
       return ResponseEntity.ok(contributions);
@@ -184,14 +193,25 @@ public class TimingImageContributionController {
   /**
    * Delete a timing image contribution
    * DELETE /api/v1/contributions/timing-images/{id}
+   * SECURITY: Users can only delete their own contributions
    */
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteContribution(@PathVariable Long id) {
+  public ResponseEntity<?> deleteContribution(@PathVariable Long id) {
     try {
       log.info("Deleting timing contribution: {}", id);
 
-      if (!timingImageRepository.findById(id).isPresent()) {
+      var contribution = timingImageRepository.findById(id);
+      if (contribution.isEmpty()) {
         return ResponseEntity.notFound().build();
+      }
+
+      // IDOR Protection: Verify the requesting user owns the contribution
+      String currentUserId = authenticationService.getCurrentUserId();
+      String ownerId = contribution.get().getUserId();
+      if (currentUserId == null || (!currentUserId.equals(ownerId) && !ownerId.startsWith("anonymous_"))) {
+        log.warn("IDOR attempt: User {} tried to delete contribution {} owned by {}", currentUserId, id, ownerId);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            .body(Map.of("error", "Access denied. You can only delete your own contributions."));
       }
 
       timingImageRepository.deleteById(id);

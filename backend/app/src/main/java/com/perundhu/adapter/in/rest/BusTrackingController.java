@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.perundhu.application.dto.BusLocationDTO;
 import com.perundhu.application.dto.BusLocationReportDTO;
 import com.perundhu.application.dto.RewardPointsDTO;
+import com.perundhu.application.service.AuthenticationService;
 import com.perundhu.application.service.BusTrackingService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,15 +33,17 @@ import org.slf4j.LoggerFactory;
  */
 @RestController
 @RequestMapping("/api/v1/bus-tracking")
-@CrossOrigin(origins = "*")
+
 @Tag(name = "Bus Tracking", description = "Crowd-sourced bus location tracking and real-time updates")
 public class BusTrackingController {
 
     private static final Logger log = LoggerFactory.getLogger(BusTrackingController.class);
     private final BusTrackingService busTrackingService;
+    private final AuthenticationService authenticationService;
 
-    public BusTrackingController(BusTrackingService busTrackingService) {
+    public BusTrackingController(BusTrackingService busTrackingService, AuthenticationService authenticationService) {
         this.busTrackingService = busTrackingService;
+        this.authenticationService = authenticationService;
     }
 
     // Response records
@@ -167,10 +170,20 @@ public class BusTrackingController {
 
     /**
      * Get user reward points
+     * SECURITY: Users can only view their own reward points
      */
     @GetMapping("/rewards/{userId}")
-    public ResponseEntity<RewardPointsDTO> getUserRewardPoints(@PathVariable String userId) {
+    public ResponseEntity<?> getUserRewardPoints(@PathVariable String userId) {
         log.info("Request received for reward points of user: {}", userId);
+
+        // IDOR Protection: Verify the requesting user matches the userId parameter
+        String currentUserId = authenticationService.getCurrentUserId();
+        if (currentUserId == null || (!currentUserId.equals(userId) && !userId.startsWith("anonymous_"))) {
+            log.warn("IDOR attempt: User {} tried to access rewards for user {}", currentUserId, userId);
+            return ResponseEntity.status(403)
+                    .body(createErrorResponse("ACCESS_DENIED", "You can only view your own rewards",
+                            "Access denied. You can only view your own reward points."));
+        }
 
         RewardPointsDTO rewards = busTrackingService.getUserRewardPoints(userId);
         return ResponseEntity.ok(rewards);

@@ -79,10 +79,18 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const [resolutionText, setResolutionText] = useState('');
   const [adminNotes, setAdminNotes] = useState('');
 
+  // Helper to get auth headers
+  const getAuthHeaders = useCallback(() => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+  }), []);
+
   // Fetch statistics
   const fetchStatistics = useCallback(async () => {
     try {
-      const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/statistics`);
+      const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/statistics`, {
+        headers: getAuthHeaders()
+      });
       if (response.ok) {
         const data = await response.json();
         setStatistics(data);
@@ -90,7 +98,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
     } catch (err) {
       console.error('Failed to fetch statistics:', err);
     }
-  }, []);
+  }, [getAuthHeaders]);
 
   // Fetch issues based on filters
   const fetchIssues = useCallback(async () => {
@@ -104,8 +112,8 @@ const RouteIssuesAdminPanel: React.FC = () => {
         // For "all", we need to fetch from a different endpoint or handle it
         // For now, fetch pending and high-priority combined
         const [pendingRes, highPriorityRes] = await Promise.all([
-          fetch(`${API_BASE}/api/v1/route-issues/admin/pending?page=0&size=100`),
-          fetch(`${API_BASE}/api/v1/route-issues/admin/high-priority`)
+          fetch(`${API_BASE}/api/v1/route-issues/admin/pending?page=0&size=100`, { headers: getAuthHeaders() }),
+          fetch(`${API_BASE}/api/v1/route-issues/admin/high-priority`, { headers: getAuthHeaders() })
         ]);
         
         const pendingData = await pendingRes.json();
@@ -123,7 +131,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
         
         setIssues(allIssues);
       } else {
-        const response = await fetch(url);
+        const response = await fetch(url, { headers: getAuthHeaders() });
         if (!response.ok) {
           throw new Error('Failed to fetch issues');
         }
@@ -143,7 +151,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [statusFilter]);
+  }, [statusFilter, getAuthHeaders]);
 
   useEffect(() => {
     fetchIssues();
@@ -162,7 +170,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
       
       const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/${issueId}/status`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({
           status: newStatus,
           resolution: resolution || null,

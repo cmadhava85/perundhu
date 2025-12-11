@@ -127,19 +127,9 @@
   color: #9CA3AF;
 }
 
-/* Search Icon */
+/* Search Icon - now handled in JSX, removing CSS version */
 .bus-list-controls-section > div:first-child > div:first-child {
   position: relative;
-}
-
-.bus-list-controls-section > div:first-child > div:first-child::before {
-  content: '🔍';
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
-  pointer-events: none;
 }
 
 /* Filter Button - Clean and Modern */

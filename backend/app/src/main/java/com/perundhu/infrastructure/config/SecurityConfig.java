@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,16 +15,23 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
+import com.perundhu.infrastructure.security.OriginValidationFilter;
+import com.perundhu.infrastructure.security.RateLimitingFilter;
+
 /**
  * Security configuration with proper JWT handling for both development and
- * production
+ * production. Includes rate limiting, origin validation, and API key
+ * protection.
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 @Profile("!prod") // Only active in non-production environments (dev, test, preprod)
 public class SecurityConfig {
 
@@ -36,12 +44,28 @@ public class SecurityConfig {
   @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:4173}")
   private String allowedOrigins;
 
+  private final RateLimitingFilter rateLimitingFilter;
+  private final OriginValidationFilter originValidationFilter;
+  private final ApiKeyValidationFilter apiKeyValidationFilter;
+
+  public SecurityConfig(RateLimitingFilter rateLimitingFilter,
+      OriginValidationFilter originValidationFilter,
+      ApiKeyValidationFilter apiKeyValidationFilter) {
+    this.rateLimitingFilter = rateLimitingFilter;
+    this.originValidationFilter = originValidationFilter;
+    this.apiKeyValidationFilter = apiKeyValidationFilter;
+  }
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // Add security filters before authentication
+        .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(originValidationFilter, RateLimitingFilter.class)
+        .addFilterAfter(apiKeyValidationFilter, OriginValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
             // Public endpoints
             .requestMatchers("/api/v1/bus-schedules/**").permitAll()
@@ -57,8 +81,12 @@ public class SecurityConfig {
             .requestMatchers("/actuator/health").permitAll()
             // Protected endpoints - user management and admin
             .requestMatchers("/api/v1/contributions/manage/**").authenticated()
-            // In dev mode, allow admin endpoints without auth for testing
-            .requestMatchers("/api/admin/**").permitAll()
+            // Admin endpoints require authentication (role check via @PreAuthorize)
+            .requestMatchers("/api/v1/admin/**").authenticated()
+            .requestMatchers("/api/admin/**").authenticated()
+            // Route issues endpoints - public for reporting, admin for management
+            .requestMatchers("/api/v1/route-issues/report").permitAll()
+            .requestMatchers("/api/v1/route-issues/admin/**").authenticated()
             // Allow all other requests for development
             .anyRequest().permitAll());
 

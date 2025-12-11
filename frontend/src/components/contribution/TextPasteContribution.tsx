@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../services/api';
+import HoneypotFields from '../common/HoneypotFields';
+import { useSubmissionSecurity } from '../../hooks/useSubmissionSecurity';
 import './TextPasteContribution.css';
 
 interface ExtractedData {
@@ -27,6 +29,7 @@ interface TextPasteContributionProps {
 
 export const TextPasteContribution: React.FC<TextPasteContributionProps> = ({ onSubmit, onError }) => {
   const { t } = useTranslation();
+  const { prepareSubmission, isLoading: isSecurityLoading } = useSubmissionSecurity();
   
   const [pastedText, setPastedText] = useState('');
   const [sourceAttribution, setSourceAttribution] = useState('');
@@ -107,11 +110,22 @@ Morning 7:30 AM, Evening 5:00 PM`,
 
     setIsSubmitting(true);
 
+    // Validate security (honeypot, reCAPTCHA)
+    const submissionData = {
+      text: pastedText,
+      sourceAttribution: sourceAttribution || 'Not specified',
+    };
+    
+    const securePayload = await prepareSubmission(submissionData);
+    if (!securePayload.isValid) {
+      onError(t('paste.errors.securityFailed', 'Security validation failed. Please try again.'));
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      const response = await api.post('/contributions/paste', {
-        text: pastedText,
-        sourceAttribution: sourceAttribution || 'Not specified',
-        website: '', // Honeypot field
+      const response = await api.post('/contributions/paste', securePayload.data, {
+        headers: securePayload.headers
       });
 
       if (response.data.success) {
@@ -148,6 +162,9 @@ Morning 7:30 AM, Evening 5:00 PM`,
 
   return (
     <div className="text-paste-contribution">
+      {/* Hidden honeypot fields for bot detection */}
+      <HoneypotFields />
+      
       <div className="instructions-section">
         <div className="do-section">
           <h3>✅ {t('paste.good.title', 'Good Examples to Paste:')}</h3>
@@ -324,25 +341,15 @@ Morning 7:30 AM, Evening 5:00 PM`,
           <button
             className="submit-btn"
             onClick={handleSubmit}
-            disabled={!agreedToTerms || isSubmitting || validation.confidence < 0.3}
+            disabled={!agreedToTerms || isSubmitting || isSecurityLoading || validation.confidence < 0.3}
             type="button"
           >
-            {isSubmitting 
+            {isSubmitting || isSecurityLoading
               ? t('paste.submitting', 'Submitting...') 
               : t('paste.submit', '✅ Submit for Review')}
           </button>
         </>
       )}
-
-      {/* Honeypot field - hidden from humans, visible to bots */}
-      <input
-        type="text"
-        name="website"
-        style={{ display: 'none' }}
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-      />
     </div>
   );
 };

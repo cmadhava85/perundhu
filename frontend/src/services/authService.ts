@@ -66,13 +66,22 @@ class AuthService {
           config.headers.Authorization = `Bearer ${token}`;
         }
 
-        // Add security headers for authenticated requests
-        config.headers['X-Client-Version'] = getEnv('VITE_APP_VERSION', '1.0.0');
-        config.headers['X-Request-ID'] = this.generateRequestId();
-        
-        // Add CSRF protection for state-changing operations
-        if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(config.method?.toUpperCase() || '')) {
-          config.headers['X-CSRF-Token'] = SecurityService.generateCSRFToken?.() || '';
+        // Add security headers only if security is enabled
+        if (SecurityService.isSecurityEnabled?.()) {
+          config.headers['X-Client-Version'] = getEnv('VITE_APP_VERSION', '1.0.0');
+          config.headers['X-Request-ID'] = this.generateRequestId();
+          
+          // Add CSRF protection for state-changing operations
+          if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(config.method?.toUpperCase() || '')) {
+            config.headers['X-CSRF-Token'] = SecurityService.generateCSRFToken?.() || '';
+          }
+        }
+
+        // Check rate limiting before making request
+        if (SecurityService.isRateLimitEnabled?.() && config.url) {
+          if (!SecurityService.isRequestAllowed(config.url)) {
+            return Promise.reject(new Error('Rate limit exceeded. Please try again later.'));
+          }
         }
 
         return config;

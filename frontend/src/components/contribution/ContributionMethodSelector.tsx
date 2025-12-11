@@ -22,132 +22,99 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
   };
 
   return (
-    <div className="enhanced-method-selector">
-      <div className="method-cards" role="radiogroup" aria-label={t('method.selectMethod', 'Select contribution method')}>
+    <div className="compact-method-selector">
+      <div className="method-chips" aria-label={t('method.selectMethod', 'Select contribution method')}>
         {featureFlags.enableManualContribution && (
-          <div 
-            className={`method-card ${selectedMethod === 'manual' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'manual' ? 'active' : ''}`}
             onClick={() => onMethodChange('manual')}
             onKeyDown={handleKeyDown('manual')}
-            role="radio"
-            aria-checked={selectedMethod === 'manual'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'manual'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">📝</div>
-            </div>
-            <h3 className="method-title">{t('method.manual.title', 'Manual Entry')}</h3>
-            <p className="method-description">{t('method.manual.desc', 'Fill out detailed route information')}</p>
-            <div className="method-badge">{t('badges.recommended', 'Recommended')}</div>
-          </div>
+            <span className="chip-icon">📝</span>
+            <span className="chip-label">{t('method.manual.short', 'Manual')}</span>
+            <span className="chip-badge recommended">★</span>
+          </button>
         )}
 
         {featureFlags.enableVoiceContribution && (
-          <div 
-            className={`method-card ${selectedMethod === 'voice' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'voice' ? 'active' : ''}`}
             onClick={() => onMethodChange('voice')}
             onKeyDown={handleKeyDown('voice')}
-            role="radio"
-            aria-checked={selectedMethod === 'voice'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'voice'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">🎤</div>
-            </div>
-            <h3 className="method-title">{t('method.voice.title', 'Voice Recording')}</h3>
-            <p className="method-description">{t('method.voice.desc', 'Speak route details naturally')}</p>
-            <div className="method-badge new">{t('badges.new', 'New!')}</div>
-          </div>
+            <span className="chip-icon">🎤</span>
+            <span className="chip-label">{t('method.voice.short', 'Voice')}</span>
+          </button>
         )}
 
         {featureFlags.enableImageContribution && (
-          <div 
-            className={`method-card ${selectedMethod === 'image' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'image' ? 'active' : ''}`}
             onClick={() => onMethodChange('image')}
             onKeyDown={handleKeyDown('image')}
-            role="radio"
-            aria-checked={selectedMethod === 'image'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'image'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">📷</div>
-            </div>
-            <h3 className="method-title">{t('method.image.title', 'Upload Schedule')}</h3>
-            <p className="method-description">{t('method.image.desc', 'Share photos of official bus schedules')}</p>
-            <div className="method-badge secondary">{t('badges.easy', 'Easy')}</div>
-          </div>
+            <span className="chip-icon">📷</span>
+            <span className="chip-label">{t('method.image.short', 'Upload')}</span>
+          </button>
         )}
 
         {featureFlags.enablePasteContribution && (
-          <div 
-            className={`method-card ${selectedMethod === 'paste' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'paste' ? 'active' : ''}`}
             onClick={() => onMethodChange('paste')}
             onKeyDown={handleKeyDown('paste')}
-            role="radio"
-            aria-checked={selectedMethod === 'paste'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'paste'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">📋</div>
-            </div>
-            <h3 className="method-title">{t('method.paste.title', 'Paste Text')}</h3>
-            <p className="method-description">{t('method.paste.desc', 'Copy-paste route info from WhatsApp, Facebook, etc.')}</p>
-            <div className="method-badge new">{t('badges.fastest', 'Fastest!')}</div>
-          </div>
+            <span className="chip-icon">📋</span>
+            <span className="chip-label">{t('method.paste.short', 'Paste')}</span>
+            <span className="chip-badge fast">⚡</span>
+          </button>
         )}
 
         {featureFlags.enableRouteVerification && (
-          <div 
-            className={`method-card ${selectedMethod === 'verify' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'verify' ? 'active' : ''}`}
             onClick={() => onMethodChange('verify')}
             onKeyDown={handleKeyDown('verify')}
-            role="radio"
-            aria-checked={selectedMethod === 'verify'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'verify'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">✅</div>
-            </div>
-            <h3 className="method-title">{t('method.verify.title', 'Verify Routes')}</h3>
-            <p className="method-description">{t('method.verify.desc', 'Help verify existing route information')}</p>
-            <div className="method-badge secondary">{t('badges.helpful', 'Helpful!')}</div>
-          </div>
+            <span className="chip-icon">✅</span>
+            <span className="chip-label">{t('method.verify.short', 'Verify')}</span>
+          </button>
         )}
 
         {featureFlags.enableAddStops && (
-          <div 
-            className={`method-card ${selectedMethod === 'addStops' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'addStops' ? 'active' : ''}`}
             onClick={() => onMethodChange('addStops')}
             onKeyDown={handleKeyDown('addStops')}
-            role="radio"
-            aria-checked={selectedMethod === 'addStops'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'addStops'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">📍</div>
-            </div>
-            <h3 className="method-title">{t('method.addStops.title', 'Add Stops')}</h3>
-            <p className="method-description">{t('method.addStops.desc', 'Add intermediate stops to existing routes')}</p>
-            <div className="method-badge new">{t('badges.new', 'New!')}</div>
-          </div>
+            <span className="chip-icon">📍</span>
+            <span className="chip-label">{t('method.addStops.short', 'Stops')}</span>
+          </button>
         )}
 
         {featureFlags.enableReportIssue && (
-          <div 
-            className={`method-card ${selectedMethod === 'reportIssue' ? 'active' : ''}`}
+          <button 
+            className={`method-chip ${selectedMethod === 'reportIssue' ? 'active' : ''}`}
             onClick={() => onMethodChange('reportIssue')}
             onKeyDown={handleKeyDown('reportIssue')}
-            role="radio"
-            aria-checked={selectedMethod === 'reportIssue'}
-            tabIndex={0}
+            aria-pressed={selectedMethod === 'reportIssue'}
+            type="button"
           >
-            <div className="method-icon-wrapper">
-              <div className="method-icon">🚨</div>
-            </div>
-            <h3 className="method-title">{t('method.reportIssue.title', 'Report Issue')}</h3>
-            <p className="method-description">{t('method.reportIssue.desc', 'Report wrong timings or discontinued buses')}</p>
-            <div className="method-badge warning">{t('badges.important', 'Important!')}</div>
-          </div>
+            <span className="chip-icon">🚨</span>
+            <span className="chip-label">{t('method.reportIssue.short', 'Report')}</span>
+          </button>
         )}
       </div>
     </div>

@@ -87,9 +87,9 @@ export const featureFlags: FeatureFlags = {
    * - Route changes
    * - Service suspended
    * 
-   * Status: ENABLED by default - Critical for data quality
+   * Status: DISABLED - Accessible from search results via "Report Issue" button
    */
-  enableReportIssue: getEnv('VITE_ENABLE_REPORT_ISSUE') !== 'false',
+  enableReportIssue: false,
 };
 
 /**

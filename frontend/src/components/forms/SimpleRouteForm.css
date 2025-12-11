@@ -3,6 +3,197 @@
  * Addresses layout jumping, poor alignment, and accessibility issues
  */
 
+/* =====================================================
+   COMPACT FORM STYLES - Mobile First Design
+   ===================================================== */
+
+/* Bus Number + Route Name Row */
+.bus-route-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.bus-field,
+.route-field {
+  min-width: 0; /* Prevent overflow */
+}
+
+.bus-route-hint {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+/* Compact Section Title */
+.section-title-compact {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Route Details Compact */
+.route-details-compact {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+/* Form Row Compact - Stacked on Mobile */
+.form-row-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Form Group Compact */
+.form-group-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Compact Label */
+.compact-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.compact-label .required {
+  color: #dc2626;
+}
+
+.compact-label .verified {
+  color: #10b981;
+  margin-left: 0.25rem;
+}
+
+/* Compact Location + Time Container */
+.compact-location-time {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.compact-location-time > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Compact Time Input */
+.compact-time {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 0.5rem;
+  min-width: 90px;
+  flex-shrink: 0;
+}
+
+.compact-time.optional {
+  border-style: dashed;
+  background: #f9fafb;
+}
+
+.compact-time .time-icon {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.compact-time-input {
+  border: none !important;
+  background: transparent !important;
+  padding: 0.5rem 0.25rem !important;
+  font-size: 0.85rem !important;
+  width: 70px !important;
+  min-width: 70px !important;
+  outline: none !important;
+}
+
+.compact-time-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Error/Warning Text Compact */
+.error-text-compact {
+  color: #dc2626;
+  font-size: 0.75rem;
+  display: block;
+}
+
+.warning-text-compact {
+  color: #d97706;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .bus-route-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .compact-location-time {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .compact-time {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .compact-time-input {
+    flex: 1;
+    width: 100% !important;
+  }
+  
+  .route-details-compact {
+    padding: 0.75rem;
+  }
+  
+  .section-title-compact {
+    font-size: 0.85rem;
+  }
+}
+
+/* Desktop - Side by Side */
+@media (min-width: 641px) {
+  .form-row-compact {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .form-group-compact {
+    flex: 1;
+  }
+}
+
+/* =====================================================
+   END COMPACT FORM STYLES
+   ===================================================== */
+
 /* Reset and base styles */
 .route-form {
   max-width: 800px;

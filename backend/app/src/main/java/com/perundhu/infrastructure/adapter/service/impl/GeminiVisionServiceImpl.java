@@ -28,6 +28,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.perundhu.domain.port.GeminiVisionService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.retry.annotation.Retry;
+
 /**
  * Implementation of GeminiVisionService using Google's Gemini API.
  * 
@@ -158,6 +162,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   }
 
   @Override
+  @CircuitBreaker(name = "gemini", fallbackMethod = "extractBusScheduleFallback")
+  @Bulkhead(name = "gemini")
+  @Retry(name = "externalApi")
   public Map<String, Object> extractBusScheduleFromImage(String imageUrl) {
     if (!isAvailable()) {
       log.warn("Gemini Vision service is not available");
@@ -177,6 +184,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   }
 
   @Override
+  @CircuitBreaker(name = "gemini", fallbackMethod = "extractBusScheduleBase64Fallback")
+  @Bulkhead(name = "gemini")
+  @Retry(name = "externalApi")
   public Map<String, Object> extractBusScheduleFromBase64(String base64ImageData, String mimeType) {
     if (!isAvailable()) {
       log.warn("Gemini Vision service is not available");
@@ -834,6 +844,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       """;
 
   @Override
+  @CircuitBreaker(name = "gemini", fallbackMethod = "extractBusScheduleFromTextFallback")
+  @Bulkhead(name = "gemini")
+  @Retry(name = "externalApi")
   public Map<String, Object> extractBusScheduleFromText(String text) {
     if (!isAvailable()) {
       log.warn("Gemini service is not available for text extraction");
@@ -948,5 +961,50 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       log.error("Error parsing Gemini text extraction response: {}", e.getMessage(), e);
       return createErrorResponse("Failed to parse response: " + e.getMessage());
     }
+  }
+
+  // ============================================
+  // CIRCUIT BREAKER FALLBACK METHODS
+  // ============================================
+
+  /**
+   * Fallback method when Gemini API circuit breaker is open for image URL
+   * extraction.
+   */
+  @SuppressWarnings("unused")
+  private Map<String, Object> extractBusScheduleFallback(String imageUrl, Throwable t) {
+    log.warn("Gemini Vision circuit breaker triggered for image URL extraction. Error: {}", t.getMessage());
+    Map<String, Object> response = createErrorResponse(
+        "Gemini Vision service temporarily unavailable. Please try again in a few moments.");
+    response.put("circuitBreakerTriggered", true);
+    response.put("retryAfterSeconds", 30);
+    return response;
+  }
+
+  /**
+   * Fallback method when Gemini API circuit breaker is open for base64
+   * extraction.
+   */
+  @SuppressWarnings("unused")
+  private Map<String, Object> extractBusScheduleBase64Fallback(String base64ImageData, String mimeType, Throwable t) {
+    log.warn("Gemini Vision circuit breaker triggered for base64 extraction. Error: {}", t.getMessage());
+    Map<String, Object> response = createErrorResponse(
+        "Gemini Vision service temporarily unavailable. Please try again in a few moments.");
+    response.put("circuitBreakerTriggered", true);
+    response.put("retryAfterSeconds", 30);
+    return response;
+  }
+
+  /**
+   * Fallback method when Gemini API circuit breaker is open for text extraction.
+   */
+  @SuppressWarnings("unused")
+  private Map<String, Object> extractBusScheduleFromTextFallback(String text, Throwable t) {
+    log.warn("Gemini Vision circuit breaker triggered for text extraction. Error: {}", t.getMessage());
+    Map<String, Object> response = createErrorResponse(
+        "Gemini Vision service temporarily unavailable. Please try again in a few moments.");
+    response.put("circuitBreakerTriggered", true);
+    response.put("retryAfterSeconds", 30);
+    return response;
   }
 }

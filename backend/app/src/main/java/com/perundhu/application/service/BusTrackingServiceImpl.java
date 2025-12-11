@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.perundhu.application.dto.BusLocationDTO;
@@ -48,6 +50,14 @@ public class BusTrackingServiceImpl implements BusTrackingService {
 
     // Track active users per bus
     private final Map<Long, Map<String, LocalDateTime>> activeBusTrackers = new ConcurrentHashMap<>();
+
+    // Maximum cache sizes to prevent memory exhaustion
+    private static final int MAX_BUS_LOCATIONS = 10000;
+    private static final int MAX_USER_REWARDS = 50000;
+    private static final int MAX_ACTIVE_TRACKERS = 10000;
+
+    // Cache entry TTL (in minutes)
+    private static final long TRACKER_TTL_MINUTES = 60;
 
     public RewardPointsDTO processLocationReport(BusLocationReportDTO report) {
         log.info("Processing location report for bus {}: lat={}, lng={}",
@@ -810,5 +820,52 @@ public class BusTrackingServiceImpl implements BusTrackingService {
                 request.getSpeed(),
                 request.getHeading(),
                 request.getDeviceInfo());
+    }
+
+    /**
+     * Scheduled cleanup of stale cache entries to prevent memory leaks
+     * Runs every 15 minutes
+     */
+    @Scheduled(fixedRate = 900000)
+    public void cleanupStaleCacheEntries() {
+        LocalDateTime now = LocalDateTime.now();
+        int locationsRemoved = 0;
+        int trackersRemoved = 0;
+
+        // Cleanup stale bus locations
+        // Note: BusLocationDTO needs timestamp field for proper cleanup
+        // For now, limit size if too large
+        if (currentBusLocations.size() > MAX_BUS_LOCATIONS) {
+            log.warn("Bus locations cache exceeded max size ({}), clearing oldest entries", MAX_BUS_LOCATIONS);
+            // Keep only recent half
+            int toRemove = currentBusLocations.size() - (MAX_BUS_LOCATIONS / 2);
+            currentBusLocations.keySet().stream().limit(toRemove).forEach(currentBusLocations::remove);
+            locationsRemoved = toRemove;
+        }
+
+        // Cleanup stale tracker entries (older than 1 hour)
+        LocalDateTime trackerCutoff = now.minusMinutes(TRACKER_TTL_MINUTES);
+        for (Map.Entry<Long, Map<String, LocalDateTime>> busEntry : activeBusTrackers.entrySet()) {
+            Map<String, LocalDateTime> trackers = busEntry.getValue();
+            int before = trackers.size();
+            trackers.entrySet().removeIf(e -> e.getValue().isBefore(trackerCutoff));
+            trackersRemoved += (before - trackers.size());
+        }
+        // Remove empty bus entries
+        activeBusTrackers.entrySet().removeIf(e -> e.getValue().isEmpty());
+
+        // Limit user rewards cache size
+        if (userRewards.size() > MAX_USER_REWARDS) {
+            log.warn("User rewards cache exceeded max size ({}), clearing excess", MAX_USER_REWARDS);
+            int toRemove = userRewards.size() - (MAX_USER_REWARDS / 2);
+            userRewards.keySet().stream().limit(toRemove).forEach(userRewards::remove);
+        }
+
+        if (locationsRemoved > 0 || trackersRemoved > 0) {
+            log.info(
+                    "Cache cleanup: removed {} locations, {} tracker entries. Current sizes: locations={}, trackers={}, rewards={}",
+                    locationsRemoved, trackersRemoved, currentBusLocations.size(), activeBusTrackers.size(),
+                    userRewards.size());
+        }
     }
 }

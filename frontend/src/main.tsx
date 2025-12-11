@@ -7,6 +7,10 @@ import './utils/browserCompat.css' // Import browser compatibility fixes
 import App from './App'
 import './i18n.ts' // Import i18n configuration
 import { queryClient } from './lib/queryClient'
+import { initializeSecurity } from './utils/reactSecurity'
+
+// Initialize security measures (disabled in development for debugging)
+initializeSecurity();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

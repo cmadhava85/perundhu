@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +20,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Test controller for Gemini Vision service.
+ * Admin controller for Gemini Vision service.
  * Provides endpoints to test the Gemini Vision integration.
  * 
- * NOTE: This controller should be secured in production or removed entirely.
+ * SECURITY: Requires ADMIN role for all operations.
+ * These endpoints are for administrative testing purposes only.
  */
 @RestController
 @RequestMapping("/api/v1/admin/gemini")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+@PreAuthorize("hasRole('ADMIN')")
 public class GeminiVisionTestController {
 
   private final GeminiVisionService geminiVisionService;

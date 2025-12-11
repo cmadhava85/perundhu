@@ -295,7 +295,18 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
           <div className="bus-number-display">
             {bus.busNumber || bus.busName || 'Bus'}
           </div>
-          <div className="bus-type-display" style={{ backgroundColor: `${busTypeInfo.color}20`, color: busTypeInfo.color }}>
+          <div className="bus-type-display" style={{ 
+            backgroundColor: `${busTypeInfo.color}20`, 
+            color: busTypeInfo.color,
+            padding: '2px 8px',
+            borderRadius: '12px',
+            fontSize: '11px',
+            fontWeight: '600',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '3px',
+            whiteSpace: 'nowrap'
+          }}>
             {busTypeInfo.icon} {busTypeInfo.label}
           </div>
           
@@ -472,28 +483,6 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
 
       {/* Expandable Route Details */}
       <div className={`expandable-content ${isExpanded ? 'expanded' : ''}`}>
-        {/* Additional Features when expanded */}
-        <div className="expanded-features">
-          {/* Live Tracking */}
-          <div className="live-tracking">
-            <div className="tracking-icon"></div>
-            <span className="tracking-text">Live tracking available</span>
-          </div>
-
-          {/* Accessibility Features */}
-          <div className="accessibility-info">
-            <div className="accessibility-icon" title="Wheelchair Accessible">
-              ♿
-            </div>
-            <div className="accessibility-icon" title="Audio Announcements">
-              🔊
-            </div>
-            <div className="accessibility-icon" title="Low Floor">
-              📐
-            </div>
-          </div>
-        </div>
-        
         <div className="route-details">
           <div className="text-headline" style={{ marginBottom: 'var(--space-4)' }}>
             🗺️ Route Details

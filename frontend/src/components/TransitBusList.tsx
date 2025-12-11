@@ -388,81 +388,72 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
       <div className="container px-2 sm:px-4">
         {/* Unified Header + Controls Container */}
         {showTitle && (
-          <div className="bus-list-unified-container bg-white rounded-lg sm:rounded-xl border border-gray-200 p-3 sm:p-6 mb-3 sm:mb-6 shadow-sm">
+          <div className="bus-list-unified-container bg-white rounded-lg sm:rounded-xl border border-gray-200 p-3 sm:p-4 mb-2 sm:mb-4 shadow-sm">
             
-            {/* Header Section with Title and Route Info */}
-            <div className="bus-list-header-section flex flex-col gap-2 sm:gap-4 mb-3 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-200">
-              {/* Title and Bus Count */}
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
-                <h1 className="text-lg sm:text-2xl font-bold text-gray-900 m-0">
+            {/* Compact Header Section */}
+            <div className="bus-list-header-section flex flex-col gap-2 mb-3 pb-3 border-b border-gray-200">
+              {/* Title + Count + Route - Better mobile layout */}
+              <div className="flex items-center justify-between gap-2">
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 m-0">
                   {t('busList.title', 'Available Buses')}
                 </h1>
-                <div className="bus-count-badge-enhanced inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold rounded-md whitespace-nowrap self-start sm:self-auto">
+                <span className="inline-flex items-center px-3 py-1.5 bg-blue-500 text-white text-sm font-bold rounded-full shadow-sm">
                   {filteredAndSortedBuses.length} {filteredAndSortedBuses.length === 1 ? t('busList.bus', 'bus') : t('busList.buses', 'buses')}
-                </div>
+                </span>
               </div>
-
-              {/* Route Info */}
+              
+              {/* Route Info - Full width on mobile */}
               {fromLocation && toLocation && (
-                <div className="bg-gray-50 p-2 sm:p-3 rounded-lg border border-gray-200">
-                  <div className="flex items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base font-medium text-gray-900 text-center flex-wrap">
-                    <span className="text-gray-500">📍</span>
-                    <span className="truncate max-w-[120px] sm:max-w-none">{fromLocation}</span>
-                    <span className="text-blue-600 font-bold">→</span>
-                    <span className="truncate max-w-[120px] sm:max-w-none">{toLocation}</span>
-                    <span className="text-gray-500">🎯</span>
-                  </div>
+                <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
+                  <span className="text-red-500">📍</span>
+                  <span className="font-semibold">{fromLocation}</span>
+                  <span className="text-blue-600 font-bold text-lg">→</span>
+                  <span className="font-semibold">{toLocation}</span>
+                  <span>🎯</span>
                 </div>
               )}
 
-              {/* Smart Sorting Info Badge */}
-              <div className="flex items-center justify-center gap-2 mt-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg">
-                <span className="text-blue-600 text-xs sm:text-sm">🎯</span>
-                <span className="text-blue-700 text-xs sm:text-sm font-medium">
-                  {t('busList.smartSorted', 'Sorted by time - upcoming buses shown first')}
+              {/* Smart Sort badge - simplified */}
+              <div className="flex items-center justify-center">
+                <span className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium border border-green-200">
+                  🎯 {t('busList.smartSortedShort', 'Sorted by time - upcoming buses shown first')}
                 </span>
-              </div>
-
-              {/* Legend for badges */}
-              <div className="flex flex-wrap items-center justify-center gap-3 mt-2 text-xs text-gray-500">
-                <span className="flex items-center gap-1"><span style={{ color: '#10B981' }}>🚀</span> Next departing</span>
-                <span className="flex items-center gap-1"><span style={{ color: '#8B5CF6' }}>⚡</span> Fastest route</span>
-                <span className="flex items-center gap-1"><span style={{ color: '#F59E0B' }}>💰</span> Best value</span>
               </div>
             </div>
 
             {/* Controls Section */}
             <div className="bus-list-controls-section">
-              {/* Search and Filter Row - Mobile-First Design */}
-              <div className="flex items-center gap-2 sm:gap-3 w-full mb-3 sm:mb-4">
-                <div className="flex-1 relative min-w-0">
+              {/* Search and Filter Row */}
+              <div className="flex items-center gap-2 w-full mb-3">
+                <div 
+                  className="flex-1 flex items-center bg-gray-100 rounded-lg overflow-hidden"
+                  style={{ border: '1px solid #d1d5db' }}
+                >
+                  <span className="flex items-center justify-center w-10 text-gray-400 flex-shrink-0">🔍</span>
                   <input
                     type="text"
                     placeholder={t('busList.searchPlaceholder', 'Search buses...')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bus-search-input-enhanced w-full pl-8 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 hover:border-gray-400"
-                    style={{ fontSize: '16px' }} // Prevents zoom on iOS
+                    className="flex-1 py-2.5 pr-3 text-sm placeholder-gray-400"
+                    style={{ fontSize: '16px', border: 'none', outline: 'none', background: 'transparent' }}
                   />
-                  <div className="absolute inset-y-0 left-0 pl-2.5 sm:pl-4 flex items-center pointer-events-none">
-                    <span className="text-gray-500 text-base sm:text-lg">🔍</span>
-                  </div>
                 </div>
                 <button
-                  className={`flex items-center justify-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold rounded-lg transition-all duration-200 border flex-shrink-0 min-w-[48px] sm:min-w-[70px]
+                  className={`flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 border flex-shrink-0
                     ${showFilters 
-                      ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-600' 
-                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                      ? 'bg-blue-500 text-white border-blue-500' 
+                      : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'
                     }`}
                   onClick={() => setShowFilters(!showFilters)}
+                  title={t('busList.filter', 'Filter')}
                 >
-                  <span className="text-sm sm:text-base">🔧</span>
-                  <span className="hidden sm:inline font-medium">{t('busList.filter', 'Filter')}</span>
+                  <span className="text-sm">🔧</span>
                 </button>
               </div>
 
-              {/* Sort Controls Row - Enhanced Mobile-Optimized Design */}
-              <div className="bus-sort-controls flex items-center gap-1.5 sm:gap-3 pt-2.5 sm:pt-4 border-t border-gray-200 overflow-x-auto">
+              {/* Sort Controls Row - Compact */}
+              <div className="bus-sort-controls flex items-center gap-1 pt-2 border-t border-gray-100 overflow-x-auto">
                 <span className="sort-label">
                   {t('busList.sort', 'Sort:')}
                 </span>

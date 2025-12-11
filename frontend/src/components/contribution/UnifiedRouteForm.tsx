@@ -5,6 +5,8 @@ import '../../styles/contribution.css';
 
 // Import our new smaller components
 import BusDetailsForm from './BusDetailsForm';
+import HoneypotFields from '../common/HoneypotFields';
+import { useSubmissionSecurity } from '../../hooks/useSubmissionSecurity';
 import RouteVisualization from './RouteVisualization';
 import StopEntryForm from './StopEntryForm';
 import FormErrorSummary from './FormErrorSummary';
@@ -23,6 +25,10 @@ interface UnifiedRouteFormProps {
  */
 const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
   const { t } = useTranslation();
+  const { 
+    prepareSubmission, 
+    isLoading: isSecurityLoading 
+  } = useSubmissionSecurity();
   const [formData, setFormData] = useState<RouteContributionType>({
     busName: '',
     busNumber: '',
@@ -334,9 +340,11 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     }
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAttemptedSubmit(true);
+    
+    // Validate security (honeypot, reCAPTCHA) will be done by prepareSubmission
     
     // Validate that at least one bus identifier is provided
     const hasBusName = !!(formData.busName || '').trim();
@@ -405,11 +413,19 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
     }
     
     // No errors, proceed with submission
-    onSubmit(formData);
+    const securePayload = await prepareSubmission(formData as unknown as Record<string, unknown>);
+    if (!securePayload.isValid) {
+      console.warn('Security validation failed:', securePayload.error);
+      return;
+    }
+    onSubmit(securePayload.data as unknown as RouteContributionType);
   };
 
   return (
     <form className="unified-route-form" onSubmit={handleSubmit}>
+      {/* Hidden honeypot fields for bot detection */}
+      <HoneypotFields />
+      
       {/* Form Error Summary component */}
       <FormErrorSummary 
         errors={getFormattedErrors()} 
@@ -480,8 +496,11 @@ const UnifiedRouteForm: React.FC<UnifiedRouteFormProps> = ({ onSubmit }) => {
         <button 
           type="submit" 
           className="submit-btn"
+          disabled={isSecurityLoading}
         >
-          {t('contribution.submitRoute', 'Submit Route')}
+          {isSecurityLoading 
+            ? t('contribution.validating', 'Validating...') 
+            : t('contribution.submitRoute', 'Submit Route')}
         </button>
       </div>
     </form>

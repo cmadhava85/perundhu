@@ -245,6 +245,16 @@ dependencies {
     
     // OpenAPI/Swagger documentation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+    
+    // Spring Boot Actuator for health endpoints and metrics
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    
+    // Resilience4j for Circuit Breakers, Retry, and Bulkhead patterns
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.2.0'
+    implementation 'io.github.resilience4j:resilience4j-circuitbreaker:2.2.0'
+    implementation 'io.github.resilience4j:resilience4j-retry:2.2.0'
+    implementation 'io.github.resilience4j:resilience4j-bulkhead:2.2.0'
+    implementation 'io.github.resilience4j:resilience4j-timelimiter:2.2.0'
 }
 
 flyway {

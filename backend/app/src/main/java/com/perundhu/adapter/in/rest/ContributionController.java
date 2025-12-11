@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.perundhu.adapter.out.cache.InMemoryImageHashRepository;
-import com.perundhu.adapter.out.security.RecaptchaService;
+import com.perundhu.infrastructure.security.RecaptchaService;
 import com.perundhu.application.service.AuthenticationService;
 import com.perundhu.application.service.ImageContributionProcessingService;
 import com.perundhu.application.service.PasteContributionValidator;
@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1/contributions")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+
 public class ContributionController {
 
   private final ContributionInputPort contributionInputPort;

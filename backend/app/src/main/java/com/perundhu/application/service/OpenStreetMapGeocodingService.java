@@ -18,6 +18,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perundhu.application.dto.LocationDTO;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.retry.annotation.Retry;
+
 /**
  * OpenStreetMap Geocoding Service using Nominatim API
  * Used for location search when location doesn't exist in database
@@ -47,6 +51,9 @@ public class OpenStreetMapGeocodingService {
    * @param limit Maximum number of results
    * @return List of LocationDTO without coordinates (for privacy/simplicity)
    */
+  @CircuitBreaker(name = "osm", fallbackMethod = "searchTamilNaduLocationsFallback")
+  @Bulkhead(name = "osm")
+  @Retry(name = "externalApi")
   public List<LocationDTO> searchTamilNaduLocations(String query, int limit) {
     if (query == null || query.trim().length() < 3) {
       return new ArrayList<>();
@@ -187,6 +194,8 @@ public class OpenStreetMapGeocodingService {
   /**
    * Get coordinates for a location (for internal use when saving new locations)
    */
+  @CircuitBreaker(name = "osm", fallbackMethod = "getCoordinatesFallback")
+  @Retry(name = "externalApi")
   public double[] getCoordinates(String locationName) {
     if (locationName == null || locationName.trim().isEmpty()) {
       return null;
@@ -248,5 +257,30 @@ public class OpenStreetMapGeocodingService {
   public void updateMissingCoordinates() {
     log.info(
         "OpenStreetMapGeocodingService.updateMissingCoordinates - use LocationRepository to find locations with null coordinates");
+  }
+
+  // ============================================
+  // CIRCUIT BREAKER FALLBACK METHODS
+  // ============================================
+
+  /**
+   * Fallback method when OSM circuit breaker is open for location search.
+   */
+  @SuppressWarnings("unused")
+  private List<LocationDTO> searchTamilNaduLocationsFallback(String query, int limit, Throwable t) {
+    log.warn("OSM circuit breaker triggered for location search. Query: '{}', Error: {}", query, t.getMessage());
+    // Return empty list - the caller should fall back to database-only search
+    return new ArrayList<>();
+  }
+
+  /**
+   * Fallback method when OSM circuit breaker is open for coordinate lookup.
+   */
+  @SuppressWarnings("unused")
+  private double[] getCoordinatesFallback(String locationName, Throwable t) {
+    log.warn("OSM circuit breaker triggered for coordinate lookup. Location: '{}', Error: {}", locationName,
+        t.getMessage());
+    // Return null - the caller should handle missing coordinates
+    return null;
   }
 }

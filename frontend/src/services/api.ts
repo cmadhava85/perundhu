@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosResponse, Method } from 'axios';
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
 import { getLocationsOffline } from './offlineService';
+import { setupRetryInterceptor } from './apiRetry';
 
 /**
  * Type for request data and parameters
@@ -124,16 +125,29 @@ export const createApiInstance = (): AxiosInstance => {
   // Log API URL to help with debugging
   console.log(`Creating API instance with baseURL: ${apiUrl}`);
   
-  return axios.create({
+  const instance = axios.create({
     baseURL: apiUrl,
     headers: {
       'Content-Type': 'application/json',
     },
+    timeout: 30000, // 30 second timeout
     // Disable caching to always get fresh data from the backend
     params: {
       _: new Date().getTime() // Add timestamp to prevent caching
     }
   });
+
+  // Setup retry interceptor for resilience
+  setupRetryInterceptor(instance, {
+    maxRetries: 3,
+    retryDelay: 1000,
+    backoffMultiplier: 2,
+    maxDelay: 10000,
+    retryableStatusCodes: [408, 429, 500, 502, 503, 504],
+    retryableErrorCodes: ['ECONNABORTED', 'ETIMEDOUT', 'ENOTFOUND', 'ENETUNREACH', 'ERR_NETWORK'],
+  });
+
+  return instance;
 };
 
 // Default API instance

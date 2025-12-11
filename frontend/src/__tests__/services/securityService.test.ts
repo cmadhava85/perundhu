@@ -2,27 +2,52 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import securityService from '../../services/securityService';
 
 // Mock localStorage for testing
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
+const localStorageMock: { [key: string]: string } = {};
+
+const localStorageImpl = {
+  getItem: vi.fn((key: string) => localStorageMock[key] ?? null),
+  setItem: vi.fn((key: string, value: string) => {
+    localStorageMock[key] = value;
+  }),
+  removeItem: vi.fn((key: string) => {
+    delete localStorageMock[key];
+  }),
+  clear: vi.fn(() => {
+    Object.keys(localStorageMock).forEach(key => delete localStorageMock[key]);
+  }),
   length: 0,
   key: vi.fn(),
 };
 
+// Mock sessionStorage for session key
+const sessionStorageMock: { [key: string]: string } = {};
+const sessionStorageImpl = {
+  getItem: vi.fn((key: string) => sessionStorageMock[key] ?? null),
+  setItem: vi.fn((key: string, value: string) => {
+    sessionStorageMock[key] = value;
+  }),
+  removeItem: vi.fn((key: string) => {
+    delete sessionStorageMock[key];
+  }),
+  clear: vi.fn(),
+};
+
 Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
+  value: localStorageImpl,
+  writable: true,
+});
+
+Object.defineProperty(window, 'sessionStorage', {
+  value: sessionStorageImpl,
   writable: true,
 });
 
 describe('SecurityService', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    localStorageMock.clear();
-    localStorageMock.getItem.mockClear();
-    localStorageMock.setItem.mockClear();
-    localStorageMock.removeItem.mockClear();
+    // Clear mock storage
+    Object.keys(localStorageMock).forEach(key => delete localStorageMock[key]);
+    Object.keys(sessionStorageMock).forEach(key => delete sessionStorageMock[key]);
     securityService.clearRateLimits();
   });
 
@@ -36,25 +61,25 @@ describe('SecurityService', () => {
       
       securityService.secureStore('test_key', testData);
       
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('test_key', expect.any(String));
+      expect(localStorageImpl.setItem).toHaveBeenCalledWith('test_key', expect.any(String));
     });
 
     it('should retrieve stored data', () => {
       const testData = { userId: '123', role: 'user' };
-      // Mock the encrypted data that would be stored
-      const encryptedData = btoa(JSON.stringify(testData)); // Base64 encoded for test
       
-      localStorageMock.getItem.mockReturnValue(encryptedData);
+      // First store the data using the service (so it uses proper encoding)
+      securityService.secureStore('test_key', testData);
       
+      // Then retrieve it
       const result = securityService.secureRetrieve('test_key');
       
-      expect(localStorageMock.getItem).toHaveBeenCalledWith('test_key');
-      // The security service should handle decryption and return the original data
       expect(result).toEqual(testData);
     });
 
     it('should handle invalid data gracefully', () => {
-      localStorageMock.getItem.mockReturnValue(null);
+      // Set null explicitly in mock
+      localStorageMock['non_existent_key'] = undefined as unknown as string;
+      delete localStorageMock['non_existent_key'];
       
       const result = securityService.secureRetrieve('non_existent_key');
       
@@ -64,7 +89,22 @@ describe('SecurityService', () => {
     it('should remove stored data', () => {
       securityService.secureRemove('test_key');
       
-      expect(localStorageMock.removeItem).toHaveBeenCalledWith('test_key');
+      expect(localStorageImpl.removeItem).toHaveBeenCalledWith('test_key');
+    });
+
+    it('should detect tampering', () => {
+      const testData = { userId: '123', role: 'user' };
+      
+      // Store valid data
+      securityService.secureStore('tamper_key', testData);
+      
+      // Tamper with the stored data
+      localStorageMock['tamper_key'] = btoa(JSON.stringify({ d: 'tampered', t: Date.now(), i: 'wrong' }));
+      
+      // Retrieval should return null due to integrity check failure
+      const result = securityService.secureRetrieve('tamper_key');
+      
+      expect(result).toBeNull();
     });
   });
 
@@ -83,6 +123,20 @@ describe('SecurityService', () => {
       const token2 = securityService.generateCSRFToken();
       
       expect(token1).not.toBe(token2);
+    });
+
+    it('should validate correct CSRF token', () => {
+      const token = securityService.generateCSRFToken();
+      const isValid = securityService.validateCSRFToken(token);
+      
+      expect(isValid).toBe(true);
+    });
+
+    it('should reject invalid CSRF token', () => {
+      securityService.generateCSRFToken();
+      const isValid = securityService.validateCSRFToken('invalid-token');
+      
+      expect(isValid).toBe(false);
     });
   });
 
@@ -146,6 +200,39 @@ describe('SecurityService', () => {
       const result = securityService.sanitizeInput(safeInput);
       
       expect(result).toBe('Hello World 123');
+    });
+  });
+
+  describe('Input Validation', () => {
+    it('should detect SQL injection patterns', () => {
+      const sqlInjection = "' OR '1'='1";
+      const result = securityService.validateInput(sqlInjection);
+      
+      expect(result.isValid).toBe(false);
+      expect(result.reason).toContain('SQL');
+    });
+
+    it('should detect XSS patterns', () => {
+      const xssInput = '<script>alert("xss")</script>';
+      const result = securityService.validateInput(xssInput);
+      
+      expect(result.isValid).toBe(false);
+      expect(result.reason).toContain('XSS');
+    });
+
+    it('should detect path traversal', () => {
+      const pathTraversal = '../../../etc/passwd';
+      const result = securityService.validateInput(pathTraversal);
+      
+      expect(result.isValid).toBe(false);
+      expect(result.reason).toContain('Path traversal');
+    });
+
+    it('should accept safe input', () => {
+      const safeInput = 'Hello World 123';
+      const result = securityService.validateInput(safeInput);
+      
+      expect(result.isValid).toBe(true);
     });
   });
 

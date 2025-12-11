@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping("/api/v1/locations")
-@CrossOrigin(origins = "*")
+
 @Tag(name = "Locations", description = "Location search and autocomplete operations")
 public class LocationController {
 

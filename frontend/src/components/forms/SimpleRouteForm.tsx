@@ -307,138 +307,115 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         </div>
       )}
 
-      <div className={`form-field-wrapper ${validationErrors.busNumber ? 'field-error' : ''}`}>
-        <FormInput
-          id="busNumber"
-          name="busNumber"
-          value={formData.busNumber}
-          onChange={handleChange}
-          label={t('route.busNumber', 'Bus Number')}
-          placeholder={t('route.busNumberPlaceholder', 'e.g., 27D, 570, MTC-123')}
-          icon="🚌"
-          hint={t('route.busNumberHint', 'Enter the bus number OR route name below')}
-        />
-        {validationErrors.busNumber && (
-          <span className="error-text" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '0.25rem', display: 'block' }}>
-            {validationErrors.busNumber}
-          </span>
-        )}
+      {/* Bus Number + Route Name - Compact Row */}
+      <div className="bus-route-row">
+        <div className={`bus-field ${validationErrors.busNumber ? 'field-error' : ''}`}>
+          <FormInput
+            id="busNumber"
+            name="busNumber"
+            value={formData.busNumber}
+            onChange={handleChange}
+            label={t('route.busNumber', 'Bus Number')}
+            placeholder={t('route.busNumberPlaceholder', 'e.g., 27D, 570')}
+            icon="🚌"
+          />
+        </div>
+        <div className="route-field">
+          <FormInput
+            id="route"
+            name="route"
+            value={formData.route}
+            onChange={handleChange}
+            label={t('route.routeName', 'Route Name')}
+            placeholder={t('route.routeNamePlaceholder', 'e.g., Chennai - Tambaram')}
+            icon="🛣️"
+          />
+        </div>
       </div>
+      {validationErrors.busNumber && (
+        <span className="error-text" style={{ color: '#dc2626', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '0.5rem', display: 'block' }}>
+          {validationErrors.busNumber}
+        </span>
+      )}
+      <p className="bus-route-hint">{t('route.busRouteHint', 'Enter either bus number or route name (at least one required)')}</p>
       
-      <FormInput
-        id="route"
-        name="route"
-        value={formData.route}
-        onChange={handleChange}
-        label={t('route.routeName', 'Route Name')}
-        placeholder={t('route.routeNamePlaceholder', 'e.g., Chennai Central - Tambaram Express')}
-        icon="🛣️"
-        hint={t('route.routeNameHint', 'Enter the route name OR bus number above')}
-      />
-      
-      <div className="form-section route-details">
-        <h3 className="section-title">
-          <span className="section-icon">🚌</span>
-          {t('route.routeInformation', 'Route Information')}
+      <div className="form-section route-details-compact">
+        <h3 className="section-title-compact">
+          📍 {t('route.routeInformation', 'Route Information')}
         </h3>
         
-        <div className="form-row">
-          <div className={`form-group departure-group ${validationErrors.origin ? 'field-error' : ''} ${locationWarnings.origin ? 'field-warning' : ''}`}>
-            <label htmlFor="origin">
-              <span className="field-icon">📍</span>
-              {t('route.departure', 'Departure')} <span style={{ color: '#dc2626' }}>*</span>
-              {locationVerified.origin && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title={t('route.locationVerified', 'Location verified')}>✓</span>}
+        <div className="form-row-compact">
+          <div className={`form-group-compact ${validationErrors.origin ? 'field-error' : ''}`}>
+            <label htmlFor="origin" className="compact-label">
+              📍 {t('route.from', 'From')} <span className="required">*</span>
+              {locationVerified.origin && <span className="verified">✓</span>}
             </label>
-            <div className="location-time-container">
-              <div style={{ flex: 1 }}>
-                <LocationAutocompleteInput
-                  id="origin"
-                  name="origin"
-                  value={formData.origin}
-                  onChange={handleOriginChange}
-                  placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
-                  label=""
-                  required
-                />
-                {validationErrors.origin && (
-                  <span className="error-text" style={{ color: '#dc2626', fontSize: '0.8rem', display: 'block', marginTop: '0.25rem' }}>
-                    {validationErrors.origin}
-                  </span>
-                )}
-                {locationWarnings.origin && !validationErrors.origin && (
-                  <span className="warning-text" style={{ color: '#d97706', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
-                    <AlertTriangle size={12} /> {locationWarnings.origin}
-                  </span>
-                )}
-              </div>
-              <div className={`time-input-group ${validationErrors.departureTime ? 'time-error' : ''}`}>
-                <label htmlFor="departureTime" className="time-label">
-                  <span className="time-icon">🕐</span>
-                  {t('route.time', 'Time')} <span style={{ color: '#dc2626' }}>*</span>
-                </label>
+            <div className="compact-location-time">
+              <LocationAutocompleteInput
+                id="origin"
+                name="origin"
+                value={formData.origin}
+                onChange={handleOriginChange}
+                placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
+                label=""
+                required
+              />
+              <div className="compact-time">
+                <span className="time-icon">⏰</span>
                 <input
                   type="time"
                   id="departureTime"
                   name="departureTime"
                   value={formData.departureTime}
                   onChange={handleChange}
-                  className={`time-input ${validationErrors.departureTime ? 'input-error' : ''}`}
-                  placeholder="--:--"
-                  style={validationErrors.departureTime ? { borderColor: '#dc2626', backgroundColor: '#fef2f2' } : {}}
+                  className={`compact-time-input ${validationErrors.departureTime ? 'input-error' : ''}`}
+                  style={validationErrors.departureTime ? { borderColor: '#dc2626' } : {}}
                 />
-                {validationErrors.departureTime && (
-                  <span className="error-text" style={{ color: '#dc2626', fontSize: '0.75rem', display: 'block', marginTop: '0.25rem' }}>
-                    {t('route.timeRequired', 'Required')}
-                  </span>
-                )}
               </div>
             </div>
+            {(validationErrors.origin || validationErrors.departureTime) && (
+              <span className="error-text-compact">
+                {validationErrors.origin || t('route.timeRequired', 'Time required')}
+              </span>
+            )}
+            {locationWarnings.origin && !validationErrors.origin && (
+              <span className="warning-text-compact"><AlertTriangle size={12} /> {locationWarnings.origin}</span>
+            )}
           </div>
           
-          <div className={`form-group arrival-group ${validationErrors.destination ? 'field-error' : ''} ${locationWarnings.destination ? 'field-warning' : ''}`}>
-            <label htmlFor="destination">
-              <span className="field-icon">🏁</span>
-              {t('route.arrival', 'Arrival')} <span style={{ color: '#dc2626' }}>*</span>
-              {locationVerified.destination && <span style={{ color: '#10b981', marginLeft: '0.25rem' }} title={t('route.locationVerified', 'Location verified')}>✓</span>}
+          <div className={`form-group-compact ${validationErrors.destination ? 'field-error' : ''}`}>
+            <label htmlFor="destination" className="compact-label">
+              🎯 {t('route.to', 'To')} <span className="required">*</span>
+              {locationVerified.destination && <span className="verified">✓</span>}
             </label>
-            <div className="location-time-container">
-              <div style={{ flex: 1 }}>
-                <LocationAutocompleteInput
-                  id="destination"
-                  name="destination"
-                  value={formData.destination}
-                  onChange={handleDestinationChange}
-                  placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
-                  label=""
-                  required
-                />
-                {validationErrors.destination && (
-                  <span className="error-text" style={{ color: '#dc2626', fontSize: '0.8rem', display: 'block', marginTop: '0.25rem' }}>
-                    {validationErrors.destination}
-                  </span>
-                )}
-                {locationWarnings.destination && !validationErrors.destination && (
-                  <span className="warning-text" style={{ color: '#d97706', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
-                    <AlertTriangle size={12} /> {locationWarnings.destination}
-                  </span>
-                )}
-              </div>
-              <div className="time-input-group">
-                <label htmlFor="arrivalTime" className="time-label">
-                  <span className="time-icon">🕑</span>
-                  {t('route.time', 'Time')} <span style={{ color: '#6b7280', fontSize: '0.75rem' }}>{t('route.timeOptional', '(optional)')}</span>
-                </label>
+            <div className="compact-location-time">
+              <LocationAutocompleteInput
+                id="destination"
+                name="destination"
+                value={formData.destination}
+                onChange={handleDestinationChange}
+                placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
+                label=""
+                required
+              />
+              <div className="compact-time optional">
+                <span className="time-icon">⏰</span>
                 <input
                   type="time"
                   id="arrivalTime"
                   name="arrivalTime"
                   value={formData.arrivalTime}
                   onChange={handleChange}
-                  className="time-input"
-                  placeholder="--:--"
+                  className="compact-time-input"
                 />
               </div>
             </div>
+            {validationErrors.destination && (
+              <span className="error-text-compact">{validationErrors.destination}</span>
+            )}
+            {locationWarnings.destination && !validationErrors.destination && (
+              <span className="warning-text-compact"><AlertTriangle size={12} /> {locationWarnings.destination}</span>
+            )}
           </div>
         </div>
         

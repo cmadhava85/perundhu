@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import type { Bus, Location } from '../../types';
 import { searchBuses, getLocations } from '../../services/api';
 import { useEffect } from 'react';
+import HoneypotFields from '../common/HoneypotFields';
+import { useSubmissionSecurity } from '../../hooks/useSubmissionSecurity';
 import './ReportIssue.css';
 
 interface ReportIssueProps {
@@ -62,6 +64,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
   onClose
 }) => {
   const { t } = useTranslation();
+  const { prepareSubmission, isLoading: isSecurityLoading } = useSubmissionSecurity();
   
   // Route selection state
   const [locations, setLocations] = useState<Location[]>([]);
@@ -212,13 +215,18 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
       reporterId: localStorage.getItem('userId') || `anon_${Date.now()}`
     };
     
+    // Validate security (honeypot, reCAPTCHA)
+    const securePayload = await prepareSubmission(issueData as unknown as Record<string, unknown>);
+    if (!securePayload.isValid) {
+      setSubmitError(t('reportIssue.securityFailed', 'Security validation failed. Please try again.'));
+      return;
+    }
+    
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/route-issues`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(issueData)
+        headers: securePayload.headers,
+        body: JSON.stringify(securePayload.data)
       });
       
       const data = await response.json();
@@ -272,6 +280,9 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
         </div>
       ) : (
         <div className="report-issue-form">
+          {/* Hidden honeypot fields for bot detection */}
+          <HoneypotFields />
+          
           {/* Step 1: Route Selection (if not pre-selected) */}
           {showRouteSelection && (
             <div className="form-section">
@@ -477,23 +488,29 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
               <div className="details-form">
                 {/* Show suggested time fields for timing issues */}
                 {(issueType === 'WRONG_TIMING' || issueType === 'WRONG_SCHEDULE') && (
-                  <div className="timing-suggestion">
-                    <label>{t('reportIssue.suggestedTimes', 'Suggested correct times (optional)')}</label>
-                    <div className="time-inputs">
-                      <div className="time-input-group">
-                        <label>🟢 {t('reportIssue.departure', 'Departure')}</label>
+                  <div className="timing-suggestion compact">
+                    <div className="timing-header">
+                      <span className="timing-label">{t('reportIssue.suggestedTimes', 'Suggested times')}</span>
+                      <span className="optional-tag">{t('reportIssue.optional', 'optional')}</span>
+                    </div>
+                    <div className="time-inputs-inline">
+                      <div className="time-chip">
+                        <span className="time-indicator departure">●</span>
                         <input
                           type="time"
                           value={suggestedDepartureTime}
                           onChange={(e) => setSuggestedDepartureTime(e.target.value)}
+                          placeholder="--:--"
                         />
                       </div>
-                      <div className="time-input-group">
-                        <label>🔴 {t('reportIssue.arrival', 'Arrival')}</label>
+                      <span className="time-separator">→</span>
+                      <div className="time-chip">
+                        <span className="time-indicator arrival">●</span>
                         <input
                           type="time"
                           value={suggestedArrivalTime}
                           onChange={(e) => setSuggestedArrivalTime(e.target.value)}
+                          placeholder="--:--"
                         />
                       </div>
                     </div>
@@ -501,7 +518,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
                 )}
                 
                 {/* Description */}
-                <div className="description-group">
+                <div className="description-group compact">
                   <label>
                     💬 {t('reportIssue.description', 'Describe the issue')}
                     {issueType !== 'BUS_NOT_AVAILABLE' && <span className="required">*</span>}
@@ -513,24 +530,25 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
                       setSubmitError(null);
                     }}
                     placeholder={getDescriptionPlaceholder(issueType, t)}
-                    rows={4}
+                    rows={2}
                   />
                   <span className="char-count">{description.length}/500</span>
                 </div>
                 
                 {/* Last traveled */}
-                <div className="last-traveled-group">
-                  <label>📅 {t('reportIssue.lastTraveled', 'When did you last travel this route?')}</label>
+                <div className="last-traveled-inline">
+                  <span className="inline-label">📅 {t('reportIssue.lastTraveledShort', 'Last traveled')}</span>
                   <select
                     value={lastTraveledDate}
                     onChange={(e) => setLastTraveledDate(e.target.value)}
+                    className="inline-select"
                   >
                     <option value="">{t('reportIssue.selectDate', 'Select...')}</option>
                     <option value="today">{t('reportIssue.date.today', 'Today')}</option>
                     <option value="this-week">{t('reportIssue.date.thisWeek', 'This week')}</option>
                     <option value="this-month">{t('reportIssue.date.thisMonth', 'This month')}</option>
                     <option value="few-months">{t('reportIssue.date.fewMonths', 'Few months ago')}</option>
-                    <option value="never">{t('reportIssue.date.never', 'Never traveled this route')}</option>
+                    <option value="never">{t('reportIssue.date.never', 'Never')}</option>
                   </select>
                 </div>
                 
@@ -546,9 +564,9 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
                 <button
                   className="submit-btn"
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isSecurityLoading}
                 >
-                  {isSubmitting ? (
+                  {isSubmitting || isSecurityLoading ? (
                     <>
                       <span className="loading-spinner" />
                       {t('reportIssue.submitting', 'Submitting...')}

@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
+
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 

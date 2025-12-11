@@ -48,7 +48,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping("/api/v1/bus-schedules")
-@CrossOrigin(origins = "*")
+
 @Tag(name = "Bus Schedules", description = "Bus search and schedule operations")
 public class BusScheduleController {
 

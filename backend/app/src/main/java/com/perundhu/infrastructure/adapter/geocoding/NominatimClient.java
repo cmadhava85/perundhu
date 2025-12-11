@@ -18,6 +18,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perundhu.domain.port.GeocodingPort;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -63,6 +66,9 @@ public class NominatimClient implements GeocodingPort {
     /**
      * Internal search method that returns NominatimResult
      */
+    @CircuitBreaker(name = "osm", fallbackMethod = "searchTamilNaduInternalFallback")
+    @Bulkhead(name = "osm")
+    @Retry(name = "externalApi")
     public Optional<NominatimResult> searchTamilNaduInternal(String query) {
         if (query == null || query.trim().isEmpty()) {
             return Optional.empty();
@@ -210,6 +216,25 @@ public class NominatimClient implements GeocodingPort {
      */
     public int getCacheSize() {
         return cache.size();
+    }
+
+    // ============================================
+    // CIRCUIT BREAKER FALLBACK METHODS
+    // ============================================
+
+    /**
+     * Fallback method when Nominatim circuit breaker is open.
+     */
+    @SuppressWarnings("unused")
+    private Optional<NominatimResult> searchTamilNaduInternalFallback(String query, Throwable t) {
+        log.warn("Nominatim circuit breaker triggered. Query: '{}', Error: {}", query, t.getMessage());
+        // Check cache as fallback
+        String normalizedQuery = query != null ? query.trim().toUpperCase() : "";
+        if (cache.containsKey(normalizedQuery)) {
+            log.info("Returning cached result for '{}' during circuit breaker open state", query);
+            return Optional.ofNullable(cache.get(normalizedQuery));
+        }
+        return Optional.empty();
     }
 
     /**

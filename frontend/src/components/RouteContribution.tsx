@@ -151,34 +151,19 @@ export const RouteContribution: React.FC = () => {
 
   return (
     <div className="premium-contribution-page">
-      <div className="contribution-hero">
-        <div className="hero-content">
-          <div className="hero-badge">
-            <span className="badge-icon">✨</span>
-            <span className="badge-text">{t('contribution.communityPowered', 'Community Powered')}</span>
-          </div>
-          
-          <h1 className="hero-title">
-            <span className="title-gradient">{t('contribution.heroTitle', 'Share Your Route Knowledge')}</span>
-          </h1>
-          
-          <p className="hero-description">
-            {t('contribution.heroDescription', 'Help fellow travelers by contributing accurate bus route information. Your local knowledge makes a difference!')}
-          </p>
+      {/* Compact Header */}
+      <div className="compact-header">
+        <div className="header-left">
+          <span className="header-badge">✨ {t('contribution.communityPowered', 'Community Powered')}</span>
+          <h1 className="header-title">{t('contribution.heroTitleShort', 'Share Route Knowledge')}</h1>
         </div>
+        {!AuthService.isAuthenticated() && (
+          <div className="header-welcome">
+            <span className="wave-icon">👋</span>
+            <span className="welcome-text">{t('welcome.short', 'Guest • No account needed')}</span>
+          </div>
+        )}
       </div>
-
-      {!AuthService.isAuthenticated() && (
-        <div className="welcome-card">
-          <div className="welcome-content">
-            <div className="welcome-icon">👋</div>
-            <div className="welcome-text">
-              <h3 className="welcome-title">{t('welcome.title', 'Welcome, Guest!')}</h3>
-              <p className="welcome-message">{t('welcome.message', 'No account needed! Start contributing right away.')}</p>
-            </div>
-          </div>
-        </div>
-      )}
       
       <div className="premium-contribution-card">
         <div className="card-header">
