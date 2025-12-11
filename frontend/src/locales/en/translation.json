@@ -578,6 +578,83 @@
       "loading": "Loading contributions...",
       "filterStatus": "Filter by Status",
       "searchPlaceholder": "Search contributions..."
+    },
+    "issues": {
+      "title": "Route Issues",
+      "subtitle": "Review and resolve user-reported route issues",
+      "stats": {
+        "pending": "Pending",
+        "highPriority": "High Priority",
+        "resolved": "Resolved",
+        "total": "Total Issues"
+      },
+      "filters": {
+        "status": "Status",
+        "priority": "Priority",
+        "all": "All",
+        "pending": "Pending",
+        "underReview": "Under Review",
+        "confirmed": "Confirmed",
+        "resolved": "Resolved",
+        "rejected": "Rejected"
+      },
+      "types": {
+        "busNotAvailable": "Bus Not Available",
+        "wrongTiming": "Wrong Timing",
+        "wrongSchedule": "Wrong Schedule",
+        "wrongStops": "Wrong Stops",
+        "wrongFare": "Wrong Fare",
+        "routeChanged": "Route Changed",
+        "serviceSuspended": "Service Suspended",
+        "other": "Other"
+      },
+      "loading": "Loading issues...",
+      "refresh": "Refresh",
+      "empty": {
+        "title": "No Issues Found",
+        "message": "There are no issues matching your filters."
+      },
+      "details": {
+        "bus": "Bus",
+        "reported": "Reported",
+        "suggestedDeparture": "Suggested Departure",
+        "suggestedArrival": "Suggested Arrival",
+        "lastTraveled": "Last Traveled",
+        "description": "Description",
+        "adminNotes": "Admin Notes",
+        "resolution": "Resolution"
+      },
+      "actions": {
+        "review": "Start Review",
+        "confirm": "Confirm Issue",
+        "resolve": "Mark Resolved",
+        "reject": "Reject"
+      },
+      "modal": {
+        "resolveTitle": "Resolve Issue",
+        "rejectTitle": "Reject Issue",
+        "resolution": "Resolution (what was fixed)",
+        "rejectReason": "Rejection Reason",
+        "adminNotes": "Internal Notes (optional)",
+        "confirmResolve": "Mark as Resolved",
+        "confirmReject": "Reject Issue"
+      }
+    },
+    "tabs": {
+      "routes": "Route Management",
+      "images": "Image Contributions",
+      "issues": "Route Issues",
+      "users": "User Management",
+      "settings": "Settings"
+    },
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Manage route contributions and system settings"
+    },
+    "comingSoon": {
+      "title": "Coming Soon",
+      "users": "User management functionality will be available in an upcoming update.",
+      "settings": "System settings configuration will be available in an upcoming update."
     }
   },
   "busTimings": {
