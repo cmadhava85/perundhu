@@ -933,12 +933,13 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       textContent = textContent.trim();
 
       // Parse JSON response
-      Map<String, Object> result = objectMapper.readValue(textContent, new TypeReference<Map<String, Object>>() {});
+      Map<String, Object> result = objectMapper.readValue(textContent, new TypeReference<Map<String, Object>>() {
+      });
       result.put("extractedBy", "gemini-text");
       result.put("model", modelName);
 
       log.info("Extracted from text - Bus: {}, From: {}, To: {}, Confidence: {}",
-          result.get("busNumber"), result.get("fromLocation"), 
+          result.get("busNumber"), result.get("fromLocation"),
           result.get("toLocation"), result.get("confidence"));
 
       return result;

@@ -662,12 +662,12 @@ public class ContributionController {
       if (geminiVisionService.isAvailable()) {
         log.info("Using Gemini AI for paste text extraction");
         geminiExtraction = geminiVisionService.extractBusScheduleFromText(normalizedText);
-        
+
         if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
           busNumber = (String) geminiExtraction.get("busNumber");
           fromLocation = (String) geminiExtraction.get("fromLocation");
           toLocation = (String) geminiExtraction.get("toLocation");
-          
+
           Object depTimes = geminiExtraction.get("departureTimes");
           if (depTimes instanceof List<?>) {
             timings = ((List<?>) depTimes).stream()
@@ -675,7 +675,7 @@ public class ContributionController {
                 .map(t -> (String) t)
                 .toList();
           }
-          
+
           Object stopsObj = geminiExtraction.get("stops");
           if (stopsObj instanceof List<?>) {
             stops = ((List<?>) stopsObj).stream()
@@ -683,22 +683,22 @@ public class ContributionController {
                 .map(s -> (String) s)
                 .toList();
           }
-          
+
           Object confObj = geminiExtraction.get("confidence");
           if (confObj instanceof Number) {
             adjustedConfidence = ((Number) confObj).doubleValue();
           }
-          
+
           log.info("Gemini extracted: bus={}, from={}, to={}, times={}, confidence={}",
               busNumber, fromLocation, toLocation, timings.size(), adjustedConfidence);
         }
       }
-      
+
       // Fallback to regex parser if Gemini unavailable or failed
       if (geminiExtraction == null || geminiExtraction.containsKey("error") || adjustedConfidence < 0.1) {
         log.info("Falling back to regex parser for paste text extraction");
         RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
-        
+
         busNumber = routeData.getBusNumber();
         fromLocation = routeData.getFromLocation();
         toLocation = routeData.getToLocation();
@@ -801,7 +801,8 @@ public class ContributionController {
       response.put("warnings", validation.getWarnings());
       response.put("status", "PENDING_VERIFICATION");
       response.put("estimatedReviewTime", adjustedConfidence >= 0.7 ? "12-24 hours" : "24-48 hours");
-      response.put("extractedBy", geminiExtraction != null && !geminiExtraction.containsKey("error") ? "gemini-ai" : "regex-parser");
+      response.put("extractedBy",
+          geminiExtraction != null && !geminiExtraction.containsKey("error") ? "gemini-ai" : "regex-parser");
 
       log.info("Paste contribution submitted by user {}, confidence: {}", userId, adjustedConfidence);
 
@@ -872,12 +873,12 @@ public class ContributionController {
       if (geminiVisionService.isAvailable()) {
         log.info("Using Gemini AI for paste text validation");
         Map<String, Object> geminiExtraction = geminiVisionService.extractBusScheduleFromText(normalizedText);
-        
+
         if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
           busNumber = (String) geminiExtraction.get("busNumber");
           fromLocation = (String) geminiExtraction.get("fromLocation");
           toLocation = (String) geminiExtraction.get("toLocation");
-          
+
           Object depTimes = geminiExtraction.get("departureTimes");
           if (depTimes instanceof List<?>) {
             timings = ((List<?>) depTimes).stream()
@@ -885,7 +886,7 @@ public class ContributionController {
                 .map(t -> (String) t)
                 .toList();
           }
-          
+
           Object stopsObj = geminiExtraction.get("stops");
           if (stopsObj instanceof List<?>) {
             stops = ((List<?>) stopsObj).stream()
@@ -893,16 +894,16 @@ public class ContributionController {
                 .map(s -> (String) s)
                 .toList();
           }
-          
+
           Object confObj = geminiExtraction.get("confidence");
           if (confObj instanceof Number) {
             adjustedConfidence = ((Number) confObj).doubleValue();
           }
-          
+
           extractedBy = "gemini-ai";
         }
       }
-      
+
       // Fallback to regex parser if Gemini unavailable or failed
       if (extractedBy.equals("regex-parser")) {
         RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);

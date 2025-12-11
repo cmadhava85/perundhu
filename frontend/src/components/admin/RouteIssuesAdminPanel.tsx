@@ -98,7 +98,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
       setLoading(true);
       setError(null);
 
-      let url = `${API_BASE}/api/v1/route-issues/admin/pending?page=0&size=100`;
+      const url = `${API_BASE}/api/v1/route-issues/admin/pending?page=0&size=100`;
       
       if (statusFilter === 'ALL') {
         // For "all", we need to fetch from a different endpoint or handle it
