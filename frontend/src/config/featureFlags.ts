@@ -8,6 +8,7 @@ export interface FeatureFlags {
   enablePasteContribution: boolean;
   enableRouteVerification: boolean;
   enableAddStops: boolean;
+  enableReportIssue: boolean;
 }
 
 export const featureFlags: FeatureFlags = {
@@ -76,6 +77,19 @@ export const featureFlags: FeatureFlags = {
    * Status: DISABLED - Accessible from search results instead
    */
   enableAddStops: false,
+  
+  /**
+   * Report Issue Feature
+   * 
+   * Enables users to report issues with routes such as:
+   * - Wrong timings
+   * - Bus not available / discontinued
+   * - Route changes
+   * - Service suspended
+   * 
+   * Status: ENABLED by default - Critical for data quality
+   */
+  enableReportIssue: getEnv('VITE_ENABLE_REPORT_ISSUE') !== 'false',
 };
 
 /**

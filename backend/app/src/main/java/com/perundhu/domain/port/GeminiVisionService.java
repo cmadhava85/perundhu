@@ -42,4 +42,14 @@ public interface GeminiVisionService {
    * @return Provider name (e.g., "gemini-1.5-flash", "vertex-ai")
    */
   String getProviderName();
+
+  /**
+   * Extract structured bus schedule data from plain text using Gemini AI.
+   * This is used for paste contributions where users paste text from WhatsApp,
+   * Facebook, or other sources.
+   * 
+   * @param text The pasted text containing bus route information
+   * @return Structured data including origin, destination, routes, timings, etc.
+   */
+  Map<String, Object> extractBusScheduleFromText(String text);
 }

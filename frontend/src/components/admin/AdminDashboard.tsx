@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import './AdminDashboard.css';
 import RouteAdminPanel from './RouteAdminPanel';
 import { ImageContributionAdminPanel } from './ImageContributionAdminPanel';
+import RouteIssuesAdminPanel from './RouteIssuesAdminPanel';
 
 /**
  * Admin Dashboard component that serves as the main entry point for admin functionality
  */
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<'routes' | 'images' | 'users' | 'settings'>('routes');
+  const [activeTab, setActiveTab] = useState<'routes' | 'images' | 'issues' | 'users' | 'settings'>('routes');
 
   return (
     <div className="admin-dashboard">
@@ -34,6 +35,13 @@ const AdminDashboard: React.FC = () => {
           {t('admin.tabs.images', 'Image Contributions')}
         </button>
         <button 
+          className={`tab-button ${activeTab === 'issues' ? 'active' : ''}`}
+          onClick={() => setActiveTab('issues')}
+        >
+          <span className="tab-icon">⚠️</span>
+          {t('admin.tabs.issues', 'Route Issues')}
+        </button>
+        <button 
           className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
           onClick={() => setActiveTab('users')}
         >
@@ -52,6 +60,7 @@ const AdminDashboard: React.FC = () => {
       <div className="admin-content">
         {activeTab === 'routes' && <RouteAdminPanel />}
         {activeTab === 'images' && <ImageContributionAdminPanel />}
+        {activeTab === 'issues' && <RouteIssuesAdminPanel />}
         {activeTab === 'users' && <div className="coming-soon">
           <div className="coming-soon-icon">👥</div>
           <h3>{t('admin.comingSoon.title', 'Coming Soon')}</h3>

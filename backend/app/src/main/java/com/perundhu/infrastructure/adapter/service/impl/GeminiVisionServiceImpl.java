@@ -369,8 +369,10 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       } else if (line.equals("ROUTES:")) {
         inRoutes = true;
       } else if (inRoutes && line.contains("|")) {
-        // Parse route: bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
-        // Also supports legacy format: bus_num|destination|via1,via2|time1,time2|bus_type
+        // Parse route:
+        // bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+        // Also supports legacy format:
+        // bus_num|destination|via1,via2|time1,time2|bus_type
         String[] parts = line.split("\\|", -1);
         if (parts.length >= 2) {
           Map<String, Object> route = new HashMap<>();
@@ -382,10 +384,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
           // Detect format based on number of fields
           boolean isNewFormat = parts.length >= 6;
-          
+
           if (isNewFormat) {
-            // NEW FORMAT: bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
-            
+            // NEW FORMAT:
+            // bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+
             // Field 1: From location
             if (parts.length > 1 && !parts[1].trim().equals("-") && !parts[1].trim().isEmpty()) {
               String fromLoc = parts[1].trim();
@@ -398,13 +401,13 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             } else if (result.containsKey("fromLocation")) {
               route.put("fromLocation", result.get("fromLocation"));
             }
-            
+
             // Field 2: To location (destination)
             if (parts.length > 2 && !parts[2].trim().equals("-") && !parts[2].trim().isEmpty()) {
               route.put("destination", normalizeLocationName(parts[2].trim()));
               route.put("toLocation", normalizeLocationName(parts[2].trim()));
             }
-            
+
             // Field 3: Via stops (intermediate stops)
             if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
               List<String> via = new ArrayList<>();
@@ -419,7 +422,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
                 route.put("intermediateStops", via);
               }
             }
-            
+
             // Field 4: Departure times
             List<String> depTimes = new ArrayList<>();
             if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
@@ -435,7 +438,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               route.put("timings", depTimes);
               route.put("departureTime", depTimes.get(0));
             }
-            
+
             // Field 5: Arrival times
             List<String> arrTimes = new ArrayList<>();
             if (parts.length > 5 && !parts[5].trim().equals("-") && !parts[5].trim().isEmpty()) {
@@ -450,15 +453,15 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               route.put("arrivalTimes", arrTimes);
               route.put("arrivalTime", arrTimes.get(0));
             }
-            
+
             // Field 6: Bus type
             if (parts.length > 6 && !parts[6].trim().equals("-") && !parts[6].trim().isEmpty()) {
               route.put("busType", parts[6].trim().toUpperCase());
             }
-            
+
           } else {
             // LEGACY FORMAT: bus_num|destination|via1,via2|time1,time2|bus_type
-            
+
             if (parts.length > 1 && !parts[1].trim().equals("-")) {
               route.put("destination", normalizeLocationName(parts[1].trim()));
               route.put("toLocation", normalizeLocationName(parts[1].trim()));
@@ -521,8 +524,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
           }
 
           routes.add(route);
-          log.debug("Parsed route {}: {} ({} -> {}) via {} at {}", 
-              routes.size(), route.get("routeNumber"), 
+          log.debug("Parsed route {}: {} ({} -> {}) via {} at {}",
+              routes.size(), route.get("routeNumber"),
               route.get("fromLocation"), route.get("destination"),
               route.get("via"), route.get("departureTimes"));
         }
@@ -542,8 +545,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       // Log details of each route for debugging
       for (int i = 0; i < routes.size(); i++) {
         Map<String, Object> r = routes.get(i);
-        log.info("Route {}: {} - {} -> {} via {} (dep: {}, arr: {}, type: {})", 
-            i + 1, r.get("routeNumber"), r.get("fromLocation"), 
+        log.info("Route {}: {} - {} -> {} via {} (dep: {}, arr: {}, type: {})",
+            i + 1, r.get("routeNumber"), r.get("fromLocation"),
             r.get("destination"), r.get("via"),
             r.get("departureTimes"), r.get("arrivalTimes"), r.get("busType"));
       }
@@ -781,5 +784,168 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     error.put("message", message);
     error.put("extractedBy", "gemini-vision-error");
     return error;
+  }
+
+  // Prompt for extracting bus schedule from pasted text
+  private static final String TEXT_EXTRACTION_PROMPT = """
+      Extract bus route information from this pasted text.
+      The text may be from WhatsApp, Facebook, Twitter, or other sources.
+      The text may be in Tamil (தமிழ்), English, or mixed.
+
+      TAMIL TEXT HANDLING:
+      - Convert Tamil text to English transliteration:
+        * சென்னை → Chennai, மதுரை → Madurai, கோயம்புத்தூர் → Coimbatore
+        * திருச்சி → Trichy, சேலம் → Salem, திருநெல்வேலி → Tirunelveli
+        * சிவகாசி → Sivakasi, அருப்புக்கோட்டை → Aruppukkottai
+        * விருதுநகர் → Virudhunagar, தேனி → Theni, திண்டுக்கல் → Dindigul
+
+      Extract the following information if present:
+
+      Return ONLY in this JSON format (no markdown, no explanation):
+      {
+        "busNumber": "route/bus number or null",
+        "fromLocation": "departure city/station in English or null",
+        "toLocation": "destination city/station in English or null",
+        "departureTimes": ["HH:MM", "HH:MM"],
+        "arrivalTimes": ["HH:MM", "HH:MM"],
+        "stops": ["stop1", "stop2", "stop3"],
+        "busType": "EXPRESS/ORDINARY/DELUXE/AC or null",
+        "via": "intermediate route description or null",
+        "confidence": 0.0-1.0,
+        "extractedFields": ["list of fields that were clearly found"],
+        "warnings": ["any issues or ambiguities found"]
+      }
+
+      RULES:
+      - Use 24-hour HH:MM format for times
+      - Convert Tamil city names to English
+      - Set confidence based on how much data was clearly found:
+        * 0.9+ = bus number + from + to + at least one time
+        * 0.7-0.9 = from + to + time (no bus number)
+        * 0.5-0.7 = from + to only
+        * 0.3-0.5 = partial information
+        * <0.3 = cannot extract meaningful route data
+      - Add warnings for ambiguous or unclear information
+      - If text contains personal plans ("I'm going", "we will travel"), reduce confidence by 0.3
+      - If text is a question about routes, set confidence to 0 and add warning
+
+      TEXT TO ANALYZE:
+      %s
+      """;
+
+  @Override
+  public Map<String, Object> extractBusScheduleFromText(String text) {
+    if (!isAvailable()) {
+      log.warn("Gemini service is not available for text extraction");
+      return createErrorResponse("Gemini service is not available");
+    }
+
+    if (text == null || text.trim().isEmpty()) {
+      return createErrorResponse("Text is empty");
+    }
+
+    try {
+      // Build the text-only request
+      String requestBody = buildTextExtractionRequest(text);
+
+      // Call the Gemini API
+      String response = callGeminiApi(requestBody);
+
+      // Parse the JSON response
+      return parseTextExtractionResponse(response);
+
+    } catch (Exception e) {
+      log.error("Error extracting bus schedule from text: {}", e.getMessage(), e);
+      return createErrorResponse("Text extraction failed: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Build the JSON request body for text extraction.
+   */
+  private String buildTextExtractionRequest(String text) throws JsonProcessingException {
+    ObjectNode root = objectMapper.createObjectNode();
+
+    // Create contents array
+    ArrayNode contents = objectMapper.createArrayNode();
+    ObjectNode content = objectMapper.createObjectNode();
+
+    // Create parts array with text prompt only (no image)
+    ArrayNode parts = objectMapper.createArrayNode();
+
+    // Add text prompt with the pasted text
+    ObjectNode textPart = objectMapper.createObjectNode();
+    String prompt = String.format(TEXT_EXTRACTION_PROMPT, text);
+    textPart.put("text", prompt);
+    parts.add(textPart);
+
+    content.set("parts", parts);
+    contents.add(content);
+    root.set("contents", contents);
+
+    // Add generation config for JSON output
+    ObjectNode generationConfig = objectMapper.createObjectNode();
+    generationConfig.put("temperature", 0.1); // Low temperature for consistent output
+    generationConfig.put("maxOutputTokens", 2048);
+    root.set("generationConfig", generationConfig);
+
+    return objectMapper.writeValueAsString(root);
+  }
+
+  /**
+   * Parse the JSON response from text extraction.
+   */
+  private Map<String, Object> parseTextExtractionResponse(String response) {
+    try {
+      JsonNode root = objectMapper.readTree(response);
+
+      // Navigate to the text content
+      JsonNode candidates = root.get("candidates");
+      if (candidates == null || !candidates.isArray() || candidates.isEmpty()) {
+        log.error("No candidates in Gemini response for text extraction");
+        return createErrorResponse("No response from Gemini");
+      }
+
+      JsonNode firstCandidate = candidates.get(0);
+      JsonNode content = firstCandidate.get("content");
+      if (content == null) {
+        return createErrorResponse("No content in Gemini response");
+      }
+
+      JsonNode parts = content.get("parts");
+      if (parts == null || !parts.isArray() || parts.isEmpty()) {
+        return createErrorResponse("No parts in Gemini response");
+      }
+
+      String textContent = parts.get(0).get("text").asText();
+      log.info("Gemini text extraction response: {}", textContent);
+
+      // Clean up markdown if present
+      textContent = textContent.trim();
+      if (textContent.startsWith("```json")) {
+        textContent = textContent.substring(7);
+      } else if (textContent.startsWith("```")) {
+        textContent = textContent.substring(3);
+      }
+      if (textContent.endsWith("```")) {
+        textContent = textContent.substring(0, textContent.length() - 3);
+      }
+      textContent = textContent.trim();
+
+      // Parse JSON response
+      Map<String, Object> result = objectMapper.readValue(textContent, new TypeReference<Map<String, Object>>() {});
+      result.put("extractedBy", "gemini-text");
+      result.put("model", modelName);
+
+      log.info("Extracted from text - Bus: {}, From: {}, To: {}, Confidence: {}",
+          result.get("busNumber"), result.get("fromLocation"), 
+          result.get("toLocation"), result.get("confidence"));
+
+      return result;
+
+    } catch (Exception e) {
+      log.error("Error parsing Gemini text extraction response: {}", e.getMessage(), e);
+      return createErrorResponse("Failed to parse response: " + e.getMessage());
+    }
   }
 }

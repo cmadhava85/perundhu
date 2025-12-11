@@ -29,6 +29,7 @@ interface TransitBusListProps {
   fromLocationObj?: AppLocation;
   toLocationObj?: AppLocation;
   onAddStops?: (bus: Bus) => void;
+  onReportIssue?: (bus: Bus) => void;
 }
 
 const TransitBusList: React.FC<TransitBusListProps> = ({
@@ -42,7 +43,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   toLocation,
   fromLocationObj,
   toLocationObj,
-  onAddStops
+  onAddStops,
+  onReportIssue
 }) => {
   const { t } = useTranslation();
   
@@ -646,6 +648,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 isFastest={bus.id === specialBuses.fastestBusId}
                 isCheapest={bus.id === specialBuses.cheapestBusId}
                 onAddStops={onAddStops}
+                onReportIssue={onReportIssue}
               />
             );
           })}

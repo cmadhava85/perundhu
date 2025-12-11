@@ -5,6 +5,7 @@ import { VirtualBusList } from './VirtualBusList';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
+import ReportIssue from './contribution/ReportIssue';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import { ApiError } from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,6 +37,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   const navigate = useNavigate();
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
+  const [reportIssueBus, setReportIssueBus] = useState<Bus | null>(null);
   
   // Helper function to get display name for location
   const getLocationDisplayName = (location: AppLocation) => {
@@ -84,6 +86,23 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         fromSearch: true
       }
     });
+  };
+
+  // Handle Report Issue - open modal with bus pre-selected
+  const handleReportIssue = (bus: Bus) => {
+    setReportIssueBus(bus);
+  };
+
+  // Handle report issue submission success
+  const handleReportSubmit = () => {
+    setReportIssueBus(null);
+    // Could add a toast notification here
+  };
+
+  // Handle report issue error
+  const handleReportError = (error: string) => {
+    console.error('Report issue error:', error);
+    // Could add error toast notification here
   };
 
   // Show loading skeleton while searching
@@ -274,6 +293,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               fromLocationObj={fromLocation}
               toLocationObj={toLocation}
               onAddStops={handleAddStops}
+              onReportIssue={handleReportIssue}
             />
           )}
         </div>
@@ -295,6 +315,53 @@ const SearchResults: React.FC<SearchResultsProps> = ({
             />
           )}
         </div>
+
+        {/* Report Issue Modal */}
+        {reportIssueBus && (
+          <div 
+            className="report-issue-modal-overlay"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000,
+              padding: '16px'
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setReportIssueBus(null);
+              }
+            }}
+          >
+            <div 
+              className="report-issue-modal-content"
+              style={{
+                background: '#fff',
+                borderRadius: '16px',
+                maxWidth: '500px',
+                width: '100%',
+                maxHeight: '90vh',
+                overflow: 'auto',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <ReportIssue
+                preSelectedBus={reportIssueBus}
+                preSelectedFrom={fromLocation}
+                preSelectedTo={toLocation}
+                onSubmit={handleReportSubmit}
+                onError={handleReportError}
+                onClose={() => setReportIssueBus(null)}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

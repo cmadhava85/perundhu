@@ -29,6 +29,7 @@ import com.perundhu.application.service.TextFormatNormalizer;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.port.ContributionInputPort;
+import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.InputValidationPort;
 import com.perundhu.domain.port.SecurityMonitoringPort;
 
@@ -57,6 +58,7 @@ public class ContributionController {
   private final TextFormatNormalizer textNormalizer;
   private final InMemoryImageHashRepository imageHashRepository;
   private final RecaptchaService recaptchaService;
+  private final GeminiVisionService geminiVisionService;
 
   /**
    * Submit a route contribution with comprehensive security validation
@@ -648,17 +650,71 @@ public class ContributionController {
       // Normalize text format (WhatsApp, Facebook, Twitter, etc.)
       String normalizedText = textNormalizer.normalizeToStandardFormat(pastedText);
 
-      // Extract route data using NLP
-      RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
+      // Try Gemini AI extraction first (much more accurate than regex)
+      Map<String, Object> geminiExtraction = null;
+      double adjustedConfidence = 0.0;
+      String busNumber = null;
+      String fromLocation = null;
+      String toLocation = null;
+      List<String> timings = List.of();
+      List<String> stops = List.of();
+
+      if (geminiVisionService.isAvailable()) {
+        log.info("Using Gemini AI for paste text extraction");
+        geminiExtraction = geminiVisionService.extractBusScheduleFromText(normalizedText);
+        
+        if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
+          busNumber = (String) geminiExtraction.get("busNumber");
+          fromLocation = (String) geminiExtraction.get("fromLocation");
+          toLocation = (String) geminiExtraction.get("toLocation");
+          
+          Object depTimes = geminiExtraction.get("departureTimes");
+          if (depTimes instanceof List<?>) {
+            timings = ((List<?>) depTimes).stream()
+                .filter(t -> t instanceof String)
+                .map(t -> (String) t)
+                .toList();
+          }
+          
+          Object stopsObj = geminiExtraction.get("stops");
+          if (stopsObj instanceof List<?>) {
+            stops = ((List<?>) stopsObj).stream()
+                .filter(s -> s instanceof String)
+                .map(s -> (String) s)
+                .toList();
+          }
+          
+          Object confObj = geminiExtraction.get("confidence");
+          if (confObj instanceof Number) {
+            adjustedConfidence = ((Number) confObj).doubleValue();
+          }
+          
+          log.info("Gemini extracted: bus={}, from={}, to={}, times={}, confidence={}",
+              busNumber, fromLocation, toLocation, timings.size(), adjustedConfidence);
+        }
+      }
+      
+      // Fallback to regex parser if Gemini unavailable or failed
+      if (geminiExtraction == null || geminiExtraction.containsKey("error") || adjustedConfidence < 0.1) {
+        log.info("Falling back to regex parser for paste text extraction");
+        RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
+        
+        busNumber = routeData.getBusNumber();
+        fromLocation = routeData.getFromLocation();
+        toLocation = routeData.getToLocation();
+        timings = routeData.getTimings();
+        stops = routeData.getStops();
+        adjustedConfidence = routeData.getConfidence();
+      }
 
       // Check minimum confidence (30% threshold for paste)
-      if (routeData.getConfidence() < 0.3) {
-        log.warn("Low confidence route data from paste contribution: {}", routeData.getConfidence());
+      if (adjustedConfidence < 0.3) {
+        log.warn("Low confidence route data from paste contribution: {}", adjustedConfidence);
         return ResponseEntity.badRequest()
             .body(Map.of(
                 "success", false,
                 "message", "Could not extract route information from pasted text",
-                "confidence", routeData.getConfidence(),
+                "confidence", adjustedConfidence,
                 "suggestions", List.of(
                     "Make sure text contains bus number or route number",
                     "Include 'from' and 'to' location names",
@@ -667,8 +723,6 @@ public class ContributionController {
       }
 
       // Apply additional penalties for paste contributions
-      double adjustedConfidence = routeData.getConfidence();
-
       // Penalty for personal pronouns
       if (pastedText.matches("(?i).*(I'm|I am|we are|my|our).*")) {
         adjustedConfidence *= 0.5;
@@ -684,17 +738,20 @@ public class ContributionController {
 
       // Create contribution data
       Map<String, Object> contributionData = new HashMap<>();
-      contributionData.put("busNumber", routeData.getBusNumber());
-      contributionData.put("fromLocationName", routeData.getFromLocation());
-      contributionData.put("toLocationName", routeData.getToLocation());
-      contributionData.put("departureTime", !routeData.getTimings().isEmpty() ? routeData.getTimings().get(0) : null);
-      contributionData.put("arrivalTime", routeData.getTimings().size() > 1 ? routeData.getTimings().get(1) : null);
+      contributionData.put("busNumber", busNumber);
+      contributionData.put("fromLocationName", fromLocation);
+      contributionData.put("toLocationName", toLocation);
+      contributionData.put("departureTime", !timings.isEmpty() ? timings.get(0) : null);
+      contributionData.put("arrivalTime", timings.size() > 1 ? timings.get(1) : null);
       contributionData.put("submittedBy", userId);
       contributionData.put("source", "PASTE");
       contributionData.put("confidenceScore", adjustedConfidence);
 
       // Build detailed notes
       StringBuilder notes = new StringBuilder("Paste contribution");
+      if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
+        notes.append(" [Extracted by Gemini AI]");
+      }
       if (sourceAttribution != null && !sourceAttribution.trim().isEmpty()) {
         notes.append(" - Source: ").append(sourceAttribution);
       }
@@ -705,8 +762,8 @@ public class ContributionController {
       contributionData.put("additionalNotes", notes.toString());
 
       // Add stops if extracted
-      if (!routeData.getStops().isEmpty()) {
-        contributionData.put("stops", routeData.getStops());
+      if (!stops.isEmpty()) {
+        contributionData.put("stops", stops);
       }
 
       // Add warnings to notes
@@ -736,14 +793,15 @@ public class ContributionController {
       response.put("contributionId", savedContribution.getId());
       response.put("confidence", adjustedConfidence);
       response.put("extractedData", Map.of(
-          "busNumber", routeData.getBusNumber() != null ? routeData.getBusNumber() : "Not detected",
-          "fromLocation", routeData.getFromLocation() != null ? routeData.getFromLocation() : "Not detected",
-          "toLocation", routeData.getToLocation() != null ? routeData.getToLocation() : "Not detected",
-          "timings", routeData.getTimings(),
-          "stops", routeData.getStops()));
+          "busNumber", busNumber != null ? busNumber : "Not detected",
+          "fromLocation", fromLocation != null ? fromLocation : "Not detected",
+          "toLocation", toLocation != null ? toLocation : "Not detected",
+          "timings", timings,
+          "stops", stops));
       response.put("warnings", validation.getWarnings());
       response.put("status", "PENDING_VERIFICATION");
       response.put("estimatedReviewTime", adjustedConfidence >= 0.7 ? "12-24 hours" : "24-48 hours");
+      response.put("extractedBy", geminiExtraction != null && !geminiExtraction.containsKey("error") ? "gemini-ai" : "regex-parser");
 
       log.info("Paste contribution submitted by user {}, confidence: {}", userId, adjustedConfidence);
 
@@ -802,11 +860,61 @@ public class ContributionController {
       String normalizedText = textNormalizer.normalizeToStandardFormat(pastedText);
       TextFormatNormalizer.FormatMetadata formatMeta = textNormalizer.getFormatMetadata(pastedText);
 
-      // Extract route data
-      RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
+      // Try Gemini AI extraction first (much more accurate)
+      String busNumber = null;
+      String fromLocation = null;
+      String toLocation = null;
+      List<String> timings = List.of();
+      List<String> stops = List.of();
+      double adjustedConfidence = 0.0;
+      String extractedBy = "regex-parser";
 
-      // Calculate adjusted confidence
-      double adjustedConfidence = routeData.getConfidence();
+      if (geminiVisionService.isAvailable()) {
+        log.info("Using Gemini AI for paste text validation");
+        Map<String, Object> geminiExtraction = geminiVisionService.extractBusScheduleFromText(normalizedText);
+        
+        if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
+          busNumber = (String) geminiExtraction.get("busNumber");
+          fromLocation = (String) geminiExtraction.get("fromLocation");
+          toLocation = (String) geminiExtraction.get("toLocation");
+          
+          Object depTimes = geminiExtraction.get("departureTimes");
+          if (depTimes instanceof List<?>) {
+            timings = ((List<?>) depTimes).stream()
+                .filter(t -> t instanceof String)
+                .map(t -> (String) t)
+                .toList();
+          }
+          
+          Object stopsObj = geminiExtraction.get("stops");
+          if (stopsObj instanceof List<?>) {
+            stops = ((List<?>) stopsObj).stream()
+                .filter(s -> s instanceof String)
+                .map(s -> (String) s)
+                .toList();
+          }
+          
+          Object confObj = geminiExtraction.get("confidence");
+          if (confObj instanceof Number) {
+            adjustedConfidence = ((Number) confObj).doubleValue();
+          }
+          
+          extractedBy = "gemini-ai";
+        }
+      }
+      
+      // Fallback to regex parser if Gemini unavailable or failed
+      if (extractedBy.equals("regex-parser")) {
+        RouteTextParser.RouteData routeData = routeTextParser.extractRouteFromText(normalizedText);
+        busNumber = routeData.getBusNumber();
+        fromLocation = routeData.getFromLocation();
+        toLocation = routeData.getToLocation();
+        timings = routeData.getTimings();
+        stops = routeData.getStops();
+        adjustedConfidence = routeData.getConfidence();
+      }
+
+      // Calculate adjusted confidence with penalties
       if (pastedText.matches("(?i).*(I'm|I am|we are|my|our).*")) {
         adjustedConfidence *= 0.5;
       }
@@ -822,12 +930,13 @@ public class ContributionController {
       response.put("warnings", validation.getWarnings());
       response.put("formatDetected", formatMeta.getType().toString());
       response.put("confidence", adjustedConfidence);
+      response.put("extractedBy", extractedBy);
       response.put("extracted", Map.of(
-          "busNumber", routeData.getBusNumber(),
-          "fromLocation", routeData.getFromLocation(),
-          "toLocation", routeData.getToLocation(),
-          "timings", routeData.getTimings(),
-          "stops", routeData.getStops()));
+          "busNumber", busNumber,
+          "fromLocation", fromLocation,
+          "toLocation", toLocation,
+          "timings", timings,
+          "stops", stops));
 
       return ResponseEntity.ok(response);
 

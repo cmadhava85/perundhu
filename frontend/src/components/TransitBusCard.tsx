@@ -18,6 +18,7 @@ interface TransitBusCardProps {
   isFastest?: boolean;
   isCheapest?: boolean;
   onAddStops?: (bus: Bus) => void;
+  onReportIssue?: (bus: Bus) => void;
 }
 
 const TransitBusCard: React.FC<TransitBusCardProps> = ({
@@ -31,7 +32,8 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   isNextBus = false,
   isFastest = false,
   isCheapest = false,
-  onAddStops
+  onAddStops,
+  onReportIssue
 }) => {
 
   const { i18n } = useTranslation();
@@ -356,43 +358,82 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             <div className="stops-info">
               🛑 {stops.length} stops
             </div>
-            {/* Add Stops CTA for buses with no/few stops */}
-            {stops.length < 2 && onAddStops && (
-              <button
-                type="button"
-                className="add-stops-cta"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onAddStops(bus);
-                }}
-                aria-label="Add stops to this route"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '4px 10px',
-                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                  color: 'white',
-                  borderRadius: '12px',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  border: 'none',
-                  cursor: 'pointer',
-                  boxShadow: '0 1px 3px rgba(16, 185, 129, 0.3)',
-                  transition: 'transform 0.2s, box-shadow 0.2s'
-                }}
-                onMouseEnter={(e) => {
-                  (e.target as HTMLButtonElement).style.transform = 'scale(1.05)';
-                  (e.target as HTMLButtonElement).style.boxShadow = '0 2px 6px rgba(16, 185, 129, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.target as HTMLButtonElement).style.transform = 'scale(1)';
-                  (e.target as HTMLButtonElement).style.boxShadow = '0 1px 3px rgba(16, 185, 129, 0.3)';
-                }}
-              >
-                ➕ Add Stops
-              </button>
-            )}
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              {/* Add Stops CTA for buses with no/few stops */}
+              {stops.length < 2 && onAddStops && (
+                <button
+                  type="button"
+                  className="add-stops-cta"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAddStops(bus);
+                  }}
+                  aria-label="Add stops to this route"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '4px 10px',
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    color: 'white',
+                    borderRadius: '12px',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 3px rgba(16, 185, 129, 0.3)',
+                    transition: 'transform 0.2s, box-shadow 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.target as HTMLButtonElement).style.transform = 'scale(1.05)';
+                    (e.target as HTMLButtonElement).style.boxShadow = '0 2px 6px rgba(16, 185, 129, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.target as HTMLButtonElement).style.transform = 'scale(1)';
+                    (e.target as HTMLButtonElement).style.boxShadow = '0 1px 3px rgba(16, 185, 129, 0.3)';
+                  }}
+                >
+                  ➕ Add Stops
+                </button>
+              )}
+              {/* Report Issue Button */}
+              {onReportIssue && (
+                <button
+                  type="button"
+                  className="report-issue-cta"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onReportIssue(bus);
+                  }}
+                  aria-label="Report an issue with this bus"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '4px 10px',
+                    background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                    color: 'white',
+                    borderRadius: '12px',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 3px rgba(245, 158, 11, 0.3)',
+                    transition: 'transform 0.2s, box-shadow 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.target as HTMLButtonElement).style.transform = 'scale(1.05)';
+                    (e.target as HTMLButtonElement).style.boxShadow = '0 2px 6px rgba(245, 158, 11, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.target as HTMLButtonElement).style.transform = 'scale(1)';
+                    (e.target as HTMLButtonElement).style.boxShadow = '0 1px 3px rgba(245, 158, 11, 0.3)';
+                  }}
+                >
+                  🚨 Report
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

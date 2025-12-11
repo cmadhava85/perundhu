@@ -4,8 +4,8 @@ import { featureFlags } from "../../config/featureFlags";
 import './ContributionMethodSelector.css';
 
 interface ContributionMethodSelectorProps {
-  selectedMethod: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops';
-  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops') => void;
+  selectedMethod: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue';
+  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue') => void;
 }
 
 export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProps> = ({
@@ -14,7 +14,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
 }) => {
   const { t } = useTranslation();
 
-  const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops') => (e: React.KeyboardEvent) => {
+  const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue') => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onMethodChange(method);
@@ -129,6 +129,24 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             <h3 className="method-title">{t('method.addStops.title', 'Add Stops')}</h3>
             <p className="method-description">{t('method.addStops.desc', 'Add intermediate stops to existing routes')}</p>
             <div className="method-badge new">{t('badges.new', 'New!')}</div>
+          </div>
+        )}
+
+        {featureFlags.enableReportIssue && (
+          <div 
+            className={`method-card ${selectedMethod === 'reportIssue' ? 'active' : ''}`}
+            onClick={() => onMethodChange('reportIssue')}
+            onKeyDown={handleKeyDown('reportIssue')}
+            role="radio"
+            aria-checked={selectedMethod === 'reportIssue'}
+            tabIndex={0}
+          >
+            <div className="method-icon-wrapper">
+              <div className="method-icon">🚨</div>
+            </div>
+            <h3 className="method-title">{t('method.reportIssue.title', 'Report Issue')}</h3>
+            <p className="method-description">{t('method.reportIssue.desc', 'Report wrong timings or discontinued buses')}</p>
+            <div className="method-badge warning">{t('badges.important', 'Important!')}</div>
           </div>
         )}
       </div>

@@ -10,6 +10,7 @@ import { VoiceContributionRecorder } from './contribution/VoiceContributionRecor
 import { TextPasteContribution } from './contribution/TextPasteContribution';
 import { RouteVerification } from './contribution/RouteVerification';
 import { AddStopsToRoute } from './contribution/AddStopsToRoute';
+import { ReportIssue } from './contribution/ReportIssue';
 import { featureFlags } from '../config/featureFlags';
 import type { Bus } from '../types';
 import './RouteContribution.css';
@@ -26,10 +27,13 @@ export const RouteContribution: React.FC = () => {
   } | null;
   
   // Initialize with first available method
-  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' => {
+  const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue' => {
     // If coming from search results with "Add Stops", use addStops method
     if (navigationState?.method === 'add-stops' && featureFlags.enableAddStops) {
       return 'addStops';
+    }
+    if (navigationState?.method === 'report-issue' && featureFlags.enableReportIssue) {
+      return 'reportIssue';
     }
     if (featureFlags.enableManualContribution) return 'manual';
     if (featureFlags.enablePasteContribution) return 'paste';
@@ -37,10 +41,11 @@ export const RouteContribution: React.FC = () => {
     if (featureFlags.enableVoiceContribution) return 'voice';
     if (featureFlags.enableRouteVerification) return 'verify';
     if (featureFlags.enableAddStops) return 'addStops';
+    if (featureFlags.enableReportIssue) return 'reportIssue';
     return 'manual'; // Fallback
   };
   
-  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops'>(getDefaultMethod());
+  const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue'>(getDefaultMethod());
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
   const [voiceTranscription, setVoiceTranscription] = useState<string>('');
@@ -56,7 +61,8 @@ export const RouteContribution: React.FC = () => {
       (contributionMethod === 'voice' && featureFlags.enableVoiceContribution) ||
       (contributionMethod === 'paste' && featureFlags.enablePasteContribution) ||
       (contributionMethod === 'verify' && featureFlags.enableRouteVerification) ||
-      (contributionMethod === 'addStops' && featureFlags.enableAddStops);
+      (contributionMethod === 'addStops' && featureFlags.enableAddStops) ||
+      (contributionMethod === 'reportIssue' && featureFlags.enableReportIssue);
     
     if (!isCurrentMethodEnabled) {
       setContributionMethod(getDefaultMethod());
@@ -267,6 +273,21 @@ export const RouteContribution: React.FC = () => {
                 onSubmit={() => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.addStopsSuccess', 'Thank you for adding stops to this route!'));
+                }}
+                onError={(error: string) => {
+                  setSubmissionStatus('error');
+                  setStatusMessage(error);
+                }}
+              />
+            </div>
+          )}
+          
+          {contributionMethod === 'reportIssue' && (
+            <div>
+              <ReportIssue
+                onSubmit={() => {
+                  setSubmissionStatus('success');
+                  setStatusMessage(t('reportIssue.successMessage', 'Your report has been submitted. We\'ll review and update the information.'));
                 }}
                 onError={(error: string) => {
                   setSubmissionStatus('error');

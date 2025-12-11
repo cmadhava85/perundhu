@@ -207,6 +207,10 @@
     "addStops": {
       "title": "Add Stops",
       "desc": "Add intermediate stops to existing routes"
+    },
+    "reportIssue": {
+      "title": "Report Issue",
+      "desc": "Report wrong timings or discontinued buses"
     }
   },
   "badges": {
@@ -214,7 +218,8 @@
     "new": "New!",
     "easy": "Easy",
     "fastest": "Fastest!",
-    "helpful": "Helpful!"
+    "helpful": "Helpful!",
+    "important": "Important!"
   },
   "welcome": {
     "title": "Welcome, Guest!",
@@ -459,7 +464,11 @@
       "description": "Upload a photo of a bus schedule board or timetable. We'll extract the route information automatically.",
       "descriptionLabel": "Description",
       "location": "Location",
-      "routeName": "Route Name (Optional)"
+      "routeName": "Route Name (Optional)",
+      "duplicateError": "This image was already uploaded. Please upload a different image.",
+      "duplicateErrorTitle": "Duplicate Image Detected",
+      "uploadError": "Failed to upload image",
+      "rateLimitError": "Too many uploads. Please wait a moment and try again."
     },
     "methods": {
       "manual": "Manual Entry",
@@ -639,6 +648,74 @@
       "USER_CONTRIBUTION": "User Contribution",
       "OFFICIAL": "Official",
       "OCR_EXTRACTED": "OCR Extracted"
+    }
+  },
+  "reportIssue": {
+    "title": "Report an Issue",
+    "subtitle": "Help us keep information accurate for everyone",
+    "step1": "Which route has the issue?",
+    "step2": "Select the bus with the issue",
+    "step3": "What's the issue?",
+    "step4": "Provide details",
+    "from": "From",
+    "to": "To",
+    "fromPlaceholder": "Enter starting location",
+    "toPlaceholder": "Enter destination",
+    "findBuses": "Find Buses",
+    "searchFailed": "Failed to search buses",
+    "noBusesFound": "No buses found for this route.",
+    "noBusesHint": "You can still report that a bus should exist on this route.",
+    "generalIssue": "General Route Issue",
+    "generalIssueDesc": "Report an issue that applies to the entire route",
+    "selectIssueType": "Please select an issue type",
+    "descriptionRequired": "Please describe the issue",
+    "description": "Describe the issue",
+    "suggestedTimes": "Suggested correct times (optional)",
+    "departure": "Departure",
+    "arrival": "Arrival",
+    "lastTraveled": "When did you last travel this route?",
+    "selectDate": "Select...",
+    "submit": "Submit Report",
+    "submitting": "Submitting...",
+    "submitFailed": "Failed to submit report. Please try again.",
+    "thankYou": "Thank you!",
+    "successMessage": "Your report has been submitted. We'll review and update the information.",
+    "tipTitle": "Your reports matter!",
+    "tipText": "Multiple reports for the same issue help us prioritize fixes. We review reports daily.",
+    "types": {
+      "busNotAvailable": "Bus Not Running",
+      "busNotAvailableDesc": "This bus no longer operates on this route",
+      "wrongTiming": "Wrong Timings",
+      "wrongTimingDesc": "Departure/arrival times are incorrect",
+      "wrongSchedule": "Wrong Schedule",
+      "wrongScheduleDesc": "Bus doesn't run on certain days shown",
+      "wrongStops": "Wrong Stops",
+      "wrongStopsDesc": "Stops information is incorrect",
+      "routeChanged": "Route Changed",
+      "routeChangedDesc": "Bus now takes a different route",
+      "serviceSuspended": "Service Suspended",
+      "serviceSuspendedDesc": "Temporarily not running",
+      "wrongFare": "Wrong Fare",
+      "wrongFareDesc": "Ticket price is different",
+      "other": "Other Issue",
+      "otherDesc": "Something else is wrong"
+    },
+    "date": {
+      "today": "Today",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "fewMonths": "Few months ago",
+      "never": "Never traveled this route"
+    },
+    "placeholder": {
+      "busNotAvailable": "When did this bus stop running? Any alternative you know?",
+      "wrongTiming": "What are the actual timings you observed?",
+      "wrongSchedule": "Which days does this bus actually run?",
+      "wrongStops": "Which stops are missing or incorrect?",
+      "routeChanged": "How has the route changed?",
+      "serviceSuspended": "Any information about when service might resume?",
+      "wrongFare": "What is the actual fare?",
+      "other": "Describe the issue in detail..."
     }
   }
 }

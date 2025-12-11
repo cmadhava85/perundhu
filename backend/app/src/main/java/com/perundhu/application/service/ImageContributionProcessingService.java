@@ -33,6 +33,8 @@ import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.RouteContributionOutputPort;
 
+import org.springframework.context.annotation.Lazy;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,6 +48,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     private final RouteContributionOutputPort routeContributionOutputPort;
     private final LocationResolutionService locationResolutionService;
     private final GeminiVisionService geminiVisionService;
+    @Lazy
+    private final ContributionProcessingService contributionProcessingService;
 
     // Thread pool for async processing
     private final ExecutorService asyncExecutor = Executors.newFixedThreadPool(5);
@@ -141,12 +145,25 @@ public class ImageContributionProcessingService implements ImageContributionInpu
      */
     private void processWithGeminiVision(ImageContribution contribution, MultipartFile imageFile) {
         try {
-            // Convert image to base64
-            byte[] imageBytes = imageFile.getBytes();
+            // Use stored image data from contribution (MultipartFile may be invalid after
+            // async)
+            byte[] imageBytes = contribution.getImageData();
+
+            // Fallback to MultipartFile only if imageData is not stored
+            if (imageBytes == null || imageBytes.length == 0) {
+                try {
+                    imageBytes = imageFile.getBytes();
+                } catch (Exception e) {
+                    logger.error("Failed to read image bytes from MultipartFile: {}", e.getMessage());
+                    markProcessingFailed(contribution, "Image data unavailable for processing");
+                    return;
+                }
+            }
+
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
-            // Determine MIME type
-            String mimeType = imageFile.getContentType();
+            // Use stored MIME type from contribution
+            String mimeType = contribution.getImageContentType();
             if (mimeType == null || mimeType.isEmpty()) {
                 mimeType = "image/jpeg"; // Default
             }
@@ -210,17 +227,40 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             List<RouteContribution> routes = createRouteContributionsFromGeminiData(contribution, extractedData);
 
             if (!routes.isEmpty()) {
+                List<RouteContribution> savedRoutes = new ArrayList<>();
                 List<String> createdRouteIds = new ArrayList<>();
                 for (RouteContribution route : routes) {
                     RouteContribution savedRoute = routeContributionOutputPort.save(route);
+                    savedRoutes.add(savedRoute);
                     createdRouteIds.add(savedRoute.getId());
                 }
 
-                contribution.setStatus("PROCESSED");
+                // Immediately integrate approved routes into the bus database
+                // This avoids waiting for the hourly scheduled job
+                try {
+                    var integrationResult = contributionProcessingService
+                            .integrateApprovedContributionsBatch(savedRoutes);
+                    logger.info("Immediate integration completed: {} integrated, {} skipped, {} failed",
+                            integrationResult.integratedCount(), integrationResult.skippedCount(),
+                            integrationResult.failedCount());
+
+                    contribution.setStatus("INTEGRATED");
+                    contribution.setValidationMessage(
+                            String.format(
+                                    "[Gemini AI] Extracted and integrated %d route(s). %d skipped (duplicates/invalid). Route IDs: %s",
+                                    integrationResult.integratedCount(), integrationResult.skippedCount(),
+                                    String.join(", ", createdRouteIds)));
+                } catch (Exception integrationError) {
+                    logger.warn("Immediate integration failed, routes will be integrated by scheduled job: {}",
+                            integrationError.getMessage());
+                    contribution.setStatus("PROCESSED");
+                    contribution.setValidationMessage(
+                            String.format(
+                                    "[Gemini AI] Successfully extracted %d route(s). Pending integration. Route IDs: %s",
+                                    routes.size(), String.join(", ", createdRouteIds)));
+                }
+
                 contribution.setProcessedDate(LocalDateTime.now());
-                contribution.setValidationMessage(
-                        String.format("[Gemini AI] Successfully extracted %d route(s). Route IDs: %s",
-                                routes.size(), String.join(", ", createdRouteIds)));
 
                 logger.info("Gemini high confidence processing completed for contribution: {}, created {} routes",
                         contribution.getId(), routes.size());
@@ -404,11 +444,11 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             .arrivalTime(estimatedArrival)
                             .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
                             .submissionDate(LocalDateTime.now())
-                            .status("PENDING_REVIEW")
+                            .status("APPROVED")
                             .sourceImageId(contribution.getId())
                             .routeGroupId(routeGroupId)
                             .additionalNotes(
-                                    String.format("[Gemini AI] Schedule %d of %d from image: %s (arrival estimated)",
+                                    String.format("[Gemini AI] Auto-approved schedule %d of %d from image: %s",
                                             scheduleIndex, totalSchedules, contribution.getId()))
                             .build();
 
@@ -473,10 +513,11 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     .departureTime(primaryDepartureTime)
                     .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
                     .submissionDate(LocalDateTime.now())
-                    .status("PENDING_REVIEW")
+                    .status("APPROVED")
                     .sourceImageId(contribution.getId())
                     .routeGroupId(routeGroupId)
-                    .additionalNotes("[Gemini AI] Auto-extracted from image contribution: " + contribution.getId())
+                    .additionalNotes(
+                            "[Gemini AI] Auto-approved from high-confidence image extraction: " + contribution.getId())
                     .build();
 
         } catch (Exception e) {

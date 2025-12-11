@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
-import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw } from 'lucide-react';
-import { submitImageContribution, getImageProcessingStatus, retryImageProcessing } from '../services/api';
+import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw, Copy } from 'lucide-react';
+import { submitImageContribution, getImageProcessingStatus, retryImageProcessing, ApiError } from '../services/api';
 import { useTranslation } from 'react-i18next';
 import './ImageContributionUpload.css';
 
@@ -9,6 +9,9 @@ interface ImageContributionUploadProps {
   onError?: (error: string) => void;
 }
 
+// Type alias for upload error types
+type UploadErrorType = 'duplicate' | 'rate-limit' | 'general';
+
 interface UploadedImage {
   file: File;
   preview: string;
@@ -16,6 +19,7 @@ interface UploadedImage {
   status?: string;
   processing?: boolean;
   error?: string;
+  errorType?: UploadErrorType;
   id: string;
   timestamp: Date;
 }
@@ -199,7 +203,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
 
     setUploadedImages(prev => 
       prev.map(img => 
-        img.id === imageId ? { ...img, processing: true, error: undefined } : img
+        img.id === imageId ? { ...img, processing: true, error: undefined, errorType: undefined } : img
       )
     );
 
@@ -234,12 +238,36 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         throw new Error(response.message || 'Upload failed');
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Upload failed';
+      let errorMessage = t('contribution.imageUpload.uploadError');
+      let errorType: UploadErrorType = 'general';
+      
+      // Check for specific error types
+      if (error instanceof ApiError) {
+        if (error.status === 409) {
+          // Duplicate image detected
+          errorMessage = t('contribution.imageUpload.duplicateError');
+          errorType = 'duplicate';
+        } else if (error.status === 429) {
+          // Rate limit exceeded
+          errorMessage = t('contribution.imageUpload.rateLimitError');
+          errorType = 'rate-limit';
+        } else {
+          errorMessage = error.userMessage || error.message || t('contribution.imageUpload.uploadError');
+        }
+      } else if (error instanceof Error) {
+        // Check if error message contains duplicate-related keywords
+        if (error.message.toLowerCase().includes('duplicate')) {
+          errorMessage = t('contribution.imageUpload.duplicateError');
+          errorType = 'duplicate';
+        } else {
+          errorMessage = error.message;
+        }
+      }
       
       setUploadedImages(prev =>
         prev.map(img =>
           img.id === imageId
-            ? { ...img, processing: false, error: errorMessage }
+            ? { ...img, processing: false, error: errorMessage, errorType }
             : img
         )
       );
@@ -323,11 +351,16 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  const getStatusIcon = (status?: string, processing?: boolean, error?: string) => {
-    if (error) return <AlertCircle className="w-4 h-4 text-red-500" />;
+  const getStatusIcon = (status?: string, processing?: boolean, error?: string, errorType?: UploadErrorType) => {
+    if (error) {
+      if (errorType === 'duplicate') {
+        return <Copy className="w-4 h-4 text-orange-500" />;
+      }
+      return <AlertCircle className="w-4 h-4 text-red-500" />;
+    }
     if (processing) return <RefreshCw className="w-4 h-4 text-blue-500 animate-spin" />;
     
     switch (status) {
@@ -344,9 +377,14 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     }
   };
 
-  const getStatusText = (status?: string, processing?: boolean, error?: string) => {
-    if (error) return `Error: ${error}`;
-    if (processing) return 'Uploading...';
+  const getStatusText = (status?: string, processing?: boolean, error?: string, errorType?: UploadErrorType) => {
+    if (error) {
+      if (errorType === 'duplicate') {
+        return t('contribution.imageUpload.duplicateErrorTitle', 'Duplicate Image Detected');
+      }
+      return error;
+    }
+    if (processing) return t('common.uploading', 'Uploading...');
     
     switch (status) {
       case 'PROCESSED':
@@ -690,14 +728,33 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                     gap: '0.5rem',
                     marginBottom: '0.75rem'
                   }}>
-                    {getStatusIcon(image.status, image.processing, image.error)}
-                    <span style={{ fontSize: '0.75rem', color: '#4b5563' }}>
-                      {getStatusText(image.status, image.processing, image.error)}
+                    {getStatusIcon(image.status, image.processing, image.error, image.errorType)}
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      color: image.errorType === 'duplicate' ? '#ea580c' : '#4b5563',
+                      fontWeight: image.error ? '600' : '400'
+                    }}>
+                      {getStatusText(image.status, image.processing, image.error, image.errorType)}
                     </span>
                   </div>
+
+                  {/* Show error message for duplicate images */}
+                  {image.error && image.errorType === 'duplicate' && (
+                    <div style={{
+                      padding: '0.5rem',
+                      marginBottom: '0.75rem',
+                      backgroundColor: '#fff7ed',
+                      border: '1px solid #fed7aa',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.75rem',
+                      color: '#9a3412'
+                    }}>
+                      {image.error}
+                    </div>
+                  )}
                   
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    {!image.contributionId && !image.processing && (
+                    {!image.contributionId && !image.processing && !image.errorType && (
                       <button
                         onClick={() => submitImage(image.id)}
                         style={{
