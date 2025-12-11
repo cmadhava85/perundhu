@@ -183,7 +183,7 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
+      uses: aquasecurity/trivy-action@0.33.1
       with:
         scan-type: 'fs'
         scan-ref: '.'
@@ -194,7 +194,7 @@ jobs:
     # Only upload SARIF if code scanning is enabled (will fail silently if not)
     - name: Run Trivy for SARIF
       if: github.repository_owner == github.actor || github.event_name == 'pull_request'
-      uses: aquasecurity/trivy-action@master
+      uses: aquasecurity/trivy-action@0.33.1
       with:
         scan-type: 'fs'
         scan-ref: '.'
