@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { api } from './api';
 
 export interface BusLocationReport {
@@ -56,7 +57,7 @@ export const reportBusLocation = async (report: BusLocationReport): Promise<Rewa
     const response = await api.post('/api/v1/bus-tracking/report', report);
     return response.data;
   } catch (error) {
-    console.error('Error reporting bus location:', error);
+    logger.error('Error reporting bus location:', error);
     throw error;
   }
 };
@@ -79,7 +80,7 @@ export const reportBusLocationSimple = async (locationReport: {
     const response = await api.post('/api/v1/bus-tracking/report-simple', locationReport);
     return response.data;
   } catch (error) {
-    console.error('Error reporting bus location (simplified):', error);
+    logger.error('Error reporting bus location (simplified):', error);
     throw error;
   }
 };
@@ -94,7 +95,7 @@ export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
     const locationsMap = response.data;
     return Object.values(locationsMap);
   } catch (error) {
-    console.error('Error getting current bus locations:', error);
+    logger.error('Error getting current bus locations:', error);
     throw error;
   }
 };
@@ -107,7 +108,7 @@ export const getBusLocationsOnRoute = async (fromLocationId: number, toLocationI
     const response = await api.get(`/api/v1/bus-tracking/route/${fromLocationId}/${toLocationId}`);
     return response.data;
   } catch (error) {
-    console.error('Error getting bus locations on route:', error);
+    logger.error('Error getting bus locations on route:', error);
     throw error;
   }
 };
@@ -120,7 +121,7 @@ export const getBusLocationHistory = async (busId: number): Promise<BusLocation[
     const response = await api.get(`/api/v1/bus-tracking/history/${busId}`);
     return response.data;
   } catch (error) {
-    console.error('Error getting bus location history:', error);
+    logger.error('Error getting bus location history:', error);
     throw error;
   }
 };
@@ -133,7 +134,7 @@ export const getUserRewardPoints = async (userId: string): Promise<RewardPoints>
     const response = await api.get(`/api/v1/bus-tracking/rewards/${userId}`);
     return response.data;
   } catch (error) {
-    console.error('Error getting user reward points:', error);
+    logger.error('Error getting user reward points:', error);
     throw error;
   }
 };
@@ -152,7 +153,7 @@ export const getEstimatedArrival = async (busId: number, stopId: number): Promis
     const response = await api.get(`/api/v1/bus-tracking/eta/${busId}/${stopId}`);
     return response.data;
   } catch (error) {
-    console.error('Error getting estimated arrival:', error);
+    logger.error('Error getting estimated arrival:', error);
     throw error;
   }
 };
@@ -168,7 +169,7 @@ export const reportDisembarkation = async (busId: number, userId: string): Promi
       timestamp: new Date().toISOString()
     });
   } catch (error) {
-    console.error('Error reporting disembarkation:', error);
+    logger.error('Error reporting disembarkation:', error);
     throw error;
   }
 };

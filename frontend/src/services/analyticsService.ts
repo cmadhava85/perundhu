@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { api } from './api';
 
 // Interface for offline data cache storage
@@ -46,7 +47,7 @@ const saveHistoricalDataOffline = async (
     };
     localStorage.setItem(key, JSON.stringify(offlineData));
   } catch (error) {
-    console.warn('Failed to save offline data', error);
+    logger.warn(`Failed to save offline data: ${error instanceof Error ? error.message : String(error)}`);
   }
 };
 
@@ -71,12 +72,12 @@ const getHistoricalDataOffline = async (
     
     // Check if data is older than 24 hours (86400000 ms)
     if (Date.now() - offlineData.timestamp > 86400000) {
-      console.warn('Using outdated offline data');
+      logger.warn('Using outdated offline data');
     }
     
     return offlineData.data;
   } catch (error) {
-    console.error('Error retrieving offline data:', error);
+    logger.error('Error retrieving offline data:', error);
     throw new Error('No historical data available offline');
   }
 };
@@ -133,7 +134,7 @@ export const getHistoricalData = async (
       );
     }
   } catch (error) {
-    console.error('Error fetching historical data:', error);
+    logger.error('Error fetching historical data:', error);
     throw new Error('Failed to fetch historical data. Please try again.');
   }
 };
@@ -194,7 +195,7 @@ class AnalyticsService {
       if (!response.ok) throw new Error('Failed to fetch user analytics');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching user analytics:', error);
+      logger.error('Error fetching user analytics:', error);
       return {
         totalJourneys: 0,
         averageRating: 0,
@@ -210,7 +211,7 @@ class AnalyticsService {
       if (!response.ok) throw new Error('Failed to fetch journey trends');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching journey trends:', error);
+      logger.error('Error fetching journey trends:', error);
       return [];
     }
   }
@@ -221,7 +222,7 @@ class AnalyticsService {
       if (!response.ok) throw new Error('Failed to fetch time distribution');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching time distribution:', error);
+      logger.error('Error fetching time distribution:', error);
       return [];
     }
   }
@@ -243,7 +244,7 @@ class AnalyticsService {
         body: JSON.stringify(payload),
       });
     } catch (error) {
-      console.error('Error tracking event:', error);
+      logger.error('Error tracking event:', error);
     }
   }
 
@@ -259,7 +260,7 @@ class AnalyticsService {
       if (!response.ok) throw new Error('Failed to fetch user behavior analytics');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching user behavior analytics:', error);
+      logger.error('Error fetching user behavior analytics:', error);
       return {
         totalUsers: 0,
         activeUsers: 0,
@@ -281,7 +282,7 @@ class AnalyticsService {
       const data = await response.json();
       return Array.isArray(data) ? data : [data];
     } catch (error) {
-      console.error('Error fetching route analytics:', error);
+      logger.error('Error fetching route analytics:', error);
       return [];
     }
   }
@@ -292,7 +293,7 @@ class AnalyticsService {
       if (!response.ok) throw new Error('Failed to fetch performance metrics');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching performance metrics:', error);
+      logger.error('Error fetching performance metrics:', error);
       return {
         averageLoadTime: 0,
         apiResponseTime: 0,
@@ -308,7 +309,7 @@ class AnalyticsService {
       if (!response.ok) throw new Error('Failed to fetch popular routes');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching popular routes:', error);
+      logger.error('Error fetching popular routes:', error);
       return [];
     }
   }

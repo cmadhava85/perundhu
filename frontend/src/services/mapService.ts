@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import L from 'leaflet';
 import { getEnv } from '../utils/envUtils';
 
@@ -83,7 +84,7 @@ class LeafletMapService implements IMapService {
       
       // Add a small delay to ensure DOM stability
       if (element.offsetParent === null && element !== document.body) {
-        console.warn('Map container may not be properly attached to DOM');
+        logger.warn('Map container may not be properly attached to DOM');
       }
       
       // Clean up any existing map with better error handling
@@ -91,7 +92,7 @@ class LeafletMapService implements IMapService {
         try {
           this.cleanup();
         } catch (cleanupError) {
-          console.warn('Error during cleanup before creating new map:', cleanupError);
+          logger.warn(`Error during cleanup before creating new map: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`);
         }
       }
       
@@ -102,12 +103,12 @@ class LeafletMapService implements IMapService {
         if (elementCheck) {
           this.initializeLeafletMap(elementCheck, options);
         } else {
-          console.error('Element disappeared during map initialization');
+          logger.error('Element disappeared during map initialization');
         }
       });
       
     } catch (error) {
-      console.error('Error creating Leaflet map:', error);
+      logger.error('Error creating Leaflet map:', error);
       throw error;
     }
   }
@@ -153,14 +154,14 @@ class LeafletMapService implements IMapService {
       
       // Add error handling for map events
       this.map.on('error', (e: L.LeafletEvent) => {
-        console.error('Leaflet map error:', e);
+        logger.error('Leaflet map error:', e);
       });
       
       // Ensure proper sizing with multiple attempts
       this.ensureMapSizing();
       
     } catch (error) {
-      console.error('Error initializing Leaflet map instance:', error);
+      logger.error('Error initializing Leaflet map instance:', error);
       this.map = null;
       throw error;
     }
@@ -177,9 +178,9 @@ class LeafletMapService implements IMapService {
         if (this.map) {
           try {
             this.map.invalidateSize();
-            console.log(`Map resize attempt ${index + 1} completed`);
+            logger.debug(`Map resize attempt ${index + 1} completed`);
           } catch (error) {
-            console.warn(`Map resize attempt ${index + 1} failed:`, error);
+            logger.warn(`Map resize attempt ${index + 1} failed: ${error instanceof Error ? error.message : String(error)}`);
           }
         }
       }, delay);
@@ -234,7 +235,7 @@ class LeafletMapService implements IMapService {
   }
   
   cleanup(): void {
-    console.log('Cleaning up Leaflet map...');
+    logger.debug('Cleaning up Leaflet map...');
     
     // Clear markers
     this.clearMarkers();
@@ -251,9 +252,9 @@ class LeafletMapService implements IMapService {
         // Remove the map
         this.map.remove();
         this.map = null;
-        console.log('Leaflet map cleaned up successfully');
+        logger.debug('Leaflet map cleaned up successfully');
       } catch (error) {
-        console.error('Error during Leaflet cleanup:', error);
+        logger.error('Error during Leaflet cleanup:', error);
         this.map = null; // Force cleanup even if error occurs
       }
     }

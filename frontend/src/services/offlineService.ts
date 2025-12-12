@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { openDB } from 'idb';
 import type { IDBPDatabase } from 'idb';
 import type { BusRoute, BusSchedule, BusStop } from '../types/busTypes';
@@ -73,7 +74,7 @@ class OfflineService {
       
       return this.db;
     } catch (error) {
-      console.error('Failed to initialize offline database:', error);
+      logger.error('Failed to initialize offline database:', error);
       throw error;
     }
   }
@@ -255,7 +256,7 @@ class OfflineService {
       const result = await db.get(STORES.LOCATIONS, 'allLocations');
       return result?.data || [];
     } catch (error) {
-      console.error('Error getting offline locations:', error);
+      logger.error('Error getting offline locations:', error);
       return [];
     }
   }
@@ -276,7 +277,7 @@ class OfflineService {
       const result = await db.get(STORES.BUSES, key);
       return result?.data || [];
     } catch (error) {
-      console.error('Error getting offline buses:', error);
+      logger.error('Error getting offline buses:', error);
       return [];
     }
   }
@@ -295,7 +296,7 @@ class OfflineService {
       const result = await db.get(STORES.STOPS, busId.toString());
       return result?.data || [];
     } catch (error) {
-      console.error('Error getting offline stops:', error);
+      logger.error('Error getting offline stops:', error);
       return [];
     }
   }
@@ -316,7 +317,7 @@ class OfflineService {
       const result = await db.get(STORES.CONNECTING_ROUTES, key);
       return result?.data || [];
     } catch (error) {
-      console.error('Error getting offline connecting routes:', error);
+      logger.error('Error getting offline connecting routes:', error);
       return [];
     }
   }
@@ -337,7 +338,7 @@ class OfflineService {
       const result = await db.get(STORES.BUS_LOCATIONS, key);
       return result?.data || [];
     } catch (error) {
-      console.error('Error getting offline bus locations:', error);
+      logger.error('Error getting offline bus locations:', error);
       return [];
     }
   }
@@ -356,7 +357,7 @@ class OfflineService {
 
       return diffDays;
     } catch (error) {
-      console.error('Error getting data age:', error);
+      logger.error('Error getting data age:', error);
       return null;
     }
   }
@@ -383,7 +384,7 @@ class OfflineService {
         }
       }
     } catch (error) {
-      console.error('Error cleaning up old bus location data:', error);
+      logger.error('Error cleaning up old bus location data:', error);
     }
   }
 
@@ -423,7 +424,7 @@ class OfflineService {
       
       // Completed cleanup of old offline data
     } catch (error) {
-      console.error('Error cleaning up old data:', error);
+      logger.error('Error cleaning up old data:', error);
     }
   }
   
@@ -433,7 +434,7 @@ class OfflineService {
       const result = await db.get(STORES.SYNC_TIMESTAMPS, key);
       return result?.timestamp || null;
     } catch (error) {
-      console.error('Error getting last sync time:', error);
+      logger.error('Error getting last sync time:', error);
       return null;
     }
   }
@@ -449,7 +450,7 @@ class OfflineService {
         timestamp: new Date().toISOString()
       });
     } catch (error) {
-      console.error('Error updating sync timestamp:', error);
+      logger.error('Error updating sync timestamp:', error);
     }
   }
 }

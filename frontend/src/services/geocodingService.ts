@@ -1,5 +1,6 @@
 import type { Location } from '../types';
 import { api } from './api';
+import { logger, LogCategory } from '../utils/logger';
 
 // Add caching interface
 interface CacheEntry {
@@ -117,7 +118,7 @@ export class GeocodingService {
     const cacheKey = `${query.toLowerCase().trim()}_${limit}`;
     const cached = GeocodingService.cache.get(cacheKey);
     if (cached && Date.now() - cached.timestamp < GeocodingService.CACHE_DURATION) {
-      console.log(`Returning cached results for "${query}"`);
+      logger.debug(`Returning cached results for "${query}"`);
       return cached.results;
     }
     
@@ -147,7 +148,7 @@ export class GeocodingService {
         });
         
         databaseResults = response.data || [];
-        console.log(`Background: Database returned ${databaseResults.length} results for "${query}"`);
+        logger.debug(`Background: Database returned ${databaseResults.length} results for "${query}"`, { category: LogCategory.SEARCH });
         
         // If we have good database results, cache and return
         if (databaseResults.length >= Math.min(limit, 5)) {
@@ -156,7 +157,7 @@ export class GeocodingService {
           return;
         }
       } catch (error) {
-        console.error('Background database search failed:', error);
+        logger.error('Background database search failed', error, { category: LogCategory.SEARCH });
       }
       
       // Only use external API if database results are insufficient
@@ -172,7 +173,7 @@ export class GeocodingService {
         GeocodingService.cache.set(cacheKey, { results: finalResults, timestamp: Date.now() });
       }
     } catch (error) {
-      console.error('Background search failed:', error);
+      logger.error('Background search failed', error, { category: LogCategory.SEARCH });
     }
   }
 
@@ -186,7 +187,7 @@ export class GeocodingService {
     const cacheKey = `${query.toLowerCase().trim()}_${limit}`;
     const cached = GeocodingService.cache.get(cacheKey);
     if (cached && Date.now() - cached.timestamp < GeocodingService.CACHE_DURATION) {
-      console.log(`Returning cached results for "${query}"`);
+      logger.debug(`Returning cached results for "${query}"`);
       return cached.results;
     }
     
@@ -211,7 +212,7 @@ export class GeocodingService {
       }
       
     } catch (error) {
-      console.error('Database search failed:', error);
+      logger.error('Database search failed', error, { category: LogCategory.API });
       // Continue with empty database results, will fallback to Nominatim
     }
     
@@ -219,13 +220,13 @@ export class GeocodingService {
     let nominatimResults: Location[] = [];
     try {
       const nominatimLimit = Math.max(5, limit - databaseResults.length);
-      console.log(`Fetching ${nominatimLimit} results from Nominatim for "${query}"`);
+      logger.debug(`Fetching ${nominatimLimit} results from Nominatim for "${query}"`, { category: LogCategory.SEARCH });
       
       // Use optimized Nominatim search
       nominatimResults = await GeocodingService.searchNominatimOptimized(query, nominatimLimit);
-      console.log(`Nominatim returned ${nominatimResults.length} results for "${query}"`);
+      logger.debug(`Nominatim returned ${nominatimResults.length} results for "${query}"`, { category: LogCategory.SEARCH });
     } catch (error) {
-      console.error('Nominatim search failed:', error);
+      logger.error('Nominatim search failed', error, { category: LogCategory.SEARCH });
     }
     
     // 3. Combine and deduplicate results (Database + Nominatim only)
@@ -235,7 +236,7 @@ export class GeocodingService {
     ];
     
     if (combinedResults.length === 0) {
-      console.log(`No results found for "${query}" in database or OpenStreetMap Nominatim`);
+      logger.debug(`No results found for "${query}" in database or OpenStreetMap Nominatim`, { category: LogCategory.SEARCH });
       return [];
     }
     
@@ -245,7 +246,7 @@ export class GeocodingService {
     // Cache the results
     GeocodingService.cache.set(cacheKey, { results: finalResults, timestamp: Date.now() });
     
-    console.log(`Returning ${finalResults.length} deduplicated results for "${query}"`);
+    logger.debug(`Returning ${finalResults.length} deduplicated results for "${query}"`, { category: LogCategory.SEARCH });
     return finalResults;
   }
 
@@ -316,7 +317,7 @@ export class GeocodingService {
           // Note: Removed class/type restrictions as they don't filter effectively on Nominatim side
         });
 
-        console.log(`🏙️ Nominatim city search: "${searchQuery}"`);
+        logger.debug(`🏙️ Nominatim city search: "${searchQuery}"`);
         
         const response = await fetch(`${GeocodingService.NOMINATIM_BASE_URL}/search?${params}`, {
           headers: {
@@ -325,17 +326,17 @@ export class GeocodingService {
         });
 
         if (!response.ok) {
-          console.warn(`Nominatim city query failed for "${searchQuery}": ${response.status}`);
+          logger.warn(`Nominatim city query failed for "${searchQuery}": ${response.status}`);
           continue;
         }
 
         const data: NominatimResult[] = await response.json();
-        console.log(`🔍 Nominatim raw response for "${searchQuery}":`, data.length, 'results');
+        logger.debug(`🔍 Nominatim raw response for "${searchQuery}": ${data.length} results`);
         
         if (data.length > 0) {
           // Log all results for debugging
           data.forEach((result: NominatimResult, index: number) => {
-            console.log(`  ${index + 1}. ${result.display_name} [class: ${result.class}, type: ${result.type}]`);
+            logger.debug(`  ${index + 1}. ${result.display_name} [class: ${result.class}, type: ${result.type}]`);
           });
           
           // Filter to only include cities, towns, villages - exclude roads, highways, etc.
@@ -363,24 +364,24 @@ export class GeocodingService {
             );
             
             const isAccepted = isValidPlace && isNotRoad;
-            console.log(`    Filter: ${result.display_name} -> ${isAccepted} (place: ${isValidPlace}, notRoad: ${isNotRoad})`);
+            logger.debug(`    Filter: ${result.display_name} -> ${isAccepted} (place: ${isValidPlace}, notRoad: ${isNotRoad})`);
             return isAccepted;
           });
           
-          console.log(`✅ Filtered to ${cityResults.length} valid city/town results out of ${data.length} total`);
+          logger.debug(`✅ Filtered to ${cityResults.length} valid city/town results out of ${data.length} total`);
           cityResults.forEach((result: NominatimResult, index: number) => {
-            console.log(`    ${index + 1}. ✓ ${result.display_name}`);
+            logger.debug(`    ${index + 1}. ✓ ${result.display_name}`);
           });
           
           allResults = allResults.concat(cityResults);
           
           // Stop early if we have enough good results
           if (allResults.length >= limit) {
-            console.log(`🎯 Got enough results (${allResults.length}), stopping search`);
+            logger.debug(`🎯 Got enough results (${allResults.length}), stopping search`);
             break;
           }
         } else {
-          console.log(`❌ No results from Nominatim for "${searchQuery}"`);
+          logger.debug(`❌ No results from Nominatim for "${searchQuery}"`);
         }
 
         // Reduced delay between queries
@@ -409,15 +410,15 @@ export class GeocodingService {
         source: 'nominatim' as const
       }));
       
-      console.log(`🎯 Final Nominatim city results (${finalResults.length}):`);
+      logger.debug(`🎯 Final Nominatim city results (${finalResults.length}):`);
       finalResults.forEach((result, index) => {
-        console.log(`  ${index + 1}. ${result.name} (${result.latitude}, ${result.longitude})`);
+        logger.debug(`  ${index + 1}. ${result.name} (${result.latitude}, ${result.longitude})`);
       });
       
       return finalResults;
 
     } catch (error) {
-      console.error('Nominatim city search failed:', error);
+      logger.error('Nominatim city search failed:', error);
       return [];
     }
   }
@@ -468,7 +469,7 @@ export class GeocodingService {
           ...(query.length > 4 && { bounded: '1', viewbox: '76.0,8.0,80.5,13.5' })
         });
 
-        console.log(`🔍 Nominatim query: "${searchQuery}"`);
+        logger.debug(`🔍 Nominatim query: "${searchQuery}"`);
         
         const response = await fetch(`${GeocodingService.NOMINATIM_BASE_URL}/search?${params}`, {
           headers: {
@@ -477,13 +478,13 @@ export class GeocodingService {
         });
 
         if (!response.ok) {
-          console.warn(`Nominatim query failed for "${searchQuery}": ${response.status}`);
+          logger.warn(`Nominatim query failed for "${searchQuery}": ${response.status}`);
           continue;
         }
 
         const data: NominatimResult[] = await response.json();
         if (data.length > 0) {
-          console.log(`🏙️ Found ${data.length} results for "${searchQuery}":`, data.map((r: NominatimResult) => r.display_name));
+          logger.debug(`🏙️ Found ${data.length} results for "${searchQuery}": ${data.map((r: NominatimResult) => r.display_name).join(', ')}`);
           
           // Check if any result contains Aruppukottai/Aruppukkottai (both spellings)
           const hasAruppukottai = data.some((item: NominatimResult) =>
@@ -491,7 +492,7 @@ export class GeocodingService {
             item.display_name?.toLowerCase().includes('aruppukkottai')
           );
           if (hasAruppukottai) {
-            console.log('🎯 Aruppukottai found in Nominatim results!');
+            logger.debug('🎯 Aruppukottai found in Nominatim results!');
           }
           
           allResults = allResults.concat(data);
@@ -501,7 +502,7 @@ export class GeocodingService {
             break;
           }
         } else {
-          console.log(`❌ No results for "${searchQuery}"`);
+          logger.debug(`❌ No results for "${searchQuery}"`);
         }
 
         // Reduced delay between queries
@@ -536,7 +537,7 @@ export class GeocodingService {
       }));
 
     } catch (error) {
-      console.error('Nominatim search failed:', error);
+      logger.error('Nominatim search failed:', error);
       return [];
     }
   }
@@ -550,7 +551,7 @@ export class GeocodingService {
    * Format Nominatim display name to prioritize town/city name first
    */
   private static formatLocationName(displayName: string): string {
-    console.log(`Formatting Nominatim result: "${displayName}"`);
+    logger.debug(`Formatting Nominatim result: "${displayName}"`);
     
     // Split the display name by commas and clean up each part
     const parts = displayName.split(',').map(part => part.trim());
@@ -620,7 +621,7 @@ export class GeocodingService {
       formattedName = normalizeSpelling(cleanPart(parts[0])) || parts[0];
     }
     
-    console.log(`Formatted "${displayName}" -> "${formattedName}"`);
+    logger.debug(`Formatted "${displayName}" -> "${formattedName}"`);
     return formattedName;
   }
 
@@ -633,7 +634,7 @@ export class GeocodingService {
       return name || '';
     }
 
-    console.log(`Formatting location name: "${name}"`);
+    logger.debug(`Formatting location name: "${name}"`);
     
     // If it's already a simple city name without commas, return as-is
     if (!name.includes(',')) {
@@ -705,7 +706,7 @@ export class GeocodingService {
       formattedName = cleanPart(parts[0]) || parts[0];
     }
     
-    console.log(`Formatted "${name}" -> "${formattedName}"`);
+    logger.debug(`Formatted "${name}" -> "${formattedName}"`);
     return formattedName;
   }
 
@@ -773,7 +774,7 @@ export class GeocodingService {
    */
   static clearCache(): void {
     GeocodingService.cache.clear();
-    console.log('Geocoding cache cleared');
+    logger.debug('Geocoding cache cleared');
   }
 
   /**
@@ -795,7 +796,7 @@ export const formatLocationNameUniversal = GeocodingService.formatLocationNameUn
 
 // Test function for Srivilliputhur geocoding - add this at the end of the file for debugging
 export const testSrivilliputhurGeocoding = async (): Promise<void> => {
-  console.log('🔍 Testing Srivilliputhur geocoding...');
+  logger.debug('🔍 Testing Srivilliputhur geocoding...');
   
   try {
     // Clear cache first to ensure fresh results
@@ -804,24 +805,24 @@ export const testSrivilliputhurGeocoding = async (): Promise<void> => {
     // Test the search function
     const results = await GeocodingService.searchLocations('Srivilliputhur', 5);
     
-    console.log(`✅ Found ${results.length} results for "Srivilliputhur":`);
+    logger.debug(`✅ Found ${results.length} results for "Srivilliputhur":`);
     results.forEach((result, index) => {
-      console.log(`${index + 1}. ${result.name} (${result.source}) - Lat: ${result.latitude}, Lng: ${result.longitude}`);
+      logger.debug(`${index + 1}. ${result.name} (${result.source}) - Lat: ${result.latitude}, Lng: ${result.longitude}`);
     });
     
     if (results.length === 0) {
-      console.log('❌ No results found. Testing direct Nominatim call...');
+      logger.debug('❌ No results found. Testing direct Nominatim call...');
       
       // Test direct Nominatim call
       const directResults = await GeocodingService.searchNominatimOptimized('Srivilliputhur', 3);
-      console.log(`Direct Nominatim results: ${directResults.length}`);
+      logger.debug(`Direct Nominatim results: ${directResults.length}`);
       directResults.forEach((result, index) => {
-        console.log(`  ${index + 1}. ${result.name} - Lat: ${result.latitude}, Lng: ${result.longitude}`);
+        logger.debug(`  ${index + 1}. ${result.name} - Lat: ${result.latitude}, Lng: ${result.longitude}`);
       });
     }
     
   } catch (error) {
-    console.error('❌ Test failed:', error);
+    logger.error('❌ Test failed:', error);
   }
 };
 

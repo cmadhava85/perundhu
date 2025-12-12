@@ -3,6 +3,7 @@ import type { AxiosInstance, AxiosResponse, Method } from 'axios';
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
 import { getLocationsOffline } from './offlineService';
 import { setupRetryInterceptor } from './apiRetry';
+import { logger } from '../utils/logger';
 
 /**
  * Type for request data and parameters
@@ -34,7 +35,7 @@ export const apiRequest = async <T>(
     });
     return response.data;
   } catch (error) {
-    console.error(`API Request Error (${method} ${url}):`, error);
+    logger.error(`API Request Error (${method} ${url}):`, error);
     throw new ApiError(`Failed to ${method.toLowerCase()} ${url}. Please try again.`);
   }
 };
@@ -123,7 +124,7 @@ export const createApiInstance = (): AxiosInstance => {
   const apiUrl = getEnv('VITE_API_URL', getEnv('VITE_API_BASE_URL', 'http://localhost:8080'));
   
   // Log API URL to help with debugging
-  console.log(`Creating API instance with baseURL: ${apiUrl}`);
+  logger.debug(`Creating API instance with baseURL: ${apiUrl}`);
   
   const instance = axios.create({
     baseURL: apiUrl,
@@ -161,7 +162,7 @@ export const setApiInstance = (instance: AxiosInstance): void => {
   if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'test') {
     api = instance;
   } else {
-    console.warn('Attempted to set API instance outside of test environment - ignored');
+    logger.warn('Attempted to set API instance outside of test environment - ignored');
   }
 };
 
@@ -179,7 +180,7 @@ export const setOfflineMode = (status: boolean): void => {
     // If going online, update last online time
     lastOnlineTime = new Date();
   }
-  console.log(`Offline mode ${status ? 'enabled' : 'disabled'}`);
+  logger.debug(`Offline mode ${status ? 'enabled' : 'disabled'}`);
 };
 
 /**
@@ -213,12 +214,12 @@ export const checkOnlineStatus = async (): Promise<boolean> => {
     
     // If successful, ensure we're in online mode
     if (isOfflineMode) {
-      console.log('Connection restored. Switching to online mode.');
+      logger.debug('Connection restored. Switching to online mode.');
     }
     setOfflineMode(false);
     return true;
   } catch (error) {
-    console.error('Network connection appears to be offline, or backend server is not available', error);
+    logger.error('Network connection appears to be offline, or backend server is not available', error);
     
     // Only set offline mode if we're truly offline - we want to keep trying to reach the real backend
     // This ensures we don't fall back to mock/stub data in production
@@ -226,7 +227,7 @@ export const checkOnlineStatus = async (): Promise<boolean> => {
       setOfflineMode(true);
     } else {
       // In production, we don't want to use mock data, so we don't set offline mode
-      console.error('Backend server connection failed in production environment');
+      logger.error('Backend server connection failed in production environment');
     }
     return false;
   }
@@ -250,7 +251,7 @@ export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
     // If it's already an array, ensure all required fields
     return Array.isArray(response.data) ? response.data.map(location => transformBusLocation(location as RawBusLocation)) : [];
   } catch (error) {
-    console.error('Error fetching current bus locations:', error);
+    logger.error('Error fetching current bus locations:', error);
     if (isOfflineMode) {
       // Return empty array in offline mode
       return [];
@@ -265,16 +266,16 @@ export const getCurrentBusLocations = async (): Promise<BusLocation[]> => {
  */
 export const getLocations = async (language?: string): Promise<Location[]> => {
   try {
-    console.log('getLocations: Starting location fetch');
+    logger.debug('getLocations: Starting location fetch');
     const response = await api.get('/api/v1/bus-schedules/locations', {
       params: {
         lang: language || 'en' // Default to English if language not provided
       }
     });
-    console.log('getLocations: Online API response received', response.data);
+    logger.debug('getLocations: Online API response received', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching locations:', error);
+    logger.error('Error fetching locations:', error);
     throw new ApiError('Failed to fetch locations. Please try again.');
   }
 };
@@ -403,13 +404,13 @@ export const searchBuses = async (
     
     // If either location is from OpenStreetMap, we need to find nearby locations in the database
     if (isFromOSM || isToOSM) {
-      console.log('🌍 OpenStreetMap location detected, searching by coordinates');
+      logger.debug('🌍 OpenStreetMap location detected, searching by coordinates');
       
       // For now, return empty array with a helpful message
       // TODO: Implement coordinate-based search or find nearest database locations
-      console.warn('⚠️ OpenStreetMap locations not yet supported for bus search');
-      console.warn(`From: ${fromLocation.name} (${fromLocation.latitude}, ${fromLocation.longitude})`);
-      console.warn(`To: ${toLocation.name} (${toLocation.latitude}, ${toLocation.longitude})`);
+      logger.warn('⚠️ OpenStreetMap locations not yet supported for bus search');
+      logger.warn(`From: ${fromLocation.name} (${fromLocation.latitude}, ${fromLocation.longitude})`);
+      logger.warn(`To: ${toLocation.name} (${toLocation.latitude}, ${toLocation.longitude})`);
       
       throw new ApiError(
         `Currently, we can only search between locations in our database. "${isFromOSM ? fromLocation.name : toLocation.name}" is not in our system yet. Please try selecting a nearby city that appears with a 🚍 icon.`,
@@ -443,15 +444,15 @@ export const searchBuses = async (
           bus.arrivalTime = stops[stops.length - 1].arrivalTime;
         }
       } catch (error) {
-        console.warn(`Failed to fetch stops for bus ${bus.id}:`, error);
+        logger.warn(`Failed to fetch stops for bus ${bus.id}: ${error instanceof Error ? error.message : String(error)}`);
         // Continue without stops for this bus
       }
     }
     
-    console.log('Transformed buses with real stops:', buses);
+    logger.debug(`Transformed buses with real stops: ${buses.length} buses`);
     return buses;
   } catch (error) {
-    console.error('Error searching buses:', error);
+    logger.error('Error searching buses:', error);
     
     // If it's our custom OSM error, throw it as-is
     if (error instanceof ApiError && error.errorCode === 'OSM_LOCATION_NOT_SUPPORTED') {
@@ -494,7 +495,7 @@ export const searchBusesViaStops = async (
     
     return buses;
   } catch (error) {
-    console.error('Error searching buses via stops:', error);
+    logger.error('Error searching buses via stops:', error);
     throw new ApiError('Failed to search for buses via stops. Please try again.');
   }
 };
@@ -539,11 +540,11 @@ const transformStopDTOToStop = (stopDTO: StopDTO, busId: number): Stop => {
  */
 export const getStops = async (busId: number, languageCode: string = 'en'): Promise<Stop[]> => {
   try {
-    console.log(`Fetching stops for bus ${busId} with language ${languageCode}`);
+    logger.debug(`Fetching stops for bus ${busId} with language ${languageCode}`);
     const response = await api.get(`/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
       params: { lang: languageCode }
     });
-    console.log('Stops API response:', response.data);
+    logger.debug('Stops API response:', response.data);
     
     // Transform the backend response to frontend Stop objects
     const stopDTOs: StopDTO[] = response.data;
@@ -551,10 +552,10 @@ export const getStops = async (busId: number, languageCode: string = 'en'): Prom
       transformStopDTOToStop(stopDTO, busId)
     );
     
-    console.log('Transformed stops:', stops);
+    logger.debug(`Transformed stops: ${stops.length} stops`);
     return stops;
   } catch (error) {
-    console.error(`Error fetching stops for bus ${busId}:`, error);
+    logger.error(`Error fetching stops for bus ${busId}:`, error);
     throw new ApiError(`Failed to fetch bus stops for bus ID ${busId}. Please try again.`);
   }
 };
@@ -581,7 +582,7 @@ export const getConnectingRoutes = async (
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching connecting routes:', error);
+    logger.error('Error fetching connecting routes:', error);
     throw new ApiError('Failed to fetch connecting routes. Please try again.');
   }
 };
@@ -601,7 +602,7 @@ export const reportBusLocation = async (
     });
     return true;
   } catch (error) {
-    console.error('Error reporting bus location:', error);
+    logger.error('Error reporting bus location:', error);
     throw new ApiError('Failed to report bus location. Please try again.');
   }
 };
@@ -620,7 +621,7 @@ export const disembarkBus = async (
     });
     return true;
   } catch (error) {
-    console.error('Error logging disembarking:', error);
+    logger.error('Error logging disembarking:', error);
     throw new ApiError('Failed to log disembarking. Please try again.');
   }
 };
@@ -636,7 +637,7 @@ export const getLiveBusLocations = async (
     const response = await api.get(`/api/v1/bus-tracking/route/${fromLocation.id}/${toLocation.id}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching live bus locations:', error);
+    logger.error('Error fetching live bus locations:', error);
     throw new ApiError('Failed to fetch live bus locations. Please try again.');
   }
 };
@@ -649,7 +650,7 @@ export const getUserRewardPoints = async (userId: string): Promise<RewardPoints>
     const response = await api.get(`/api/v1/bus-tracking/rewards/${userId}`);
     return response.data;
   } catch (error: unknown) {
-    console.error('Error fetching reward points:', error);
+    logger.error('Error fetching reward points:', error);
     // Using our ApiError class for better error handling
     const axiosError = error as { response?: { status: number; data?: { errorCode?: string } } };
     if (axiosError.response) {
@@ -682,7 +683,7 @@ export interface ApiErrorResponse {
 
 // Error handler utility for consistent error responses
 export const handleApiError = (error: unknown): never => {
-  console.error('API error:', error);
+  logger.error('API error:', error);
   
   // Check if it's an axios error with response property
   const axiosError = error as { response?: ApiErrorResponse };
@@ -903,7 +904,7 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
   
   try {
     // First search in database
-    console.log(`searchLocations: Searching for "${query}" in database`);
+    logger.debug(`searchLocations: Searching for "${query}" in database`);
     const response = await api.get('/api/v1/locations/search', {
       params: { 
         query,
@@ -913,7 +914,7 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
     });
     
     const dbResults = response.data;
-    console.log(`searchLocations: Found ${dbResults.length} database results for "${query}"`);
+    logger.debug(`searchLocations: Found ${dbResults.length} database results for "${query}"`);
     
     // If we have enough results from DB, return them
     if (dbResults.length >= limit) {
@@ -922,7 +923,7 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
     
     // If database has no results or insufficient results, check map API
     try {
-      console.log(`searchLocations: Not enough database results, trying map API for "${query}"`);
+      logger.debug(`searchLocations: Not enough database results, trying map API for "${query}"`);
       const mapResponse = await api.get('/api/v1/locations/search', {
         params: { 
           query,
@@ -932,29 +933,29 @@ export const searchLocations = async (query: string, limit = 10): Promise<Locati
       });
       
       const mapResults = mapResponse.data;
-      console.log(`searchLocations: Found ${mapResults.length} map API results for "${query}"`);
+      logger.debug(`searchLocations: Found ${mapResults.length} map API results for "${query}"`);
       
       // Combine results, prioritizing database results
       const combinedResults = [...dbResults, ...mapResults].slice(0, limit);
       return combinedResults;
     } catch (mapError) {
-      console.warn('Map API search failed, returning database results only:', mapError);
+      logger.warn(`Map API search failed, returning database results only: ${mapError instanceof Error ? mapError.message : String(mapError)}`);
       return dbResults;
     }
   } catch (error) {
-    console.error('Error searching locations:', error);
+    logger.error('Error searching locations:', error);
     
     // Try offline data as last resort
     if (isOfflineMode) {
       try {
         const offlineLocations = (await getLocationsOffline()) as Location[];
-        console.log(`searchLocations: Using offline data for "${query}"`);
+        logger.debug(`searchLocations: Using offline data for "${query}"`);
         // Filter locations based on query
         return offlineLocations.filter(location => 
           location.name.toLowerCase().includes(query.toLowerCase())
         ).slice(0, limit);
       } catch (offlineError) {
-        console.error('Error getting offline locations:', offlineError);
+        logger.error('Error getting offline locations:', offlineError);
       }
     }
     
@@ -992,7 +993,7 @@ export class APIService {
         return response.data;
       }
     } catch (error) {
-      console.error('Error fetching bus schedules:', error);
+      logger.error('Error fetching bus schedules:', error);
       return handleApiError(error);
     }
   }

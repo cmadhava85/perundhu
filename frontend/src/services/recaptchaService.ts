@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 /**
  * Google reCAPTCHA v3 Service
  * Provides invisible bot protection for form submissions
@@ -92,13 +93,13 @@ export const executeRecaptcha = async (action: string = 'submit'): Promise<strin
             resolve(token);
           })
           .catch((error: Error) => {
-            console.error('reCAPTCHA execution error:', error);
+            logger.error('reCAPTCHA execution error:', error);
             reject(error);
           });
       });
     });
   } catch (error) {
-    console.error('reCAPTCHA error:', error);
+    logger.error('reCAPTCHA error:', error);
     return null;
   }
 };
@@ -111,7 +112,7 @@ export const getRecaptchaToken = async (action: string = 'submit'): Promise<stri
   try {
     return await executeRecaptcha(action);
   } catch (error) {
-    console.warn('Failed to get reCAPTCHA token:', error);
+    logger.warn('Failed to get reCAPTCHA token:', { error: error instanceof Error ? error.message : String(error) });
     return null;
   }
 };

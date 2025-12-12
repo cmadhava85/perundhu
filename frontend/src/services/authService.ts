@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 import SecurityService from './securityService';
@@ -95,7 +96,7 @@ class AuthService {
         // Validate security headers in response
         const securityLevel = response.headers['x-security-level'];
         if (securityLevel === 'HIGH' || securityLevel === 'CRITICAL') {
-          console.warn('High security alert detected from backend');
+          logger.warn('High security alert detected from backend');
         }
 
         return response;
@@ -105,7 +106,7 @@ class AuthService {
 
         // Handle rate limiting
         if (error.response?.status === 429) {
-          console.error('Rate limit exceeded for authenticated request');
+          logger.error('Rate limit exceeded for authenticated request');
           SecurityService.handleSecurityBreach?.('Authentication rate limit exceeded');
           return Promise.reject(new Error('Too many requests. Please try again later.'));
         }
@@ -187,7 +188,7 @@ class AuthService {
         await this.api.post('/api/auth/logout', { refreshToken });
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      logger.error('Logout error:', error);
     } finally {
       this.clearAuthData();
     }

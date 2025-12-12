@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type {
@@ -39,7 +40,7 @@ export class ApiService {
     const baseUrl = this.getEnv('VITE_API_URL', 'http://localhost:8080');
     const apiUrl = baseUrl.endsWith('/api/v1') ? baseUrl : `${baseUrl}/api/v1`;
     
-    console.log(`Creating API instance with baseURL: ${apiUrl}`);
+    logger.debug(`Creating API instance with baseURL: ${apiUrl}`);
     
     return axios.create({
       baseURL: apiUrl,

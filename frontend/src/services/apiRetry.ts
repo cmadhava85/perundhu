@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import axios from 'axios';
 import type { AxiosError, AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -75,7 +76,7 @@ function shouldRetry(error: AxiosError, config: RetryConfig, currentRetryCount: 
     // Check for Retry-After header (rate limiting)
     const retryAfter = error.response.headers?.['retry-after'];
     if (retryAfter) {
-      console.log(`API rate limited. Retry-After: ${retryAfter}s`);
+      logger.debug(`API rate limited. Retry-After: ${retryAfter}s`);
     }
     return true;
   }
@@ -127,7 +128,7 @@ export function setupRetryInterceptor(
         
         const delay = calculateRetryDelay(currentRetryCount, config);
         
-        console.log(
+        logger.debug(
           `API request failed. Retrying (${currentRetryCount + 1}/${config.maxRetries}) in ${delay}ms...`,
           {
             url: originalRequest.url,
@@ -189,7 +190,7 @@ export async function withRetry<T>(
       
       if (attempt < fullConfig.maxRetries) {
         const delay = calculateRetryDelay(attempt, fullConfig);
-        console.log(`Operation failed. Retrying (${attempt + 1}/${fullConfig.maxRetries}) in ${delay}ms...`);
+        logger.debug(`Operation failed. Retrying (${attempt + 1}/${fullConfig.maxRetries}) in ${delay}ms...`);
         await sleep(delay);
       }
     }

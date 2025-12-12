@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import axios from 'axios';
 import type { RouteContribution, ImageContribution } from '../types/contributionTypes';
 import AuthService from './authService';
@@ -86,7 +87,7 @@ const AdminService = {
       );
       return response.data;
     } catch {
-      console.error('Integration endpoint not available - using manual integration guidance');
+      logger.error('Integration endpoint not available - using manual integration guidance');
       
       // Since the backend integration endpoint isn't available yet,
       // provide manual integration instructions
@@ -125,7 +126,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
       );
       return response.data;
     } catch {
-      console.error('Integration endpoint not available for specific route');
+      logger.error('Integration endpoint not available for specific route');
       throw new Error('Integration service not available for this route.');
     }
   },
@@ -138,7 +139,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
       });
       return response.data;
     } catch {
-      console.error('Integration status endpoint not available');
+      logger.error('Integration status endpoint not available');
       return { error: 'Integration status not available' };
     }
   },

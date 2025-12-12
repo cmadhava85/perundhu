@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 /**
  * Security service for managing API security, rate limiting, and secure storage
  * Enhanced with tampering detection and secure data handling
@@ -82,7 +83,7 @@ class SecurityService {
       
       localStorage.setItem(key, btoa(wrapped));
     } catch (error) {
-      console.error('Failed to store secure data:', error);
+      logger.error('Failed to store secure data:', error);
     }
   }
 
@@ -126,7 +127,7 @@ class SecurityService {
       
       return JSON.parse(serialized) as T;
     } catch (error) {
-      console.error('Failed to retrieve secure data:', error);
+      logger.error('Failed to retrieve secure data:', error);
       // Clear potentially corrupted data
       this.secureRemove(key);
       return null;
@@ -141,7 +142,7 @@ class SecurityService {
       localStorage.removeItem(key);
       this.integrityChecks.delete(key);
     } catch (error) {
-      console.error('Failed to remove secure data:', error);
+      logger.error('Failed to remove secure data:', error);
     }
   }
 
@@ -203,7 +204,7 @@ class SecurityService {
     }
 
     if (record.count >= this.RATE_LIMIT) {
-      console.warn('Rate limit exceeded for ' + url);
+      logger.warn('Rate limit exceeded for ' + url);
       return false;
     }
 
@@ -216,11 +217,11 @@ class SecurityService {
    * Respects VITE_SECURITY_ENABLED flag
    */
   handleSecurityBreach(reason: string): void {
-    console.error('Security breach detected:', reason);
+    logger.error('Security breach detected:', reason);
     
     // If security is disabled, just log and return
     if (!isSecurityEnabled()) {
-      console.warn('Security is disabled - breach handling skipped');
+      logger.warn('Security is disabled - breach handling skipped');
       return;
     }
     
@@ -274,7 +275,7 @@ class SecurityService {
     
     for (const header of requiredHeaders) {
       if (!headers[header]) {
-        console.warn('Missing security header: ' + header);
+        logger.warn('Missing security header: ' + header);
         return false;
       }
     }
