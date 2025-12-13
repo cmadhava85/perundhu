@@ -148,10 +148,10 @@ jobs:
     
     - name: Upload security reports
       uses: actions/upload-artifact@v4
-      if: always()
+      if: failure()
       with:
         name: security-reports
         path: |
           backend/build/reports/
           frontend/npm-audit.json
-        retention-days: 30
+        retention-days: 3

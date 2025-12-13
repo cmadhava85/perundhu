@@ -61,6 +61,7 @@ jobs:
       with:
         name: frontend-image-tag
         path: frontend-image.txt
+        retention-days: 1
 
   build-and-push-backend:
     name: Build & Push Backend Docker Image
@@ -113,6 +114,7 @@ jobs:
       with:
         name: backend-image-tag
         path: backend-image.txt
+        retention-days: 1
 
   deploy-to-cloud-run:
     name: Deploy to Cloud Run

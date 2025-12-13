@@ -245,7 +245,7 @@ jobs:
       with:
         name: terraform-outputs-preprod
         path: ${{ env.TF_ENV_DIR }}/outputs.json
-        retention-days: 30
+        retention-days: 3
     
     - name: Create Summary
       run: |
@@ -445,7 +445,7 @@ jobs:
       with:
         name: terraform-outputs-production
         path: ${{ env.TF_ENV_DIR }}/outputs.json
-        retention-days: 90
+        retention-days: 3
     
     - name: Create Summary
       run: |
