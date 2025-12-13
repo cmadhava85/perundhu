@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../types';
 import '../styles/journey-timeline.css';
@@ -14,7 +14,7 @@ interface JourneyTimelineProps {
 
 /**
  * Visual Journey Timeline Component
- * Displays a graphical representation of the bus route with stops
+ * Compact, mobile-friendly representation of the bus route
  */
 const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
   bus,
@@ -26,87 +26,110 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  // Sort stops by order/time
-  const sortedStops = [...stops].sort((a, b) => {
-    if (a.stopOrder !== undefined && b.stopOrder !== undefined) {
-      return a.stopOrder - b.stopOrder;
-    }
-    if (a.order !== undefined && b.order !== undefined) {
-      return a.order - b.order;
-    }
-    // Sort by time if order not available
-    const timeA = a.arrivalTime || a.departureTime || '00:00';
-    const timeB = b.arrivalTime || b.departureTime || '00:00';
-    return timeA.localeCompare(timeB);
-  });
+  // Sort all stops by order or time - don't filter any out
+  const allStops = useMemo(() => {
+    if (!stops || stops.length === 0) return [];
+    
+    return [...stops].sort((a, b) => {
+      // Sort by stopOrder first
+      if (a.stopOrder !== undefined && b.stopOrder !== undefined) {
+        return a.stopOrder - b.stopOrder;
+      }
+      // Then by order
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      }
+      // Finally by time
+      const timeA = a.departureTime || a.arrivalTime || '00:00';
+      const timeB = b.departureTime || b.arrivalTime || '00:00';
+      return timeA.localeCompare(timeB);
+    });
+  }, [stops]);
 
   // Calculate journey duration
-  const getDurationMinutes = (): number => {
+  const duration = useMemo(() => {
     if (!bus.departureTime || !bus.arrivalTime) return 0;
     const [depH, depM] = bus.departureTime.split(':').map(Number);
     const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
     let minutes = (arrH * 60 + arrM) - (depH * 60 + depM);
-    if (minutes < 0) minutes += 24 * 60; // Handle overnight
+    if (minutes < 0) minutes += 24 * 60;
     return minutes;
-  };
+  }, [bus.departureTime, bus.arrivalTime]);
 
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    if (hours === 0) return `${mins}${t('common.min', 'min')}`;
-    if (mins === 0) return `${hours}${t('common.hr', 'hr')}`;
-    return `${hours}${t('common.hr', 'hr')} ${mins}${t('common.min', 'min')}`;
+    if (hours === 0) return `${mins}m`;
+    if (mins === 0) return `${hours}h`;
+    return `${hours}h ${mins}m`;
   };
 
-  const duration = getDurationMinutes();
-  const hasStops = sortedStops.length > 0;
+  const formatTime = (time?: string): string => {
+    if (!time) return '--:--';
+    // Remove seconds if present (HH:MM:SS -> HH:MM)
+    const parts = time.split(':');
+    return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
+  };
+
+  const hasStops = allStops.length > 0;
+  const stopCount = allStops.length;
 
   return (
-    <div className="journey-timeline">
-      {/* Timeline Header */}
-      <div className="timeline-header" onClick={onToggle} role="button" tabIndex={0}>
-        <div className="timeline-summary">
-          <div className="timeline-endpoints">
-            <div className="endpoint origin">
-              <span className="endpoint-time">{bus.departureTime}</span>
-              <span className="endpoint-dot origin-dot"></span>
-              <span className="endpoint-name">{fromLocation || bus.from}</span>
-            </div>
-            
-            <div className="timeline-connector">
-              <div className="connector-line">
-                <div className="connector-arrow">→</div>
-              </div>
-              <span className="connector-duration">{formatDuration(duration)}</span>
-              {hasStops && (
-                <span className="connector-stops">
-                  {sortedStops.length} {t('timeline.stops', 'stops')}
-                </span>
-              )}
-            </div>
-
-            <div className="endpoint destination">
-              <span className="endpoint-time">{bus.arrivalTime}</span>
-              <span className="endpoint-dot destination-dot"></span>
-              <span className="endpoint-name">{toLocation || bus.to}</span>
-            </div>
-          </div>
+    <div className="journey-timeline-compact">
+      {/* Compact Header - Always visible */}
+      <div 
+        className="timeline-header-compact" 
+        onClick={onToggle} 
+        role="button" 
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && onToggle?.()}
+      >
+        {/* Origin */}
+        <div className="endpoint-compact origin">
+          <span className="time-compact">{formatTime(bus.departureTime)}</span>
+          <span 
+            className="dot-compact origin-dot" 
+            style={{ background: '#10B981', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid #fff' }}
+          ></span>
+          <span className="name-compact">{fromLocation || bus.from}</span>
         </div>
         
+        {/* Journey Info */}
+        <div className="journey-info-compact">
+          <div className="journey-line"></div>
+          <div className="journey-meta">
+            <span className="duration-compact">{formatDuration(duration)}</span>
+            {stopCount > 0 && (
+              <span className="stops-count-compact">{stopCount} stops</span>
+            )}
+          </div>
+        </div>
+
+        {/* Destination */}
+        <div className="endpoint-compact destination">
+          <span className="time-compact">{formatTime(bus.arrivalTime)}</span>
+          <span 
+            className="dot-compact destination-dot"
+            style={{ background: '#EF4444', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid #fff' }}
+          ></span>
+          <span className="name-compact">{toLocation || bus.to}</span>
+        </div>
+
+        {/* Expand Toggle */}
         {hasStops && (
           <button 
-            className="timeline-toggle"
+            className="toggle-compact"
             aria-expanded={isExpanded}
-            aria-label={isExpanded ? t('timeline.collapse', 'Collapse stops') : t('timeline.expand', 'Expand stops')}
+            aria-label={isExpanded ? 'Hide stops' : 'Show stops'}
           >
             <svg 
-              width="16" 
-              height="16" 
+              width="14" 
+              height="14" 
               viewBox="0 0 24 24" 
               fill="none" 
               stroke="currentColor" 
-              strokeWidth="2"
-              className={`toggle-icon ${isExpanded ? 'expanded' : ''}`}
+              strokeWidth="2.5"
+              className={isExpanded ? 'rotated' : ''}
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -114,66 +137,37 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
         )}
       </div>
 
-      {/* Expanded Stops View */}
+      {/* Expanded Stops - Clean vertical list showing ALL stops */}
       {isExpanded && hasStops && (
-        <div className="timeline-stops">
-          <div className="stops-list">
-            {/* Origin */}
-            <div className="stop-item origin-stop">
-              <div className="stop-marker origin-marker">
-                <span className="marker-dot"></span>
-                <span className="marker-line"></span>
-              </div>
-              <div className="stop-details">
-                <span className="stop-time">{bus.departureTime}</span>
-                <span className="stop-name">{fromLocation || bus.from}</span>
-                <span className="stop-label">{t('timeline.departure', 'Departure')}</span>
-              </div>
-            </div>
-
-            {/* Intermediate Stops */}
-            {sortedStops.map((stop, index) => (
-              <div key={stop.id || index} className="stop-item intermediate-stop">
-                <div className="stop-marker">
-                  <span className="marker-dot"></span>
-                  <span className="marker-line"></span>
-                </div>
-                <div className="stop-details">
-                  <span className="stop-time">
-                    {stop.arrivalTime || stop.departureTime || '--:--'}
-                  </span>
-                  <span className="stop-name">
-                    {stop.translatedName || stop.name}
-                  </span>
-                  {stop.platform && (
-                    <span className="stop-platform">
-                      {t('timeline.platform', 'Platform')} {stop.platform}
+        <div className="stops-expanded-compact">
+          {allStops.map((stop, index) => {
+            const arrTime = formatTime(stop.arrivalTime);
+            const depTime = formatTime(stop.departureTime);
+            const hasArrival = arrTime !== '--:--';
+            const hasDeparture = depTime !== '--:--';
+            
+            return (
+              <div key={stop.id || index} className="stop-row-compact">
+                <span className="stop-index">{index + 1}</span>
+                <span className="stop-name-compact">{stop.translatedName || stop.name}</span>
+                <div className="stop-times-compact">
+                  {hasArrival && (
+                    <span className="stop-time-arrival" title="Arrival">
+                      <span className="time-label">arr</span> {arrTime}
                     </span>
+                  )}
+                  {hasDeparture && (
+                    <span className="stop-time-departure" title="Departure">
+                      <span className="time-label">dep</span> {depTime}
+                    </span>
+                  )}
+                  {!hasArrival && !hasDeparture && (
+                    <span className="stop-time-compact">--:--</span>
                   )}
                 </div>
               </div>
-            ))}
-
-            {/* Destination */}
-            <div className="stop-item destination-stop">
-              <div className="stop-marker destination-marker">
-                <span className="marker-dot"></span>
-              </div>
-              <div className="stop-details">
-                <span className="stop-time">{bus.arrivalTime}</span>
-                <span className="stop-name">{toLocation || bus.to}</span>
-                <span className="stop-label">{t('timeline.arrival', 'Arrival')}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* No Stops Message */}
-      {isExpanded && !hasStops && (
-        <div className="timeline-no-stops">
-          <span className="no-stops-icon">📍</span>
-          <span className="no-stops-text">{t('timeline.directRoute', 'Direct route - No intermediate stops listed')}</span>
+            );
+          })}
         </div>
       )}
     </div>

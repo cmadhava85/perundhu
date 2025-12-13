@@ -496,7 +496,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
       {/* Expandable Route Details */}
       <div className={`expandable-content ${isExpanded ? 'expanded' : ''}`}>
         <div className="route-details">
-          {/* Journey Timeline - Visual representation */}
+          {/* Journey Timeline - Visual representation with integrated stops */}
           <JourneyTimeline
             bus={bus}
             stops={stops}
@@ -504,26 +504,6 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             toLocation={getLocationDisplayName(toLocation) || bus.to}
             isExpanded={stops.length > 0}
           />
-          
-          {stops.length > 0 && (
-            <div className="stops-simple-list" style={{ marginTop: 'var(--space-4)' }}>
-              <div className="text-headline" style={{ marginBottom: 'var(--space-3)' }}>
-                📍 All Stops
-              </div>
-              {stops.map((stop, index) => (
-                <div key={stop.id || index} className="stop-simple-item">
-                  <span className="stop-simple-number">{index + 1}</span>
-                  <span className="stop-simple-name">{getStopDisplayName(stop)}</span>
-                  <span className="stop-simple-time">
-                    {stop.arrivalTime || '--:--'}
-                  </span>
-                  {stop.departureTime && stop.departureTime !== stop.arrivalTime && (
-                    <span className="stop-simple-departure">{stop.departureTime}</span>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
 
           {/* Map Placeholder */}
           <div style={{
