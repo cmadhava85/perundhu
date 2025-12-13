@@ -164,7 +164,8 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  overflow: hidden;
+  overflow: visible;
+  min-height: 80px;
 }
 
 .main-tab-navigation::before {
@@ -412,6 +413,7 @@
 @media (max-width: 767px) {
   .main-tab-navigation {
     padding: 8px 0 6px;
+    min-height: 70px;
   }
   
   .main-tabs {
@@ -442,6 +444,10 @@
 }
 
 @media (max-width: 640px) {
+  .main-tab-navigation {
+    min-height: 60px;
+  }
+  
   .main-tabs {
     margin: 0 4px;
     width: calc(100% - 8px);
