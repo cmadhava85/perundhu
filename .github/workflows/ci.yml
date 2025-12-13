@@ -139,7 +139,7 @@ jobs:
       with:
         name: backend-test-results
         path: backend/build/reports/tests/
-        retention-days: 3
+        retention-days: 1
 
   backend-build:
     name: Backend Build

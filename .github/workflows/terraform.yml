@@ -151,7 +151,7 @@ jobs:
       with:
         name: terraform-plan-preprod
         path: ${{ env.TF_ENV_DIR }}/tfplan
-        retention-days: 7
+        retention-days: 1
     
     - name: Comment Plan on PR
       if: github.event_name == 'pull_request'
@@ -245,7 +245,7 @@ jobs:
       with:
         name: terraform-outputs-preprod
         path: ${{ env.TF_ENV_DIR }}/outputs.json
-        retention-days: 3
+        retention-days: 1
     
     - name: Create Summary
       run: |
@@ -379,7 +379,7 @@ jobs:
       with:
         name: terraform-plan-production
         path: ${{ env.TF_ENV_DIR }}/tfplan
-        retention-days: 7
+        retention-days: 1
 
   terraform-apply-production:
     name: Apply Production Infrastructure
@@ -445,7 +445,7 @@ jobs:
       with:
         name: terraform-outputs-production
         path: ${{ env.TF_ENV_DIR }}/outputs.json
-        retention-days: 3
+        retention-days: 1
     
     - name: Create Summary
       run: |

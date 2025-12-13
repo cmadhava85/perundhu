@@ -154,4 +154,4 @@ jobs:
         path: |
           backend/build/reports/
           frontend/npm-audit.json
-        retention-days: 3
+        retention-days: 1
