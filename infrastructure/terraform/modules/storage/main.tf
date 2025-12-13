@@ -4,16 +4,16 @@
 resource "google_storage_bucket" "images_bucket" {
   name     = "${var.app_name}-${var.environment}-images-${random_string.bucket_suffix.result}"
   location = var.region
-  
+
   # Prevent accidental deletion
   force_destroy = false
-  
+
   uniform_bucket_level_access = true
-  
+
   versioning {
     enabled = true
   }
-  
+
   lifecycle_rule {
     condition {
       age = 90
@@ -22,17 +22,17 @@ resource "google_storage_bucket" "images_bucket" {
       type = "Delete"
     }
   }
-  
+
   lifecycle_rule {
     condition {
-      age = 30
+      age                = 30
       num_newer_versions = 3
     }
     action {
       type = "Delete"
     }
   }
-  
+
   cors {
     origin          = ["*"]
     method          = ["GET", "HEAD", "PUT", "POST", "DELETE"]
@@ -45,19 +45,19 @@ resource "google_storage_bucket" "images_bucket" {
 resource "google_storage_bucket" "backup_bucket" {
   name     = "${var.app_name}-${var.environment}-backups-${random_string.bucket_suffix.result}"
   location = var.region
-  
+
   # Cost optimization: Use NEARLINE for backups (accessed < 1x/month)
   storage_class = "NEARLINE"
-  
+
   # Prevent accidental deletion
   force_destroy = false
-  
+
   uniform_bucket_level_access = true
-  
+
   versioning {
     enabled = true
   }
-  
+
   # Cost optimization: Delete old backups after 90 days
   lifecycle_rule {
     condition {
@@ -67,7 +67,7 @@ resource "google_storage_bucket" "backup_bucket" {
       type = "Delete"
     }
   }
-  
+
   # Move to COLDLINE after 30 days for older backups
   lifecycle_rule {
     condition {
@@ -84,11 +84,11 @@ resource "google_storage_bucket" "backup_bucket" {
 resource "google_storage_bucket" "logs_bucket" {
   name     = "${var.app_name}-${var.environment}-logs-${random_string.bucket_suffix.result}"
   location = var.region
-  
-  force_destroy = true  # Logs can be safely deleted
-  
+
+  force_destroy = true # Logs can be safely deleted
+
   uniform_bucket_level_access = true
-  
+
   lifecycle_rule {
     condition {
       age = 30
@@ -103,26 +103,26 @@ resource "google_storage_bucket" "logs_bucket" {
 resource "google_storage_bucket" "static_assets_bucket" {
   name     = "${var.app_name}-${var.environment}-static-${random_string.bucket_suffix.result}"
   location = var.region
-  
+
   force_destroy = false
-  
+
   uniform_bucket_level_access = true
-  
+
   # Make bucket publicly readable for static assets
   versioning {
     enabled = true
   }
-  
+
   cors {
     origin          = ["*"]
     method          = ["GET", "HEAD"]
     response_header = ["Content-Type", "Cache-Control"]
     max_age_seconds = 3600
   }
-  
+
   lifecycle_rule {
     condition {
-      age = 90
+      age                = 90
       num_newer_versions = 5
     }
     action {

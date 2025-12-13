@@ -2,6 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location as AppLocation } from '../types';
 import { locationAutocompleteService, type LocationSuggestion } from '../services/locationAutocompleteService';
+import { findNearbyLocationFromGPS, checkLocationPermission } from '../services/nearbyLocationService';
+import { getGeolocationSupport } from '../services/geolocation';
 import '../styles/transit-design-system.css';
 
 // Recent search interface
@@ -56,6 +58,13 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   const [isLoadingFrom, setIsLoadingFrom] = useState(false);
   const [isLoadingTo, setIsLoadingTo] = useState(false);
   
+  // GPS location detection state
+  const [isGettingLocation, setIsGettingLocation] = useState(false);
+  const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt' | 'unknown'>('unknown');
+  const [locationError, setLocationError] = useState<string | null>(null);
+  const [gpsSupported, setGpsSupported] = useState(true);
+  const [isFromGPS, setIsFromGPS] = useState(false); // Track if origin was set via GPS
+  
   // Load recent searches from localStorage
   useEffect(() => {
     try {
@@ -68,6 +77,59 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       // Ignore localStorage errors
     }
   }, []);
+
+  // Check GPS support and permission status on mount
+  useEffect(() => {
+    const checkGpsStatus = async () => {
+      const supported = getGeolocationSupport();
+      setGpsSupported(supported);
+      
+      if (supported) {
+        const permission = await checkLocationPermission();
+        setLocationPermission(permission);
+        
+        // Auto-detect location if permission is already granted and no origin set
+        if (permission === 'granted' && !fromQuery && !selectedFromLocation) {
+          handleUseMyLocation();
+        }
+      }
+    };
+    
+    checkGpsStatus();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Handle "Use My Location" button click
+  const handleUseMyLocation = async () => {
+    setIsGettingLocation(true);
+    setLocationError(null);
+    
+    try {
+      const result = await findNearbyLocationFromGPS();
+      
+      if (result.success && result.location) {
+        // Set the location as the "from" location
+        setFromQuery(getLocationDisplayName(result.location));
+        setSelectedFromLocation(result.location);
+        setLocationPermission('granted');
+        setIsFromGPS(true); // Mark as GPS-detected
+        
+        // Show distance info if available
+        if (result.distance && result.distance > 0) {
+          console.log(`Set origin to: ${result.location.name} (${result.distance.toFixed(1)}km away)`);
+        }
+      } else {
+        setLocationError(result.error || t('location.error', 'Could not detect your location'));
+        // Clear error after 5 seconds
+        setTimeout(() => setLocationError(null), 5000);
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setLocationError(errorMessage);
+      setTimeout(() => setLocationError(null), 5000);
+    } finally {
+      setIsGettingLocation(false);
+    }
+  };
 
   // Save recent search to localStorage
   const saveRecentSearch = useCallback((from: AppLocation, to: AppLocation) => {
@@ -303,6 +365,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     setSelectedFromLocation(selectedToLocation);
     setSelectedToLocation(tempLocation);
     
+    // Reset GPS flag when swapping (GPS location is now destination, not origin)
+    setIsFromGPS(false);
+    
     // Notify parent component of the swap
     if (selectedFromLocation && selectedToLocation && onLocationChange) {
       onLocationChange(selectedToLocation, selectedFromLocation);
@@ -323,43 +388,129 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           <div className="stack stack-md">
             {/* From Location */}
             <div style={{ position: 'relative' }}>
-              <label 
-                htmlFor="from-location-input"
-                className="text-caption" 
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}
-              >
-                <span>🟢 {t('search.from', 'From')}</span>
-                {selectedFromLocation && selectedFromLocation.id !== -1 && (
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 8px',
-                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                    color: 'white',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: '600'
-                  }}>
-                    ✓ Verified
-                  </span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+                <label 
+                  htmlFor="from-location-input"
+                  className="text-caption" 
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                >
+                  <span>🟢 {t('search.from', 'From')}</span>
+                  {selectedFromLocation && selectedFromLocation.id !== -1 && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '2px 8px',
+                      background: isFromGPS 
+                        ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)' 
+                        : 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                      color: 'white',
+                      borderRadius: '12px',
+                      fontSize: '10px',
+                      fontWeight: '600'
+                    }}>
+                      {isFromGPS ? '📍 ' + t('location.nearYou', 'Near you') : '✓ ' + t('search.verified', 'Verified')}
+                    </span>
+                  )}
+                  {fromQuery && !selectedFromLocation && fromQuery.length >= 2 && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '2px 8px',
+                      background: '#FEF3C7',
+                      color: '#D97706',
+                      borderRadius: '12px',
+                      fontSize: '10px',
+                      fontWeight: '600'
+                    }}>
+                      ⚠ {t('search.selectFromList', 'Select from list')}
+                    </span>
+                  )}
+                </label>
+                
+                {/* Use My Location Button */}
+                {gpsSupported && (
+                  <button
+                    type="button"
+                    onClick={handleUseMyLocation}
+                    disabled={isGettingLocation}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '4px 10px',
+                      background: isGettingLocation 
+                        ? '#E5E7EB' 
+                        : locationPermission === 'granted' 
+                          ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)'
+                          : 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)',
+                      color: isGettingLocation ? '#6B7280' : 'white',
+                      border: 'none',
+                      borderRadius: '16px',
+                      fontSize: '11px',
+                      fontWeight: '600',
+                      cursor: isGettingLocation ? 'wait' : 'pointer',
+                      transition: 'all 0.2s ease',
+                      boxShadow: isGettingLocation ? 'none' : '0 2px 8px rgba(99, 102, 241, 0.3)'
+                    }}
+                    title={t('location.useMyLocation', 'Use my current location')}
+                  >
+                    {isGettingLocation ? (
+                      <>
+                        <span style={{
+                          width: '12px',
+                          height: '12px',
+                          border: '2px solid #9CA3AF',
+                          borderTopColor: '#374151',
+                          borderRadius: '50%',
+                          animation: 'spin 0.8s linear infinite',
+                          display: 'inline-block'
+                        }} />
+                        {t('location.detecting', 'Detecting...')}
+                      </>
+                    ) : (
+                      <>
+                        📍 {t('location.useLocation', 'Use my location')}
+                      </>
+                    )}
+                  </button>
                 )}
-                {fromQuery && !selectedFromLocation && fromQuery.length >= 2 && (
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 8px',
-                    background: '#FEF3C7',
-                    color: '#D97706',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: '600'
-                  }}>
-                    ⚠ Select from list
-                  </span>
-                )}
-              </label>
+              </div>
+              
+              {/* Location Error Message */}
+              {locationError && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 12px',
+                  background: '#FEF2F2',
+                  border: '1px solid #FECACA',
+                  borderRadius: '8px',
+                  marginBottom: '8px',
+                  fontSize: '12px',
+                  color: '#DC2626'
+                }}>
+                  <span>⚠️</span>
+                  <span>{locationError}</span>
+                  <button
+                    onClick={() => setLocationError(null)}
+                    style={{
+                      marginLeft: 'auto',
+                      background: 'none',
+                      border: 'none',
+                      color: '#DC2626',
+                      cursor: 'pointer',
+                      padding: '2px',
+                      fontSize: '14px'
+                    }}
+                    title={t('common.dismiss', 'Dismiss')}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
               <input
                 id="from-location-input"
                 type="text"
@@ -369,6 +520,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   setSelectedFromLocation(null);
                   setShowFromSuggestions(true);
                   setHighlightedFromIndex(-1);
+                  setIsFromGPS(false); // Reset GPS flag when user types manually
                   // Trigger dynamic autocomplete (DB + OpenStreetMap)
                   fetchDynamicSuggestions(e.target.value, true);
                 }}

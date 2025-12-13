@@ -45,17 +45,17 @@ resource "google_monitoring_alert_policy" "uptime_alert" {
 
   conditions {
     display_name = "Uptime check failure"
-    
+
     condition_threshold {
       filter          = "metric.type=\"monitoring.googleapis.com/uptime_check/check_passed\" resource.type=\"uptime_url\""
       duration        = "300s"
       comparison      = "COMPARISON_EQ"
       threshold_value = 0
-      
+
       trigger {
         count = 1
       }
-      
+
       aggregations {
         alignment_period   = "300s"
         per_series_aligner = "ALIGN_FRACTION_TRUE"
@@ -78,17 +78,17 @@ resource "google_monitoring_alert_policy" "error_rate_alert" {
 
   conditions {
     display_name = "High error rate"
-    
+
     condition_threshold {
       filter          = "metric.type=\"run.googleapis.com/request_count\" resource.type=\"cloud_run_revision\" metric.label.response_code_class=\"5xx\""
       duration        = "300s"
       comparison      = "COMPARISON_GT"
       threshold_value = 10
-      
+
       trigger {
         count = 1
       }
-      
+
       aggregations {
         alignment_period     = "300s"
         per_series_aligner   = "ALIGN_RATE"
@@ -109,17 +109,17 @@ resource "google_monitoring_alert_policy" "db_connections_alert" {
 
   conditions {
     display_name = "High database connections"
-    
+
     condition_threshold {
       filter          = "metric.type=\"cloudsql.googleapis.com/database/postgresql/num_backends\" resource.type=\"cloudsql_database\""
       duration        = "300s"
       comparison      = "COMPARISON_GT"
       threshold_value = 80
-      
+
       trigger {
         count = 1
       }
-      
+
       aggregations {
         alignment_period   = "300s"
         per_series_aligner = "ALIGN_MEAN"
@@ -138,17 +138,17 @@ resource "google_monitoring_alert_policy" "redis_memory_alert" {
 
   conditions {
     display_name = "High Redis memory usage"
-    
+
     condition_threshold {
       filter          = "metric.type=\"redis.googleapis.com/stats/memory/usage_ratio\" resource.type=\"redis_instance\""
       duration        = "300s"
       comparison      = "COMPARISON_GT"
       threshold_value = 0.8
-      
+
       trigger {
         count = 1
       }
-      
+
       aggregations {
         alignment_period   = "300s"
         per_series_aligner = "ALIGN_MEAN"
@@ -163,7 +163,7 @@ resource "google_monitoring_alert_policy" "redis_memory_alert" {
 resource "google_monitoring_dashboard" "main" {
   dashboard_json = jsonencode({
     displayName = "${var.app_name}-${var.environment}-dashboard"
-    
+
     gridLayout = {
       widgets = [
         {

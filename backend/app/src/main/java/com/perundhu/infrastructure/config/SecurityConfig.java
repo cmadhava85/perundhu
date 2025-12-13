@@ -138,7 +138,8 @@ public class SecurityConfig {
 
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
     configuration.setAllowedHeaders(List.of(
-        "Authorization", "Content-Type", "X-Requested-With", "X-API-Key", "Accept-Language"));
+        "Authorization", "Content-Type", "X-Requested-With", "X-API-Key", "Accept-Language",
+        "X-Recaptcha-Token", "X-Form-Timestamp"));
     configuration.setExposedHeaders(List.of(
         "X-Request-ID", "X-Security-Level", "X-Rate-Limit-Remaining"));
     configuration.setAllowCredentials(true);

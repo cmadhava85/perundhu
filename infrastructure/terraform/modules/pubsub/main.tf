@@ -5,7 +5,7 @@ resource "google_pubsub_topic" "image_processing" {
   name = "${var.app_name}-${var.environment}-image-processing"
 
   message_retention_duration = "86400s" # 24 hours
-  
+
   message_storage_policy {
     allowed_persistence_regions = [var.region]
   }
@@ -19,12 +19,12 @@ resource "google_pubsub_subscription" "image_processing_subscription" {
   ack_deadline_seconds       = 30
   message_retention_duration = "86400s"
   retain_acked_messages      = false
-  
+
   retry_policy {
     minimum_backoff = "10s"
     maximum_backoff = "600s"
   }
-  
+
   dead_letter_policy {
     dead_letter_topic     = google_pubsub_topic.dead_letter.id
     max_delivery_attempts = 5
@@ -36,7 +36,7 @@ resource "google_pubsub_topic" "notifications" {
   name = "${var.app_name}-${var.environment}-notifications"
 
   message_retention_duration = "86400s" # 24 hours
-  
+
   message_storage_policy {
     allowed_persistence_regions = [var.region]
   }
@@ -50,7 +50,7 @@ resource "google_pubsub_subscription" "notifications_subscription" {
   ack_deadline_seconds       = 20
   message_retention_duration = "86400s"
   retain_acked_messages      = false
-  
+
   retry_policy {
     minimum_backoff = "10s"
     maximum_backoff = "300s"
@@ -62,7 +62,7 @@ resource "google_pubsub_topic" "route_contributions" {
   name = "${var.app_name}-${var.environment}-route-contributions"
 
   message_retention_duration = "604800s" # 7 days
-  
+
   message_storage_policy {
     allowed_persistence_regions = [var.region]
   }
@@ -76,12 +76,12 @@ resource "google_pubsub_subscription" "route_contributions_subscription" {
   ack_deadline_seconds       = 60
   message_retention_duration = "604800s"
   retain_acked_messages      = false
-  
+
   retry_policy {
     minimum_backoff = "10s"
     maximum_backoff = "600s"
   }
-  
+
   dead_letter_policy {
     dead_letter_topic     = google_pubsub_topic.dead_letter.id
     max_delivery_attempts = 3
@@ -93,7 +93,7 @@ resource "google_pubsub_topic" "bus_locations" {
   name = "${var.app_name}-${var.environment}-bus-locations"
 
   message_retention_duration = "3600s" # 1 hour (location updates are frequent)
-  
+
   message_storage_policy {
     allowed_persistence_regions = [var.region]
   }
@@ -107,7 +107,7 @@ resource "google_pubsub_subscription" "bus_locations_subscription" {
   ack_deadline_seconds       = 10
   message_retention_duration = "3600s"
   retain_acked_messages      = false
-  
+
   retry_policy {
     minimum_backoff = "5s"
     maximum_backoff = "60s"
@@ -119,7 +119,7 @@ resource "google_pubsub_topic" "dead_letter" {
   name = "${var.app_name}-${var.environment}-dead-letter"
 
   message_retention_duration = "604800s" # 7 days
-  
+
   message_storage_policy {
     allowed_persistence_regions = [var.region]
   }
@@ -140,7 +140,7 @@ resource "google_pubsub_topic" "analytics" {
   name = "${var.app_name}-${var.environment}-analytics"
 
   message_retention_duration = "259200s" # 3 days
-  
+
   message_storage_policy {
     allowed_persistence_regions = [var.region]
   }
@@ -154,7 +154,7 @@ resource "google_pubsub_subscription" "analytics_subscription" {
   ack_deadline_seconds       = 30
   message_retention_duration = "259200s"
   retain_acked_messages      = false
-  
+
   retry_policy {
     minimum_backoff = "10s"
     maximum_backoff = "300s"

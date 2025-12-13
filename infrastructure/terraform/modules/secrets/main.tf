@@ -1,9 +1,44 @@
 # Secret Manager for storing sensitive configuration
+# ============================================
+# NAMING CONVENTION: {environment}-{secret-name}
+# This matches the sm:// references in application-{profile}.properties
+# ============================================
+# NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
+# are managed by the shared-secrets module, not here.
+# ============================================
+
+# Database URL secret
+resource "google_secret_manager_secret" "db_url" {
+  secret_id = "${var.environment}-db-url"
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "db_url" {
+  secret      = google_secret_manager_secret.db_url.id
+  secret_data = var.db_url
+}
+
+# Database username secret
+resource "google_secret_manager_secret" "db_username" {
+  secret_id = "${var.environment}-db-username"
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "db_username" {
+  secret      = google_secret_manager_secret.db_username.id
+  secret_data = var.db_username
+}
 
 # Database password secret
 resource "google_secret_manager_secret" "db_password" {
-  secret_id = "${var.app_name}-${var.environment}-db-password"
-  
+  secret_id = "${var.environment}-db-password"
+
   replication {
     auto {}
   }
@@ -14,24 +49,10 @@ resource "google_secret_manager_secret_version" "db_password" {
   secret_data = var.db_password
 }
 
-# Redis auth string secret
-resource "google_secret_manager_secret" "redis_auth" {
-  secret_id = "${var.app_name}-${var.environment}-redis-auth"
-  
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "redis_auth" {
-  secret      = google_secret_manager_secret.redis_auth.id
-  secret_data = var.redis_auth
-}
-
 # JWT secret for authentication
 resource "google_secret_manager_secret" "jwt_secret" {
-  secret_id = "${var.app_name}-${var.environment}-jwt-secret"
-  
+  secret_id = "${var.environment}-jwt-secret"
+
   replication {
     auto {}
   }
@@ -39,7 +60,7 @@ resource "google_secret_manager_secret" "jwt_secret" {
 
 resource "random_password" "jwt_secret" {
   length  = 64
-  special = true
+  special = false # Avoid special chars that may cause issues in env vars
 }
 
 resource "google_secret_manager_secret_version" "jwt_secret" {
@@ -47,19 +68,37 @@ resource "google_secret_manager_secret_version" "jwt_secret" {
   secret_data = random_password.jwt_secret.result
 }
 
-# API keys for external services
-resource "google_secret_manager_secret" "api_keys" {
-  secret_id = "${var.app_name}-${var.environment}-api-keys"
-  
+# Data encryption key (AES-256)
+resource "google_secret_manager_secret" "data_encryption_key" {
+  secret_id = "${var.environment}-data-encryption-key"
+
   replication {
     auto {}
   }
 }
 
-resource "google_secret_manager_secret_version" "api_keys" {
-  secret      = google_secret_manager_secret.api_keys.id
-  secret_data = jsonencode({
-    google_maps_api_key = var.google_maps_api_key
-    oauth_client_secret = var.oauth_client_secret
-  })
+resource "random_password" "data_encryption_key" {
+  length  = 32 # 256 bits for AES-256
+  special = false
+}
+
+resource "google_secret_manager_secret_version" "data_encryption_key" {
+  secret      = google_secret_manager_secret.data_encryption_key.id
+  secret_data = random_password.data_encryption_key.result
+}
+
+# Redis auth string secret (optional, for caching)
+resource "google_secret_manager_secret" "redis_auth" {
+  count     = var.redis_auth != "" ? 1 : 0
+  secret_id = "${var.environment}-redis-auth"
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "redis_auth" {
+  count       = var.redis_auth != "" ? 1 : 0
+  secret      = google_secret_manager_secret.redis_auth[0].id
+  secret_data = var.redis_auth
 }

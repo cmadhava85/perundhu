@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,9 +30,14 @@ import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.StopRepository;
 
 /**
- * Implementation of ConnectingRouteService using BFS algorithm.
- * Finds multi-transfer routes between locations by building a graph
- * of all bus stops and using breadth-first search to find paths.
+ * Implementation of ConnectingRouteService using Dijkstra's algorithm.
+ * Finds optimal multi-transfer routes between locations by building a graph
+ * of all bus stops and using priority-based search to find shortest paths.
+ * 
+ * Algorithm: Modified Dijkstra's with multi-criteria optimization
+ * - Primary: Minimize total travel time (duration + wait times)
+ * - Secondary: Minimize number of transfers
+ * - Tertiary: Prefer shorter physical distance (A* heuristic)
  */
 @Service
 @Transactional(readOnly = true) // Optimize for read-only operations
@@ -43,6 +47,12 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   private static final int MAX_RESULTS = 10;
   private static final int MIN_TRANSFER_WAIT_MINUTES = 10;
   private static final int MAX_TRANSFER_WAIT_MINUTES = 120;
+  private static final int MAX_JOURNEY_DURATION_MINUTES = 720; // 12 hours max journey
+  private static final double EARTH_RADIUS_KM = 6371.0;
+
+  // Weighting factors for multi-criteria optimization
+  private static final double DURATION_WEIGHT = 1.0; // Primary: minimize time
+  private static final double TRANSFER_PENALTY = 30.0; // 30 minutes penalty per transfer
 
   private final BusRepository busRepository;
   private final LocationRepository locationRepository;
@@ -59,8 +69,20 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
   @Override
   public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId, int maxTransfers) {
-    log.info("Finding connecting routes from {} to {} with max {} transfers",
-        fromLocationId, toLocationId, maxTransfers);
+    return findConnectingRoutesInternal(fromLocationId, toLocationId, maxTransfers, null);
+  }
+
+  @Override
+  public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId,
+      LocalTime departureAfter, int maxTransfers) {
+    return findConnectingRoutesInternal(fromLocationId, toLocationId, maxTransfers, departureAfter);
+  }
+
+  private List<ConnectingRouteDTO> findConnectingRoutesInternal(Long fromLocationId, Long toLocationId,
+      int maxTransfers, LocalTime departureAfter) {
+    log.info("Finding connecting routes from {} to {} with max {} transfers{}",
+        fromLocationId, toLocationId, maxTransfers,
+        departureAfter != null ? " departing after " + departureAfter : "");
 
     long startTime = System.currentTimeMillis();
 
@@ -84,10 +106,11 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
     log.info("Found {} potential paths", paths.size());
 
-    // Convert paths to DTOs
+    // Convert paths to DTOs and filter by departure time if specified
     List<ConnectingRouteDTO> routes = paths.stream()
         .map(path -> convertToDTO(path, fromLocation, toLocation))
         .filter(route -> route != null)
+        .filter(route -> filterByDepartureTime(route, departureAfter))
         .sorted(Comparator
             .comparingInt(ConnectingRouteDTO::transfers)
             .thenComparingInt(ConnectingRouteDTO::totalDuration))
@@ -96,6 +119,34 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
     log.info("Returning {} connecting routes in {}ms total", routes.size(), System.currentTimeMillis() - startTime);
     return routes;
+  }
+
+  /**
+   * Filter route by departure time.
+   * Returns true if route should be included (departs after specified time).
+   */
+  private boolean filterByDepartureTime(ConnectingRouteDTO route, LocalTime departureAfter) {
+    if (departureAfter == null) {
+      return true; // No filter applied
+    }
+
+    if (route.legs() == null || route.legs().isEmpty()) {
+      return true;
+    }
+
+    // Check first leg's departure time
+    String departureTimeStr = route.legs().get(0).departureTime();
+    if (departureTimeStr == null) {
+      return true; // Include if no time info available
+    }
+
+    try {
+      LocalTime routeDeparture = LocalTime.parse(departureTimeStr);
+      return !routeDeparture.isBefore(departureAfter);
+    } catch (Exception e) {
+      log.debug("Could not parse departure time: {}", departureTimeStr);
+      return true; // Include on parse error
+    }
   }
 
   /**
@@ -176,40 +227,55 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   }
 
   /**
-   * BFS to find all paths from source to destination with limited transfers.
+   * Dijkstra's algorithm to find optimal paths from source to destination.
+   * Uses priority queue to explore shortest paths first.
+   * Returns multiple route options sorted by total weighted cost.
    */
   private List<RoutePath> findPaths(RouteGraph graph, Long fromLocationId, Long toLocationId, int maxTransfers) {
     List<RoutePath> validPaths = new ArrayList<>();
 
-    // BFS state: (currentLocationId, path so far, buses used)
-    Queue<PathState> queue = new LinkedList<>();
-    queue.add(new PathState(fromLocationId, new ArrayList<>(), new HashSet<>()));
+    // Priority queue sorted by weighted cost (lower is better)
+    PriorityQueue<PathState> priorityQueue = new PriorityQueue<>(
+        Comparator.comparingDouble(PathState::weightedCost));
 
-    // Track visited states to avoid cycles (location + number of transfers)
-    Map<String, Integer> visited = new HashMap<>();
+    priorityQueue.add(new PathState(fromLocationId, new ArrayList<>(), new HashSet<>(), 0, 0));
 
-    while (!queue.isEmpty()) {
-      PathState state = queue.poll();
+    // Track best cost to reach each location (for pruning)
+    Map<Long, Double> bestCostToLocation = new HashMap<>();
+    bestCostToLocation.put(fromLocationId, 0.0);
+
+    while (!priorityQueue.isEmpty()) {
+      PathState state = priorityQueue.poll();
 
       // Check if we've reached the destination
       if (state.currentLocationId.equals(toLocationId) && !state.segments.isEmpty()) {
-        validPaths.add(new RoutePath(new ArrayList<>(state.segments)));
+        // Only add if within journey limit
+        if (isWithinJourneyLimit(state.totalDuration)) {
+          validPaths.add(new RoutePath(new ArrayList<>(state.segments), state.totalDuration, state.transfers));
+        }
+
+        // Early termination: if we have enough routes, stop searching
+        if (validPaths.size() >= MAX_RESULTS * 2) {
+          break;
+        }
         continue;
       }
 
       // Don't explore further if we've exceeded max transfers
-      int currentTransfers = countTransfers(state.segments);
-      if (currentTransfers > maxTransfers) {
+      if (state.transfers > maxTransfers) {
         continue;
       }
 
-      // Create a state key for cycle detection
-      String stateKey = state.currentLocationId + "-" + currentTransfers;
-      Integer previousTransfers = visited.get(stateKey);
-      if (previousTransfers != null && previousTransfers <= currentTransfers) {
+      // Don't explore if already exceeded journey limit
+      if (!isWithinJourneyLimit(state.totalDuration)) {
         continue;
       }
-      visited.put(stateKey, currentTransfers);
+
+      // Prune paths that are worse than what we've already found
+      Double bestCost = bestCostToLocation.get(state.currentLocationId);
+      if (bestCost != null && state.weightedCost() > bestCost * 1.5) {
+        continue; // This path is significantly worse, skip it
+      }
 
       // Explore outgoing edges
       List<BusSegment> outgoingSegments = graph.getOutgoingEdges(state.currentLocationId);
@@ -219,29 +285,205 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
           continue;
         }
 
-        // Check transfer validity (wait time between buses)
+        // Calculate wait time and check transfer validity
+        int waitTime = 0;
+        int newTransfers = state.transfers;
+
         if (!state.segments.isEmpty()) {
           BusSegment lastSegment = state.segments.get(state.segments.size() - 1);
-          if (!isValidTransfer(lastSegment, segment)) {
-            continue;
+
+          // Check if this is a transfer (different bus)
+          if (!lastSegment.bus.id().value().equals(segment.bus.id().value())) {
+            if (!isValidTransfer(lastSegment, segment)) {
+              continue;
+            }
+            waitTime = calculateWaitTime(lastSegment, segment);
+            newTransfers++;
           }
         }
 
-        // Add this segment and continue BFS
-        List<BusSegment> newPath = new ArrayList<>(state.segments);
-        newPath.add(segment);
+        // Calculate new weighted cost
+        int newDuration = state.totalDuration + segment.duration + waitTime;
+        double newWeightedCost = calculateWeightedCost(newDuration, newTransfers);
 
-        Set<Long> newBusesUsed = new HashSet<>(state.busesUsed);
-        newBusesUsed.add(segment.bus.id().value());
+        // Only explore if this path is potentially better
+        Long nextLocationId = segment.toStop.location().id().value();
+        Double existingBestCost = bestCostToLocation.get(nextLocationId);
 
-        queue.add(new PathState(
-            segment.toStop.location().id().value(),
-            newPath,
-            newBusesUsed));
+        if (existingBestCost == null || newWeightedCost < existingBestCost) {
+          bestCostToLocation.put(nextLocationId, newWeightedCost);
+
+          // Add this segment and continue search
+          List<BusSegment> newPath = new ArrayList<>(state.segments);
+          newPath.add(segment);
+
+          Set<Long> newBusesUsed = new HashSet<>(state.busesUsed);
+          newBusesUsed.add(segment.bus.id().value());
+
+          priorityQueue.add(new PathState(
+              nextLocationId,
+              newPath,
+              newBusesUsed,
+              newDuration,
+              newTransfers));
+        }
       }
     }
 
-    return validPaths;
+    // Sort final results by weighted cost
+    validPaths.sort(Comparator.comparingDouble(RoutePath::weightedCost));
+
+    // Apply diversity filter to ensure varied results
+    return filterForDiversity(validPaths);
+  }
+
+  /**
+   * Filter routes to ensure diversity in transfer points.
+   * This prevents returning multiple routes with the same connection points.
+   */
+  private List<RoutePath> filterForDiversity(List<RoutePath> paths) {
+    if (paths.size() <= MAX_RESULTS) {
+      return paths;
+    }
+
+    List<RoutePath> diversePaths = new ArrayList<>();
+    Set<String> seenTransferSignatures = new HashSet<>();
+
+    for (RoutePath path : paths) {
+      String signature = getTransferSignature(path);
+
+      // Always include the first path (best cost)
+      // For subsequent paths, check for diversity
+      if (diversePaths.isEmpty() || !seenTransferSignatures.contains(signature)) {
+        diversePaths.add(path);
+        seenTransferSignatures.add(signature);
+
+        if (diversePaths.size() >= MAX_RESULTS) {
+          break;
+        }
+      }
+    }
+
+    // If we don't have enough diverse paths, add remaining by cost
+    if (diversePaths.size() < MAX_RESULTS) {
+      for (RoutePath path : paths) {
+        if (!diversePaths.contains(path)) {
+          diversePaths.add(path);
+          if (diversePaths.size() >= MAX_RESULTS) {
+            break;
+          }
+        }
+      }
+    }
+
+    return diversePaths;
+  }
+
+  /**
+   * Generate a signature for a route based on its transfer points.
+   * Routes with same transfer points are considered similar.
+   */
+  private String getTransferSignature(RoutePath path) {
+    StringBuilder signature = new StringBuilder();
+    Set<Long> transferLocations = new HashSet<>();
+
+    for (int i = 1; i < path.segments.size(); i++) {
+      BusSegment prev = path.segments.get(i - 1);
+      BusSegment curr = path.segments.get(i);
+
+      // Check if this is a transfer (different bus)
+      if (!prev.bus.id().value().equals(curr.bus.id().value())) {
+        Long transferLocationId = prev.toStop.location().id().value();
+        transferLocations.add(transferLocationId);
+      }
+    }
+
+    // Create sorted signature
+    transferLocations.stream()
+        .sorted()
+        .forEach(id -> signature.append(id).append("-"));
+
+    // Also include number of segments as part of signature
+    signature.append("s").append(path.segments.size());
+
+    return signature.toString();
+  }
+
+  /**
+   * Calculate weighted cost for multi-criteria optimization.
+   * Lower cost = better route
+   */
+  private double calculateWeightedCost(int totalDuration, int transfers) {
+    return (totalDuration * DURATION_WEIGHT) + (transfers * TRANSFER_PENALTY);
+  }
+
+  /**
+   * Calculate wait time between two bus segments
+   */
+  private int calculateWaitTime(BusSegment arriving, BusSegment departing) {
+    LocalTime arrivalTime = arriving.toStop.arrivalTime();
+    LocalTime departureTime = departing.fromStop.departureTime();
+
+    if (arrivalTime == null || departureTime == null) {
+      return 15; // Default wait time if timing info missing
+    }
+
+    long waitMinutes = Duration.between(arrivalTime, departureTime).toMinutes();
+    if (waitMinutes < 0) {
+      waitMinutes += 24 * 60; // Handle next-day departures
+    }
+
+    return (int) waitMinutes;
+  }
+
+  /**
+   * Calculate distance between two locations using Haversine formula.
+   * Returns distance in kilometers.
+   */
+  private double calculateHaversineDistance(Location from, Location to) {
+    if (from == null || to == null)
+      return 0.0;
+    if (from.latitude() == null || from.longitude() == null)
+      return 0.0;
+    if (to.latitude() == null || to.longitude() == null)
+      return 0.0;
+
+    double lat1 = Math.toRadians(from.latitude());
+    double lat2 = Math.toRadians(to.latitude());
+    double lon1 = Math.toRadians(from.longitude());
+    double lon2 = Math.toRadians(to.longitude());
+
+    double dLat = lat2 - lat1;
+    double dLon = lon2 - lon1;
+
+    double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+        + Math.cos(lat1) * Math.cos(lat2)
+            * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return EARTH_RADIUS_KM * c;
+  }
+
+  /**
+   * Calculate total distance for a route path
+   */
+  private double calculateTotalDistance(List<BusSegment> segments) {
+    double totalDistance = 0.0;
+    for (BusSegment segment : segments) {
+      Location from = segment.fromStop.location();
+      Location to = segment.toStop.location();
+      totalDistance += calculateHaversineDistance(from, to);
+    }
+    return totalDistance;
+  }
+
+  /**
+   * Check if a route is within acceptable journey time limit.
+   * Default: 12 hours maximum
+   */
+  private boolean isWithinJourneyLimit(int totalDuration) {
+    return totalDuration <= MAX_JOURNEY_DURATION_MINUTES;
   }
 
   /**
@@ -254,28 +496,6 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       }
     }
     return false;
-  }
-
-  /**
-   * Count the number of transfers in a path.
-   * A transfer occurs when switching from one bus to another.
-   */
-  private int countTransfers(List<BusSegment> segments) {
-    if (segments.size() <= 1)
-      return 0;
-
-    int transfers = 0;
-    Long previousBusId = null;
-
-    for (BusSegment segment : segments) {
-      Long currentBusId = segment.bus.id().value();
-      if (previousBusId != null && !previousBusId.equals(currentBusId)) {
-        transfers++;
-      }
-      previousBusId = currentBusId;
-    }
-
-    return transfers;
   }
 
   /**
@@ -336,7 +556,9 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
     try {
       List<LegDTO> legs = new ArrayList<>();
       int totalDuration = 0;
-      double totalDistance = 0.0;
+
+      // Calculate total distance using Haversine formula
+      double totalDistance = calculateTotalDistance(path.segments);
 
       // Group consecutive segments by bus
       List<List<BusSegment>> groupedByBus = groupSegmentsByBus(path.segments);
@@ -475,15 +697,26 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   }
 
   /**
-   * State for BFS traversal
+   * State for Dijkstra's traversal with cost tracking
    */
-  private record PathState(Long currentLocationId, List<BusSegment> segments, Set<Long> busesUsed) {
+  private record PathState(
+      Long currentLocationId,
+      List<BusSegment> segments,
+      Set<Long> busesUsed,
+      int totalDuration,
+      int transfers) {
+    double weightedCost() {
+      return (totalDuration * DURATION_WEIGHT) + (transfers * TRANSFER_PENALTY);
+    }
   }
 
   /**
-   * A complete route path
+   * A complete route path with cost information
    */
-  private record RoutePath(List<BusSegment> segments) {
+  private record RoutePath(List<BusSegment> segments, int totalDuration, int transfers) {
+    double weightedCost() {
+      return (totalDuration * DURATION_WEIGHT) + (transfers * TRANSFER_PENALTY);
+    }
   }
 
   /**

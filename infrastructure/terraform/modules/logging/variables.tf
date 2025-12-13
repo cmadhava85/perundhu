@@ -16,7 +16,7 @@ variable "app_name" {
 variable "log_retention_days" {
   description = "Number of days to retain logs"
   type        = number
-  default     = 7  # Minimum for cost savings
+  default     = 7 # Minimum for cost savings
 }
 
 variable "exclude_debug_logs" {

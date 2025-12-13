@@ -186,9 +186,18 @@ describe('TransitBusCard Component', () => {
     });
 
     it('does not show Add Stops button when bus has sufficient stops', () => {
-      render(<TransitBusCard {...defaultProps} stops={mockStops} />);
+      // Create 6+ stops to test the button is hidden (threshold is <=5)
+      const manyStops = [
+        { id: 1, name: 'Stop 1', arrivalTime: '06:00', departureTime: '06:05', order: 1, busId: 1 },
+        { id: 2, name: 'Stop 2', arrivalTime: '07:00', departureTime: '07:05', order: 2, busId: 1 },
+        { id: 3, name: 'Stop 3', arrivalTime: '08:00', departureTime: '08:05', order: 3, busId: 1 },
+        { id: 4, name: 'Stop 4', arrivalTime: '09:00', departureTime: '09:05', order: 4, busId: 1 },
+        { id: 5, name: 'Stop 5', arrivalTime: '10:00', departureTime: '10:05', order: 5, busId: 1 },
+        { id: 6, name: 'Stop 6', arrivalTime: '11:00', departureTime: '11:05', order: 6, busId: 1 }
+      ];
+      render(<TransitBusCard {...defaultProps} stops={manyStops} />);
       
-      // Should not show Add Stops for bus with 4 stops
+      // Should not show Add Stops for bus with 6 stops (threshold is <=5)
       const addStopsButton = screen.queryByRole('button', { name: /Add Stops/i });
       expect(addStopsButton).toBeNull();
     });

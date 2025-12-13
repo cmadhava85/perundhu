@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,8 @@ import org.springframework.test.context.TestPropertySource;
     "spring.main.web-application-type=servlet",
     "security.api.rate-limit.enabled=false",
     "security.ip-filtering.enabled=false",
-    "security.monitoring.enabled=false"
+    "security.monitoring.enabled=false",
+    "spring.cloud.compatibility-verifier.enabled=false"
 })
 @AutoConfigureWebMvc
 public class SecurityAutomationTest {

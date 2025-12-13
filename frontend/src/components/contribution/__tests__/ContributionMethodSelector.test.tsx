@@ -18,7 +18,8 @@ vi.mock('../../../config/featureFlags', () => ({
     enableImageContribution: true,
     enablePasteContribution: true,
     enableRouteVerification: true,
-    enableAddStops: true
+    enableAddStops: true,
+    enableReportIssue: false
   }
 }));
 
@@ -37,55 +38,60 @@ describe('ContributionMethodSelector Component', () => {
       expect(() => render(<ContributionMethodSelector {...defaultProps} />)).not.toThrow();
     });
 
-    it('displays all method cards when features are enabled', () => {
+    it('displays all method chips when features are enabled', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      expect(screen.getByText('Manual Entry')).toBeDefined();
-      expect(screen.getByText('Voice Recording')).toBeDefined();
-      expect(screen.getByText('Upload Schedule')).toBeDefined();
-      expect(screen.getByText('Paste Text')).toBeDefined();
-      expect(screen.getByText('Verify Routes')).toBeDefined();
-      expect(screen.getByText('Add Stops')).toBeDefined();
+      // Component uses short labels in chips
+      expect(screen.getByText('Manual')).toBeDefined();
+      expect(screen.getByText('Voice')).toBeDefined();
+      expect(screen.getByText('Upload')).toBeDefined();
+      expect(screen.getByText('Paste')).toBeDefined();
+      expect(screen.getByText('Verify')).toBeDefined();
+      expect(screen.getByText('Stops')).toBeDefined();
     });
 
-    it('displays method descriptions', () => {
+    it('displays method icons', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      expect(screen.getByText('Fill out detailed route information')).toBeDefined();
-      expect(screen.getByText('Add intermediate stops to existing routes')).toBeDefined();
+      expect(screen.getByText('📝')).toBeDefined(); // Manual
+      expect(screen.getByText('🎤')).toBeDefined(); // Voice
+      expect(screen.getByText('📷')).toBeDefined(); // Upload
+      expect(screen.getByText('📋')).toBeDefined(); // Paste
+      expect(screen.getByText('✅')).toBeDefined(); // Verify
+      expect(screen.getByText('📍')).toBeDefined(); // Stops
     });
   });
 
   describe('Method Selection', () => {
-    it('calls onMethodChange when Manual Entry is clicked', () => {
+    it('calls onMethodChange when Manual is clicked', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} selectedMethod="image" />);
       
-      const manualCard = screen.getByText('Manual Entry').closest('[role="radio"]');
-      if (manualCard) {
-        fireEvent.click(manualCard);
+      const manualChip = screen.getByText('Manual').closest('button');
+      if (manualChip) {
+        fireEvent.click(manualChip);
         expect(onMethodChange).toHaveBeenCalledWith('manual');
       }
     });
 
-    it('calls onMethodChange when Add Stops is clicked', () => {
+    it('calls onMethodChange when Stops is clicked', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} />);
       
-      const addStopsCard = screen.getByText('Add Stops').closest('[role="radio"]');
-      if (addStopsCard) {
-        fireEvent.click(addStopsCard);
+      const stopsChip = screen.getByText('Stops').closest('button');
+      if (stopsChip) {
+        fireEvent.click(stopsChip);
         expect(onMethodChange).toHaveBeenCalledWith('addStops');
       }
     });
 
-    it('calls onMethodChange when Verify Routes is clicked', () => {
+    it('calls onMethodChange when Verify is clicked', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} />);
       
-      const verifyCard = screen.getByText('Verify Routes').closest('[role="radio"]');
-      if (verifyCard) {
-        fireEvent.click(verifyCard);
+      const verifyChip = screen.getByText('Verify').closest('button');
+      if (verifyChip) {
+        fireEvent.click(verifyChip);
         expect(onMethodChange).toHaveBeenCalledWith('verify');
       }
     });
@@ -93,90 +99,84 @@ describe('ContributionMethodSelector Component', () => {
     it('shows active state for selected method', () => {
       render(<ContributionMethodSelector {...defaultProps} selectedMethod="addStops" />);
       
-      const addStopsCard = screen.getByText('Add Stops').closest('[role="radio"]');
-      if (addStopsCard) {
-        expect(addStopsCard.getAttribute('aria-checked')).toBe('true');
+      const stopsChip = screen.getByText('Stops').closest('button');
+      if (stopsChip) {
+        expect(stopsChip.classList.contains('active')).toBe(true);
+        expect(stopsChip.getAttribute('aria-pressed')).toBe('true');
       }
     });
   });
 
   describe('Keyboard Accessibility', () => {
-    it('handles Enter key on method card', () => {
+    it('handles Enter key on method chip', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} />);
       
-      const addStopsCard = screen.getByText('Add Stops').closest('[role="radio"]');
-      if (addStopsCard) {
-        fireEvent.keyDown(addStopsCard, { key: 'Enter' });
+      const stopsChip = screen.getByText('Stops').closest('button');
+      if (stopsChip) {
+        fireEvent.keyDown(stopsChip, { key: 'Enter' });
         expect(onMethodChange).toHaveBeenCalledWith('addStops');
       }
     });
 
-    it('handles Space key on method card', () => {
+    it('handles Space key on method chip', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} />);
       
-      const verifyCard = screen.getByText('Verify Routes').closest('[role="radio"]');
-      if (verifyCard) {
-        fireEvent.keyDown(verifyCard, { key: ' ' });
+      const verifyChip = screen.getByText('Verify').closest('button');
+      if (verifyChip) {
+        fireEvent.keyDown(verifyChip, { key: ' ' });
         expect(onMethodChange).toHaveBeenCalledWith('verify');
       }
     });
 
-    it('method cards have tabIndex for keyboard navigation', () => {
+    it('method chips are buttons and keyboard navigable', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      const addStopsCard = screen.getByText('Add Stops').closest('[role="radio"]');
-      if (addStopsCard) {
-        expect(addStopsCard.getAttribute('tabIndex')).toBe('0');
-      }
+      const buttons = screen.getAllByRole('button');
+      expect(buttons.length).toBeGreaterThanOrEqual(6);
     });
   });
 
   describe('ARIA Attributes', () => {
-    it('has radiogroup role on container', () => {
+    it('has aria-label on container', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      const radiogroup = screen.getByRole('radiogroup');
-      expect(radiogroup).toBeDefined();
+      const container = screen.getByLabelText('Select contribution method');
+      expect(container).toBeDefined();
     });
 
-    it('has radio role on method cards', () => {
-      render(<ContributionMethodSelector {...defaultProps} />);
+    it('uses aria-pressed on method chips', () => {
+      render(<ContributionMethodSelector {...defaultProps} selectedMethod="manual" />);
       
-      const radios = screen.getAllByRole('radio');
-      expect(radios.length).toBeGreaterThanOrEqual(1);
+      const manualChip = screen.getByText('Manual').closest('button');
+      if (manualChip) {
+        expect(manualChip.getAttribute('aria-pressed')).toBe('true');
+      }
     });
 
-    it('sets aria-checked correctly for selected method', () => {
+    it('sets aria-pressed correctly for selected method', () => {
       render(<ContributionMethodSelector {...defaultProps} selectedMethod="verify" />);
       
-      const verifyCard = screen.getByText('Verify Routes').closest('[role="radio"]');
-      const manualCard = screen.getByText('Manual Entry').closest('[role="radio"]');
+      const verifyChip = screen.getByText('Verify').closest('button');
+      const manualChip = screen.getByText('Manual').closest('button');
       
-      if (verifyCard && manualCard) {
-        expect(verifyCard.getAttribute('aria-checked')).toBe('true');
-        expect(manualCard.getAttribute('aria-checked')).toBe('false');
+      if (verifyChip && manualChip) {
+        expect(verifyChip.getAttribute('aria-pressed')).toBe('true');
+        expect(manualChip.getAttribute('aria-pressed')).toBe('false');
       }
     });
   });
 
   describe('Method Badges', () => {
-    it('shows Recommended badge for Manual Entry', () => {
+    it('shows star badge for Manual (recommended)', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
-      expect(screen.getByText('Recommended')).toBeDefined();
+      expect(screen.getByText('★')).toBeDefined();
     });
 
-    it('shows New! badge for Add Stops', () => {
+    it('shows lightning badge for Paste (fast)', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
-      // There might be multiple "New!" badges
-      const newBadges = screen.getAllByText('New!');
-      expect(newBadges.length).toBeGreaterThanOrEqual(1);
-    });
-
-    it('shows Helpful! badge for Verify Routes', () => {
-      render(<ContributionMethodSelector {...defaultProps} />);
-      expect(screen.getByText('Helpful!')).toBeDefined();
+      expect(screen.getByText('⚡')).toBeDefined();
     });
   });
 });

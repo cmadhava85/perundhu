@@ -103,7 +103,7 @@ public class ContributionController {
       // CAPTCHA verification for new users (placeholder - integrate with Google
       // reCAPTCHA or similar)
       // CAPTCHA verification for anonymous/new users
-      String captchaToken = (String) contributionData.get("captchaToken");
+      String captchaToken = extractCaptchaToken(request, (String) contributionData.get("captchaToken"));
       if (recaptchaService.isEnabled()) {
         // Require CAPTCHA for new users (less than 5 approved contributions)
         // TODO: Get user contribution count from database
@@ -249,7 +249,7 @@ public class ContributionController {
       }
 
       // CAPTCHA verification for anonymous/new users
-      String captchaToken = metadata.get("captchaToken");
+      String captchaToken = extractCaptchaToken(request, metadata.get("captchaToken"));
       if (recaptchaService.isEnabled() && captchaToken != null) {
         if (!recaptchaService.verifyToken(captchaToken, "image_upload")) {
           log.warn("CAPTCHA verification failed for image upload from user: {}", userId);
@@ -455,7 +455,7 @@ public class ContributionController {
       }
 
       // CAPTCHA verification for new users
-      String voiceCaptchaToken = request.getParameter("captchaToken");
+      String voiceCaptchaToken = extractCaptchaToken(request, request.getParameter("captchaToken"));
       if (recaptchaService.isEnabled() && voiceCaptchaToken != null) {
         if (!recaptchaService.verifyToken(voiceCaptchaToken, "voice_upload")) {
           log.warn("CAPTCHA verification failed for voice upload from user: {}", userId);
@@ -619,9 +619,15 @@ public class ContributionController {
       // Extract and validate text
       String pastedText = (String) requestData.get("text");
       String sourceAttribution = (String) requestData.get("sourceAttribution");
-      @SuppressWarnings("unused")
-      String captchaToken = (String) requestData.get("captchaToken");
-      // TODO: Implement CAPTCHA verification for new users
+
+      // CAPTCHA verification for paste contributions
+      String captchaToken = extractCaptchaToken(request, (String) requestData.get("captchaToken"));
+      if (recaptchaService.isEnabled() && captchaToken != null) {
+        if (!recaptchaService.verifyToken(captchaToken, "paste_contribution")) {
+          log.warn("CAPTCHA verification failed for paste contribution from user: {}", userId);
+          return ResponseEntity.status(403).body(createErrorResponse("CAPTCHA verification failed"));
+        }
+      }
 
       if (pastedText == null || pastedText.trim().isEmpty()) {
         return ResponseEntity.badRequest()
@@ -1531,5 +1537,25 @@ public class ContributionController {
     // Excessive URLs (more than 2 in metadata is suspicious)
     long urlCount = (long) lowerText.split("http").length - 1;
     return urlCount > 2;
+  }
+
+  /**
+   * Extract reCAPTCHA token from request.
+   * First checks the X-Recaptcha-Token header (preferred),
+   * then falls back to request body/parameter.
+   *
+   * @param request   The HTTP request
+   * @param bodyToken Token from request body (if available)
+   * @return The captcha token, or null if not found
+   */
+  private String extractCaptchaToken(HttpServletRequest request, String bodyToken) {
+    // First, check the X-Recaptcha-Token header (preferred method)
+    String headerToken = request.getHeader("X-Recaptcha-Token");
+    if (headerToken != null && !headerToken.isEmpty()) {
+      return headerToken;
+    }
+
+    // Fall back to body token
+    return bodyToken;
   }
 }

@@ -3,7 +3,7 @@
 
 terraform {
   backend "gcs" {
-    bucket  = "perundhu-terraform-state-preprod"
-    prefix  = "preprod/state"
+    bucket = "perundhu-terraform-state-preprod"
+    prefix = "preprod/state"
   }
 }

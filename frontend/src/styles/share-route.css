@@ -1,0 +1,356 @@
+/* Share Route Styles */
+
+/* Share Button */
+.share-route-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25);
+}
+
+.share-route-button:hover {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+}
+
+.share-route-button:active {
+  transform: translateY(0);
+}
+
+.share-button-text {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .share-button-text {
+    display: inline;
+  }
+}
+
+/* Modal Overlay */
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Share Modal */
+.share-modal {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 600px) {
+  .share-modal-overlay {
+    align-items: center;
+    padding: 20px;
+  }
+
+  .share-modal {
+    border-radius: 20px;
+    max-height: 90vh;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.share-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.share-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.share-modal-close {
+  background: #F3F4F6;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-modal-close:hover {
+  background: #E5E7EB;
+  color: #1F2937;
+}
+
+/* Route Preview */
+.share-modal-preview {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.preview-route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.preview-from,
+.preview-to {
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.preview-arrow {
+  color: #3B82F6;
+  font-weight: bold;
+}
+
+.preview-bus {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+/* Share Options Grid */
+.share-options {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 20px;
+}
+
+@media (max-width: 400px) {
+  .share-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Share Option Button */
+.share-option-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-option-button:hover {
+  background: #fff;
+  border-color: var(--option-color, #3B82F6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.share-option-button:active {
+  transform: translateY(0);
+}
+
+.option-icon {
+  font-size: 24px;
+}
+
+.option-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4B5563;
+  text-align: center;
+}
+
+/* Native Share Button */
+.share-native-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 40px);
+  margin: 0 20px 20px;
+  padding: 12px;
+  background: #fff;
+  border: 2px dashed #E5E7EB;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-native-button:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+  background: #EFF6FF;
+}
+
+/* Success animation for copy */
+.share-option-button.copied {
+  background: #D1FAE5;
+  border-color: #10B981;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .share-modal {
+    background: #1F2937;
+  }
+
+  .share-modal-header {
+    border-bottom-color: #374151;
+  }
+
+  .share-modal-header h3 {
+    color: #F9FAFB;
+  }
+
+  .share-modal-close {
+    background: #374151;
+    color: #9CA3AF;
+  }
+
+  .share-modal-close:hover {
+    background: #4B5563;
+    color: #F9FAFB;
+  }
+
+  .share-modal-preview {
+    background: linear-gradient(135deg, #374151 0%, #1F2937 100%);
+    border-bottom-color: #374151;
+  }
+
+  .preview-from,
+  .preview-to {
+    color: #F9FAFB;
+  }
+
+  .preview-bus {
+    color: #9CA3AF;
+  }
+
+  .share-option-button {
+    background: #374151;
+    border-color: #4B5563;
+  }
+
+  .share-option-button:hover {
+    background: #4B5563;
+  }
+
+  .option-label {
+    color: #D1D5DB;
+  }
+
+  .share-native-button {
+    background: #374151;
+    border-color: #4B5563;
+    color: #9CA3AF;
+  }
+
+  .share-native-button:hover {
+    border-color: #3B82F6;
+    background: #1E3A5F;
+  }
+}
+
+/* Inline share button variant */
+.share-route-button.inline {
+  padding: 6px 10px;
+  font-size: 12px;
+  background: transparent;
+  color: #8B5CF6;
+  box-shadow: none;
+  border: 1px solid #E5E7EB;
+}
+
+.share-route-button.inline:hover {
+  background: #F5F3FF;
+  border-color: #8B5CF6;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Compact share button for cards */
+.share-route-button.compact {
+  padding: 6px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+}
+
+.share-route-button.compact .share-button-text {
+  display: none;
+}
+
+/* Floating action button variant */
+.share-route-button.fab {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  z-index: 100;
+}
+
+.share-route-button.fab:hover {
+  transform: scale(1.1);
+}
+
+.share-route-button.fab .share-button-text {
+  display: none;
+}

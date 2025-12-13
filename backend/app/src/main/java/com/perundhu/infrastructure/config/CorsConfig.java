@@ -39,6 +39,8 @@ public class CorsConfig {
         config.addAllowedHeader("Accept");
         config.addAllowedHeader("Accept-Language"); // Important for i18n
         config.addAllowedHeader("Authorization");
+        config.addAllowedHeader("X-Recaptcha-Token"); // reCAPTCHA v3 token
+        config.addAllowedHeader("X-Form-Timestamp"); // Honeypot form timestamp
 
         // Apply this configuration to all paths
         source.registerCorsConfiguration("/**", config);

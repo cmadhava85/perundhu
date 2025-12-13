@@ -30,12 +30,17 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * Rate limit: 1 request per second (Nominatim usage policy)
  * Results are cached to minimize API calls.
+ * 
+ * Enhanced with multi-query strategy to find bus stands like:
+ * - Arapalayam, Periyar in Madurai
+ * - CMBT in Chennai
  */
 @Component
 @Slf4j
 public class NominatimClient implements GeocodingPort {
 
     private static final String NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
+    private static final String TAMIL_NADU_SUFFIX = ", Tamil Nadu, India";
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(10);
     private static final long RATE_LIMIT_MS = 1100; // 1.1 seconds between requests
 
@@ -43,6 +48,13 @@ public class NominatimClient implements GeocodingPort {
     private final ObjectMapper objectMapper;
     private final ConcurrentHashMap<String, NominatimResult> cache;
     private long lastRequestTime = 0;
+
+    // Major cities in Tamil Nadu for query enhancement
+    private static final String[] MAJOR_CITIES = {
+            "Madurai", "Chennai", "Coimbatore", "Trichy", "Tiruchirappalli",
+            "Salem", "Tirunelveli", "Erode", "Vellore", "Thanjavur",
+            "Dindigul", "Theni", "Nagercoil", "Thoothukudi", "Karaikudi"
+    };
 
     public NominatimClient() {
         this.httpClient = HttpClient.newBuilder()
@@ -64,7 +76,8 @@ public class NominatimClient implements GeocodingPort {
     }
 
     /**
-     * Internal search method that returns NominatimResult
+     * Internal search method that returns NominatimResult.
+     * Uses multi-query strategy for better bus stand discovery.
      */
     @CircuitBreaker(name = "osm", fallbackMethod = "searchTamilNaduInternalFallback")
     @Bulkhead(name = "osm")
@@ -82,19 +95,77 @@ public class NominatimClient implements GeocodingPort {
             return Optional.ofNullable(cache.get(normalizedQuery));
         }
 
-        try {
-            // Rate limiting
-            synchronized (this) {
-                long now = System.currentTimeMillis();
-                long elapsed = now - lastRequestTime;
-                if (elapsed < RATE_LIMIT_MS) {
-                    Thread.sleep(RATE_LIMIT_MS - elapsed);
-                }
-                lastRequestTime = System.currentTimeMillis();
-            }
+        // Generate multiple search queries to improve bus stand discovery
+        List<String> searchQueries = generateBusStandSearchQueries(query);
 
-            // Build the search URL - restrict to Tamil Nadu, India
-            String searchQuery = query + ", Tamil Nadu, India";
+        for (String searchQuery : searchQueries) {
+            Optional<NominatimResult> result = executeNominatimSearch(searchQuery);
+            if (result.isPresent()) {
+                cache.put(normalizedQuery, result.get());
+                return result;
+            }
+        }
+
+        // Cache negative result to avoid repeated lookups
+        cache.put(normalizedQuery, null);
+        return Optional.empty();
+    }
+
+    /**
+     * Generate multiple search query variations for better bus stand discovery.
+     * OpenStreetMap may have bus stands named differently than user input.
+     */
+    private List<String> generateBusStandSearchQueries(String query) {
+        List<String> queries = new ArrayList<>();
+        String cleanQuery = query.trim();
+
+        // Extract city name if present (e.g., "Arapalayam Madurai" -> city = "Madurai")
+        String cityName = extractCityFromQuery(cleanQuery);
+        String locationName = cleanQuery.replace(cityName, "").trim();
+
+        // Strategy 1: Direct query with "bus stand" appended (if not already present)
+        if (!cleanQuery.toLowerCase().contains("bus stand") &&
+                !cleanQuery.toLowerCase().contains("bus station")) {
+            queries.add(cleanQuery + " bus stand" + TAMIL_NADU_SUFFIX);
+        }
+
+        // Strategy 2: Original query with Tamil Nadu context
+        queries.add(cleanQuery + TAMIL_NADU_SUFFIX);
+
+        // Strategy 3: If city is detected, search with city context
+        if (!cityName.isEmpty() && !locationName.isEmpty()) {
+            queries.add(locationName + " bus stand " + cityName + TAMIL_NADU_SUFFIX);
+            queries.add(locationName + " " + cityName + TAMIL_NADU_SUFFIX);
+        }
+
+        // Strategy 4: Search as suburb/area (for places like Arapalayam)
+        if (!cleanQuery.toLowerCase().contains("bus")) {
+            queries.add(cleanQuery + " India");
+        }
+
+        return queries;
+    }
+
+    /**
+     * Extract city name from query if present.
+     */
+    private String extractCityFromQuery(String query) {
+        String queryLower = query.toLowerCase();
+        for (String city : MAJOR_CITIES) {
+            if (queryLower.contains(city.toLowerCase())) {
+                return city;
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Execute a single Nominatim search with rate limiting.
+     */
+    private Optional<NominatimResult> executeNominatimSearch(String searchQuery) {
+        try {
+            enforceRateLimit();
+
             String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
             String url = String.format(
                     "%s?q=%s&format=json&addressdetails=1&limit=5&accept-language=en",
@@ -107,36 +178,74 @@ public class NominatimClient implements GeocodingPort {
                     .GET()
                     .build();
 
-            log.debug("Nominatim search: {}", query);
+            log.debug("Nominatim search: {}", searchQuery);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                JsonNode results = objectMapper.readTree(response.body());
-
-                if (results.isArray() && results.size() > 0) {
-                    // Find the best match (prefer cities/towns over other types)
-                    for (JsonNode result : results) {
-                        NominatimResult parsed = parseResult(result);
-                        if (parsed != null && isInTamilNadu(parsed)) {
-                            cache.put(normalizedQuery, parsed);
-                            log.info("Nominatim resolved '{}' to '{}'", query, parsed.getDisplayName());
-                            return Optional.of(parsed);
-                        }
-                    }
-                }
+                return findBestResult(response.body(), searchQuery);
             } else {
                 log.warn("Nominatim returned status {}: {}", response.statusCode(), response.body());
             }
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.warn("Nominatim request interrupted for: {}", query);
+            log.warn("Nominatim request interrupted for: {}", searchQuery);
         } catch (Exception e) {
-            log.error("Nominatim search failed for '{}': {}", query, e.getMessage());
+            log.error("Nominatim search failed for '{}': {}", searchQuery, e.getMessage());
         }
 
-        // Cache negative result to avoid repeated lookups
-        cache.put(normalizedQuery, null);
+        return Optional.empty();
+    }
+
+    /**
+     * Enforce rate limiting for Nominatim API.
+     */
+    private void enforceRateLimit() throws InterruptedException {
+        synchronized (this) {
+            long now = System.currentTimeMillis();
+            long elapsed = now - lastRequestTime;
+            if (elapsed < RATE_LIMIT_MS) {
+                Thread.sleep(RATE_LIMIT_MS - elapsed);
+            }
+            lastRequestTime = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     * Find the best result from Nominatim response, preferring bus_station type.
+     */
+    private Optional<NominatimResult> findBestResult(String responseBody, String searchQuery) {
+        try {
+            JsonNode results = objectMapper.readTree(responseBody);
+
+            if (results.isArray() && results.size() > 0) {
+                NominatimResult busStationResult = null;
+                NominatimResult anyResult = null;
+
+                for (JsonNode result : results) {
+                    NominatimResult parsed = parseResult(result);
+                    if (parsed != null && isInTamilNadu(parsed)) {
+                        // Prefer bus_station type
+                        if ("bus_station".equals(parsed.getType())) {
+                            busStationResult = parsed;
+                            break;
+                        }
+                        if (anyResult == null) {
+                            anyResult = parsed;
+                        }
+                    }
+                }
+
+                NominatimResult bestResult = busStationResult != null ? busStationResult : anyResult;
+                if (bestResult != null) {
+                    log.info("Nominatim resolved '{}' to '{}' (type: {})",
+                            searchQuery, bestResult.getDisplayName(), bestResult.getType());
+                    return Optional.of(bestResult);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Failed to parse Nominatim response: {}", e.getMessage());
+        }
         return Optional.empty();
     }
 

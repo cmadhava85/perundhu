@@ -13,8 +13,8 @@ resource "google_cloud_run_service" "backend" {
         "run.googleapis.com/vpc-access-connector" = var.vpc_connector_name
         "run.googleapis.com/vpc-access-egress"    = "private-ranges-only"
         # Cost optimization: CPU throttling and Gen2
-        "run.googleapis.com/cpu-throttling"         = "true"
-        "run.googleapis.com/startup-cpu-boost"      = "true"
+        "run.googleapis.com/cpu-throttling"        = "true"
+        "run.googleapis.com/startup-cpu-boost"     = "true"
         "run.googleapis.com/execution-environment" = "gen2"
       }
     }
@@ -22,46 +22,46 @@ resource "google_cloud_run_service" "backend" {
     spec {
       service_account_name = var.service_account_email
       timeout_seconds      = 300
-      
+
       containers {
         image = var.container_image
-        
+
         ports {
           container_port = 8080
         }
-        
+
         resources {
           limits = {
             cpu    = var.cpu_limit
             memory = var.memory_limit
           }
         }
-        
+
         env {
           name  = "SPRING_PROFILES_ACTIVE"
           value = "preprod"
         }
-        
+
         env {
           name  = "GCP_PROJECT_ID"
           value = var.project_id
         }
-        
+
         env {
           name  = "GCP_INSTANCE_CONNECTION_NAME"
           value = var.db_connection_name
         }
-        
+
         env {
           name  = "MYSQL_DATABASE"
           value = var.db_name
         }
-        
+
         env {
           name  = "MYSQL_USERNAME"
           value = var.db_user
         }
-        
+
         env {
           name = "MYSQL_PASSWORD"
           value_from {
@@ -71,17 +71,17 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
-        
+
         env {
           name  = "REDIS_HOST"
           value = var.redis_host
         }
-        
+
         env {
           name  = "REDIS_PORT"
           value = tostring(var.redis_port)
         }
-        
+
         env {
           name = "REDIS_AUTH"
           value_from {
@@ -91,12 +91,12 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
-        
+
         env {
           name  = "STORAGE_BUCKET_IMAGES"
           value = var.storage_bucket_name
         }
-        
+
         env {
           name = "JWT_SECRET"
           value_from {
@@ -106,32 +106,32 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
-        
+
         env {
           name  = "CORS_ALLOWED_ORIGINS"
           value = var.cors_allowed_origins
         }
-        
+
         env {
           name  = "LOG_LEVEL_ROOT"
           value = "INFO"
         }
-        
+
         env {
           name  = "LOG_LEVEL_APP"
           value = "INFO"
         }
-        
+
         env {
           name  = "HIKARI_MAX_POOL_SIZE"
           value = "5"
         }
-        
+
         env {
           name  = "HIKARI_MIN_IDLE"
           value = "2"
         }
-        
+
         # Health check
         liveness_probe {
           http_get {
@@ -143,7 +143,7 @@ resource "google_cloud_run_service" "backend" {
           timeout_seconds       = 5
           failure_threshold     = 3
         }
-        
+
         startup_probe {
           http_get {
             path = "/actuator/health"
@@ -167,7 +167,7 @@ resource "google_cloud_run_service" "backend" {
 # IAM policy to allow public access (you may want to restrict this)
 resource "google_cloud_run_service_iam_member" "public_access" {
   count = var.allow_public_access ? 1 : 0
-  
+
   service  = google_cloud_run_service.backend.name
   location = google_cloud_run_service.backend.location
   role     = "roles/run.invoker"
@@ -177,7 +177,7 @@ resource "google_cloud_run_service_iam_member" "public_access" {
 # Custom domain mapping (optional)
 resource "google_cloud_run_domain_mapping" "domain" {
   count = var.custom_domain != "" ? 1 : 0
-  
+
   location = var.region
   name     = var.custom_domain
 

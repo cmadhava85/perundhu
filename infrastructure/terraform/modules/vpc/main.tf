@@ -50,7 +50,7 @@ resource "google_compute_router_nat" "nat" {
 # VPC Connector for Cloud Run to access VPC resources
 resource "google_vpc_access_connector" "connector" {
   provider = google-beta
-  
+
   name          = "${var.app_name}-${var.environment}-connector"
   region        = var.region
   ip_cidr_range = "10.8.0.0/28"
@@ -58,7 +58,7 @@ resource "google_vpc_access_connector" "connector" {
 
   min_instances = 2
   max_instances = 3
-  
+
   machine_type = "e2-micro"
 }
 

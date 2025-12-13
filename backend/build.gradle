@@ -132,6 +132,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-mysql:4.8.4'
     
+    // GCP Secret Manager for reading secrets in preprod/prod environments
+    implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager:4.8.4'
+    
+    // Spring Cloud Bootstrap (required for bootstrap.yml processing)
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4'
+    
     // Security dependencies for OAuth2 JWT authentication
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'

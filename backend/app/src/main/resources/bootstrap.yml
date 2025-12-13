@@ -1,0 +1,40 @@
+# Bootstrap configuration for Spring Cloud GCP Secret Manager
+# This file is processed before application.properties and enables Secret Manager integration
+# for preprod and prod profiles only. Local development uses environment variables.
+
+spring:
+  application:
+    name: perundhu-backend
+  cloud:
+    gcp:
+      secretmanager:
+        # Secret Manager is only enabled for preprod and prod profiles
+        # For local development, this is disabled and env vars are used instead
+        enabled: false
+
+---
+# PreProd Profile - Enable Secret Manager
+spring:
+  config:
+    activate:
+      on-profile: preprod
+  cloud:
+    gcp:
+      project-id: ${GCP_PROJECT_ID:astute-strategy-406601}
+      secretmanager:
+        enabled: true
+        # Legacy mode allows using sm:// prefix in property values
+        legacy: false
+
+---
+# Production Profile - Enable Secret Manager
+spring:
+  config:
+    activate:
+      on-profile: production
+  cloud:
+    gcp:
+      project-id: ${GCP_PROJECT_ID:astute-strategy-406601}
+      secretmanager:
+        enabled: true
+        legacy: false

@@ -2,7 +2,6 @@ package com.perundhu.security;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,8 @@ import org.springframework.test.context.TestPropertySource;
     "spring.datasource.url=jdbc:h2:mem:testdb",
     "spring.main.web-application-type=servlet",
     "security.api.rate-limit.enabled=false",
-    "security.ip-filtering.enabled=false"
+    "security.ip-filtering.enabled=false",
+    "spring.cloud.compatibility-verifier.enabled=false"
 })
 @AutoConfigureWebMvc
 public class SecurityConfigurationTest {

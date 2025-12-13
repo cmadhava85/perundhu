@@ -6,7 +6,7 @@ resource "google_billing_budget" "monthly_budget" {
 
   budget_filter {
     projects = ["projects/${var.project_id}"]
-    
+
     # Optional: Filter by specific services
     # services = ["services/24E6-581D-38E5"]  # Cloud Run
   }
@@ -52,7 +52,7 @@ resource "google_billing_budget" "monthly_budget" {
   all_updates_rule {
     monitoring_notification_channels = var.notification_channels
     disable_default_iam_recipients   = false
-    
+
     # Optional: Pub/Sub topic for programmatic handling
     # pubsub_topic = var.budget_pubsub_topic
   }
@@ -63,7 +63,7 @@ resource "google_monitoring_notification_channel" "email" {
   count        = var.notification_email != "" ? 1 : 0
   display_name = "${var.app_name}-${var.environment}-budget-email"
   type         = "email"
-  
+
   labels = {
     email_address = var.notification_email
   }

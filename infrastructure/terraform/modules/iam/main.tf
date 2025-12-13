@@ -93,7 +93,7 @@ resource "google_project_iam_custom_role" "app_role" {
   role_id     = "${var.app_name}_${var.environment}_app_role"
   title       = "${var.app_name} ${var.environment} Application Role"
   description = "Custom role for ${var.app_name} application in ${var.environment}"
-  
+
   permissions = [
     "pubsub.topics.publish",
     "pubsub.subscriptions.consume",

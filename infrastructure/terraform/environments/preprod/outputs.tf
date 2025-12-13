@@ -117,19 +117,19 @@ output "redis_auth_secret_name" {
 output "application_config" {
   description = "Application configuration for deployment"
   value = {
-    GCP_PROJECT_ID             = var.project_id
-    GCP_REGION                 = var.region
-    GCP_INSTANCE_CONNECTION_NAME = module.database.db_connection_name
-    MYSQL_DATABASE             = module.database.db_name
-    MYSQL_USERNAME             = module.database.db_user
-    REDIS_HOST                 = var.enable_redis ? module.redis[0].redis_host : ""
-    REDIS_PORT                 = var.enable_redis ? module.redis[0].redis_port : 6379
-    STORAGE_BUCKET_IMAGES      = module.storage.images_bucket_name
-    STORAGE_BUCKET_BACKUP      = module.storage.backup_bucket_name
+    GCP_PROJECT_ID                = var.project_id
+    GCP_REGION                    = var.region
+    GCP_INSTANCE_CONNECTION_NAME  = module.database.db_connection_name
+    MYSQL_DATABASE                = module.database.db_name
+    MYSQL_USERNAME                = module.database.db_user
+    REDIS_HOST                    = var.enable_redis ? module.redis[0].redis_host : ""
+    REDIS_PORT                    = var.enable_redis ? module.redis[0].redis_port : 6379
+    STORAGE_BUCKET_IMAGES         = module.storage.images_bucket_name
+    STORAGE_BUCKET_BACKUP         = module.storage.backup_bucket_name
     PUBSUB_TOPIC_IMAGE_PROCESSING = module.pubsub.image_processing_topic
-    PUBSUB_TOPIC_NOTIFICATIONS = module.pubsub.notification_topic
-    SERVICE_ACCOUNT_EMAIL      = module.iam.backend_service_account_email
-    GEMINI_API_ENABLED         = true
+    PUBSUB_TOPIC_NOTIFICATIONS    = module.pubsub.notification_topic
+    SERVICE_ACCOUNT_EMAIL         = module.iam.backend_service_account_email
+    GEMINI_API_ENABLED            = true
   }
   sensitive = true
 }

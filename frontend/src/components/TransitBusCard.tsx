@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
+import ShareRoute from './ShareRoute';
+import JourneyTimeline from './JourneyTimeline';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
 
@@ -370,8 +372,8 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               🛑 {stops.length} stops
             </div>
             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              {/* Add Stops CTA for buses with no/few stops */}
-              {stops.length < 2 && onAddStops && (
+              {/* Add Stops CTA for buses with 5 or fewer stops */}
+              {stops.length <= 5 && onAddStops && (
                 <button
                   type="button"
                   className="add-stops-cta"
@@ -406,6 +408,16 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                 >
                   ➕ Add Stops
                 </button>
+              )}
+              {/* Share Route Button */}
+              {fromLocation && toLocation && (
+                <div onClick={(e) => e.stopPropagation()}>
+                  <ShareRoute
+                    bus={bus}
+                    fromLocation={fromLocation}
+                    toLocation={toLocation}
+                  />
+                </div>
               )}
               {/* Report Issue Button */}
               {onReportIssue && (
@@ -484,12 +496,20 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
       {/* Expandable Route Details */}
       <div className={`expandable-content ${isExpanded ? 'expanded' : ''}`}>
         <div className="route-details">
-          <div className="text-headline" style={{ marginBottom: 'var(--space-4)' }}>
-            🗺️ Route Details
-          </div>
+          {/* Journey Timeline - Visual representation */}
+          <JourneyTimeline
+            bus={bus}
+            stops={stops}
+            fromLocation={getLocationDisplayName(fromLocation) || bus.from}
+            toLocation={getLocationDisplayName(toLocation) || bus.to}
+            isExpanded={stops.length > 0}
+          />
           
           {stops.length > 0 && (
-            <div className="stops-simple-list">
+            <div className="stops-simple-list" style={{ marginTop: 'var(--space-4)' }}>
+              <div className="text-headline" style={{ marginBottom: 'var(--space-3)' }}>
+                📍 All Stops
+              </div>
               {stops.map((stop, index) => (
                 <div key={stop.id || index} className="stop-simple-item">
                   <span className="stop-simple-number">{index + 1}</span>

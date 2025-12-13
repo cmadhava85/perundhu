@@ -102,5 +102,10 @@ variable "billing_account_id" {
 variable "monthly_budget_amount" {
   description = "Monthly budget amount in USD for alerts"
   type        = number
-  default     = 200  # $200/month for production
+  default     = 200 # $200/month for production
 }
+
+# ============================================
+# NOTE: Shared secrets (gemini_api_key, recaptcha_*)
+# are managed in terraform/environments/shared
+# ============================================

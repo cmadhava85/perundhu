@@ -4,13 +4,25 @@ variable "project_id" {
 }
 
 variable "environment" {
-  description = "Environment name (e.g., preprod, prod)"
+  description = "Environment name (e.g., preprod, production)"
   type        = string
 }
 
 variable "app_name" {
   description = "Application name"
   type        = string
+}
+
+variable "db_url" {
+  description = "Full JDBC database URL"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_username" {
+  description = "Database username"
+  type        = string
+  sensitive   = true
 }
 
 variable "db_password" {
@@ -21,19 +33,6 @@ variable "db_password" {
 
 variable "redis_auth" {
   description = "Redis auth string"
-  type        = string
-  sensitive   = true
-}
-
-variable "google_maps_api_key" {
-  description = "Google Maps API key"
-  type        = string
-  default     = ""
-  sensitive   = true
-}
-
-variable "oauth_client_secret" {
-  description = "OAuth client secret"
   type        = string
   default     = ""
   sensitive   = true

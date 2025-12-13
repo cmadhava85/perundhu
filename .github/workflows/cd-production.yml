@@ -100,8 +100,8 @@ jobs:
       run: |
         VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
         
-        # Get backend URL from Cloud Run
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-1032721240281.asia-south1.run.app")
+        # Get backend URL from Cloud Run (use existing service or placeholder for first deploy)
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://api.perundhu.app")
         
         # Frontend - Build with production environment variables
         FRONTEND_IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${VERSION}"
@@ -169,18 +169,21 @@ jobs:
     - name: Get Backend URL
       id: backend-url
       run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "")
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "")
         echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
     
     - name: Deploy Backend to Production
       run: |
-        gcloud run deploy perundhu-backend-prod \
+        # Note: DB credentials, JWT secret, and encryption key are read directly from
+        # Secret Manager using sm:// prefix in application-production.properties.
+        # Only non-sm:// secrets need to be passed as env vars.
+        gcloud run deploy perundhu-backend-production \
           --image ${{ needs.build-and-push-images.outputs.backend_image }} \
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=production,CORS_ALLOWED_ORIGINS=https://perundhu.app,https://www.perundhu.app,GEMINI_API_ENABLED=true" \
-          --set-secrets="DB_PASSWORD=prod-db-password:latest,JWT_SECRET=JWT_SECRET_PROD:latest,DATA_ENCRYPTION_KEY=DATA_ENCRYPTION_KEY_PROD:latest,DB_URL=prod-db-url:latest,DB_USERNAME=prod-db-username:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=production,CORS_ALLOWED_ORIGINS=https://perundhu.app,https://www.perundhu.app,GEMINI_API_ENABLED=true,GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }}" \
+          --set-secrets="GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
           --memory 1Gi \
           --cpu 1 \
           --min-instances 0 \
@@ -193,12 +196,12 @@ jobs:
     - name: Get Frontend Backend URL for env vars
       id: get-backend-url
       run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)')
         echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
     
     - name: Deploy Frontend to Production
       run: |
-        gcloud run deploy perundhu-frontend-prod \
+        gcloud run deploy perundhu-frontend-production \
           --image ${{ needs.build-and-push-images.outputs.frontend_image }} \
           --platform managed \
           --region ${{ env.GCP_REGION }} \
@@ -217,8 +220,8 @@ jobs:
     - name: Get service URLs
       id: urls
       run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)')
         echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
         echo "frontend_url=$FRONTEND_URL" >> $GITHUB_OUTPUT
     
@@ -247,8 +250,8 @@ jobs:
     
     - name: Get service URLs
       run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-prod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        FRONTEND_URL=$(gcloud run services describe perundhu-frontend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)')
         echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
         echo "FRONTEND_URL=$FRONTEND_URL" >> $GITHUB_ENV
     

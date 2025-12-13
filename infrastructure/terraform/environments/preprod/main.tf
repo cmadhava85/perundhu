@@ -63,10 +63,10 @@ resource "google_project_service" "required_apis" {
 module "vpc" {
   source = "../../modules/vpc"
 
-  project_id   = var.project_id
-  region       = var.region
-  environment  = var.environment
-  app_name     = var.app_name
+  project_id  = var.project_id
+  region      = var.region
+  environment = var.environment
+  app_name    = var.app_name
 
   depends_on = [google_project_service.required_apis]
 }
@@ -75,13 +75,13 @@ module "vpc" {
 module "database" {
   source = "../../modules/database"
 
-  project_id      = var.project_id
-  region          = var.region
-  environment     = var.environment
-  app_name        = var.app_name
-  vpc_network     = module.vpc.private_vpc_connection
-  private_subnet  = module.vpc.private_subnet_name
-  db_version      = var.db_version
+  project_id       = var.project_id
+  region           = var.region
+  environment      = var.environment
+  app_name         = var.app_name
+  vpc_network      = module.vpc.private_vpc_connection
+  private_subnet   = module.vpc.private_subnet_name
+  db_version       = var.db_version
   db_instance_tier = var.db_instance_tier
 
   depends_on = [module.vpc]
@@ -116,29 +116,33 @@ module "redis" {
   source = "../../modules/redis"
   count  = var.enable_redis ? 1 : 0
 
-  project_id        = var.project_id
-  region            = var.region
-  environment       = var.environment
-  app_name          = var.app_name
-  vpc_network       = module.vpc.network_name
+  project_id         = var.project_id
+  region             = var.region
+  environment        = var.environment
+  app_name           = var.app_name
+  vpc_network        = module.vpc.network_name
   authorized_network = module.vpc.network_self_link
-  
+
   # Use smallest Redis for dev (1GB)
   memory_size_gb = 1
-  tier           = "BASIC"  # No HA for preprod
+  tier           = "BASIC" # No HA for preprod
 
   depends_on = [module.vpc]
 }
 
-# Secret Manager for sensitive configuration
+# Secret Manager for environment-specific configuration
+# NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
+# are managed by the shared environment: terraform/environments/shared
 module "secrets" {
   source = "../../modules/secrets"
 
-  project_id   = var.project_id
-  environment  = var.environment
-  app_name     = var.app_name
-  db_password  = module.database.db_password
-  redis_auth   = var.enable_redis ? module.redis[0].redis_auth_string : ""
+  project_id  = var.project_id
+  environment = var.environment
+  app_name    = var.app_name
+  db_url      = module.database.database_url
+  db_username = module.database.db_user
+  db_password = module.database.db_password
+  redis_auth  = var.enable_redis ? module.redis[0].redis_auth_string : ""
 
   depends_on = [module.database]
 }
@@ -158,25 +162,25 @@ module "iam" {
 module "cloud_run" {
   source = "../../modules/cloud_run"
 
-  project_id                = var.project_id
-  region                    = var.region
-  environment               = var.environment
-  app_name                  = var.app_name
-  service_account_email     = module.iam.backend_service_account_email
-  vpc_connector_name        = module.vpc.vpc_connector_name
-  db_connection_name        = module.database.db_connection_name
-  db_name                   = module.database.db_name
-  db_user                   = module.database.db_user
-  storage_bucket_name       = module.storage.images_bucket_name
+  project_id            = var.project_id
+  region                = var.region
+  environment           = var.environment
+  app_name              = var.app_name
+  service_account_email = module.iam.backend_service_account_email
+  vpc_connector_name    = module.vpc.vpc_connector_name
+  db_connection_name    = module.database.db_connection_name
+  db_name               = module.database.db_name
+  db_user               = module.database.db_user
+  storage_bucket_name   = module.storage.images_bucket_name
   # Redis is optional for preprod - use empty string if disabled
-  redis_host                = var.enable_redis ? module.redis[0].redis_host : ""
-  redis_port                = var.enable_redis ? module.redis[0].redis_port : 6379
-  
+  redis_host = var.enable_redis ? module.redis[0].redis_host : ""
+  redis_port = var.enable_redis ? module.redis[0].redis_port : 6379
+
   # Cost optimization: Scale to zero, minimal resources
-  min_instances = 0          # Scale to zero when idle
-  max_instances = 2          # Low max for dev
-  cpu_limit     = "1000m"    # 1 CPU
-  memory_limit  = "512Mi"    # Minimal memory for dev
+  min_instances = 0       # Scale to zero when idle
+  max_instances = 2       # Low max for dev
+  cpu_limit     = "1000m" # 1 CPU
+  memory_limit  = "512Mi" # Minimal memory for dev
 
   depends_on = [module.vpc, module.database, module.storage, module.iam]
 }
@@ -185,12 +189,12 @@ module "cloud_run" {
 module "monitoring" {
   source = "../../modules/monitoring"
 
-  project_id           = var.project_id
-  environment          = var.environment
-  app_name             = var.app_name
-  cloud_run_service    = module.cloud_run.service_name
-  db_instance_name     = module.database.db_instance_name
-  notification_email   = var.notification_email
+  project_id         = var.project_id
+  environment        = var.environment
+  app_name           = var.app_name
+  cloud_run_service  = module.cloud_run.service_name
+  db_instance_name   = module.database.db_instance_name
+  notification_email = var.notification_email
 
   depends_on = [module.cloud_run, module.database]
 }
@@ -211,10 +215,10 @@ module "budget" {
 module "logging" {
   source = "../../modules/logging"
 
-  project_id              = var.project_id
-  environment             = var.environment
-  app_name                = var.app_name
-  log_retention_days      = 7     # Minimum retention for dev
-  exclude_debug_logs      = true  # Don't store debug logs
-  exclude_health_check_logs = true  # Don't store health check spam
+  project_id                = var.project_id
+  environment               = var.environment
+  app_name                  = var.app_name
+  log_retention_days        = 7    # Minimum retention for dev
+  exclude_debug_logs        = true # Don't store debug logs
+  exclude_health_check_logs = true # Don't store health check spam
 }

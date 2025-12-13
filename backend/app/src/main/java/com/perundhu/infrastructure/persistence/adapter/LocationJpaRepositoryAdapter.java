@@ -120,7 +120,9 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
             return List.of();
         }
 
-        return jpaRepository.findByNameContainingIgnoreCase(namePattern.trim())
+        // Use bus-stand-first query for better user experience
+        // Bus stands (e.g., "Madurai - Mattuthavani") appear before generic city names
+        return jpaRepository.findByNameContainingIgnoreCaseBusStandFirst(namePattern.trim())
                 .stream()
                 .limit(10) // Limit to 10 suggestions
                 .map(LocationJpaEntity::toDomainModel)

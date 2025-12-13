@@ -47,8 +47,10 @@ export class LocationAutocompleteService {
         return [];
       }
       
-      const suggestions = this.convertToSuggestions(locations);
-      logger.debug(`✅ Converted to ${suggestions.length} suggestions in fast mode`);
+      // Prioritize bus stands for better user experience
+      const prioritizedLocations = this.prioritizeBusStands(locations);
+      const suggestions = this.convertToSuggestions(prioritizedLocations);
+      logger.debug(`✅ Converted to ${suggestions.length} suggestions (bus stands prioritized)`);
       
       return suggestions;
       
@@ -215,7 +217,7 @@ export class LocationAutocompleteService {
       const data = await response.json();
       logger.debug(`🌍 Nominatim returned ${data.length} results`);
       
-      // Quick filtering for cities/towns only
+      // Extended interface for Nominatim results
       interface NominatimResult {
         type: string;
         addresstype: string;
@@ -224,8 +226,17 @@ export class LocationAutocompleteService {
         display_name: string;
         lat: string;
         lon: string;
+        name?: string;
       }
-      const cityResults = data.filter((result: NominatimResult) => {
+      
+      // Filter for valid places including bus stations and bus stops
+      const validResults = data.filter((result: NominatimResult) => {
+        // Accept bus stations and bus stops with high priority
+        const isBusStationOrStop = result.type === 'bus_station' || 
+                                    result.type === 'bus_stop' || 
+                                    result.class === 'amenity' ||
+                                    result.class === 'highway'; // bus_stop is often under highway class
+        
         // Accept various place types
         const isValidPlace = (
           ['city', 'town', 'village', 'hamlet'].includes(result.type) ||
@@ -242,14 +253,23 @@ export class LocationAutocompleteService {
           result.type !== 'industrial'
         );
         
-        return isValidPlace && isNotRoad;
+        return (isBusStationOrStop || isValidPlace) && isNotRoad;
       });
       
-      logger.debug(`🌍 Filtered to ${cityResults.length} city results`);
+      // Sort results: bus stations/stops first, then other places
+      const sortedResults = validResults.sort((a: NominatimResult, b: NominatimResult) => {
+        const aIsBusStationOrStop = a.type === 'bus_station' || a.type === 'bus_stop';
+        const bIsBusStationOrStop = b.type === 'bus_station' || b.type === 'bus_stop';
+        if (aIsBusStationOrStop && !bIsBusStationOrStop) return -1;
+        if (!aIsBusStationOrStop && bIsBusStationOrStop) return 1;
+        return 0;
+      });
       
-      return cityResults.map((result: NominatimResult) => ({
+      logger.debug(`🌍 Filtered to ${sortedResults.length} results (bus stations prioritized)`);
+      
+      return sortedResults.map((result: NominatimResult) => ({
         id: -(Math.random() * 1000000), // Unique negative ID
-        name: this.formatLocationNameSimple(result.display_name),
+        name: result.name || this.formatLocationNameSimple(result.display_name),
         latitude: parseFloat(result.lat),
         longitude: parseFloat(result.lon),
         source: 'nominatim'
@@ -286,6 +306,31 @@ export class LocationAutocompleteService {
     }
     
     return filtered;
+  }
+
+  /**
+   * Sort results to prioritize bus stands and bus stops first.
+   * Bus stands are identified by having " - " in their name (e.g., "Madurai - Mattuthavani").
+   * Bus stops are identified by "Bus Stop" suffix (e.g., "Srivilliputhur - Bus Stop").
+   * For Nominatim results, bus_station and bus_stop types are prioritized.
+   */
+  private prioritizeBusStands(locations: LocationSuggestion[]): LocationSuggestion[] {
+    return [...locations].sort((a, b) => {
+      // Check if location is a bus stand or bus stop
+      const aIsBusStandOrStop = a.name.includes(' - ') || 
+                                 a.name.toLowerCase().includes('bus stop') ||
+                                 a.name.toLowerCase().includes('bus stand');
+      const bIsBusStandOrStop = b.name.includes(' - ') || 
+                                 b.name.toLowerCase().includes('bus stop') ||
+                                 b.name.toLowerCase().includes('bus stand');
+      
+      // Bus stands/stops come first
+      if (aIsBusStandOrStop && !bIsBusStandOrStop) return -1;
+      if (!aIsBusStandOrStop && bIsBusStandOrStop) return 1;
+      
+      // If both are bus stands/stops or both are not, maintain original order
+      return 0;
+    });
   }
 
   /**
