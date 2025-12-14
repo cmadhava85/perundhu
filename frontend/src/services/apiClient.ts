@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { traceContext, TRACE_HEADERS } from '../utils/traceId';
-import { logger } from '../utils/logger';
 
 // Helper function to get environment variables that works in both Vite and Jest
 const getEnv = (key: string, defaultValue: string = ''): string => {

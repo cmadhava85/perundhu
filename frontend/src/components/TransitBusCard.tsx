@@ -52,7 +52,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   };
   
   // Helper function to get display name for stop
-  const getStopDisplayName = (stop: Stop) => {
+  const _getStopDisplayName = (stop: Stop) => {
     if (i18n.language === 'ta' && stop.translatedName) {
       return stop.translatedName;
     }

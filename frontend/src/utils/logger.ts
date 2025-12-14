@@ -4,7 +4,7 @@
  * Provides structured logging with different log levels and performance tracking
  */
 
-import { traceContext } from './traceId';
+// TraceId is passed via context to avoid circular dependencies
 
 export enum LogLevel {
   DEBUG = 'DEBUG',

@@ -24,7 +24,7 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
   isExpanded = false,
   onToggle
 }) => {
-  const { t } = useTranslation();
+  const { t: _t } = useTranslation();
 
   // Sort all stops by order or time - don't filter any out
   const allStops = useMemo(() => {
