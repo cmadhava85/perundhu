@@ -70,13 +70,30 @@ export function useBusSearchEnhanced({
       };
     },
     
-    enabled: enabled && !!fromLocationId && !!toLocationId,
+    // Only enable when we have valid positive location IDs
+    enabled: enabled && !!fromLocationId && fromLocationId > 0 && !!toLocationId && toLocationId > 0,
     
     // Custom options
     staleTime: 2 * 60 * 1000, // 2 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     
-    retry: 3,
+    // Smart retry - don't retry on 4xx client errors or 500 server errors (only network/gateway issues)
+    retry: (failureCount, error) => {
+      // Max 2 retries
+      if (failureCount >= 2) return false;
+      
+      // Check if it's an axios error with a response
+      const axiosError = error as { response?: { status: number } };
+      const status = axiosError?.response?.status;
+      
+      // Don't retry client errors (4xx) or internal server errors (500)
+      if (status && (status >= 400 && status < 500 || status === 500)) {
+        return false;
+      }
+      
+      // Retry on network errors or gateway issues (502, 503, 504)
+      return true;
+    },
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
   });
 }

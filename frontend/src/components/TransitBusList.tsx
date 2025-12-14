@@ -7,12 +7,11 @@ import '../styles/transit-design-system.css';
 import '../styles/bus-list-clean-redesign.css';
 
 // Filter and sort types
-type SortOption = 'departure' | 'arrival' | 'duration' | 'price' | 'rating';
+type SortOption = 'departure' | 'arrival' | 'duration';
 type SortDirection = 'asc' | 'desc';
 
 interface FilterOptions {
   busTypes: string[];
-  priceRange: [number, number];
   timeRange: string;
   accessibility: boolean;
   express: boolean;
@@ -57,7 +56,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   
   const [filters, setFilters] = useState<FilterOptions>({
     busTypes: [],
-    priceRange: [0, 2000],
     timeRange: 'all',
     accessibility: false,
     express: false
@@ -106,13 +104,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     const minutesA = getTimeInMinutes(timeA);
     const minutesB = getTimeInMinutes(timeB);
     
-    // If times are very close (within 15 minutes), sort by bus quality/rating
-    if (Math.abs(minutesA - minutesB) <= 15) {
-      const ratingA = a.rating || 4;
-      const ratingB = b.rating || 4;
-      return ratingB - ratingA; // Higher rating first
-    }
-    
     return sortDirection === 'asc' ? minutesA - minutesB : minutesB - minutesA;
   };
 
@@ -131,20 +122,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     }
     
     return sortDirection === 'asc' ? minutesA - minutesB : minutesB - minutesA;
-  };
-
-  const sortByPrice = (a: Bus, b: Bus): number => {
-    const fareA = a.fare || Number.MAX_SAFE_INTEGER;
-    const fareB = b.fare || Number.MAX_SAFE_INTEGER;
-    
-    // If prices are very similar (within ₹50), prefer better ratings
-    if (Math.abs(fareA - fareB) <= 50) {
-      const ratingA = a.rating || 4;
-      const ratingB = b.rating || 4;
-      return ratingB - ratingA;
-    }
-    
-    return sortDirection === 'asc' ? fareA - fareB : fareB - fareA;
   };
 
   const sortByDuration = (a: Bus, b: Bus): number => {
@@ -167,40 +144,15 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     return sortDirection === 'asc' ? durationA - durationB : durationB - durationA;
   };
 
-  const sortByRating = (a: Bus, b: Bus): number => {
-    const ratingA = a.rating || 4;
-    const ratingB = b.rating || 4;
-    
-    // If ratings are similar, prefer more reasonable price
-    if (Math.abs(ratingA - ratingB) <= 0.2) {
-      const fareA = a.fare || 0;
-      const fareB = b.fare || 0;
-      
-      if (fareA > 0 && fareB > 0) {
-        return fareA - fareB; // Lower price among similar ratings
-      }
-    }
-    
-    return sortDirection === 'asc' ? ratingA - ratingB : ratingB - ratingA;
-  };
-
-  // Calculate price range
-  const priceRange = useMemo(() => {
-    const prices = buses.map(bus => bus.fare || 0).filter(p => p > 0);
-    return prices.length > 0 ? [Math.min(...prices), Math.max(...prices)] : [0, 2000];
-  }, [buses]);
-
-  // Find special buses: next bus, fastest, cheapest
+  // Find special buses: next bus, fastest
   const specialBuses = useMemo(() => {
     const now = new Date();
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
     
     let nextBusId: number | null = null;
     let fastestBusId: number | null = null;
-    let cheapestBusId: number | null = null;
     let minTimeUntilDeparture = Infinity;
     let minDuration = Infinity;
-    let minFare = Infinity;
     
     for (const bus of buses) {
       // Find next bus (soonest upcoming departure)
@@ -228,15 +180,9 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
           fastestBusId = bus.id;
         }
       }
-      
-      // Find cheapest bus
-      if (bus.fare && bus.fare > 0 && bus.fare < minFare) {
-        minFare = bus.fare;
-        cheapestBusId = bus.id;
-      }
     }
     
-    return { nextBusId, fastestBusId, cheapestBusId };
+    return { nextBusId, fastestBusId };
   }, [buses]);
 
   // Filter and sort buses
@@ -261,11 +207,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
         }
       }
 
-      // Price filter
-      if (bus.fare && (bus.fare < filters.priceRange[0] || bus.fare > filters.priceRange[1])) {
-        return false;
-      }
-
       // Express filter
       if (filters.express) {
         const category = (bus.category || '').toLowerCase();
@@ -284,12 +225,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
           return sortByDeparture(a, b);
         case 'arrival':
           return sortByArrival(a, b);
-        case 'price':
-          return sortByPrice(a, b);
         case 'duration':
           return sortByDuration(a, b);
-        case 'rating':
-          return sortByRating(a, b);
         default:
           return 0;
       }
@@ -316,9 +253,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     } else {
       // Set new sort option with appropriate default direction
       setSortBy(option);
-      // Set sensible defaults for each sort type
-      const defaultDirection = ['rating'].includes(option) ? 'desc' : 'asc';
-      setSortDirection(defaultDirection);
+      setSortDirection('asc');
     }
   };
 
@@ -475,9 +410,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                   {[
                     { key: 'departure', label: t('busList.sortDeparture', 'Departure'), shortLabel: t('busList.sortDepartureShort', 'Dep'), icon: '🕐', description: t('busList.sortDepartureDesc', 'Earliest first') },
                     { key: 'arrival', label: t('busList.sortArrival', 'Arrival'), shortLabel: t('busList.sortArrivalShort', 'Arr'), icon: '🏁', description: t('busList.sortArrivalDesc', 'Shortest journey') },
-                    { key: 'duration', label: t('busList.sortDuration', 'Duration'), shortLabel: t('busList.sortDurationShort', 'Time'), icon: '⏱️', description: t('busList.sortDurationDesc', 'Fastest route') },
-                    { key: 'price', label: t('busList.sortPrice', 'Price'), shortLabel: '₹', icon: '💰', description: t('busList.sortPriceDesc', 'Best value') },
-                    { key: 'rating', label: t('busList.sortRating', 'Rating'), shortLabel: '⭐', icon: '⭐', description: t('busList.sortRatingDesc', 'Top rated') }
+                    { key: 'duration', label: t('busList.sortDuration', 'Duration'), shortLabel: t('busList.sortDurationShort', 'Time'), icon: '⏱️', description: t('busList.sortDurationDesc', 'Fastest route') }
                   ].map(({ key, label, shortLabel, icon, description }) => (
                     <button
                       key={key}
@@ -594,34 +527,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                         </button>
                       </div>
                     </div>
-
-                    {/* Price Range */}
-                    <div>
-                      <div className="text-caption" style={{ 
-                        marginBottom: 'var(--space-2)',
-                        fontWeight: 'var(--font-medium)',
-                        color: 'var(--transit-text-secondary)'
-                      }}>
-                        {t('busList.priceRange', 'Price Range')}: ₹{filters.priceRange[0]} - ₹{filters.priceRange[1]}
-                      </div>
-                      <input
-                        type="range"
-                        min={priceRange[0]}
-                        max={priceRange[1]}
-                        value={filters.priceRange[1]}
-                        onChange={(e) => setFilters(prev => ({
-                          ...prev,
-                          priceRange: [prev.priceRange[0], Number(e.target.value)]
-                        }))}
-                        style={{ 
-                          width: '100%',
-                          height: '6px',
-                          borderRadius: '3px',
-                          background: 'var(--transit-divider)',
-                          outline: 'none'
-                        }}
-                      />
-                    </div>
                   </div>
                 </div>
               )}
@@ -651,7 +556,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 isCompact={true}
                 isNextBus={bus.id === specialBuses.nextBusId}
                 isFastest={bus.id === specialBuses.fastestBusId}
-                isCheapest={bus.id === specialBuses.cheapestBusId}
                 onAddStops={onAddStops}
                 onReportIssue={onReportIssue}
               />
@@ -670,11 +574,6 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
               <div>
                 <strong className="text-blue-600">{busTypes.length}</strong> service types
               </div>
-              {priceRange[1] > 0 && (
-                <div>
-                  ₹<strong className="text-blue-600">{priceRange[0]}</strong> - ₹<strong className="text-blue-600">{priceRange[1]}</strong> fare range
-                </div>
-              )}
             </div>
             <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
               <span>ℹ️</span>

@@ -18,7 +18,6 @@ interface TransitBusCardProps {
   isCompact?: boolean;
   isNextBus?: boolean;
   isFastest?: boolean;
-  isCheapest?: boolean;
   onAddStops?: (bus: Bus) => void;
   onReportIssue?: (bus: Bus) => void;
 }
@@ -33,7 +32,6 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   isCompact = false,
   isNextBus = false,
   isFastest = false,
-  isCheapest = false,
   onAddStops,
   onReportIssue
 }) => {
@@ -230,7 +228,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
       style={isNextBus ? { borderLeft: '4px solid #10B981', background: 'linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, transparent 20%)' } : undefined}
     >
       {/* Special Badges Row */}
-      {(isNextBus || isFastest || isCheapest) && (
+      {(isNextBus || isFastest) && (
         <div className="special-badges-row" style={{
           display: 'flex',
           gap: '6px',
@@ -269,22 +267,6 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               boxShadow: '0 1px 3px rgba(139, 92, 246, 0.3)'
             }}>
               ⚡ Fastest
-            </span>
-          )}
-          {isCheapest && (
-            <span style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '4px',
-              padding: '3px 8px',
-              background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-              color: 'white',
-              borderRadius: '12px',
-              fontSize: '11px',
-              fontWeight: '600',
-              boxShadow: '0 1px 3px rgba(245, 158, 11, 0.3)'
-            }}>
-              💰 Best Value
             </span>
           )}
         </div>
