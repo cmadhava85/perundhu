@@ -4,6 +4,8 @@
  * Provides structured logging with different log levels and performance tracking
  */
 
+import { traceContext } from './traceId';
+
 export enum LogLevel {
   DEBUG = 'DEBUG',
   INFO = 'INFO',
@@ -301,11 +303,23 @@ class Logger {
    */
   private log(level: LogLevel, message: string, context?: LogContext): void {
     const timestamp = new Date().toISOString();
+    
+    // Get traceId from context - handle circular dependency by lazy import
+    let traceId: string | undefined;
+    let sessionId: string | undefined;
+    try {
+      traceId = traceContext.getTraceId();
+      sessionId = traceContext.getSessionId();
+    } catch {
+      // traceContext may not be available yet during initialization
+    }
+    
     const logEntry = {
       timestamp,
       level,
       message,
-      sessionId: this.sessionId,
+      traceId,
+      sessionId: sessionId || this.sessionId,
       url: globalThis.window === undefined ? undefined : globalThis.window.location.pathname,
       ...context,
     };
@@ -320,14 +334,16 @@ class Logger {
     if (this.isDevelopment) {
       const consoleMethod = this.getConsoleMethod(level);
       const categoryTag = context?.category ? `[${context.category}]` : '';
-      const prefix = `[${level}]${categoryTag}`;
+      const traceTag = traceId ? `[${traceId}]` : '';
+      const prefix = `[${level}]${traceTag}${categoryTag}`;
       consoleMethod(`${prefix} ${message}`, context || '');
     }
 
     // In production, only log warnings and errors to console
     if (this.isProduction && (level === LogLevel.WARN || level === LogLevel.ERROR)) {
       const consoleMethod = level === LogLevel.ERROR ? console.error : console.warn;
-      consoleMethod(`[${level}] ${message}`);
+      const traceTag = traceId ? `[${traceId}]` : '';
+      consoleMethod(`[${level}]${traceTag} ${message}`);
     }
 
     // Store in session storage (development only)

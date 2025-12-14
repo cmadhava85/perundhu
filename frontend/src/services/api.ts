@@ -1,9 +1,10 @@
 import axios from 'axios';
-import type { AxiosInstance, AxiosResponse, Method } from 'axios';
+import type { AxiosInstance, AxiosResponse, Method, InternalAxiosRequestConfig } from 'axios';
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
 import { getLocationsOffline } from './offlineService';
 import { setupRetryInterceptor } from './apiRetry';
 import { logger } from '../utils/logger';
+import { traceContext, TRACE_HEADERS } from '../utils/traceId';
 
 /**
  * Type for request data and parameters
@@ -137,6 +138,50 @@ export const createApiInstance = (): AxiosInstance => {
       _: new Date().getTime() // Add timestamp to prevent caching
     }
   });
+
+  // Add request interceptor to attach traceId to all requests
+  instance.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+      // Generate a new traceId for each request
+      const traceId = traceContext.newTraceId();
+      const sessionId = traceContext.getSessionId();
+      
+      // Add trace headers
+      config.headers.set(TRACE_HEADERS.TRACE_ID, traceId);
+      config.headers.set(TRACE_HEADERS.SESSION_ID, sessionId);
+      
+      // Log the request with traceId
+      logger.debug(`[${traceId}] API Request: ${config.method?.toUpperCase()} ${config.url}`, {
+        category: 'API' as unknown as undefined,
+        requestId: traceId,
+      });
+      
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // Add response interceptor to log responses with traceId
+  instance.interceptors.response.use(
+    (response) => {
+      const traceId = response.config.headers.get(TRACE_HEADERS.TRACE_ID) || 'unknown';
+      logger.debug(`[${traceId}] API Response: ${response.status} ${response.config.url}`, {
+        category: 'API' as unknown as undefined,
+        requestId: traceId as string,
+      });
+      return response;
+    },
+    (error) => {
+      const traceId = error.config?.headers?.get?.(TRACE_HEADERS.TRACE_ID) ?? 'unknown';
+      logger.error(`[${traceId}] API Error: ${error.message}`, error, {
+        category: 'API' as unknown as undefined,
+        requestId: traceId as string,
+      });
+      return Promise.reject(error);
+    }
+  );
 
   // Setup retry interceptor for resilience
   setupRetryInterceptor(instance, {
