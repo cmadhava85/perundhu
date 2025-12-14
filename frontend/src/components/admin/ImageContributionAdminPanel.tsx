@@ -11,6 +11,7 @@ import {
   User,
   RefreshCw
 } from 'lucide-react';
+import './ImageContributionAdminPanel.css';
 
 interface ImageContribution {
   id: string;
@@ -897,37 +898,36 @@ export const ImageContributionAdminPanel: React.FC = () => {
         )}
       </div>
 
-      {/* OCR Data Modal - Redesigned */}
+      {/* OCR Data Modal - Redesigned with Mobile Support */}
       {showOCRModal && ocrData && (
         <div 
-          className="fixed inset-0 flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', zIndex: 9999, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+          className="ocr-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="ocr-modal-title"
           onClick={() => setShowOCRModal(false)}
+          onKeyDown={(e) => e.key === 'Escape' && setShowOCRModal(false)}
         >
           <div 
-            className="bg-white rounded-xl w-full max-w-4xl shadow-2xl overflow-hidden"
-            style={{ maxHeight: '85vh' }}
+            className="ocr-modal"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
-            {/* Compact Header */}
-            <div 
-              className="px-6 py-4 flex justify-between items-center border-b-4"
-              style={{ background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', borderColor: '#1e40af' }}
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-white bg-opacity-20 rounded-lg p-2">
+            <div className="ocr-modal-header">
+              <div className="ocr-modal-header-content">
+                <div className="ocr-modal-icon">
                   <svg style={{ width: '24px', height: '24px' }} className="text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">OCR Extracted Data</h3>
-                  <p className="text-blue-100 text-xs">Bus Schedule Information</p>
+                  <h3 id="ocr-modal-title" className="ocr-modal-title">OCR Extracted Data</h3>
+                  <p className="ocr-modal-subtitle">Bus Schedule Information</p>
                 </div>
               </div>
               <button
                 onClick={() => setShowOCRModal(false)}
-                className="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-all"
+                className="ocr-modal-close-btn"
                 title="Close"
               >
                 <XCircle style={{ width: '24px', height: '24px' }} />
@@ -935,56 +935,48 @@ export const ImageContributionAdminPanel: React.FC = () => {
             </div>
 
             {/* Tab Navigation */}
-            <div className="flex border-b border-gray-200 bg-gray-50">
+            <div className="ocr-modal-tabs">
               <button
                 onClick={() => setActiveTab('parsed')}
-                className={`flex-1 px-6 py-3 font-semibold transition-all ${
-                  activeTab === 'parsed'
-                    ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
-                }`}
+                className={`ocr-modal-tab ${activeTab === 'parsed' ? 'active' : ''}`}
               >
-                <span className="flex items-center justify-center gap-2">
+                <span className="ocr-modal-tab-content">
                   <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  Parsed Data
+                  <span className="tab-text">Parsed Data</span>
                 </span>
               </button>
               <button
                 onClick={() => setActiveTab('raw')}
-                className={`flex-1 px-6 py-3 font-semibold transition-all ${
-                  activeTab === 'raw'
-                    ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
-                }`}
+                className={`ocr-modal-tab ${activeTab === 'raw' ? 'active' : ''}`}
               >
-                <span className="flex items-center justify-center gap-2">
+                <span className="ocr-modal-tab-content">
                   <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
-                  Raw Text
+                  <span className="tab-text">Raw Text</span>
                 </span>
               </button>
             </div>
 
             {/* Content Area - Scrollable */}
-            <div className="overflow-y-auto p-6" style={{ maxHeight: 'calc(85vh - 220px)', background: 'linear-gradient(to bottom right, #f9fafb, white)' }}>
+            <div className="ocr-modal-content">
               {activeTab === 'parsed' ? (
                 <div className="space-y-6">
                   {/* Quick Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 rounded-lg border-l-4 shadow-sm" style={{ background: 'linear-gradient(to bottom right, #dbeafe, #bfdbfe)', borderLeftColor: '#3b82f6' }}>
-                      <div className="text-xs font-semibold uppercase mb-1" style={{ color: '#2563eb' }}>Route</div>
-                      <div className="text-lg font-bold text-gray-900 truncate">{ocrData.busNumber || 'N/A'}</div>
+                  <div className="ocr-stats-grid">
+                    <div className="ocr-stat-card route">
+                      <div className="ocr-stat-label">Route</div>
+                      <div className="ocr-stat-value">{ocrData.busNumber || 'N/A'}</div>
                     </div>
-                    <div className="p-4 rounded-lg border-l-4 shadow-sm" style={{ background: 'linear-gradient(to bottom right, #dcfce7, #bbf7d0)', borderLeftColor: '#22c55e' }}>
-                      <div className="text-xs font-semibold uppercase mb-1" style={{ color: '#16a34a' }}>Departure</div>
-                      <div className="text-lg font-bold text-gray-900">{ocrData.departureTime || 'N/A'}</div>
+                    <div className="ocr-stat-card departure">
+                      <div className="ocr-stat-label">Departure</div>
+                      <div className="ocr-stat-value">{ocrData.departureTime || 'N/A'}</div>
                     </div>
-                    <div className="p-4 rounded-lg border-l-4 shadow-sm" style={{ background: 'linear-gradient(to bottom right, #f3e8ff, #e9d5ff)', borderLeftColor: '#a855f7' }}>
-                      <div className="text-xs font-semibold uppercase mb-1" style={{ color: '#9333ea' }}>Confidence</div>
-                      <div className="text-lg font-bold text-gray-900">{ocrData.confidence ? `${Math.round(ocrData.confidence * 100)}%` : 'N/A'}</div>
+                    <div className="ocr-stat-card confidence">
+                      <div className="ocr-stat-label">Confidence</div>
+                      <div className="ocr-stat-value">{ocrData.confidence ? `${Math.round(ocrData.confidence * 100)}%` : 'N/A'}</div>
                     </div>
                   </div>
 
@@ -1426,46 +1418,46 @@ export const ImageContributionAdminPanel: React.FC = () => {
             </div>
 
             {/* Sticky Footer */}
-            <div className="border-t border-gray-200 bg-white px-6 py-4">
-              <div className="flex flex-wrap gap-2 justify-between">
+            <div className="ocr-modal-footer">
+              <div className="ocr-modal-footer-actions">
                 {/* Left side - Edit button */}
-                <div className="flex gap-2">
+                <div className="ocr-footer-left">
                   {!isEditMode ? (
                     <button
                       onClick={enterEditMode}
-                      className="px-4 py-2 border-2 border-amber-500 text-amber-700 bg-amber-50 rounded-lg hover:bg-amber-100 font-medium transition-all flex items-center gap-2"
+                      className="ocr-btn ocr-btn-edit"
                       disabled={!ocrData?.multipleRoutes?.length}
                       title="Manually correct OCR errors"
                     >
                       <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
-                      Edit Routes
+                      <span className="btn-text">Edit Routes</span>
                     </button>
                   ) : (
                     <>
                       <button
                         onClick={cancelEditMode}
-                        className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-all"
+                        className="ocr-btn ocr-btn-cancel-edit"
                       >
-                        Cancel Edit
+                        <span className="btn-text">Cancel Edit</span>
                       </button>
                       <button
                         onClick={saveCorrections}
                         disabled={savingCorrections}
-                        className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium transition-all shadow-sm hover:shadow flex items-center gap-2"
+                        className="ocr-btn ocr-btn-save"
                       >
                         {savingCorrections ? (
                           <>
                             <Loader2 style={{ width: '16px', height: '16px' }} className="animate-spin" />
-                            Saving...
+                            <span className="btn-text">Saving...</span>
                           </>
                         ) : (
                           <>
                             <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
-                            Save Corrections
+                            <span className="btn-text">Save Corrections</span>
                           </>
                         )}
                       </button>
@@ -1474,12 +1466,12 @@ export const ImageContributionAdminPanel: React.FC = () => {
                 </div>
                 
                 {/* Right side - Approve/Reject buttons */}
-                <div className="flex flex-wrap gap-2">
+                <div className="ocr-footer-right">
                 <button
                   onClick={() => setShowOCRModal(false)}
-                  className="px-4 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-all"
+                  className="ocr-btn ocr-btn-cancel"
                 >
-                  Cancel
+                  <span className="btn-text">Cancel</span>
                 </button>
                 <button
                   onClick={() => {
@@ -1488,11 +1480,11 @@ export const ImageContributionAdminPanel: React.FC = () => {
                       rejectContribution(selectedContribution.id);
                     }
                   }}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition-all shadow-sm hover:shadow flex items-center gap-2"
+                  className="ocr-btn ocr-btn-reject"
                   disabled={processingId !== null || isEditMode}
                 >
                   <XCircle style={{ width: '16px', height: '16px' }} />
-                  Reject
+                  <span className="btn-text">Reject</span>
                 </button>
                 <button
                   onClick={() => {
@@ -1501,11 +1493,11 @@ export const ImageContributionAdminPanel: React.FC = () => {
                       approveContribution(selectedContribution.id, false);
                     }
                   }}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-all shadow-sm hover:shadow flex items-center gap-2"
+                  className="ocr-btn ocr-btn-approve"
                   disabled={processingId !== null || isEditMode}
                 >
                   <CheckCircle style={{ width: '16px', height: '16px' }} />
-                  Approve
+                  <span className="btn-text">Approve</span>
                 </button>
                 <button
                   onClick={() => {
@@ -1513,18 +1505,18 @@ export const ImageContributionAdminPanel: React.FC = () => {
                       handleApproveWithRoutes(selectedContribution.id);
                     }
                   }}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-all shadow-sm hover:shadow flex items-center gap-2"
+                  className="ocr-btn ocr-btn-approve-routes"
                   disabled={processingId !== null || isEditMode}
                 >
                   {processingId ? (
                     <>
                       <Loader2 style={{ width: '16px', height: '16px' }} className="animate-spin" />
-                      Processing...
+                      <span className="btn-text">Processing...</span>
                     </>
                   ) : (
                     <>
                       <CheckCircle style={{ width: '16px', height: '16px' }} />
-                      Approve & Create Routes
+                      <span className="btn-text">Approve & Create Routes</span>
                     </>
                   )}
                 </button>
@@ -1538,31 +1530,37 @@ export const ImageContributionAdminPanel: React.FC = () => {
       {/* Time Edit Popup - shown when routes have missing departure/arrival times */}
       {showTimeEditPopup && routesWithMissingTimes.length > 0 && (
         <div 
-          className="fixed inset-0 flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 10000, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+          className="time-edit-popup-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="time-edit-popup-title"
           onClick={() => {
             setShowTimeEditPopup(false);
             setRoutesWithMissingTimes([]);
             setPendingApprovalContributionId(null);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setShowTimeEditPopup(false);
+              setRoutesWithMissingTimes([]);
+              setPendingApprovalContributionId(null);
+            }
+          }}
         >
           <div 
-            className="bg-white rounded-xl w-full max-w-2xl shadow-2xl overflow-hidden"
-            style={{ maxHeight: '80vh' }}
+            className="time-edit-popup"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div 
-              className="px-6 py-4 flex justify-between items-center border-b-4"
-              style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', borderColor: '#b45309' }}
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-white bg-opacity-20 rounded-lg p-2">
+            <div className="time-edit-popup-header">
+              <div className="time-edit-popup-header-content">
+                <div className="time-edit-popup-icon">
                   <AlertCircle style={{ width: '24px', height: '24px' }} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Missing Time Information</h3>
-                  <p className="text-amber-100 text-xs">{routesWithMissingTimes.length} route(s) need departure time</p>
+                  <h3 id="time-edit-popup-title" className="time-edit-popup-title">Missing Time Information</h3>
+                  <p className="time-edit-popup-subtitle">{routesWithMissingTimes.length} route(s) need departure time</p>
                 </div>
               </div>
               <button
@@ -1571,7 +1569,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                   setRoutesWithMissingTimes([]);
                   setPendingApprovalContributionId(null);
                 }}
-                className="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-all"
+                className="time-edit-popup-close"
                 title="Close"
               >
                 <XCircle style={{ width: '24px', height: '24px' }} />
@@ -1579,32 +1577,32 @@ export const ImageContributionAdminPanel: React.FC = () => {
             </div>
 
             {/* Info Banner */}
-            <div className="px-6 py-3 bg-amber-50 border-b border-amber-200">
-              <p className="text-sm text-amber-800">
+            <div className="time-edit-popup-info">
+              <p>
                 ⚠️ The following routes are missing departure time. Please enter the departure time to integrate them, 
                 or skip these routes to integrate only the valid ones.
               </p>
             </div>
 
             {/* Routes List */}
-            <div className="p-6 max-h-96 overflow-y-auto space-y-4">
+            <div className="time-edit-popup-content">
               {routesWithMissingTimes.map((item) => (
-                <div key={item.index} className="p-4 rounded-lg border-2 border-amber-300 bg-amber-50">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 bg-amber-600">
-                      <span className="text-white font-bold text-xs">{item.index + 1}</span>
+                <div key={item.index} className="time-edit-route-card">
+                  <div className="time-edit-route-header">
+                    <div className="time-edit-route-badge">
+                      <span>{item.index + 1}</span>
                     </div>
-                    <div className="font-semibold text-gray-900">
+                    <div className="time-edit-route-name">
                       {item.route.fromLocation || '?'} → {item.route.toLocation || '?'}
                     </div>
                     {item.route.routeNumber && (
-                      <span className="px-2 py-0.5 text-xs bg-purple-100 text-purple-800 rounded font-bold border border-purple-300">
+                      <span className="time-edit-route-number">
                         {item.route.routeNumber}
                       </span>
                     )}
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="time-edit-inputs">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Departure Time <span className="text-red-500">*</span>
