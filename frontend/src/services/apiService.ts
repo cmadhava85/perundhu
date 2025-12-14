@@ -88,8 +88,6 @@ export class ApiService {
         config.headers[TRACE_HEADERS.TRACE_ID] = traceId;
         config.headers[TRACE_HEADERS.SESSION_ID] = sessionId;
         
-        logger.debug(`[${traceId}] ApiService Request: ${config.method?.toUpperCase()} ${config.url}`);
-        
         // Add authorization header if available
         const authToken = localStorage.getItem('authToken');
         if (authToken) {

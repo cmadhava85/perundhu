@@ -304,22 +304,15 @@ class Logger {
   private log(level: LogLevel, message: string, context?: LogContext): void {
     const timestamp = new Date().toISOString();
     
-    // Get traceId from context - handle circular dependency by lazy import
-    let traceId: string | undefined;
-    let sessionId: string | undefined;
-    try {
-      traceId = traceContext.getTraceId();
-      sessionId = traceContext.getSessionId();
-    } catch {
-      // traceContext may not be available yet during initialization
-    }
+    // Get traceId from context if provided, otherwise skip to avoid circular calls
+    const traceId = context?.requestId as string | undefined;
     
     const logEntry = {
       timestamp,
       level,
       message,
       traceId,
-      sessionId: sessionId || this.sessionId,
+      sessionId: this.sessionId,
       url: globalThis.window === undefined ? undefined : globalThis.window.location.pathname,
       ...context,
     };
@@ -342,8 +335,7 @@ class Logger {
     // In production, only log warnings and errors to console
     if (this.isProduction && (level === LogLevel.WARN || level === LogLevel.ERROR)) {
       const consoleMethod = level === LogLevel.ERROR ? console.error : console.warn;
-      const traceTag = traceId ? `[${traceId}]` : '';
-      consoleMethod(`[${level}]${traceTag} ${message}`);
+      consoleMethod(`[${level}] ${message}`);
     }
 
     // Store in session storage (development only)

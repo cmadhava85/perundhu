@@ -150,12 +150,6 @@ export const createApiInstance = (): AxiosInstance => {
       config.headers.set(TRACE_HEADERS.TRACE_ID, traceId);
       config.headers.set(TRACE_HEADERS.SESSION_ID, sessionId);
       
-      // Log the request with traceId
-      logger.debug(`[${traceId}] API Request: ${config.method?.toUpperCase()} ${config.url}`, {
-        category: 'API' as unknown as undefined,
-        requestId: traceId,
-      });
-      
       return config;
     },
     (error) => {
@@ -166,19 +160,9 @@ export const createApiInstance = (): AxiosInstance => {
   // Add response interceptor to log responses with traceId
   instance.interceptors.response.use(
     (response) => {
-      const traceId = response.config.headers.get(TRACE_HEADERS.TRACE_ID) || 'unknown';
-      logger.debug(`[${traceId}] API Response: ${response.status} ${response.config.url}`, {
-        category: 'API' as unknown as undefined,
-        requestId: traceId as string,
-      });
       return response;
     },
     (error) => {
-      const traceId = error.config?.headers?.get?.(TRACE_HEADERS.TRACE_ID) ?? 'unknown';
-      logger.error(`[${traceId}] API Error: ${error.message}`, error, {
-        category: 'API' as unknown as undefined,
-        requestId: traceId as string,
-      });
       return Promise.reject(error);
     }
   );

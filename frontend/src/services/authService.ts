@@ -69,8 +69,6 @@ class AuthService {
         config.headers[TRACE_HEADERS.TRACE_ID] = traceId;
         config.headers[TRACE_HEADERS.SESSION_ID] = sessionId;
         
-        logger.debug(`[${traceId}] AuthService Request: ${config.method?.toUpperCase()} ${config.url}`);
-        
         const token = this.getToken();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;

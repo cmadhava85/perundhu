@@ -35,8 +35,6 @@ apiClient.interceptors.request.use(
     config.headers[TRACE_HEADERS.TRACE_ID] = traceId;
     config.headers[TRACE_HEADERS.SESSION_ID] = sessionId;
     
-    logger.debug(`[${traceId}] Analytics Request: ${config.method?.toUpperCase()} ${config.url}`);
-    
     return config;
   },
   error => {

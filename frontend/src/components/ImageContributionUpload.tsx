@@ -460,7 +460,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           lineHeight: '1.4'
         }}>
           {t('contribution.imageUpload.descriptionShort', 
-            'Upload photos of bus schedules. AI extracts data automatically.')}
+            'Upload photos of bus schedules.')}
         </p>
       </div>
           

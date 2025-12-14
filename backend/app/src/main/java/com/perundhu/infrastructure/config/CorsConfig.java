@@ -41,6 +41,9 @@ public class CorsConfig {
         config.addAllowedHeader("Authorization");
         config.addAllowedHeader("X-Recaptcha-Token"); // reCAPTCHA v3 token
         config.addAllowedHeader("X-Form-Timestamp"); // Honeypot form timestamp
+        config.addAllowedHeader("X-Trace-Id"); // Distributed tracing
+        config.addAllowedHeader("X-Session-Id"); // Session tracking
+        config.addAllowedHeader("X-Request-Id"); // Request tracking
 
         // Apply this configuration to all paths
         source.registerCorsConfiguration("/**", config);
