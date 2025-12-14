@@ -180,15 +180,25 @@ export function useBusSearch({
       };
     },
     
-    enabled: enabled && !!fromLocationId && !!toLocationId,
+    // Only enable when we have valid positive location IDs (negative IDs indicate user-typed text)
+    enabled: enabled && !!fromLocationId && !!toLocationId && fromLocationId > 0 && toLocationId > 0,
     
     // Custom options for bus search
     staleTime: 2 * 60 * 1000, // 2 minutes - bus schedules don't change frequently
     gcTime: 10 * 60 * 1000, // 10 minutes cache
     
-    // Error handling
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
+    // Error handling - reduced retries to prevent excessive API calls
+    retry: (failureCount, error) => {
+      // Don't retry on 4xx errors or 500 with validation messages
+      const axiosError = error as { response?: { status?: number } };
+      const status = axiosError?.response?.status;
+      if (status && status >= 400 && status < 500) return false;
+      // Only retry once for 500 errors (might be cold start)
+      if (status === 500) return failureCount < 1;
+      // Retry up to 2 times for other errors
+      return failureCount < 2;
+    },
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 5000),
   });
 }
 

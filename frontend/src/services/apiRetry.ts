@@ -24,11 +24,13 @@ export interface RetryConfig {
  * Default retry configuration
  */
 export const DEFAULT_RETRY_CONFIG: RetryConfig = {
-  maxRetries: 3,
+  maxRetries: 2,
   retryDelay: 1000,
   backoffMultiplier: 2,
   maxDelay: 10000,
-  retryableStatusCodes: [408, 429, 500, 502, 503, 504],
+  // Only retry on gateway/proxy errors and timeouts - NOT 500 (let React Query handle those)
+  // 500 errors from validation failures should not be retried at axios level
+  retryableStatusCodes: [408, 429, 502, 503, 504],
   retryableErrorCodes: ['ECONNABORTED', 'ETIMEDOUT', 'ENOTFOUND', 'ENETUNREACH', 'ERR_NETWORK'],
 };
 

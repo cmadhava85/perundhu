@@ -168,12 +168,13 @@ export const createApiInstance = (): AxiosInstance => {
   );
 
   // Setup retry interceptor for resilience
+  // Only retry on gateway/proxy errors - NOT 500 (React Query handles those)
   setupRetryInterceptor(instance, {
-    maxRetries: 3,
+    maxRetries: 2,
     retryDelay: 1000,
     backoffMultiplier: 2,
-    maxDelay: 10000,
-    retryableStatusCodes: [408, 429, 500, 502, 503, 504],
+    maxDelay: 5000,
+    retryableStatusCodes: [408, 429, 502, 503, 504], // Removed 500 - let React Query handle it
     retryableErrorCodes: ['ECONNABORTED', 'ETIMEDOUT', 'ENOTFOUND', 'ENETUNREACH', 'ERR_NETWORK'],
   });
 

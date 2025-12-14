@@ -13,11 +13,20 @@ export const queryClient = new QueryClient({
       // Cache data for 30 minutes
       gcTime: 30 * 60 * 1000, // Previously called cacheTime
       
-      // Retry failed requests
-      retry: 2,
+      // Smart retry - only retry on network/transient errors, not validation failures
+      retry: (failureCount, error) => {
+        // Don't retry on 4xx errors (client errors)
+        const axiosError = error as { response?: { status?: number } };
+        const status = axiosError?.response?.status;
+        if (status && status >= 400 && status < 500) return false;
+        // Only retry once for server errors (may be cold start)
+        if (status && status >= 500) return failureCount < 1;
+        // Retry up to 2 times for network errors
+        return failureCount < 2;
+      },
       
-      // Retry delay with exponential backoff
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      // Retry delay with exponential backoff (capped at 5 seconds)
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 5000),
       
       // Disable refetch on window focus - prevents unnecessary API calls when switching tabs
       refetchOnWindowFocus: false,
