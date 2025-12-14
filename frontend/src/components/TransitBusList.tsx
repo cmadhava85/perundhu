@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import TransitBusCard from './TransitBusCard';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import '../styles/transit-design-system.css';
@@ -357,27 +358,40 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 )}
               </>
             ) : (
-              t('busList.noBusesMessage', "We couldn't find any buses for your selected route.")
+              t('busList.noBusesMessage', 'Currently no bus route available for this selection.')
             )}
           </p>
-          <div className="stack stack-sm" style={{ maxWidth: '300px', margin: '0 auto' }}>
-            <div className="text-caption">{t('busList.suggestions', 'Suggestions:')}</div>
-            <ul style={{ textAlign: 'left', color: 'var(--transit-text-secondary)' }}>
-              {hasInvalidLocation ? (
-                <>
-                  <li>{t('busList.suggestionSelectFromList', 'Select a location from the dropdown suggestions')}</li>
-                  <li>{t('busList.suggestionCheckSpelling', 'Check the spelling of your location')}</li>
-                  <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
-                </>
-              ) : (
-                <>
-                  <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
-                  <li>{t('busList.suggestionTimes', 'Check different times of day')}</li>
-                  <li>{t('busList.suggestionSupport', 'Contact support for assistance')}</li>
-                </>
-              )}
-            </ul>
-          </div>
+          {hasInvalidLocation ? (
+            <div className="stack stack-sm" style={{ maxWidth: '300px', margin: '0 auto' }}>
+              <div className="text-caption">{t('busList.suggestions', 'Suggestions:')}</div>
+              <ul style={{ textAlign: 'left', color: 'var(--transit-text-secondary)' }}>
+                <li>{t('busList.suggestionSelectFromList', 'Select a location from the dropdown suggestions')}</li>
+                <li>{t('busList.suggestionCheckSpelling', 'Check the spelling of your location')}</li>
+                <li>{t('busList.suggestionNearby', 'Try searching for nearby locations')}</li>
+              </ul>
+            </div>
+          ) : (
+            <div style={{ marginTop: 'var(--space-4)' }}>
+              <p className="text-body" style={{ color: 'var(--transit-text-secondary)', marginBottom: 'var(--space-4)' }}>
+                {t('busList.contributePrompt', 'If you know this route, help others by contributing the bus information.')}
+              </p>
+              <Link 
+                to="/contribute" 
+                className="transit-button transit-button-primary"
+                style={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '8px',
+                  padding: '12px 24px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  textDecoration: 'none'
+                }}
+              >
+                ✏️ {t('busList.contributeButton', 'Contribute Route Info')}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     );
