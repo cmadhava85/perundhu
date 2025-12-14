@@ -701,16 +701,44 @@
 
   .new-stop-entry {
     flex-direction: column;
+    padding: 12px;
+    gap: 8px;
   }
 
   .stop-order {
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .order-number {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+
+  .stop-fields {
+    width: 100%;
+    gap: 10px;
   }
 
   .remove-stop-btn {
     margin-top: 0;
     align-self: flex-end;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+
+  .new-stop-entry {
+    position: relative;
+    padding-right: 48px;
   }
 
   .action-buttons {
@@ -721,5 +749,44 @@
   .submit-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .field-group label {
+    font-size: 0.7rem;
+  }
+
+  .time-input {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .new-stop-entry {
+    padding: 10px;
+    padding-right: 44px;
+  }
+
+  .order-number {
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+  }
+
+  .remove-stop-btn {
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .stop-fields {
+    gap: 8px;
+  }
+
+  .time-input {
+    padding: 7px 8px;
+    font-size: 0.8rem;
   }
 }

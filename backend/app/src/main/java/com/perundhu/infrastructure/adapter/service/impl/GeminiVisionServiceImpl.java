@@ -729,10 +729,37 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
   /**
    * Normalize location name to standard format.
+   * Strips common suffixes like "BUS STAND", "BUS STATION", etc.
    */
   private String normalizeLocationName(String name) {
     if (name == null || name.isEmpty()) {
       return name;
+    }
+
+    String upper = name.toUpperCase().trim();
+
+    // Strip common suffixes (order matters - longer patterns first)
+    String[] suffixesToRemove = {
+        " BUS STAND", " BUS STATION", " BUSSTAND", " BUSSTATION",
+        " STAND", " STATION", " TERMINAL", " DEPOT",
+        "BUSSTAND", "BUSSTATION"  // For cases without spaces
+    };
+    for (String suffix : suffixesToRemove) {
+      if (upper.endsWith(suffix)) {
+        upper = upper.substring(0, upper.length() - suffix.length()).trim();
+        break;
+      }
+    }
+
+    // Also handle prefix patterns like "CMBT" (Chennai Mofussil Bus Terminus)
+    String[] prefixAbbreviations = {
+        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC"
+    };
+    for (String abbr : prefixAbbreviations) {
+      if (upper.equals(abbr)) {
+        // Keep abbreviations as-is - they're valid location identifiers
+        return upper;
+      }
     }
 
     // Map of common variations to standard names
@@ -743,9 +770,10 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         Map.entry("TIRUCHIRAPALLI", "TRICHY"),
         Map.entry("TUTICORIN", "THOOTHUKUDI"),
         Map.entry("TANJORE", "THANJAVUR"),
-        Map.entry("NELLAI", "TIRUNELVELI"));
+        Map.entry("NELLAI", "TIRUNELVELI"),
+        Map.entry("MATHAVARAMBUSSTAND", "MATHAVARAM"),
+        Map.entry("MATHAVARAMBUSSTATION", "MATHAVARAM"));
 
-    String upper = name.toUpperCase().trim();
     return nameMap.getOrDefault(upper, upper);
   }
 
@@ -798,46 +826,71 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
   // Prompt for extracting bus schedule from pasted text
   private static final String TEXT_EXTRACTION_PROMPT = """
+      You are a bus route information extractor for Tamil Nadu, India.
       Extract bus route information from this pasted text.
-      The text may be from WhatsApp, Facebook, Twitter, or other sources.
+      The text may be from WhatsApp, Facebook, Twitter, bus station boards, or other sources.
       The text may be in Tamil (தமிழ்), English, or mixed.
 
-      TAMIL TEXT HANDLING:
-      - Convert Tamil text to English transliteration:
-        * சென்னை → Chennai, மதுரை → Madurai, கோயம்புத்தூர் → Coimbatore
-        * திருச்சி → Trichy, சேலம் → Salem, திருநெல்வேலி → Tirunelveli
-        * சிவகாசி → Sivakasi, அருப்புக்கோட்டை → Aruppukkottai
-        * விருதுநகர் → Virudhunagar, தேனி → Theni, திண்டுக்கல் → Dindigul
+      COMMON TEXT FORMATS TO RECOGNIZE:
+      1. WhatsApp format: "[12/01/25, 6:30 AM] User: 570 Chennai to Madurai 6:00 AM"
+      2. Arrow format: "Chennai → Madurai" or "Chennai -> Madurai" or "Chennai - Madurai"
+      3. Official format: "Route No: 570, From: Chennai, To: Madurai, Departure: 06:00"
+      4. Tamil format: "சென்னை லிருந்து மதுரை வரை பஸ் எண் 570"
+      5. Simple format: "Bus 27D runs from Coimbatore to Salem at 5:30 AM"
+      6. Schedule format: "TNSTC 570: Chennai-Madurai via Trichy, timings: 6:00, 8:00, 10:00"
+      7. Announcement format: "New service! 123A Express Chennai to Tirunelveli daily"
 
-      Extract the following information if present:
+      TAMIL TEXT HANDLING - Convert Tamil to English:
+      CITIES: சென்னை→Chennai, மதுரை→Madurai, கோயம்புத்தூர்→Coimbatore, திருச்சி→Trichy,
+              சேலம்→Salem, திருநெல்வேலி→Tirunelveli, சிவகாசி→Sivakasi, அருப்புக்கோட்டை→Aruppukkottai,
+              விருதுநகர்→Virudhunagar, தேனி→Theni, திண்டுக்கல்→Dindigul, தஞ்சாவூர்→Thanjavur,
+              கன்னியாகுமரி→Kanyakumari, திருப்பூர்→Tiruppur, ஈரோடு→Erode, நாமக்கல்→Namakkal,
+              கரூர்→Karur, வேலூர்→Vellore, குடியாத்தம்→Gudiyatham, கும்பகோணம்→Kumbakonam
+      BUS TERMS: பஸ்/வண்டி→Bus, எண்→Number, புறப்பாடு→Departure, வரவு→Arrival,
+                 நிலையம்→Station, வழி→Via, மணி→hour, காலை→Morning/AM, மாலை→Evening/PM
 
-      Return ONLY in this JSON format (no markdown, no explanation):
+      Return ONLY valid JSON (no markdown code blocks, no explanation):
       {
-        "busNumber": "route/bus number or null",
-        "fromLocation": "departure city/station in English or null",
-        "toLocation": "destination city/station in English or null",
-        "departureTimes": ["HH:MM", "HH:MM"],
-        "arrivalTimes": ["HH:MM", "HH:MM"],
-        "stops": ["stop1", "stop2", "stop3"],
-        "busType": "EXPRESS/ORDINARY/DELUXE/AC or null",
-        "via": "intermediate route description or null",
-        "confidence": 0.0-1.0,
-        "extractedFields": ["list of fields that were clearly found"],
-        "warnings": ["any issues or ambiguities found"]
+        "busNumber": "route/bus number like 570, 27D, MTC-45, or null if not found",
+        "fromLocation": "departure city in English (e.g., Chennai, Madurai) or null",
+        "toLocation": "destination city in English or null",
+        "departureTimes": ["06:00", "08:30"],
+        "arrivalTimes": ["12:00", "14:30"],
+        "stops": ["Trichy", "Dindigul", "Theni"],
+        "busType": "EXPRESS/ORDINARY/DELUXE/AC/SUPER DELUXE or null",
+        "via": "route description like 'via Trichy' or null",
+        "confidence": 0.85,
+        "extractedFields": ["busNumber", "fromLocation", "toLocation"],
+        "warnings": ["No departure time found", "Bus type unclear"],
+        "suggestions": ["Add departure time for better accuracy"]
       }
 
-      RULES:
-      - Use 24-hour HH:MM format for times
-      - Convert Tamil city names to English
-      - Set confidence based on how much data was clearly found:
-        * 0.9+ = bus number + from + to + at least one time
-        * 0.7-0.9 = from + to + time (no bus number)
-        * 0.5-0.7 = from + to only
-        * 0.3-0.5 = partial information
-        * <0.3 = cannot extract meaningful route data
-      - Add warnings for ambiguous or unclear information
-      - If text contains personal plans ("I'm going", "we will travel"), reduce confidence by 0.3
-      - If text is a question about routes, set confidence to 0 and add warning
+      EXTRACTION RULES:
+      1. BUS NUMBER: Look for patterns like 570, 27D, A1, MTC-45, TNSTC-123, SETC-456
+      2. LOCATIONS: Extract FROM and TO - these are the most important fields
+         - Common patterns: "X to Y", "X → Y", "X - Y", "from X to Y", "X லிருந்து Y க்கு"
+         - Always output city names in English, even if input is Tamil
+      3. TIMES: Convert to 24-hour HH:MM format (06:00, 18:30)
+         - "6 AM" → "06:00", "6:30 PM" → "18:30"
+         - "காலை 6 மணி" (morning 6) → "06:00"
+      4. STOPS: List intermediate stops if mentioned after "via", "stops:", "வழி"
+
+      CONFIDENCE SCORING:
+      - 0.9-1.0: Found busNumber + fromLocation + toLocation + at least one time
+      - 0.7-0.89: Found fromLocation + toLocation + time (no bus number)
+      - 0.5-0.69: Found fromLocation + toLocation only
+      - 0.3-0.49: Found partial information (only one location or only bus number)
+      - 0.0-0.29: Cannot extract meaningful route data
+
+      REDUCE CONFIDENCE BY 0.3 IF:
+      - Text contains personal travel plans ("I'm going", "we will travel", "நான் போகிறேன்")
+      - Text is asking a question about routes ("Which bus?", "எந்த பஸ்?")
+      - Text is informal chat/conversation
+
+      ADD HELPFUL SUGGESTIONS when data is incomplete:
+      - If no bus number: "Add bus/route number for complete info"
+      - If no times: "Include departure time like '6:00 AM' or 'காலை 6 மணி'"
+      - If locations unclear: "Specify cities clearly like 'Chennai to Madurai'"
 
       TEXT TO ANALYZE:
       %s

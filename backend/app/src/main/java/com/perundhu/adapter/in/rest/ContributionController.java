@@ -649,8 +649,11 @@ public class ContributionController {
       PasteContributionValidator.ValidationResult validation = pasteValidator.validatePasteContent(pastedText);
 
       if (!validation.isValid()) {
-        return ResponseEntity.badRequest()
-            .body(createErrorResponse(validation.getReason()));
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("success", false);
+        errorResponse.put("error", validation.getReason());
+        errorResponse.put("suggestions", validation.getSuggestions());
+        return ResponseEntity.badRequest().body(errorResponse);
       }
 
       // Normalize text format (WhatsApp, Facebook, Twitter, etc.)
@@ -935,6 +938,7 @@ public class ContributionController {
       response.put("isValid", validation.isValid());
       response.put("reason", validation.getReason());
       response.put("warnings", validation.getWarnings());
+      response.put("suggestions", validation.getSuggestions());
       response.put("formatDetected", formatMeta.getType().toString());
       response.put("confidence", adjustedConfidence);
       response.put("extractedBy", extractedBy);

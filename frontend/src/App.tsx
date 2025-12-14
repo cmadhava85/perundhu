@@ -88,18 +88,21 @@ function AppContent() {
   const [fromLocation, setFromLocation] = useState(initialFromLocation);
   const [toLocation, setToLocation] = useState(initialToLocation);
   const [_isSearching, setIsSearching] = useState(false);
+  // Track if initial locations have been set to prevent infinite loops
+  const [initialLocationsSet, setInitialLocationsSet] = useState(false);
   
-  // Update location states when API data is loaded
+  // Update location states when API data is loaded (only once)
   useEffect(() => {
-    if (locations && locations.length > 0) {
+    if (locations && locations.length > 0 && !initialLocationsSet) {
       if (!fromLocation) {
         setFromLocation(locations[0]);
       }
       if (!toLocation && locations.length > 1) {
         setToLocation(locations[1]);
       }
+      setInitialLocationsSet(true);
     }
-  }, [locations, !fromLocation, !toLocation]);
+  }, [locations, fromLocation, toLocation, initialLocationsSet]);
   
   useEffect(() => {
     const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
@@ -116,6 +119,9 @@ function AppContent() {
     }
   }, [fromLocation, getDestinations]);
 
+  // Track if search has been triggered to prevent duplicate calls
+  const [searchTriggered, setSearchTriggered] = useState(false);
+
   // Restore search parameters from URL on page load/refresh
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -127,6 +133,7 @@ function AppContent() {
       const to = locations.find(loc => loc.id === parseInt(toId));
       
       if (from && to) {
+        // Only update locations if they differ
         if (fromLocation?.id !== from.id) {
           setFromLocation(from);
         }
@@ -134,28 +141,38 @@ function AppContent() {
           setToLocation(to);
         }
         
-        if (location.pathname === '/search-results' && buses.length === 0 && !busesLoading) {
+        // Only trigger search once when on search-results page with no results
+        if (location.pathname === '/search-results' && 
+            buses.length === 0 && 
+            !busesLoading && 
+            !searchTriggered) {
+          setSearchTriggered(true);
           searchBuses(from, to);
         }
       }
     }
-  }, [location.search, location.pathname, locations]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, location.pathname, locations, busesLoading, searchTriggered]);
 
-  // Update main tab when route changes
+  // Reset searchTriggered when navigating away from search-results
+  useEffect(() => {
+    if (location.pathname !== '/search-results') {
+      setSearchTriggered(false);
+    }
+  }, [location.pathname]);
+
+  // Update main tab when route changes - removed activeMainTab from dependencies
+  // to prevent unnecessary re-renders
   useEffect(() => {
     const pathname = location.pathname;
     if (pathname === '/contribute') {
-      if (activeMainTab !== 'contribute') {
-        setActiveMainTab('contribute');
-        setActiveTab('contribute');
-      }
+      setActiveMainTab('contribute');
+      setActiveTab('contribute');
     } else if (pathname === '/' || pathname === '/search' || pathname === '/search-results') {
-      if (activeMainTab !== 'search') {
-        setActiveMainTab('search');
-        setActiveTab('search');
-      }
+      setActiveMainTab('search');
+      setActiveTab('search');
     }
-  }, [location.pathname, activeMainTab]);
+  }, [location.pathname]);
 
   // Handler for the "Find Buses" button click
   const handleSearch = useCallback(async (fromLoc?: BusLocation, toLoc?: BusLocation) => {

@@ -940,16 +940,25 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           {fromQuery && toQuery && selectedFromLocation && selectedToLocation && (
             <div style={{
               textAlign: 'center',
-              fontSize: '12px',
-              color: 'var(--transit-text-tertiary)',
-              marginTop: '-8px'
+              fontSize: '13px',
+              color: 'var(--transit-text-secondary, #64748b)',
+              marginTop: '4px',
+              marginBottom: '8px',
+              padding: '8px 12px',
+              background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+              borderRadius: '8px',
+              border: '1px solid #bae6fd',
+              fontWeight: '500'
             }}>
               💡 Press <kbd style={{
-                padding: '2px 6px',
-                background: '#f3f4f6',
+                padding: '3px 8px',
+                background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                color: '#ffffff',
                 borderRadius: '4px',
-                border: '1px solid #e5e7eb',
-                fontSize: '11px'
+                border: 'none',
+                fontSize: '12px',
+                fontWeight: '600',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
               }}>Enter</kbd> to search
             </div>
           )}

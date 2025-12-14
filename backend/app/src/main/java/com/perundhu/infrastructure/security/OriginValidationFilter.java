@@ -28,7 +28,7 @@ public class OriginValidationFilter extends OncePerRequestFilter {
 
   private static final Logger log = LoggerFactory.getLogger(OriginValidationFilter.class);
 
-  @Value("${security.allowed-origins:http://localhost:5173,http://localhost:4173,https://perundhu.app,https://www.perundhu.app}")
+  @Value("${security.allowed-origins:http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:4173,https://perundhu.app,https://www.perundhu.app}")
   private String allowedOriginsConfig;
 
   @Value("${security.origin-validation.enabled:true}")

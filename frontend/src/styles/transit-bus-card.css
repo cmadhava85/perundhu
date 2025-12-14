@@ -191,6 +191,7 @@
   font-size: var(--text-sm);
   color: var(--transit-text-secondary);
   font-weight: var(--font-medium);
+  white-space: nowrap;
 }
 
 /* Add Stops CTA Button */

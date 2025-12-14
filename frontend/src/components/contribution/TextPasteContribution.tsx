@@ -17,6 +17,7 @@ interface ValidationResponse {
   isValid: boolean;
   reason?: string;
   warnings: string[];
+  suggestions?: string[];
   formatDetected: string;
   confidence: number;
   extracted: ExtractedData;
@@ -38,7 +39,7 @@ export const TextPasteContribution: React.FC<TextPasteContributionProps> = ({ on
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  // Example templates
+  // Example templates with various formats that parse well
   const exampleTexts = [
     {
       label: t('paste.examples.whatsapp', 'WhatsApp Format'),
@@ -48,10 +49,17 @@ Arrival: 2:00 PM
 Stops: Tambaram, Chengalpattu, Villupuram, Trichy`,
     },
     {
-      label: t('paste.examples.simple', 'Simple Format'),
+      label: t('paste.examples.simple', 'Arrow Format'),
       text: `Route 123A
 Coimbatore → Salem
 Morning 7:30 AM, Evening 5:00 PM`,
+    },
+    {
+      label: t('paste.examples.official', 'Official Format'),
+      text: `TNSTC-45G Chennai - Madurai Express
+Departure: Chennai 6:00 AM
+Arrival: Madurai 2:00 PM
+Via: Chengalpattu, Villupuram, Trichy`,
     },
     {
       label: t('paste.examples.tamil', 'Tamil Format'),
@@ -59,6 +67,14 @@ Morning 7:30 AM, Evening 5:00 PM`,
 மதுரை லிருந்து திருச்சி க்கு
 காலை 10:00 மணி`,
     },
+  ];
+  
+  // Format hints for better parsing
+  const formatHints = [
+    t('paste.hints.arrow', 'Use arrow (→ or ->) between locations: "Chennai → Madurai"'),
+    t('paste.hints.busNumber', 'Put bus number at start: "Bus 27D" or "Route 123A"'),
+    t('paste.hints.fromTo', 'Use "from...to": "from Chennai to Madurai"'),
+    t('paste.hints.times', 'Include times with AM/PM: "6:00 AM" or "காலை 10 மணி"'),
   ];
 
   const handleTextChange = (text: string) => {
@@ -75,7 +91,7 @@ Morning 7:30 AM, Evening 5:00 PM`,
     setIsValidating(true);
     
     try {
-      const response = await api.post('/contributions/paste/validate', {
+      const response = await api.post('/api/v1/contributions/paste/validate', {
         text: pastedText,
       });
 
@@ -124,7 +140,7 @@ Morning 7:30 AM, Evening 5:00 PM`,
     }
 
     try {
-      const response = await api.post('/contributions/paste', securePayload.data, {
+      const response = await api.post('/api/v1/contributions/paste', securePayload.data, {
         headers: securePayload.headers
       });
 
@@ -202,6 +218,15 @@ Morning 7:30 AM, Evening 5:00 PM`,
           ))}
         </div>
       </div>
+      
+      <div className="format-hints-section">
+        <h4>💡 {t('paste.hints.title', 'Tips for Better Parsing:')}</h4>
+        <ul className="format-hints-list">
+          {formatHints.map((hint, i) => (
+            <li key={i}>{hint}</li>
+          ))}
+        </ul>
+      </div>
 
       <div className="paste-area">
         <label htmlFor="pasteText">
@@ -236,6 +261,16 @@ Morning 7:30 AM, Evening 5:00 PM`,
             <div className="validation-error">
               <h4>❌ {t('paste.validation.failed', 'Validation Failed')}</h4>
               <p>{validation.reason}</p>
+              {validation.suggestions && validation.suggestions.length > 0 && (
+                <div className="suggestions-list">
+                  <h5>💡 {t('paste.suggestions.title', 'Suggestions:')}</h5>
+                  <ul>
+                    {validation.suggestions.map((suggestion, i) => (
+                      <li key={i}>{suggestion}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <div className="validation-success">

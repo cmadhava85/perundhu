@@ -242,6 +242,9 @@ export interface RouteContribution {
   validationMessage?: string;
   processedDate?: string;
   stops: StopContribution[];
+  // Anti-spam fields
+  website?: string; // Honeypot for bot detection
+  captchaToken?: string | null;
 }
 
 /**
@@ -278,5 +281,8 @@ export interface ImageContribution {
   extractedData?: string;
   // Add missing field needed by tests
   imageData?: string;
+  // Anti-spam fields
+  website?: string; // Honeypot for bot detection
+  captchaToken?: string | null;
 }
 

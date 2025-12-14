@@ -4,6 +4,7 @@ import { AlertTriangle } from 'lucide-react';
 import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
+import { getRecaptchaToken } from '../../services/recaptchaService';
 import './SimpleRouteForm.css';
 
 interface LocationData {
@@ -36,6 +37,8 @@ interface EnhancedFormData extends FormData {
   busName: string;
   intermediateStops: Stop[];
   stopsData: Stop[] | string;
+  website?: string; // Honeypot field for bot detection
+  captchaToken?: string | null;
 }
 
 interface SimpleRouteFormProps {
@@ -66,6 +69,10 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
   
   // Track location warnings (unverified locations)
   const [locationWarnings, setLocationWarnings] = useState<{[key: string]: string}>({});
+  
+  // Honeypot field for bot detection (invisible to users)
+  const [honeypot, setHoneypot] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Validate form before submission
   const validateForm = (): boolean => {
@@ -119,16 +126,27 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
       return;
     }
     
-    const enhancedData = {
-      ...formData,
-      fromLocationName: formData.origin || 'Unknown Origin',
-      toLocationName: formData.destination || 'Unknown Destination',
-      busName: formData.route || formData.busNumber || 'Unknown Bus',
-      intermediateStops: intermediateStops,
-      stopsData: intermediateStops.length > 0 ? intermediateStops : formData.stops
-    };
+    setIsSubmitting(true);
     
-    onSubmit(enhancedData);
+    try {
+      // Get reCAPTCHA token for spam protection
+      const captchaToken = await getRecaptchaToken('manual_contribution');
+      
+      const enhancedData = {
+        ...formData,
+        fromLocationName: formData.origin || 'Unknown Origin',
+        toLocationName: formData.destination || 'Unknown Destination',
+        busName: formData.route || formData.busNumber || 'Unknown Bus',
+        intermediateStops: intermediateStops,
+        stopsData: intermediateStops.length > 0 ? intermediateStops : formData.stops,
+        website: honeypot, // Honeypot for bot detection
+        captchaToken
+      };
+      
+      onSubmit(enhancedData);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Use stable counter for stop IDs to prevent re-renders
@@ -607,12 +625,26 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
         )}
       </div>
       
+      {/* Honeypot field - hidden from users, visible to bots */}
+      <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+      
       <div className="form-actions">
-        <button type="submit" className="submit-button modern-submit-btn">
+        <button type="submit" className="submit-button modern-submit-btn" disabled={isSubmitting}>
           <div className="submit-btn-content">
-            <span className="submit-icon">🚌</span>
-            <span className="submit-text">{t('contribution.submitRoute', 'Submit Route Information')}</span>
-            <span className="submit-arrow">→</span>
+            <span className="submit-icon">{isSubmitting ? '⏳' : '🚌'}</span>
+            <span className="submit-text">{isSubmitting ? t('contribution.submitting', 'Submitting...') : t('contribution.submitRoute', 'Submit Route Information')}</span>
+            <span className="submit-arrow">{isSubmitting ? '' : '→'}</span>
           </div>
         </button>
       </div>

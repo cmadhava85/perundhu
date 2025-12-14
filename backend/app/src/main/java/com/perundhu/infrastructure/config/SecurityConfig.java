@@ -41,7 +41,7 @@ public class SecurityConfig {
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:}")
   private String issuerUri;
 
-  @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:4173}")
+  @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:4173}")
   private String allowedOrigins;
 
   private final RateLimitingFilter rateLimitingFilter;

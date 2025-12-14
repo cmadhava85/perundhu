@@ -78,13 +78,14 @@ const nominatimResults = await GeocodingService.searchNominatimOptimized(query, 
 
 ## 🔧 **Environment Variables**
 
-You can optionally remove the Google API key from `.env` files if you want to use only Leaflet maps:
+You can optionally remove the Google API key from `.env.local` if you want to use only Leaflet maps:
 
 ```bash
 # Optional: Remove or comment out if using only OpenStreetMap
-# VITE_GOOGLE_MAPS_API_KEY=AIzaSyCRuEOy2k959dAwHY3bN3CercDFNOcfku0
+# VITE_GOOGLE_MAPS_API_KEY=your-api-key-here
 ```
 
+**Note**: Google Maps API key should be stored in `.env.local` (not committed) or injected during CI/CD.
 **But keep it if you want Google Maps as a display option** (maps are shown less frequently than autocomplete).
 
 ## 📈 **Verification**

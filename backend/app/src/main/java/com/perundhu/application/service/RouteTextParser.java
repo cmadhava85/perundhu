@@ -57,40 +57,195 @@ public class RouteTextParser {
    * Extract bus number from text
    */
   private void extractBusNumber(String text, RouteData data) {
-    // Patterns: 27D, 570, MTC-123, Bus 27D, Route 570, பஸ் 27D
-    Pattern busPattern = Pattern.compile(
-        "(?i)(?:bus|route|பஸ்|வண்டி)\\s*[:#-]?\\s*([A-Z0-9-]+)|" +
-            "\\b([A-Z]?\\d{1,4}[A-Z]?)\\b");
+    // Multiple patterns for different bus number formats
+    // Priority 1: Explicit "Bus/Route X" format
+    Pattern explicitPattern = Pattern.compile(
+        "(?i)(?:bus|route|service|no\\.?|number|பஸ்|வண்டி|எண்)\\s*[:#.-]?\\s*([A-Z0-9]{1,4}[A-Z]?|[A-Z]{1,3}[0-9]{1,4}[A-Z]?)",
+        Pattern.CASE_INSENSITIVE);
 
-    Matcher matcher = busPattern.matcher(text);
-    if (matcher.find()) {
-      String busNumber = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
-      if (busNumber != null && !busNumber.isEmpty()) {
-        // Validate bus number format (1-4 digits optionally with letters)
-        if (busNumber.matches("[A-Z]?\\d{1,4}[A-Z]?")) {
-          data.setBusNumber(busNumber.toUpperCase());
-        }
+    // Priority 2: TNSTC/MTC format: TNSTC-123, MTC 45G, etc.
+    Pattern prefixPattern = Pattern.compile(
+        "(?i)(TNSTC|MTC|SETC|KSRTC|TSRTC|APSRTC|BMTC)\\s*[-:]?\\s*([A-Z0-9]{1,5})");
+
+    // Priority 3: Alphanumeric at start of text: "27D Chennai to Madurai"
+    Pattern startPattern = Pattern.compile(
+        "^\\s*([A-Z]?\\d{1,4}[A-Z]?)\\b");
+
+    // Priority 4: Standalone bus numbers: 27D, 570, 123A
+    Pattern standalonePattern = Pattern.compile(
+        "\\b([A-Z]{0,2}\\d{1,4}[A-Z]?)\\b");
+
+    // Try explicit pattern first
+    Matcher explicitMatcher = explicitPattern.matcher(text);
+    if (explicitMatcher.find()) {
+      String busNumber = explicitMatcher.group(1).toUpperCase();
+      if (isValidBusNumber(busNumber)) {
+        data.setBusNumber(busNumber);
+        log.debug("Matched explicit bus pattern: {}", busNumber);
+        return;
       }
     }
+
+    // Try prefix pattern (TNSTC, MTC, etc.)
+    Matcher prefixMatcher = prefixPattern.matcher(text);
+    if (prefixMatcher.find()) {
+      String prefix = prefixMatcher.group(1).toUpperCase();
+      String number = prefixMatcher.group(2).toUpperCase();
+      String busNumber = prefix + "-" + number;
+      data.setBusNumber(busNumber);
+      log.debug("Matched prefix bus pattern: {}", busNumber);
+      return;
+    }
+
+    // Try start pattern
+    Matcher startMatcher = startPattern.matcher(text);
+    if (startMatcher.find()) {
+      String busNumber = startMatcher.group(1).toUpperCase();
+      if (isValidBusNumber(busNumber)) {
+        data.setBusNumber(busNumber);
+        log.debug("Matched start bus pattern: {}", busNumber);
+        return;
+      }
+    }
+
+    // Try standalone pattern (last resort, might have false positives)
+    Matcher standaloneMatcher = standalonePattern.matcher(text);
+    while (standaloneMatcher.find()) {
+      String busNumber = standaloneMatcher.group(1).toUpperCase();
+      // Skip common false positives like years (2024), times (630)
+      if (isValidBusNumber(busNumber) && !isLikelyNotBusNumber(busNumber)) {
+        data.setBusNumber(busNumber);
+        log.debug("Matched standalone bus pattern: {}", busNumber);
+        return;
+      }
+    }
+  }
+
+  /**
+   * Validate bus number format
+   */
+  private boolean isValidBusNumber(String busNumber) {
+    if (busNumber == null || busNumber.isEmpty())
+      return false;
+    // Valid: 27D, 570, A1, 123A, MTC-45
+    return busNumber.matches("[A-Z]{0,3}[-]?\\d{1,4}[A-Z]?") ||
+        busNumber.matches("[A-Z]\\d{1,4}");
+  }
+
+  /**
+   * Check if number is likely not a bus number (years, times, etc.)
+   */
+  private boolean isLikelyNotBusNumber(String number) {
+    if (number == null)
+      return true;
+    // Skip years (2020-2030)
+    if (number.matches("20[2-3]\\d"))
+      return true;
+    // Skip pure 3-digit numbers that could be times
+    if (number.matches("\\d{3}") && !number.matches("[1-9]\\d{2}"))
+      return true;
+    // Skip 4-digit numbers without letters (likely times like 0630)
+    if (number.matches("0\\d{3}"))
+      return true;
+    return false;
   }
 
   /**
    * Extract from and to locations
    */
   private void extractLocations(String text, RouteData data) {
-    // English patterns: "from X to Y", "X to Y"
-    Pattern englishPattern = Pattern.compile(
-        "(?i)(?:from\\s+)?([a-zA-Z\\s]{3,30})\\s+(?:to|→|-)\\s+([a-zA-Z\\s]{3,30})");
+    // Pattern 1: Arrow format with various arrow types: "Coimbatore → Salem",
+    // "Chennai -> Madurai", "A - B"
+    Pattern arrowPattern = Pattern.compile(
+        "([a-zA-Z][a-zA-Z\\s]{2,35})\\s*(?:→|->|➡️|➡|→|–|—|=>|>)\\s*([a-zA-Z][a-zA-Z\\s]{2,35})",
+        Pattern.CASE_INSENSITIVE);
 
-    // Tamil patterns: "புறப்பாடு X வரவு Y"
+    // Pattern 2: Dash/hyphen format with space: "Chennai - Madurai", "Coimbatore -
+    // Salem Route"
+    Pattern dashPattern = Pattern.compile(
+        "([A-Z][a-zA-Z]{2,20})\\s+-\\s+([A-Z][a-zA-Z]{2,20})");
+
+    // Pattern 3: English patterns: "from X to Y", "X to Y", "departs from X arrives
+    // at Y"
+    Pattern englishPattern = Pattern.compile(
+        "(?i)(?:from\\s+)?([a-zA-Z][a-zA-Z\\s]{2,35})\\s+(?:to|towards|via)\\s+([a-zA-Z][a-zA-Z\\s]{2,35})");
+
+    // Pattern 4: Departure/Arrival pattern: "Departure: Chennai Arrival: Madurai"
+    Pattern departArrivePattern = Pattern.compile(
+        "(?i)(?:departure|depart|start|origin)\\s*[:-]?\\s*([a-zA-Z][a-zA-Z\\s]{2,30})" +
+            ".*?(?:arrival|arrive|end|destination)\\s*[:-]?\\s*([a-zA-Z][a-zA-Z\\s]{2,30})",
+        Pattern.DOTALL);
+
+    // Pattern 5: Route header format: "Chennai Madurai Route" or "Chennai-Madurai
+    // Express"
+    Pattern routeHeaderPattern = Pattern.compile(
+        "([A-Z][a-zA-Z]{2,20})\\s*[-–]?\\s*([A-Z][a-zA-Z]{2,20})\\s*(?:Route|Express|Bus|Service)",
+        Pattern.CASE_INSENSITIVE);
+
+    // Pattern 6: Tamil patterns: "புறப்பாடு X வரவு Y", "X லிருந்து Y க்கு"
     Pattern tamilPattern = Pattern.compile(
         "(?:புறப்பாடு|இருந்து)\\s*[:-]?\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})" +
             "\\s+(?:வரவு|வரை)\\s*[:-]?\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})");
+
+    // Pattern 7: Tamil suffix pattern: "X லிருந்து Y க்கு"
+    Pattern tamilSuffixPattern = Pattern.compile(
+        "([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})\\s*லிருந்து\\s*([\\u0B80-\\u0BFFa-zA-Z\\s]{3,30})\\s*க்கு");
+
+    // Pattern 8: Colon separated: "From: Chennai To: Madurai"
+    Pattern colonPattern = Pattern.compile(
+        "(?i)from\\s*[:-]\\s*([a-zA-Z][a-zA-Z\\s]{2,30}).*?to\\s*[:-]\\s*([a-zA-Z][a-zA-Z\\s]{2,30})",
+        Pattern.DOTALL);
+
+    // Try arrow pattern first (most common in pastes)
+    Matcher arrowMatcher = arrowPattern.matcher(text);
+    if (arrowMatcher.find()) {
+      data.setFromLocation(cleanLocationName(arrowMatcher.group(1)));
+      data.setToLocation(cleanLocationName(arrowMatcher.group(2)));
+      log.debug("Matched arrow pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
+      return;
+    }
+
+    // Try dash pattern
+    Matcher dashMatcher = dashPattern.matcher(text);
+    if (dashMatcher.find()) {
+      data.setFromLocation(cleanLocationName(dashMatcher.group(1)));
+      data.setToLocation(cleanLocationName(dashMatcher.group(2)));
+      log.debug("Matched dash pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
+      return;
+    }
+
+    // Try departure/arrival pattern
+    Matcher departMatcher = departArrivePattern.matcher(text);
+    if (departMatcher.find()) {
+      data.setFromLocation(cleanLocationName(departMatcher.group(1)));
+      data.setToLocation(cleanLocationName(departMatcher.group(2)));
+      log.debug("Matched depart/arrive pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
+      return;
+    }
+
+    // Try colon pattern
+    Matcher colonMatcher = colonPattern.matcher(text);
+    if (colonMatcher.find()) {
+      data.setFromLocation(cleanLocationName(colonMatcher.group(1)));
+      data.setToLocation(cleanLocationName(colonMatcher.group(2)));
+      log.debug("Matched colon pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
+      return;
+    }
+
+    // Try route header pattern
+    Matcher routeHeaderMatcher = routeHeaderPattern.matcher(text);
+    if (routeHeaderMatcher.find()) {
+      data.setFromLocation(cleanLocationName(routeHeaderMatcher.group(1)));
+      data.setToLocation(cleanLocationName(routeHeaderMatcher.group(2)));
+      log.debug("Matched route header pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
+      return;
+    }
 
     Matcher englishMatcher = englishPattern.matcher(text);
     if (englishMatcher.find()) {
       data.setFromLocation(cleanLocationName(englishMatcher.group(1)));
       data.setToLocation(cleanLocationName(englishMatcher.group(2)));
+      log.debug("Matched English pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
       return;
     }
 
@@ -98,6 +253,15 @@ public class RouteTextParser {
     if (tamilMatcher.find()) {
       data.setFromLocation(cleanLocationName(tamilMatcher.group(1)));
       data.setToLocation(cleanLocationName(tamilMatcher.group(2)));
+      log.debug("Matched Tamil pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
+      return;
+    }
+
+    Matcher tamilSuffixMatcher = tamilSuffixPattern.matcher(text);
+    if (tamilSuffixMatcher.find()) {
+      data.setFromLocation(cleanLocationName(tamilSuffixMatcher.group(1)));
+      data.setToLocation(cleanLocationName(tamilSuffixMatcher.group(2)));
+      log.debug("Matched Tamil suffix pattern: {} -> {}", data.getFromLocation(), data.getToLocation());
     }
   }
 
@@ -165,16 +329,32 @@ public class RouteTextParser {
   }
 
   /**
-   * Clean location name
+   * Clean location name - removes common prefixes/suffixes and normalizes spacing
    */
   private String cleanLocationName(String location) {
     if (location == null)
       return "";
 
-    return location.trim()
+    String cleaned = location.trim()
         .replaceAll("\\s+", " ")
-        .replaceAll("^(from|to|புறப்பாடு|வரவு)\\s+", "")
+        // Remove common prefixes
+        .replaceAll("(?i)^(from|to|at|in|near|புறப்பாடு|வரவு|via)\\s+", "")
+        // Remove common suffixes
+        .replaceAll("(?i)\\s+(route|express|bus|service|station|junction|jn|stand|terminal)$", "")
+        // Remove timing words that might be captured
+        .replaceAll("(?i)\\s*(morning|evening|afternoon|night|daily|am|pm)$", "")
+        // Remove any trailing punctuation
+        .replaceAll("[.,;:!?]+$", "")
+        // Remove any leading punctuation
+        .replaceAll("^[.,;:!?-]+", "")
         .trim();
+
+    // Capitalize first letter of each word for consistency
+    if (!cleaned.isEmpty() && Character.isLowerCase(cleaned.charAt(0))) {
+      cleaned = Character.toUpperCase(cleaned.charAt(0)) + cleaned.substring(1);
+    }
+
+    return cleaned;
   }
 
   /**

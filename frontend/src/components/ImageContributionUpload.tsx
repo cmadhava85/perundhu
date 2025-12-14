@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw, Copy } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing, ApiError } from '../services/api';
+import { getRecaptchaToken } from '../services/recaptchaService';
 import { useTranslation } from 'react-i18next';
 import './ImageContributionUpload.css';
 
@@ -42,6 +43,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [routeName, setRouteName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
+  const [honeypot, setHoneypot] = useState(''); // Bot detection field
   
   // Use stable counter for image IDs to prevent re-renders
   const imageIdCounterRef = useRef(1);
@@ -208,12 +210,17 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     );
 
     try {
+      // Get reCAPTCHA token for spam protection
+      const captchaToken = await getRecaptchaToken('image_upload');
+      
       const contributionData = {
         busName: routeName || 'Unknown Bus',
         busNumber: 'N/A',
         fromLocationName: location || 'Unknown',
         toLocationName: 'Unknown',
-        notes: description || 'Bus schedule image'
+        notes: description || 'Bus schedule image',
+        website: honeypot, // Honeypot for bot detection
+        captchaToken
       };
 
       const response = await submitImageContribution(contributionData, image.file);
@@ -541,6 +548,20 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             }}
           />
         </div>
+      </div>
+      
+      {/* Honeypot field - hidden from users, visible to bots */}
+      <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+        <label htmlFor="website-img">Website</label>
+        <input
+          type="text"
+          id="website-img"
+          name="website"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
 
       {/* Compact Upload Area */}
