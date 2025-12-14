@@ -22,6 +22,13 @@ const UserAnalyticsDashboard = React.lazy(() => import('./UserAnalyticsDashboard
 const AdminDashboard = React.lazy(() => import('./admin/AdminDashboard'));
 const FeatureSettings = React.lazy(() => import('./FeatureSettings'));
 
+// Static pages - lazy loaded
+const AboutUs = React.lazy(() => import('./StaticPages').then(module => ({ default: module.AboutUs })));
+const ContactUs = React.lazy(() => import('./StaticPages').then(module => ({ default: module.ContactUs })));
+const PrivacyPolicy = React.lazy(() => import('./StaticPages').then(module => ({ default: module.PrivacyPolicy })));
+const TermsOfService = React.lazy(() => import('./StaticPages').then(module => ({ default: module.TermsOfService })));
+const FAQ = React.lazy(() => import('./StaticPages').then(module => ({ default: module.FAQ })));
+
 interface AppRoutesProps {
   locations: BusLocation[];
   fromLocation: BusLocation | null;
@@ -204,6 +211,47 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
               {...featureSettings}
               onSettingsChange={() => {}}
             />
+          </Suspense>
+        </ErrorBoundary>
+      } />
+      
+      {/* Static Pages */}
+      <Route path="/about" element={
+        <ErrorBoundary>
+          <Suspense fallback={LazyLoadingFallback}>
+            <AboutUs />
+          </Suspense>
+        </ErrorBoundary>
+      } />
+      
+      <Route path="/contact" element={
+        <ErrorBoundary>
+          <Suspense fallback={LazyLoadingFallback}>
+            <ContactUs />
+          </Suspense>
+        </ErrorBoundary>
+      } />
+      
+      <Route path="/privacy" element={
+        <ErrorBoundary>
+          <Suspense fallback={LazyLoadingFallback}>
+            <PrivacyPolicy />
+          </Suspense>
+        </ErrorBoundary>
+      } />
+      
+      <Route path="/terms" element={
+        <ErrorBoundary>
+          <Suspense fallback={LazyLoadingFallback}>
+            <TermsOfService />
+          </Suspense>
+        </ErrorBoundary>
+      } />
+      
+      <Route path="/faq" element={
+        <ErrorBoundary>
+          <Suspense fallback={LazyLoadingFallback}>
+            <FAQ />
           </Suspense>
         </ErrorBoundary>
       } />

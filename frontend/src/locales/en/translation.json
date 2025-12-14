@@ -57,10 +57,28 @@
     "contact": "Contact"
   },
   "footer": {
+    "title": "Tamil Nadu Bus Scheduler",
     "copyright": "© 2025 Perundhu Bus Services",
+    "allRightsReserved": "All Rights Reserved.",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
-    "help": "Help Center"
+    "help": "Help Center",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "faq": "FAQ"
+  },
+  "common": {
+    "appName": "Perundhu",
+    "tagline": "Your Bus Travel Planner",
+    "loading": "Loading...",
+    "error": "No routes for this selection. Try different locations.",
+    "close": "Close",
+    "min": "min",
+    "hr": "hr",
+    "dismiss": "Dismiss",
+    "backToHome": "Back to Home"
   },
   "search": {
     "title": "Find Your Bus",
@@ -950,6 +968,96 @@
       "serviceSuspended": "Any information about when service might resume?",
       "wrongFare": "What is the actual fare?",
       "other": "Describe the issue in detail..."
+    }
+  },
+  "pages": {
+    "about": {
+      "title": "About Us",
+      "missionTitle": "Our Mission",
+      "missionText": "Perundhu is dedicated to making bus travel in Tamil Nadu easier and more accessible for everyone. We provide accurate, real-time bus schedule information to help you plan your journeys efficiently.",
+      "whatWeDoTitle": "What We Do",
+      "feature1": "Comprehensive bus schedule database for Tamil Nadu",
+      "feature2": "Real-time bus tracking powered by community contributions",
+      "feature3": "Easy-to-use search to find the best routes",
+      "feature4": "Support for multiple languages including Tamil and English",
+      "communityTitle": "Community Powered",
+      "communityText": "Our platform is powered by contributions from travelers like you. By sharing route information, bus timings, and real-time location updates, our community helps keep the data accurate and up-to-date.",
+      "teamTitle": "Our Team",
+      "teamText": "Perundhu is built by a passionate team of developers and transit enthusiasts who believe in making public transportation accessible to all."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "intro": "We would love to hear from you! Whether you have questions, feedback, or suggestions, please reach out to us.",
+      "emailTitle": "Email",
+      "supportTitle": "Support Hours",
+      "supportHours": "Monday to Friday: 9:00 AM - 6:00 PM IST",
+      "feedbackTitle": "Feedback",
+      "feedbackText": "Have suggestions to improve our service? We are always looking for ways to enhance your experience. Share your ideas through the contribution feature in the app.",
+      "reportIssueTitle": "Report an Issue",
+      "reportIssueText": "Found incorrect bus timings or route information? Use the \"Report Issue\" feature on any bus route to let us know, and our team will verify and update the information."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last Updated: December 2025",
+      "introTitle": "Introduction",
+      "introText": "At Perundhu, we respect your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our service.",
+      "dataCollectionTitle": "Information We Collect",
+      "locationData": "Location Data",
+      "locationDataText": "When you use the bus tracking feature, we may collect your location to help track bus positions. This is only collected when you actively enable tracking.",
+      "usageData": "Usage Data",
+      "usageDataText": "We collect anonymous usage statistics to improve our service, such as popular routes and search patterns.",
+      "contributionData": "Contribution Data",
+      "contributionDataText": "Route information, timings, and images you contribute are stored to improve our database.",
+      "howWeUseTitle": "How We Use Your Information",
+      "use1": "To provide and improve bus schedule and tracking services",
+      "use2": "To verify and validate contributed route information",
+      "use3": "To analyze usage patterns and improve user experience",
+      "use4": "To communicate with you about service updates",
+      "dataSharingTitle": "Data Sharing",
+      "dataSharingText": "We do not sell your personal data. We may share anonymized, aggregated data with partners to improve public transportation services.",
+      "yourRightsTitle": "Your Rights",
+      "yourRightsText": "You have the right to access, correct, or delete your personal data. Contact us at support@perundhu.com for any privacy-related requests."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last Updated: December 2025",
+      "acceptanceTitle": "Acceptance of Terms",
+      "acceptanceText": "By accessing and using Perundhu, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our service.",
+      "serviceDescTitle": "Service Description",
+      "serviceDescText": "Perundhu provides bus schedule information, route planning, and real-time tracking services for public buses in Tamil Nadu. Our information is provided as-is and may not always reflect real-time changes.",
+      "userResponsibilitiesTitle": "User Responsibilities",
+      "responsibility1": "Provide accurate information when contributing route data",
+      "responsibility2": "Do not submit false, misleading, or harmful content",
+      "responsibility3": "Respect the intellectual property rights of others",
+      "responsibility4": "Do not attempt to disrupt or misuse the service",
+      "contributionsTitle": "User Contributions",
+      "contributionsText": "By submitting route information, images, or other content, you grant Perundhu a non-exclusive, royalty-free license to use, modify, and display the content to improve our service.",
+      "disclaimerTitle": "Disclaimer",
+      "disclaimerText": "Bus schedules and timings may change without notice. Perundhu is not responsible for any inconvenience caused by inaccurate or outdated information. Always verify important travel details with official sources.",
+      "limitationTitle": "Limitation of Liability",
+      "limitationText": "Perundhu shall not be liable for any direct, indirect, or consequential damages arising from the use of our service."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How do I search for bus routes?",
+      "a1": "Enter your departure and destination locations in the search form on the home page, then click \"Search Buses\" to find available routes.",
+      "q2": "Is the bus timing information accurate?",
+      "a2": "Our database is updated regularly through official sources and community contributions. However, actual timings may vary due to traffic and other factors. Always allow extra time for your journey.",
+      "q3": "How can I contribute route information?",
+      "a3": "Click on \"Contribute\" in the app to add new route information. You can enter details manually, upload photos of bus schedules, paste text from messages, or use voice input.",
+      "q4": "How does bus tracking work?",
+      "a4": "When passengers on a bus enable tracking, their anonymized location helps show the real-time position of the bus on the map. More trackers mean more accurate information.",
+      "q5": "What languages are supported?",
+      "a5": "Perundhu currently supports English and Tamil. You can switch languages using the language selector in the header.",
+      "q6": "How do I report incorrect information?",
+      "a6": "Use the \"Report Issue\" option on any bus route to report incorrect timings, wrong stops, or other issues. Our team will review and update the information.",
+      "q7": "Is the app free to use?",
+      "a7": "Yes, Perundhu is completely free to use. There are no hidden charges or premium features.",
+      "q8": "Can I use the app offline?",
+      "a8": "Some features like searching previously viewed routes work offline. However, real-time tracking and new searches require an internet connection.",
+      "moreHelpTitle": "Need More Help?",
+      "moreHelpText": "If you could not find the answer to your question, please",
+      "contactLink": "contact us"
     }
   }
 }

@@ -45,6 +45,11 @@ public class CorsConfig {
         config.addAllowedHeader("X-Session-Id"); // Session tracking
         config.addAllowedHeader("X-Request-Id"); // Request tracking
 
+        // Expose headers so client can read them
+        config.addExposedHeader("X-Trace-Id");
+        config.addExposedHeader("X-Session-Id");
+        config.addExposedHeader("X-Request-Id");
+
         // Apply this configuration to all paths
         source.registerCorsConfiguration("/**", config);
 

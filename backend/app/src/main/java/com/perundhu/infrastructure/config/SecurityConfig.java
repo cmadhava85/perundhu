@@ -139,9 +139,11 @@ public class SecurityConfig {
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
     configuration.setAllowedHeaders(List.of(
         "Authorization", "Content-Type", "X-Requested-With", "X-API-Key", "Accept-Language",
-        "X-Recaptcha-Token", "X-Form-Timestamp"));
+        "X-Recaptcha-Token", "X-Form-Timestamp",
+        "X-Trace-Id", "X-Session-Id", "X-Request-Id")); // Distributed tracing headers
     configuration.setExposedHeaders(List.of(
-        "X-Request-ID", "X-Security-Level", "X-Rate-Limit-Remaining"));
+        "X-Request-ID", "X-Security-Level", "X-Rate-Limit-Remaining",
+        "X-Trace-Id", "X-Session-Id", "X-Request-Id")); // Expose tracing headers to client
     configuration.setAllowCredentials(true);
     configuration.setMaxAge(3600L);
 
