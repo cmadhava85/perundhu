@@ -429,7 +429,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
               borderRadius: '1rem',
               fontWeight: '500'
             }}>
-              {uploadedImages.length} images
+              {uploadedImages.length} {t('contribution.imageUpload.imageCount', 'images')}
             </span>
             <span style={{ 
               background: '#ecfdf5', 
@@ -438,7 +438,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
               borderRadius: '1rem',
               fontWeight: '500'
             }}>
-              {uploadedImages.filter(img => img.status === 'PROCESSED').length} processed
+              {uploadedImages.filter(img => img.status === 'PROCESSED').length} {t('contribution.imageUpload.processedCount', 'processed')}
             </span>
             {uploadedImages.filter(img => img.processing).length > 0 && (
               <span style={{ 
@@ -485,7 +485,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="e.g., Bus schedule at Kochi"
+            placeholder={t('contribution.imageUpload.descriptionPlaceholder', 'e.g., Bus schedule at Kochi')}
             style={{
               width: '100%',
               padding: '0.5rem 0.625rem',
@@ -511,7 +511,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="e.g., Kochi"
+            placeholder={t('contribution.imageUpload.locationPlaceholder', 'e.g., Kochi')}
             style={{
               width: '100%',
               padding: '0.5rem 0.625rem',
@@ -537,7 +537,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             type="text"
             value={routeName}
             onChange={(e) => setRouteName(e.target.value)}
-            placeholder="e.g., Kochi-Alappuzha"
+            placeholder={t('contribution.imageUpload.routeNamePlaceholder', 'e.g., Kochi-Alappuzha')}
             style={{
               width: '100%',
               padding: '0.5rem 0.625rem',
@@ -606,15 +606,15 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             <div style={{ textAlign: 'left' }}>
               {isDragActive ? (
                 <p style={{ color: '#2563eb', fontSize: '1rem', fontWeight: '600', margin: 0 }}>
-                  Drop images here!
+                  {t('contribution.imageUpload.dropHere', 'Drop images here!')}
                 </p>
               ) : (
                 <>
                   <p style={{ color: '#374151', fontSize: '0.9375rem', fontWeight: '600', margin: '0 0 0.25rem 0' }}>
-                    Drag & drop bus schedule images here
+                    {t('contribution.imageUpload.dragDropTitle', 'Drag & drop bus schedule images here')}
                   </p>
                   <p style={{ color: '#9ca3af', margin: 0, fontSize: '0.75rem' }}>
-                    or click to select • JPEG, PNG, WebP up to 10MB
+                    {t('contribution.imageUpload.dragDropHint', 'or click to select • JPEG, PNG, WebP up to 10MB')}
                   </p>
                 </>
               )}

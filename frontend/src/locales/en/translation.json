@@ -347,6 +347,13 @@
   "paste": {
     "label": "Paste route information here:",
     "placeholder": "Paste bus route information here...\n\nExample:\nBus 27D from Chennai to Madurai\nDeparts 6:00 AM, arrives 2:00 PM\nStops: Tambaram, Chengalpattu, Villupuram",
+    "hints": {
+      "title": "Tips for Better Parsing:",
+      "arrow": "Use arrow (→ or ->) between locations: \"Chennai → Madurai\"",
+      "busNumber": "Put bus number at start: \"Bus 27D\" or \"Route 123A\"",
+      "fromTo": "Use \"from...to\": \"from Chennai to Madurai\"",
+      "times": "Include times with AM/PM: \"6:00 AM\" or \"காலை 10 மணி\""
+    },
     "characters": "characters",
     "validating": "Analyzing...",
     "validate": "🔍 Analyze Text",
@@ -420,8 +427,11 @@
   "route": {
     "busNumber": "Bus Number",
     "busNumberHint": "Enter the bus number OR route name below",
+    "busNumberPlaceholder": "e.g., 27D, 570",
     "routeName": "Route Name",
     "routeNameHint": "Enter the route name OR bus number above",
+    "routeNamePlaceholder": "e.g., Chennai - Tambaram",
+    "busRouteHint": "Enter either bus number or route name (at least one required)",
     "routeInformation": "Route Information",
     "departure": "Departure",
     "arrival": "Arrival",
@@ -516,7 +526,18 @@
       "duplicateError": "This image was already uploaded. Please upload a different image.",
       "duplicateErrorTitle": "Duplicate Image Detected",
       "uploadError": "Failed to upload image",
-      "rateLimitError": "Too many uploads. Please wait a moment and try again."
+      "rateLimitError": "Too many uploads. Please wait a moment and try again.",
+      "routeNameShort": "Route (Optional)",
+      "dragDropTitle": "Drag & drop bus schedule images here",
+      "dragDropHint": "or click to select • JPEG, PNG, WebP up to 10MB",
+      "dropHere": "Drop images here!",
+      "imageCount": "images",
+      "processedCount": "processed",
+      "processingCount": "processing",
+      "descriptionShort": "Upload photos of bus schedules. AI extracts data automatically.",
+      "descriptionPlaceholder": "e.g., Bus schedule at Kochi",
+      "locationPlaceholder": "e.g., Kochi",
+      "routeNamePlaceholder": "e.g., Kochi-Alappuzha"
     },
     "methods": {
       "manual": "Manual Entry",
