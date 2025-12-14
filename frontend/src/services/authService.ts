@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 import SecurityService from './securityService';
 import { getEnv } from '../utils/environment';
+import { traceContext, TRACE_HEADERS } from '../utils/traceId';
 
 export interface User {
   id: string;
@@ -62,6 +63,14 @@ class AuthService {
     // Request interceptor to add auth token
     this.api.interceptors.request.use(
       (config) => {
+        // Add traceId for distributed tracing
+        const traceId = traceContext.newTraceId();
+        const sessionId = traceContext.getSessionId();
+        config.headers[TRACE_HEADERS.TRACE_ID] = traceId;
+        config.headers[TRACE_HEADERS.SESSION_ID] = sessionId;
+        
+        logger.debug(`[${traceId}] AuthService Request: ${config.method?.toUpperCase()} ${config.url}`);
+        
         const token = this.getToken();
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
@@ -70,7 +79,7 @@ class AuthService {
         // Add security headers only if security is enabled
         if (SecurityService.isSecurityEnabled?.()) {
           config.headers['X-Client-Version'] = getEnv('VITE_APP_VERSION', '1.0.0');
-          config.headers['X-Request-ID'] = this.generateRequestId();
+          config.headers['X-Request-ID'] = traceId; // Use traceId instead of separate requestId
           
           // Add CSRF protection for state-changing operations
           if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(config.method?.toUpperCase() || '')) {

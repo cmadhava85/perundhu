@@ -1,6 +1,7 @@
 import { logger } from '../utils/logger';
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { traceContext, TRACE_HEADERS } from '../utils/traceId';
 import type {
   Bus, Stop, Location, BusLocationReport, BusLocation,
   RewardPoints, ConnectingRoute, RouteContribution, ImageContribution
@@ -80,6 +81,14 @@ export class ApiService {
           ...config.params,
           _: new Date().getTime()
         };
+        
+        // Add traceId for distributed tracing
+        const traceId = traceContext.newTraceId();
+        const sessionId = traceContext.getSessionId();
+        config.headers[TRACE_HEADERS.TRACE_ID] = traceId;
+        config.headers[TRACE_HEADERS.SESSION_ID] = sessionId;
+        
+        logger.debug(`[${traceId}] ApiService Request: ${config.method?.toUpperCase()} ${config.url}`);
         
         // Add authorization header if available
         const authToken = localStorage.getItem('authToken');

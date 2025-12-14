@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { traceContext, TRACE_HEADERS } from '../utils/traceId';
+import { logger } from '../utils/logger';
 
 // Helper function to get environment variables that works in both Vite and Jest
 const getEnv = (key: string, defaultValue: string = ''): string => {
@@ -27,7 +29,14 @@ export const apiClient = axios.create({
 // Add request interceptor for analytics requests
 apiClient.interceptors.request.use(
   config => {
-    // You can add auth tokens or other headers here
+    // Add traceId for distributed tracing
+    const traceId = traceContext.newTraceId();
+    const sessionId = traceContext.getSessionId();
+    config.headers[TRACE_HEADERS.TRACE_ID] = traceId;
+    config.headers[TRACE_HEADERS.SESSION_ID] = sessionId;
+    
+    logger.debug(`[${traceId}] Analytics Request: ${config.method?.toUpperCase()} ${config.url}`);
+    
     return config;
   },
   error => {
