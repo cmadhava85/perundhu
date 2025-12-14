@@ -19,16 +19,17 @@ COPY health-check.sh ./
 # Build application
 RUN gradle clean build -x test --no-daemon
 
-# Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+# Runtime stage - Use standard JRE (not alpine) for glibc compatibility with native libraries
+FROM eclipse-temurin:17-jre-jammy
 
 # Install necessary packages
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    netcat-openbsd
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create app user (alpine uses addgroup/adduser)
-RUN addgroup -S appuser && adduser -S -G appuser appuser
+# Create app user
+RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 # Set working directory
 WORKDIR /app
@@ -54,7 +55,9 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD ./health-check.sh || exit 1
 
 # Environment variables
-ENV JAVA_OPTS="-Xmx1536m -Xms512m -XX:+UseG1GC -XX:+UseStringDeduplication" \
+# -Dio.grpc.netty.shaded.io.netty.transport.noNative=true disables native transport
+# -Dio.netty.noPreferDirect=true avoids direct buffer issues
+ENV JAVA_OPTS="-Xmx1536m -Xms512m -XX:+UseG1GC -XX:+UseStringDeduplication -Dio.grpc.netty.shaded.io.netty.transport.noNative=true" \
     SPRING_PROFILES_ACTIVE=preprod \
     SERVER_PORT=8080
 

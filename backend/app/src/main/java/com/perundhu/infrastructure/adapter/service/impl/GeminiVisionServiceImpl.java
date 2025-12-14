@@ -742,7 +742,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     String[] suffixesToRemove = {
         " BUS STAND", " BUS STATION", " BUSSTAND", " BUSSTATION",
         " STAND", " STATION", " TERMINAL", " DEPOT",
-        "BUSSTAND", "BUSSTATION"  // For cases without spaces
+        "BUSSTAND", "BUSSTATION" // For cases without spaces
     };
     for (String suffix : suffixesToRemove) {
       if (upper.endsWith(suffix)) {

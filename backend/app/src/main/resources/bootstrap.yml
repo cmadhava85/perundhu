@@ -1,6 +1,6 @@
-# Bootstrap configuration for Spring Cloud GCP Secret Manager
-# This file is processed before application.properties and enables Secret Manager integration
-# for preprod and prod profiles only. Local development uses environment variables.
+# Bootstrap configuration for Spring Cloud GCP
+# Note: Secret Manager is DISABLED in all profiles to avoid native library crashes
+# Secrets are passed via Cloud Run --set-secrets flag as environment variables
 
 spring:
   application:
@@ -8,12 +8,12 @@ spring:
   cloud:
     gcp:
       secretmanager:
-        # Secret Manager is only enabled for preprod and prod profiles
-        # For local development, this is disabled and env vars are used instead
+        # Secret Manager is DISABLED to avoid netty-tcnative native library crashes
+        # Use Cloud Run --set-secrets flag to inject secrets as environment variables
         enabled: false
 
 ---
-# PreProd Profile - Enable Secret Manager
+# PreProd Profile - Secret Manager DISABLED
 spring:
   config:
     activate:
@@ -22,12 +22,10 @@ spring:
     gcp:
       project-id: ${GCP_PROJECT_ID:astute-strategy-406601}
       secretmanager:
-        enabled: true
-        # Legacy mode allows using sm:// prefix in property values
-        legacy: false
+        enabled: false
 
 ---
-# Production Profile - Enable Secret Manager
+# Production Profile - Secret Manager DISABLED (use Cloud Run secrets)
 spring:
   config:
     activate:
@@ -36,5 +34,4 @@ spring:
     gcp:
       project-id: ${GCP_PROJECT_ID:astute-strategy-406601}
       secretmanager:
-        enabled: true
-        legacy: false
+        enabled: false
