@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TransitBusCard from './TransitBusCard';
@@ -235,18 +235,26 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     return filtered;
   }, [buses, searchQuery, filters, sortBy, sortDirection]);
 
+  // Memoized callback for bus selection to prevent re-renders
+  const handleBusSelect = useCallback((busId: number) => {
+    const selectedBus = buses.find(b => b.id === busId);
+    if (selectedBus && onSelectBus) {
+      onSelectBus(selectedBus);
+    }
+  }, [buses, onSelectBus]);
+
   // Handle filter changes
-  const handleBusTypeToggle = (type: string) => {
+  const handleBusTypeToggle = useCallback((type: string) => {
     setFilters(prev => ({
       ...prev,
       busTypes: prev.busTypes.includes(type)
         ? prev.busTypes.filter(t => t !== type)
         : [...prev.busTypes, type]
     }));
-  };
+  }, []);
 
   // Handle sorting
-  const handleSort = (option: SortOption) => {
+  const handleSort = useCallback((option: SortOption) => {
     if (sortBy === option) {
       // Toggle direction if same option is clicked
       setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
@@ -255,11 +263,11 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
       setSortBy(option);
       setSortDirection('asc');
     }
-  };
+  }, [sortBy]);
 
-  const toggleSortDirection = () => {
+  const toggleSortDirection = useCallback(() => {
     setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-  };
+  }, []);
 
   if (buses.length === 0) {
     // Check if either location was a user-input (not from database)
@@ -545,12 +553,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 bus={bus}
                 selectedBusId={selectedBusId || null}
                 stops={busStops}
-                onSelectBus={(busId: number) => {
-                  const selectedBus = buses.find(b => b.id === busId);
-                  if (selectedBus && onSelectBus) {
-                    onSelectBus(selectedBus);
-                  }
-                }}
+                onSelectBus={handleBusSelect}
                 fromLocation={fromLocationObj}
                 toLocation={toLocationObj}
                 isCompact={true}

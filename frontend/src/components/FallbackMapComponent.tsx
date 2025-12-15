@@ -214,4 +214,4 @@ const FallbackMapComponent: React.FC<FallbackMapComponentProps> = ({
   );
 };
 
-export default FallbackMapComponent;
+export default React.memo(FallbackMapComponent);

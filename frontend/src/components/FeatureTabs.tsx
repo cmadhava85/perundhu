@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureSettings from './FeatureSettings';
 
@@ -114,4 +115,4 @@ const FeatureTabs: React.FC<FeatureTabsProps> = ({
   );
 };
 
-export default FeatureTabs;
+export default React.memo(FeatureTabs);
