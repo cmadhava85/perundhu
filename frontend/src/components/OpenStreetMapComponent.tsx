@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo, memo } from 'react';
 import { logDebug, logWarn } from '../utils/logger';
 import type { Location, Stop } from '../types/index';
 import { getStopCoordinates, getStopCoordinatesAsync, getCoordinateSource } from '../utils/cityCoordinates';
@@ -19,7 +19,7 @@ interface OpenStreetMapComponentProps {
  * OpenStreetMap Component using Leaflet
  * Provides interactive maps with route visualization, markers, and popups
  */
-const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
+const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
   fromLocation,
   toLocation,
   selectedStops = [],
@@ -32,24 +32,27 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const isInitializingRef = useRef<boolean>(false);
-  const lastPropsRef = useRef<{
-    fromLocation: Location;
-    toLocation: Location;
-    selectedStops: Stop[];
-    buses: unknown[];
-  } | null>(null);
+  const initializedForRef = useRef<string>('');
+
+  // Memoize stable keys to prevent unnecessary re-renders
+  const stableMapKey = useMemo(() => {
+    const fromKey = `${fromLocation?.id || fromLocation?.name}-${fromLocation?.latitude?.toFixed(4)}-${fromLocation?.longitude?.toFixed(4)}`;
+    const toKey = `${toLocation?.id || toLocation?.name}-${toLocation?.latitude?.toFixed(4)}-${toLocation?.longitude?.toFixed(4)}`;
+    const stopsKey = selectedStops.map(s => s.id || s.name).join(',');
+    return `${fromKey}|${toKey}|${stopsKey}|${buses.length}`;
+  }, [fromLocation?.id, fromLocation?.name, fromLocation?.latitude, fromLocation?.longitude,
+      toLocation?.id, toLocation?.name, toLocation?.latitude, toLocation?.longitude,
+      selectedStops, buses.length]);
 
   useEffect(() => {
-    // Check if props have actually changed to avoid unnecessary re-renders
-    const currentProps = { fromLocation, toLocation, selectedStops, buses };
-    const propsChanged = !lastPropsRef.current || 
-      JSON.stringify(lastPropsRef.current) !== JSON.stringify(currentProps);
-    
-    if (!propsChanged && mapInstanceRef.current) {
-      return; // No changes, keep existing map
+    // Skip if already initialized for same data
+    if (initializedForRef.current === stableMapKey && mapInstanceRef.current) {
+      logDebug('Map already initialized for this data, skipping', {
+        component: 'OpenStreetMapComponent',
+        mapId
+      });
+      return;
     }
-    
-    lastPropsRef.current = currentProps;
 
     // Dynamic import to avoid SSR issues
     const initializeMap = async () => {
@@ -312,6 +315,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
             });
 
             mapInstanceRef.current = map;
+            initializedForRef.current = stableMapKey;
             
             // Ensure proper sizing after initialization
             setTimeout(() => {
@@ -334,7 +338,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
 
     initializeMap();
 
-    // Cleanup function
+    // Cleanup function - only cleanup when component unmounts, not on every re-render
+    return () => {
+      // Don't cleanup on every effect run, only on unmount
+    };
+  }, [stableMapKey, mapId]);
+
+  // Separate cleanup effect for unmount only
+  useEffect(() => {
     return () => {
       isInitializingRef.current = false;
       if (mapInstanceRef.current) {
@@ -344,10 +355,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
           // Error during map cleanup
         } finally {
           mapInstanceRef.current = null;
+          initializedForRef.current = '';
         }
       }
     };
-  }, [fromLocation?.id, toLocation?.id, selectedStops?.length, buses?.length]);
+  }, []);
 
   // Fallback content when Leaflet is not available
   const _FallbackContent = () => (
@@ -428,6 +440,17 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = ({
       </div>
     </div>
   );
-};
+}, (prevProps, nextProps) => {
+  // Custom comparison to prevent unnecessary re-renders
+  const fromSame = prevProps.fromLocation?.id === nextProps.fromLocation?.id &&
+                   prevProps.fromLocation?.name === nextProps.fromLocation?.name;
+  const toSame = prevProps.toLocation?.id === nextProps.toLocation?.id &&
+                 prevProps.toLocation?.name === nextProps.toLocation?.name;
+  const stopsSame = prevProps.selectedStops?.length === nextProps.selectedStops?.length;
+  const busesSame = prevProps.buses?.length === nextProps.buses?.length;
+  const mapIdSame = prevProps.mapId === nextProps.mapId;
+  
+  return fromSame && toSame && stopsSame && busesSame && mapIdSame;
+});
 
 export default OpenStreetMapComponent;
