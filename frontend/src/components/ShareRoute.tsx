@@ -189,7 +189,7 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
       label: copied ? t('share.copied', 'Copied!') : t('share.copy', 'Copy'),
       icon: copied ? '✅' : '📋',
       action: handleCopy,
-      color: copied ? '#10B981' : '#8B5CF6',
+      color: copied ? '#10B981' : '#3B82F6',
     },
   ];
 

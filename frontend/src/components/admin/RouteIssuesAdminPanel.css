@@ -470,12 +470,12 @@
 }
 
 .action-btn.confirm {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
 }
 
 .action-btn.confirm:hover:not(:disabled) {
-  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
 }
 
 .action-btn.resolve {

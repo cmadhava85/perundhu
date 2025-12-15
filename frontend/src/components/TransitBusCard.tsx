@@ -259,12 +259,12 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               alignItems: 'center',
               gap: '4px',
               padding: '3px 8px',
-              background: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
+              background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
               color: 'white',
               borderRadius: '12px',
               fontSize: '11px',
               fontWeight: '600',
-              boxShadow: '0 1px 3px rgba(139, 92, 246, 0.3)'
+              boxShadow: '0 1px 3px rgba(59, 130, 246, 0.3)'
             }}>
               ⚡ Fastest
             </span>

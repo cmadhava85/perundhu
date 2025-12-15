@@ -684,8 +684,8 @@
 
 /* Browser Compatibility */
 .compatibility-section {
-  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
-  border-left: 4px solid #a855f7;
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-left: 4px solid #3b82f6;
 }
 
 .browser-list {

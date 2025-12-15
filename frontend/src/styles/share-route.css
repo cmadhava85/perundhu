@@ -6,7 +6,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -14,13 +14,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
 }
 
 .share-route-button:hover {
-  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
 }
 
 .share-route-button:active {
@@ -309,14 +309,14 @@
   padding: 6px 10px;
   font-size: 12px;
   background: transparent;
-  color: #8B5CF6;
+  color: #3B82F6;
   box-shadow: none;
   border: 1px solid #E5E7EB;
 }
 
 .share-route-button.inline:hover {
-  background: #F5F3FF;
-  border-color: #8B5CF6;
+  background: #EFF6FF;
+  border-color: #3B82F6;
   box-shadow: none;
   transform: none;
 }
@@ -343,7 +343,7 @@
   height: 56px;
   border-radius: 50%;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
   z-index: 100;
 }
 
