@@ -1,13 +1,12 @@
 name: CD - Auto Deploy to Pre-Production
 
-# Triggered by CI pipeline on successful build or manually
+# Triggered after CI pipeline completes successfully or manually
 on:
-  push:
-    branches: [ main, master ]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
-      - '.github/workflows/cd-preprod-auto.yml'
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches: [main, master]
   workflow_dispatch:
     inputs:
       deploy_frontend:
@@ -36,10 +35,33 @@ env:
   JAVA_VERSION: '17'
 
 jobs:
+  # Check if CI passed (skip this check for manual dispatch)
+  check-ci-status:
+    name: Check CI Status
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.check.outputs.should_deploy }}
+    steps:
+    - name: Check CI workflow result
+      id: check
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "Manual dispatch - proceeding with deployment"
+          echo "should_deploy=true" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
+          echo "CI passed - proceeding with deployment"
+          echo "should_deploy=true" >> $GITHUB_OUTPUT
+        else
+          echo "CI did not succeed (status: ${{ github.event.workflow_run.conclusion }}) - skipping deployment"
+          echo "should_deploy=false" >> $GITHUB_OUTPUT
+        fi
+
   # Detect which services have changes
   detect-changes:
     name: Detect Changed Services
     runs-on: ubuntu-latest
+    needs: [check-ci-status]
+    if: needs.check-ci-status.outputs.should_deploy == 'true'
     outputs:
       frontend: ${{ steps.changes.outputs.frontend }}
       backend: ${{ steps.changes.outputs.backend }}
