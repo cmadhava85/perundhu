@@ -12,15 +12,15 @@ on:
       deploy_frontend:
         description: 'Deploy Frontend'
         type: boolean
-        default: false
+        default: true
       deploy_backend:
         description: 'Deploy Backend'
         type: boolean
-        default: false
+        default: true
       deploy_all:
-        description: 'Deploy All Services'
+        description: 'Deploy All Services (overrides individual selections)'
         type: boolean
-        default: false
+        default: true
 
 # Queue deployments instead of cancelling - let each deployment complete
 concurrency:
