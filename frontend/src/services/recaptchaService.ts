@@ -17,34 +17,55 @@ const isRecaptchaEnabled = (): boolean => {
 // Track if script is loaded
 let scriptLoaded = false;
 let scriptLoading = false;
+let loadPromise: Promise<void> | null = null;
 
 /**
  * Load the reCAPTCHA script dynamically
  */
 export const loadRecaptchaScript = (): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    if (!isRecaptchaEnabled()) {
-      resolve();
-      return;
-    }
+  if (!isRecaptchaEnabled()) {
+    return Promise.resolve();
+  }
 
-    if (scriptLoaded) {
-      resolve();
-      return;
-    }
+  if (scriptLoaded && typeof window.grecaptcha !== 'undefined') {
+    return Promise.resolve();
+  }
 
-    if (scriptLoading) {
-      // Wait for existing load
-      const checkLoaded = setInterval(() => {
-        if (scriptLoaded) {
-          clearInterval(checkLoaded);
+  // If already loading, return the existing promise
+  if (scriptLoading && loadPromise) {
+    return loadPromise;
+  }
+
+  scriptLoading = true;
+
+  loadPromise = new Promise((resolve, reject) => {
+    // Check if script already exists in DOM
+    const existingScript = document.querySelector(`script[src*="recaptcha/api.js"]`);
+    if (existingScript) {
+      // Script exists, wait for grecaptcha to be available
+      const checkReady = setInterval(() => {
+        if (typeof window.grecaptcha !== 'undefined') {
+          clearInterval(checkReady);
+          scriptLoaded = true;
+          scriptLoading = false;
           resolve();
         }
       }, 100);
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkReady);
+        scriptLoading = false;
+        if (typeof window.grecaptcha === 'undefined') {
+          logger.warn('reCAPTCHA script exists but grecaptcha not available');
+          resolve(); // Resolve anyway to not block forms
+        } else {
+          scriptLoaded = true;
+          resolve();
+        }
+      }, 10000);
       return;
     }
-
-    scriptLoading = true;
 
     const script = document.createElement('script');
     script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`;
@@ -52,18 +73,41 @@ export const loadRecaptchaScript = (): Promise<void> => {
     script.defer = true;
 
     script.onload = () => {
-      scriptLoaded = true;
-      scriptLoading = false;
-      resolve();
+      // Wait for grecaptcha to be ready
+      const checkReady = setInterval(() => {
+        if (typeof window.grecaptcha !== 'undefined') {
+          clearInterval(checkReady);
+          scriptLoaded = true;
+          scriptLoading = false;
+          resolve();
+        }
+      }, 100);
+      
+      // Timeout after 5 seconds
+      setTimeout(() => {
+        clearInterval(checkReady);
+        scriptLoading = false;
+        if (typeof window.grecaptcha === 'undefined') {
+          logger.warn('reCAPTCHA loaded but grecaptcha not defined');
+          resolve(); // Resolve anyway to not block forms
+        } else {
+          scriptLoaded = true;
+          resolve();
+        }
+      }, 5000);
     };
 
-    script.onerror = () => {
+    script.onerror = (error) => {
       scriptLoading = false;
-      reject(new Error('Failed to load reCAPTCHA script'));
+      loadPromise = null;
+      logger.error('Failed to load reCAPTCHA script', { error });
+      resolve(); // Resolve instead of reject to not block forms
     };
 
     document.head.appendChild(script);
   });
+
+  return loadPromise;
 };
 
 /**
@@ -73,30 +117,47 @@ export const loadRecaptchaScript = (): Promise<void> => {
  */
 export const executeRecaptcha = async (action: string = 'submit'): Promise<string | null> => {
   if (!isRecaptchaEnabled()) {
-    console.debug('reCAPTCHA is disabled');
+    logger.debug('reCAPTCHA is disabled');
     return null;
   }
 
   try {
     await loadRecaptchaScript();
 
-    // Wait for grecaptcha to be ready
+    // Check if grecaptcha is available
     if (typeof window.grecaptcha === 'undefined') {
-      throw new Error('reCAPTCHA not loaded');
+      logger.warn('reCAPTCHA not loaded, continuing without token');
+      return null;
     }
 
-    return new Promise((resolve, reject) => {
-      window.grecaptcha.ready(() => {
-        window.grecaptcha
-          .execute(SITE_KEY, { action })
-          .then((token: string) => {
-            resolve(token);
-          })
-          .catch((error: Error) => {
-            logger.error('reCAPTCHA execution error:', error);
-            reject(error);
-          });
-      });
+    return new Promise((resolve) => {
+      try {
+        window.grecaptcha.ready(() => {
+          try {
+            window.grecaptcha
+              .execute(SITE_KEY, { action })
+              .then((token: string) => {
+                resolve(token);
+              })
+              .catch((error: Error) => {
+                logger.error('reCAPTCHA execution error:', error);
+                resolve(null); // Return null instead of rejecting to not block forms
+              });
+          } catch (innerError) {
+            logger.error('reCAPTCHA execute call error:', innerError);
+            resolve(null);
+          }
+        });
+      } catch (readyError) {
+        logger.error('reCAPTCHA ready call error:', readyError);
+        resolve(null);
+      }
+      
+      // Timeout after 5 seconds
+      setTimeout(() => {
+        logger.warn('reCAPTCHA execution timeout');
+        resolve(null);
+      }, 5000);
     });
   } catch (error) {
     logger.error('reCAPTCHA error:', error);

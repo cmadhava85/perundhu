@@ -5,6 +5,7 @@ import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
 import { getRecaptchaToken } from '../../services/recaptchaService';
+import { isKnownLocation } from '../../services/geocodingService';
 import './SimpleRouteForm.css';
 
 interface LocationData {
@@ -88,16 +89,23 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     if (!formData.origin?.trim()) {
       errors.origin = 'Departure location is required';
     } else if (!locationVerified.origin) {
-      // Warn if origin was typed but not selected from autocomplete
-      warnings.origin = 'Location not recognized. Select from suggestions for better accuracy.';
+      // Only show warning if location is not verified AND not a known city
+      // This prevents false warnings for valid cities like "Aruppukottai" or "Madurai"
+      const originName = formData.origin.trim();
+      if (!isKnownLocation(originName)) {
+        warnings.origin = 'Location not recognized. Select from suggestions for better accuracy.';
+      }
     }
     
     // Destination is required
     if (!formData.destination?.trim()) {
       errors.destination = 'Arrival location is required';
     } else if (!locationVerified.destination) {
-      // Warn if destination was typed but not selected from autocomplete
-      warnings.destination = 'Location not recognized. Select from suggestions for better accuracy.';
+      // Only show warning if location is not verified AND not a known city
+      const destName = formData.destination.trim();
+      if (!isKnownLocation(destName)) {
+        warnings.destination = 'Location not recognized. Select from suggestions for better accuracy.';
+      }
     }
     
     // Departure time is required

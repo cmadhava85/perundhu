@@ -104,6 +104,13 @@ export class GeocodingService {
   }
 
   /**
+   * Get the list of common cities (for external use like validation)
+   */
+  static getCommonCities(): readonly string[] {
+    return GeocodingService.COMMON_CITIES;
+  }
+
+  /**
    * Smart search that uses instant suggestions first, then API calls
    */
   static async smartSearch(query: string, limit: number = 10): Promise<Location[]> {
@@ -824,6 +831,36 @@ export const testSrivilliputhurGeocoding = async (): Promise<void> => {
   } catch (error) {
     logger.error('❌ Test failed:', error);
   }
+};
+
+/**
+ * Check if a location name is a known/recognized city
+ * This helps reduce false "location not recognized" warnings
+ */
+export const isKnownLocation = (locationName: string): boolean => {
+  if (!locationName || locationName.trim().length < 2) return false;
+  
+  const normalizedName = locationName.toLowerCase().trim();
+  
+  // Check against common cities list
+  const isKnownCity = GeocodingService.getCommonCities().some(city => {
+    const normalizedCity = city.toLowerCase();
+    // Exact match or close match (handles variations like Aruppukottai/Aruppukkottai)
+    return normalizedName === normalizedCity || 
+           normalizedName.includes(normalizedCity) || 
+           normalizedCity.includes(normalizedName);
+  });
+  
+  if (isKnownCity) return true;
+  
+  // Also check for bus stand patterns that indicate known locations
+  if (normalizedName.includes(' - ') || 
+      normalizedName.includes('bus stand') || 
+      normalizedName.includes('bus station')) {
+    return true;
+  }
+  
+  return false;
 };
 
 // Make test function available globally for debugging

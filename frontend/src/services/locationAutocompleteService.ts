@@ -313,23 +313,43 @@ export class LocationAutocompleteService {
    * Bus stands are identified by having " - " in their name (e.g., "Madurai - Mattuthavani").
    * Bus stops are identified by "Bus Stop" suffix (e.g., "Srivilliputhur - Bus Stop").
    * For Nominatim results, bus_station and bus_stop types are prioritized.
+   * Also prioritizes exact name matches for better user experience.
    */
   private prioritizeBusStands(locations: LocationSuggestion[]): LocationSuggestion[] {
     return [...locations].sort((a, b) => {
-      // Check if location is a bus stand or bus stop
-      const aIsBusStandOrStop = a.name.includes(' - ') || 
-                                 a.name.toLowerCase().includes('bus stop') ||
-                                 a.name.toLowerCase().includes('bus stand');
-      const bIsBusStandOrStop = b.name.includes(' - ') || 
-                                 b.name.toLowerCase().includes('bus stop') ||
-                                 b.name.toLowerCase().includes('bus stand');
+      const aName = a.name.toLowerCase();
+      const bName = b.name.toLowerCase();
       
-      // Bus stands/stops come first
-      if (aIsBusStandOrStop && !bIsBusStandOrStop) return -1;
-      if (!aIsBusStandOrStop && bIsBusStandOrStop) return 1;
+      // Priority 1: Bus stands with " - " pattern (e.g., "Madurai - Mattuthavani")
+      const aIsBusStand = a.name.includes(' - ');
+      const bIsBusStand = b.name.includes(' - ');
       
-      // If both are bus stands/stops or both are not, maintain original order
-      return 0;
+      // Priority 2: Bus stop/stand keywords
+      const aHasBusKeyword = aName.includes('bus stop') || 
+                              aName.includes('bus stand') ||
+                              aName.includes('bus station') ||
+                              aName.includes('bus terminus');
+      const bHasBusKeyword = bName.includes('bus stop') || 
+                              bName.includes('bus stand') ||
+                              bName.includes('bus station') ||
+                              bName.includes('bus terminus');
+      
+      // Calculate priority score (lower = higher priority)
+      const getScore = (isBusStand: boolean, hasBusKeyword: boolean, source?: string): number => {
+        let score = 100;
+        if (isBusStand) score -= 50;  // Highest priority for bus stands
+        if (hasBusKeyword) score -= 30;  // Second priority for bus keywords
+        if (source === 'database') score -= 10;  // Prefer database results
+        return score;
+      };
+      
+      const aScore = getScore(aIsBusStand, aHasBusKeyword, a.source);
+      const bScore = getScore(bIsBusStand, bHasBusKeyword, b.source);
+      
+      if (aScore !== bScore) return aScore - bScore;
+      
+      // If scores equal, sort alphabetically
+      return aName.localeCompare(bName);
     });
   }
 
