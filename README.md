@@ -19,9 +19,10 @@ Perundhu is a comprehensive bus tracking and route planning application built wi
 ### Key Features
 - 🚍 Real-time bus tracking with live location updates
 - 🗺️ Interactive route planning with OpenStreetMap
-- 📸 OCR-based bus timing image processing (Tamil + English)
-- � Copy-paste route contributions from WhatsApp/Facebook/Twitter
-- �🔍 Smart autocomplete for bus stops and routes
+- 📸 **AI-powered OCR** using Google Gemini Vision (Tamil + English)
+- 📋 Copy-paste route contributions from WhatsApp/Facebook/Twitter
+- 🔍 Smart autocomplete for bus stops and routes
+- 🌐 **Tamil language support** for locations and search
 - 📱 Mobile-responsive design with Material UI
 - 🔐 Secure OAuth2 JWT authentication
 - ☁️ Cloud-native deployment on Google Cloud Platform
@@ -150,39 +151,40 @@ graph LR
     style Services fill:#2196F3,color:#fff
 ```
 
-### OCR Timing Image Processing Flow
+### OCR Image Processing Flow (Gemini Vision AI)
 
 ```mermaid
 sequenceDiagram
     participant User
     participant Frontend
     participant API as Backend API
-    participant OCR as Tesseract OCR
+    participant Gemini as Gemini Vision AI
     participant DB as MySQL Database
     participant Storage as Cloud Storage
     
     User->>Frontend: Upload bus timing image
-    Frontend->>API: POST /api/v1/contributions/timing-images
+    Frontend->>API: POST /api/v1/contributions/images
     API->>Storage: Store image file
     Storage-->>API: Return file URL
     API->>DB: Save contribution record
     DB-->>API: Return contribution ID
     API-->>Frontend: Contribution created
     
-    Frontend->>API: POST /api/v1/admin/contributions/{id}/extract
+    Frontend->>API: POST /api/admin/contributions/images/{id}/extract-ocr
     API->>Storage: Fetch image
     Storage-->>API: Image data
-    API->>OCR: Extract text (Tamil + English)
-    OCR-->>API: Extracted timings
+    API->>Gemini: Extract text (Tamil + English)
+    Gemini-->>API: Extracted routes with times
     API->>DB: Update with extracted data
     DB-->>API: Success
     API-->>Frontend: Extraction complete
     
-    Frontend->>API: POST /api/v1/admin/contributions/{id}/approve
-    API->>DB: Create bus timings records
-    API->>DB: Update contribution status
+    Frontend->>API: POST /api/admin/contributions/images/{id}/approve
+    API->>DB: Create locations (English + Tamil translations)
+    API->>DB: Create bus routes and stops
+    API->>DB: Update contribution status to INTEGRATED
     DB-->>API: Success
-    API-->>Frontend: Approved and integrated
+    API-->>Frontend: Approved - routes now searchable
 ```
 
 ### GCP Deployment Architecture
@@ -315,58 +317,41 @@ gcloud run deploy perundhu-frontend --image gcr.io/PROJECT_ID/perundhu-frontend
 |----------|-------------|
 | [IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md) | Complete implementation guide with best practices |
 | [HEXAGONAL_ARCHITECTURE_GUIDELINES.md](./HEXAGONAL_ARCHITECTURE_GUIDELINES.md) | Architecture patterns and conventions |
-| [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) | Quick reference for common tasks |
+| [TESTING_GUIDE.md](./TESTING_GUIDE.md) | Testing strategies and guide |
 
-### Deployment & DevOps
+### Deployment & Infrastructure
 | Document | Description |
 |----------|-------------|
-| [CLOUDBUILD_GUIDE.md](./CLOUDBUILD_GUIDE.md) | CI/CD pipeline setup and usage |
-| [infrastructure/DEPLOYMENT_GUIDE.md](./infrastructure/DEPLOYMENT_GUIDE.md) | Infrastructure deployment with Terraform |
-| [infrastructure/README.md](./infrastructure/README.md) | Infrastructure architecture overview |
+| [CI_CD_DOCUMENTATION.md](./CI_CD_DOCUMENTATION.md) | CI/CD pipeline setup and GitHub Actions |
+| [INFRASTRUCTURE_INTEGRATION_GUIDE.md](./INFRASTRUCTURE_INTEGRATION_GUIDE.md) | Infrastructure setup with Terraform |
+| [CUSTOM_DOMAIN_SETUP.md](./CUSTOM_DOMAIN_SETUP.md) | Cloud Run domain configuration |
+| [GCP_SECRET_MANAGER_SETUP.md](./GCP_SECRET_MANAGER_SETUP.md) | Secrets management on GCP |
+
+### Security & Authentication
+| Document | Description |
+|----------|-------------|
+| [SECURITY_DEPLOYMENT_GUIDE.md](./SECURITY_DEPLOYMENT_GUIDE.md) | Security configuration and best practices |
+| [AUTHENTICATION_SETUP.md](./AUTHENTICATION_SETUP.md) | OAuth2 JWT authentication setup |
 
 ### Feature Documentation
 | Document | Description |
 |----------|-------------|
-| [OCR_IMPLEMENTATION_COMPLETE.md](./OCR_IMPLEMENTATION_COMPLETE.md) | OCR timing image processing system |
-| [BUS_TIMING_IMAGE_SYSTEM.md](./BUS_TIMING_IMAGE_SYSTEM.md) | Bus timing image contribution system |
-| [PASTE_CONTRIBUTION_IMPLEMENTATION.md](./PASTE_CONTRIBUTION_IMPLEMENTATION.md) | Copy-paste contribution with NLP extraction |
-| [CONTRIBUTION_METHODS_SECURITY_ANALYSIS.md](./CONTRIBUTION_METHODS_SECURITY_ANALYSIS.md) | Security comparison across all contribution methods |
-| [CRITICAL_SECURITY_FIXES_SUMMARY.md](./CRITICAL_SECURITY_FIXES_SUMMARY.md) | Phase 1: Critical security fixes implementation |
-| [HIGH_PRIORITY_SECURITY_FIXES.md](./HIGH_PRIORITY_SECURITY_FIXES.md) | Phase 2: High-priority security fixes implementation |
-| [AUTHENTICATION_SETUP.md](./AUTHENTICATION_SETUP.md) | OAuth2 JWT authentication setup |
-| [TRANSIT_ROUTING_IMPLEMENTATION.md](./TRANSIT_ROUTING_IMPLEMENTATION.md) | Transit routing and navigation |
+| [IMAGE_PROCESSING_SYSTEM.md](./IMAGE_PROCESSING_SYSTEM.md) | OCR/Gemini Vision image processing |
+| [TAMIL_LANGUAGE_COMPLETE_IMPLEMENTATION.md](./TAMIL_LANGUAGE_COMPLETE_IMPLEMENTATION.md) | Tamil language support |
+| [VOICE_CONTRIBUTION_FEATURE.md](./VOICE_CONTRIBUTION_FEATURE.md) | Voice contribution feature |
 | [OPENSTREETMAP_STOP_FEATURES.md](./OPENSTREETMAP_STOP_FEATURES.md) | OpenStreetMap integration |
+| [SCALABLE_LOCATION_RESOLUTION.md](./SCALABLE_LOCATION_RESOLUTION.md) | Location resolution architecture |
 
-### Frontend Documentation
+### Code Quality
 | Document | Description |
 |----------|-------------|
-| [MODERN_UI_GUIDE.md](./MODERN_UI_GUIDE.md) | Modern UI design patterns |
-| [MOBILE_DESIGN_ENHANCEMENT.md](./MOBILE_DESIGN_ENHANCEMENT.md) | Mobile responsive design |
-| [RESPONSIVE_DESIGN_COMPLETION_REPORT.md](./RESPONSIVE_DESIGN_COMPLETION_REPORT.md) | Responsive design implementation |
-
-### Backend Documentation
-| Document | Description |
-|----------|-------------|
-| [backend/TESSERACT_INSTALLATION.md](./backend/TESSERACT_INSTALLATION.md) | Tesseract OCR setup guide |
-| [DATABASE_MIGRATION_SUCCESS.md](./DATABASE_MIGRATION_SUCCESS.md) | Database migration guide |
-| [COST_OPTIMIZATION_VERIFICATION.md](./COST_OPTIMIZATION_VERIFICATION.md) | GCP cost optimization strategies |
-
-### Testing Documentation
-| Document | Description |
-|----------|-------------|
-| [PLAYWRIGHT_INSTALLATION_SUCCESS.md](./PLAYWRIGHT_INSTALLATION_SUCCESS.md) | E2E testing with Playwright |
-| [CODE_COMPLIANCE_SUMMARY.md](./CODE_COMPLIANCE_SUMMARY.md) | Architecture compliance testing |
+| [CODE_QUALITY_GUIDE.md](./CODE_QUALITY_GUIDE.md) | Static analysis and code quality tools |
+| [MYSQL_PERFORMANCE_OPTIMIZATION.md](./MYSQL_PERFORMANCE_OPTIMIZATION.md) | Database performance tuning |
 
 ### GitHub Copilot
 | Document | Description |
 |----------|-------------|
 | [COPILOT_SETUP.md](./COPILOT_SETUP.md) | GitHub Copilot configuration and prompts |
-
-### Project Status Reports
-| Document | Description |
-|----------|-------------|
-| [FINAL_STATUS_REPORT.md](./FINAL_STATUS_REPORT.md) | Project completion status |
-| [TIMING_IMAGE_CONTROLLERS_CREATED.md](./TIMING_IMAGE_CONTROLLERS_CREATED.md) | OCR REST API controllers |
 
 ## 🛠 Tech Stack
 

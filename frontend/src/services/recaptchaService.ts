@@ -38,7 +38,7 @@ export const loadRecaptchaScript = (): Promise<void> => {
 
   scriptLoading = true;
 
-  loadPromise = new Promise((resolve, reject) => {
+  loadPromise = new Promise((resolve, _reject) => {
     // Check if script already exists in DOM
     const existingScript = document.querySelector(`script[src*="recaptcha/api.js"]`);
     if (existingScript) {

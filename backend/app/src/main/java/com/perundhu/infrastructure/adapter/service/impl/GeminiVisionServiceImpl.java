@@ -8,10 +8,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,69 +62,119 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   // The prompt template for extracting bus schedule information
   // Using compact pipe-delimited format to minimize token usage
   private static final String BUS_SCHEDULE_PROMPT = """
-      Extract ALL bus routes and schedules from this Tamil Nadu bus timing board image.
-      The text in the image may be in Tamil (தமிழ்), English, or mixed.
-      IMPORTANT: Extract EVERY SINGLE route visible in the image. Do not skip any routes.
-
-      TAMIL TEXT HANDLING:
-      - If text is in Tamil script (e.g., மதுரை, சென்னை, சிவகாசி), convert to English transliteration
-      - Use standard English spellings for Tamil place names:
-        * சென்னை → Chennai, மதுரை → Madurai, கோயம்புத்தூர் → Coimbatore
-        * திருச்சி → Trichy, சேலம் → Salem, திருநெல்வேலி → Tirunelveli
-        * சிவகாசி → Sivakasi, அருப்புக்கோட்டை → Aruppukkottai, ராமேஸ்வரம் → Rameswaram
-        * விருதுநகர் → Virudhunagar, தேனி → Theni, திண்டுக்கல் → Dindigul
-        * நாகர்கோவில் → Nagercoil, கன்னியாகுமரி → Kanyakumari
-      - For Tamil text not recognized, provide best phonetic English transliteration
-
-      Return ONLY in this compact format (no markdown, no explanation):
-
-      ORIGIN:station_name (the bus stand or station where this board is located)
+      You are an expert OCR system specialized in extracting bus schedule information from Tamil Nadu bus timing boards.
+      
+      TASK: Extract ALL bus routes and schedules from this image with maximum accuracy.
+      
+      IMAGE ANALYSIS TIPS:
+      - Look carefully at ALL rows/columns in the image
+      - Bus boards often have faded or low-contrast text - extract everything visible
+      - Times may be displayed in various formats (digital, handwritten, printed)
+      - Route numbers often include suffixes like UD, D, E, A, B, C (e.g., 166UD, 42A)
+      - Board headers usually show the station name (origin)
+      
+      LANGUAGE HANDLING:
+      The text may be in Tamil (தமிழ்), English, or mixed. Always output in English.
+      
+      Tamil City Name Translations (use these exact spellings):
+      | Tamil | English |
+      |-------|---------|
+      | சென்னை | Chennai |
+      | மதுரை | Madurai |
+      | கோயம்புத்தூர் / கோவை | Coimbatore |
+      | திருச்சி / திருச்சிராப்பள்ளி | Trichy |
+      | சேலம் | Salem |
+      | திருநெல்வேலி / நெல்லை | Tirunelveli |
+      | சிவகாசி | Sivakasi |
+      | அருப்புக்கோட்டை | Aruppukkottai |
+      | விருதுநகர் | Virudhunagar |
+      | ராமேஸ்வரம் | Rameswaram |
+      | இராமநாதபுரம் | Ramanathapuram |
+      | தேனி | Theni |
+      | திண்டுக்கல் | Dindigul |
+      | நாகர்கோவில் | Nagercoil |
+      | கன்னியாகுமரி | Kanyakumari |
+      | தூத்துக்குடி | Thoothukudi |
+      | தஞ்சாவூர் | Thanjavur |
+      | கும்பகோணம் | Kumbakonam |
+      | வேலூர் | Vellore |
+      | ஈரோடு | Erode |
+      | திருப்பூர் | Tiruppur |
+      | கரூர் | Karur |
+      | நாமக்கல் | Namakkal |
+      | ஓசூர் | Hosur |
+      | பெங்களூர் | Bengaluru |
+      | மைசூர் | Mysuru |
+      | திருப்பதி | Tirupati |
+      | புதுச்சேரி | Puducherry |
+      | திருவனந்தபுரம் | Thiruvananthapuram |
+      | கொச்சி | Kochi |
+      | பாலக்காடு | Palakkad |
+      
+      Tamil Bus Terms:
+      | Tamil | English |
+      |-------|---------|
+      | பேருந்து நிலையம் | Bus Station |
+      | புறப்பாடு | Departure |
+      | வரவு | Arrival |
+      | வழி | Via |
+      | மணி | hour/time |
+      | காலை | Morning/AM |
+      | மாலை | Evening/PM |
+      | இரவு | Night |
+      
+      OUTPUT FORMAT (strict - no markdown, no explanation):
+      
+      ORIGIN:station_name
       TYPE:departure_board|route_schedule|destination_table|arrival_board
       ROUTES:
       bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
-      bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
-      (list ALL routes, one per line)
       END
-
-      FIELD DEFINITIONS:
-      - bus_num: Route number or bus number (e.g., 166UD, 42A, 520)
-      - from_location: Departure/origin station in English (use ORIGIN if same as board location)
-      - to_location: Final destination station in English
-      - via_stops: Intermediate stops in English, separated by commas (e.g., Dindigul,Trichy,Salem)
-      - dep_time: Departure times in 24-hour format, comma-separated (e.g., 06:00,14:30,22:00)
-      - arr_time: Arrival times if shown, comma-separated (use - if not available)
-      - bus_type: Type of bus (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, etc.)
-
-      EXAMPLE 1 - Tamil text board (மதுரை பேருந்து நிலையம்):
+      
+      FIELD RULES:
+      - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.)
+      - from_location: Origin station (use ORIGIN if same as board location, or - if not shown)
+      - to_location: Final destination in English (REQUIRED - never leave blank)
+      - via_stops: Intermediate stops comma-separated (use - if none shown)
+      - dep_time: Departure time(s) in HH:MM 24-hour format, comma-separated for multiple times
+      - arr_time: Arrival time(s) in HH:MM format (use - if not shown)
+      - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.)
+      
+      TIME EXTRACTION RULES:
+      - Convert 12-hour to 24-hour format (6:00 AM → 06:00, 6:00 PM → 18:00)
+      - If time shows seconds (19:41:00), output as HH:MM only (19:41)
+      - Tamil time indicators: காலை = AM, மாலை/இரவு = PM
+      - Extract ALL times shown for each route, comma-separated
+      
+      EXAMPLES:
+      
+      Example 1 - Departure board:
+      ORIGIN:ARUPPUKKOTTAI
+      TYPE:departure_board
+      ROUTES:
+      -|ARUPPUKKOTTAI|MADURAI|-|19:41|-|ORDINARY
+      101|ARUPPUKKOTTAI|CHENNAI|Madurai,Trichy|21:00|-|EXPRESS
+      END
+      
+      Example 2 - Full route schedule:
       ORIGIN:MADURAI
       TYPE:route_schedule
       ROUTES:
       166UD|MADURAI|CHENNAI|Dindigul,Trichy,Villupuram|06:00,14:30|12:00,20:30|EXPRESS
-      520UD|MADURAI|BANGALORE|Theni,Cumbum,Salem,Krishnagiri|08:00,20:00|14:00,02:00|DELUXE
-      42|MADURAI|COIMBATORE|Palani,Pollachi|07:30,09:00,15:00|-|ORDINARY
-      88A|MADURAI|TIRUNELVELI|Virudhunagar,Kovilpatti|10:00,16:30|12:30,19:00|EXPRESS
-      17|MADURAI|RAMESHWARAM|Paramakudi,Ramanathapuram|05:30,11:00,17:00|09:00,14:30,20:30|ORDINARY
+      42A|MADURAI|COIMBATORE|Palani,Pollachi|07:30,15:00|-|ORDINARY
       END
-
-      EXAMPLE 2 - Departure times only board:
-      ORIGIN:SIVAKASI
-      TYPE:departure_board
-      ROUTES:
-      101|SIVAKASI|CHENNAI|-|06:00,18:00|-|EXPRESS
-      202|SIVAKASI|MADURAI|-|07:00,09:00,11:00,14:00,17:00,20:00|-|ORDINARY
-      END
-
-      CRITICAL RULES:
-      - Extract EVERY route visible in the image - do not summarize or skip any
-      - Convert ALL Tamil text to English transliteration (e.g., சென்னை → Chennai)
-      - Use 24-hour HH:MM format for all times
-      - Use - as placeholder for missing/unavailable information
-      - List ALL departure times for each route, separated by commas
-      - List ALL arrival times if shown, matching the order of departure times
-      - Include ALL intermediate stops/via points in order (in English)
-      - Preserve the exact bus type shown (EXPRESS, DELUXE, SUPER DELUXE, AC SLEEPER, etc.)
-      - If origin is shown on the board, use it as from_location for all routes
-      - Count the routes in the image and ensure you output that exact count
+      
+      CRITICAL INSTRUCTIONS:
+      1. Count all visible routes and extract EVERY one - do not skip
+      2. If you cannot read a field clearly, use your best interpretation
+      3. Always use - for genuinely missing/unavailable information
+      4. Route numbers can be missing (use -) but destinations are usually always shown
+      5. Pay special attention to:
+         - Faded or low-contrast text
+         - Handwritten additions or corrections
+         - Multiple time columns (weekday/weekend/holiday schedules)
+      6. For boards showing only times without route numbers, still extract each row as a separate route
+      7. Double-check your count matches the visible rows in the image
       """;
 
   @Value("${gemini.api.key:}")
@@ -371,8 +424,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
           String[] times = timesStr.split(",");
           for (String time : times) {
             time = time.trim();
-            if (!time.isEmpty() && time.matches("\\d{1,2}:\\d{2}")) {
-              allTimes.add(normalizeTime(time));
+            if (looksLikeTime(time)) {
+              String normalized = normalizeTime(time);
+              if (normalized != null) {
+                allTimes.add(normalized);
+              }
             }
           }
         }
@@ -438,8 +494,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
               for (String t : parts[4].split(",")) {
                 t = t.trim();
-                if (t.matches("\\d{1,2}:\\d{2}")) {
-                  depTimes.add(normalizeTime(t));
+                if (looksLikeTime(t)) {
+                  String normalized = normalizeTime(t);
+                  if (normalized != null) {
+                    depTimes.add(normalized);
+                  }
                 }
               }
             }
@@ -454,8 +513,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             if (parts.length > 5 && !parts[5].trim().equals("-") && !parts[5].trim().isEmpty()) {
               for (String t : parts[5].split(",")) {
                 t = t.trim();
-                if (t.matches("\\d{1,2}:\\d{2}")) {
-                  arrTimes.add(normalizeTime(t));
+                if (looksLikeTime(t)) {
+                  String normalized = normalizeTime(t);
+                  if (normalized != null) {
+                    arrTimes.add(normalized);
+                  }
                 }
               }
             }
@@ -494,8 +556,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
               for (String t : parts[3].split(",")) {
                 t = t.trim();
-                if (t.matches("\\d{1,2}:\\d{2}")) {
-                  times.add(normalizeTime(t));
+                if (looksLikeTime(t)) {
+                  String normalized = normalizeTime(t);
+                  if (normalized != null) {
+                    times.add(normalized);
+                  }
                 }
               }
             }
@@ -503,11 +568,12 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             // If no times found in field 3, check field 4
             if (times.isEmpty() && parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
               String field4 = parts[4].trim();
-              if (field4.matches(".*\\d{1,2}:\\d{2}.*")) {
-                for (String t : field4.split(",")) {
-                  t = t.trim();
-                  if (t.matches("\\d{1,2}:\\d{2}")) {
-                    times.add(normalizeTime(t));
+              for (String t : field4.split(",")) {
+                t = t.trim();
+                if (looksLikeTime(t)) {
+                  String normalized = normalizeTime(t);
+                  if (normalized != null) {
+                    times.add(normalized);
                   }
                 }
               }
@@ -522,7 +588,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             // Bus type from field 4 if not times
             if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
               String field4 = parts[4].trim();
-              if (!field4.matches(".*\\d{1,2}:\\d{2}.*")) {
+              if (!looksLikeTime(field4)) {
                 route.put("busType", field4.toUpperCase());
               }
             }
@@ -562,21 +628,413 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       }
     }
 
-    log.info("Parsed {} times and {} routes from Gemini response", allTimes.size(), routes.size());
+    // Calculate confidence score based on extracted data quality
+    double confidence = calculateConfidence(result, routes);
+    result.put("confidence", confidence);
+
+    log.info("Parsed {} times and {} routes from Gemini response (confidence: {})", 
+        allTimes.size(), routes.size(), confidence);
     return result;
+  }
+  
+  /**
+   * Calculate confidence score based on extracted data quality.
+   * Score ranges from 0.0 (very low) to 1.0 (very high).
+   */
+  @SuppressWarnings("unchecked")
+  private double calculateConfidence(Map<String, Object> result, List<Map<String, Object>> routes) {
+    double score = 0.5; // Base score
+    
+    // +0.1 if origin is detected
+    if (result.get("origin") != null && !result.get("origin").toString().isEmpty()) {
+      score += 0.1;
+    }
+    
+    // +0.1 if board type is detected
+    if (result.get("boardType") != null && !result.get("boardType").toString().isEmpty()) {
+      score += 0.05;
+    }
+    
+    // Evaluate routes quality
+    if (routes != null && !routes.isEmpty()) {
+      score += 0.1; // At least some routes found
+      
+      int routesWithTimes = 0;
+      int routesWithDestination = 0;
+      int routesWithBusType = 0;
+      int routesWithRouteNumber = 0;
+      
+      for (Map<String, Object> route : routes) {
+        if (route.get("departureTimes") != null) {
+          List<?> times = (List<?>) route.get("departureTimes");
+          if (!times.isEmpty()) routesWithTimes++;
+        }
+        if (route.get("destination") != null && !route.get("destination").toString().equals("-")) {
+          routesWithDestination++;
+        }
+        if (route.get("busType") != null && !route.get("busType").toString().equals("-")) {
+          routesWithBusType++;
+        }
+        if (route.get("routeNumber") != null && !route.get("routeNumber").toString().equals("-")) {
+          routesWithRouteNumber++;
+        }
+      }
+      
+      int totalRoutes = routes.size();
+      
+      // Score based on completeness of route data
+      if (routesWithDestination == totalRoutes) score += 0.1;
+      else if (routesWithDestination > totalRoutes / 2) score += 0.05;
+      
+      if (routesWithTimes == totalRoutes) score += 0.1;
+      else if (routesWithTimes > totalRoutes / 2) score += 0.05;
+      
+      if (routesWithBusType > totalRoutes / 2) score += 0.05;
+      if (routesWithRouteNumber > totalRoutes / 2) score += 0.05;
+      
+      // Bonus for multiple routes (indicates complete extraction)
+      if (totalRoutes >= 5) score += 0.05;
+      if (totalRoutes >= 10) score += 0.05;
+    }
+    
+    // Cap at 0.95 (never 100% confident with OCR)
+    return Math.min(0.95, Math.max(0.1, score));
   }
 
   /**
    * Normalize time to HH:MM format.
+   * Handles various formats:
+   * - HH:MM (standard)
+   * - HH:MM:SS (with seconds)
+   * - H:MM (single digit hour)
+   * - HH.MM or H.MM (dot separator)
+   * - HH:MM AM/PM (12-hour format)
+   * - HHMM (no separator)
    */
   private String normalizeTime(String time) {
-    if (time == null)
+    if (time == null || time.trim().isEmpty())
       return null;
+    
     time = time.trim();
-    if (time.matches("\\d:\\d{2}")) {
-      return "0" + time;
+    
+    // Remove common prefixes/suffixes
+    time = time.replaceAll("(?i)^(at|@|time[:\\s]*)\\s*", "");
+    time = time.replaceAll("(?i)\\s*(hrs?|hours?)$", "");
+    
+    // Handle 12-hour format with AM/PM
+    boolean isPM = time.toUpperCase().contains("PM");
+    boolean isAM = time.toUpperCase().contains("AM");
+    time = time.replaceAll("(?i)\\s*(AM|PM|A\\.M\\.|P\\.M\\.)\\s*", "").trim();
+    
+    // Handle dot separator (e.g., "19.41" -> "19:41")
+    time = time.replace(".", ":");
+    
+    // Handle no separator format (e.g., "1941" -> "19:41")
+    if (time.matches("\\d{4}") && !time.contains(":")) {
+      time = time.substring(0, 2) + ":" + time.substring(2);
+    } else if (time.matches("\\d{3}") && !time.contains(":")) {
+      // e.g., "941" -> "9:41"
+      time = time.substring(0, 1) + ":" + time.substring(1);
     }
+    
+    // Strip seconds if present (e.g., "19:41:00" -> "19:41")
+    if (time.matches("\\d{1,2}:\\d{2}:\\d{2}")) {
+      time = time.substring(0, time.lastIndexOf(':'));
+    }
+    
+    // Pad single digit hour (e.g., "9:30" -> "09:30")
+    if (time.matches("\\d:\\d{2}")) {
+      time = "0" + time;
+    }
+    
+    // Convert 12-hour to 24-hour format
+    if (isPM || isAM) {
+      String[] parts = time.split(":");
+      if (parts.length >= 2) {
+        int hour = Integer.parseInt(parts[0]);
+        if (isPM && hour < 12) {
+          hour += 12;
+        } else if (isAM && hour == 12) {
+          hour = 0;
+        }
+        time = String.format("%02d:%s", hour, parts[1]);
+      }
+    }
+    
+    // Final validation - return null if not a valid time
+    if (!time.matches("\\d{2}:\\d{2}")) {
+      return null;
+    }
+    
     return time;
+  }
+
+  /**
+   * Check if a string looks like a time value.
+   * More flexible pattern to catch various formats.
+   */
+  private boolean looksLikeTime(String str) {
+    if (str == null || str.trim().isEmpty()) return false;
+    str = str.trim();
+    
+    // Various time patterns
+    return str.matches("\\d{1,2}[:\\.。]\\d{2}(:\\d{2})?") ||  // HH:MM or HH:MM:SS
+           str.matches("\\d{1,2}[:\\.。]\\d{2}\\s*(AM|PM|am|pm|A\\.M\\.|P\\.M\\.)?") ||  // With AM/PM
+           str.matches("\\d{3,4}") ||  // HHMM or HMM
+           str.matches("\\d{1,2}\\s*(AM|PM|am|pm)");  // Just hour with AM/PM
+  }
+  
+  /**
+   * Validate that a time string is a valid 24-hour time.
+   * Returns true if the time is between 00:00 and 23:59.
+   */
+  private boolean isValidTime(String time) {
+    if (time == null || !time.matches("\\d{2}:\\d{2}")) {
+      return false;
+    }
+    try {
+      String[] parts = time.split(":");
+      int hour = Integer.parseInt(parts[0]);
+      int minute = Integer.parseInt(parts[1]);
+      return hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+  
+  /**
+   * Validate that a location name is reasonable.
+   * Returns true if it looks like a valid location.
+   */
+  private boolean isValidLocation(String location) {
+    if (location == null || location.trim().isEmpty() || location.equals("-")) {
+      return false;
+    }
+    String trimmed = location.trim();
+    
+    // Length validation: min 2 chars, max 50 chars (longest city name reasonable limit)
+    if (trimmed.length() < 2 || trimmed.length() > 50) {
+      return false;
+    }
+    
+    // Reject if purely numeric
+    if (trimmed.matches("\\d+")) {
+      return false;
+    }
+    
+    // Reject common OCR garbage patterns
+    if (isOcrGarbage(trimmed)) {
+      return false;
+    }
+    
+    // Check for valid characters: letters (English/Tamil), spaces, dots, hyphens, apostrophes
+    // Tamil Unicode range: \u0B80-\u0BFF
+    if (!trimmed.matches("[A-Za-z\\u0B80-\\u0BFF\\s.\\-']+")) {
+      return false;
+    }
+    
+    // After normalization, check if it's a known location
+    String normalized = normalizeLocationName(trimmed);
+    if (isKnownLocation(normalized)) {
+      return true;
+    }
+    
+    // If not in known list, apply heuristic validation
+    // Must have at least one vowel (likely a real word)
+    String upperNorm = normalized.toUpperCase();
+    if (!upperNorm.matches(".*[AEIOU].*") && !trimmed.matches(".*[\\u0B80-\\u0BFF].*")) {
+      return false;
+    }
+    
+    // Reject if too many consecutive consonants (likely garbage)
+    if (upperNorm.matches(".*[BCDFGHJKLMNPQRSTVWXYZ]{5,}.*")) {
+      return false;
+    }
+    
+    // Accept if it passes all checks (could be a new/unknown valid location)
+    return true;
+  }
+  
+  /**
+   * Check if the string looks like OCR garbage or noise.
+   */
+  private boolean isOcrGarbage(String text) {
+    if (text == null || text.isEmpty()) {
+      return true;
+    }
+    
+    String upper = text.toUpperCase().trim();
+    
+    // Common OCR noise patterns
+    String[] garbagePatterns = {
+        "^[^A-Za-z\\u0B80-\\u0BFF]+$",  // No letters at all
+        "^[\\W_]+$",                      // Only special characters
+        "^(NA|N/A|NIL|NULL|NONE|UNKNOWN|TBD|N\\.A\\.)$",  // Placeholder values
+        "^[X]+$",                         // Just X's
+        "^[-]+$",                         // Just dashes
+        "^[.]+$",                         // Just dots
+        "^\\d+[A-Z]?$",                   // Mostly numbers with optional letter
+        "^[A-Z]\\d+$",                    // Letter followed by numbers
+        "^(BUS|STAND|STATION|DEPOT|TERMINUS|STOP)$",  // Just suffix words
+        "^(THE|TO|FROM|VIA|AND|OR)$",    // Common prepositions/conjunctions only
+        "^[A-Z]{1,2}$",                   // Single or double letters only (too short)
+    };
+    
+    for (String pattern : garbagePatterns) {
+      if (upper.matches(pattern)) {
+        return true;
+      }
+    }
+    
+    // Check for excessive repetition (e.g., "AAAA", "ABAB")
+    if (hasExcessiveRepetition(upper)) {
+      return true;
+    }
+    
+    // Check for random-looking strings (high entropy)
+    if (looksRandom(upper)) {
+      return true;
+    }
+    
+    return false;
+  }
+  
+  /**
+   * Check if string has excessive character repetition.
+   */
+  private boolean hasExcessiveRepetition(String text) {
+    if (text.length() < 4) {
+      return false;
+    }
+    
+    // Check for 4+ same consecutive characters
+    if (text.matches(".*(.)\\1{3,}.*")) {
+      return true;
+    }
+    
+    // Check for repeating 2-char patterns (e.g., "ABAB")
+    if (text.length() >= 6) {
+      String twoChar = text.substring(0, 2);
+      String repeated = twoChar.repeat(3);
+      if (text.startsWith(repeated)) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
+  /**
+   * Check if string looks like random characters (high entropy, no word patterns).
+   */
+  private boolean looksRandom(String text) {
+    if (text.length() < 4) {
+      return false;
+    }
+    
+    // Calculate vowel to consonant ratio - valid words usually have 20-40% vowels
+    long vowelCount = text.chars().filter(c -> "AEIOU".indexOf(c) >= 0).count();
+    double vowelRatio = (double) vowelCount / text.length();
+    
+    // If very few vowels (except for known abbreviations) or too many vowels
+    if (text.length() > 4 && (vowelRatio < 0.1 || vowelRatio > 0.7)) {
+      // Exception for known abbreviations like CMBT, KSRTC
+      if (!isKnownAbbreviation(text)) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  
+  /**
+   * Check if the location is a known valid location name.
+   */
+  private boolean isKnownLocation(String normalizedName) {
+    if (normalizedName == null || normalizedName.isEmpty()) {
+      return false;
+    }
+    
+    String upper = normalizedName.toUpperCase().trim();
+    
+    // Known Tamil Nadu and South India locations (comprehensive list)
+    Set<String> knownLocations = new HashSet<>(Arrays.asList(
+        // Tamil Nadu - Major Cities
+        "CHENNAI", "MADURAI", "COIMBATORE", "TRICHY", "TIRUCHIRAPPALLI", "SALEM",
+        "TIRUNELVELI", "THANJAVUR", "VELLORE", "ERODE", "TIRUPPUR", "THOOTHUKUDI",
+        "DINDIGUL", "KANYAKUMARI", "NAGERCOIL",
+        
+        // Tamil Nadu - Districts/Towns
+        "SIVAKASI", "VIRUDHUNAGAR", "ARUPPUKKOTTAI", "RAMANATHAPURAM", "RAMESWARAM",
+        "THENI", "KARUR", "NAMAKKAL", "KUMBAKONAM", "NAGAPATTINAM", "MAYILADUTHURAI",
+        "TIRUVARUR", "PUDUKKOTTAI", "PERAMBALUR", "ARIYALUR", "CUDDALORE",
+        "VILUPPURAM", "KALLAKURICHI", "TIRUVANNAMALAI", "RANIPET", "TIRUPATTUR",
+        "KRISHNAGIRI", "DHARMAPURI", "HOSUR", "OOTY", "COONOOR", "NILGIRIS",
+        "POLLACHI", "PALANI", "KODAIKANAL", "KANCHIPURAM", "CHENGALPATTU",
+        
+        // Chennai Areas
+        "KOYAMBEDU", "TAMBARAM", "EGMORE", "BROADWAY", "GUINDY", "ADYAR",
+        "THIRUVANMIYUR", "VELACHERY", "PORUR", "AVADI", "AMBATTUR", "POONAMALLEE",
+        "MADHAVARAM", "MATHAVARAM", "PERAMBUR", "TONDIARPET", "ROYAPURAM",
+        
+        // Madurai Areas  
+        "PERIYAR", "THIRUMANGALAM", "USILAMPATTI", "MELUR", "VADIPATTI",
+        
+        // South Tamil Nadu
+        "SANKARANKOVIL", "TENKASI", "SRIVILLIPUTHUR", "SATTUR", "KOVILPATTI",
+        "OTTAPIDARAM", "TIRUCHENDUR", "KAYALPATTINAM", "KULASEKHARAPATNAM",
+        "MANAPPADU", "SRIVAIKUNDAM", "PALAYAMKOTTAI", "AMBASAMUDRAM",
+        "CHERANMAHADEVI", "KADAYANALLUR", "RAJAPALAYAM", "WATRAP",
+        "SRIPERUMBUDUR", "MARAIMALAINAGAR", "CHIDAMBARAM", "SIRKALI",
+        
+        // Karnataka
+        "BENGALURU", "BANGALORE", "MYSURU", "MYSORE", "MANGALURU", "MANGALORE",
+        "HUBBALLI", "HUBLI", "DHARWAD", "BELGAUM", "BELAGAVI", "DAVANGERE",
+        "BELLARY", "BALLARI", "TUMKUR", "SHIMOGA", "SHIVAMOGGA", "HASSAN",
+        "CHITRADURGA", "KOLAR", "MANDYA", "RAICHUR", "BIDAR", "GULBARGA",
+        
+        // Kerala
+        "THIRUVANANTHAPURAM", "TRIVANDRUM", "KOCHI", "COCHIN", "ERNAKULAM",
+        "KOZHIKODE", "CALICUT", "THRISSUR", "TRICHUR", "KOLLAM", "QUILON",
+        "ALAPPUZHA", "ALLEPPEY", "PALAKKAD", "PALGHAT", "KANNUR", "CANNANORE",
+        "MALAPPURAM", "KOTTAYAM", "PATHANAMTHITTA", "IDUKKI", "WAYANAD",
+        "KASARAGOD", "MUNNAR",
+        
+        // Andhra Pradesh / Telangana
+        "HYDERABAD", "SECUNDERABAD", "VISAKHAPATNAM", "VIZAG", "VIJAYAWADA",
+        "TIRUPATI", "TIRUMALA", "GUNTUR", "NELLORE", "KURNOOL", "KADAPA",
+        "ANANTAPUR", "RAJAHMUNDRY", "KAKINADA", "ELURU", "ONGOLE", "CHITTOOR",
+        "WARANGAL", "KARIMNAGAR", "NIZAMABAD", "KHAMMAM", "MAHBUBNAGAR",
+        
+        // Puducherry
+        "PUDUCHERRY", "PONDICHERRY", "KARAIKAL", "MAHE", "YANAM",
+        
+        // Other Major South Indian Cities
+        "MUMBAI", "BOMBAY", "PUNE", "GOA", "PANAJI", "MARGAO",
+        
+        // Known bus stand codes/abbreviations
+        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC", "APSRTC", "MSRTC"
+    ));
+    
+    return knownLocations.contains(upper);
+  }
+  
+  /**
+   * Check if the string is a known abbreviation.
+   */
+  private boolean isKnownAbbreviation(String text) {
+    if (text == null || text.isEmpty()) {
+      return false;
+    }
+    
+    Set<String> abbreviations = new HashSet<>(Arrays.asList(
+        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC", "KPN", "SRM", "VRL", "SRS",
+        "APSRTC", "MSRTC", "GSRTC", "RSRTC", "UPSRTC", "OSRTC", "WBTC",
+        "TPJ", "MAS", "CHN", "CBE", "MDU", "TEN", "NCL", "TVL", "SLM",
+        "VLR", "ERD", "TPR", "DGL", "KRR", "NMK", "TJR", "RMD", "BZA"
+    ));
+    
+    return abbreviations.contains(text.toUpperCase().trim());
   }
 
   /**
@@ -729,20 +1187,44 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
   /**
    * Normalize location name to standard format.
-   * Strips common suffixes like "BUS STAND", "BUS STATION", etc.
+   * Strips common suffixes, handles abbreviations, standardizes names,
+   * and converts Tamil script to English.
    */
   private String normalizeLocationName(String name) {
     if (name == null || name.isEmpty()) {
       return name;
     }
+    
+    String original = name.trim();
+    
+    // First, check for Tamil script and convert to English
+    // Tamil script range: \u0B80-\u0BFF
+    if (original.matches(".*[\\u0B80-\\u0BFF].*")) {
+      String converted = convertTamilToEnglish(original);
+      if (converted != null && !converted.equals(original)) {
+        original = converted;
+      }
+    }
 
-    String upper = name.toUpperCase().trim();
+    String upper = original.toUpperCase().trim();
+    
+    // Remove extra whitespace
+    upper = upper.replaceAll("\\s+", " ");
+    
+    // Remove common noise patterns
+    upper = upper.replaceAll("\\(.*?\\)", "").trim();  // Remove parenthetical info
+    upper = upper.replaceAll("\\[.*?\\]", "").trim();  // Remove bracket info
+    upper = upper.replaceAll("\\d+$", "").trim();      // Remove trailing numbers
 
     // Strip common suffixes (order matters - longer patterns first)
     String[] suffixesToRemove = {
-        " BUS STAND", " BUS STATION", " BUSSTAND", " BUSSTATION",
-        " STAND", " STATION", " TERMINAL", " DEPOT",
-        "BUSSTAND", "BUSSTATION" // For cases without spaces
+        " NEW BUS STAND", " OLD BUS STAND", " CENTRAL BUS STAND",
+        " MOFUSSIL BUS STAND", " MOFUSSIL BUS STATION", " MOFUSSIL BUS TERMINUS",
+        " BUS TERMINUS", " BUS STAND", " BUS STATION", " BUS DEPOT",
+        " BUSSTAND", " BUSSTATION", " BUSTAND",
+        " STAND", " STATION", " TERMINAL", " TERMINUS", " DEPOT",
+        " JUNCTION", " JN", " JN.", " TOWN", " CITY",
+        "BUSSTAND", "BUSSTATION", "BUSTAND" // For cases without spaces
     };
     for (String suffix : suffixesToRemove) {
       if (upper.endsWith(suffix)) {
@@ -750,31 +1232,309 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         break;
       }
     }
-
-    // Also handle prefix patterns like "CMBT" (Chennai Mofussil Bus Terminus)
-    String[] prefixAbbreviations = {
-        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC"
+    
+    // Strip common prefixes
+    String[] prefixesToRemove = {
+        "NEW ", "OLD ", "CENTRAL ", "MAIN "
     };
-    for (String abbr : prefixAbbreviations) {
+    for (String prefix : prefixesToRemove) {
+      if (upper.startsWith(prefix) && upper.length() > prefix.length() + 3) {
+        upper = upper.substring(prefix.length()).trim();
+        break;
+      }
+    }
+
+    // Known abbreviations - keep as-is
+    String[] knownAbbreviations = {
+        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC", "KPN", "SRM", "VRL", "SRS",
+        "APSRTC", "MSRTC", "GSRTC", "RSRTC", "UPSRTC", "OSRTC", "WBTC"
+    };
+    for (String abbr : knownAbbreviations) {
       if (upper.equals(abbr)) {
-        // Keep abbreviations as-is - they're valid location identifiers
         return upper;
       }
     }
 
-    // Map of common variations to standard names
-    Map<String, String> nameMap = Map.ofEntries(
-        Map.entry("BANGALORE", "BENGALURU"),
-        Map.entry("MADRAS", "CHENNAI"),
-        Map.entry("TIRUCHIRAPPALLI", "TRICHY"),
-        Map.entry("TIRUCHIRAPALLI", "TRICHY"),
-        Map.entry("TUTICORIN", "THOOTHUKUDI"),
-        Map.entry("TANJORE", "THANJAVUR"),
-        Map.entry("NELLAI", "TIRUNELVELI"),
-        Map.entry("MATHAVARAMBUSSTAND", "MATHAVARAM"),
-        Map.entry("MATHAVARAMBUSSTATION", "MATHAVARAM"));
-
+    // Comprehensive map of variations to standard names (Tamil Nadu focus)
+    Map<String, String> nameMap = new HashMap<>();
+    
+    // Major cities - alternate spellings
+    nameMap.put("BANGALORE", "BENGALURU");
+    nameMap.put("BANGLORE", "BENGALURU");
+    nameMap.put("BLORE", "BENGALURU");
+    nameMap.put("BLR", "BENGALURU");
+    nameMap.put("MADRAS", "CHENNAI");
+    nameMap.put("MAS", "CHENNAI");
+    nameMap.put("CHN", "CHENNAI");
+    nameMap.put("CHNAI", "CHENNAI");
+    nameMap.put("BOMBAY", "MUMBAI");
+    nameMap.put("CALCUTTA", "KOLKATA");
+    
+    // Tamil Nadu cities
+    nameMap.put("TIRUCHIRAPPALLI", "TRICHY");
+    nameMap.put("TIRUCHIRAPALLI", "TRICHY");
+    nameMap.put("TIRUCHI", "TRICHY");
+    nameMap.put("TIRUCHY", "TRICHY");
+    nameMap.put("TPJ", "TRICHY");
+    nameMap.put("TUTICORIN", "THOOTHUKUDI");
+    nameMap.put("TUTI", "THOOTHUKUDI");
+    nameMap.put("TANJORE", "THANJAVUR");
+    nameMap.put("TJR", "THANJAVUR");
+    nameMap.put("NELLAI", "TIRUNELVELI");
+    nameMap.put("TINELVELI", "TIRUNELVELI");
+    nameMap.put("TVL", "TIRUNELVELI");
+    nameMap.put("COIMBATORE", "COIMBATORE");
+    nameMap.put("KOVAI", "COIMBATORE");
+    nameMap.put("CBE", "COIMBATORE");
+    nameMap.put("KANYAKUMARI", "KANYAKUMARI");
+    nameMap.put("CAPE COMORIN", "KANYAKUMARI");
+    nameMap.put("NAGERCOIL", "NAGERCOIL");
+    nameMap.put("NAGARCOIL", "NAGERCOIL");
+    nameMap.put("NCL", "NAGERCOIL");
+    
+    // South Tamil Nadu
+    nameMap.put("ARUPPUKOTTAI", "ARUPPUKKOTTAI");
+    nameMap.put("ARUPPUKOTAI", "ARUPPUKKOTTAI");
+    nameMap.put("A.KOTTAI", "ARUPPUKKOTTAI");
+    nameMap.put("VIRUDUNAGAR", "VIRUDHUNAGAR");
+    nameMap.put("VIRUDHU NAGAR", "VIRUDHUNAGAR");
+    nameMap.put("VNR", "VIRUDHUNAGAR");
+    nameMap.put("SIVAKASHI", "SIVAKASI");
+    nameMap.put("SIVA KASI", "SIVAKASI");
+    nameMap.put("SKS", "SIVAKASI");
+    nameMap.put("RAMANATHAPURAM", "RAMANATHAPURAM");
+    nameMap.put("RAMNAD", "RAMANATHAPURAM");
+    nameMap.put("RMD", "RAMANATHAPURAM");
+    nameMap.put("RAMESHWARAM", "RAMESWARAM");
+    nameMap.put("RAMESVARAM", "RAMESWARAM");
+    
+    // Central Tamil Nadu
+    nameMap.put("DINDUGAL", "DINDIGUL");
+    nameMap.put("DINDIKAL", "DINDIGUL");
+    nameMap.put("DGL", "DINDIGUL");
+    nameMap.put("THENI", "THENI");
+    nameMap.put("TNI", "THENI");
+    nameMap.put("KARUR", "KARUR");
+    nameMap.put("KRR", "KARUR");
+    nameMap.put("NAMAKKAL", "NAMAKKAL");
+    nameMap.put("NMK", "NAMAKKAL");
+    nameMap.put("ERODE", "ERODE");
+    nameMap.put("ERD", "ERODE");
+    nameMap.put("TIRUPUR", "TIRUPPUR");
+    nameMap.put("TIRUPR", "TIRUPPUR");
+    nameMap.put("TPR", "TIRUPPUR");
+    nameMap.put("KUMBAKONAM", "KUMBAKONAM");
+    nameMap.put("KUMBKONAM", "KUMBAKONAM");
+    nameMap.put("KMB", "KUMBAKONAM");
+    
+    // North Tamil Nadu
+    nameMap.put("VELLORE", "VELLORE");
+    nameMap.put("VLR", "VELLORE");
+    nameMap.put("GUDIYATTAM", "GUDIYATHAM");
+    nameMap.put("GUDIYATAM", "GUDIYATHAM");
+    nameMap.put("VILLUPURAM", "VILUPPURAM");
+    nameMap.put("VPM", "VILUPPURAM");
+    nameMap.put("CUDDALORE", "CUDDALORE");
+    nameMap.put("CDLR", "CUDDALORE");
+    nameMap.put("PONDICHERRY", "PUDUCHERRY");
+    nameMap.put("PONDY", "PUDUCHERRY");
+    nameMap.put("PDY", "PUDUCHERRY");
+    
+    // Chennai areas
+    nameMap.put("MATHAVARAMBUSSTAND", "MATHAVARAM");
+    nameMap.put("MATHAVARAMBUSSTATION", "MATHAVARAM");
+    nameMap.put("KOYAMBEDU", "KOYAMBEDU");
+    nameMap.put("CMBT KOYAMBEDU", "KOYAMBEDU");
+    nameMap.put("TAMBARAM", "TAMBARAM");
+    nameMap.put("TBM", "TAMBARAM");
+    nameMap.put("EGMORE", "EGMORE");
+    nameMap.put("EGM", "EGMORE");
+    nameMap.put("BROADWAY", "BROADWAY");
+    nameMap.put("GUINDY", "GUINDY");
+    
+    // Karnataka
+    nameMap.put("MYSORE", "MYSURU");
+    nameMap.put("MYSUR", "MYSURU");
+    nameMap.put("MYS", "MYSURU");
+    nameMap.put("MANGALORE", "MANGALURU");
+    nameMap.put("MANGALOR", "MANGALURU");
+    nameMap.put("MNG", "MANGALURU");
+    nameMap.put("HUBLI", "HUBBALLI");
+    nameMap.put("DHARWAD", "DHARWAD");
+    
+    // Kerala
+    nameMap.put("TRIVANDRUM", "THIRUVANANTHAPURAM");
+    nameMap.put("TVM", "THIRUVANANTHAPURAM");
+    nameMap.put("CALICUT", "KOZHIKODE");
+    nameMap.put("CCT", "KOZHIKODE");
+    nameMap.put("COCHIN", "KOCHI");
+    nameMap.put("ERNAKULAM", "KOCHI");
+    nameMap.put("EKM", "KOCHI");
+    nameMap.put("PALGHAT", "PALAKKAD");
+    nameMap.put("PGT", "PALAKKAD");
+    nameMap.put("QUILON", "KOLLAM");
+    nameMap.put("ALLEPPEY", "ALAPPUZHA");
+    nameMap.put("TRICHUR", "THRISSUR");
+    nameMap.put("TCR", "THRISSUR");
+    nameMap.put("CANNANORE", "KANNUR");
+    
+    // Andhra Pradesh / Telangana
+    nameMap.put("HYDRABAD", "HYDERABAD");
+    nameMap.put("HYD", "HYDERABAD");
+    nameMap.put("SECUNDRABAD", "SECUNDERABAD");
+    nameMap.put("VISHAKAPATNAM", "VISAKHAPATNAM");
+    nameMap.put("VIZAG", "VISAKHAPATNAM");
+    nameMap.put("VSP", "VISAKHAPATNAM");
+    nameMap.put("VIJAYAWADA", "VIJAYAWADA");
+    nameMap.put("BZA", "VIJAYAWADA");
+    nameMap.put("TIRUPATHI", "TIRUPATI");
+    nameMap.put("TIRUMALA", "TIRUPATI");
+    
     return nameMap.getOrDefault(upper, upper);
+  }
+
+  /**
+   * Convert Tamil script location names to English.
+   * Maps common Tamil Nadu city names from Tamil to standard English spellings.
+   */
+  private String convertTamilToEnglish(String tamilName) {
+    if (tamilName == null || tamilName.isEmpty()) {
+      return tamilName;
+    }
+    
+    String trimmed = tamilName.trim();
+    
+    // Tamil to English city name mappings
+    Map<String, String> tamilToEnglish = new HashMap<>();
+    
+    // Major cities
+    tamilToEnglish.put("சென்னை", "CHENNAI");
+    tamilToEnglish.put("மதுரை", "MADURAI");
+    tamilToEnglish.put("கோயம்புத்தூர்", "COIMBATORE");
+    tamilToEnglish.put("கோவை", "COIMBATORE");
+    tamilToEnglish.put("திருச்சி", "TRICHY");
+    tamilToEnglish.put("திருச்சிராப்பள்ளி", "TRICHY");
+    tamilToEnglish.put("சேலம்", "SALEM");
+    tamilToEnglish.put("திருநெல்வேலி", "TIRUNELVELI");
+    tamilToEnglish.put("நெல்லை", "TIRUNELVELI");
+    tamilToEnglish.put("தஞ்சாவூர்", "THANJAVUR");
+    tamilToEnglish.put("தஞ்சை", "THANJAVUR");
+    tamilToEnglish.put("வேலூர்", "VELLORE");
+    tamilToEnglish.put("ஈரோடு", "ERODE");
+    tamilToEnglish.put("திருப்பூர்", "TIRUPPUR");
+    
+    // South Tamil Nadu
+    tamilToEnglish.put("சிவகாசி", "SIVAKASI");
+    tamilToEnglish.put("விருதுநகர்", "VIRUDHUNAGAR");
+    tamilToEnglish.put("அருப்புக்கோட்டை", "ARUPPUKKOTTAI");
+    tamilToEnglish.put("இராமநாதபுரம்", "RAMANATHAPURAM");
+    tamilToEnglish.put("ராமநாதபுரம்", "RAMANATHAPURAM");
+    tamilToEnglish.put("ராமேஸ்வரம்", "RAMESWARAM");
+    tamilToEnglish.put("தூத்துக்குடி", "THOOTHUKUDI");
+    tamilToEnglish.put("கன்னியாகுமரி", "KANYAKUMARI");
+    tamilToEnglish.put("நாகர்கோவில்", "NAGERCOIL");
+    tamilToEnglish.put("நாகர்கோயில்", "NAGERCOIL");
+    
+    // Central Tamil Nadu
+    tamilToEnglish.put("திண்டுக்கல்", "DINDIGUL");
+    tamilToEnglish.put("தேனி", "THENI");
+    tamilToEnglish.put("கரூர்", "KARUR");
+    tamilToEnglish.put("நாமக்கல்", "NAMAKKAL");
+    tamilToEnglish.put("கும்பகோணம்", "KUMBAKONAM");
+    tamilToEnglish.put("புதுக்கோட்டை", "PUDUKKOTTAI");
+    tamilToEnglish.put("பெரம்பலூர்", "PERAMBALUR");
+    tamilToEnglish.put("அரியலூர்", "ARIYALUR");
+    
+    // North Tamil Nadu
+    tamilToEnglish.put("காஞ்சிபுரம்", "KANCHIPURAM");
+    tamilToEnglish.put("திருவண்ணாமலை", "TIRUVANNAMALAI");
+    tamilToEnglish.put("கிருஷ்ணகிரி", "KRISHNAGIRI");
+    tamilToEnglish.put("தர்மபுரி", "DHARMAPURI");
+    tamilToEnglish.put("விழுப்புரம்", "VILUPPURAM");
+    tamilToEnglish.put("கடலூர்", "CUDDALORE");
+    tamilToEnglish.put("செங்கல்பட்டு", "CHENGALPATTU");
+    tamilToEnglish.put("திருவள்ளூர்", "TIRUVALLUR");
+    tamilToEnglish.put("ஓசூர்", "HOSUR");
+    
+    // Chennai areas
+    tamilToEnglish.put("கோயம்பேடு", "KOYAMBEDU");
+    tamilToEnglish.put("தாம்பரம்", "TAMBARAM");
+    tamilToEnglish.put("எழும்பூர்", "EGMORE");
+    tamilToEnglish.put("மத்தவரம்", "MATHAVARAM");
+    tamilToEnglish.put("குரோம்பேட்டை", "CHROMEPET");
+    tamilToEnglish.put("பல்லாவரம்", "PALLAVARAM");
+    
+    // Coastal towns
+    tamilToEnglish.put("நாகப்பட்டினம்", "NAGAPATTINAM");
+    tamilToEnglish.put("காரைக்கால்", "KARAIKAL");
+    tamilToEnglish.put("வேதாரண்யம்", "VEDARANYAM");
+    tamilToEnglish.put("சிதம்பரம்", "CHIDAMBARAM");
+    
+    // Other important towns
+    tamilToEnglish.put("பொள்ளாச்சி", "POLLACHI");
+    tamilToEnglish.put("பாளையங்கோட்டை", "PALAYAMKOTTAI");
+    tamilToEnglish.put("மேட்டூர்", "METTUR");
+    tamilToEnglish.put("ஆத்தூர்", "ATTUR");
+    tamilToEnglish.put("உதகமண்டலம்", "OOTY");
+    tamilToEnglish.put("ஊட்டி", "OOTY");
+    tamilToEnglish.put("கொடைக்கானல்", "KODAIKANAL");
+    tamilToEnglish.put("யாழ்ப்பாணம்", "JAFFNA");
+    
+    // Other states - common destinations
+    tamilToEnglish.put("பெங்களூர்", "BENGALURU");
+    tamilToEnglish.put("பெங்களூரு", "BENGALURU");
+    tamilToEnglish.put("மைசூர்", "MYSURU");
+    tamilToEnglish.put("மைசூரு", "MYSURU");
+    tamilToEnglish.put("மங்களூர்", "MANGALURU");
+    tamilToEnglish.put("ஹைதராபாத்", "HYDERABAD");
+    tamilToEnglish.put("திருப்பதி", "TIRUPATI");
+    tamilToEnglish.put("திருமலை", "TIRUPATI");
+    tamilToEnglish.put("புதுச்சேரி", "PUDUCHERRY");
+    tamilToEnglish.put("பாண்டிச்சேரி", "PUDUCHERRY");
+    
+    // Kerala cities
+    tamilToEnglish.put("கேரளா", "KERALA");
+    tamilToEnglish.put("திருவனந்தபுரம்", "THIRUVANANTHAPURAM");
+    tamilToEnglish.put("கொச்சி", "KOCHI");
+    tamilToEnglish.put("கோழிக்கோடு", "KOZHIKODE");
+    tamilToEnglish.put("பாலக்காடு", "PALAKKAD");
+    tamilToEnglish.put("திருச்சூர்", "THRISSUR");
+    tamilToEnglish.put("கண்ணூர்", "KANNUR");
+    tamilToEnglish.put("கொல்லம்", "KOLLAM");
+    tamilToEnglish.put("ஆலப்புழா", "ALAPPUZHA");
+    
+    // Check for exact match first
+    if (tamilToEnglish.containsKey(trimmed)) {
+      return tamilToEnglish.get(trimmed);
+    }
+    
+    // Check if the input contains any Tamil city name (for compound names like "மதுரை பேருந்து நிலையம்")
+    for (Map.Entry<String, String> entry : tamilToEnglish.entrySet()) {
+      if (trimmed.contains(entry.getKey())) {
+        return entry.getValue();
+      }
+    }
+    
+    // Remove Tamil suffixes for bus station/stand
+    String[] tamilSuffixes = {
+        " பேருந்து நிலையம்",  // Bus Station
+        " பஸ் ஸ்டாண்ட்",      // Bus Stand
+        " நிலையம்",          // Station
+        " மையம்",            // Center
+        "பேருந்து நிலையம்",
+        "பஸ் ஸ்டாண்ட்",
+        "நிலையம்"
+    };
+    for (String suffix : tamilSuffixes) {
+      if (trimmed.endsWith(suffix)) {
+        String stripped = trimmed.substring(0, trimmed.length() - suffix.length()).trim();
+        if (tamilToEnglish.containsKey(stripped)) {
+          return tamilToEnglish.get(stripped);
+        }
+      }
+    }
+    
+    return tamilName; // Return original if no match found
   }
 
   /**

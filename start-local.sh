@@ -98,6 +98,18 @@ wait_for_service() {
 }
 
 # =============================================================================
+# Load Environment Variables
+# =============================================================================
+
+# Load environment variables from .env file if it exists
+if [ -f "$PROJECT_ROOT/.env" ]; then
+    log_info "Loading environment variables from .env file..."
+    set -a
+    source "$PROJECT_ROOT/.env"
+    set +a
+fi
+
+# =============================================================================
 # Service Management Functions
 # =============================================================================
 

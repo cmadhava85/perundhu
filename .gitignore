@@ -39,6 +39,9 @@ nohup.out
 # Ignore uploaded files (managed separately)
 **/uploads/images/
 
+# Archived documentation (old/obsolete docs)
+archive/
+
 # Terraform state and sensitive files
 *.tfstate
 *.tfstate.*
