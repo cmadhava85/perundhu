@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.perundhu.infrastructure.security.AdminBasicAuthFilter;
 import com.perundhu.infrastructure.security.ApiKeyValidationFilter;
 import com.perundhu.infrastructure.security.OriginValidationFilter;
 import com.perundhu.infrastructure.security.RateLimitingFilter;
@@ -47,13 +48,16 @@ public class SecurityConfig {
   private final RateLimitingFilter rateLimitingFilter;
   private final OriginValidationFilter originValidationFilter;
   private final ApiKeyValidationFilter apiKeyValidationFilter;
+  private final AdminBasicAuthFilter adminBasicAuthFilter;
 
   public SecurityConfig(RateLimitingFilter rateLimitingFilter,
       OriginValidationFilter originValidationFilter,
-      ApiKeyValidationFilter apiKeyValidationFilter) {
+      ApiKeyValidationFilter apiKeyValidationFilter,
+      AdminBasicAuthFilter adminBasicAuthFilter) {
     this.rateLimitingFilter = rateLimitingFilter;
     this.originValidationFilter = originValidationFilter;
     this.apiKeyValidationFilter = apiKeyValidationFilter;
+    this.adminBasicAuthFilter = adminBasicAuthFilter;
   }
 
   @Bean
@@ -66,12 +70,15 @@ public class SecurityConfig {
         .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
         .addFilterAfter(originValidationFilter, RateLimitingFilter.class)
         .addFilterAfter(apiKeyValidationFilter, OriginValidationFilter.class)
+        // Add admin basic auth filter after API key validation
+        .addFilterAfter(adminBasicAuthFilter, ApiKeyValidationFilter.class)
         .authorizeHttpRequests(authz -> authz
             // Public endpoints
             .requestMatchers("/api/v1/bus-schedules/**").permitAll()
             .requestMatchers("/api/v1/analytics/**").permitAll()
             .requestMatchers("/api/v1/contributions/analyze-image").permitAll()
             .requestMatchers("/api/v1/contributions/routes").permitAll() // Allow anonymous route contributions
+            .requestMatchers("/api/v1/contributions/routes/stops").permitAll() // Allow anonymous stop contributions to existing routes
             .requestMatchers("/api/v1/contributions/buses/**").permitAll() // Allow anonymous bus contributions
             .requestMatchers("/api/v1/contributions/stops/**").permitAll() // Allow anonymous stop contributions
             .requestMatchers("/api/v1/buses/**").permitAll()

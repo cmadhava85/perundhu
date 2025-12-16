@@ -264,6 +264,51 @@ public class InputValidationService implements InputValidationPort {
       }
     }
 
+    // Pass through other fields that don't require validation
+    // Coordinates
+    if (data.containsKey("fromLatitude")) {
+      sanitizedValues.put("fromLatitude", data.get("fromLatitude"));
+    }
+    if (data.containsKey("fromLongitude")) {
+      sanitizedValues.put("fromLongitude", data.get("fromLongitude"));
+    }
+    if (data.containsKey("toLatitude")) {
+      sanitizedValues.put("toLatitude", data.get("toLatitude"));
+    }
+    if (data.containsKey("toLongitude")) {
+      sanitizedValues.put("toLongitude", data.get("toLongitude"));
+    }
+    
+    // Time fields
+    if (data.containsKey("departureTime")) {
+      sanitizedValues.put("departureTime", data.get("departureTime"));
+    }
+    if (data.containsKey("arrivalTime")) {
+      sanitizedValues.put("arrivalTime", data.get("arrivalTime"));
+    }
+    
+    // Additional metadata fields
+    if (data.containsKey("additionalNotes")) {
+      sanitizedValues.put("additionalNotes", data.get("additionalNotes"));
+    }
+    if (data.containsKey("scheduleInfo")) {
+      sanitizedValues.put("scheduleInfo", data.get("scheduleInfo"));
+    }
+    if (data.containsKey("stops")) {
+      sanitizedValues.put("stops", data.get("stops"));
+    }
+    if (data.containsKey("busName")) {
+      sanitizedValues.put("busName", data.get("busName"));
+    }
+    
+    // ADD_STOPS contribution fields
+    if (data.containsKey("sourceBusId")) {
+      sanitizedValues.put("sourceBusId", data.get("sourceBusId"));
+    }
+    if (data.containsKey("contributionType")) {
+      sanitizedValues.put("contributionType", data.get("contributionType"));
+    }
+
     return new ContributionValidationResult(errors.isEmpty(), errors, sanitizedValues);
   }
 

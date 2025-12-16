@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location } from '../../types';
-import { searchBuses, getStops, getLocations } from '../../services/api';
+import { searchBuses, getStops, getLocations, submitStopsContribution } from '../../services/api';
 import { locationAutocompleteService, type LocationSuggestion } from '../../services/locationAutocompleteService';
 import './AddStopsToRoute.css';
 
 interface AddStopsToRouteProps {
   // Pre-selected bus (when coming from search results)
   preSelectedBus?: Bus;
+  // Pre-populated origin/destination from search
+  fromLocation?: Location;
+  toLocation?: Location;
   onSubmit?: (busId: number, stops: StopEntry[]) => void;
   onCancel?: () => void;
   onError?: (error: string) => void;
@@ -24,11 +27,18 @@ export interface StopEntry {
 
 export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   preSelectedBus,
+  fromLocation: preSelectedFromLocation,
+  toLocation: preSelectedToLocation,
   onSubmit,
   onCancel,
   onError
 }) => {
   const { t, i18n } = useTranslation();
+
+  // Debug logging
+  console.log('AddStopsToRoute - preSelectedBus:', preSelectedBus);
+  console.log('AddStopsToRoute - fromLocation:', preSelectedFromLocation);
+  console.log('AddStopsToRoute - toLocation:', preSelectedToLocation);
   
   // State for route selection (when not pre-selected)
   const [locations, setLocations] = useState<Location[]>([]);
@@ -65,11 +75,22 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
 
   // If preSelectedBus is provided, use it directly
   useEffect(() => {
+    console.log('AddStopsToRoute useEffect - preSelectedBus changed:', preSelectedBus);
     if (preSelectedBus) {
+      console.log('Setting selectedBus to:', preSelectedBus);
       setSelectedBus(preSelectedBus);
       loadExistingStops(preSelectedBus.id);
     }
   }, [preSelectedBus]);
+
+  // Also handle initial mount with preSelectedBus
+  useEffect(() => {
+    if (preSelectedBus && !selectedBus) {
+      console.log('Initial mount - setting selectedBus from preSelectedBus');
+      setSelectedBus(preSelectedBus);
+      loadExistingStops(preSelectedBus.id);
+    }
+  }, []);
 
   // Load locations on mount
   useEffect(() => {
@@ -287,21 +308,51 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     setIsSubmitting(true);
     
     try {
-      // Simulate API call - in production, this would call a real endpoint
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Prepare the submission data
+      const submissionData = {
+        busId: selectedBus.id,
+        busNumber: selectedBus.busNumber,
+        busName: selectedBus.busName,
+        fromLocationName: selectedBus.from,
+        toLocationName: selectedBus.to,
+        departureTime: selectedBus.departureTime,
+        arrivalTime: selectedBus.arrivalTime,
+        stops: newStops.map(stop => ({
+          locationName: stop.locationName,
+          locationId: stop.locationId,
+          arrivalTime: stop.arrivalTime,
+          departureTime: stop.departureTime,
+          order: stop.order
+        })),
+        additionalNotes: `User contributed ${newStops.length} intermediate stop(s) for this route`
+      };
+
+      console.log('Submitting stops contribution:', submissionData);
       
-      onSubmit?.(selectedBus.id, newStops);
-      setSubmitSuccess(true);
+      // Call the actual API
+      const response = await submitStopsContribution(submissionData);
       
-      // Reset after success
-      setTimeout(() => {
-        setNewStops([]);
-        setSubmitSuccess(false);
-        if (!preSelectedBus) {
-          setSelectedBus(null);
-        }
-      }, 3000);
-    } catch {
+      if (response.success) {
+        console.log('Stops contribution submitted successfully:', response);
+        onSubmit?.(selectedBus.id, newStops);
+        setSubmitSuccess(true);
+        
+        // Reset after success
+        setTimeout(() => {
+          setNewStops([]);
+          setSubmitSuccess(false);
+          if (!preSelectedBus) {
+            setSelectedBus(null);
+          }
+        }, 3000);
+      } else {
+        // API returned an error
+        const errorMessage = response.message || t('addStops.submitFailed', 'Failed to submit stops');
+        console.error('Stops contribution failed:', response);
+        onError?.(errorMessage);
+      }
+    } catch (error) {
+      console.error('Error submitting stops:', error);
       onError?.(t('addStops.submitFailed', 'Failed to submit stops'));
     } finally {
       setIsSubmitting(false);
@@ -512,6 +563,32 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
               <span>{t('addStops.readonlyNotice', 'Route details cannot be edited. You can only add stops.')}</span>
             </div>
             
+            {/* Route Visual Display */}
+            <div className="route-visual-display">
+              <div className="route-endpoint origin">
+                <span className="endpoint-icon">🟢</span>
+                <div className="endpoint-details">
+                  <span className="endpoint-label">{t('addStops.fromLocation', 'From')}</span>
+                  <span className="endpoint-name">{selectedBus.from}</span>
+                  <span className="endpoint-time">{selectedBus.departureTime}</span>
+                </div>
+              </div>
+              
+              <div className="route-line-connector">
+                <div className="line"></div>
+                <span className="add-stops-hint">+ {t('addStops.addIntermediateStops', 'Add intermediate stops here')}</span>
+              </div>
+              
+              <div className="route-endpoint destination">
+                <span className="endpoint-icon">🔴</span>
+                <div className="endpoint-details">
+                  <span className="endpoint-label">{t('addStops.toLocation', 'To')}</span>
+                  <span className="endpoint-name">{selectedBus.to}</span>
+                  <span className="endpoint-time">{selectedBus.arrivalTime}</span>
+                </div>
+              </div>
+            </div>
+            
             <div className="bus-details-grid">
               <div className="detail-item">
                 <label>{t('addStops.busNumber', 'Bus Number')}</label>
@@ -521,22 +598,24 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                 <label>{t('addStops.busName', 'Bus Name')}</label>
                 <input type="text" value={selectedBus.busName} disabled className="disabled-input" />
               </div>
-              <div className="detail-item">
-                <label>{t('addStops.fromLocation', 'From')}</label>
-                <input type="text" value={selectedBus.from} disabled className="disabled-input" />
-              </div>
-              <div className="detail-item">
-                <label>{t('addStops.toLocation', 'To')}</label>
-                <input type="text" value={selectedBus.to} disabled className="disabled-input" />
-              </div>
-              <div className="detail-item">
-                <label>{t('addStops.departure', 'Departure')}</label>
-                <input type="text" value={selectedBus.departureTime} disabled className="disabled-input" />
-              </div>
-              <div className="detail-item">
-                <label>{t('addStops.arrival', 'Arrival')}</label>
-                <input type="text" value={selectedBus.arrivalTime} disabled className="disabled-input" />
-              </div>
+              {selectedBus.busType && (
+                <div className="detail-item">
+                  <label>{t('addStops.busType', 'Bus Type')}</label>
+                  <input type="text" value={selectedBus.busType} disabled className="disabled-input" />
+                </div>
+              )}
+              {selectedBus.fare !== undefined && selectedBus.fare !== null && (
+                <div className="detail-item">
+                  <label>{t('addStops.fare', 'Fare')}</label>
+                  <input type="text" value={`₹${selectedBus.fare}`} disabled className="disabled-input" />
+                </div>
+              )}
+              {selectedBus.duration && (
+                <div className="detail-item">
+                  <label>{t('addStops.duration', 'Duration')}</label>
+                  <input type="text" value={selectedBus.duration} disabled className="disabled-input" />
+                </div>
+              )}
             </div>
 
             {!preSelectedBus && (

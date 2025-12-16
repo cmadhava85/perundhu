@@ -91,6 +91,7 @@ public class IntegrationController {
 
   /**
    * Integrate a specific approved route contribution by ID
+   * Also allows retrying INTEGRATION_FAILED contributions
    */
   @PostMapping("/route/{id}")
   public ResponseEntity<Map<String, Object>> integrateSpecificRoute(@PathVariable String id) {
@@ -102,10 +103,19 @@ public class IntegrationController {
       RouteContribution contribution = routeContributionPort.findRouteContributionById(id)
           .orElseThrow(() -> new RuntimeException("Route contribution not found: " + id));
 
-      if (!"APPROVED".equals(contribution.getStatus())) {
+      // Allow both APPROVED and INTEGRATION_FAILED (for retry)
+      if (!"APPROVED".equals(contribution.getStatus()) && !"INTEGRATION_FAILED".equals(contribution.getStatus())) {
         result.put("error",
-            "Route contribution must be approved before integration. Current status: " + contribution.getStatus());
+            "Route contribution must be approved or in INTEGRATION_FAILED status to integrate. Current status: " + contribution.getStatus());
         return ResponseEntity.badRequest().body(result);
+      }
+
+      // Reset status to APPROVED for retry
+      if ("INTEGRATION_FAILED".equals(contribution.getStatus())) {
+        log.info("Retrying previously failed integration for contribution: {}", id);
+        contribution.setStatus("APPROVED");
+        contribution.setValidationMessage("Retrying integration...");
+        routeContributionOutputPort.save(contribution);
       }
 
       log.info("Integrating route contribution: {} - {} to {}",

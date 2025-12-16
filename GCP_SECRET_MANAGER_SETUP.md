@@ -29,6 +29,8 @@ Secrets are managed by Terraform in two parts:
 | `PUBLIC_API_KEY` | Frontend API key | Auto-generated |
 | `recaptcha-site-key` | Google reCAPTCHA v3 site key | Manual input |
 | `recaptcha-secret-key` | Google reCAPTCHA v3 secret key | Manual input |
+| `admin-username` | Admin panel username | Manual input |
+| `admin-password` | Admin panel password | Manual input |
 
 ### PreProd Environment (`preprod` profile)
 
@@ -92,6 +94,10 @@ gcloud config set project $PROJECT_ID
 echo -n "your-gemini-api-key" | gcloud secrets create gemini-api-key --data-file=-
 echo -n "your-recaptcha-site-key" | gcloud secrets create recaptcha-site-key --data-file=-
 echo -n "your-recaptcha-secret-key" | gcloud secrets create recaptcha-secret-key --data-file=-
+
+# Admin credentials for admin panel access
+echo -n "your-admin-username" | gcloud secrets create admin-username --data-file=-
+echo -n "your-strong-admin-password" | gcloud secrets create admin-password --data-file=-
 
 # Production environment secrets
 echo -n "jdbc:mysql://..." | gcloud secrets create production-db-url --data-file=-

@@ -57,10 +57,21 @@ public class PasteContributionValidator {
     }
 
     // Must contain route-related keywords
+    // Use (?s) DOTALL flag so . matches newlines in multi-line text
     boolean hasRouteKeywords = text.matches(
-        "(?i).*(bus|route|பஸ்|வண்டி|வழி|schedule|timing|timetable|service|TNSTC|MTC|SETC|express|departure|arrival|புறப்பாடு|வரவு).*");
+        "(?is).*(bus|route|பஸ்|வண்டி|வழி|schedule|timing|timetable|service|TNSTC|MTC|SETC|express|departure|arrival|புறப்பாடு|வரவு).*");
 
-    if (!hasRouteKeywords) {
+    // Check for bus number pattern (e.g., 27D, 570A, TN-01-5678, 123A)
+    // This allows validation even without explicit keywords if there's a clear route format
+    boolean hasBusNumberPattern = text.matches(
+        "(?is).*\\b(\\d{1,4}[A-Z]{0,2}|[A-Z]{2,3}[-\\s]?\\d{2,4}[-\\s]?\\d{0,4})\\b.*");
+
+    // Check for from/to pattern early to use in validation logic
+    boolean hasFromTo = text.matches(
+        "(?is).*(from|to|புறப்பாடு|வரவு|லிருந்து|க்கு|->|→|➡️|–|=>| - |via).*");
+
+    // Accept if: has route keywords OR (has bus number AND has from/to pattern)
+    if (!hasRouteKeywords && !(hasBusNumberPattern && hasFromTo)) {
       result.setValid(false);
       result.setReason("Text doesn't appear to contain bus route information");
       result.setSuggestions(List.of(
@@ -72,18 +83,15 @@ public class PasteContributionValidator {
       return result;
     }
 
-    // Must have from/to pattern
-    boolean hasFromTo = text.matches(
-        "(?i).*(from|to|புறப்பாடு|வரவு|லிருந்து|க்கு|->|→|➡️|–|=>| - ).*");
-
     if (!hasFromTo) {
       warnings.add("No clear 'from/to' pattern detected - extraction may fail");
       suggestions.add("Try formats like: 'Chennai to Madurai' or 'Chennai → Madurai' or 'சென்னை லிருந்து மதுரை க்கு'");
     }
 
     // Check for spam keywords
+    // Use (?s) DOTALL flag so . matches newlines in multi-line text
     boolean hasSpamKeywords = text.matches(
-        "(?i).*(buy now|click here|download|free prize|win money|lottery|" +
+        "(?is).*(buy now|click here|download|free prize|win money|lottery|" +
             "call now|limited offer|act now|congratulations|claim your).*");
 
     if (hasSpamKeywords) {
@@ -96,7 +104,8 @@ public class PasteContributionValidator {
     }
 
     // Check if looks like personal chat/message
-    boolean looksLikeChat = text.matches("(?i).*(hey bro|what's up|how are you|" +
+    // Use (?s) DOTALL flag so . matches newlines in multi-line text
+    boolean looksLikeChat = text.matches("(?is).*(hey bro|what's up|how are you|" +
         "hi there|hello friend|good morning|thanks bro|welcome da).*");
 
     if (looksLikeChat) {
@@ -116,8 +125,9 @@ public class PasteContributionValidator {
     }
 
     // Check for personal pronouns (likely personal travel plan)
+    // Use (?s) DOTALL flag so . matches newlines in multi-line text
     boolean hasPersonalPronouns = text.matches(
-        "(?i).*(I'm going|I am going|we are going|my bus|our trip|I will|we will|" +
+        "(?is).*(I'm going|I am going|we are going|my bus|our trip|I will|we will|" +
             "I need|we need|நான் போகிறேன்|நாங்கள்|என் பஸ்).*");
 
     if (hasPersonalPronouns) {
@@ -127,15 +137,16 @@ public class PasteContributionValidator {
     }
 
     // Check for future tense (planning, not announcing)
+    // Use (?s) DOTALL flag so . matches newlines in multi-line text
     boolean hasFutureTense = text.matches(
-        "(?i).*(will go|going to travel|tomorrow|next week|planning to|போவேன்|போகிறேன்).*");
+        "(?is).*(will go|going to travel|tomorrow|next week|planning to|போவேன்|போகிறேன்).*");
 
     if (hasFutureTense) {
       warnings.add("Contains future tense - may be travel plan, not current route info");
     }
 
     // Check for conversation patterns (greetings + questions)
-    boolean hasGreetings = text.matches("(?i).*(hi|hello|hey|வணக்கம்|ஹலோ).*");
+    boolean hasGreetings = text.matches("(?is).*(hi|hello|hey|வணக்கம்|ஹலோ).*");
     if (hasGreetings && questionCount > 0) {
       warnings.add("Looks like a conversation thread - extract relevant route info only");
     }

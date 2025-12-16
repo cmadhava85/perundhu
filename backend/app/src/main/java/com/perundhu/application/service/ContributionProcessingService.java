@@ -1298,10 +1298,11 @@ public class ContributionProcessingService {
 
             if (contribution.getBusNumber() != null && !contribution.getBusNumber().startsWith("GEN-")) {
                 // Real bus number - check for exact match (bus number + route + timing)
-                existingBusWithTiming = busRepository.findByBusNumberAndRoute(
+                List<Bus> routeBuses = busRepository.findByBusNumberAndRoute(
                         contribution.getBusNumber(),
                         fromLocation.getId(),
-                        toLocation.getId())
+                        toLocation.getId());
+                existingBusWithTiming = routeBuses.stream()
                         .filter(bus -> {
                             boolean departureSame = bus.getDepartureTime() != null
                                     && bus.getDepartureTime().equals(finalDepartureTime);
@@ -1309,7 +1310,8 @@ public class ContributionProcessingService {
                                 return departureSame;
                             }
                             return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
-                        });
+                        })
+                        .findFirst();
             } else {
                 // Generated bus number - check by route + timing only
                 List<Bus> routeBuses = busRepository.findBusesBetweenLocations(

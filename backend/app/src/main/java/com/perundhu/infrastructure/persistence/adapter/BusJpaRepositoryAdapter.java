@@ -143,11 +143,13 @@ public class BusJpaRepositoryAdapter implements BusRepository {
                 .toList();
     }
 
-    public Optional<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
+    public List<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
             LocationId toLocationId) {
         return jpaRepository.findByBusNumberAndFromLocationIdAndToLocationId(
                 busNumber, fromLocationId.getValue(), toLocationId.getValue())
-                .map(BusJpaEntity::toDomainModel);
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
     }
 
     @Override

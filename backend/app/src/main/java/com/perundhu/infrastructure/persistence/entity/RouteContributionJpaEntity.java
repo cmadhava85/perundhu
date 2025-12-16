@@ -93,6 +93,12 @@ public class RouteContributionJpaEntity {
     @Column(name = "route_group_id")
     private String routeGroupId;
 
+    @Column(name = "source_bus_id")
+    private Long sourceBusId;
+
+    @Column(name = "contribution_type")
+    private String contributionType;
+
     /**
      * Intermediate stops stored as JSON string.
      * Format: [{"name":"STOP1","stopOrder":1},{"name":"STOP2","stopOrder":2}]

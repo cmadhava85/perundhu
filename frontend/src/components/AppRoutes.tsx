@@ -15,6 +15,10 @@ import CombinedMapTracker from './CombinedMapTracker';
 import ConnectingRoutes from './ConnectingRoutes';
 import RouteContributionComponent from './RouteContribution';
 
+// Admin components
+import AdminLogin from './admin/AdminLogin';
+import ProtectedAdminRoute from './admin/ProtectedAdminRoute';
+
 // Lazy loaded components (used less frequently)
 const UserSessionHistory = React.lazy(() => import('./UserSessionHistory'));
 const UserRewards = React.lazy(() => import('./UserRewards'));
@@ -196,12 +200,20 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
         </ErrorBoundary>
       } />
       
+      {/* Admin Login Route */}
+      <Route path="/admin/login" element={
+        <AdminLogin />
+      } />
+      
+      {/* Protected Admin Dashboard */}
       <Route path="/admin" element={
-        <ErrorBoundary>
-          <Suspense fallback={LazyLoadingFallback}>
-            <AdminDashboard />
-          </Suspense>
-        </ErrorBoundary>
+        <ProtectedAdminRoute>
+          <ErrorBoundary>
+            <Suspense fallback={LazyLoadingFallback}>
+              <AdminDashboard />
+            </Suspense>
+          </ErrorBoundary>
+        </ProtectedAdminRoute>
       } />
       
       <Route path="/settings" element={

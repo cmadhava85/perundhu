@@ -1,18 +1,25 @@
 package com.perundhu.adapter.in.rest;
 
+import com.perundhu.application.dto.BusDTO;
+import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.AuthenticationService;
+import com.perundhu.application.service.BusScheduleService;
+import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity.IssueStatus;
 import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity.IssueType;
 import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity.IssuePriority;
+import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.RouteIssueJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -33,6 +40,9 @@ public class RouteIssueController {
 
   private final RouteIssueJpaRepository routeIssueRepository;
   private final AuthenticationService authenticationService;
+  private final BusScheduleService busScheduleService;
+  private final BusJpaRepository busJpaRepository;
+  private final CacheManager cacheManager;
 
   /**
    * Submit a new route issue report
@@ -250,8 +260,36 @@ public class RouteIssueController {
     }
   }
 
+  @GetMapping("/admin/by-status")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<?> getIssuesByStatus(
+      @RequestParam String status,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "100") int size) {
+    try {
+      IssueStatus issueStatus = IssueStatus.valueOf(status.toUpperCase());
+      Page<RouteIssueJpaEntity> issues = routeIssueRepository.findByStatus(
+          issueStatus,
+          PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
+
+      return ResponseEntity.ok(Map.of(
+          "issues", issues.getContent().stream().map(this::toResponse).toList(),
+          "totalCount", issues.getTotalElements(),
+          "page", page,
+          "totalPages", issues.getTotalPages()));
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest()
+          .body(Map.of("error", "Invalid status: " + status));
+    } catch (Exception e) {
+      log.error("Error fetching issues by status", e);
+      return ResponseEntity.internalServerError()
+          .body(Map.of("error", "Failed to fetch issues"));
+    }
+  }
+
   @PutMapping("/admin/{issueId}/status")
   @PreAuthorize("hasRole('ADMIN')")
+  @Transactional
   public ResponseEntity<?> updateStatus(
       @PathVariable Long issueId,
       @RequestBody StatusUpdateRequest request) {
@@ -275,13 +313,48 @@ public class RouteIssueController {
         issue.setResolvedAt(LocalDateTime.now());
       }
 
+      // Handle bus deactivation for confirmed BUS_NOT_AVAILABLE or SERVICE_SUSPENDED issues
+      boolean busDeactivated = false;
+      if (request.status == IssueStatus.CONFIRMED && issue.getBusId() != null) {
+        IssueType issueType = issue.getIssueType();
+        if (issueType == IssueType.BUS_NOT_AVAILABLE || issueType == IssueType.SERVICE_SUSPENDED) {
+          Optional<BusJpaEntity> busOpt = busJpaRepository.findById(issue.getBusId());
+          if (busOpt.isPresent()) {
+            BusJpaEntity bus = busOpt.get();
+            bus.setActive(false);
+            busJpaRepository.save(bus);
+            busDeactivated = true;
+            log.info("Deactivated bus {} (ID: {}) due to confirmed {} issue",
+                bus.getBusNumber(), bus.getId(), issueType);
+            
+            // Clear the bus search cache to ensure deactivated buses don't appear in results
+            var busSearchCache = cacheManager.getCache("busSearchCache");
+            if (busSearchCache != null) {
+              busSearchCache.clear();
+              log.info("Cleared busSearchCache after deactivating bus {}", bus.getId());
+            }
+            
+            // Update resolution message
+            String deactivationNote = String.format("Bus deactivated from search results. Issue type: %s", issueType);
+            issue.setResolution(issue.getResolution() != null ? 
+                issue.getResolution() + " | " + deactivationNote : deactivationNote);
+          }
+        }
+      }
+
       routeIssueRepository.save(issue);
 
       log.info("Updated issue {} status: {} -> {}", issueId, oldStatus, request.status);
 
-      return ResponseEntity.ok(Map.of(
-          "success", true,
-          "issue", toResponse(issue)));
+      Map<String, Object> response = new LinkedHashMap<>();
+      response.put("success", true);
+      response.put("issue", toResponse(issue));
+      if (busDeactivated) {
+        response.put("busDeactivated", true);
+        response.put("message", "Bus has been deactivated and will no longer appear in search results");
+      }
+      
+      return ResponseEntity.ok(response);
     } catch (Exception e) {
       log.error("Error updating issue status", e);
       return ResponseEntity.internalServerError()
@@ -311,6 +384,85 @@ public class RouteIssueController {
       log.error("Error updating priority", e);
       return ResponseEntity.internalServerError()
           .body(Map.of("error", "Failed to update priority"));
+    }
+  }
+
+  /**
+   * Get detailed issue information including bus route details
+   * This allows admin to see the current bus data alongside the reported issue
+   */
+  @GetMapping("/admin/{issueId}/details")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<?> getIssueDetails(@PathVariable Long issueId) {
+    try {
+      Optional<RouteIssueJpaEntity> optIssue = routeIssueRepository.findById(issueId);
+      if (optIssue.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      }
+
+      RouteIssueJpaEntity issue = optIssue.get();
+      Map<String, Object> response = new LinkedHashMap<>();
+
+      // Add basic issue info
+      response.put("issue", toResponse(issue));
+
+      // If we have a busId, fetch the current bus details
+      if (issue.getBusId() != null) {
+        try {
+          Optional<BusDTO> busOpt = busScheduleService.getBusById(issue.getBusId());
+          if (busOpt.isPresent()) {
+            BusDTO bus = busOpt.get();
+            Map<String, Object> busDetails = new LinkedHashMap<>();
+            busDetails.put("id", bus.id());
+            busDetails.put("busNumber", bus.number());
+            busDetails.put("busName", bus.name());
+            busDetails.put("departureTime", bus.departureTime());
+            busDetails.put("arrivalTime", bus.arrivalTime());
+            busDetails.put("fromLocation", bus.fromLocationName());
+            busDetails.put("toLocation", bus.toLocationName());
+            busDetails.put("busType", bus.type());
+            busDetails.put("operator", bus.operator());
+            response.put("currentBusDetails", busDetails);
+
+            // Also fetch the stops for this bus
+            try {
+              List<StopDTO> stops = busScheduleService.getStopsForBus(issue.getBusId(), "en");
+              List<Map<String, Object>> stopsList = new ArrayList<>();
+              for (StopDTO stop : stops) {
+                Map<String, Object> stopData = new LinkedHashMap<>();
+                stopData.put("id", stop.id());
+                stopData.put("name", stop.name());
+                stopData.put("locationId", stop.locationId());
+                stopData.put("stopOrder", stop.sequence());
+                stopData.put("arrivalTime", stop.arrivalTime() != null ? stop.arrivalTime().toString() : null);
+                stopData.put("departureTime", stop.departureTime() != null ? stop.departureTime().toString() : null);
+                stopsList.add(stopData);
+              }
+              response.put("currentStops", stopsList);
+            } catch (Exception e) {
+              log.warn("Could not fetch stops for bus {}: {}", issue.getBusId(), e.getMessage());
+              response.put("currentStops", List.of());
+            }
+          } else {
+            response.put("currentBusDetails", null);
+            response.put("currentStops", List.of());
+            response.put("busNotFound", true);
+          }
+        } catch (Exception e) {
+          log.warn("Could not fetch bus details for id {}: {}", issue.getBusId(), e.getMessage());
+          response.put("currentBusDetails", null);
+          response.put("currentStops", List.of());
+        }
+      } else {
+        response.put("currentBusDetails", null);
+        response.put("currentStops", List.of());
+      }
+
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      log.error("Error fetching issue details", e);
+      return ResponseEntity.internalServerError()
+          .body(Map.of("error", "Failed to fetch issue details"));
     }
   }
 

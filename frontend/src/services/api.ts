@@ -751,6 +751,45 @@ export const submitRouteContribution = async (data: RouteContribution) => {
 };
 
 /**
+ * Submit stops to be added to an existing bus route
+ * 
+ * @param busId The ID of the bus to add stops to
+ * @param stops Array of stop entries with location, times, and order
+ * @param busDetails Optional bus details for context
+ * @returns Promise with the submission result
+ */
+export interface StopEntrySubmission {
+  locationName: string;
+  locationId?: number;
+  latitude?: number;
+  longitude?: number;
+  arrivalTime: string;
+  departureTime: string;
+  order: number;
+}
+
+export interface AddStopsSubmission {
+  busId: number;
+  busNumber?: string;
+  busName?: string;
+  fromLocationName?: string;
+  toLocationName?: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  stops: StopEntrySubmission[];
+  additionalNotes?: string;
+}
+
+export const submitStopsContribution = async (data: AddStopsSubmission) => {
+  try {
+    const response = await api.post(`/api/v1/contributions/routes/stops`, data);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
  * Submit an image of a bus schedule
  * 
  * @param data Metadata about the image

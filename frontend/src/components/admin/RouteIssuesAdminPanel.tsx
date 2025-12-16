@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AlertCircle, CheckCircle, Clock, XCircle, AlertTriangle, Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, XCircle, AlertTriangle, Eye, ChevronDown, ChevronUp, MapPin, Bus, Info } from 'lucide-react';
 import './RouteIssuesAdminPanel.css';
 
 // Issue types matching backend
@@ -46,6 +46,36 @@ interface RouteIssue {
   resolvedAt?: string;
 }
 
+interface BusDetails {
+  id: number;
+  busNumber?: string;
+  busName?: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  fromLocation?: string;
+  toLocation?: string;
+  busType?: string;
+  fare?: number;
+  operator?: string;
+  frequency?: string;
+}
+
+interface StopInfo {
+  id: number;
+  name?: string;
+  locationId?: number;
+  stopOrder?: number;
+  arrivalTime?: string;
+  departureTime?: string;
+}
+
+interface IssueDetails {
+  issue: RouteIssue;
+  currentBusDetails?: BusDetails | null;
+  currentStops?: StopInfo[];
+  busNotFound?: boolean;
+}
+
 interface Statistics {
   byStatus: Record<string, number>;
   byType: Record<string, number>;
@@ -64,7 +94,7 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const [statistics, setStatistics] = useState<Statistics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<IssueStatus | 'ALL'>('PENDING');
+  const [statusFilter, setStatusFilter] = useState<IssueStatus | 'ALL'>('ALL');
   const [priorityFilter, setPriorityFilter] = useState<IssuePriority | 'ALL'>('ALL');
   const [expandedIssueId, setExpandedIssueId] = useState<number | null>(null);
   const [actionLoading, setActionLoading] = useState<number | null>(null);
@@ -79,11 +109,32 @@ const RouteIssuesAdminPanel: React.FC = () => {
   const [resolutionText, setResolutionText] = useState('');
   const [adminNotes, setAdminNotes] = useState('');
 
-  // Helper to get auth headers
-  const getAuthHeaders = useCallback(() => ({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
-  }), []);
+  // Apply Changes modal state
+  const [applyChangesModal, setApplyChangesModal] = useState<{
+    isOpen: boolean;
+    issue: RouteIssue | null;
+    busDetails: BusDetails | null;
+  }>({ isOpen: false, issue: null, busDetails: null });
+  const [updatedDepartureTime, setUpdatedDepartureTime] = useState('');
+  const [updatedArrivalTime, setUpdatedArrivalTime] = useState('');
+  const [applyingChanges, setApplyingChanges] = useState(false);
+
+  // Issue details state (with bus info)
+  const [issueDetails, setIssueDetails] = useState<IssueDetails | null>(null);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
+  // Helper to get auth headers - Use Basic auth for admin endpoints
+  const getAuthHeaders = useCallback(() => {
+    // Admin credentials - in production these should come from a secure source
+    const username = localStorage.getItem('adminUsername') || 'admin';
+    const password = localStorage.getItem('adminPassword') || 'admin123';
+    const credentials = btoa(`${username}:${password}`);
+    
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Basic ${credentials}`
+    };
+  }, []);
 
   // Fetch statistics
   const fetchStatistics = useCallback(async () => {
@@ -100,50 +151,63 @@ const RouteIssuesAdminPanel: React.FC = () => {
     }
   }, [getAuthHeaders]);
 
+  // Fetch issue details with bus information
+  const fetchIssueDetails = useCallback(async (issueId: number) => {
+    try {
+      setLoadingDetails(true);
+      const response = await fetch(`${API_BASE}/api/v1/route-issues/admin/${issueId}/details`, {
+        headers: getAuthHeaders()
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setIssueDetails(data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch issue details:', err);
+    } finally {
+      setLoadingDetails(false);
+    }
+  }, [getAuthHeaders]);
+
   // Fetch issues based on filters
   const fetchIssues = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const url = `${API_BASE}/api/v1/route-issues/admin/pending?page=0&size=100`;
-      
       if (statusFilter === 'ALL') {
-        // For "all", we need to fetch from a different endpoint or handle it
-        // For now, fetch pending and high-priority combined
-        const [pendingRes, highPriorityRes] = await Promise.all([
-          fetch(`${API_BASE}/api/v1/route-issues/admin/pending?page=0&size=100`, { headers: getAuthHeaders() }),
-          fetch(`${API_BASE}/api/v1/route-issues/admin/high-priority`, { headers: getAuthHeaders() })
-        ]);
+        // Fetch all statuses
+        const statuses: IssueStatus[] = ['PENDING', 'UNDER_REVIEW', 'CONFIRMED', 'RESOLVED', 'REJECTED'];
+        const responses = await Promise.all(
+          statuses.map(status => 
+            fetch(`${API_BASE}/api/v1/route-issues/admin/by-status?status=${status}&page=0&size=100`, { 
+              headers: getAuthHeaders() 
+            })
+          )
+        );
         
-        const pendingData = await pendingRes.json();
-        const highPriorityData = await highPriorityRes.json();
-        
-        // Combine and deduplicate
-        const allIssues = [...(pendingData.issues || [])];
-        const pendingIds = new Set(allIssues.map((i: RouteIssue) => i.id));
-        
-        for (const issue of (highPriorityData.issues || [])) {
-          if (!pendingIds.has(issue.id)) {
-            allIssues.push(issue);
+        const allIssues: RouteIssue[] = [];
+        for (const response of responses) {
+          if (response.ok) {
+            const data = await response.json();
+            allIssues.push(...(data.issues || []));
           }
         }
         
         setIssues(allIssues);
       } else {
-        const response = await fetch(url, { headers: getAuthHeaders() });
+        // Fetch specific status
+        const response = await fetch(
+          `${API_BASE}/api/v1/route-issues/admin/by-status?status=${statusFilter}&page=0&size=100`,
+          { headers: getAuthHeaders() }
+        );
+        
         if (!response.ok) {
           throw new Error('Failed to fetch issues');
         }
+        
         const data = await response.json();
-        
-        // Filter by status if not PENDING
-        let filteredIssues = data.issues || [];
-        if (statusFilter !== 'PENDING') {
-          filteredIssues = filteredIssues.filter((i: RouteIssue) => i.status === statusFilter);
-        }
-        
-        setIssues(filteredIssues);
+        setIssues(data.issues || []);
       }
     } catch (err) {
       setError('Failed to load issues. Please try again.');
@@ -157,6 +221,26 @@ const RouteIssuesAdminPanel: React.FC = () => {
     fetchIssues();
     fetchStatistics();
   }, [fetchIssues, fetchStatistics]);
+
+  // ESC key handler for modals
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (resolutionModal.isOpen) {
+          setResolutionModal({ isOpen: false, issue: null, newStatus: 'RESOLVED' });
+          setResolutionText('');
+          setAdminNotes('');
+        }
+        if (applyChangesModal.isOpen) {
+          setApplyChangesModal({ isOpen: false, issue: null, busDetails: null });
+          setUpdatedDepartureTime('');
+          setUpdatedArrivalTime('');
+        }
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [resolutionModal.isOpen, applyChangesModal.isOpen]);
 
   // Filter by priority
   const filteredIssues = priorityFilter === 'ALL' 
@@ -226,6 +310,132 @@ const RouteIssuesAdminPanel: React.FC = () => {
       setResolutionModal({ isOpen: false, issue: null, newStatus: 'RESOLVED' });
       setResolutionText('');
       setAdminNotes('');
+    }
+  };
+
+  // Open Apply Changes modal
+  const handleApplyChanges = (issue: RouteIssue) => {
+    const busDetails = issueDetails?.currentBusDetails || null;
+    setApplyChangesModal({ isOpen: true, issue, busDetails });
+    // Pre-fill with suggested times if available
+    setUpdatedDepartureTime(issue.suggestedDepartureTime || busDetails?.departureTime || '');
+    setUpdatedArrivalTime(issue.suggestedArrivalTime || busDetails?.arrivalTime || '');
+  };
+
+  // Apply changes to database
+  const handleApplyChangesToDatabase = async () => {
+    if (!applyChangesModal.issue || !applyChangesModal.busDetails) return;
+    
+    setApplyingChanges(true);
+    try {
+      // Update the bus timing in the database
+      const response = await fetch(`${API_BASE}/api/v1/admin/buses/${applyChangesModal.busDetails.id}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({
+          departureTime: updatedDepartureTime,
+          arrivalTime: updatedArrivalTime
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update bus');
+      }
+
+      // Mark issue as resolved with auto-generated resolution
+      const resolution = `Updated bus timings from ${applyChangesModal.busDetails.departureTime || 'N/A'} → ${updatedDepartureTime} (departure) and ${applyChangesModal.busDetails.arrivalTime || 'N/A'} → ${updatedArrivalTime} (arrival) based on user report`;
+      
+      await updateIssueStatus(
+        applyChangesModal.issue.id,
+        'RESOLVED',
+        resolution,
+        'Changes applied to database'
+      );
+
+      setSuccessMessage(`Successfully updated bus #${applyChangesModal.busDetails.busNumber} and resolved issue #${applyChangesModal.issue.id}`);
+      setTimeout(() => setSuccessMessage(null), 5000);
+
+      // Close modal and refresh
+      setApplyChangesModal({ isOpen: false, issue: null, busDetails: null });
+      setUpdatedDepartureTime('');
+      setUpdatedArrivalTime('');
+      
+      // Refresh issue details
+      if (expandedIssueId) {
+        fetchIssueDetails(expandedIssueId);
+      }
+    } catch (err) {
+      setError('Failed to apply changes. Please try again.');
+      console.error(err);
+    } finally {
+      setApplyingChanges(false);
+    }
+  };
+
+  // Get action guide based on issue type
+  const getActionGuide = (type: IssueType, issue: RouteIssue, busDetails?: BusDetails | null) => {
+    switch (type) {
+      case 'WRONG_TIMING':
+        return (
+          <ul>
+            <li>Verify the reported timing against official schedules</li>
+            <li>Current: {busDetails?.departureTime || 'N/A'} → {busDetails?.arrivalTime || 'N/A'}</li>
+            {issue.suggestedDepartureTime && <li>User suggests: {issue.suggestedDepartureTime} → {issue.suggestedArrivalTime || 'N/A'}</li>}
+            <li>If verified, use <strong>Apply Changes & Resolve</strong> to update database automatically</li>
+          </ul>
+        );
+      case 'WRONG_STOPS':
+        return (
+          <ul>
+            <li>Review the current stops list above</li>
+            <li>Cross-check with user's description about missing/incorrect stops</li>
+            <li>Navigate to Route Admin Panel to add/remove/reorder stops</li>
+            <li>Mark as Resolved after updating</li>
+          </ul>
+        );
+      case 'BUS_NOT_AVAILABLE':
+        return (
+          <ul>
+            <li>Verify if this bus is still operational</li>
+            <li>Check with transport authority or multiple user reports</li>
+            <li>If confirmed discontinued, archive this bus in Route Admin Panel</li>
+            <li>Mark as Resolved with note about discontinuation</li>
+          </ul>
+        );
+      case 'ROUTE_CHANGED':
+        return (
+          <ul>
+            <li>Check if the route path has changed</li>
+            <li>Review stops and verify against current route</li>
+            <li>Update stops/route in Route Admin Panel if needed</li>
+            <li>Mark as Resolved after updating route</li>
+          </ul>
+        );
+      case 'WRONG_SCHEDULE':
+        return (
+          <ul>
+            <li>Verify the operating days/schedule</li>
+            <li>Update schedule information if incorrect</li>
+            <li>Mark as Resolved after correction</li>
+          </ul>
+        );
+      case 'SERVICE_SUSPENDED':
+        return (
+          <ul>
+            <li>Confirm if service is temporarily suspended</li>
+            <li>Add suspension note if confirmed</li>
+            <li>Mark bus as inactive if long-term suspension</li>
+          </ul>
+        );
+      default:
+        return (
+          <ul>
+            <li>Review user description carefully</li>
+            <li>Take appropriate action based on the reported issue</li>
+            <li>Update relevant data in Route Admin Panel</li>
+            <li>Mark as Resolved or Rejected with clear notes</li>
+          </ul>
+        );
     }
   };
 
@@ -392,7 +602,15 @@ const RouteIssuesAdminPanel: React.FC = () => {
           {filteredIssues.map((issue) => (
             <div key={issue.id} className={`issue-card ${expandedIssueId === issue.id ? 'expanded' : ''}`}>
               {/* Issue Header */}
-              <div className="issue-header" onClick={() => setExpandedIssueId(expandedIssueId === issue.id ? null : issue.id)}>
+              <div className="issue-header" onClick={() => {
+                if (expandedIssueId === issue.id) {
+                  setExpandedIssueId(null);
+                  setIssueDetails(null);
+                } else {
+                  setExpandedIssueId(issue.id);
+                  fetchIssueDetails(issue.id);
+                }
+              }}>
                 <div className="issue-main-info">
                   <span className="issue-type-icon">{getIssueTypeIcon(issue.issueType)}</span>
                   <div className="issue-title">
@@ -422,41 +640,185 @@ const RouteIssuesAdminPanel: React.FC = () => {
               {/* Expanded Details */}
               {expandedIssueId === issue.id && (
                 <div className="issue-details">
-                  <div className="details-grid">
-                    <div className="detail-item">
-                      <label>{t('admin.issues.details.bus', 'Bus')}:</label>
-                      <span>{issue.busName || issue.busNumber || 'Not specified'}</span>
-                    </div>
-                    <div className="detail-item">
-                      <label>{t('admin.issues.details.reported', 'Reported')}:</label>
-                      <span>{formatDate(issue.createdAt)}</span>
-                    </div>
-                    {issue.suggestedDepartureTime && (
-                      <div className="detail-item">
-                        <label>{t('admin.issues.details.suggestedDeparture', 'Suggested Departure')}:</label>
-                        <span>{issue.suggestedDepartureTime}</span>
-                      </div>
-                    )}
-                    {issue.suggestedArrivalTime && (
-                      <div className="detail-item">
-                        <label>{t('admin.issues.details.suggestedArrival', 'Suggested Arrival')}:</label>
-                        <span>{issue.suggestedArrivalTime}</span>
-                      </div>
-                    )}
-                    {issue.lastTraveledDate && (
-                      <div className="detail-item">
-                        <label>{t('admin.issues.details.lastTraveled', 'Last Traveled')}:</label>
-                        <span>{issue.lastTraveledDate}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {issue.description && (
-                    <div className="description-section">
-                      <label>{t('admin.issues.details.description', 'Description')}:</label>
-                      <p>{issue.description}</p>
+                  {/* Loading indicator for details */}
+                  {loadingDetails && (
+                    <div className="details-loading">
+                      <div className="spinner small"></div>
+                      <span>Loading bus details...</span>
                     </div>
                   )}
+
+                  {/* Current Bus Details Section - Similar to Add Stops */}
+                  {!loadingDetails && issueDetails?.currentBusDetails && (
+                    <div className="bus-details-comparison">
+                      <div className="comparison-header">
+                        <Bus size={20} />
+                        <h4>{t('admin.issues.currentBusInfo', 'Current Bus Information')}</h4>
+                      </div>
+                      
+                      <div className="comparison-grid">
+                        {/* Current System Column */}
+                        <div className="comparison-column current-data">
+                          <h5>📊 {t('admin.issues.currentSystem', 'Current System')}</h5>
+                          <div className="data-card">
+                                <div className="data-row">
+                                  <span className="data-label">Bus Number:</span>
+                                  <span className="data-value">#{issueDetails.currentBusDetails.busNumber}</span>
+                                </div>
+                                <div className="data-row">
+                                  <span className="data-label">Bus Name:</span>
+                                  <span className="data-value">{issueDetails.currentBusDetails.busName}</span>
+                                </div>
+                                <div className="data-row">
+                                  <span className="data-label">Route:</span>
+                                  <span className="data-value">
+                                    {issueDetails.currentBusDetails.fromLocation} → {issueDetails.currentBusDetails.toLocation}
+                                  </span>
+                                </div>
+                                <div className="data-row highlight-time">
+                                  <span className="data-label">🟢 Departure Time:</span>
+                                  <span className="data-value time-value">{issueDetails.currentBusDetails.departureTime || 'Not set'}</span>
+                                </div>
+                                <div className="data-row highlight-time">
+                                  <span className="data-label">🔴 Arrival Time:</span>
+                                  <span className="data-value time-value">{issueDetails.currentBusDetails.arrivalTime || 'Not set'}</span>
+                                </div>
+                                {issueDetails.currentBusDetails.fare && (
+                                  <div className="data-row">
+                                    <span className="data-label">Fare:</span>
+                                    <span className="data-value">₹{issueDetails.currentBusDetails.fare}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Reported Issue Column */}
+                            <div className="comparison-column reported-data">
+                              <h5>🚨 {t('admin.issues.reportedIssue', 'Reported Issue')}</h5>
+                              <div className="data-card">
+                                <div className="data-row">
+                                  <span className="data-label">Issue Type:</span>
+                                  <span className="data-value issue-type-badge">
+                                    {getIssueTypeIcon(issue.issueType)} {getIssueTypeLabel(issue.issueType)}
+                                  </span>
+                                </div>
+                                <div className="data-row">
+                                  <span className="data-label">Reported:</span>
+                                  <span className="data-value">{formatDate(issue.createdAt)}</span>
+                                </div>
+                                {issue.suggestedDepartureTime && (
+                                  <div className="data-row highlight-suggestion">
+                                    <span className="data-label">⚡ Suggested Departure:</span>
+                                    <span className="data-value suggested-time">{issue.suggestedDepartureTime}</span>
+                                  </div>
+                                )}
+                                {issue.suggestedArrivalTime && (
+                                  <div className="data-row highlight-suggestion">
+                                    <span className="data-label">⚡ Suggested Arrival:</span>
+                                    <span className="data-value suggested-time">{issue.suggestedArrivalTime}</span>
+                                  </div>
+                                )}
+                                {issue.lastTraveledDate && (
+                                  <div className="data-row">
+                                    <span className="data-label">Last Traveled:</span>
+                                    <span className="data-value">{issue.lastTraveledDate}</span>
+                                  </div>
+                                )}
+                                {issue.reportCount > 1 && (
+                                  <div className="data-row highlight-reports">
+                                    <span className="data-label">👥 Reports:</span>
+                                    <span className="data-value report-count-value">{issue.reportCount} users reported this</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                        {/* Current Stops */}
+                        {issueDetails.currentStops && issueDetails.currentStops.length > 0 && (
+                          <div className="stops-section">
+                            <div className="stops-header">
+                              <MapPin size={18} />
+                              <h5>{t('admin.issues.currentStops', 'Route Stops')} ({issueDetails.currentStops.length})</h5>
+                            </div>
+                            <div className="stops-timeline">
+                              {issueDetails.currentStops.map((stop, index) => (
+                                <div key={stop.id || index} className="stop-item">
+                                  <div className="stop-marker">
+                                    <div className="stop-dot"></div>
+                                    {index < issueDetails.currentStops!.length - 1 && <div className="stop-line"></div>}
+                                  </div>
+                                  <div className="stop-content">
+                                    <span className="stop-order">#{stop.stopOrder || index + 1}</span>
+                                    <span className="stop-name">{stop.name || `Stop ${stop.locationId || index + 1}`}</span>
+                                    {(stop.arrivalTime || stop.departureTime) && (
+                                      <span className="stop-time">
+                                        {stop.arrivalTime || stop.departureTime}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                  )}
+
+                  {/* Bus not found warning */}
+                  {!loadingDetails && issueDetails?.busNotFound && (
+                    <div className="bus-not-found-warning">
+                      <AlertTriangle size={18} />
+                      <span>{t('admin.issues.busNotFound', 'Bus not found in system - may have been removed or ID is invalid')}</span>
+                    </div>
+                  )}
+
+                  {/* User Description & Action Guide */}
+                  <div className="description-action-section">
+                    <div className="section-header">
+                      <Info size={18} />
+                      <h4>{t('admin.issues.userDescription', 'User Description & Suggested Action')}</h4>
+                    </div>
+
+                    {/* Suggested Times Display */}
+                    {(issue.suggestedDepartureTime || issue.suggestedArrivalTime) && (
+                      <div className="details-grid">
+                        {issue.suggestedDepartureTime && (
+                          <div className="detail-item">
+                            <label>{t('admin.issues.details.suggestedDeparture', 'Suggested Departure')}:</label>
+                            <span className="suggested-value">⚡ {issue.suggestedDepartureTime}</span>
+                          </div>
+                        )}
+                        {issue.suggestedArrivalTime && (
+                          <div className="detail-item">
+                            <label>{t('admin.issues.details.suggestedArrival', 'Suggested Arrival')}:</label>
+                            <span className="suggested-value">⚡ {issue.suggestedArrivalTime}</span>
+                          </div>
+                        )}
+                        {issue.lastTraveledDate && (
+                          <div className="detail-item">
+                            <label>{t('admin.issues.details.lastTraveled', 'Last Traveled')}:</label>
+                            <span>{issue.lastTraveledDate}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                  {issue.description && (
+                    <div className="user-description">
+                      <label>💬 {t('admin.issues.description', 'User Report')}:</label>
+                      <p className="description-text">{issue.description}</p>
+                    </div>
+                  )}
+
+                  {/* Action Guide based on issue type */}
+                  <div className="action-guide">
+                    <label>✅ {t('admin.issues.suggestedAction', 'Suggested Action')}:</label>
+                    <div className="action-steps">
+                      {getActionGuide(issue.issueType, issue, issueDetails?.currentBusDetails)}
+                    </div>
+                  </div>
+                </div>
 
                   {issue.adminNotes && (
                     <div className="admin-notes-section">
@@ -475,6 +837,20 @@ const RouteIssuesAdminPanel: React.FC = () => {
                   {/* Action Buttons */}
                   {issue.status !== 'RESOLVED' && issue.status !== 'REJECTED' && (
                     <div className="issue-actions">
+                      {/* Apply Changes - for timing issues with suggestions */}
+                      {(issue.issueType === 'WRONG_TIMING' || issue.issueType === 'WRONG_SCHEDULE') && 
+                       (issue.suggestedDepartureTime || issue.suggestedArrivalTime) && 
+                       issueDetails?.currentBusDetails && (
+                        <button 
+                          className="action-btn apply-changes"
+                          onClick={() => handleApplyChanges(issue)}
+                          disabled={actionLoading === issue.id}
+                        >
+                          <CheckCircle size={16} />
+                          {t('admin.issues.actions.applyChanges', 'Apply Changes & Resolve')}
+                        </button>
+                      )}
+                      
                       {issue.status === 'PENDING' && (
                         <>
                           <button 
@@ -535,9 +911,91 @@ const RouteIssuesAdminPanel: React.FC = () => {
         </div>
       )}
 
+      {/* Apply Changes Modal */}
+      {applyChangesModal.isOpen && applyChangesModal.issue && applyChangesModal.busDetails && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => {
+            setApplyChangesModal({ isOpen: false, issue: null, busDetails: null });
+            setUpdatedDepartureTime('');
+            setUpdatedArrivalTime('');
+          }}
+        >
+          <div className="apply-changes-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>✏️ Apply Changes to Database</h3>
+            <p className="modal-subtitle">
+              Update bus #{applyChangesModal.busDetails.busNumber} timings and resolve issue
+            </p>
+
+            <div className="timing-comparison">
+              <div className="timing-row">
+                <label>Current Departure Time:</label>
+                <span className="current-value">{applyChangesModal.busDetails.departureTime || 'Not set'}</span>
+              </div>
+              <div className="timing-row">
+                <label>New Departure Time:</label>
+                <input
+                  type="time"
+                  value={updatedDepartureTime}
+                  onChange={(e) => setUpdatedDepartureTime(e.target.value)}
+                  className="time-input"
+                />
+              </div>
+            </div>
+
+            <div className="timing-comparison">
+              <div className="timing-row">
+                <label>Current Arrival Time:</label>
+                <span className="current-value">{applyChangesModal.busDetails.arrivalTime || 'Not set'}</span>
+              </div>
+              <div className="timing-row">
+                <label>New Arrival Time:</label>
+                <input
+                  type="time"
+                  value={updatedArrivalTime}
+                  onChange={(e) => setUpdatedArrivalTime(e.target.value)}
+                  className="time-input"
+                />
+              </div>
+            </div>
+
+            <div className="modal-info">
+              ℹ️ This will update the bus timings in the database and automatically mark the issue as resolved.
+            </div>
+
+            <div className="modal-actions">
+              <button
+                className="modal-btn cancel"
+                onClick={() => {
+                  setApplyChangesModal({ isOpen: false, issue: null, busDetails: null });
+                  setUpdatedDepartureTime('');
+                  setUpdatedArrivalTime('');
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="modal-btn apply"
+                onClick={handleApplyChangesToDatabase}
+                disabled={applyingChanges || !updatedDepartureTime || !updatedArrivalTime}
+              >
+                {applyingChanges ? 'Applying...' : 'Apply Changes'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Resolution Modal */}
       {resolutionModal.isOpen && resolutionModal.issue && (
-        <div className="modal-overlay" onClick={() => setResolutionModal({ isOpen: false, issue: null, newStatus: 'RESOLVED' })}>
+        <div 
+          className="modal-overlay" 
+          onClick={() => {
+            setResolutionModal({ isOpen: false, issue: null, newStatus: 'RESOLVED' });
+            setResolutionText('');
+            setAdminNotes('');
+          }}
+        >
           <div className="resolution-modal" onClick={(e) => e.stopPropagation()}>
             <h3>
               {resolutionModal.newStatus === 'RESOLVED' 

@@ -7,6 +7,7 @@ export type ContributionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 export interface StopContribution {
   stopOrder: number;
   name: string;
+  locationName?: string; // Alternative field name from some API responses
   translatedName?: string;
   taName?: string;
   translations?: {
@@ -46,6 +47,9 @@ export interface RouteContribution {
   additionalNotes?: string;
   submittedBy?: string;
   stops?: StopContribution[];
+  // Fields for stop contributions to existing routes
+  sourceBusId?: number;
+  contributionType?: 'NEW_ROUTE' | 'ADD_STOPS';
   // Legacy fields kept for backward compatibility with frontend forms
   route?: string;
   origin?: string;

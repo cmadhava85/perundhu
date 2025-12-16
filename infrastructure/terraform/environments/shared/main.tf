@@ -44,6 +44,8 @@ module "shared_secrets" {
   gemini_api_key       = var.gemini_api_key
   recaptcha_site_key   = var.recaptcha_site_key
   recaptcha_secret_key = var.recaptcha_secret_key
+  admin_username       = var.admin_username
+  admin_password       = var.admin_password
 
   depends_on = [google_project_service.secretmanager]
 }

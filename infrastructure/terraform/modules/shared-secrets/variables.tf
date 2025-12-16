@@ -29,3 +29,17 @@ variable "recaptcha_secret_key" {
   default     = ""
   sensitive   = true
 }
+
+variable "admin_username" {
+  description = "Username for admin panel authentication (shared across all environments)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "admin_password" {
+  description = "Password for admin panel authentication (shared across all environments)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}

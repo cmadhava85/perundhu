@@ -105,7 +105,7 @@ public interface BusRepository {
 
         List<Bus> findByCategory(String category);
 
-        Optional<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
+        List<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
                         LocationId toLocationId);
 
         List<Bus> findInService();

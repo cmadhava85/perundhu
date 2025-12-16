@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.perundhu.domain.model.RouteContribution;
+import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.port.ContributionInputPort;
 import com.perundhu.domain.port.RouteContributionOutputPort;
@@ -230,6 +231,33 @@ public class ContributionApplicationService implements ContributionInputPort {
 
   // Private helper methods
   private RouteContribution createRouteContributionFromData(Map<String, Object> data, String userId) {
+    // Extract stops if present
+    List<StopContribution> stops = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    List<Map<String, Object>> stopsData = (List<Map<String, Object>>) data.get("stops");
+    if (stopsData != null && !stopsData.isEmpty()) {
+      for (Map<String, Object> stopData : stopsData) {
+        StopContribution stop = StopContribution.builder()
+            .name((String) stopData.get("name"))
+            .arrivalTime((String) stopData.get("arrivalTime"))
+            .departureTime((String) stopData.get("departureTime"))
+            .stopOrder(stopData.get("stopOrder") != null ? 
+                Integer.valueOf(stopData.get("stopOrder").toString()) : null)
+            .latitude(stopData.get("latitude") != null ? 
+                Double.valueOf(stopData.get("latitude").toString()) : null)
+            .longitude(stopData.get("longitude") != null ? 
+                Double.valueOf(stopData.get("longitude").toString()) : null)
+            .build();
+        stops.add(stop);
+      }
+    }
+
+    // Extract sourceBusId if present
+    Long sourceBusId = null;
+    if (data.get("sourceBusId") != null) {
+      sourceBusId = Long.valueOf(data.get("sourceBusId").toString());
+    }
+
     return RouteContribution.builder()
         .id(UUID.randomUUID().toString())
         .userId(userId)
@@ -248,6 +276,9 @@ public class ContributionApplicationService implements ContributionInputPort {
         .submissionDate(LocalDateTime.now())
         .additionalNotes((String) data.get("additionalNotes"))
         .submittedBy(userId)
+        .stops(stops)
+        .sourceBusId(sourceBusId)
+        .contributionType((String) data.get("contributionType"))
         .build();
   }
 

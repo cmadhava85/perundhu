@@ -6,6 +6,9 @@ import AuthService from './authService';
 // API URL from environment variable
 const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
+// Session storage keys for admin auth
+const ADMIN_AUTH_KEY = 'admin_auth_credentials';
+
 // Integration result types
 export interface IntegrationResult {
   manualIntegrationRequired?: boolean;
@@ -18,72 +21,79 @@ export interface IntegrationResult {
 }
 
 /**
- * Service to handle admin operations with development admin authentication
+ * Service to handle admin operations with HTTP Basic authentication
  */
 const AdminService = {
-  // Helper method to get admin token for development
-  getAdminToken: (): string => {
-    // For development, use a special admin token that the MockJwtDecoder will recognize
+  // Helper method to get admin authorization header
+  getAuthHeader: (): string => {
+    // First, check for Basic Auth credentials in session storage
+    const basicAuthCredentials = sessionStorage.getItem(ADMIN_AUTH_KEY);
+    if (basicAuthCredentials) {
+      return `Basic ${basicAuthCredentials}`;
+    }
+    
+    // Fallback to JWT token for backward compatibility
     const existingToken = AuthService.getToken();
     if (existingToken) {
-      return existingToken;
+      return `Bearer ${existingToken}`;
     }
-    // Return development admin token
-    return 'dev-admin-token';
+    
+    // Return development admin token as last resort
+    return 'Bearer dev-admin-token';
   },
 
   // Route contribution methods
   getRouteContributions: async (): Promise<RouteContribution[]> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.get(`${API_URL}/api/admin/contributions/routes`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: authHeader }
     });
     return response.data;
   },
 
   getPendingRouteContributions: async (): Promise<RouteContribution[]> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.get(`${API_URL}/api/admin/contributions/routes/pending`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: authHeader }
     });
     return response.data;
   },
 
   approveRouteContribution: async (id: number): Promise<RouteContribution> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
       `${API_URL}/api/admin/contributions/routes/${id}/approve`,
       {},
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: authHeader } }
     );
     return response.data;
   },
 
   rejectRouteContribution: async (id: number, reason: string): Promise<RouteContribution> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
       `${API_URL}/api/admin/contributions/routes/${id}/reject`, 
       { reason },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: authHeader } }
     );
     return response.data;
   },
 
   deleteRouteContribution: async (id: number): Promise<void> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     await axios.delete(`${API_URL}/api/admin/contributions/routes/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: authHeader }
     });
   },
 
   // Integration methods - for syncing approved contributions to main database
   integrateApprovedRoutes: async (): Promise<IntegrationResult> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
         `${API_URL}/api/admin/integration/approved-routes`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: authHeader } }
       );
       return response.data;
     } catch {
@@ -117,12 +127,12 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   },
 
   integrateSpecificRoute: async (id: number): Promise<IntegrationResult> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.post(
         `${API_URL}/api/admin/integration/route/${id}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: authHeader } }
       );
       return response.data;
     } catch {
@@ -132,10 +142,10 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   },
 
   getIntegrationStatus: async (): Promise<unknown> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     try {
       const response = await axios.get(`${API_URL}/api/admin/integration/status`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: authHeader }
       });
       return response.data;
     } catch {
@@ -146,46 +156,95 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
 
   // Image contribution methods
   getImageContributions: async (): Promise<ImageContribution[]> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.get(`${API_URL}/api/admin/contributions/images`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: authHeader }
     });
     return response.data;
   },
 
   getPendingImageContributions: async (): Promise<ImageContribution[]> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.get(`${API_URL}/api/admin/contributions/images/pending`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: authHeader }
     });
     return response.data;
   },
 
   approveImageContribution: async (id: number): Promise<ImageContribution> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
       `${API_URL}/api/admin/contributions/images/${id}/approve`,
       {},
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: authHeader } }
     );
     return response.data;
   },
 
   rejectImageContribution: async (id: number, reason: string): Promise<ImageContribution> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
       `${API_URL}/api/admin/contributions/images/${id}/reject`,
       { reason },
-      { headers: { Authorization: `Bearer ${token}` }
+      { headers: { Authorization: authHeader }
     });
     return response.data;
   },
 
   deleteImageContribution: async (id: number): Promise<void> => {
-    const token = AdminService.getAdminToken();
+    const authHeader = AdminService.getAuthHeader();
     await axios.delete(`${API_URL}/api/admin/contributions/images/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: authHeader }
     });
+  },
+
+  // Get bus details by ID (for showing existing route info in stop contributions)
+  getBusDetails: async (busId: number): Promise<{
+    id: number;
+    busNumber: string;
+    busName?: string;
+    fromLocation: string;
+    toLocation: string;
+    departureTime?: string;
+    arrivalTime?: string;
+    stops?: Array<{
+      name: string;
+      arrivalTime?: string;
+      departureTime?: string;
+      stopOrder: number;
+    }>;
+  } | null> => {
+    try {
+      const response = await axios.get(`${API_URL}/api/v1/bus-schedules/buses/${busId}`, {
+        headers: { 'User-Agent': 'Mozilla/5.0' }
+      });
+      
+      // Also fetch stops for this bus
+      let stops: Array<{name: string; arrivalTime?: string; departureTime?: string; stopOrder: number}> = [];
+      try {
+        const stopsResponse = await axios.get(`${API_URL}/api/v1/bus-schedules/buses/${busId}/stops/basic`, {
+          headers: { 'User-Agent': 'Mozilla/5.0' }
+        });
+        stops = stopsResponse.data || [];
+      } catch {
+        logger.warn(`Could not fetch stops for bus ${busId}`);
+      }
+      
+      const bus = response.data;
+      return {
+        id: bus.id,
+        busNumber: bus.busNumber,
+        busName: bus.busName,
+        fromLocation: bus.fromLocation?.name || bus.fromLocationName,
+        toLocation: bus.toLocation?.name || bus.toLocationName,
+        departureTime: bus.departureTime,
+        arrivalTime: bus.arrivalTime,
+        stops: stops
+      };
+    } catch (error) {
+      logger.error(`Failed to fetch bus details for ID ${busId}:`, error);
+      return null;
+    }
   }
 };
 

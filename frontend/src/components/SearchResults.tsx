@@ -78,12 +78,17 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 
   // Handle Add Stops - navigate to contribute page with bus pre-selected
   const handleAddStops = (bus: Bus) => {
+    console.log('SearchResults - handleAddStops called with bus:', bus);
+    console.log('SearchResults - fromLocation:', fromLocation);
+    console.log('SearchResults - toLocation:', toLocation);
     // Navigate to contribute page with bus info in state
     navigate('/contribute', { 
       state: { 
         selectedBus: bus,
         method: 'add-stops',
-        fromSearch: true
+        fromSearch: true,
+        fromLocation: fromLocation,
+        toLocation: toLocation
       }
     });
   };

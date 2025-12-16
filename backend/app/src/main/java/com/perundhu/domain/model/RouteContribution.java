@@ -36,6 +36,10 @@ public class RouteContribution {
     // Fields for tracking OCR-extracted schedules
     private String sourceImageId; // ID of the image contribution this came from
     private String routeGroupId; // Groups related schedules (e.g., same route, different times)
+    
+    // Field for tracking stop contributions to existing routes
+    private Long sourceBusId; // ID of the existing bus this stop contribution is for
+    private String contributionType; // "NEW_ROUTE" or "ADD_STOPS"
 
     // Default constructor
     public RouteContribution() {
@@ -76,7 +80,9 @@ public class RouteContribution {
                 .submittedBy(this.submittedBy)
                 .stops(this.stops)
                 .sourceImageId(this.sourceImageId)
-                .routeGroupId(this.routeGroupId);
+                .routeGroupId(this.routeGroupId)
+                .sourceBusId(this.sourceBusId)
+                .contributionType(this.contributionType);
     }
 
     // Getters and setters
@@ -288,6 +294,22 @@ public class RouteContribution {
         this.routeGroupId = routeGroupId;
     }
 
+    public Long getSourceBusId() {
+        return sourceBusId;
+    }
+
+    public void setSourceBusId(Long sourceBusId) {
+        this.sourceBusId = sourceBusId;
+    }
+
+    public String getContributionType() {
+        return contributionType;
+    }
+
+    public void setContributionType(String contributionType) {
+        this.contributionType = contributionType;
+    }
+
     // Builder class
     public static class RouteContributionBuilder {
         private final RouteContribution contribution = new RouteContribution();
@@ -419,6 +441,16 @@ public class RouteContribution {
 
         public RouteContributionBuilder routeGroupId(String routeGroupId) {
             contribution.setRouteGroupId(routeGroupId);
+            return this;
+        }
+
+        public RouteContributionBuilder sourceBusId(Long sourceBusId) {
+            contribution.setSourceBusId(sourceBusId);
+            return this;
+        }
+
+        public RouteContributionBuilder contributionType(String contributionType) {
+            contribution.setContributionType(contributionType);
             return this;
         }
 

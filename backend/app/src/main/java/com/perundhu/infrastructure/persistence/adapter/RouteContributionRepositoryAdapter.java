@@ -141,6 +141,8 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
                 .submittedBy(contribution.getSubmittedBy())
                 .sourceImageId(contribution.getSourceImageId())
                 .routeGroupId(contribution.getRouteGroupId())
+                .sourceBusId(contribution.getSourceBusId())
+                .contributionType(contribution.getContributionType())
                 .stopsJson(serializeStops(contribution.getStops()))
                 .build();
     }
@@ -199,6 +201,8 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
                 .submittedBy(entity.getSubmittedBy())
                 .sourceImageId(entity.getSourceImageId())
                 .routeGroupId(entity.getRouteGroupId())
+                .sourceBusId(entity.getSourceBusId())
+                .contributionType(entity.getContributionType())
                 .stops(deserializeStops(entity.getStopsJson()))
                 .build();
     }

@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { RouteContribution } from '../../types/contributionTypes';
 import { ContributionStatus } from '../../types/admin';
+import AdminService from '../../services/adminService';
 import './RouteDetailsModal.css';
+
+interface ExistingBusDetails {
+  id: number;
+  busNumber: string;
+  busName?: string;
+  fromLocation: string;
+  toLocation: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  stops?: Array<{
+    name: string;
+    arrivalTime?: string;
+    departureTime?: string;
+    stopOrder: number;
+  }>;
+}
 
 interface RouteDetailsModalProps {
   contribution: RouteContribution;
@@ -20,6 +37,40 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
   onDelete
 }) => {
   const { t } = useTranslation();
+  const [existingBusDetails, setExistingBusDetails] = useState<ExistingBusDetails | null>(null);
+  const [loadingExistingBus, setLoadingExistingBus] = useState(false);
+
+  // Check if this is an ADD_STOPS contribution
+  const isAddStopsContribution = contribution.contributionType === 'ADD_STOPS' || 
+    contribution.additionalNotes?.includes('ADD_STOPS');
+  
+  // Extract sourceBusId from additionalNotes if not directly available
+  const getSourceBusId = (): number | null => {
+    if (contribution.sourceBusId) {
+      return contribution.sourceBusId;
+    }
+    // Try to extract from additionalNotes: "ADD_STOPS for bus ID: 12"
+    const match = contribution.additionalNotes?.match(/bus ID:\s*(\d+)/);
+    return match ? parseInt(match[1], 10) : null;
+  };
+
+  // Fetch existing bus details when this is an ADD_STOPS contribution
+  useEffect(() => {
+    const sourceBusId = getSourceBusId();
+    if (isAddStopsContribution && sourceBusId) {
+      setLoadingExistingBus(true);
+      AdminService.getBusDetails(sourceBusId)
+        .then((details) => {
+          setExistingBusDetails(details);
+        })
+        .catch(() => {
+          // Ignore errors - existing bus might not be found
+        })
+        .finally(() => {
+          setLoadingExistingBus(false);
+        });
+    }
+  }, [contribution.sourceBusId, contribution.additionalNotes, isAddStopsContribution]);
 
   const getStatusClass = (status?: ContributionStatus) => {
     if (!status) return 'status-badge';
@@ -142,8 +193,89 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
                   <span>{formatDate(contribution.processedDate)}</span>
                 </div>
               )}
+              {isAddStopsContribution && (
+                <div className="detail-item full-width">
+                  <label>Contribution Type</label>
+                  <span className="contribution-type-badge add-stops">
+                    🆕 Adding Stops to Existing Route
+                  </span>
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Existing Route Details - shown only for ADD_STOPS contributions */}
+          {isAddStopsContribution && (
+            <div className="details-section existing-route-section">
+              <h3 className="section-title">
+                <span className="section-icon">📋</span>
+                Existing Route Details
+              </h3>
+              {loadingExistingBus ? (
+                <div className="loading-indicator">Loading existing route details...</div>
+              ) : existingBusDetails ? (
+                <div className="existing-route-details">
+                  <div className="details-grid">
+                    <div className="detail-item">
+                      <label>Bus Number</label>
+                      <span>{existingBusDetails.busNumber}</span>
+                    </div>
+                    <div className="detail-item">
+                      <label>Bus Name</label>
+                      <span>{existingBusDetails.busName || 'N/A'}</span>
+                    </div>
+                    <div className="detail-item">
+                      <label>From</label>
+                      <span>{existingBusDetails.fromLocation}</span>
+                    </div>
+                    <div className="detail-item">
+                      <label>To</label>
+                      <span>{existingBusDetails.toLocation}</span>
+                    </div>
+                    <div className="detail-item">
+                      <label>Departure</label>
+                      <span>{existingBusDetails.departureTime || 'N/A'}</span>
+                    </div>
+                    <div className="detail-item">
+                      <label>Arrival</label>
+                      <span>{existingBusDetails.arrivalTime || 'N/A'}</span>
+                    </div>
+                  </div>
+                  
+                  {existingBusDetails.stops && existingBusDetails.stops.length > 0 && (
+                    <div className="existing-stops-section">
+                      <h4 className="subsection-title">
+                        <span className="section-icon">🚏</span>
+                        Current Stops ({existingBusDetails.stops.length})
+                      </h4>
+                      <div className="existing-stops-list">
+                        {existingBusDetails.stops
+                          .sort((a, b) => a.stopOrder - b.stopOrder)
+                          .map((stop, index) => (
+                            <div key={index} className="existing-stop-item">
+                              <div className="stop-order">{stop.stopOrder}</div>
+                              <div className="stop-details">
+                                <div className="stop-name">{stop.name}</div>
+                                {(stop.arrivalTime || stop.departureTime) && (
+                                  <div className="stop-timing">
+                                    {stop.arrivalTime && <span>Arr: {stop.arrivalTime}</span>}
+                                    {stop.departureTime && <span>Dep: {stop.departureTime}</span>}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="no-data-message">
+                  Could not load existing route details for Bus ID: {getSourceBusId()}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Route Path Information */}
           <div className="details-section">
@@ -214,41 +346,57 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
 
           {/* Stops Information */}
           {contribution.stops && contribution.stops.length > 0 && (
-            <div className="details-section">
+            <div className={`details-section ${isAddStopsContribution ? 'new-stops-section' : ''}`}>
               <h3 className="section-title">
                 <span className="section-icon">🚏</span>
-                {t('admin.routes.details.stops', 'Intermediate Stops')} ({contribution.stops.length})
+                {isAddStopsContribution ? (
+                  <span className="new-badge">🆕 NEW Stops to Add ({contribution.stops.length})</span>
+                ) : (
+                  <>{t('admin.routes.details.stops', 'Intermediate Stops')} ({contribution.stops.length})</>
+                )}
               </h3>
-              <div className="stops-list">
+              {isAddStopsContribution && (
+                <div className="new-stops-notice">
+                  ℹ️ These stops will be added to the existing route upon approval
+                </div>
+              )}
+              <div className="contributed-stops-list">
                 {contribution.stops
-                  .sort((a, b) => a.stopOrder - b.stopOrder)
-                  .map((stop, index) => (
-                    <div key={index} className="stop-item">
-                      <div className="stop-order">{stop.stopOrder}</div>
-                      <div className="stop-details">
-                        <div className="stop-name">{stop.name}</div>
-                        {(stop.latitude && stop.longitude) && (
-                          <div className="stop-coordinates">
-                            {formatCoordinates(stop.latitude, stop.longitude)}
-                          </div>
+                  .sort((a, b) => (a.stopOrder ?? 0) - (b.stopOrder ?? 0))
+                  .map((stop, index) => {
+                    // Use name, or fall back to locationName, or show a placeholder
+                    const displayName = stop.name || stop.locationName || `Stop ${stop.stopOrder || index + 1}`;
+                    return (
+                      <div key={index} className="contributed-stop-card">
+                        {isAddStopsContribution && (
+                          <div className="stop-new-indicator">NEW</div>
                         )}
-                        {(stop.arrivalTime || stop.departureTime) && (
-                          <div className="stop-timing">
-                            {stop.arrivalTime && (
-                              <span className="stop-time">
-                                {t('admin.routes.details.arrives', 'Arrives')}: {formatTime(stop.arrivalTime)}
-                              </span>
-                            )}
-                            {stop.departureTime && (
-                              <span className="stop-time">
-                                {t('admin.routes.details.departs', 'Departs')}: {formatTime(stop.departureTime)}
-                              </span>
-                            )}
+                        <div className="stop-header">
+                          <div className="stop-sequence-badge">{stop.stopOrder ?? index + 1}</div>
+                          <div className="stop-location-name">{displayName}</div>
+                        </div>
+                        <div className="stop-times-row">
+                          {stop.arrivalTime && (
+                            <div className="stop-time-item arrival">
+                              <span className="time-label">↓ Arrives</span>
+                              <span className="time-value">{formatTime(stop.arrivalTime)}</span>
+                            </div>
+                          )}
+                          {stop.departureTime && (
+                            <div className="stop-time-item departure">
+                              <span className="time-label">↑ Departs</span>
+                              <span className="time-value">{formatTime(stop.departureTime)}</span>
+                            </div>
+                          )}
+                        </div>
+                        {(stop.latitude && stop.longitude) && (
+                          <div className="stop-coordinates-row">
+                            📍 {formatCoordinates(stop.latitude, stop.longitude)}
                           </div>
                         )}
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 }
               </div>
             </div>

@@ -206,6 +206,202 @@ public class ContributionController {
   }
 
   /**
+   * Submit stops to be added to an existing bus route.
+   * This creates a RouteContribution with type "ADD_STOPS" that requires admin approval.
+   */
+  @PostMapping("/routes/stops")
+  public ResponseEntity<Map<String, Object>> submitStopsContribution(
+      @RequestBody Map<String, Object> requestData,
+      HttpServletRequest request) {
+
+    String clientId = getClientId(request);
+    String userId = authenticationService.getCurrentUserId();
+
+    // For anonymous users, generate a unique identifier
+    if (userId == null || userId.equals("anonymous")) {
+      userId = "anonymous_" + clientId;
+    }
+
+    try {
+      log.info("Processing stops contribution from user: {}", userId);
+
+      // Security pre-checks
+      if (!performSecurityChecksAnonymous(request, clientId, "stops-contribution")) {
+        return createSecurityBlockedResponse();
+      }
+
+      // Honeypot check (bot detection)
+      String honeypot = (String) requestData.get("website");
+      if (honeypot != null && !honeypot.isEmpty()) {
+        log.warn("Bot detected via honeypot in stops contribution from IP: {}", request.getRemoteAddr());
+        Map<String, Object> fakeResponse = new HashMap<>();
+        fakeResponse.put("success", true);
+        fakeResponse.put("message", "Stops submitted successfully");
+        return ResponseEntity.ok(fakeResponse);
+      }
+
+      // Rate limiting check
+      if (!securityMonitoringPort.checkRateLimit(clientId, "stops-contributions", 10, 3600000)) {
+        log.warn("Rate limit exceeded for stops contribution submission: {}", clientId);
+        return ResponseEntity.status(429)
+            .body(createErrorResponse("Rate limit exceeded. Please try again later."));
+      }
+
+      // Extract and validate required fields
+      Long busId = requestData.get("busId") != null ? 
+          Long.valueOf(requestData.get("busId").toString()) : null;
+      String busNumber = (String) requestData.get("busNumber");
+      String busName = (String) requestData.get("busName");
+      String fromLocationName = (String) requestData.get("fromLocationName");
+      String toLocationName = (String) requestData.get("toLocationName");
+      String routeDepartureTime = (String) requestData.get("departureTime");
+      String routeArrivalTime = (String) requestData.get("arrivalTime");
+      String additionalNotes = (String) requestData.get("additionalNotes");
+
+      @SuppressWarnings("unchecked")
+      List<Map<String, Object>> stopsData = (List<Map<String, Object>>) requestData.get("stops");
+
+      if (busId == null) {
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("Bus ID is required"));
+      }
+
+      if (stopsData == null || stopsData.isEmpty()) {
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse("At least one stop is required"));
+      }
+
+      // Convert stops data to StopContribution objects
+      List<com.perundhu.domain.model.StopContribution> stops = new java.util.ArrayList<>();
+      for (Map<String, Object> stopData : stopsData) {
+        String locationName = (String) stopData.get("locationName");
+        String stopArrivalTime = (String) stopData.get("arrivalTime");
+        String stopDepartureTime = (String) stopData.get("departureTime");
+        Integer order = stopData.get("order") != null ? 
+            Integer.valueOf(stopData.get("order").toString()) : null;
+        Double latitude = stopData.get("latitude") != null ? 
+            Double.valueOf(stopData.get("latitude").toString()) : null;
+        Double longitude = stopData.get("longitude") != null ? 
+            Double.valueOf(stopData.get("longitude").toString()) : null;
+
+        if (locationName == null || locationName.isBlank()) {
+          return ResponseEntity.badRequest()
+              .body(createErrorResponse("Stop location name is required"));
+        }
+
+        com.perundhu.domain.model.StopContribution stop = com.perundhu.domain.model.StopContribution.builder()
+            .name(locationName)
+            .arrivalTime(stopArrivalTime)
+            .departureTime(stopDepartureTime)
+            .stopOrder(order)
+            .latitude(latitude)
+            .longitude(longitude)
+            .build();
+        stops.add(stop);
+      }
+
+      // Create a RouteContribution for the stops
+      // This will be reviewed by admins and then merged into the existing route
+      RouteContribution contribution = RouteContribution.builder()
+          .userId(userId)
+          .busNumber(busNumber != null ? busNumber : "BUS-" + busId)
+          .busName(busName != null ? busName : "")
+          .fromLocationName(fromLocationName != null ? fromLocationName : "")
+          .toLocationName(toLocationName != null ? toLocationName : "")
+          .departureTime(routeDepartureTime)
+          .arrivalTime(routeArrivalTime)
+          .sourceBusId(busId)
+          .contributionType("ADD_STOPS")
+          .additionalNotes(additionalNotes != null ? 
+              "ADD_STOPS for bus ID: " + busId + ". " + additionalNotes :
+              "ADD_STOPS for bus ID: " + busId)
+          .stops(stops)
+          .status("PENDING")
+          .build();
+
+      // Save the contribution
+      RouteContribution savedContribution = contributionInputPort.submitRouteContribution(
+          convertToContributionData(contribution), userId);
+
+      log.info("Stops contribution submitted successfully. ID: {}, User: {}, Bus ID: {}, Stops count: {}",
+          savedContribution.getId(), userId, busId, stops.size());
+
+      // Log security event for successful submission
+      securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
+          clientId,
+          "DATA_SUBMISSION",
+          "INFO",
+          "Stops contribution submitted for bus ID: " + busId,
+          "/api/v1/contributions/routes/stops",
+          request.getHeader("User-Agent"),
+          LocalDateTime.now()));
+
+      Map<String, Object> response = new HashMap<>();
+      response.put("success", true);
+      response.put("message", "Stops submitted for review. An admin will review and approve your contribution.");
+      response.put("submissionId", savedContribution.getId());
+      response.put("status", savedContribution.getStatus());
+      response.put("stopsCount", stops.size());
+      response.put("estimatedProcessingTime", "24-48 hours");
+
+      return ResponseEntity.ok(response);
+
+    } catch (NumberFormatException e) {
+      log.warn("Invalid number format in stops contribution from user {}: {}", userId, e.getMessage());
+      return ResponseEntity.badRequest()
+          .body(createErrorResponse("Invalid number format: " + e.getMessage()));
+
+    } catch (Exception e) {
+      log.error("Error processing stops contribution from user {}: {}", userId, e.getMessage(), e);
+
+      securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
+          clientId,
+          "PROCESSING_ERROR",
+          "HIGH",
+          "Stops contribution processing failed: " + e.getMessage(),
+          "/api/v1/contributions/routes/stops",
+          request.getHeader("User-Agent"),
+          LocalDateTime.now()));
+
+      return ResponseEntity.internalServerError()
+          .body(createErrorResponse("Failed to process contribution. Please try again."));
+    }
+  }
+
+  /**
+   * Convert RouteContribution to Map for the input port
+   */
+  private Map<String, Object> convertToContributionData(RouteContribution contribution) {
+    Map<String, Object> data = new HashMap<>();
+    data.put("busNumber", contribution.getBusNumber());
+    data.put("busName", contribution.getBusName());
+    data.put("fromLocationName", contribution.getFromLocationName());
+    data.put("toLocationName", contribution.getToLocationName());
+    data.put("departureTime", contribution.getDepartureTime());
+    data.put("arrivalTime", contribution.getArrivalTime());
+    data.put("additionalNotes", contribution.getAdditionalNotes());
+    data.put("sourceBusId", contribution.getSourceBusId());
+    data.put("contributionType", contribution.getContributionType());
+    
+    if (contribution.getStops() != null && !contribution.getStops().isEmpty()) {
+      List<Map<String, Object>> stopsData = new java.util.ArrayList<>();
+      for (var stop : contribution.getStops()) {
+        Map<String, Object> stopMap = new HashMap<>();
+        stopMap.put("name", stop.getName());
+        stopMap.put("arrivalTime", stop.getArrivalTime());
+        stopMap.put("departureTime", stop.getDepartureTime());
+        stopMap.put("stopOrder", stop.getStopOrder());
+        stopMap.put("latitude", stop.getLatitude());
+        stopMap.put("longitude", stop.getLongitude());
+        stopsData.add(stopMap);
+      }
+      data.put("stops", stopsData);
+    }
+    
+    return data;
+  }
+
+  /**
    * Submit an image contribution with enhanced AI/OCR processing
    */
   @PostMapping("/images")
@@ -942,12 +1138,15 @@ public class ContributionController {
       response.put("formatDetected", formatMeta.getType().toString());
       response.put("confidence", adjustedConfidence);
       response.put("extractedBy", extractedBy);
-      response.put("extracted", Map.of(
-          "busNumber", busNumber,
-          "fromLocation", fromLocation,
-          "toLocation", toLocation,
-          "timings", timings,
-          "stops", stops));
+      
+      // Build extracted map - use HashMap to allow null values
+      Map<String, Object> extracted = new HashMap<>();
+      extracted.put("busNumber", busNumber);
+      extracted.put("fromLocation", fromLocation);
+      extracted.put("toLocation", toLocation);
+      extracted.put("timings", timings);
+      extracted.put("stops", stops);
+      response.put("extracted", extracted);
 
       return ResponseEntity.ok(response);
 

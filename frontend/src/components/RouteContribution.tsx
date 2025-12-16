@@ -24,15 +24,18 @@ export const RouteContribution: React.FC = () => {
     selectedBus?: Bus; 
     method?: string;
     fromSearch?: boolean;
+    fromLocation?: { id: number; name: string; translatedName?: string; latitude: number; longitude: number };
+    toLocation?: { id: number; name: string; translatedName?: string; latitude: number; longitude: number };
   } | null;
   
   // Initialize with first available method
   const getDefaultMethod = (): 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue' => {
-    // If coming from search results with "Add Stops", use addStops method
-    if (navigationState?.method === 'add-stops' && featureFlags.enableAddStops) {
+    // If coming from search results with "Add Stops", use addStops method (bypass feature flag)
+    if (navigationState?.method === 'add-stops' && navigationState?.fromSearch) {
       return 'addStops';
     }
-    if (navigationState?.method === 'report-issue' && featureFlags.enableReportIssue) {
+    // If coming from search results with "Report Issue", use reportIssue method (bypass feature flag)
+    if (navigationState?.method === 'report-issue' && navigationState?.fromSearch) {
       return 'reportIssue';
     }
     if (featureFlags.enableManualContribution) return 'manual';
@@ -52,22 +55,44 @@ export const RouteContribution: React.FC = () => {
   
   // Store pre-selected bus for AddStopsToRoute component
   const preSelectedBus = navigationState?.selectedBus || undefined;
+  const preSelectedFromLocation = navigationState?.fromLocation || undefined;
+  const preSelectedToLocation = navigationState?.toLocation || undefined;
+
+  // Debug logging
+  console.log('RouteContribution - navigationState:', navigationState);
+  console.log('RouteContribution - preSelectedBus:', preSelectedBus);
+  console.log('RouteContribution - fromLocation:', preSelectedFromLocation);
+  console.log('RouteContribution - toLocation:', preSelectedToLocation);
+
+  // When navigating from search results with a method, update the contribution method
+  useEffect(() => {
+    // Bypass feature flag when coming from search results
+    if (navigationState?.method === 'add-stops' && navigationState?.fromSearch) {
+      console.log('Setting contribution method to addStops from search results');
+      setContributionMethod('addStops');
+    } else if (navigationState?.method === 'report-issue' && navigationState?.fromSearch) {
+      console.log('Setting contribution method to reportIssue from search results');
+      setContributionMethod('reportIssue');
+    }
+  }, [navigationState?.method, navigationState?.fromSearch]);
 
   // Update selected method if current method becomes disabled
+  // But allow addStops/reportIssue when coming from search results
   useEffect(() => {
+    const isFromSearch = navigationState?.fromSearch === true;
     const isCurrentMethodEnabled = 
       (contributionMethod === 'manual' && featureFlags.enableManualContribution) ||
       (contributionMethod === 'image' && featureFlags.enableImageContribution) ||
       (contributionMethod === 'voice' && featureFlags.enableVoiceContribution) ||
       (contributionMethod === 'paste' && featureFlags.enablePasteContribution) ||
       (contributionMethod === 'verify' && featureFlags.enableRouteVerification) ||
-      (contributionMethod === 'addStops' && featureFlags.enableAddStops) ||
-      (contributionMethod === 'reportIssue' && featureFlags.enableReportIssue);
+      (contributionMethod === 'addStops' && (featureFlags.enableAddStops || isFromSearch)) ||
+      (contributionMethod === 'reportIssue' && (featureFlags.enableReportIssue || isFromSearch));
     
     if (!isCurrentMethodEnabled) {
       setContributionMethod(getDefaultMethod());
     }
-  }, [contributionMethod]);
+  }, [contributionMethod, navigationState?.fromSearch]);
 
   interface ContributionData {
     busName?: string;
@@ -255,6 +280,8 @@ export const RouteContribution: React.FC = () => {
             <div>
               <AddStopsToRoute
                 preSelectedBus={preSelectedBus}
+                fromLocation={preSelectedFromLocation}
+                toLocation={preSelectedToLocation}
                 onSubmit={() => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.addStopsSuccess', 'Thank you for adding stops to this route!'));

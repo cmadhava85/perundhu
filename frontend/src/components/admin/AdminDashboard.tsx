@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import './AdminDashboard.css';
 import RouteAdminPanel from './RouteAdminPanel';
 import { ImageContributionAdminPanel } from './ImageContributionAdminPanel';
@@ -10,13 +12,30 @@ import RouteIssuesAdminPanel from './RouteIssuesAdminPanel';
  */
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { logout } = useAdminAuth();
   const [activeTab, setActiveTab] = useState<'routes' | 'images' | 'issues' | 'users' | 'settings'>('routes');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+  };
 
   return (
     <div className="admin-dashboard">
       <div className="admin-header">
-        <h1>{t('admin.dashboard.title', 'Admin Dashboard')}</h1>
-        <p>{t('admin.dashboard.subtitle', 'Manage route contributions and system settings')}</p>
+        <div className="admin-header-content">
+          <h1>{t('admin.dashboard.title', 'Admin Dashboard')}</h1>
+          <p>{t('admin.dashboard.subtitle', 'Manage route contributions and system settings')}</p>
+        </div>
+        <button className="admin-logout-button" onClick={handleLogout}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          {t('admin.logout', 'Logout')}
+        </button>
       </div>
 
       <div className="admin-tabs">
