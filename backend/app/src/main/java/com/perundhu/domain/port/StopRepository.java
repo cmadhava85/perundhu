@@ -1,6 +1,7 @@
 package com.perundhu.domain.port;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.perundhu.domain.model.Bus;
@@ -72,6 +73,15 @@ public interface StopRepository {
      * @return List of stops ordered by bus ID and stop order
      */
     List<Stop> findByBusIdsOrderByStopOrder(List<Long> busIds);
+
+    /**
+     * Batch load stops for multiple buses, returning a map grouped by bus ID.
+     * This is the optimized version for building route graphs.
+     * 
+     * @param busIds List of bus IDs to load stops for
+     * @return Map of bus ID to list of stops, ordered by stop order
+     */
+    Map<Long, List<Stop>> findStopsByBusIdsGrouped(List<Long> busIds);
 
     Stop save(Stop stop);
 

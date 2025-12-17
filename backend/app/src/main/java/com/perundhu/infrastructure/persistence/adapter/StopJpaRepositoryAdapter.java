@@ -1,7 +1,10 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.perundhu.domain.model.Bus;
@@ -98,5 +101,33 @@ public class StopJpaRepositoryAdapter implements StopRepository {
         return jpaRepository.findByBusIdsOrderByStopOrder(busIds).stream()
                 .map(StopJpaEntity::toDomainModel)
                 .toList();
+    }
+
+    @Override
+    public Map<Long, List<Stop>> findStopsByBusIdsGrouped(List<Long> busIds) {
+        if (busIds == null || busIds.isEmpty()) {
+            return Map.of();
+        }
+        
+        List<StopJpaEntity> entities = jpaRepository.findByBusIdsOrderByStopOrder(busIds);
+        Map<Long, List<Stop>> result = new HashMap<>();
+        
+        // Initialize all bus IDs with empty lists
+        for (Long busId : busIds) {
+            result.put(busId, new ArrayList<>());
+        }
+        
+        // Group stops by their bus ID
+        for (StopJpaEntity entity : entities) {
+            if (entity.getBus() != null && entity.getBus().getId() != null) {
+                Long busId = entity.getBus().getId();
+                List<Stop> stopsForBus = result.get(busId);
+                if (stopsForBus != null) {
+                    stopsForBus.add(entity.toDomainModel());
+                }
+            }
+        }
+        
+        return result;
     }
 }

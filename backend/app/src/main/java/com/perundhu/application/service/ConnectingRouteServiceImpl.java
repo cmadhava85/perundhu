@@ -50,6 +50,10 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   private static final int MAX_JOURNEY_DURATION_MINUTES = 720; // 12 hours max journey
   private static final double EARTH_RADIUS_KM = 6371.0;
 
+  // Performance tuning constants
+  private static final int MAX_QUEUE_SIZE = 10000; // Limit priority queue to prevent memory explosion
+  private static final int MAX_PATHS_EXPLORED = 5000; // Early termination after exploring enough paths
+
   // Weighting factors for multi-criteria optimization
   private static final double DURATION_WEIGHT = 1.0; // Primary: minimize time
   private static final double TRANSFER_PENALTY = 30.0; // 30 minutes penalty per transfer
@@ -68,6 +72,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   }
 
   @Override
+  @Cacheable(value = "connectingRoutesCache", key = "#fromLocationId + '-' + #toLocationId + '-' + #maxTransfers")
   public List<ConnectingRouteDTO> findConnectingRoutes(Long fromLocationId, Long toLocationId, int maxTransfers) {
     return findConnectingRoutesInternal(fromLocationId, toLocationId, maxTransfers, null);
   }
@@ -168,35 +173,25 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         .map(bus -> bus.id().value())
         .toList();
 
-    // Load all stops for all buses in ONE query (batch load) - prevents N+1
-    // The repository returns stops grouped implicitly by bus ID due to ORDER BY
-    List<Stop> allStops = stopRepository.findByBusIdsOrderByStopOrder(busIds);
+    // OPTIMIZED: Load ALL stops for ALL buses in ONE batch query - prevents N+1!
+    // Returns a map of busId -> List<Stop>, already grouped and ordered
+    Map<Long, List<Stop>> stopsByBusId = stopRepository.findStopsByBusIdsGrouped(busIds);
+    log.debug("Loaded stops for {} buses in batch in {}ms", stopsByBusId.size(), System.currentTimeMillis() - startTime);
 
-    // Group stops by bus ID using a custom index-based approach since Stop doesn't
-    // have bus reference
-    // Since stops are ordered by bus_id, stop_order we can group them efficiently
-    Map<Long, List<Stop>> stopsByBusId = new HashMap<>();
+    // Build map for fast bus lookup
+    Map<Long, Bus> busById = new HashMap<>();
+    for (Bus bus : allBuses) {
+      if (bus.id() != null) {
+        busById.put(bus.id().value(), bus);
+      }
+    }
+
     for (Long busId : busIds) {
-      stopsByBusId.put(busId, new ArrayList<>());
-    }
+      Bus bus = busById.get(busId);
+      if (bus == null) continue;
 
-    // Use location-based matching to assign stops to buses
-    // Load stops per bus (this is cached anyway, so N+1 is mitigated by cache)
-    for (Bus bus : allBuses) {
-      if (bus.id() == null)
-        continue;
-      List<Stop> stops = stopRepository.findByBusIdOrderByStopOrder(bus.id().value());
-      stopsByBusId.put(bus.id().value(), stops);
-    }
-    log.debug("Loaded stops for {} buses in {}ms", stopsByBusId.size(), System.currentTimeMillis() - startTime);
-
-    for (Bus bus : allBuses) {
-      if (bus.id() == null)
-        continue;
-
-      List<Stop> stops = stopsByBusId.get(bus.id().value());
-      if (stops == null)
-        continue;
+      List<Stop> stops = stopsByBusId.get(busId);
+      if (stops == null || stops.isEmpty()) continue;
 
       // Add edges between consecutive stops
       for (int i = 0; i < stops.size() - 1; i++) {
@@ -230,9 +225,15 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
    * Dijkstra's algorithm to find optimal paths from source to destination.
    * Uses priority queue to explore shortest paths first.
    * Returns multiple route options sorted by total weighted cost.
+   * 
+   * Optimizations:
+   * - Queue size limit to prevent memory explosion
+   * - Maximum paths explored limit for early termination
+   * - Better state tracking to avoid redundant exploration
    */
   private List<RoutePath> findPaths(RouteGraph graph, Long fromLocationId, Long toLocationId, int maxTransfers) {
     List<RoutePath> validPaths = new ArrayList<>();
+    int pathsExplored = 0;
 
     // Priority queue sorted by weighted cost (lower is better)
     PriorityQueue<PathState> priorityQueue = new PriorityQueue<>(
@@ -240,12 +241,26 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
     priorityQueue.add(new PathState(fromLocationId, new ArrayList<>(), new HashSet<>(), 0, 0));
 
-    // Track best cost to reach each location (for pruning)
-    Map<Long, Double> bestCostToLocation = new HashMap<>();
-    bestCostToLocation.put(fromLocationId, 0.0);
+    // Track best cost to reach each location with specific transfer count (for better pruning)
+    // Key: locationId + "-" + transfers, Value: best weighted cost
+    Map<String, Double> bestCostToLocationWithTransfers = new HashMap<>();
+    bestCostToLocationWithTransfers.put(fromLocationId + "-0", 0.0);
 
-    while (!priorityQueue.isEmpty()) {
+    while (!priorityQueue.isEmpty() && pathsExplored < MAX_PATHS_EXPLORED) {
+      // Limit queue size to prevent memory explosion
+      if (priorityQueue.size() > MAX_QUEUE_SIZE) {
+        log.debug("Queue size {} exceeded limit, trimming...", priorityQueue.size());
+        // Keep only the best entries
+        List<PathState> bestStates = new ArrayList<>();
+        while (!priorityQueue.isEmpty() && bestStates.size() < MAX_QUEUE_SIZE / 2) {
+          bestStates.add(priorityQueue.poll());
+        }
+        priorityQueue.clear();
+        priorityQueue.addAll(bestStates);
+      }
+
       PathState state = priorityQueue.poll();
+      pathsExplored++;
 
       // Check if we've reached the destination
       if (state.currentLocationId.equals(toLocationId) && !state.segments.isEmpty()) {
@@ -256,6 +271,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
         // Early termination: if we have enough routes, stop searching
         if (validPaths.size() >= MAX_RESULTS * 2) {
+          log.debug("Found {} valid paths, terminating early after exploring {} states", validPaths.size(), pathsExplored);
           break;
         }
         continue;
@@ -271,9 +287,10 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         continue;
       }
 
-      // Prune paths that are worse than what we've already found
-      Double bestCost = bestCostToLocation.get(state.currentLocationId);
-      if (bestCost != null && state.weightedCost() > bestCost * 1.5) {
+      // Prune paths that are worse than what we've already found for this location+transfers combo
+      String stateKey = state.currentLocationId + "-" + state.transfers;
+      Double bestCost = bestCostToLocationWithTransfers.get(stateKey);
+      if (bestCost != null && state.weightedCost() > bestCost * 1.3) {
         continue; // This path is significantly worse, skip it
       }
 
@@ -299,6 +316,11 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
             }
             waitTime = calculateWaitTime(lastSegment, segment);
             newTransfers++;
+            
+            // Skip if new transfer count exceeds limit
+            if (newTransfers > maxTransfers) {
+              continue;
+            }
           }
         }
 
@@ -308,10 +330,11 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
         // Only explore if this path is potentially better
         Long nextLocationId = segment.toStop.location().id().value();
-        Double existingBestCost = bestCostToLocation.get(nextLocationId);
+        String nextStateKey = nextLocationId + "-" + newTransfers;
+        Double existingBestCost = bestCostToLocationWithTransfers.get(nextStateKey);
 
         if (existingBestCost == null || newWeightedCost < existingBestCost) {
-          bestCostToLocation.put(nextLocationId, newWeightedCost);
+          bestCostToLocationWithTransfers.put(nextStateKey, newWeightedCost);
 
           // Add this segment and continue search
           List<BusSegment> newPath = new ArrayList<>(state.segments);
@@ -329,6 +352,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         }
       }
     }
+
+    log.debug("Explored {} paths, found {} valid routes", pathsExplored, validPaths.size());
 
     // Sort final results by weighted cost
     validPaths.sort(Comparator.comparingDouble(RoutePath::weightedCost));
