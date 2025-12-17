@@ -104,7 +104,7 @@ export const RouteContribution: React.FC = () => {
     toLocationName?: string;
     departureTime?: string;
     arrivalTime?: string;
-    stops?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }>;
+    stops?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }> | string;
     intermediateStops?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }>;
     stopsData?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }> | string;
     description?: string;
@@ -127,15 +127,14 @@ export const RouteContribution: React.FC = () => {
         // For non-image contributions, we need to pass the full route data
         // The data should include all required RouteContribution fields
         // Convert intermediate stops to the expected format
-        const stopsArray = data.intermediateStops || data.stops || [];
-        const formattedStops = Array.isArray(stopsArray) 
-          ? stopsArray.map((stop, index) => ({
-              name: stop.name,
-              arrivalTime: stop.arrivalTime || '',
-              departureTime: stop.departureTime || '',
-              stopOrder: stop.stopOrder ?? index + 1
-            }))
-          : [];
+        // Prioritize intermediateStops (array), then check if stops is an array
+        const stopsArray = data.intermediateStops || (Array.isArray(data.stops) ? data.stops : []);
+        const formattedStops = stopsArray.map((stop, index) => ({
+            name: stop.name,
+            arrivalTime: stop.arrivalTime || '',
+            departureTime: stop.departureTime || '',
+            stopOrder: stop.stopOrder ?? index + 1
+          }));
         
         await submitRouteContribution({
           busName: data.busName || '',
