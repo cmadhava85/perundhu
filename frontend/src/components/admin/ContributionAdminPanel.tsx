@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import type { RouteContribution } from '../../types/contributionTypes';
 import AuthService from '../../services/authService';
+import AdminService from '../../services/adminService';
 import './ContributionAdminPanel.css';
 
 interface AdminStats {
@@ -52,7 +53,7 @@ const ContributionAdminPanel: React.FC = () => {
           setLoading(true);
           const response = await fetch('/api/v1/admin/contributions', {
             headers: {
-              'Authorization': `Bearer ${AuthService.getToken()}`,
+              'Authorization': AdminService.getAuthHeader(),
               'Content-Type': 'application/json'
             }
           });
@@ -73,7 +74,7 @@ const ContributionAdminPanel: React.FC = () => {
         try {
           const statsResponse = await fetch('/api/v1/contributions/statistics', {
             headers: {
-              'Authorization': `Bearer ${AuthService.getToken()}`,
+              'Authorization': AdminService.getAuthHeader(),
               'Content-Type': 'application/json'
             }
           });
@@ -100,7 +101,7 @@ const ContributionAdminPanel: React.FC = () => {
       setLoading(true);
       const response = await fetch('/api/v1/admin/contributions', {
         headers: {
-          'Authorization': `Bearer ${AuthService.getToken()}`,
+          'Authorization': AdminService.getAuthHeader(),
           'Content-Type': 'application/json'
         }
       });
@@ -120,7 +121,7 @@ const ContributionAdminPanel: React.FC = () => {
     try {
       const response = await fetch('/api/v1/contributions/statistics', {
         headers: {
-          'Authorization': `Bearer ${AuthService.getToken()}`,
+          'Authorization': AdminService.getAuthHeader(),
           'Content-Type': 'application/json'
         }
       });
@@ -144,7 +145,7 @@ const ContributionAdminPanel: React.FC = () => {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${AuthService.getToken()}`,
+          'Authorization': AdminService.getAuthHeader(),
           'Content-Type': 'application/json'
         }
       });
@@ -172,7 +173,7 @@ const ContributionAdminPanel: React.FC = () => {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${AuthService.getToken()}`,
+          'Authorization': AdminService.getAuthHeader(),
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ reason })

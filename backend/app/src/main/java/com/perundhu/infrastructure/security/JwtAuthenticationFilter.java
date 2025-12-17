@@ -32,7 +32,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     try {
       String jwt = getJwtFromRequest(request);
 
-      if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+      // Only process if it looks like a valid JWT (has 2 dots for header.payload.signature)
+      if (StringUtils.hasText(jwt) && isValidJwtFormat(jwt) && tokenProvider.validateToken(jwt)) {
         String username = tokenProvider.getUsernameFromToken(jwt);
         List<SimpleGrantedAuthority> authorities = tokenProvider.getAuthoritiesFromToken(jwt);
 
@@ -42,10 +43,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception ex) {
-      log.error("Could not set user authentication in security context", ex);
+      log.debug("Could not set user authentication in security context: {}", ex.getMessage());
     }
 
     filterChain.doFilter(request, response);
+  }
+
+  /**
+   * Check if the token has valid JWT format (header.payload.signature)
+   * This prevents trying to parse Basic Auth credentials or other non-JWT tokens
+   */
+  private boolean isValidJwtFormat(String token) {
+    if (token == null || token.isEmpty()) {
+      return false;
+    }
+    // JWT tokens must have exactly 2 period characters (3 parts)
+    long periodCount = token.chars().filter(ch -> ch == '.').count();
+    return periodCount == 2;
   }
 
   private String getJwtFromRequest(HttpServletRequest request) {

@@ -10,6 +10,7 @@ import {
   Calendar,
   User
 } from 'lucide-react';
+import AdminService from '../../services/adminService';
 import './ImageContributionAdminPanel.css';
 
 interface ImageContribution {
@@ -127,7 +128,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
         const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images`, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+            'Authorization': AdminService.getAuthHeader()
           }
         });
         const data = await response.json();
@@ -157,7 +158,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
       const response = await fetch(`${API_BASE_URL}/api/admin/contributions/images`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          'Authorization': AdminService.getAuthHeader()
         }
       });
       const data = await response.json();
@@ -179,7 +180,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          'Authorization': AdminService.getAuthHeader()
         }
       });
       
@@ -318,7 +319,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+            'Authorization': AdminService.getAuthHeader()
           },
           body: JSON.stringify(correctedData)
         }
@@ -442,7 +443,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+            'Authorization': AdminService.getAuthHeader()
           },
           body: JSON.stringify(correctedData)
         }
@@ -496,7 +497,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+            'Authorization': AdminService.getAuthHeader()
           },
           body: JSON.stringify(correctedData)
         }
@@ -527,7 +528,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          'Authorization': AdminService.getAuthHeader()
         },
         body: JSON.stringify({ extractOCRData: createRoute }),
       });
@@ -562,7 +563,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+          'Authorization': AdminService.getAuthHeader()
         },
         body: JSON.stringify({ reason }),
       });

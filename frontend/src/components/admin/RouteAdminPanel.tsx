@@ -181,7 +181,7 @@ const RouteAdminPanel: React.FC = () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`
+            'Authorization': AdminService.getAuthHeader()
           },
           body: JSON.stringify({
             departureTime: editedDepartureTime,
