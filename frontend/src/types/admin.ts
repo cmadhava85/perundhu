@@ -4,7 +4,10 @@
 export const ContributionStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  INTEGRATION_FAILED: 'INTEGRATION_FAILED',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  INTEGRATED: 'INTEGRATED'
 } as const;
 
 export type ContributionStatus = typeof ContributionStatus[keyof typeof ContributionStatus];

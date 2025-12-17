@@ -16,6 +16,7 @@ const RouteContributionList: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<string>('pending');
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState<RouteContribution | null>(null);
+  const [retryingId, setRetryingId] = useState<number | null>(null);
   
   // Load contributions on component mount
   useEffect(() => {
@@ -106,6 +107,25 @@ const RouteContributionList: React.FC = () => {
     }
   };
 
+  // Handle retry for failed integrations
+  const handleRetry = async (id: number | undefined) => {
+    if (!id) return;
+    try {
+      setRetryingId(id);
+      setError(null);
+      await AdminService.retryIntegration(id);
+      
+      // Reload contributions to get updated list
+      await loadContributions();
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to retry integration';
+      setError(errorMessage);
+      console.error('Error retrying integration:', err);
+    } finally {
+      setRetryingId(null);
+    }
+  };
+
   // Close the reject modal
   const handleCloseRejectModal = () => {
     setRejectModalOpen(false);
@@ -122,6 +142,12 @@ const RouteContributionList: React.FC = () => {
         return 'status-badge approved';
       case 'rejected':
         return 'status-badge rejected';
+      case 'integration_failed':
+        return 'status-badge integration-failed';
+      case 'pending_review':
+        return 'status-badge pending-review';
+      case 'integrated':
+        return 'status-badge integrated';
       default:
         return 'status-badge';
     }
@@ -137,6 +163,12 @@ const RouteContributionList: React.FC = () => {
         return 'status-approved';
       case 'rejected':
         return 'status-rejected';
+      case 'integration_failed':
+        return 'status-integration-failed';
+      case 'pending_review':
+        return 'status-pending-review';
+      case 'integrated':
+        return 'status-integrated';
       default:
         return '';
     }
@@ -156,6 +188,9 @@ const RouteContributionList: React.FC = () => {
             <option value="pending">{t('admin.contributions.statusPending', 'Pending')}</option>
             <option value="approved">{t('admin.contributions.statusApproved', 'Approved')}</option>
             <option value="rejected">{t('admin.contributions.statusRejected', 'Rejected')}</option>
+            <option value="integration_failed">{t('admin.contributions.statusIntegrationFailed', 'Integration Failed')}</option>
+            <option value="pending_review">{t('admin.contributions.statusPendingReview', 'Pending Review')}</option>
+            <option value="integrated">{t('admin.contributions.statusIntegrated', 'Integrated')}</option>
           </select>
         </div>
       </div>
@@ -175,6 +210,7 @@ const RouteContributionList: React.FC = () => {
               <th>{t('admin.contributions.submittedBy', 'Submitted By')}</th>
               <th>{t('admin.contributions.submissionDate', 'Date')}</th>
               <th>{t('admin.contributions.status', 'Status')}</th>
+              <th>{t('admin.contributions.errorDetails', 'Error/Notes')}</th>
               <th>{t('admin.contributions.actions', 'Actions')}</th>
             </tr>
           </thead>
@@ -191,6 +227,15 @@ const RouteContributionList: React.FC = () => {
                   <span className={getStatusClass(contribution.status)}>
                     {contribution.status}
                   </span>
+                </td>
+                <td className="validation-message-cell">
+                  {contribution.validationMessage ? (
+                    <span className="validation-message" title={contribution.validationMessage}>
+                      ⚠️ {contribution.validationMessage.length > 50 
+                        ? `${contribution.validationMessage.substring(0, 50)}...` 
+                        : contribution.validationMessage}
+                    </span>
+                  ) : '-'}
                 </td>
                 <td>
                   <div className="action-buttons">
@@ -209,6 +254,19 @@ const RouteContributionList: React.FC = () => {
                           {t('admin.contributions.reject', 'Reject')}
                         </button>
                       </>
+                    )}
+                    {(contribution.status?.toLowerCase() === 'integration_failed' || 
+                      contribution.status?.toLowerCase() === 'pending_review' ||
+                      contribution.status?.toLowerCase() === 'approved') && (
+                      <button 
+                        className="btn btn-retry"
+                        onClick={() => contribution.id && handleRetry(contribution.id)}
+                        disabled={retryingId === contribution.id}
+                      >
+                        {retryingId === contribution.id 
+                          ? t('admin.contributions.retrying', 'Retrying...') 
+                          : t('admin.contributions.retry', 'Retry Integration')}
+                      </button>
                     )}
                     <button 
                       className="btn btn-view"

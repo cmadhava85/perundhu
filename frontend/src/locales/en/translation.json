@@ -453,6 +453,8 @@
     "routeNameHint": "Enter the route name OR bus number above",
     "routeNamePlaceholder": "e.g., Chennai - Tambaram",
     "busRouteHint": "Enter either bus number or route name (at least one required)",
+    "busStandTip": "Tip:",
+    "busStandHint": "For cities with multiple bus stands (Madurai, Chennai, etc.), select the specific bus stand from suggestions (e.g., \"Madurai - Arapalayam\") for better accuracy.",
     "routeInformation": "Route Information",
     "departure": "Departure",
     "arrival": "Arrival",

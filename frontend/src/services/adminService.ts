@@ -144,6 +144,25 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     }
   },
 
+  // Retry integration for a failed contribution
+  retryIntegration: async (id: number): Promise<IntegrationResult> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/admin/integration/integrate/${id}`,
+        {},
+        { headers: { Authorization: authHeader } }
+      );
+      return response.data;
+    } catch (error) {
+      logger.error(`Failed to retry integration for contribution ${id}:`, error);
+      if (axios.isAxiosError(error) && error.response?.data?.message) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error('Failed to retry integration. Please check the validation errors and try again.');
+    }
+  },
+
   getIntegrationStatus: async (): Promise<unknown> => {
     const authHeader = AdminService.getAuthHeader();
     try {

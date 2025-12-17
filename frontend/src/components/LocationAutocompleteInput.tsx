@@ -211,7 +211,7 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
                     padding: '14px 16px',
                     minHeight: '48px',
                     border: 'none',
-                    background: 'transparent',
+                    background: suggestion.name.includes(' - ') ? '#f0fdf4' : 'transparent',
                     textAlign: 'left',
                     cursor: 'pointer',
                     borderBottom: index < suggestions.length - 1 ? '1px solid #f0f0f0' : 'none',
@@ -221,14 +221,19 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
                     fontSize: '15px',
                     transition: 'background-color 0.15s ease'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = '#f0f7ff'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                  onMouseEnter={(e) => e.currentTarget.style.background = suggestion.name.includes(' - ') ? '#dcfce7' : '#f0f7ff'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = suggestion.name.includes(' - ') ? '#f0fdf4' : 'transparent'}
                 >
                   <span style={{ fontSize: '18px' }}>
-                    {suggestion.source === 'database' ? '🚍' : suggestion.source === 'local' ? '⚡' : '🌍'}
+                    {suggestion.name.includes(' - ') ? '🚏' : suggestion.source === 'database' ? '🚍' : suggestion.source === 'local' ? '⚡' : '🌍'}
                   </span>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 500, color: '#1f2937' }}>{suggestion.name}</div>
+                    <div style={{ fontWeight: 500, color: '#1f2937' }}>
+                      {suggestion.name}
+                      {suggestion.name.includes(' - ') && (
+                        <span style={{ marginLeft: '8px', fontSize: '11px', background: '#22c55e', color: 'white', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>Bus Stand</span>
+                      )}
+                    </div>
                     {suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
                       <div style={{ fontSize: '13px', color: '#6b7280', marginTop: '3px' }}>
                         {suggestion.translatedName}

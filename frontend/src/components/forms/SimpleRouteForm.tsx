@@ -370,6 +370,25 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
           📍 {t('route.routeInformation', 'Route Information')}
         </h3>
         
+        {/* Bus Stand Hint */}
+        <div className="bus-stand-hint" style={{
+          background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
+          border: '1px solid #86efac',
+          borderRadius: '10px',
+          padding: '0.75rem 1rem',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontSize: '0.85rem',
+          color: '#166534'
+        }}>
+          <span style={{ fontSize: '1.2rem' }}>💡</span>
+          <span>
+            <strong>{t('route.busStandTip', 'Tip:')}</strong> {t('route.busStandHint', 'For cities with multiple bus stands (Madurai, Chennai, etc.), select the specific bus stand from suggestions (e.g., "Madurai - Arapalayam") for better accuracy.')}
+          </span>
+        </div>
+        
         <div className="form-row-compact">
           <div className={`form-group-compact ${validationErrors.origin ? 'field-error' : ''}`}>
             <label htmlFor="origin" className="compact-label">

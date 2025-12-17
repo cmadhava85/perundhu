@@ -96,6 +96,54 @@ tr.status-rejected {
   color: #b91c1c;
 }
 
+.status-badge.integration-failed {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px dashed #f59e0b;
+}
+
+.status-badge.pending-review {
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+.status-badge.integrated {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+/* Row styling for new statuses */
+tr.status-integration-failed {
+  background-color: #fef3c7;
+}
+
+tr.status-pending-review {
+  background-color: #e0e7ff;
+}
+
+tr.status-integrated {
+  background-color: #d1fae5;
+}
+
+/* Validation message cell */
+.validation-message-cell {
+  max-width: 200px;
+}
+
+.validation-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #fef3c7;
+  color: #92400e;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  cursor: help;
+  word-break: break-word;
+}
+
 /* Action buttons */
 .action-buttons {
   display: flex;
@@ -135,6 +183,21 @@ tr.status-rejected {
 .btn-view {
   background-color: #dbeafe;
   color: #1e40af;
+}
+
+.btn-retry {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.btn-retry:hover {
+  background-color: #fde68a;
+}
+
+.btn-retry:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Empty state */
