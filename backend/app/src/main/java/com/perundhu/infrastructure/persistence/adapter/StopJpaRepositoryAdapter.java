@@ -108,15 +108,15 @@ public class StopJpaRepositoryAdapter implements StopRepository {
         if (busIds == null || busIds.isEmpty()) {
             return Map.of();
         }
-        
+
         List<StopJpaEntity> entities = jpaRepository.findByBusIdsOrderByStopOrder(busIds);
         Map<Long, List<Stop>> result = new HashMap<>();
-        
+
         // Initialize all bus IDs with empty lists
         for (Long busId : busIds) {
             result.put(busId, new ArrayList<>());
         }
-        
+
         // Group stops by their bus ID
         for (StopJpaEntity entity : entities) {
             if (entity.getBus() != null && entity.getBus().getId() != null) {
@@ -127,7 +127,7 @@ public class StopJpaRepositoryAdapter implements StopRepository {
                 }
             }
         }
-        
+
         return result;
     }
 }

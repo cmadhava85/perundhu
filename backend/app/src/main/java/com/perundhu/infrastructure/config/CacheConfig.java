@@ -1,5 +1,7 @@
 package com.perundhu.infrastructure.config;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.cache.CacheManager;
@@ -33,15 +35,23 @@ public class CacheConfig {
     public static final String CONNECTING_ROUTES_CACHE = "connectingRoutesCache";
 
     /**
-     * Default Caffeine cache configuration:
-     * - TTL: 10 minutes (data freshness)
-     * - Max size: 1000 entries (memory protection)
-     * - Record stats for monitoring
+     * Custom cache manager with specific TTLs for different cache types.
+     * - Route graph cache: 1 hour (rarely changes, expensive to rebuild)
+     * - Connecting routes cache: 30 minutes (pre-computed routes)
+     * - Default: 10 minutes
      */
     @Bean
     @Primary
     public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager(
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager() {
+            @Override
+            protected com.github.benmanes.caffeine.cache.Cache<Object, Object> createNativeCaffeineCache(String name) {
+                return getCacheBuilder(name).build();
+            }
+        };
+
+        // Register all cache names
+        cacheManager.setCacheNames(java.util.List.of(
                 LATEST_BUS_LOCATIONS_CACHE,
                 BUS_LOCATION_HISTORY_CACHE,
                 NEARBY_BUSES_CACHE,
@@ -52,22 +62,54 @@ public class CacheConfig {
                 SEARCH_RESULTS_CACHE,
                 BUS_SEARCH_CACHE,
                 STOPS_CACHE,
-                CONNECTING_ROUTES_CACHE);
+                CONNECTING_ROUTES_CACHE));
 
-        cacheManager.setCaffeine(defaultCacheBuilder());
         cacheManager.setAllowNullValues(false);
-
         return cacheManager;
     }
 
     /**
-     * Default cache builder with reasonable defaults for most caches.
+     * Get cache builder with specific configuration based on cache name.
      */
-    private Caffeine<Object, Object> defaultCacheBuilder() {
-        return Caffeine.newBuilder()
-                .expireAfterWrite(10, TimeUnit.MINUTES) // TTL for cache entries
-                .maximumSize(1000) // Prevent unbounded growth
-                .recordStats(); // Enable statistics for monitoring
+    private Caffeine<Object, Object> getCacheBuilder(String cacheName) {
+        return switch (cacheName) {
+            // Route graph is expensive to build and rarely changes
+            // Use 1 hour TTL - will be warmed on startup
+            case ROUTE_GRAPH_CACHE -> Caffeine.newBuilder()
+                    .expireAfterWrite(60, TimeUnit.MINUTES)
+                    .maximumSize(5) // Only need 1 entry (the global graph)
+                    .recordStats();
+
+            // Connecting routes results can be cached longer
+            case CONNECTING_ROUTES_CACHE -> Caffeine.newBuilder()
+                    .expireAfterWrite(30, TimeUnit.MINUTES)
+                    .maximumSize(500) // Cache popular route queries
+                    .recordStats();
+
+            // Live location data needs short TTL
+            case LATEST_BUS_LOCATIONS_CACHE, NEARBY_BUSES_CACHE -> Caffeine.newBuilder()
+                    .expireAfterWrite(30, TimeUnit.SECONDS)
+                    .maximumSize(200)
+                    .recordStats();
+
+            // Translations rarely change
+            case TRANSLATIONS_CACHE -> Caffeine.newBuilder()
+                    .expireAfterWrite(60, TimeUnit.MINUTES)
+                    .maximumSize(2000)
+                    .recordStats();
+
+            // Locations rarely change
+            case LOCATIONS_CACHE -> Caffeine.newBuilder()
+                    .expireAfterWrite(30, TimeUnit.MINUTES)
+                    .maximumSize(500)
+                    .recordStats();
+
+            // Default for all other caches
+            default -> Caffeine.newBuilder()
+                    .expireAfterWrite(10, TimeUnit.MINUTES)
+                    .maximumSize(1000)
+                    .recordStats();
+        };
     }
 
     /**

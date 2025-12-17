@@ -307,7 +307,8 @@
   },
   "actions": {
     "addAnother": "Add Another Route",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "modifyDetails": "Modify Details"
   },
   "voice": {
     "transcription": "Transcribed Text:",
@@ -491,6 +492,8 @@
     "cardSubtitle": "Choose your preferred method to contribute",
     "successMessage": "Thank you for your contribution!",
     "errorMessage": "Failed to submit contribution. Please try again.",
+    "duplicateErrorMessage": "This route was already submitted. Please modify the details or try a different route.",
+    "duplicateErrorTitle": "Route Already Submitted",
     "verificationSuccess": "Thank you for verifying this route!",
     "addStopsSuccess": "Thank you for adding stops to this route!",
     "submitRoute": "Submit Route Information",

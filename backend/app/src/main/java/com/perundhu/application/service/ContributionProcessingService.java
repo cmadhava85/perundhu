@@ -20,6 +20,7 @@ import com.perundhu.domain.model.ImageContribution;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.Stop;
+import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.LocationRepository;
@@ -872,6 +873,38 @@ public class ContributionProcessingService {
 
         // Set user_id field (required by database)
         contribution.setUserId(submittedBy);
+
+        // Handle stops array - convert from List<Map> to List<StopContribution>
+        if (data.get("stops") != null) {
+            try {
+                @SuppressWarnings("unchecked")
+                List<Map<String, Object>> stopsData = (List<Map<String, Object>>) data.get("stops");
+                List<StopContribution> stops = new ArrayList<>();
+                
+                for (Map<String, Object> stopData : stopsData) {
+                    StopContribution stop = StopContribution.builder()
+                            .name((String) stopData.get("name"))
+                            .arrivalTime((String) stopData.get("arrivalTime"))
+                            .departureTime((String) stopData.get("departureTime"))
+                            .stopOrder(stopData.get("stopOrder") != null 
+                                    ? ((Number) stopData.get("stopOrder")).intValue() 
+                                    : null)
+                            .latitude(stopData.get("latitude") != null 
+                                    ? convertToDouble(stopData.get("latitude"), "stop.latitude") 
+                                    : null)
+                            .longitude(stopData.get("longitude") != null 
+                                    ? convertToDouble(stopData.get("longitude"), "stop.longitude") 
+                                    : null)
+                            .build();
+                    stops.add(stop);
+                }
+                
+                contribution.setStops(stops);
+                log.info("DEBUG Backend: Parsed {} stops from contribution data", stops.size());
+            } catch (Exception e) {
+                log.warn("DEBUG Backend: Failed to parse stops data: {}", e.getMessage());
+            }
+        }
 
         // Log final coordinate values for debugging
         log.info("DEBUG Backend: Final RouteContribution coordinates - from: ({}, {}), to: ({}, {})",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { submitRouteContribution, submitImageContribution } from "../services/api";
+import { submitRouteContribution, submitImageContribution, ApiError } from "../services/api";
 import AuthService from '../services/authService';
 import { SimpleRouteForm } from './forms/SimpleRouteForm';
 import ImageContributionUpload from './ImageContributionUpload';
@@ -52,6 +52,7 @@ export const RouteContribution: React.FC = () => {
   const [contributionMethod, setContributionMethod] = useState<'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue'>(getDefaultMethod());
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string>('');
+  const [errorType, setErrorType] = useState<'general' | 'duplicate'>('general');
   const [voiceTranscription, setVoiceTranscription] = useState<string>('');
   
   // Store pre-selected bus for AddStopsToRoute component
@@ -101,6 +102,11 @@ export const RouteContribution: React.FC = () => {
     busNumber?: string;
     fromLocationName?: string;
     toLocationName?: string;
+    departureTime?: string;
+    arrivalTime?: string;
+    stops?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }>;
+    intermediateStops?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }>;
+    stopsData?: Array<{ name: string; arrivalTime?: string; departureTime?: string; stopOrder?: number }> | string;
     description?: string;
     file?: File;
   }
@@ -120,24 +126,45 @@ export const RouteContribution: React.FC = () => {
       } else if (!isImage) {
         // For non-image contributions, we need to pass the full route data
         // The data should include all required RouteContribution fields
+        // Convert intermediate stops to the expected format
+        const stopsArray = data.intermediateStops || data.stops || [];
+        const formattedStops = Array.isArray(stopsArray) 
+          ? stopsArray.map((stop, index) => ({
+              name: stop.name,
+              arrivalTime: stop.arrivalTime || '',
+              departureTime: stop.departureTime || '',
+              stopOrder: stop.stopOrder ?? index + 1
+            }))
+          : [];
+        
         await submitRouteContribution({
           busName: data.busName || '',
           busNumber: data.busNumber || '',
           fromLocationName: data.fromLocationName || '',
           toLocationName: data.toLocationName || '',
-          departureTime: '',
-          arrivalTime: '',
-          stops: []
+          departureTime: data.departureTime || '',
+          arrivalTime: data.arrivalTime || '',
+          stops: formattedStops
         });
       }
       setSubmissionStatus('success');
       setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
-    } catch (_error) {
-      // Submission failed
-      setSubmissionStatus('error');
-      setStatusMessage(
-        t('contribution.errorMessage', 'Failed to submit contribution. Please try again.')
-      );
+    } catch (error) {
+      // Check for duplicate submission (409 status)
+      if (error instanceof ApiError && error.status === 409) {
+        setSubmissionStatus('error');
+        setErrorType('duplicate');
+        setStatusMessage(
+          t('contribution.duplicateErrorMessage', 'This route was already submitted. Please modify the details or try a different route.')
+        );
+      } else {
+        // General submission failure
+        setSubmissionStatus('error');
+        setErrorType('general');
+        setStatusMessage(
+          t('contribution.errorMessage', 'Failed to submit contribution. Please try again.')
+        );
+      }
     }
   };
 
@@ -167,9 +194,11 @@ export const RouteContribution: React.FC = () => {
       setSubmissionStatus('success');
       setStatusMessage(t('contribution.voice.successMessage', 'Voice contribution submitted successfully!'));
       setVoiceTranscription('');
-    } catch (_error) {
+    } catch (error) {
       // Voice submission failed
+      console.error('Voice contribution error:', error);
       setSubmissionStatus('error');
+      setErrorType('general');
       setStatusMessage(
         t('contribution.voice.errorMessage', 'Failed to submit voice contribution. Please try again.')
       );
@@ -337,14 +366,22 @@ export const RouteContribution: React.FC = () => {
         )}
         
         {submissionStatus === 'error' && (
-          <div className="premium-status error">
+          <div className={`premium-status error ${errorType === 'duplicate' ? 'duplicate' : ''}`}>
             <div className="status-content">
-              <h3 className="status-title">{t('status.error.title', 'Submission Failed')}</h3>
+              <h3 className="status-title">
+                {errorType === 'duplicate' 
+                  ? t('contribution.duplicateErrorTitle', 'Route Already Submitted')
+                  : t('status.error.title', 'Submission Failed')
+                }
+              </h3>
               <p className="status-message">{statusMessage}</p>
               <div className="error-actions">
-                <button className="action-btn primary" onClick={() => setSubmissionStatus('idle')}>
-                  <span className="btn-icon">🔄</span>
-                  <span>{t('actions.tryAgain', 'Try Again')}</span>
+                <button className="action-btn primary" onClick={() => { setSubmissionStatus('idle'); setErrorType('general'); }}>
+                  <span className="btn-icon">{errorType === 'duplicate' ? '✏️' : '🔄'}</span>
+                  <span>{errorType === 'duplicate' 
+                    ? t('actions.modifyDetails', 'Modify Details')
+                    : t('actions.tryAgain', 'Try Again')
+                  }</span>
                 </button>
               </div>
             </div>

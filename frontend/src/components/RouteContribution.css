@@ -330,7 +330,7 @@
   max-width: 800px;
   margin: 0 auto;
   box-shadow: var(--shadow-medium);
-  overflow: hidden;
+  overflow: visible; /* Changed to allow dropdowns to display outside */
   animation: slideInUp 0.8s ease-out 0.2s both;
   position: relative;
 }
@@ -1164,6 +1164,20 @@
 
 .premium-status.error {
   background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(238, 90, 82, 0.2) 100%);
+}
+
+/* Duplicate submission - warning style (orange) */
+.premium-status.error.duplicate {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.25) 0%, rgba(251, 146, 60, 0.2) 100%);
+  border: 1px solid rgba(234, 88, 12, 0.4);
+}
+
+.premium-status.error.duplicate .status-title {
+  color: #fdba74;
+}
+
+.premium-status.error.duplicate .action-btn.primary {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
 }
 
 .status-content h3 {

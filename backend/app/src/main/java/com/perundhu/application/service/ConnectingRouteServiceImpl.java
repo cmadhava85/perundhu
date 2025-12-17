@@ -22,12 +22,12 @@ import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO.LegDTO;
 import com.perundhu.application.dto.LocationDTO;
 import com.perundhu.application.dto.StopDTO;
+import com.perundhu.application.service.RouteGraphCacheService.BusSegmentData;
+import com.perundhu.application.service.RouteGraphCacheService.RouteGraphData;
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.Stop;
-import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
-import com.perundhu.domain.port.StopRepository;
 
 /**
  * Implementation of ConnectingRouteService using Dijkstra's algorithm.
@@ -58,17 +58,14 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   private static final double DURATION_WEIGHT = 1.0; // Primary: minimize time
   private static final double TRANSFER_PENALTY = 30.0; // 30 minutes penalty per transfer
 
-  private final BusRepository busRepository;
   private final LocationRepository locationRepository;
-  private final StopRepository stopRepository;
+  private final RouteGraphCacheService routeGraphCacheService;
 
   public ConnectingRouteServiceImpl(
-      BusRepository busRepository,
       LocationRepository locationRepository,
-      StopRepository stopRepository) {
-    this.busRepository = busRepository;
+      RouteGraphCacheService routeGraphCacheService) {
     this.locationRepository = locationRepository;
-    this.stopRepository = stopRepository;
+    this.routeGraphCacheService = routeGraphCacheService;
   }
 
   @Override
@@ -100,8 +97,9 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       return List.of();
     }
 
-    // Build the route graph (cached)
-    RouteGraph graph = buildRouteGraph();
+    // Build the route graph (cached via external service - fixes proxy bypass
+    // issue)
+    RouteGraphData graph = routeGraphCacheService.buildRouteGraph();
     log.debug("Graph built in {}ms", System.currentTimeMillis() - startTime);
 
     // Use BFS to find all paths with up to maxTransfers
@@ -155,73 +153,6 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   }
 
   /**
-   * Build a graph representing all bus routes.
-   * Nodes are locations, edges are bus segments between stops.
-   * This method is cached since the route graph changes infrequently.
-   */
-  @Cacheable(value = "routeGraphCache")
-  public RouteGraph buildRouteGraph() {
-    RouteGraph graph = new RouteGraph();
-    long startTime = System.currentTimeMillis();
-
-    List<Bus> allBuses = busRepository.findAll();
-    log.debug("Building route graph from {} buses", allBuses.size());
-
-    // Collect all bus IDs first
-    List<Long> busIds = allBuses.stream()
-        .filter(bus -> bus.id() != null)
-        .map(bus -> bus.id().value())
-        .toList();
-
-    // OPTIMIZED: Load ALL stops for ALL buses in ONE batch query - prevents N+1!
-    // Returns a map of busId -> List<Stop>, already grouped and ordered
-    Map<Long, List<Stop>> stopsByBusId = stopRepository.findStopsByBusIdsGrouped(busIds);
-    log.debug("Loaded stops for {} buses in batch in {}ms", stopsByBusId.size(), System.currentTimeMillis() - startTime);
-
-    // Build map for fast bus lookup
-    Map<Long, Bus> busById = new HashMap<>();
-    for (Bus bus : allBuses) {
-      if (bus.id() != null) {
-        busById.put(bus.id().value(), bus);
-      }
-    }
-
-    for (Long busId : busIds) {
-      Bus bus = busById.get(busId);
-      if (bus == null) continue;
-
-      List<Stop> stops = stopsByBusId.get(busId);
-      if (stops == null || stops.isEmpty()) continue;
-
-      // Add edges between consecutive stops
-      for (int i = 0; i < stops.size() - 1; i++) {
-        Stop fromStop = stops.get(i);
-        Stop toStop = stops.get(i + 1);
-
-        if (fromStop.location() == null || toStop.location() == null)
-          continue;
-        if (fromStop.location().id() == null || toStop.location().id() == null)
-          continue;
-
-        Long fromLocId = fromStop.location().id().value();
-        Long toLocId = toStop.location().id().value();
-
-        // Calculate duration between stops
-        int duration = calculateDuration(fromStop.departureTime(), toStop.arrivalTime());
-
-        graph.addEdge(fromLocId, toLocId, new BusSegment(
-            bus,
-            fromStop,
-            toStop,
-            duration));
-      }
-    }
-
-    log.info("Route graph built with {} nodes in {}ms", graph.getNodeCount(), System.currentTimeMillis() - startTime);
-    return graph;
-  }
-
-  /**
    * Dijkstra's algorithm to find optimal paths from source to destination.
    * Uses priority queue to explore shortest paths first.
    * Returns multiple route options sorted by total weighted cost.
@@ -231,7 +162,7 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
    * - Maximum paths explored limit for early termination
    * - Better state tracking to avoid redundant exploration
    */
-  private List<RoutePath> findPaths(RouteGraph graph, Long fromLocationId, Long toLocationId, int maxTransfers) {
+  private List<RoutePath> findPaths(RouteGraphData graph, Long fromLocationId, Long toLocationId, int maxTransfers) {
     List<RoutePath> validPaths = new ArrayList<>();
     int pathsExplored = 0;
 
@@ -241,7 +172,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
     priorityQueue.add(new PathState(fromLocationId, new ArrayList<>(), new HashSet<>(), 0, 0));
 
-    // Track best cost to reach each location with specific transfer count (for better pruning)
+    // Track best cost to reach each location with specific transfer count (for
+    // better pruning)
     // Key: locationId + "-" + transfers, Value: best weighted cost
     Map<String, Double> bestCostToLocationWithTransfers = new HashMap<>();
     bestCostToLocationWithTransfers.put(fromLocationId + "-0", 0.0);
@@ -271,7 +203,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
         // Early termination: if we have enough routes, stop searching
         if (validPaths.size() >= MAX_RESULTS * 2) {
-          log.debug("Found {} valid paths, terminating early after exploring {} states", validPaths.size(), pathsExplored);
+          log.debug("Found {} valid paths, terminating early after exploring {} states", validPaths.size(),
+              pathsExplored);
           break;
         }
         continue;
@@ -287,7 +220,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         continue;
       }
 
-      // Prune paths that are worse than what we've already found for this location+transfers combo
+      // Prune paths that are worse than what we've already found for this
+      // location+transfers combo
       String stateKey = state.currentLocationId + "-" + state.transfers;
       Double bestCost = bestCostToLocationWithTransfers.get(stateKey);
       if (bestCost != null && state.weightedCost() > bestCost * 1.3) {
@@ -295,10 +229,10 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       }
 
       // Explore outgoing edges
-      List<BusSegment> outgoingSegments = graph.getOutgoingEdges(state.currentLocationId);
-      for (BusSegment segment : outgoingSegments) {
+      List<BusSegmentData> outgoingSegments = graph.getOutgoingEdges(state.currentLocationId);
+      for (BusSegmentData segment : outgoingSegments) {
         // Skip if this would create a cycle in our path
-        if (hasLocationInPath(state.segments, segment.toStop.location().id().value())) {
+        if (hasLocationInPath(state.segments, segment.toStop().location().id().value())) {
           continue;
         }
 
@@ -307,16 +241,16 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         int newTransfers = state.transfers;
 
         if (!state.segments.isEmpty()) {
-          BusSegment lastSegment = state.segments.get(state.segments.size() - 1);
+          BusSegmentData lastSegment = state.segments.get(state.segments.size() - 1);
 
           // Check if this is a transfer (different bus)
-          if (!lastSegment.bus.id().value().equals(segment.bus.id().value())) {
+          if (!lastSegment.bus().id().value().equals(segment.bus().id().value())) {
             if (!isValidTransfer(lastSegment, segment)) {
               continue;
             }
             waitTime = calculateWaitTime(lastSegment, segment);
             newTransfers++;
-            
+
             // Skip if new transfer count exceeds limit
             if (newTransfers > maxTransfers) {
               continue;
@@ -325,11 +259,11 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         }
 
         // Calculate new weighted cost
-        int newDuration = state.totalDuration + segment.duration + waitTime;
+        int newDuration = state.totalDuration + segment.duration() + waitTime;
         double newWeightedCost = calculateWeightedCost(newDuration, newTransfers);
 
         // Only explore if this path is potentially better
-        Long nextLocationId = segment.toStop.location().id().value();
+        Long nextLocationId = segment.toStop().location().id().value();
         String nextStateKey = nextLocationId + "-" + newTransfers;
         Double existingBestCost = bestCostToLocationWithTransfers.get(nextStateKey);
 
@@ -337,11 +271,11 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
           bestCostToLocationWithTransfers.put(nextStateKey, newWeightedCost);
 
           // Add this segment and continue search
-          List<BusSegment> newPath = new ArrayList<>(state.segments);
+          List<BusSegmentData> newPath = new ArrayList<>(state.segments);
           newPath.add(segment);
 
           Set<Long> newBusesUsed = new HashSet<>(state.busesUsed);
-          newBusesUsed.add(segment.bus.id().value());
+          newBusesUsed.add(segment.bus().id().value());
 
           priorityQueue.add(new PathState(
               nextLocationId,
@@ -413,12 +347,12 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
     Set<Long> transferLocations = new HashSet<>();
 
     for (int i = 1; i < path.segments.size(); i++) {
-      BusSegment prev = path.segments.get(i - 1);
-      BusSegment curr = path.segments.get(i);
+      BusSegmentData prev = path.segments.get(i - 1);
+      BusSegmentData curr = path.segments.get(i);
 
       // Check if this is a transfer (different bus)
-      if (!prev.bus.id().value().equals(curr.bus.id().value())) {
-        Long transferLocationId = prev.toStop.location().id().value();
+      if (!prev.bus().id().value().equals(curr.bus().id().value())) {
+        Long transferLocationId = prev.toStop().location().id().value();
         transferLocations.add(transferLocationId);
       }
     }
@@ -445,9 +379,9 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   /**
    * Calculate wait time between two bus segments
    */
-  private int calculateWaitTime(BusSegment arriving, BusSegment departing) {
-    LocalTime arrivalTime = arriving.toStop.arrivalTime();
-    LocalTime departureTime = departing.fromStop.departureTime();
+  private int calculateWaitTime(BusSegmentData arriving, BusSegmentData departing) {
+    LocalTime arrivalTime = arriving.toStop().arrivalTime();
+    LocalTime departureTime = departing.fromStop().departureTime();
 
     if (arrivalTime == null || departureTime == null) {
       return 15; // Default wait time if timing info missing
@@ -493,11 +427,11 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   /**
    * Calculate total distance for a route path
    */
-  private double calculateTotalDistance(List<BusSegment> segments) {
+  private double calculateTotalDistance(List<BusSegmentData> segments) {
     double totalDistance = 0.0;
-    for (BusSegment segment : segments) {
-      Location from = segment.fromStop.location();
-      Location to = segment.toStop.location();
+    for (BusSegmentData segment : segments) {
+      Location from = segment.fromStop().location();
+      Location to = segment.toStop().location();
       totalDistance += calculateHaversineDistance(from, to);
     }
     return totalDistance;
@@ -514,9 +448,9 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   /**
    * Check if a location is already visited in the current path
    */
-  private boolean hasLocationInPath(List<BusSegment> segments, Long locationId) {
-    for (BusSegment segment : segments) {
-      if (segment.fromStop.location().id().value().equals(locationId)) {
+  private boolean hasLocationInPath(List<BusSegmentData> segments, Long locationId) {
+    for (BusSegmentData segment : segments) {
+      if (segment.fromStop().location().id().value().equals(locationId)) {
         return true;
       }
     }
@@ -529,14 +463,14 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
    * 1. The arrival of first bus is before departure of second
    * 2. Wait time is between MIN and MAX transfer wait times
    */
-  private boolean isValidTransfer(BusSegment arriving, BusSegment departing) {
+  private boolean isValidTransfer(BusSegmentData arriving, BusSegmentData departing) {
     // If same bus, no transfer needed
-    if (arriving.bus.id().value().equals(departing.bus.id().value())) {
+    if (arriving.bus().id().value().equals(departing.bus().id().value())) {
       return true;
     }
 
-    LocalTime arrivalTime = arriving.toStop.arrivalTime();
-    LocalTime departureTime = departing.fromStop.departureTime();
+    LocalTime arrivalTime = arriving.toStop().arrivalTime();
+    LocalTime departureTime = departing.fromStop().departureTime();
 
     if (arrivalTime == null || departureTime == null) {
       // Allow if timing info is missing
@@ -586,19 +520,19 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       double totalDistance = calculateTotalDistance(path.segments);
 
       // Group consecutive segments by bus
-      List<List<BusSegment>> groupedByBus = groupSegmentsByBus(path.segments);
+      List<List<BusSegmentData>> groupedByBus = groupSegmentsByBus(path.segments);
 
-      for (List<BusSegment> busSegments : groupedByBus) {
+      for (List<BusSegmentData> busSegments : groupedByBus) {
         if (busSegments.isEmpty())
           continue;
 
-        BusSegment firstSegment = busSegments.get(0);
-        BusSegment lastSegment = busSegments.get(busSegments.size() - 1);
-        Bus bus = firstSegment.bus;
+        BusSegmentData firstSegment = busSegments.get(0);
+        BusSegmentData lastSegment = busSegments.get(busSegments.size() - 1);
+        Bus bus = firstSegment.bus();
 
         // Calculate leg duration
         int legDuration = busSegments.stream()
-            .mapToInt(s -> s.duration)
+            .mapToInt(s -> s.duration())
             .sum();
         totalDuration += legDuration;
 
@@ -607,12 +541,12 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
             bus.id().value(),
             bus.name(),
             bus.number(),
-            firstSegment.fromStop.id() != null ? firstSegment.fromStop.id().value() : null,
-            lastSegment.toStop.id() != null ? lastSegment.toStop.id().value() : null,
-            convertStopToDTO(firstSegment.fromStop),
-            convertStopToDTO(lastSegment.toStop),
-            firstSegment.fromStop.departureTime() != null ? firstSegment.fromStop.departureTime().toString() : null,
-            lastSegment.toStop.arrivalTime() != null ? lastSegment.toStop.arrivalTime().toString() : null,
+            firstSegment.fromStop().id() != null ? firstSegment.fromStop().id().value() : null,
+            lastSegment.toStop().id() != null ? lastSegment.toStop().id().value() : null,
+            convertStopToDTO(firstSegment.fromStop()),
+            convertStopToDTO(lastSegment.toStop()),
+            firstSegment.fromStop().departureTime() != null ? firstSegment.fromStop().departureTime().toString() : null,
+            lastSegment.toStop().arrivalTime() != null ? lastSegment.toStop().arrivalTime().toString() : null,
             legDuration,
             null // Distance not available
         );
@@ -655,16 +589,16 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   /**
    * Group consecutive segments that use the same bus
    */
-  private List<List<BusSegment>> groupSegmentsByBus(List<BusSegment> segments) {
-    List<List<BusSegment>> groups = new ArrayList<>();
+  private List<List<BusSegmentData>> groupSegmentsByBus(List<BusSegmentData> segments) {
+    List<List<BusSegmentData>> groups = new ArrayList<>();
     if (segments.isEmpty())
       return groups;
 
-    List<BusSegment> currentGroup = new ArrayList<>();
+    List<BusSegmentData> currentGroup = new ArrayList<>();
     Long currentBusId = null;
 
-    for (BusSegment segment : segments) {
-      Long segmentBusId = segment.bus.id().value();
+    for (BusSegmentData segment : segments) {
+      Long segmentBusId = segment.bus().id().value();
 
       if (currentBusId == null || currentBusId.equals(segmentBusId)) {
         currentGroup.add(segment);
@@ -713,20 +647,14 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         location.longitude());
   }
 
-  // Inner classes for graph representation
-
-  /**
-   * Represents a segment of a bus route between two stops
-   */
-  private record BusSegment(Bus bus, Stop fromStop, Stop toStop, int duration) {
-  }
+  // Inner classes for path state tracking
 
   /**
    * State for Dijkstra's traversal with cost tracking
    */
   private record PathState(
       Long currentLocationId,
-      List<BusSegment> segments,
+      List<BusSegmentData> segments,
       Set<Long> busesUsed,
       int totalDuration,
       int transfers) {
@@ -738,28 +666,9 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
   /**
    * A complete route path with cost information
    */
-  private record RoutePath(List<BusSegment> segments, int totalDuration, int transfers) {
+  private record RoutePath(List<BusSegmentData> segments, int totalDuration, int transfers) {
     double weightedCost() {
       return (totalDuration * DURATION_WEIGHT) + (transfers * TRANSFER_PENALTY);
-    }
-  }
-
-  /**
-   * Graph structure for route finding
-   */
-  private static class RouteGraph {
-    private final Map<Long, List<BusSegment>> adjacencyList = new HashMap<>();
-
-    void addEdge(Long fromLocationId, Long toLocationId, BusSegment segment) {
-      adjacencyList.computeIfAbsent(fromLocationId, k -> new ArrayList<>()).add(segment);
-    }
-
-    List<BusSegment> getOutgoingEdges(Long locationId) {
-      return adjacencyList.getOrDefault(locationId, List.of());
-    }
-
-    int getNodeCount() {
-      return adjacencyList.size();
     }
   }
 }
