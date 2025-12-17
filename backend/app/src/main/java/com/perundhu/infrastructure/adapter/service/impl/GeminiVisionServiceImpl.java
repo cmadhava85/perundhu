@@ -63,19 +63,19 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   // Using compact pipe-delimited format to minimize token usage
   private static final String BUS_SCHEDULE_PROMPT = """
       You are an expert OCR system specialized in extracting bus schedule information from Tamil Nadu bus timing boards.
-      
+
       TASK: Extract ALL bus routes and schedules from this image with maximum accuracy.
-      
+
       IMAGE ANALYSIS TIPS:
       - Look carefully at ALL rows/columns in the image
       - Bus boards often have faded or low-contrast text - extract everything visible
       - Times may be displayed in various formats (digital, handwritten, printed)
       - Route numbers often include suffixes like UD, D, E, A, B, C (e.g., 166UD, 42A)
       - Board headers usually show the station name (origin)
-      
+
       LANGUAGE HANDLING:
       The text may be in Tamil (தமிழ்), English, or mixed. Always output in English.
-      
+
       Tamil City Name Translations (use these exact spellings):
       | Tamil | English |
       |-------|---------|
@@ -110,7 +110,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       | திருவனந்தபுரம் | Thiruvananthapuram |
       | கொச்சி | Kochi |
       | பாலக்காடு | Palakkad |
-      
+
       Tamil Bus Terms:
       | Tamil | English |
       |-------|---------|
@@ -122,15 +122,15 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       | காலை | Morning/AM |
       | மாலை | Evening/PM |
       | இரவு | Night |
-      
+
       OUTPUT FORMAT (strict - no markdown, no explanation):
-      
+
       ORIGIN:station_name
       TYPE:departure_board|route_schedule|destination_table|arrival_board
       ROUTES:
       bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
       END
-      
+
       FIELD RULES:
       - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.)
       - from_location: Origin station (use ORIGIN if same as board location, or - if not shown)
@@ -139,15 +139,15 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       - dep_time: Departure time(s) in HH:MM 24-hour format, comma-separated for multiple times
       - arr_time: Arrival time(s) in HH:MM format (use - if not shown)
       - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.)
-      
+
       TIME EXTRACTION RULES:
       - Convert 12-hour to 24-hour format (6:00 AM → 06:00, 6:00 PM → 18:00)
       - If time shows seconds (19:41:00), output as HH:MM only (19:41)
       - Tamil time indicators: காலை = AM, மாலை/இரவு = PM
       - Extract ALL times shown for each route, comma-separated
-      
+
       EXAMPLES:
-      
+
       Example 1 - Departure board:
       ORIGIN:ARUPPUKKOTTAI
       TYPE:departure_board
@@ -155,7 +155,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       -|ARUPPUKKOTTAI|MADURAI|-|19:41|-|ORDINARY
       101|ARUPPUKKOTTAI|CHENNAI|Madurai,Trichy|21:00|-|EXPRESS
       END
-      
+
       Example 2 - Full route schedule:
       ORIGIN:MADURAI
       TYPE:route_schedule
@@ -163,7 +163,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       166UD|MADURAI|CHENNAI|Dindigul,Trichy,Villupuram|06:00,14:30|12:00,20:30|EXPRESS
       42A|MADURAI|COIMBATORE|Palani,Pollachi|07:30,15:00|-|ORDINARY
       END
-      
+
       CRITICAL INSTRUCTIONS:
       1. Count all visible routes and extract EVERY one - do not skip
       2. If you cannot read a field clearly, use your best interpretation
@@ -632,11 +632,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     double confidence = calculateConfidence(result, routes);
     result.put("confidence", confidence);
 
-    log.info("Parsed {} times and {} routes from Gemini response (confidence: {})", 
+    log.info("Parsed {} times and {} routes from Gemini response (confidence: {})",
         allTimes.size(), routes.size(), confidence);
     return result;
   }
-  
+
   /**
    * Calculate confidence score based on extracted data quality.
    * Score ranges from 0.0 (very low) to 1.0 (very high).
@@ -644,30 +644,31 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   @SuppressWarnings("unchecked")
   private double calculateConfidence(Map<String, Object> result, List<Map<String, Object>> routes) {
     double score = 0.5; // Base score
-    
+
     // +0.1 if origin is detected
     if (result.get("origin") != null && !result.get("origin").toString().isEmpty()) {
       score += 0.1;
     }
-    
+
     // +0.1 if board type is detected
     if (result.get("boardType") != null && !result.get("boardType").toString().isEmpty()) {
       score += 0.05;
     }
-    
+
     // Evaluate routes quality
     if (routes != null && !routes.isEmpty()) {
       score += 0.1; // At least some routes found
-      
+
       int routesWithTimes = 0;
       int routesWithDestination = 0;
       int routesWithBusType = 0;
       int routesWithRouteNumber = 0;
-      
+
       for (Map<String, Object> route : routes) {
         if (route.get("departureTimes") != null) {
           List<?> times = (List<?>) route.get("departureTimes");
-          if (!times.isEmpty()) routesWithTimes++;
+          if (!times.isEmpty())
+            routesWithTimes++;
         }
         if (route.get("destination") != null && !route.get("destination").toString().equals("-")) {
           routesWithDestination++;
@@ -679,24 +680,32 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
           routesWithRouteNumber++;
         }
       }
-      
+
       int totalRoutes = routes.size();
-      
+
       // Score based on completeness of route data
-      if (routesWithDestination == totalRoutes) score += 0.1;
-      else if (routesWithDestination > totalRoutes / 2) score += 0.05;
-      
-      if (routesWithTimes == totalRoutes) score += 0.1;
-      else if (routesWithTimes > totalRoutes / 2) score += 0.05;
-      
-      if (routesWithBusType > totalRoutes / 2) score += 0.05;
-      if (routesWithRouteNumber > totalRoutes / 2) score += 0.05;
-      
+      if (routesWithDestination == totalRoutes)
+        score += 0.1;
+      else if (routesWithDestination > totalRoutes / 2)
+        score += 0.05;
+
+      if (routesWithTimes == totalRoutes)
+        score += 0.1;
+      else if (routesWithTimes > totalRoutes / 2)
+        score += 0.05;
+
+      if (routesWithBusType > totalRoutes / 2)
+        score += 0.05;
+      if (routesWithRouteNumber > totalRoutes / 2)
+        score += 0.05;
+
       // Bonus for multiple routes (indicates complete extraction)
-      if (totalRoutes >= 5) score += 0.05;
-      if (totalRoutes >= 10) score += 0.05;
+      if (totalRoutes >= 5)
+        score += 0.05;
+      if (totalRoutes >= 10)
+        score += 0.05;
     }
-    
+
     // Cap at 0.95 (never 100% confident with OCR)
     return Math.min(0.95, Math.max(0.1, score));
   }
@@ -714,21 +723,21 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   private String normalizeTime(String time) {
     if (time == null || time.trim().isEmpty())
       return null;
-    
+
     time = time.trim();
-    
+
     // Remove common prefixes/suffixes
     time = time.replaceAll("(?i)^(at|@|time[:\\s]*)\\s*", "");
     time = time.replaceAll("(?i)\\s*(hrs?|hours?)$", "");
-    
+
     // Handle 12-hour format with AM/PM
     boolean isPM = time.toUpperCase().contains("PM");
     boolean isAM = time.toUpperCase().contains("AM");
     time = time.replaceAll("(?i)\\s*(AM|PM|A\\.M\\.|P\\.M\\.)\\s*", "").trim();
-    
+
     // Handle dot separator (e.g., "19.41" -> "19:41")
     time = time.replace(".", ":");
-    
+
     // Handle no separator format (e.g., "1941" -> "19:41")
     if (time.matches("\\d{4}") && !time.contains(":")) {
       time = time.substring(0, 2) + ":" + time.substring(2);
@@ -736,17 +745,17 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       // e.g., "941" -> "9:41"
       time = time.substring(0, 1) + ":" + time.substring(1);
     }
-    
+
     // Strip seconds if present (e.g., "19:41:00" -> "19:41")
     if (time.matches("\\d{1,2}:\\d{2}:\\d{2}")) {
       time = time.substring(0, time.lastIndexOf(':'));
     }
-    
+
     // Pad single digit hour (e.g., "9:30" -> "09:30")
     if (time.matches("\\d:\\d{2}")) {
       time = "0" + time;
     }
-    
+
     // Convert 12-hour to 24-hour format
     if (isPM || isAM) {
       String[] parts = time.split(":");
@@ -760,12 +769,12 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         time = String.format("%02d:%s", hour, parts[1]);
       }
     }
-    
+
     // Final validation - return null if not a valid time
     if (!time.matches("\\d{2}:\\d{2}")) {
       return null;
     }
-    
+
     return time;
   }
 
@@ -774,16 +783,17 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
    * More flexible pattern to catch various formats.
    */
   private boolean looksLikeTime(String str) {
-    if (str == null || str.trim().isEmpty()) return false;
+    if (str == null || str.trim().isEmpty())
+      return false;
     str = str.trim();
-    
+
     // Various time patterns
-    return str.matches("\\d{1,2}[:\\.。]\\d{2}(:\\d{2})?") ||  // HH:MM or HH:MM:SS
-           str.matches("\\d{1,2}[:\\.。]\\d{2}\\s*(AM|PM|am|pm|A\\.M\\.|P\\.M\\.)?") ||  // With AM/PM
-           str.matches("\\d{3,4}") ||  // HHMM or HMM
-           str.matches("\\d{1,2}\\s*(AM|PM|am|pm)");  // Just hour with AM/PM
+    return str.matches("\\d{1,2}[:\\.。]\\d{2}(:\\d{2})?") || // HH:MM or HH:MM:SS
+        str.matches("\\d{1,2}[:\\.。]\\d{2}\\s*(AM|PM|am|pm|A\\.M\\.|P\\.M\\.)?") || // With AM/PM
+        str.matches("\\d{3,4}") || // HHMM or HMM
+        str.matches("\\d{1,2}\\s*(AM|PM|am|pm)"); // Just hour with AM/PM
   }
-  
+
   /**
    * Validate that a time string is a valid 24-hour time.
    * Returns true if the time is between 00:00 and 23:59.
@@ -801,7 +811,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       return false;
     }
   }
-  
+
   /**
    * Validate that a location name is reasonable.
    * Returns true if it looks like a valid location.
@@ -811,50 +821,52 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       return false;
     }
     String trimmed = location.trim();
-    
-    // Length validation: min 2 chars, max 50 chars (longest city name reasonable limit)
+
+    // Length validation: min 2 chars, max 50 chars (longest city name reasonable
+    // limit)
     if (trimmed.length() < 2 || trimmed.length() > 50) {
       return false;
     }
-    
+
     // Reject if purely numeric
     if (trimmed.matches("\\d+")) {
       return false;
     }
-    
+
     // Reject common OCR garbage patterns
     if (isOcrGarbage(trimmed)) {
       return false;
     }
-    
-    // Check for valid characters: letters (English/Tamil), spaces, dots, hyphens, apostrophes
+
+    // Check for valid characters: letters (English/Tamil), spaces, dots, hyphens,
+    // apostrophes
     // Tamil Unicode range: \u0B80-\u0BFF
     if (!trimmed.matches("[A-Za-z\\u0B80-\\u0BFF\\s.\\-']+")) {
       return false;
     }
-    
+
     // After normalization, check if it's a known location
     String normalized = normalizeLocationName(trimmed);
     if (isKnownLocation(normalized)) {
       return true;
     }
-    
+
     // If not in known list, apply heuristic validation
     // Must have at least one vowel (likely a real word)
     String upperNorm = normalized.toUpperCase();
     if (!upperNorm.matches(".*[AEIOU].*") && !trimmed.matches(".*[\\u0B80-\\u0BFF].*")) {
       return false;
     }
-    
+
     // Reject if too many consecutive consonants (likely garbage)
     if (upperNorm.matches(".*[BCDFGHJKLMNPQRSTVWXYZ]{5,}.*")) {
       return false;
     }
-    
+
     // Accept if it passes all checks (could be a new/unknown valid location)
     return true;
   }
-  
+
   /**
    * Check if the string looks like OCR garbage or noise.
    */
@@ -862,43 +874,43 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (text == null || text.isEmpty()) {
       return true;
     }
-    
+
     String upper = text.toUpperCase().trim();
-    
+
     // Common OCR noise patterns
     String[] garbagePatterns = {
-        "^[^A-Za-z\\u0B80-\\u0BFF]+$",  // No letters at all
-        "^[\\W_]+$",                      // Only special characters
-        "^(NA|N/A|NIL|NULL|NONE|UNKNOWN|TBD|N\\.A\\.)$",  // Placeholder values
-        "^[X]+$",                         // Just X's
-        "^[-]+$",                         // Just dashes
-        "^[.]+$",                         // Just dots
-        "^\\d+[A-Z]?$",                   // Mostly numbers with optional letter
-        "^[A-Z]\\d+$",                    // Letter followed by numbers
-        "^(BUS|STAND|STATION|DEPOT|TERMINUS|STOP)$",  // Just suffix words
-        "^(THE|TO|FROM|VIA|AND|OR)$",    // Common prepositions/conjunctions only
-        "^[A-Z]{1,2}$",                   // Single or double letters only (too short)
+        "^[^A-Za-z\\u0B80-\\u0BFF]+$", // No letters at all
+        "^[\\W_]+$", // Only special characters
+        "^(NA|N/A|NIL|NULL|NONE|UNKNOWN|TBD|N\\.A\\.)$", // Placeholder values
+        "^[X]+$", // Just X's
+        "^[-]+$", // Just dashes
+        "^[.]+$", // Just dots
+        "^\\d+[A-Z]?$", // Mostly numbers with optional letter
+        "^[A-Z]\\d+$", // Letter followed by numbers
+        "^(BUS|STAND|STATION|DEPOT|TERMINUS|STOP)$", // Just suffix words
+        "^(THE|TO|FROM|VIA|AND|OR)$", // Common prepositions/conjunctions only
+        "^[A-Z]{1,2}$", // Single or double letters only (too short)
     };
-    
+
     for (String pattern : garbagePatterns) {
       if (upper.matches(pattern)) {
         return true;
       }
     }
-    
+
     // Check for excessive repetition (e.g., "AAAA", "ABAB")
     if (hasExcessiveRepetition(upper)) {
       return true;
     }
-    
+
     // Check for random-looking strings (high entropy)
     if (looksRandom(upper)) {
       return true;
     }
-    
+
     return false;
   }
-  
+
   /**
    * Check if string has excessive character repetition.
    */
@@ -906,12 +918,12 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (text.length() < 4) {
       return false;
     }
-    
+
     // Check for 4+ same consecutive characters
     if (text.matches(".*(.)\\1{3,}.*")) {
       return true;
     }
-    
+
     // Check for repeating 2-char patterns (e.g., "ABAB")
     if (text.length() >= 6) {
       String twoChar = text.substring(0, 2);
@@ -920,22 +932,23 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         return true;
       }
     }
-    
+
     return false;
   }
-  
+
   /**
-   * Check if string looks like random characters (high entropy, no word patterns).
+   * Check if string looks like random characters (high entropy, no word
+   * patterns).
    */
   private boolean looksRandom(String text) {
     if (text.length() < 4) {
       return false;
     }
-    
+
     // Calculate vowel to consonant ratio - valid words usually have 20-40% vowels
     long vowelCount = text.chars().filter(c -> "AEIOU".indexOf(c) >= 0).count();
     double vowelRatio = (double) vowelCount / text.length();
-    
+
     // If very few vowels (except for known abbreviations) or too many vowels
     if (text.length() > 4 && (vowelRatio < 0.1 || vowelRatio > 0.7)) {
       // Exception for known abbreviations like CMBT, KSRTC
@@ -943,10 +956,10 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         return true;
       }
     }
-    
+
     return false;
   }
-  
+
   /**
    * Check if the location is a known valid location name.
    */
@@ -954,16 +967,16 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (normalizedName == null || normalizedName.isEmpty()) {
       return false;
     }
-    
+
     String upper = normalizedName.toUpperCase().trim();
-    
+
     // Known Tamil Nadu and South India locations (comprehensive list)
     Set<String> knownLocations = new HashSet<>(Arrays.asList(
         // Tamil Nadu - Major Cities
         "CHENNAI", "MADURAI", "COIMBATORE", "TRICHY", "TIRUCHIRAPPALLI", "SALEM",
         "TIRUNELVELI", "THANJAVUR", "VELLORE", "ERODE", "TIRUPPUR", "THOOTHUKUDI",
         "DINDIGUL", "KANYAKUMARI", "NAGERCOIL",
-        
+
         // Tamil Nadu - Districts/Towns
         "SIVAKASI", "VIRUDHUNAGAR", "ARUPPUKKOTTAI", "RAMANATHAPURAM", "RAMESWARAM",
         "THENI", "KARUR", "NAMAKKAL", "KUMBAKONAM", "NAGAPATTINAM", "MAYILADUTHURAI",
@@ -971,54 +984,53 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         "VILUPPURAM", "KALLAKURICHI", "TIRUVANNAMALAI", "RANIPET", "TIRUPATTUR",
         "KRISHNAGIRI", "DHARMAPURI", "HOSUR", "OOTY", "COONOOR", "NILGIRIS",
         "POLLACHI", "PALANI", "KODAIKANAL", "KANCHIPURAM", "CHENGALPATTU",
-        
+
         // Chennai Areas
         "KOYAMBEDU", "TAMBARAM", "EGMORE", "BROADWAY", "GUINDY", "ADYAR",
         "THIRUVANMIYUR", "VELACHERY", "PORUR", "AVADI", "AMBATTUR", "POONAMALLEE",
         "MADHAVARAM", "MATHAVARAM", "PERAMBUR", "TONDIARPET", "ROYAPURAM",
-        
-        // Madurai Areas  
+
+        // Madurai Areas
         "PERIYAR", "THIRUMANGALAM", "USILAMPATTI", "MELUR", "VADIPATTI",
-        
+
         // South Tamil Nadu
         "SANKARANKOVIL", "TENKASI", "SRIVILLIPUTHUR", "SATTUR", "KOVILPATTI",
         "OTTAPIDARAM", "TIRUCHENDUR", "KAYALPATTINAM", "KULASEKHARAPATNAM",
         "MANAPPADU", "SRIVAIKUNDAM", "PALAYAMKOTTAI", "AMBASAMUDRAM",
         "CHERANMAHADEVI", "KADAYANALLUR", "RAJAPALAYAM", "WATRAP",
         "SRIPERUMBUDUR", "MARAIMALAINAGAR", "CHIDAMBARAM", "SIRKALI",
-        
+
         // Karnataka
         "BENGALURU", "BANGALORE", "MYSURU", "MYSORE", "MANGALURU", "MANGALORE",
         "HUBBALLI", "HUBLI", "DHARWAD", "BELGAUM", "BELAGAVI", "DAVANGERE",
         "BELLARY", "BALLARI", "TUMKUR", "SHIMOGA", "SHIVAMOGGA", "HASSAN",
         "CHITRADURGA", "KOLAR", "MANDYA", "RAICHUR", "BIDAR", "GULBARGA",
-        
+
         // Kerala
         "THIRUVANANTHAPURAM", "TRIVANDRUM", "KOCHI", "COCHIN", "ERNAKULAM",
         "KOZHIKODE", "CALICUT", "THRISSUR", "TRICHUR", "KOLLAM", "QUILON",
         "ALAPPUZHA", "ALLEPPEY", "PALAKKAD", "PALGHAT", "KANNUR", "CANNANORE",
         "MALAPPURAM", "KOTTAYAM", "PATHANAMTHITTA", "IDUKKI", "WAYANAD",
         "KASARAGOD", "MUNNAR",
-        
+
         // Andhra Pradesh / Telangana
         "HYDERABAD", "SECUNDERABAD", "VISAKHAPATNAM", "VIZAG", "VIJAYAWADA",
         "TIRUPATI", "TIRUMALA", "GUNTUR", "NELLORE", "KURNOOL", "KADAPA",
         "ANANTAPUR", "RAJAHMUNDRY", "KAKINADA", "ELURU", "ONGOLE", "CHITTOOR",
         "WARANGAL", "KARIMNAGAR", "NIZAMABAD", "KHAMMAM", "MAHBUBNAGAR",
-        
+
         // Puducherry
         "PUDUCHERRY", "PONDICHERRY", "KARAIKAL", "MAHE", "YANAM",
-        
+
         // Other Major South Indian Cities
         "MUMBAI", "BOMBAY", "PUNE", "GOA", "PANAJI", "MARGAO",
-        
+
         // Known bus stand codes/abbreviations
-        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC", "APSRTC", "MSRTC"
-    ));
-    
+        "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC", "APSRTC", "MSRTC"));
+
     return knownLocations.contains(upper);
   }
-  
+
   /**
    * Check if the string is a known abbreviation.
    */
@@ -1026,14 +1038,13 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (text == null || text.isEmpty()) {
       return false;
     }
-    
+
     Set<String> abbreviations = new HashSet<>(Arrays.asList(
         "CMBT", "MGBS", "KSRTC", "TNSTC", "SETC", "KPN", "SRM", "VRL", "SRS",
         "APSRTC", "MSRTC", "GSRTC", "RSRTC", "UPSRTC", "OSRTC", "WBTC",
         "TPJ", "MAS", "CHN", "CBE", "MDU", "TEN", "NCL", "TVL", "SLM",
-        "VLR", "ERD", "TPR", "DGL", "KRR", "NMK", "TJR", "RMD", "BZA"
-    ));
-    
+        "VLR", "ERD", "TPR", "DGL", "KRR", "NMK", "TJR", "RMD", "BZA"));
+
     return abbreviations.contains(text.toUpperCase().trim());
   }
 
@@ -1194,9 +1205,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (name == null || name.isEmpty()) {
       return name;
     }
-    
+
     String original = name.trim();
-    
+
     // First, check for Tamil script and convert to English
     // Tamil script range: \u0B80-\u0BFF
     if (original.matches(".*[\\u0B80-\\u0BFF].*")) {
@@ -1207,14 +1218,14 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     }
 
     String upper = original.toUpperCase().trim();
-    
+
     // Remove extra whitespace
     upper = upper.replaceAll("\\s+", " ");
-    
+
     // Remove common noise patterns
-    upper = upper.replaceAll("\\(.*?\\)", "").trim();  // Remove parenthetical info
-    upper = upper.replaceAll("\\[.*?\\]", "").trim();  // Remove bracket info
-    upper = upper.replaceAll("\\d+$", "").trim();      // Remove trailing numbers
+    upper = upper.replaceAll("\\(.*?\\)", "").trim(); // Remove parenthetical info
+    upper = upper.replaceAll("\\[.*?\\]", "").trim(); // Remove bracket info
+    upper = upper.replaceAll("\\d+$", "").trim(); // Remove trailing numbers
 
     // Strip common suffixes (order matters - longer patterns first)
     String[] suffixesToRemove = {
@@ -1232,7 +1243,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         break;
       }
     }
-    
+
     // Strip common prefixes
     String[] prefixesToRemove = {
         "NEW ", "OLD ", "CENTRAL ", "MAIN "
@@ -1257,7 +1268,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
     // Comprehensive map of variations to standard names (Tamil Nadu focus)
     Map<String, String> nameMap = new HashMap<>();
-    
+
     // Major cities - alternate spellings
     nameMap.put("BANGALORE", "BENGALURU");
     nameMap.put("BANGLORE", "BENGALURU");
@@ -1269,7 +1280,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("CHNAI", "CHENNAI");
     nameMap.put("BOMBAY", "MUMBAI");
     nameMap.put("CALCUTTA", "KOLKATA");
-    
+
     // Tamil Nadu cities
     nameMap.put("TIRUCHIRAPPALLI", "TRICHY");
     nameMap.put("TIRUCHIRAPALLI", "TRICHY");
@@ -1291,7 +1302,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("NAGERCOIL", "NAGERCOIL");
     nameMap.put("NAGARCOIL", "NAGERCOIL");
     nameMap.put("NCL", "NAGERCOIL");
-    
+
     // South Tamil Nadu
     nameMap.put("ARUPPUKOTTAI", "ARUPPUKKOTTAI");
     nameMap.put("ARUPPUKOTAI", "ARUPPUKKOTTAI");
@@ -1307,7 +1318,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("RMD", "RAMANATHAPURAM");
     nameMap.put("RAMESHWARAM", "RAMESWARAM");
     nameMap.put("RAMESVARAM", "RAMESWARAM");
-    
+
     // Central Tamil Nadu
     nameMap.put("DINDUGAL", "DINDIGUL");
     nameMap.put("DINDIKAL", "DINDIGUL");
@@ -1326,7 +1337,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("KUMBAKONAM", "KUMBAKONAM");
     nameMap.put("KUMBKONAM", "KUMBAKONAM");
     nameMap.put("KMB", "KUMBAKONAM");
-    
+
     // North Tamil Nadu
     nameMap.put("VELLORE", "VELLORE");
     nameMap.put("VLR", "VELLORE");
@@ -1339,7 +1350,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("PONDICHERRY", "PUDUCHERRY");
     nameMap.put("PONDY", "PUDUCHERRY");
     nameMap.put("PDY", "PUDUCHERRY");
-    
+
     // Chennai areas
     nameMap.put("MATHAVARAMBUSSTAND", "MATHAVARAM");
     nameMap.put("MATHAVARAMBUSSTATION", "MATHAVARAM");
@@ -1351,7 +1362,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("EGM", "EGMORE");
     nameMap.put("BROADWAY", "BROADWAY");
     nameMap.put("GUINDY", "GUINDY");
-    
+
     // Karnataka
     nameMap.put("MYSORE", "MYSURU");
     nameMap.put("MYSUR", "MYSURU");
@@ -1361,7 +1372,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("MNG", "MANGALURU");
     nameMap.put("HUBLI", "HUBBALLI");
     nameMap.put("DHARWAD", "DHARWAD");
-    
+
     // Kerala
     nameMap.put("TRIVANDRUM", "THIRUVANANTHAPURAM");
     nameMap.put("TVM", "THIRUVANANTHAPURAM");
@@ -1377,7 +1388,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("TRICHUR", "THRISSUR");
     nameMap.put("TCR", "THRISSUR");
     nameMap.put("CANNANORE", "KANNUR");
-    
+
     // Andhra Pradesh / Telangana
     nameMap.put("HYDRABAD", "HYDERABAD");
     nameMap.put("HYD", "HYDERABAD");
@@ -1389,7 +1400,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     nameMap.put("BZA", "VIJAYAWADA");
     nameMap.put("TIRUPATHI", "TIRUPATI");
     nameMap.put("TIRUMALA", "TIRUPATI");
-    
+
     return nameMap.getOrDefault(upper, upper);
   }
 
@@ -1401,12 +1412,12 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (tamilName == null || tamilName.isEmpty()) {
       return tamilName;
     }
-    
+
     String trimmed = tamilName.trim();
-    
+
     // Tamil to English city name mappings
     Map<String, String> tamilToEnglish = new HashMap<>();
-    
+
     // Major cities
     tamilToEnglish.put("சென்னை", "CHENNAI");
     tamilToEnglish.put("மதுரை", "MADURAI");
@@ -1422,7 +1433,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("வேலூர்", "VELLORE");
     tamilToEnglish.put("ஈரோடு", "ERODE");
     tamilToEnglish.put("திருப்பூர்", "TIRUPPUR");
-    
+
     // South Tamil Nadu
     tamilToEnglish.put("சிவகாசி", "SIVAKASI");
     tamilToEnglish.put("விருதுநகர்", "VIRUDHUNAGAR");
@@ -1434,7 +1445,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("கன்னியாகுமரி", "KANYAKUMARI");
     tamilToEnglish.put("நாகர்கோவில்", "NAGERCOIL");
     tamilToEnglish.put("நாகர்கோயில்", "NAGERCOIL");
-    
+
     // Central Tamil Nadu
     tamilToEnglish.put("திண்டுக்கல்", "DINDIGUL");
     tamilToEnglish.put("தேனி", "THENI");
@@ -1444,7 +1455,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("புதுக்கோட்டை", "PUDUKKOTTAI");
     tamilToEnglish.put("பெரம்பலூர்", "PERAMBALUR");
     tamilToEnglish.put("அரியலூர்", "ARIYALUR");
-    
+
     // North Tamil Nadu
     tamilToEnglish.put("காஞ்சிபுரம்", "KANCHIPURAM");
     tamilToEnglish.put("திருவண்ணாமலை", "TIRUVANNAMALAI");
@@ -1455,7 +1466,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("செங்கல்பட்டு", "CHENGALPATTU");
     tamilToEnglish.put("திருவள்ளூர்", "TIRUVALLUR");
     tamilToEnglish.put("ஓசூர்", "HOSUR");
-    
+
     // Chennai areas
     tamilToEnglish.put("கோயம்பேடு", "KOYAMBEDU");
     tamilToEnglish.put("தாம்பரம்", "TAMBARAM");
@@ -1463,13 +1474,13 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("மத்தவரம்", "MATHAVARAM");
     tamilToEnglish.put("குரோம்பேட்டை", "CHROMEPET");
     tamilToEnglish.put("பல்லாவரம்", "PALLAVARAM");
-    
+
     // Coastal towns
     tamilToEnglish.put("நாகப்பட்டினம்", "NAGAPATTINAM");
     tamilToEnglish.put("காரைக்கால்", "KARAIKAL");
     tamilToEnglish.put("வேதாரண்யம்", "VEDARANYAM");
     tamilToEnglish.put("சிதம்பரம்", "CHIDAMBARAM");
-    
+
     // Other important towns
     tamilToEnglish.put("பொள்ளாச்சி", "POLLACHI");
     tamilToEnglish.put("பாளையங்கோட்டை", "PALAYAMKOTTAI");
@@ -1479,7 +1490,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("ஊட்டி", "OOTY");
     tamilToEnglish.put("கொடைக்கானல்", "KODAIKANAL");
     tamilToEnglish.put("யாழ்ப்பாணம்", "JAFFNA");
-    
+
     // Other states - common destinations
     tamilToEnglish.put("பெங்களூர்", "BENGALURU");
     tamilToEnglish.put("பெங்களூரு", "BENGALURU");
@@ -1491,7 +1502,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("திருமலை", "TIRUPATI");
     tamilToEnglish.put("புதுச்சேரி", "PUDUCHERRY");
     tamilToEnglish.put("பாண்டிச்சேரி", "PUDUCHERRY");
-    
+
     // Kerala cities
     tamilToEnglish.put("கேரளா", "KERALA");
     tamilToEnglish.put("திருவனந்தபுரம்", "THIRUVANANTHAPURAM");
@@ -1502,25 +1513,26 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     tamilToEnglish.put("கண்ணூர்", "KANNUR");
     tamilToEnglish.put("கொல்லம்", "KOLLAM");
     tamilToEnglish.put("ஆலப்புழா", "ALAPPUZHA");
-    
+
     // Check for exact match first
     if (tamilToEnglish.containsKey(trimmed)) {
       return tamilToEnglish.get(trimmed);
     }
-    
-    // Check if the input contains any Tamil city name (for compound names like "மதுரை பேருந்து நிலையம்")
+
+    // Check if the input contains any Tamil city name (for compound names like
+    // "மதுரை பேருந்து நிலையம்")
     for (Map.Entry<String, String> entry : tamilToEnglish.entrySet()) {
       if (trimmed.contains(entry.getKey())) {
         return entry.getValue();
       }
     }
-    
+
     // Remove Tamil suffixes for bus station/stand
     String[] tamilSuffixes = {
-        " பேருந்து நிலையம்",  // Bus Station
-        " பஸ் ஸ்டாண்ட்",      // Bus Stand
-        " நிலையம்",          // Station
-        " மையம்",            // Center
+        " பேருந்து நிலையம்", // Bus Station
+        " பஸ் ஸ்டாண்ட்", // Bus Stand
+        " நிலையம்", // Station
+        " மையம்", // Center
         "பேருந்து நிலையம்",
         "பஸ் ஸ்டாண்ட்",
         "நிலையம்"
@@ -1533,7 +1545,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         }
       }
     }
-    
+
     return tamilName; // Return original if no match found
   }
 

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perundhu - Local Business Partnership Mockup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Perundhu Design Tokens */
+      --primary: #0ea5e9;
+      --primary-600: #0284c7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-900: #0f172a;
+      
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: var(--space-4);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      color: var(--gray-900);
+      font-size: 28px;
+      margin-bottom: var(--space-2);
+    }
+
+    .header p {
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+
+    .search-info {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-info .route {
+      flex: 1;
+      font-weight: 600;
+      color: var(--gray-900);
+      font-size: 16px;
+    }
+
+    .results-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* Regular Bus Card */
+    .bus-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--gray-200);
+    }
+
+    .bus-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: var(--space-3);
+    }
+
+    /* LOCAL BUSINESS CARD */
+    .local-business-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 2px solid #86efac;
+      border-radius: var(--radius-lg);
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .local-business-card:hover {
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .business-header {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      padding: var(--space-3);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .business-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+    }
+
+    .business-content {
+      padding: var(--space-4);
+    }
+
+    .business-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .business-logo {
+      font-size: 32px;
+    }
+
+    .business-description {
+      color: var(--gray-700);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+
+    .business-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .business-feature {
+      background: white;
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      border: 1px solid #bbf7d0;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 24px;
+      margin-bottom: var(--space-2);
+    }
+
+    .feature-label {
+      font-size: 12px;
+      color: var(--gray-600);
+      font-weight: 600;
+    }
+
+    .feature-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-top: 2px;
+    }
+
+    .location-info {
+      background: white;
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      border: 1px solid #bbf7d0;
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 13px;
+      color: var(--gray-700);
+    }
+
+    .location-icon {
+      color: #ef4444;
+      font-size: 18px;
+    }
+
+    .business-cta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+
+    .cta-button {
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .cta-button.primary {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      color: white;
+    }
+
+    .cta-button.secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .partner-info {
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px dashed rgba(0, 0, 0, 0.1);
+      font-size: 11px;
+      color: var(--gray-600);
+      text-align: center;
+    }
+
+    /* COMPACT LOCAL BUSINESS CARD (Alternative style) */
+    .local-business-compact {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #fbbf24;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.2);
+      position: relative;
+    }
+
+    .compact-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #f59e0b;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .business-icon-large {
+      font-size: 48px;
+      flex-shrink: 0;
+    }
+
+    .compact-content {
+      flex: 1;
+    }
+
+    .compact-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: var(--space-2);
+    }
+
+    .compact-offer {
+      color: #92400e;
+      font-size: 13px;
+      margin-bottom: var(--space-3);
+      font-weight: 500;
+    }
+
+    .compact-cta {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .compact-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: var(--space-2);
+      }
+
+      .header {
+        padding: var(--space-4);
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .business-title {
+        font-size: 18px;
+      }
+
+      .business-features {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .business-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .local-business-compact {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .business-icon-large {
+        font-size: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .business-features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🏪 Local Business Partnership Mockup</h1>
+      <p>Location-aware business promotions near bus stops</p>
+    </div>
+
+    <!-- Search Info -->
+    <div class="search-info">
+      <div class="route">
+        <span style="color: #64748b;">From:</span> Chennai (Koyambedu) 
+        <span style="margin: 0 8px;">→</span> 
+        <span style="color: #64748b;">To:</span> Coimbatore
+      </div>
+    </div>
+
+    <!-- Results List -->
+    <div class="results-list">
+      
+      <!-- Regular Bus Card -->
+      <div class="bus-card">
+        <div class="bus-number">🚌 150 - Express (2h 30min) - ₹180</div>
+        <div style="color: #64748b; font-size: 14px;">Departure: 06:00 AM • Via Salem</div>
+      </div>
+
+      <!-- LOCAL BUSINESS CARD - Full Featured -->
+      <div class="local-business-card">
+        <div class="business-header">
+          <div class="business-badge">📍 Near Koyambedu Bus Stand</div>
+          <div class="business-badge">Partner Offer</div>
+        </div>
+        
+        <div class="business-content">
+          <div class="business-title">
+            <span class="business-logo">🏨</span>
+            Hotel Saravana Bhavan
+          </div>
+
+          <div class="business-description">
+            Traditional South Indian breakfast & meals. Perfect stop before your journey! 
+            Open 24/7 • Pure Veg • AC & Non-AC seating
+          </div>
+
+          <div class="business-features">
+            <div class="business-feature">
+              <div class="feature-icon">🎟️</div>
+              <div class="feature-label">Special Offer</div>
+              <div class="feature-value">15% Off</div>
+            </div>
+            <div class="business-feature">
+              <div class="feature-icon">⏱️</div>
+              <div class="feature-label">Wait Time</div>
+              <div class="feature-value">5-10 min</div>
+            </div>
+            <div class="business-feature">
+              <div class="feature-icon">⭐</div>
+              <div class="feature-label">Rating</div>
+              <div class="feature-value">4.5/5</div>
+            </div>
+          </div>
+
+          <div class="location-info">
+            <span class="location-icon">📍</span>
+            <span><strong>50 meters</strong> from Koyambedu Platform 12 • 2 min walk</span>
+          </div>
+
+          <div class="business-cta">
+            <button class="cta-button primary">Get 15% Off Code</button>
+            <button class="cta-button secondary">View Menu</button>
+          </div>
+
+          <div class="partner-info">
+            Trusted Perundhu Partner • Show this app at counter
+          </div>
+        </div>
+      </div>
+
+      <!-- Regular Bus Card -->
+      <div class="bus-card">
+        <div class="bus-number">🚌 151A - Ordinary (3h 0min) - ₹120</div>
+        <div style="color: #64748b; font-size: 14px;">Departure: 06:30 AM • Via Erode</div>
+      </div>
+
+      <!-- COMPACT LOCAL BUSINESS CARD -->
+      <div class="local-business-compact">
+        <div class="compact-badge">Partner</div>
+        <div class="business-icon-large">💼</div>
+        <div class="compact-content">
+          <div class="compact-title">Luggage Storage - Safe & Secure</div>
+          <div class="compact-offer">
+            🎯 Store your bags for ₹20/day while you explore Chennai. 
+            24/7 CCTV monitored. Just 3 min from bus stand.
+          </div>
+          <button class="compact-cta">Book Storage Now</button>
+        </div>
+      </div>
+
+      <!-- Regular Bus Card -->
+      <div class="bus-card">
+        <div class="bus-number">🚌 152 - Express (2h 45min) - ₹190</div>
+        <div style="color: #64748b; font-size: 14px;">Departure: 07:00 AM • Via Tiruppur</div>
+      </div>
+
+      <!-- COMPACT LOCAL BUSINESS CARD 2 -->
+      <div class="local-business-compact">
+        <div class="compact-badge">Travel Partner</div>
+        <div class="business-icon-large">🛵</div>
+        <div class="compact-content">
+          <div class="compact-title">Ola/Uber to Coimbatore Junction</div>
+          <div class="compact-offer">
+            🚖 Pre-book your ride from Coimbatore bus stand to your destination. 
+            Flat 20% off for Perundhu users.
+          </div>
+          <button class="compact-cta">Get Promo Code</button>
+        </div>
+      </div>
+
+      <!-- LOCAL BUSINESS CARD - Arrival Location -->
+      <div class="local-business-card">
+        <div class="business-header">
+          <div class="business-badge">📍 Near Coimbatore Bus Stand</div>
+          <div class="business-badge">Destination Partner</div>
+        </div>
+        
+        <div class="business-content">
+          <div class="business-title">
+            <span class="business-logo">🏨</span>
+            Budget Stay Inn
+          </div>
+
+          <div class="business-description">
+            Just arrived? Clean, affordable rooms near Coimbatore bus stand. 
+            Free WiFi • Hot water • Parking available
+          </div>
+
+          <div class="business-features">
+            <div class="business-feature">
+              <div class="feature-icon">💰</div>
+              <div class="feature-label">Price/Night</div>
+              <div class="feature-value">₹899</div>
+            </div>
+            <div class="business-feature">
+              <div class="feature-icon">🚶</div>
+              <div class="feature-label">Distance</div>
+              <div class="feature-value">200m</div>
+            </div>
+            <div class="business-feature">
+              <div class="feature-icon">⭐</div>
+              <div class="feature-label">Google Rating</div>
+              <div class="feature-value">4.2/5</div>
+            </div>
+          </div>
+
+          <div class="location-info">
+            <span class="location-icon">📍</span>
+            <span><strong>200 meters</strong> from Coimbatore Central Bus Stand • 5 min walk</span>
+          </div>
+
+          <div class="business-cta">
+            <button class="cta-button primary">Check Availability</button>
+            <button class="cta-button secondary">Call Now</button>
+          </div>
+
+          <div class="partner-info">
+            Verified Partner • Exclusive 10% discount for Perundhu travelers
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

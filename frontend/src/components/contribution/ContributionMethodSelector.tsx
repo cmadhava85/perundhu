@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { featureFlags } from "../../config/featureFlags";
+import { useFeatureFlags } from "../../contexts/FeatureFlagsContext";
 import './ContributionMethodSelector.css';
 
 interface ContributionMethodSelectorProps {
@@ -13,6 +13,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
   onMethodChange
 }) => {
   const { t } = useTranslation();
+  const { flags } = useFeatureFlags();
 
   const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue') => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -24,7 +25,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
   return (
     <div className="compact-method-selector">
       <div className="method-chips" aria-label={t('method.selectMethod', 'Select contribution method')}>
-        {featureFlags.enableManualContribution && (
+        {flags.enableManualContribution && (
           <button 
             className={`method-chip ${selectedMethod === 'manual' ? 'active' : ''}`}
             onClick={() => onMethodChange('manual')}
@@ -38,7 +39,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           </button>
         )}
 
-        {featureFlags.enableVoiceContribution && (
+        {flags.enableVoiceContribution && (
           <button 
             className={`method-chip ${selectedMethod === 'voice' ? 'active' : ''}`}
             onClick={() => onMethodChange('voice')}
@@ -51,7 +52,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           </button>
         )}
 
-        {featureFlags.enableImageContribution && (
+        {flags.enableImageContribution && (
           <button 
             className={`method-chip ${selectedMethod === 'image' ? 'active' : ''}`}
             onClick={() => onMethodChange('image')}
@@ -64,7 +65,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           </button>
         )}
 
-        {featureFlags.enablePasteContribution && (
+        {flags.enablePasteContribution && (
           <button 
             className={`method-chip ${selectedMethod === 'paste' ? 'active' : ''}`}
             onClick={() => onMethodChange('paste')}
@@ -78,7 +79,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           </button>
         )}
 
-        {featureFlags.enableRouteVerification && (
+        {flags.enableRouteVerification && (
           <button 
             className={`method-chip ${selectedMethod === 'verify' ? 'active' : ''}`}
             onClick={() => onMethodChange('verify')}
@@ -91,31 +92,8 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
           </button>
         )}
 
-        {featureFlags.enableAddStops && (
-          <button 
-            className={`method-chip ${selectedMethod === 'addStops' ? 'active' : ''}`}
-            onClick={() => onMethodChange('addStops')}
-            onKeyDown={handleKeyDown('addStops')}
-            aria-pressed={selectedMethod === 'addStops'}
-            type="button"
-          >
-            <span className="chip-icon">📍</span>
-            <span className="chip-label">{t('method.addStops.short', 'Stops')}</span>
-          </button>
-        )}
-
-        {featureFlags.enableReportIssue && (
-          <button 
-            className={`method-chip ${selectedMethod === 'reportIssue' ? 'active' : ''}`}
-            onClick={() => onMethodChange('reportIssue')}
-            onKeyDown={handleKeyDown('reportIssue')}
-            aria-pressed={selectedMethod === 'reportIssue'}
-            type="button"
-          >
-            <span className="chip-icon">🚨</span>
-            <span className="chip-label">{t('method.reportIssue.short', 'Report')}</span>
-          </button>
-        )}
+        {/* Note: enableAddStops and enableReportIssue are for search result actions, not contribution methods */}
+        {/* They should not appear here - they belong on route search result cards */}
       </div>
     </div>
   );

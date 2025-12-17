@@ -721,7 +721,8 @@ class GeminiVisionServiceImplTest {
     @Test
     @DisplayName("Should not flag normal words")
     void shouldNotFlagNormalWords() throws Exception {
-      // Note: looksRandom() expects uppercase input as it's called after toUpperCase()
+      // Note: looksRandom() expects uppercase input as it's called after
+      // toUpperCase()
       assertThat(invokeLooksRandom("CHENNAI")).isFalse();
       assertThat(invokeLooksRandom("MADURAI")).isFalse();
       assertThat(invokeLooksRandom("COIMBATORE")).isFalse();

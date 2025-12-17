@@ -26,13 +26,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
   buses = [],
   onBusClick,
   className = 'map-container',
-  style = { height: '450px', width: '100%' },
+  style = { height: '350px', width: '100%', minHeight: '300px' },
   mapId = 'osm-map'
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const isInitializingRef = useRef<boolean>(false);
   const initializedForRef = useRef<string>('');
+  const resizeHandlerRef = useRef<(() => void) | null>(null);
 
   // Memoize stable keys to prevent unnecessary re-renders
   const stableMapKey = useMemo(() => {
@@ -317,16 +318,35 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
             mapInstanceRef.current = map;
             initializedForRef.current = stableMapKey;
             
-            // Ensure proper sizing after initialization
-            setTimeout(() => {
-              if (map) {
-                try {
-                  map.invalidateSize();
-                } catch (_error) {
-                  // Error invalidating map size
+            // Ensure proper sizing after initialization with multiple attempts for mobile
+            const resizeAttempts = [100, 300, 500, 1000];
+            resizeAttempts.forEach((delay) => {
+              setTimeout(() => {
+                if (map && mapRef.current) {
+                  try {
+                    map.invalidateSize({ animate: false, pan: false });
+                  } catch (_error) {
+                    // Error invalidating map size
+                  }
                 }
+              }, delay);
+            });
+            
+            // Also handle orientation change on mobile
+            const handleResize = () => {
+              if (map) {
+                setTimeout(() => {
+                  try {
+                    map.invalidateSize({ animate: false, pan: false });
+                  } catch (_error) {
+                    // Error during resize
+                  }
+                }, 100);
               }
-            }, 100);
+            };
+            resizeHandlerRef.current = handleResize;
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('orientationchange', handleResize);
           }
         }
       } catch (_error) {
@@ -338,9 +358,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
 
     initializeMap();
 
-    // Cleanup function - only cleanup when component unmounts, not on every re-render
+    // Cleanup function - remove event listeners when effect re-runs
     return () => {
-      // Don't cleanup on every effect run, only on unmount
+      if (resizeHandlerRef.current) {
+        window.removeEventListener('resize', resizeHandlerRef.current);
+        window.removeEventListener('orientationchange', resizeHandlerRef.current);
+      }
     };
   }, [stableMapKey, mapId]);
 
@@ -348,6 +371,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
   useEffect(() => {
     return () => {
       isInitializingRef.current = false;
+      if (resizeHandlerRef.current) {
+        window.removeEventListener('resize', resizeHandlerRef.current);
+        window.removeEventListener('orientationchange', resizeHandlerRef.current);
+        resizeHandlerRef.current = null;
+      }
       if (mapInstanceRef.current) {
         try {
           mapInstanceRef.current.remove();

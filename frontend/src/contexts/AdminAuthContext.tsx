@@ -64,6 +64,10 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
       const credentials = btoa(`${username}:${password}`);
       const authHeader = `Basic ${credentials}`;
 
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
       // Validate credentials against backend
       const response = await fetch(`${getApiBaseUrl()}/api/admin/contributions/routes/pending`, {
         method: 'GET',
@@ -72,7 +76,11 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
           'Content-Type': 'application/json',
           'User-Agent': 'Mozilla/5.0',
         },
+        signal: controller.signal,
+        credentials: 'include', // Include cookies for CORS
       });
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         // Store credentials in session storage (not localStorage for security)
@@ -85,14 +93,24 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
         setError('Invalid username or password');
         setIsLoading(false);
         return false;
+      } else if (response.status === 403) {
+        setError('Access forbidden. Please check your credentials.');
+        setIsLoading(false);
+        return false;
       } else {
-        setError(`Authentication failed: ${response.statusText}`);
+        setError(`Authentication failed: ${response.statusText || 'Unknown error'}`);
         setIsLoading(false);
         return false;
       }
     } catch (err) {
       console.error('Admin login error:', err);
-      setError('Unable to connect to server. Please try again.');
+      if (err instanceof Error && err.name === 'AbortError') {
+        setError('Connection timed out. Please check your network and try again.');
+      } else if (err instanceof TypeError && err.message.includes('Failed to fetch')) {
+        setError('Unable to connect to server. Please check if the server is running and CORS is configured.');
+      } else {
+        setError('Unable to connect to server. Please try again.');
+      }
       setIsLoading(false);
       return false;
     }

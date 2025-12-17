@@ -14,26 +14,65 @@ applyTo: 'backend/**/*.java'
 - **Testing**: JUnit 5, Mockito, ArchUnit 1.2.1
 - **Architecture**: Hexagonal/Ports & Adapters Pattern
 
+## ⚠️ CRITICAL: New Module Creation Checklist
+
+**BEFORE creating any new backend module, ALWAYS:**
+
+1. **Read architecture docs first**
+   - Check `HEXAGONAL_ARCHITECTURE_GUIDELINES.md`
+   - Review `domain/port/README.md`
+
+2. **Check existing patterns**
+   ```bash
+   ls backend/.../domain/port/           # Existing port interfaces
+   ls backend/.../infrastructure/adapter/ # Existing adapters
+   ```
+
+3. **Create files in this ORDER:**
+   ```
+   1. Domain Model      → domain/model/EntityName.java (pure Java, immutable)
+   2. Domain Port       → domain/port/EntityNamePort.java (interface)
+   3. JPA Entity        → infrastructure/persistence/entity/EntityNameJpaEntity.java
+   4. JPA Repository    → infrastructure/persistence/repository/EntityNameJpaRepository.java
+   5. Port Adapter      → infrastructure/adapter/EntityNamePortAdapter.java (@Component)
+   6. Application Svc   → application/service/EntityNameService.java (uses PORT only)
+   7. REST Controller   → adapter/in/rest/EntityNameController.java
+   8. Tests             → Test files for service (mock port, not JPA repo)
+   ```
+
+4. **Validate before committing**
+   ```bash
+   ./gradlew test --tests HexagonalArchitectureTest
+   ```
+
 ## Hexagonal Architecture Rules (ENFORCED BY ARCHUNIT)
 
-### Layer Structure
+### Actual Layer Structure (Current Codebase)
 ```
 com.perundhu/
-├── domain/           # Core business logic (NO external dependencies)
-│   ├── model/        # Business entities and value objects
-│   ├── port/         # Interfaces for external dependencies
-│   └── exception/    # Domain-specific exceptions
-├── application/      # Use case orchestration (depends ONLY on domain)
-│   ├── service/      # Use case implementations
-│   └── dto/          # Data transfer objects
-└── infrastructure/   # Technical implementations (depends on domain + application)
-    ├── persistence/  # Database adapters
-    │   ├── entity/   # JPA entities (NOT in domain)
-    │   ├── jpa/      # JPA repositories
-    │   └── adapter/  # Repository adapters implementing domain ports
-    ├── adapter/      # External service adapters
-    ├── config/       # Spring configuration
-    └── security/     # Security configuration
+├── domain/                    # Core business logic (NO external dependencies)
+│   ├── model/                 # Business entities (SystemSetting, Bus, Stop, etc.)
+│   ├── port/                  # Output port interfaces (BusRepository, SystemSettingPort, etc.)
+│   │   ├── input/             # Input port interfaces
+│   │   └── output/            # Output port interfaces (alternative location)
+│   ├── service/               # Domain service interfaces
+│   └── exception/             # Domain-specific exceptions
+├── application/               # Use case orchestration (depends ONLY on domain)
+│   ├── service/               # Use case implementations (uses domain ports)
+│   └── dto/                   # Data transfer objects
+├── adapter/                   # Inbound adapters (REST controllers)
+│   └── in/rest/               # REST API controllers
+│       └── dto/               # Request/Response DTOs
+└── infrastructure/            # Technical implementations
+    ├── persistence/           # Database concerns
+    │   ├── entity/            # JPA entities (*JpaEntity.java)
+    │   └── repository/        # JPA repositories (*JpaRepository.java)
+    ├── adapter/               # Port adapter implementations (*PortAdapter.java)
+    │   ├── geocoding/         # Geocoding service adapters
+    │   ├── output/            # Other output adapters
+    │   └── service/           # External service adapters
+    ├── config/                # Spring configuration
+    └── security/              # Security configuration
 ```
 
 ### ❌ VIOLATIONS THAT WILL FAIL ARCHUNIT TESTS
@@ -194,35 +233,76 @@ public class HexagonalConfig {
 3. **Pure Domain**: No framework annotations in domain layer
 4. **Testability**: Business logic testable without infrastructure
 
-## Naming Conventions
+## Naming Conventions (ACTUAL PATTERNS IN CODEBASE)
 
-### Domain Layer
-- **Models**: `Bus`, `Stop`, `Location`, `RouteContribution`
-- **Value Objects**: `BusId`, `StopId`, `LocationId` (immutable)
-- **Ports**: `*Repository`, `*Service`, `*OutputPort` (interfaces)
-- **Exceptions**: `*Exception` in `domain.exception`
+### Domain Layer (`com.perundhu.domain`)
+| Type | Pattern | Examples |
+|------|---------|----------|
+| **Models** | `EntityName` | `Bus`, `Stop`, `SystemSetting`, `RouteContribution` |
+| **Ports** | `EntityNamePort` or `EntityNameRepository` | `SystemSettingPort`, `BusRepository`, `RouteContributionPort` |
+| **Value Objects** | `EntityNameId` | `BusId`, `StopId`, `LocationId` (immutable) |
+| **Exceptions** | `*Exception` | In `domain/exception/` |
 
-### Infrastructure Layer
-- **JPA Entities**: `*JpaEntity` in `infrastructure.persistence.entity`
-- **JPA Repos**: `*JpaRepository` in `infrastructure.persistence.jpa`
-- **Adapters**: `*Adapter`, `*RepositoryAdapter` in `infrastructure.persistence.adapter`
-- **Configs**: `*Config` in `infrastructure.config`
+### Infrastructure Layer (`com.perundhu.infrastructure`)
+| Type | Pattern | Location | Examples |
+|------|---------|----------|----------|
+| **JPA Entities** | `EntityNameJpaEntity` | `persistence/entity/` | `SystemSettingJpaEntity`, `BusJpaEntity` |
+| **JPA Repositories** | `EntityNameJpaRepository` | `persistence/repository/` | `SystemSettingJpaRepository`, `BusJpaRepository` |
+| **Port Adapters** | `EntityNamePortAdapter` | `adapter/` | `SystemSettingPortAdapter`, `RouteContributionPortAdapter` |
+| **Configs** | `*Config` | `config/` | `HexagonalConfig`, `SecurityConfig` |
 
-### Application Layer
-- **Services**: `*Service` in `application.service`
-- **DTOs**: `*DTO`, `*Request`, `*Response` in `application.dto`
+### Application Layer (`com.perundhu.application`)
+| Type | Pattern | Location | Examples |
+|------|---------|----------|----------|
+| **Services** | `EntityNameService` | `service/` | `SystemSettingsService`, `BusService` |
+| **DTOs** | `*DTO`, `*Request`, `*Response` | `dto/` | `BusDTO`, `ContributionRequest` |
 
-## Dependency Injection Pattern
+### Adapter Layer (`com.perundhu.adapter`)
+| Type | Pattern | Location | Examples |
+|------|---------|----------|----------|
+| **REST Controllers** | `EntityNameController` | `in/rest/` | `SettingsAdminController`, `BusScheduleController` |
+| **Request DTOs** | `*Request` | `in/rest/dto/` | `ContributionRequest` |
+| **Response DTOs** | `*Response` | `in/rest/dto/` | `ApiResponse`, `BusResponse` |
 
-### ❌ AVOID - Spring annotations on adapters
-```java
-package com.perundhu.infrastructure.persistence.adapter;
+## Real Example: SystemSetting Module (Current Implementation)
 
-@Repository  // ❌ AVOID - Managed by HexagonalConfig instead
-public class BusRepositoryAdapter implements BusRepository { }
+```
+domain/
+├── model/SystemSetting.java           # Immutable domain model with withValue()
+└── port/SystemSettingPort.java        # Interface with CRUD methods
+
+infrastructure/
+├── persistence/
+│   ├── entity/SystemSettingJpaEntity.java    # @Entity with toDomain()/fromDomain()
+│   └── repository/SystemSettingJpaRepository.java  # JpaRepository interface
+└── adapter/SystemSettingPortAdapter.java     # @Component implementing SystemSettingPort
+
+application/
+└── service/SystemSettingsService.java        # Uses SystemSettingPort, NOT JpaRepository
+
+adapter/
+└── in/rest/SettingsAdminController.java      # REST API
 ```
 
-### ✅ PREFER - Configuration-based bean registration
+## Dependency Injection Pattern (ACTUAL)
+
+### Current Pattern - Use @Component on Adapters
+```java
+// infrastructure/adapter/SystemSettingPortAdapter.java
+@Component
+@RequiredArgsConstructor
+public class SystemSettingPortAdapter implements SystemSettingPort {
+    private final SystemSettingJpaRepository jpaRepository;
+    
+    @Override
+    public SystemSetting save(SystemSetting setting) {
+        // Convert domain → entity, save, convert back
+        return jpaRepository.save(SystemSettingJpaEntity.fromDomain(setting)).toDomain();
+    }
+}
+```
+
+### Alternative - Configuration-based registration
 ```java
 // HexagonalConfig.java
 @Configuration
@@ -374,6 +454,11 @@ void applicationLayerShouldNotDependOnInfrastructureLayer()
 // Application cannot import from ..infrastructure.. package
 
 @Test
+void controllersShouldNotDependOnInfrastructureLayer()
+// ⚠️ NEW: Controllers (adapter.in.rest) cannot import from ..infrastructure.persistence..
+// This prevents controllers from bypassing the service layer!
+
+@Test
 void configurationShouldOnlyBeInInfrastructureLayer()
 // @Configuration only in ..infrastructure.config.. or ..infrastructure.security..
 
@@ -411,10 +496,72 @@ void domainServicesShouldBeInterfaces()
    - Fix: Make it an interface in domain.port
 4. **Using @Service on domain service**
    - Fix: Make it an interface, implement in infrastructure
+5. **⚠️ Controller importing JpaRepository or JpaEntity (NEW)**
+   - Fix: Create/use application service that uses domain port
+   - Example: `BusAdminController → BusAdminService → BusRepository (port)`
 
 ### Unit Tests (JUnit 5 + Mockito)
+
+**⚠️ CRITICAL: In service tests, ALWAYS mock the DOMAIN PORT, NOT the JPA repository!**
+
 ```java
-// Domain model test - Pure unit test
+// ❌ WRONG - Mocking JPA repository in service test
+@ExtendWith(MockitoExtension.class)
+class SystemSettingsServiceTest {
+    @Mock
+    private SystemSettingJpaRepository jpaRepository; // WRONG!
+}
+
+// ✅ CORRECT - Mocking domain port in service test
+@ExtendWith(MockitoExtension.class)
+class SystemSettingsServiceTest {
+    @Mock
+    private SystemSettingPort settingPort; // CORRECT!
+    
+    @InjectMocks
+    private SystemSettingsService settingsService;
+    
+    private SystemSetting sampleSetting; // Use domain model, not JPA entity
+    
+    @BeforeEach
+    void setUp() {
+        sampleSetting = new SystemSetting(
+            1L, "feature.enabled", "true", "features", "Description",
+            LocalDateTime.now(), LocalDateTime.now()
+        );
+    }
+    
+    @Test
+    void shouldGetSetting() {
+        // Mock port methods
+        when(settingPort.findBySettingKey("feature.enabled"))
+            .thenReturn(Optional.of(sampleSetting));
+        
+        // Act
+        Optional<SystemSetting> result = settingsService.getSetting("feature.enabled");
+        
+        // Assert
+        assertThat(result).isPresent();
+        verify(settingPort).findBySettingKey("feature.enabled");
+    }
+    
+    @Test
+    void shouldUpdateSetting() {
+        when(settingPort.findBySettingKey("feature.enabled"))
+            .thenReturn(Optional.of(sampleSetting));
+        when(settingPort.save(any(SystemSetting.class)))
+            .thenAnswer(invocation -> invocation.getArgument(0));
+        
+        SystemSetting result = settingsService.updateSetting("feature.enabled", "false");
+        
+        assertThat(result.getSettingValue()).isEqualTo("false");
+        verify(settingPort).save(any(SystemSetting.class)); // Verify port save
+    }
+}
+```
+
+```java
+// Domain model test - Pure unit test (no mocks needed)
 @Test
 void shouldValidateBusNumber() {
     assertThrows(DomainValidationException.class, () -> {
@@ -422,32 +569,15 @@ void shouldValidateBusNumber() {
     });
 }
 
-// Service test - Mock dependencies
-@ExtendWith(MockitoExtension.class)
-class BusServiceTest {
+// Domain model test - immutable update
+@Test
+void shouldCreateNewInstanceWithUpdatedValue() {
+    SystemSetting original = new SystemSetting(1L, "key", "value1", "cat", "desc", null, null);
+    SystemSetting updated = original.withValue("value2");
     
-    @Mock
-    private BusRepository busRepository;
-    
-    @InjectMocks
-    private BusService busService;
-    
-    @Test
-    void shouldFindBusByRoute() {
-        // Arrange
-        List<Bus> expectedBuses = List.of(
-            new Bus(new BusId(1L), "101", "City Express")
-        );
-        when(busRepository.findByRoute("101"))
-            .thenReturn(expectedBuses);
-        
-        // Act
-        List<Bus> result = busService.findByRoute("101");
-        
-        // Assert
-        assertEquals(1, result.size());
-        assertEquals("City Express", result.get(0).getName());
-    }
+    assertThat(updated.getSettingValue()).isEqualTo("value2");
+    assertThat(original.getSettingValue()).isEqualTo("value1"); // Original unchanged
+}
 }
 ```
 
@@ -533,6 +663,66 @@ class BusIntegrationTest {
 
 ## Anti-Patterns to Avoid
 
+### ❌ CRITICAL: Controllers Calling Repositories Directly
+
+**This is a common violation that bypasses the entire architecture!**
+
+```java
+// ❌❌❌ WRONG - Controller directly using JPA repository
+package com.perundhu.adapter.in.rest;
+
+import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository; // VIOLATION!
+import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;  // VIOLATION!
+
+@RestController
+public class BusAdminController {
+    private final BusJpaRepository busRepository; // WRONG!
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBusById(@PathVariable Long id) {
+        return busRepository.findById(id)  // WRONG - bypasses service layer!
+            .map(bus -> ResponseEntity.ok(bus))
+            .orElse(ResponseEntity.notFound().build());
+    }
+}
+```
+
+**Why this is WRONG:**
+1. **Violates layered architecture** - Controller (adapter-in) imports from infrastructure
+2. **Bypasses business logic** - No service layer validation or processing
+3. **Exposes JPA entities** - Should return DTOs, not database entities
+4. **Reduces testability** - Harder to unit test without database
+5. **Mixes concerns** - Controller handles persistence logic
+
+```java
+// ✅✅✅ CORRECT - Controller uses application service
+package com.perundhu.adapter.in.rest;
+
+import com.perundhu.application.service.BusAdminService; // CORRECT!
+
+@RestController
+@RequiredArgsConstructor
+public class BusAdminController {
+    private final BusAdminService busAdminService; // CORRECT!
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBusById(@PathVariable Long id) {
+        return busAdminService.getBusById(id)  // CORRECT!
+            .map(bus -> ResponseEntity.ok(toResponse(bus)))
+            .orElse(ResponseEntity.notFound().build());
+    }
+}
+```
+
+**Correct Architecture Flow:**
+```
+Controller → Service → Domain Port → Adapter → JpaRepository
+     ↓           ↓           ↓           ↓           ↓
+  adapter     application   domain   infrastructure  JPA
+```
+
+### ❌ Other Anti-Patterns
+
 ❌ Don't use field injection
 ❌ Don't expose entities directly from controllers
 ❌ Don't put business logic in controllers
@@ -552,6 +742,17 @@ class BusIntegrationTest {
 - [ ] Does this need to be an interface? (Ports must be interfaces)
 - [ ] Am I creating a duplicate? (Check for existing interfaces)
 - [ ] Does the naming follow conventions?
+
+### Before Adding an Import
+- [ ] Domain layer: NO application or infrastructure imports
+- [ ] Application layer: ONLY domain imports (+ standard Java)
+- [ ] Infrastructure layer: Can import domain + application + frameworks
+- [ ] **Controllers (adapter.in.rest)**: NO infrastructure imports - use application services!
+
+### Before Adding a Dependency to Controller
+- [ ] **NEVER inject JpaRepository into a controller** - use application service
+- [ ] **NEVER inject JpaEntity into a controller** - use DTOs
+- [ ] Controller should only depend on: Application services, DTOs, standard Spring annotations
 
 ### Before Adding an Import
 - [ ] Domain layer: NO application or infrastructure imports
@@ -587,6 +788,10 @@ class BusIntegrationTest {
 grep -r "import.*infrastructure" backend/app/src/main/java/com/perundhu/application/
 grep -r "import.*infrastructure" backend/app/src/main/java/com/perundhu/domain/
 grep -r "@Entity" backend/app/src/main/java/com/perundhu/domain/
+
+# ⚠️ CRITICAL: Find controllers importing infrastructure (JPA repos/entities)
+grep -r "import.*infrastructure" backend/app/src/main/java/com/perundhu/adapter/in/rest/
+grep -l "JpaRepository\|JpaEntity" backend/app/src/main/java/com/perundhu/adapter/in/rest/*.java
 
 # List all domain ports (should be interfaces)
 find backend/app/src/main/java/com/perundhu/domain/port -name "*.java" -exec grep -l "interface" {} \;

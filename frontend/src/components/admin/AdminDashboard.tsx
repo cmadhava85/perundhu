@@ -6,6 +6,7 @@ import './AdminDashboard.css';
 import RouteAdminPanel from './RouteAdminPanel';
 import { ImageContributionAdminPanel } from './ImageContributionAdminPanel';
 import RouteIssuesAdminPanel from './RouteIssuesAdminPanel';
+import AdminSettingsPanel from './AdminSettingsPanel';
 
 /**
  * Admin Dashboard component that serves as the main entry point for admin functionality
@@ -85,11 +86,7 @@ const AdminDashboard: React.FC = () => {
           <h3>{t('admin.comingSoon.title', 'Coming Soon')}</h3>
           <p>{t('admin.comingSoon.users', 'User management functionality will be available in an upcoming update.')}</p>
         </div>}
-        {activeTab === 'settings' && <div className="coming-soon">
-          <div className="coming-soon-icon">⚙️</div>
-          <h3>{t('admin.comingSoon.title', 'Coming Soon')}</h3>
-          <p>{t('admin.comingSoon.settings', 'System settings configuration will be available in an upcoming update.')}</p>
-        </div>}
+        {activeTab === 'settings' && <AdminSettingsPanel />}
       </div>
     </div>
   );

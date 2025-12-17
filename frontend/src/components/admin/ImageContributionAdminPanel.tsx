@@ -8,8 +8,7 @@ import {
   AlertCircle,
   Loader2,
   Calendar,
-  User,
-  RefreshCw
+  User
 } from 'lucide-react';
 import './ImageContributionAdminPanel.css';
 
@@ -103,15 +102,6 @@ export const ImageContributionAdminPanel: React.FC = () => {
   void editingRouteIndex; // Index tracked for future edit UI features
   const [savingCorrections, setSavingCorrections] = useState(false);
   
-  // Integration state
-  const [integrating, setIntegrating] = useState(false);
-  const [integrationResult, setIntegrationResult] = useState<{
-    integratedCount: number;
-    skippedDuplicates: number;
-    failedCount: number;
-    message: string;
-  } | null>(null);
-  
   // Time edit popup state for routes with missing departure/arrival times
   const [showTimeEditPopup, setShowTimeEditPopup] = useState(false);
   const [routesWithMissingTimes, setRoutesWithMissingTimes] = useState<{
@@ -176,42 +166,6 @@ export const ImageContributionAdminPanel: React.FC = () => {
       // Failed to fetch image contributions
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Integrate all approved timing records into buses table for search
-  const integrateTimingRecords = async () => {
-    try {
-      setIntegrating(true);
-      setIntegrationResult(null);
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
-      const response = await fetch(`${API_BASE_URL}/api/admin/integration/timing-records`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-admin-token'}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Integration failed: ${response.status}`);
-      }
-      
-      const result = await response.json();
-      setIntegrationResult({
-        integratedCount: result.integratedCount || 0,
-        skippedDuplicates: result.skippedDuplicates || 0,
-        failedCount: result.failedCount || 0,
-        message: result.message || 'Integration completed'
-      });
-      
-      // Show success alert
-      alert(`✅ Integration Complete!\n\n${result.message}`);
-      
-    } catch (error) {
-      alert(`❌ Integration failed: ${error}`);
-    } finally {
-      setIntegrating(false);
     }
   };
 
@@ -668,232 +622,155 @@ export const ImageContributionAdminPanel: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-3xl font-bold text-gray-900">Image Contributions</h2>
-        
-        {/* Integration Button */}
-        <button
-          onClick={integrateTimingRecords}
-          disabled={integrating}
-          className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-md hover:shadow-lg transition-all duration-200"
-          title="Integrate approved timing records into the buses table so they appear in search results"
-        >
-          {integrating ? (
-            <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              Integrating...
-            </>
-          ) : (
-            <>
-              <RefreshCw className="w-5 h-5 mr-2" />
-              Integrate to Search
-            </>
-          )}
-        </button>
+        <h2 className="text-2xl font-bold text-gray-900">Image Contributions</h2>
       </div>
       
-      {/* Integration Result Banner */}
-      {integrationResult && (
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg p-4 shadow-sm">
-          <div className="flex items-start gap-3">
-            <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 className="font-semibold text-green-800">Integration Complete</h4>
-              <p className="text-green-700 text-sm mt-1">{integrationResult.message}</p>
-              <div className="flex gap-4 mt-2 text-sm">
-                <span className="text-green-700">
-                  <span className="font-bold">{integrationResult.integratedCount}</span> new buses added
-                </span>
-                <span className="text-blue-700">
-                  <span className="font-bold">{integrationResult.skippedDuplicates}</span> duplicates linked
-                </span>
-                {integrationResult.failedCount > 0 && (
-                  <span className="text-red-700">
-                    <span className="font-bold">{integrationResult.failedCount}</span> failed
-                  </span>
-                )}
-              </div>
-            </div>
-            <button
-              onClick={() => setIntegrationResult(null)}
-              className="ml-auto text-green-600 hover:text-green-800"
-              title="Dismiss"
-            >
-              <XCircle className="w-5 h-5" />
-            </button>
-          </div>
+      {/* Statistics Cards - Responsive */}
+      <div className="stats-grid-responsive">
+        <div className="stat-card-item total">
+          <div className="stat-number">{contributions.length}</div>
+          <div className="stat-label">Total</div>
         </div>
-      )}
-      
-      {/* Statistics Table */}
-      <div className="bg-white rounded-lg border-2 border-gray-200 overflow-hidden shadow-sm">
-        <table className="min-w-full">
-          <thead>
-            <tr className="border-b-2 border-gray-200">
-              <th className="px-8 py-4 text-center text-sm font-bold text-gray-800 bg-gradient-to-br from-blue-50 to-blue-100 uppercase tracking-wider">Total</th>
-              <th className="px-8 py-4 text-center text-sm font-bold text-gray-800 bg-gradient-to-br from-indigo-50 to-indigo-100 border-l-2 border-gray-200 uppercase tracking-wider">Processing</th>
-              <th className="px-8 py-4 text-center text-sm font-bold text-gray-800 bg-gradient-to-br from-yellow-50 to-yellow-100 border-l-2 border-gray-200 uppercase tracking-wider">Needs Review</th>
-              <th className="px-8 py-4 text-center text-sm font-bold text-gray-800 bg-gradient-to-br from-green-50 to-green-100 border-l-2 border-gray-200 uppercase tracking-wider">Approved</th>
-              <th className="px-8 py-4 text-center text-sm font-bold text-gray-800 bg-gradient-to-br from-red-50 to-red-100 border-l-2 border-gray-200 uppercase tracking-wider">Failed</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="px-8 py-6 text-center text-3xl font-extrabold text-blue-700 bg-blue-50">{contributions.length}</td>
-              <td className="px-8 py-6 text-center text-3xl font-extrabold text-indigo-700 bg-indigo-50 border-l-2 border-gray-200">{contributions.filter(c => c.status === 'PROCESSING').length}</td>
-              <td className="px-8 py-6 text-center text-3xl font-extrabold text-yellow-700 bg-yellow-50 border-l-2 border-gray-200">{contributions.filter(c => c.status === 'MANUAL_REVIEW_NEEDED' || c.status === 'LOW_CONFIDENCE_OCR').length}</td>
-              <td className="px-8 py-6 text-center text-3xl font-extrabold text-green-700 bg-green-50 border-l-2 border-gray-200">{contributions.filter(c => c.status === 'APPROVED' || c.status === 'PROCESSED').length}</td>
-              <td className="px-8 py-6 text-center text-3xl font-extrabold text-red-700 bg-red-50 border-l-2 border-gray-200">{contributions.filter(c => c.status === 'PROCESSING_FAILED' || c.status === 'UPLOAD_FAILED' || c.status === 'REJECTED').length}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="stat-card-item processing">
+          <div className="stat-number">{contributions.filter(c => c.status === 'PROCESSING').length}</div>
+          <div className="stat-label">Processing</div>
+        </div>
+        <div className="stat-card-item review">
+          <div className="stat-number">{contributions.filter(c => c.status === 'MANUAL_REVIEW_NEEDED' || c.status === 'LOW_CONFIDENCE_OCR').length}</div>
+          <div className="stat-label">Review</div>
+        </div>
+        <div className="stat-card-item approved">
+          <div className="stat-number">{contributions.filter(c => c.status === 'APPROVED' || c.status === 'PROCESSED').length}</div>
+          <div className="stat-label">Approved</div>
+        </div>
+        <div className="stat-card-item failed">
+          <div className="stat-number">{contributions.filter(c => c.status === 'PROCESSING_FAILED' || c.status === 'UPLOAD_FAILED' || c.status === 'REJECTED').length}</div>
+          <div className="stat-label">Failed</div>
+        </div>
       </div>
 
-      {/* Contributions Table */}
-      <div className="bg-white rounded-lg shadow-md border-2 border-gray-200 overflow-hidden">
+      {/* Contributions - Responsive Card Grid */}
+      <div className="contributions-container">
         {contributions.length === 0 ? (
-          <div className="text-center py-16">
+          <div className="empty-state-container">
             <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No image contributions found</h3>
             <p className="text-gray-500">Image contributions will appear here when users submit them.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y-2 divide-gray-300">
-              <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
-                <tr>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b-2 border-gray-300">
-                    Image
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b-2 border-gray-300">
-                    Contribution ID
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b-2 border-gray-300">
-                    Status
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b-2 border-gray-300">
-                    Submitted By
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b-2 border-gray-300">
-                    Submission Date
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b-2 border-gray-300">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {contributions.map((contribution) => (
-                  <tr key={contribution.id} className="hover:bg-blue-50 transition-all duration-150 border-b border-gray-200">
-                    {/* Image Thumbnail */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button 
-                        type="button"
-                        onClick={() => window.open(contribution.imageUrl, '_blank')}
-                        className="relative group cursor-pointer"
-                        aria-label="View full image"
-                      >
-                        <img 
-                          src={contribution.imageUrl} 
-                          alt="Bus schedule"
-                          className="h-20 w-20 object-cover rounded-lg border-2 border-gray-300 group-hover:border-blue-500 group-hover:shadow-lg transition-all duration-200 shadow-sm"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 rounded-lg flex items-center justify-center">
-                          <Eye className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                      </button>
-                    </td>
-                    
-                    {/* Contribution ID */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">#{contribution.id.slice(-8)}</div>
-                      <div className="text-xs text-gray-500">{contribution.id}</div>
-                    </td>
-                    
-                    {/* Status */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold shadow-sm ${getStatusColor(contribution.status)}`}>
-                        {getStatusIcon(contribution.status)}
-                        <span className="ml-2">{contribution.status.split('_').join(' ')}</span>
+          <div className="contributions-grid-layout">
+            {contributions.map((contribution) => (
+              <div 
+                key={contribution.id} 
+                className={`contribution-card-item ${contribution.status === 'APPROVED' ? 'status-approved' : contribution.status === 'REJECTED' || contribution.status === 'PROCESSING_FAILED' ? 'status-rejected' : 'status-pending'}`}
+              >
+                {/* Image Section */}
+                <div className="card-image-section">
+                  <button 
+                    type="button"
+                    onClick={() => window.open(contribution.imageUrl, '_blank')}
+                    className="card-image-button"
+                    aria-label="View full image"
+                  >
+                    <img 
+                      src={contribution.imageUrl} 
+                      alt="Bus schedule"
+                      className="card-thumbnail"
+                    />
+                    <div className="card-image-overlay">
+                      <Eye className="w-6 h-6 text-white" />
+                    </div>
+                  </button>
+                  
+                  {/* Status Badge - Overlaid on image */}
+                  <span className={`status-badge-overlay ${getStatusColor(contribution.status)}`}>
+                    {getStatusIcon(contribution.status)}
+                    <span className="status-text">{contribution.status.split('_').join(' ')}</span>
+                  </span>
+                </div>
+                
+                {/* Card Content */}
+                <div className="card-content-section">
+                  {/* Route Info - Origin/Destination if available */}
+                  {contribution.routeName ? (
+                    <div className="route-info-display">
+                      <div className="route-label">📍 Route</div>
+                      <div className="route-value">{contribution.routeName}</div>
+                    </div>
+                  ) : contribution.location ? (
+                    <div className="route-info-display">
+                      <div className="route-label">📍 Location</div>
+                      <div className="route-value">{contribution.location}</div>
+                    </div>
+                  ) : (
+                    <div className="route-info-display pending">
+                      <div className="route-label">🔍 Route Info</div>
+                      <div className="route-value">Extract to view</div>
+                    </div>
+                  )}
+                  
+                  {/* Meta Info Row */}
+                  <div className="card-meta-row">
+                    <div className="meta-item-compact">
+                      <User className="w-3.5 h-3.5" />
+                      <span>{contribution.userId?.split('_')[0] || 'anon'}</span>
+                    </div>
+                    <div className="meta-item-compact">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>
+                        {new Date(contribution.submissionDate).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
                       </span>
-                    </td>
+                    </div>
+                  </div>
+                  
+                  {/* Actions Row */}
+                  <div className="card-actions-row">
+                    <button
+                      onClick={() => extractOCRData(contribution)}
+                      disabled={extractingOCRId === contribution.id}
+                      className="action-btn-compact extract"
+                      title="Extract & View"
+                    >
+                      {extractingOCRId === contribution.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Download className="w-4 h-4" />
+                      )}
+                      <span>Extract</span>
+                    </button>
                     
-                    {/* Submitted By */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <User className="w-4 h-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">{contribution.userId}</span>
-                      </div>
-                    </td>
-                    
-                    {/* Submission Date */}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">
-                          {new Date(contribution.submissionDate).toLocaleDateString('en-US', { 
-                            year: 'numeric', 
-                            month: 'short', 
-                            day: 'numeric' 
-                          })}
-                        </span>
-                      </div>
-                    </td>
-                    
-                    {/* Actions */}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center gap-2">
+                    {(contribution.status !== 'APPROVED' && contribution.status !== 'REJECTED' && contribution.status !== 'PROCESSING_FAILED' && contribution.status !== 'UPLOAD_FAILED') && (
+                      <>
                         <button
-                          onClick={() => window.open(contribution.imageUrl, '_blank')}
-                          className="inline-flex items-center p-2 border-2 border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-100 hover:border-gray-400 transition-all duration-150 shadow-sm hover:shadow"
-                          title="View Full Image"
+                          onClick={() => approveContribution(contribution.id, false)}
+                          disabled={processingId === contribution.id}
+                          className="action-btn-compact approve"
+                          title="Approve"
                         >
-                          <Eye className="w-5 h-5" />
-                        </button>
-                        
-                        <button
-                          onClick={() => extractOCRData(contribution)}
-                          disabled={extractingOCRId === contribution.id}
-                          className="inline-flex items-center p-2 border-2 border-blue-400 rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm hover:shadow"
-                          title="Extract Text"
-                        >
-                          {extractingOCRId === contribution.id ? (
-                            <Loader2 className="w-5 h-5 animate-spin" />
+                          {processingId === contribution.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
                           ) : (
-                            <Download className="w-5 h-5" />
+                            <CheckCircle className="w-4 h-4" />
                           )}
                         </button>
                         
-                        {(contribution.status === 'PROCESSING' || contribution.status === 'MANUAL_REVIEW_NEEDED' || contribution.status === 'LOW_CONFIDENCE_OCR') && (
-                          <>
-                            <button
-                              onClick={() => approveContribution(contribution.id, false)}
-                              disabled={processingId === contribution.id}
-                              className="inline-flex items-center p-2 border-2 border-green-500 rounded-lg text-white bg-green-600 hover:bg-green-700 hover:border-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm hover:shadow"
-                              title="Approve"
-                            >
-                              {processingId === contribution.id ? (
-                                <Loader2 className="w-5 h-5 animate-spin" />
-                              ) : (
-                                <CheckCircle className="w-5 h-5" />
-                              )}
-                            </button>
-                            
-                            <button
-                              onClick={() => rejectContribution(contribution.id)}
-                              disabled={processingId === contribution.id}
-                              className="inline-flex items-center p-2 border-2 border-red-500 rounded-lg text-white bg-red-600 hover:bg-red-700 hover:border-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm hover:shadow"
-                              title="Reject"
-                            >
-                              <XCircle className="w-5 h-5" />
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        <button
+                          onClick={() => rejectContribution(contribution.id)}
+                          disabled={processingId === contribution.id}
+                          className="action-btn-compact reject"
+                          title="Reject"
+                        >
+                          <XCircle className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

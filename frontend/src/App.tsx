@@ -23,6 +23,7 @@ import { useBusSearchEnhanced } from './hooks/useBusSearchEnhanced';
 // Context providers
 import { ThemeProvider } from './context/ThemeContext';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
+import { FeatureFlagsProvider } from './contexts/FeatureFlagsContext';
 
 // Utils
 import { getFeatureFlag } from './utils/environment';
@@ -34,11 +35,13 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <AdminAuthProvider>
-          <Router>
-            <AppContent />
-          </Router>
-        </AdminAuthProvider>
+        <FeatureFlagsProvider>
+          <AdminAuthProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </AdminAuthProvider>
+        </FeatureFlagsProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

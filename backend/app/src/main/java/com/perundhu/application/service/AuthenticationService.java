@@ -1,5 +1,7 @@
 package com.perundhu.application.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,12 +11,33 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     /**
-     * Get the current user ID
-     * For now, returns "anonymous" but can be extended with proper authentication
+     * Get the current user ID from Spring Security context
+     * Returns the authenticated user's username or "anonymous" if not authenticated
      */
     public String getCurrentUserId() {
-        // TODO: Implement proper authentication logic
-        // This is a placeholder implementation
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            
+            // Handle different principal types
+            if (principal instanceof String) {
+                String username = (String) principal;
+                // Skip anonymous authentication
+                if (!"anonymousUser".equals(username)) {
+                    return username;
+                }
+            } else if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                return ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+            } else if (principal != null) {
+                // Try to get a sensible string representation
+                String principalStr = principal.toString();
+                if (!"anonymousUser".equals(principalStr)) {
+                    return principalStr;
+                }
+            }
+        }
+        
         return "anonymous";
     }
 
@@ -29,8 +52,15 @@ public class AuthenticationService {
      * Check if the current user is an admin
      */
     public boolean isAdmin() {
-        String userId = getCurrentUserId();
-        return "admin".equals(userId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+        
+        // Check for admin role
+        return authentication.getAuthorities().stream()
+                .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()) 
+                               || "admin".equals(auth.getAuthority()));
     }
 
     /**
@@ -45,6 +75,6 @@ public class AuthenticationService {
      * Log out the current user
      */
     public void logout() {
-        // TODO: Implement logout logic
+        SecurityContextHolder.clearContext();
     }
 }

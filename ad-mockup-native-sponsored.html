@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perundhu - Native Sponsored Ads Mockup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Perundhu Design Tokens */
+      --primary: #0ea5e9;
+      --primary-600: #0284c7;
+      --primary-700: #0369a1;
+      --secondary: #a855f7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: var(--space-4);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      color: var(--gray-900);
+      font-size: 28px;
+      margin-bottom: var(--space-2);
+    }
+
+    .header p {
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+
+    .search-info {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-info .route {
+      flex: 1;
+      font-weight: 600;
+      color: var(--gray-900);
+      font-size: 16px;
+    }
+
+    .search-info .count {
+      background: var(--primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .results-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* Regular Bus Card */
+    .bus-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--gray-200);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .bus-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .bus-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-3);
+    }
+
+    .bus-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .bus-icon {
+      font-size: 28px;
+    }
+
+    .bus-type {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .bus-type.express {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .bus-type.ac {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+
+    .bus-details {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      color: var(--gray-600);
+      font-size: 14px;
+      margin-bottom: var(--space-3);
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-icon {
+      color: var(--gray-400);
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    /* SPONSORED CARD - Highlighted Design */
+    .bus-card.sponsored {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #fbbf24;
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.25);
+    }
+
+    .bus-card.sponsored:hover {
+      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.35);
+    }
+
+    .sponsored-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .sponsored-badge::before {
+      content: "⭐";
+      font-size: 12px;
+    }
+
+    .sponsored-features {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      margin-top: var(--space-3);
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gray-700);
+      font-size: 13px;
+    }
+
+    .feature-icon {
+      color: var(--success);
+      font-size: 16px;
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: var(--space-3);
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+    }
+
+    .sponsored-info {
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px dashed rgba(0, 0, 0, 0.1);
+      font-size: 12px;
+      color: var(--gray-600);
+      text-align: center;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: var(--space-2);
+      }
+
+      .header {
+        padding: var(--space-4);
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .bus-card {
+        padding: var(--space-3);
+      }
+
+      .bus-number {
+        font-size: 20px;
+      }
+
+      .bus-icon {
+        font-size: 24px;
+      }
+
+      .bus-details {
+        gap: var(--space-2);
+        font-size: 13px;
+      }
+
+      .sponsored-features {
+        gap: var(--space-2);
+      }
+
+      .feature {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .bus-card-header {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .sponsored-badge {
+        position: static;
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🚌 Native Sponsored Ads Mockup</h1>
+      <p>Sponsored bus listings blend naturally with regular results</p>
+    </div>
+
+    <!-- Search Info -->
+    <div class="search-info">
+      <div class="route">
+        <span style="color: #64748b;">From:</span> Chennai 
+        <span style="margin: 0 8px;">→</span> 
+        <span style="color: #64748b;">To:</span> Coimbatore
+      </div>
+      <div class="count">15 buses</div>
+    </div>
+
+    <!-- Results List -->
+    <div class="results-list">
+      
+      <!-- Regular Bus Card 1 -->
+      <div class="bus-card">
+        <div class="bus-card-header">
+          <div class="bus-number">
+            <span class="bus-icon">🚌</span>
+            150
+          </div>
+          <div class="bus-type express">Express</div>
+        </div>
+        <div class="bus-details">
+          <div class="detail-item">
+            <span class="detail-icon">⏱️</span>
+            <span>2h 30min</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">🕐</span>
+            <span>06:00 AM</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">📍</span>
+            <span>Via: Salem</span>
+          </div>
+          <div class="detail-item">
+            <span class="price">₹180</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPONSORED BUS CARD -->
+      <div class="bus-card sponsored">
+        <div class="sponsored-badge">Sponsored</div>
+        
+        <div class="bus-card-header">
+          <div class="bus-number">
+            <span class="bus-icon">🚐</span>
+            Premium AC Volvo
+          </div>
+          <div class="bus-type ac">AC Deluxe</div>
+        </div>
+        
+        <div class="bus-details">
+          <div class="detail-item">
+            <span class="detail-icon">⏱️</span>
+            <span><strong>2h 15min</strong> (Faster!)</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">🕐</span>
+            <span>Every 30 minutes</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">📍</span>
+            <span>Direct Route</span>
+          </div>
+          <div class="detail-item">
+            <span class="price">₹250</span>
+          </div>
+        </div>
+
+        <div class="sponsored-features">
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Free WiFi</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Charging Ports</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Water Bottle</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Reclining Seats</span>
+          </div>
+        </div>
+
+        <button class="cta-button">Book Direct & Save ₹30</button>
+
+        <div class="sponsored-info">
+          This is a paid promotion from RedBus Premium Services
+        </div>
+      </div>
+
+      <!-- Regular Bus Card 2 -->
+      <div class="bus-card">
+        <div class="bus-card-header">
+          <div class="bus-number">
+            <span class="bus-icon">🚌</span>
+            151A
+          </div>
+          <div class="bus-type">Ordinary</div>
+        </div>
+        <div class="bus-details">
+          <div class="detail-item">
+            <span class="detail-icon">⏱️</span>
+            <span>3h 0min</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">🕐</span>
+            <span>06:30 AM</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">📍</span>
+            <span>Via: Erode</span>
+          </div>
+          <div class="detail-item">
+            <span class="price">₹120</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPONSORED BUS CARD 2 -->
+      <div class="bus-card sponsored">
+        <div class="sponsored-badge">Sponsored</div>
+        
+        <div class="bus-card-header">
+          <div class="bus-number">
+            <span class="bus-icon">🚐</span>
+            VRL Travels
+          </div>
+          <div class="bus-type ac">Multi-Axle AC</div>
+        </div>
+        
+        <div class="bus-details">
+          <div class="detail-item">
+            <span class="detail-icon">⏱️</span>
+            <span><strong>2h 20min</strong></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">🕐</span>
+            <span>07:00 AM, 01:00 PM, 09:00 PM</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">📍</span>
+            <span>Express Highway</span>
+          </div>
+          <div class="detail-item">
+            <span class="price">₹280</span>
+          </div>
+        </div>
+
+        <div class="sponsored-features">
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Live GPS Tracking</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Insurance Covered</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Free Cancellation</span>
+          </div>
+        </div>
+
+        <button class="cta-button">Book Now - 10% Off</button>
+
+        <div class="sponsored-info">
+          Sponsored by VRL Travels • Ad
+        </div>
+      </div>
+
+      <!-- Regular Bus Card 3 -->
+      <div class="bus-card">
+        <div class="bus-card-header">
+          <div class="bus-number">
+            <span class="bus-icon">🚌</span>
+            152
+          </div>
+          <div class="bus-type express">Express</div>
+        </div>
+        <div class="bus-details">
+          <div class="detail-item">
+            <span class="detail-icon">⏱️</span>
+            <span>2h 45min</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">🕐</span>
+            <span>07:00 AM</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">📍</span>
+            <span>Via: Tiruppur</span>
+          </div>
+          <div class="detail-item">
+            <span class="price">₹190</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

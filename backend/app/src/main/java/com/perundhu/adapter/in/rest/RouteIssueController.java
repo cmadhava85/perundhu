@@ -1,33 +1,32 @@
 package com.perundhu.adapter.in.rest;
 
-import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.AuthenticationService;
-import com.perundhu.application.service.BusScheduleService;
-import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
-import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity;
-import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity.IssueStatus;
-import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity.IssueType;
-import com.perundhu.infrastructure.persistence.entity.RouteIssueJpaEntity.IssuePriority;
-import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
-import com.perundhu.infrastructure.persistence.repository.RouteIssueJpaRepository;
+import com.perundhu.application.service.RouteIssueService;
+import com.perundhu.application.service.RouteIssueService.IssueDetails;
+import com.perundhu.application.service.RouteIssueService.IssueStatistics;
+import com.perundhu.application.service.RouteIssueService.RouteIssueRequest;
+import com.perundhu.application.service.RouteIssueService.StatusUpdateResult;
+import com.perundhu.application.service.RouteIssueService.SubmitResult;
+import com.perundhu.domain.model.RouteIssue;
+import com.perundhu.domain.model.RouteIssue.IssuePriority;
+import com.perundhu.domain.model.RouteIssue.IssueStatus;
+import com.perundhu.domain.model.RouteIssue.IssueType;
+import com.perundhu.domain.port.RouteIssuePort.PagedResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.CacheManager;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
  * REST controller for reporting and managing route issues.
  * Allows users to report wrong timings, non-existent buses, etc.
+ * 
+ * Follows hexagonal architecture - uses application service, not infrastructure
+ * repositories.
  * 
  * Public endpoints: POST /report, GET /my-reports, GET /route, GET /bus/{busId}
  * Admin endpoints (require ADMIN role): /admin/**
@@ -38,94 +37,50 @@ import java.util.*;
 @Slf4j
 public class RouteIssueController {
 
-  private final RouteIssueJpaRepository routeIssueRepository;
+  private final RouteIssueService routeIssueService;
   private final AuthenticationService authenticationService;
-  private final BusScheduleService busScheduleService;
-  private final BusJpaRepository busJpaRepository;
-  private final CacheManager cacheManager;
 
   /**
    * Submit a new route issue report
    */
   @PostMapping
-  public ResponseEntity<?> submitIssue(@RequestBody RouteIssueRequest request) {
+  public ResponseEntity<?> submitIssue(@RequestBody IssueSubmitRequest request) {
     log.info("Received route issue report: type={}, busId={}, from={}, to={}",
         request.issueType, request.busId, request.fromLocation, request.toLocation);
 
     try {
-      // Validate request
-      if (request.issueType == null) {
-        return ResponseEntity.badRequest()
-            .body(Map.of("error", "Issue type is required"));
+      RouteIssueRequest serviceRequest = new RouteIssueRequest(
+          request.busId,
+          request.busName,
+          request.busNumber,
+          request.fromLocation,
+          request.toLocation,
+          request.issueType,
+          request.description,
+          request.suggestedDepartureTime,
+          request.suggestedArrivalTime,
+          request.lastTraveledDate,
+          request.reporterId);
+
+      SubmitResult result = routeIssueService.submitIssue(serviceRequest);
+
+      if (result instanceof SubmitResult.Success success) {
+        return ResponseEntity.ok(Map.of(
+            "success", true,
+            "message", "Thank you for reporting! We'll review and update the information.",
+            "issueId", success.issueId(),
+            "status", success.status().name()));
+      } else if (result instanceof SubmitResult.ExistingIssue existing) {
+        return ResponseEntity.ok(Map.of(
+            "success", true,
+            "message", "Thank you! This issue has been reported by others too. We're looking into it.",
+            "issueId", existing.issueId(),
+            "reportCount", existing.reportCount(),
+            "existingIssue", true));
+      } else if (result instanceof SubmitResult.ValidationError error) {
+        return ResponseEntity.badRequest().body(Map.of("error", error.error()));
       }
-
-      // Check for similar existing issue
-      if (request.busId != null) {
-        List<IssueStatus> activeStatuses = Arrays.asList(
-            IssueStatus.PENDING, IssueStatus.UNDER_REVIEW, IssueStatus.CONFIRMED);
-
-        Optional<RouteIssueJpaEntity> existingIssue = routeIssueRepository
-            .findFirstByBusIdAndIssueTypeAndStatusIn(
-                request.busId, request.issueType, activeStatuses);
-
-        if (existingIssue.isPresent()) {
-          RouteIssueJpaEntity issue = existingIssue.get();
-          issue.setReportCount(issue.getReportCount() + 1);
-
-          if (issue.getReportCount() >= 5 && issue.getPriority() != IssuePriority.CRITICAL) {
-            issue.setPriority(IssuePriority.CRITICAL);
-          } else if (issue.getReportCount() >= 3 && issue.getPriority() == IssuePriority.MEDIUM) {
-            issue.setPriority(IssuePriority.HIGH);
-          }
-
-          if (request.description != null && !request.description.isBlank()) {
-            String existingDesc = issue.getDescription() != null ? issue.getDescription() : "";
-            issue.setDescription(existingDesc + "\n\n---\nAdditional report:\n" + request.description);
-          }
-
-          routeIssueRepository.save(issue);
-
-          log.info("Incremented report count for existing issue id={}, count={}",
-              issue.getId(), issue.getReportCount());
-
-          return ResponseEntity.ok(Map.of(
-              "success", true,
-              "message", "Thank you! This issue has been reported by others too. We're looking into it.",
-              "issueId", issue.getId(),
-              "reportCount", issue.getReportCount(),
-              "existingIssue", true));
-        }
-      }
-
-      IssuePriority priority = determinePriority(request.issueType);
-
-      RouteIssueJpaEntity issue = RouteIssueJpaEntity.builder()
-          .busId(request.busId)
-          .busName(request.busName)
-          .busNumber(request.busNumber)
-          .fromLocation(request.fromLocation)
-          .toLocation(request.toLocation)
-          .issueType(request.issueType)
-          .description(request.description)
-          .suggestedDepartureTime(request.suggestedDepartureTime)
-          .suggestedArrivalTime(request.suggestedArrivalTime)
-          .lastTraveledDate(request.lastTraveledDate)
-          .status(IssueStatus.PENDING)
-          .priority(priority)
-          .reporterId(request.reporterId)
-          .createdAt(LocalDateTime.now())
-          .build();
-
-      RouteIssueJpaEntity saved = routeIssueRepository.save(issue);
-
-      log.info("Created new route issue id={}, type={}, priority={}",
-          saved.getId(), saved.getIssueType(), saved.getPriority());
-
-      return ResponseEntity.ok(Map.of(
-          "success", true,
-          "message", "Thank you for reporting! We'll review and update the information.",
-          "issueId", saved.getId(),
-          "status", saved.getStatus().name()));
+      return ResponseEntity.internalServerError().body(Map.of("error", "Unexpected error"));
 
     } catch (Exception e) {
       log.error("Error submitting route issue", e);
@@ -149,7 +104,7 @@ public class RouteIssueController {
             .body(Map.of("error", "Access denied. You can only view your own reports."));
       }
 
-      List<RouteIssueJpaEntity> issues = routeIssueRepository.findByReporterIdOrderByCreatedAtDesc(reporterId);
+      List<RouteIssue> issues = routeIssueService.getReportsByReporterId(reporterId);
       return ResponseEntity.ok(Map.of(
           "issues", issues.stream().map(this::toResponse).toList(),
           "count", issues.size()));
@@ -163,10 +118,7 @@ public class RouteIssueController {
   @GetMapping("/route")
   public ResponseEntity<?> getRouteIssues(@RequestParam String from, @RequestParam String to) {
     try {
-      List<RouteIssueJpaEntity> issues = routeIssueRepository.findIssuesForRoute(from, to);
-      List<RouteIssueJpaEntity> confirmedIssues = issues.stream()
-          .filter(i -> i.getStatus() == IssueStatus.CONFIRMED)
-          .toList();
+      List<RouteIssue> confirmedIssues = routeIssueService.getConfirmedIssuesForRoute(from, to);
 
       return ResponseEntity.ok(Map.of(
           "issues", confirmedIssues.stream().map(this::toPublicResponse).toList(),
@@ -180,10 +132,7 @@ public class RouteIssueController {
   @GetMapping("/bus/{busId}")
   public ResponseEntity<?> getBusIssues(@PathVariable Long busId) {
     try {
-      List<RouteIssueJpaEntity> issues = routeIssueRepository.findByBusId(busId);
-      List<RouteIssueJpaEntity> confirmedIssues = issues.stream()
-          .filter(i -> i.getStatus() == IssueStatus.CONFIRMED)
-          .toList();
+      List<RouteIssue> confirmedIssues = routeIssueService.getConfirmedIssuesForBus(busId);
 
       return ResponseEntity.ok(Map.of(
           "issues", confirmedIssues.stream().map(this::toPublicResponse).toList(),
@@ -203,15 +152,13 @@ public class RouteIssueController {
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "20") int size) {
     try {
-      Page<RouteIssueJpaEntity> issues = routeIssueRepository.findByStatus(
-          IssueStatus.PENDING,
-          PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
+      PagedResult<RouteIssue> issues = routeIssueService.getPendingIssues(page, size);
 
       return ResponseEntity.ok(Map.of(
-          "issues", issues.getContent().stream().map(this::toResponse).toList(),
-          "totalCount", issues.getTotalElements(),
-          "page", page,
-          "totalPages", issues.getTotalPages()));
+          "issues", issues.content().stream().map(this::toResponse).toList(),
+          "totalCount", issues.totalElements(),
+          "page", issues.page(),
+          "totalPages", issues.totalPages()));
     } catch (Exception e) {
       log.error("Error fetching pending issues", e);
       return ResponseEntity.internalServerError()
@@ -223,7 +170,7 @@ public class RouteIssueController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> getHighPriorityIssues() {
     try {
-      List<RouteIssueJpaEntity> issues = routeIssueRepository.findHighPriorityIssues();
+      List<RouteIssue> issues = routeIssueService.getHighPriorityIssues();
       return ResponseEntity.ok(Map.of(
           "issues", issues.stream().map(this::toResponse).toList(),
           "count", issues.size()));
@@ -238,21 +185,13 @@ public class RouteIssueController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> getStatistics() {
     try {
-      Map<String, Long> statusCounts = new HashMap<>();
-      for (IssueStatus status : IssueStatus.values()) {
-        statusCounts.put(status.name(), routeIssueRepository.countByStatus(status));
-      }
-
-      Map<String, Long> typeCounts = new HashMap<>();
-      for (IssueType type : IssueType.values()) {
-        typeCounts.put(type.name(), routeIssueRepository.countByIssueType(type));
-      }
+      IssueStatistics stats = routeIssueService.getStatistics();
 
       return ResponseEntity.ok(Map.of(
-          "byStatus", statusCounts,
-          "byType", typeCounts,
-          "totalPending", routeIssueRepository.countByStatus(IssueStatus.PENDING),
-          "highPriorityCount", routeIssueRepository.findHighPriorityIssues().size()));
+          "byStatus", stats.byStatus(),
+          "byType", stats.byType(),
+          "totalPending", stats.totalPending(),
+          "highPriorityCount", stats.highPriorityCount()));
     } catch (Exception e) {
       log.error("Error fetching statistics", e);
       return ResponseEntity.internalServerError()
@@ -268,15 +207,13 @@ public class RouteIssueController {
       @RequestParam(defaultValue = "100") int size) {
     try {
       IssueStatus issueStatus = IssueStatus.valueOf(status.toUpperCase());
-      Page<RouteIssueJpaEntity> issues = routeIssueRepository.findByStatus(
-          issueStatus,
-          PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
+      PagedResult<RouteIssue> issues = routeIssueService.getIssuesByStatus(issueStatus, page, size);
 
       return ResponseEntity.ok(Map.of(
-          "issues", issues.getContent().stream().map(this::toResponse).toList(),
-          "totalCount", issues.getTotalElements(),
-          "page", page,
-          "totalPages", issues.getTotalPages()));
+          "issues", issues.content().stream().map(this::toResponse).toList(),
+          "totalCount", issues.totalElements(),
+          "page", issues.page(),
+          "totalPages", issues.totalPages()));
     } catch (IllegalArgumentException e) {
       return ResponseEntity.badRequest()
           .body(Map.of("error", "Invalid status: " + status));
@@ -289,72 +226,26 @@ public class RouteIssueController {
 
   @PutMapping("/admin/{issueId}/status")
   @PreAuthorize("hasRole('ADMIN')")
-  @Transactional
   public ResponseEntity<?> updateStatus(
       @PathVariable Long issueId,
       @RequestBody StatusUpdateRequest request) {
     try {
-      Optional<RouteIssueJpaEntity> optIssue = routeIssueRepository.findById(issueId);
-      if (optIssue.isEmpty()) {
+      StatusUpdateResult result = routeIssueService.updateStatus(
+          issueId, request.status, request.adminNotes, request.resolution);
+
+      if (result instanceof StatusUpdateResult.Success success) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("success", true);
+        response.put("issue", toResponse(success.issue()));
+        if (success.busDeactivated()) {
+          response.put("busDeactivated", true);
+          response.put("message", "Bus has been deactivated and will no longer appear in search results");
+        }
+        return ResponseEntity.ok(response);
+      } else if (result instanceof StatusUpdateResult.NotFound) {
         return ResponseEntity.notFound().build();
       }
-
-      RouteIssueJpaEntity issue = optIssue.get();
-      IssueStatus oldStatus = issue.getStatus();
-      issue.setStatus(request.status);
-
-      if (request.adminNotes != null) {
-        issue.setAdminNotes(request.adminNotes);
-      }
-      if (request.resolution != null) {
-        issue.setResolution(request.resolution);
-      }
-      if (request.status == IssueStatus.RESOLVED) {
-        issue.setResolvedAt(LocalDateTime.now());
-      }
-
-      // Handle bus deactivation for confirmed BUS_NOT_AVAILABLE or SERVICE_SUSPENDED issues
-      boolean busDeactivated = false;
-      if (request.status == IssueStatus.CONFIRMED && issue.getBusId() != null) {
-        IssueType issueType = issue.getIssueType();
-        if (issueType == IssueType.BUS_NOT_AVAILABLE || issueType == IssueType.SERVICE_SUSPENDED) {
-          Optional<BusJpaEntity> busOpt = busJpaRepository.findById(issue.getBusId());
-          if (busOpt.isPresent()) {
-            BusJpaEntity bus = busOpt.get();
-            bus.setActive(false);
-            busJpaRepository.save(bus);
-            busDeactivated = true;
-            log.info("Deactivated bus {} (ID: {}) due to confirmed {} issue",
-                bus.getBusNumber(), bus.getId(), issueType);
-            
-            // Clear the bus search cache to ensure deactivated buses don't appear in results
-            var busSearchCache = cacheManager.getCache("busSearchCache");
-            if (busSearchCache != null) {
-              busSearchCache.clear();
-              log.info("Cleared busSearchCache after deactivating bus {}", bus.getId());
-            }
-            
-            // Update resolution message
-            String deactivationNote = String.format("Bus deactivated from search results. Issue type: %s", issueType);
-            issue.setResolution(issue.getResolution() != null ? 
-                issue.getResolution() + " | " + deactivationNote : deactivationNote);
-          }
-        }
-      }
-
-      routeIssueRepository.save(issue);
-
-      log.info("Updated issue {} status: {} -> {}", issueId, oldStatus, request.status);
-
-      Map<String, Object> response = new LinkedHashMap<>();
-      response.put("success", true);
-      response.put("issue", toResponse(issue));
-      if (busDeactivated) {
-        response.put("busDeactivated", true);
-        response.put("message", "Bus has been deactivated and will no longer appear in search results");
-      }
-      
-      return ResponseEntity.ok(response);
+      return ResponseEntity.internalServerError().body(Map.of("error", "Unexpected error"));
     } catch (Exception e) {
       log.error("Error updating issue status", e);
       return ResponseEntity.internalServerError()
@@ -368,16 +259,10 @@ public class RouteIssueController {
       @PathVariable Long issueId,
       @RequestBody PriorityUpdateRequest request) {
     try {
-      Optional<RouteIssueJpaEntity> optIssue = routeIssueRepository.findById(issueId);
-      if (optIssue.isEmpty()) {
+      boolean updated = routeIssueService.updatePriority(issueId, request.priority);
+      if (!updated) {
         return ResponseEntity.notFound().build();
       }
-
-      RouteIssueJpaEntity issue = optIssue.get();
-      issue.setPriority(request.priority);
-      routeIssueRepository.save(issue);
-
-      log.info("Updated issue {} priority to {}", issueId, request.priority);
 
       return ResponseEntity.ok(Map.of("success", true));
     } catch (Exception e) {
@@ -395,67 +280,49 @@ public class RouteIssueController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> getIssueDetails(@PathVariable Long issueId) {
     try {
-      Optional<RouteIssueJpaEntity> optIssue = routeIssueRepository.findById(issueId);
-      if (optIssue.isEmpty()) {
+      Optional<IssueDetails> optDetails = routeIssueService.getIssueDetails(issueId);
+      if (optDetails.isEmpty()) {
         return ResponseEntity.notFound().build();
       }
 
-      RouteIssueJpaEntity issue = optIssue.get();
+      IssueDetails details = optDetails.get();
       Map<String, Object> response = new LinkedHashMap<>();
 
       // Add basic issue info
-      response.put("issue", toResponse(issue));
+      response.put("issue", toResponse(details.issue()));
 
-      // If we have a busId, fetch the current bus details
-      if (issue.getBusId() != null) {
-        try {
-          Optional<BusDTO> busOpt = busScheduleService.getBusById(issue.getBusId());
-          if (busOpt.isPresent()) {
-            BusDTO bus = busOpt.get();
-            Map<String, Object> busDetails = new LinkedHashMap<>();
-            busDetails.put("id", bus.id());
-            busDetails.put("busNumber", bus.number());
-            busDetails.put("busName", bus.name());
-            busDetails.put("departureTime", bus.departureTime());
-            busDetails.put("arrivalTime", bus.arrivalTime());
-            busDetails.put("fromLocation", bus.fromLocationName());
-            busDetails.put("toLocation", bus.toLocationName());
-            busDetails.put("busType", bus.type());
-            busDetails.put("operator", bus.operator());
-            response.put("currentBusDetails", busDetails);
+      // If we have bus details
+      if (details.currentBusDetails() != null) {
+        Map<String, Object> busDetails = new LinkedHashMap<>();
+        busDetails.put("id", details.currentBusDetails().id());
+        busDetails.put("busNumber", details.currentBusDetails().number());
+        busDetails.put("busName", details.currentBusDetails().name());
+        busDetails.put("departureTime", details.currentBusDetails().departureTime());
+        busDetails.put("arrivalTime", details.currentBusDetails().arrivalTime());
+        busDetails.put("fromLocation", details.currentBusDetails().fromLocationName());
+        busDetails.put("toLocation", details.currentBusDetails().toLocationName());
+        busDetails.put("busType", details.currentBusDetails().type());
+        busDetails.put("operator", details.currentBusDetails().operator());
+        response.put("currentBusDetails", busDetails);
 
-            // Also fetch the stops for this bus
-            try {
-              List<StopDTO> stops = busScheduleService.getStopsForBus(issue.getBusId(), "en");
-              List<Map<String, Object>> stopsList = new ArrayList<>();
-              for (StopDTO stop : stops) {
-                Map<String, Object> stopData = new LinkedHashMap<>();
-                stopData.put("id", stop.id());
-                stopData.put("name", stop.name());
-                stopData.put("locationId", stop.locationId());
-                stopData.put("stopOrder", stop.sequence());
-                stopData.put("arrivalTime", stop.arrivalTime() != null ? stop.arrivalTime().toString() : null);
-                stopData.put("departureTime", stop.departureTime() != null ? stop.departureTime().toString() : null);
-                stopsList.add(stopData);
-              }
-              response.put("currentStops", stopsList);
-            } catch (Exception e) {
-              log.warn("Could not fetch stops for bus {}: {}", issue.getBusId(), e.getMessage());
-              response.put("currentStops", List.of());
-            }
-          } else {
-            response.put("currentBusDetails", null);
-            response.put("currentStops", List.of());
-            response.put("busNotFound", true);
-          }
-        } catch (Exception e) {
-          log.warn("Could not fetch bus details for id {}: {}", issue.getBusId(), e.getMessage());
-          response.put("currentBusDetails", null);
-          response.put("currentStops", List.of());
+        List<Map<String, Object>> stopsList = new ArrayList<>();
+        for (StopDTO stop : details.currentStops()) {
+          Map<String, Object> stopData = new LinkedHashMap<>();
+          stopData.put("id", stop.id());
+          stopData.put("name", stop.name());
+          stopData.put("locationId", stop.locationId());
+          stopData.put("stopOrder", stop.sequence());
+          stopData.put("arrivalTime", stop.arrivalTime() != null ? stop.arrivalTime().toString() : null);
+          stopData.put("departureTime", stop.departureTime() != null ? stop.departureTime().toString() : null);
+          stopsList.add(stopData);
         }
+        response.put("currentStops", stopsList);
       } else {
         response.put("currentBusDetails", null);
         response.put("currentStops", List.of());
+        if (details.busNotFound()) {
+          response.put("busNotFound", true);
+        }
       }
 
       return ResponseEntity.ok(response);
@@ -468,16 +335,7 @@ public class RouteIssueController {
 
   // ================== HELPER METHODS ==================
 
-  private IssuePriority determinePriority(IssueType type) {
-    return switch (type) {
-      case BUS_NOT_AVAILABLE, SERVICE_SUSPENDED -> IssuePriority.HIGH;
-      case WRONG_TIMING, ROUTE_CHANGED -> IssuePriority.MEDIUM;
-      case WRONG_STOPS, WRONG_FARE, WRONG_SCHEDULE -> IssuePriority.MEDIUM;
-      case OTHER -> IssuePriority.LOW;
-    };
-  }
-
-  private Map<String, Object> toResponse(RouteIssueJpaEntity issue) {
+  private Map<String, Object> toResponse(RouteIssue issue) {
     Map<String, Object> response = new LinkedHashMap<>();
     response.put("id", issue.getId());
     response.put("busId", issue.getBusId());
@@ -501,7 +359,7 @@ public class RouteIssueController {
     return response;
   }
 
-  private Map<String, Object> toPublicResponse(RouteIssueJpaEntity issue) {
+  private Map<String, Object> toPublicResponse(RouteIssue issue) {
     Map<String, Object> response = new LinkedHashMap<>();
     response.put("id", issue.getId());
     response.put("issueType", issue.getIssueType());
@@ -513,7 +371,7 @@ public class RouteIssueController {
 
   // ================== REQUEST DTOs ==================
 
-  public record RouteIssueRequest(
+  public record IssueSubmitRequest(
       Long busId,
       String busName,
       String busNumber,

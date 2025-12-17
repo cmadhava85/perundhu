@@ -7,7 +7,9 @@ import java.util.Optional;
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.dto.BusScheduleDTO;
+import com.perundhu.application.dto.BusStandDTO;
 import com.perundhu.application.dto.LocationDTO;
+import com.perundhu.application.dto.MultiStandSearchResponse;
 import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.RouteDTO;
 import com.perundhu.application.dto.StopDTO;
@@ -48,7 +50,7 @@ public interface BusScheduleService {
      * @return List of buses that travel directly between the locations
      */
     List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId);
-    
+
     /**
      * Find direct buses between two locations with translated location names
      * 
@@ -70,7 +72,7 @@ public interface BusScheduleService {
      * @return List of buses that pass through both locations
      */
     List<BusDTO> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId);
-    
+
     /**
      * Find buses that pass through both locations with translated location names
      * 
@@ -195,9 +197,41 @@ public interface BusScheduleService {
     /**
      * Get location translation for a specific language.
      * 
-     * @param locationId The location ID
-     * @param languageCode The language code (e.g., "ta" for Tamil, "en" for English)
+     * @param locationId   The location ID
+     * @param languageCode The language code (e.g., "ta" for Tamil, "en" for
+     *                     English)
      * @return The translated name, or null if not found
      */
     String getLocationTranslation(Long locationId, String languageCode);
+
+    // ==================== MULTI-BUS-STAND SEARCH METHODS ====================
+
+    /**
+     * Search for buses across all bus stands when user enters a city name.
+     * For example, searching "Aruppukottai" returns buses from both
+     * "Aruppukottai New Bus Stand" and "Aruppukottai Old Bus Stand".
+     * 
+     * @param fromLocation The source location (city name or bus stand name)
+     * @param toLocation   The destination location (city name or bus stand name)
+     * @param languageCode Language code for translations
+     * @return MultiStandSearchResponse containing buses from all relevant bus
+     *         stands
+     */
+    MultiStandSearchResponse searchBusesAcrossStands(String fromLocation, String toLocation, String languageCode);
+
+    /**
+     * Get all bus stands for a city.
+     * 
+     * @param cityName The name of the city
+     * @return List of bus stands in that city
+     */
+    List<BusStandDTO> getBusStandsForCity(String cityName);
+
+    /**
+     * Check if a location search term refers to a city with multiple bus stands.
+     * 
+     * @param searchTerm The search term entered by user
+     * @return true if the term matches a city that has multiple bus stands
+     */
+    boolean isCityWithMultipleBusStands(String searchTerm);
 }

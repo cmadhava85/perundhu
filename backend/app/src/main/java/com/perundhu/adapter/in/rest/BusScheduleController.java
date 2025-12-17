@@ -25,8 +25,10 @@ import com.google.common.util.concurrent.RateLimiter;
 import com.perundhu.adapter.in.rest.dto.PaginatedResponse;
 import com.perundhu.application.dto.BusDTO;
 import com.perundhu.application.dto.BusRouteDTO;
+import com.perundhu.application.dto.BusStandDTO;
 import com.perundhu.application.dto.ConnectingRouteDTO;
 import com.perundhu.application.dto.LocationDTO;
+import com.perundhu.application.dto.MultiStandSearchResponse;
 import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.BusScheduleService;
@@ -392,6 +394,109 @@ public class BusScheduleController {
             log.error("Error in comprehensive search", e);
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    /**
+     * Multi-bus-stand search endpoint
+     * When user enters a city name (e.g., "Aruppukottai"), this returns buses from
+     * ALL bus stands in that city.
+     * For example: "Aruppukottai" returns buses from both New Bus Stand and Old Bus
+     * Stand.
+     */
+    @Operation(summary = "Search buses across all bus stands", description = "Search for buses across all bus stands when user enters a city name. "
+            +
+            "For example, searching 'Aruppukottai' returns buses from both Aruppukottai New Bus Stand and Old Bus Stand.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved buses from all bus stands"),
+            @ApiResponse(responseCode = "400", description = "Invalid search parameters", content = @Content),
+            @ApiResponse(responseCode = "429", description = "Rate limit exceeded", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @GetMapping("/search/multi-stand")
+    public ResponseEntity<MultiStandSearchResponse> searchBusesMultiStand(
+            @Parameter(description = "Source location (city or bus stand name)", required = true) @RequestParam("from") String fromLocation,
+            @Parameter(description = "Destination location (city or bus stand name)", required = true) @RequestParam("to") String toLocation,
+            @Parameter(description = "Language code (en or ta)") @RequestParam(defaultValue = "en") String lang) {
+
+        // Apply rate limiting
+        checkRateLimit(getUserId());
+
+        log.info("Multi-stand search: from='{}' to='{}' lang='{}'", fromLocation, toLocation, lang);
+
+        // Validate parameters
+        if (fromLocation == null || fromLocation.isBlank() || toLocation == null || toLocation.isBlank()) {
+            log.warn("Invalid search parameters: from='{}', to='{}'", fromLocation, toLocation);
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (fromLocation.trim().equalsIgnoreCase(toLocation.trim())) {
+            log.warn("Same location provided for from and to: '{}'", fromLocation);
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            MultiStandSearchResponse response = busScheduleService.searchBusesAcrossStands(
+                    fromLocation.trim(),
+                    toLocation.trim(),
+                    lang);
+
+            log.info("Multi-stand search completed: {} buses from {} bus stands to {} bus stands",
+                    response.totalBuses(),
+                    response.fromBusStands().size(),
+                    response.toBusStands().size());
+
+            return ResponseEntity.ok(response);
+        } catch (RateLimitException e) {
+            log.warn("Rate limit exceeded for multi-stand search: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+        } catch (Exception e) {
+            log.error("Error in multi-stand search from='{}' to='{}'", fromLocation, toLocation, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Get all bus stands for a specific city
+     */
+    @Operation(summary = "Get bus stands for city", description = "Get all bus stands for a specific city name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved bus stands"),
+            @ApiResponse(responseCode = "400", description = "Invalid city name", content = @Content)
+    })
+    @GetMapping("/bus-stands")
+    public ResponseEntity<List<BusStandDTO>> getBusStandsForCity(
+            @Parameter(description = "City name", required = true) @RequestParam("city") String cityName) {
+
+        if (cityName == null || cityName.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        log.debug("Getting bus stands for city: {}", cityName);
+        List<BusStandDTO> busStands = busScheduleService.getBusStandsForCity(cityName.trim());
+        return ResponseEntity.ok(busStands);
+    }
+
+    /**
+     * Check if a location is a city with multiple bus stands
+     */
+    @Operation(summary = "Check if city has multiple bus stands", description = "Check if a location name refers to a city with multiple bus stands")
+    @GetMapping("/check-multi-stand")
+    public ResponseEntity<Map<String, Object>> checkMultiStandCity(
+            @Parameter(description = "Location/city name", required = true) @RequestParam("location") String location) {
+
+        if (location == null || location.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        boolean hasMultipleStands = busScheduleService.isCityWithMultipleBusStands(location.trim());
+        List<BusStandDTO> stands = hasMultipleStands ? busScheduleService.getBusStandsForCity(location.trim())
+                : List.of();
+
+        return ResponseEntity.ok(Map.of(
+                "location", location.trim(),
+                "hasMultipleStands", hasMultipleStands,
+                "busStandCount", stands.size(),
+                "busStands", stands));
     }
 
     /**

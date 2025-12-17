@@ -11,16 +11,17 @@ import { TextPasteContribution } from './contribution/TextPasteContribution';
 import { RouteVerification } from './contribution/RouteVerification';
 import { AddStopsToRoute } from './contribution/AddStopsToRoute';
 import { ReportIssue } from './contribution/ReportIssue';
-import { featureFlags } from '../config/featureFlags';
+import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import type { Bus } from '../types';
 import './RouteContribution.css';
 
 export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
-  const location = useLocation();
+  const routerLocation = useLocation();
+  const { flags } = useFeatureFlags();
   
   // Get pre-selected bus from navigation state (from search results "Add Stops" button)
-  const navigationState = location.state as { 
+  const navigationState = routerLocation.state as { 
     selectedBus?: Bus; 
     method?: string;
     fromSearch?: boolean;
@@ -38,13 +39,13 @@ export const RouteContribution: React.FC = () => {
     if (navigationState?.method === 'report-issue' && navigationState?.fromSearch) {
       return 'reportIssue';
     }
-    if (featureFlags.enableManualContribution) return 'manual';
-    if (featureFlags.enablePasteContribution) return 'paste';
-    if (featureFlags.enableImageContribution) return 'image';
-    if (featureFlags.enableVoiceContribution) return 'voice';
-    if (featureFlags.enableRouteVerification) return 'verify';
-    if (featureFlags.enableAddStops) return 'addStops';
-    if (featureFlags.enableReportIssue) return 'reportIssue';
+    if (flags.enableManualContribution) return 'manual';
+    if (flags.enablePasteContribution) return 'paste';
+    if (flags.enableImageContribution) return 'image';
+    if (flags.enableVoiceContribution) return 'voice';
+    if (flags.enableRouteVerification) return 'verify';
+    if (flags.enableAddStops) return 'addStops';
+    if (flags.enableReportIssue) return 'reportIssue';
     return 'manual'; // Fallback
   };
   
@@ -81,18 +82,19 @@ export const RouteContribution: React.FC = () => {
   useEffect(() => {
     const isFromSearch = navigationState?.fromSearch === true;
     const isCurrentMethodEnabled = 
-      (contributionMethod === 'manual' && featureFlags.enableManualContribution) ||
-      (contributionMethod === 'image' && featureFlags.enableImageContribution) ||
-      (contributionMethod === 'voice' && featureFlags.enableVoiceContribution) ||
-      (contributionMethod === 'paste' && featureFlags.enablePasteContribution) ||
-      (contributionMethod === 'verify' && featureFlags.enableRouteVerification) ||
-      (contributionMethod === 'addStops' && (featureFlags.enableAddStops || isFromSearch)) ||
-      (contributionMethod === 'reportIssue' && (featureFlags.enableReportIssue || isFromSearch));
+      (contributionMethod === 'manual' && flags.enableManualContribution) ||
+      (contributionMethod === 'image' && flags.enableImageContribution) ||
+      (contributionMethod === 'voice' && flags.enableVoiceContribution) ||
+      (contributionMethod === 'paste' && flags.enablePasteContribution) ||
+      (contributionMethod === 'verify' && flags.enableRouteVerification) ||
+      (contributionMethod === 'addStops' && (flags.enableAddStops || isFromSearch)) ||
+      (contributionMethod === 'reportIssue' && (flags.enableReportIssue || isFromSearch));
     
     if (!isCurrentMethodEnabled) {
       setContributionMethod(getDefaultMethod());
     }
-  }, [contributionMethod, navigationState?.fromSearch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contributionMethod, navigationState?.fromSearch, flags]);
 
   interface ContributionData {
     busName?: string;

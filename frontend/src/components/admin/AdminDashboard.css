@@ -206,6 +206,27 @@
   }
 }
 
+/* Extra small devices - 480px and below */
+@media (max-width: 480px) {
+  .admin-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+  
+  .tab-button {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.75rem;
+    border-radius: 5px;
+    flex: 0 1 auto;
+  }
+  
+  .tab-icon {
+    font-size: 0.875rem;
+  }
+}
+
 /* Tablet and up */
 @media (min-width: 641px) {
   .admin-tabs {

@@ -63,6 +63,9 @@ public class BusJpaEntity {
     @JoinColumn(name = "to_location_id")
     private LocationJpaEntity toLocation;
 
+    // Note: Bus stand feature uses the existing locations table with pattern "City - BusStandName"
+    // No separate bus_stands table foreign keys needed
+
     private Integer capacity;
 
     private String category;
@@ -90,7 +93,7 @@ public class BusJpaEntity {
                 .toLocation(bus.toLocation() != null ? LocationJpaEntity.fromDomainModel(bus.toLocation()) : null)
                 .capacity(bus.capacity())
                 .category(bus.type())
-                .active(true)
+                .active(bus.active() != null ? bus.active() : true)
                 .build();
     }
 
@@ -106,7 +109,8 @@ public class BusJpaEntity {
                 departureTime != null ? departureTime : LocalTime.of(9, 0), // departureTime
                 arrivalTime != null ? arrivalTime : LocalTime.of(17, 0), // arrivalTime
                 capacity != null ? capacity : 50, // capacity
-                List.of() // features - not in JPA entity
+                List.of(), // features - not in JPA entity
+                active != null ? active : true // active
         );
     }
 }

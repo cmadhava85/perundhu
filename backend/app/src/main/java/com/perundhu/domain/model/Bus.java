@@ -17,7 +17,8 @@ public record Bus(
         LocalTime departureTime,
         LocalTime arrivalTime,
         Integer capacity,
-        List<String> features) {
+        List<String> features,
+        Boolean active) {
     /**
      * Constructor with validation
      */
@@ -37,6 +38,35 @@ public record Bus(
         if (capacity == null) {
             capacity = 50; // Default bus capacity
         }
+        if (active == null) {
+            active = true; // Default to active
+        }
+    }
+
+    /**
+     * Backward-compatible constructor without active field
+     */
+    public Bus(BusId id, String number, String name, String operator, String type,
+            Location fromLocation, Location toLocation, LocalTime departureTime,
+            LocalTime arrivalTime, Integer capacity, List<String> features) {
+        this(id, number, name, operator, type, fromLocation, toLocation,
+                departureTime, arrivalTime, capacity, features, true);
+    }
+
+    // With-methods for immutable updates
+    public Bus withDepartureTime(LocalTime newDepartureTime) {
+        return new Bus(id, number, name, operator, type, fromLocation, toLocation,
+                newDepartureTime, arrivalTime, capacity, features, active);
+    }
+
+    public Bus withArrivalTime(LocalTime newArrivalTime) {
+        return new Bus(id, number, name, operator, type, fromLocation, toLocation,
+                departureTime, newArrivalTime, capacity, features, active);
+    }
+
+    public Bus withActive(Boolean newActive) {
+        return new Bus(id, number, name, operator, type, fromLocation, toLocation,
+                departureTime, arrivalTime, capacity, features, newActive);
     }
 
     // Traditional getter methods for compatibility
@@ -84,9 +114,21 @@ public record Bus(
         return features;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
     public String getBusNumber() {
         return number;
     } // Alias for backward compatibility
+
+    public String busNumber() {
+        return number;
+    } // Record-style alias
+
+    public String category() {
+        return type;
+    } // Alias for JPA entity compatibility
 
     /**
      * Factory method to create a bus with minimal information

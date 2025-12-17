@@ -239,8 +239,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           )
         );
 
-        pollProcessingStatus(response.contributionId, imageId);
-        onSuccess?.(response.contributionId);
+        // Start polling for processing status - onSuccess will be called when processing completes
+        pollProcessingStatus(response.contributionId, imageId, onSuccess);
       } else {
         throw new Error(response.message || 'Upload failed');
       }
@@ -283,7 +283,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     }
   };
 
-  const pollProcessingStatus = async (contributionId: string, imageId: string) => {
+  const pollProcessingStatus = async (contributionId: string, imageId: string, successCallback?: (contributionId: string) => void) => {
     const pollInterval = setInterval(async () => {
       try {
         const statusResponse = await getImageProcessingStatus(contributionId);
@@ -296,8 +296,13 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           )
         );
 
+        // Check if processing is complete (not in PROCESSING or PENDING state)
         if (statusResponse.status && !['PROCESSING', 'PENDING'].includes(statusResponse.status)) {
           clearInterval(pollInterval);
+          // Only call success callback when actually processed successfully
+          if (statusResponse.status === 'PROCESSED' && successCallback) {
+            successCallback(contributionId);
+          }
         }
       } catch (error) {
         console.error('Error polling status:', error);

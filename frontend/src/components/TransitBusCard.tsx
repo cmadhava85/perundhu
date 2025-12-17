@@ -5,6 +5,7 @@ import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import ShareRoute from './ShareRoute';
 import JourneyTimeline from './JourneyTimeline';
+import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
 
@@ -37,6 +38,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
 }) => {
 
   const { i18n } = useTranslation();
+  const { flags } = useFeatureFlags();
   const [isExpanded, setIsExpanded] = useState(false);
   const isSelected = selectedBusId === bus.id;
   
@@ -355,7 +357,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             </div>
             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
               {/* Add Stops CTA for buses with 5 or fewer stops */}
-              {stops.length <= 5 && onAddStops && (
+              {flags.enableAddStops && stops.length <= 5 && onAddStops && (
                 <button
                   type="button"
                   className="add-stops-cta"
@@ -392,7 +394,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                 </button>
               )}
               {/* Share Route Button */}
-              {fromLocation && toLocation && (
+              {flags.enableShareRoute && fromLocation && toLocation && (
                 <div onClick={(e) => e.stopPropagation()}>
                   <ShareRoute
                     bus={bus}
@@ -402,7 +404,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                 </div>
               )}
               {/* Report Issue Button */}
-              {onReportIssue && (
+              {flags.enableReportIssue && onReportIssue && (
                 <button
                   type="button"
                   className="report-issue-cta"

@@ -94,6 +94,29 @@ public class HexagonalArchitectureTest {
     rule.check(importedClasses);
   }
 
+  /**
+   * CRITICAL: Controllers (REST adapters) should NOT directly depend on
+   * infrastructure layer.
+   * Controllers should use application services, not JPA repositories or
+   * entities.
+   * 
+   * Violation example:
+   * - Controller importing BusJpaRepository or BusJpaEntity
+   * 
+   * Correct pattern:
+   * - Controller → Service → Domain Port → Adapter → JpaRepository
+   */
+  @Test
+  void controllersShouldNotDependOnInfrastructureLayer() {
+    ArchRule rule = noClasses()
+        .that().resideInAPackage("..adapter.in.rest..")
+        .should().dependOnClassesThat().resideInAPackage("..infrastructure.persistence..")
+        .because("Controllers should use application services, not JPA repositories/entities directly. " +
+            "This violates layered architecture and bypasses business logic.");
+
+    rule.check(importedClasses);
+  }
+
   @Test
   void domainServicesShouldBeInterfaces() {
     ArchRule rule = classes()

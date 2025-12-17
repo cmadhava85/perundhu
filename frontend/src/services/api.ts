@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosResponse, Method, InternalAxiosRequestConfig } from 'axios';
-import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution } from '../types/index';
+import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution, BusStand, MultiStandSearchResponse, MultiStandCheckResponse } from '../types/index';
 import { getLocationsOffline } from './offlineService';
 import { setupRetryInterceptor } from './apiRetry';
 import { logger } from '../utils/logger';
@@ -1153,4 +1153,134 @@ export const retryImageProcessing = async (contributionId: string) => {
   } catch (error) {
     return handleApiError(error);
   }
+};
+
+// ==================== MULTI-BUS-STAND SEARCH API ====================
+
+/**
+ * Search for buses across all bus stands when user enters a city name.
+ * For example, searching "Aruppukottai" returns buses from both 
+ * "Aruppukottai New Bus Stand" and "Aruppukottai Old Bus Stand".
+ * 
+ * @param fromLocation Source city or bus stand name
+ * @param toLocation Destination city or bus stand name
+ * @param languageCode Language code for translations (default: 'en')
+ * @returns MultiStandSearchResponse with buses from all relevant bus stands
+ */
+export const searchBusesMultiStand = async (
+  fromLocation: string,
+  toLocation: string,
+  languageCode: string = 'en'
+): Promise<MultiStandSearchResponse> => {
+  try {
+    logger.info(`Multi-stand search: from='${fromLocation}' to='${toLocation}'`);
+    
+    const response = await api.get('/api/v1/bus-schedules/search/multi-stand', {
+      params: {
+        from: fromLocation,
+        to: toLocation,
+        lang: languageCode
+      }
+    });
+    
+    const result: MultiStandSearchResponse = response.data;
+    
+    logger.info(`Multi-stand search returned ${result.totalBuses} buses from ${result.fromBusStands.length} source stands`);
+    
+    return result;
+  } catch (error) {
+    logger.error('Error in multi-stand bus search:', error);
+    throw new ApiError('Failed to search buses across bus stands. Please try again.');
+  }
+};
+
+/**
+ * Get all bus stands for a specific city
+ * 
+ * @param cityName Name of the city
+ * @returns List of bus stands in that city
+ */
+export const getBusStandsForCity = async (cityName: string): Promise<BusStand[]> => {
+  try {
+    const response = await api.get('/api/v1/bus-schedules/bus-stands', {
+      params: { city: cityName }
+    });
+    return response.data;
+  } catch (error) {
+    logger.error(`Error fetching bus stands for ${cityName}:`, error);
+    throw new ApiError(`Failed to get bus stands for ${cityName}`);
+  }
+};
+
+/**
+ * Check if a location is a city with multiple bus stands
+ * 
+ * @param location Location/city name to check
+ * @returns Information about whether the city has multiple bus stands
+ */
+export const checkMultiStandCity = async (location: string): Promise<MultiStandCheckResponse> => {
+  try {
+    const response = await api.get('/api/v1/bus-schedules/check-multi-stand', {
+      params: { location }
+    });
+    return response.data;
+  } catch (error) {
+    logger.error(`Error checking multi-stand for ${location}:`, error);
+    // Return default response indicating no multi-stand
+    return {
+      location,
+      hasMultipleStands: false,
+      busStandCount: 0,
+      busStands: []
+    };
+  }
+};
+
+/**
+ * Enhanced bus search that automatically uses multi-stand search when appropriate.
+ * Detects if the search locations are cities with multiple bus stands and
+ * uses the appropriate search method.
+ * 
+ * @param fromLocation Source location (can be city or bus stand)
+ * @param toLocation Destination location (can be city or bus stand)
+ * @param languageCode Language for translations
+ * @returns Buses from all relevant bus stands
+ */
+export const searchBusesSmart = async (
+  fromLocation: Location | string,
+  toLocation: Location | string,
+  languageCode: string = 'en'
+): Promise<{ buses: Bus[]; multiStandInfo?: MultiStandSearchResponse }> => {
+  // Extract names
+  const fromName = typeof fromLocation === 'string' ? fromLocation : fromLocation.name;
+  const toName = typeof toLocation === 'string' ? toLocation : toLocation.name;
+  
+  // Check if either location is a city with multiple stands
+  const [fromCheck, toCheck] = await Promise.all([
+    checkMultiStandCity(fromName),
+    checkMultiStandCity(toName)
+  ]);
+  
+  if (fromCheck.hasMultipleStands || toCheck.hasMultipleStands) {
+    // Use multi-stand search
+    logger.info(`Using multi-stand search: from has ${fromCheck.busStandCount} stands, to has ${toCheck.busStandCount} stands`);
+    const multiResult = await searchBusesMultiStand(fromName, toName, languageCode);
+    return {
+      buses: multiResult.buses,
+      multiStandInfo: multiResult
+    };
+  }
+  
+  // Fall back to regular search if no multi-stand detected
+  if (typeof fromLocation === 'object' && typeof toLocation === 'object') {
+    const buses = await searchBuses(fromLocation, toLocation, true, languageCode);
+    return { buses };
+  }
+  
+  // If we only have names, try multi-stand search anyway
+  const multiResult = await searchBusesMultiStand(fromName, toName, languageCode);
+  return {
+    buses: multiResult.buses,
+    multiStandInfo: multiResult
+  };
 };

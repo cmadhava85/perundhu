@@ -245,6 +245,120 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
       logger.error(`Failed to fetch bus details for ID ${busId}:`, error);
       return null;
     }
+  },
+
+  // System settings methods
+  getFeatureFlags: async (): Promise<Record<string, boolean>> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.get(`${API_URL}/api/admin/settings/feature-flags`, {
+        headers: { Authorization: authHeader }
+      });
+      return response.data;
+    } catch (error) {
+      logger.error('Failed to fetch feature flags from backend', error);
+      throw error;
+    }
+  },
+
+  updateFeatureFlags: async (flags: Record<string, boolean>): Promise<{
+    success: boolean;
+    flags: Record<string, boolean>;
+    timestamp: string;
+  }> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.put(
+        `${API_URL}/api/admin/settings/feature-flags`,
+        flags,
+        { headers: { Authorization: authHeader } }
+      );
+      return response.data;
+    } catch (error) {
+      logger.error('Failed to update feature flags', error);
+      throw error;
+    }
+  },
+
+  resetFeatureFlags: async (): Promise<{
+    success: boolean;
+    flags: Record<string, boolean>;
+    timestamp: string;
+  }> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/admin/settings/feature-flags/reset`,
+        {},
+        { headers: { Authorization: authHeader } }
+      );
+      return response.data;
+    } catch (error) {
+      logger.error('Failed to reset feature flags', error);
+      throw error;
+    }
+  },
+
+  getAllSettings: async (): Promise<Array<{
+    id: number;
+    settingKey: string;
+    settingValue: string;
+    category: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+  }>> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.get(`${API_URL}/api/admin/settings`, {
+        headers: { Authorization: authHeader }
+      });
+      return response.data;
+    } catch (error) {
+      logger.error('Failed to fetch all settings', error);
+      throw error;
+    }
+  },
+
+  updateSetting: async (key: string, value: string): Promise<{
+    id: number;
+    settingKey: string;
+    settingValue: string;
+    category: string;
+    description: string;
+  }> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.put(
+        `${API_URL}/api/admin/settings/key/${encodeURIComponent(key)}`,
+        { value },
+        { headers: { Authorization: authHeader } }
+      );
+      return response.data;
+    } catch (error) {
+      logger.error(`Failed to update setting ${key}`, error);
+      throw error;
+    }
+  },
+
+  resetAllSettings: async (): Promise<{
+    success: boolean;
+    message: string;
+    settings: Record<string, string>;
+    timestamp: string;
+  }> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/admin/settings/reset`,
+        {},
+        { headers: { Authorization: authHeader } }
+      );
+      return response.data;
+    } catch (error) {
+      logger.error('Failed to reset all settings', error);
+      throw error;
+    }
   }
 };
 

@@ -286,3 +286,45 @@ export interface ImageContribution {
   captchaToken?: string | null;
 }
 
+/**
+ * Bus Stand information for multi-stand search
+ */
+export interface BusStand {
+  id: number;
+  busStandName: string;
+  cityId: number;
+  cityName: string;
+  latitude?: number;
+  longitude?: number;
+  busStandType: 'MAIN' | 'PRIVATE' | 'TNSTC' | 'SETC';
+  facilities: string[];
+  address?: string;
+  busCount: number;
+}
+
+/**
+ * Multi-stand search response
+ * Used when user searches by city name (e.g., "Aruppukottai")
+ * Returns buses from ALL bus stands in that city
+ */
+export interface MultiStandSearchResponse {
+  fromCity: string;
+  toCity: string;
+  searchType: 'CITY_ONLY' | 'BUS_STAND_SPECIFIC' | 'WITH_DETAILS';
+  fromBusStands: BusStand[];
+  toBusStands: BusStand[];
+  buses: Bus[];
+  totalBuses: number;
+  busStandCombinations: number;
+}
+
+/**
+ * Check if a location is a city with multiple bus stands
+ */
+export interface MultiStandCheckResponse {
+  location: string;
+  hasMultipleStands: boolean;
+  busStandCount: number;
+  busStands: BusStand[];
+}
+
