@@ -157,7 +157,9 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
             fontSize: '14px',
             border: '2px solid #ddd',
             borderRadius: '8px',
-            outline: 'none'
+            outline: 'none',
+            height: '48px',
+            boxSizing: 'border-box'
           }}
           autoComplete="off"
         />

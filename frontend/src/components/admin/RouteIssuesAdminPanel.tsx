@@ -742,14 +742,20 @@ const RouteIssuesAdminPanel: React.FC = () => {
                               <h5>{t('admin.issues.currentStops', 'Route Stops')} ({issueDetails.currentStops.length})</h5>
                             </div>
                             <div className="stops-timeline">
-                              {issueDetails.currentStops.map((stop, index) => (
+                              {[...issueDetails.currentStops]
+                                .sort((a, b) => {
+                                  const timeA = a.departureTime || a.arrivalTime || '00:00';
+                                  const timeB = b.departureTime || b.arrivalTime || '00:00';
+                                  return timeA.localeCompare(timeB);
+                                })
+                                .map((stop, index) => (
                                 <div key={stop.id || index} className="stop-item">
                                   <div className="stop-marker">
                                     <div className="stop-dot"></div>
                                     {index < issueDetails.currentStops!.length - 1 && <div className="stop-line"></div>}
                                   </div>
                                   <div className="stop-content">
-                                    <span className="stop-order">#{stop.stopOrder || index + 1}</span>
+                                    <span className="stop-order">#{index + 1}</span>
                                     <span className="stop-name">{stop.name || `Stop ${stop.locationId || index + 1}`}</span>
                                     {(stop.arrivalTime || stop.departureTime) && (
                                       <span className="stop-time">

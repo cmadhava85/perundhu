@@ -389,78 +389,99 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
           </span>
         </div>
         
-        <div className="form-row-compact">
-          <div className={`form-group-compact ${validationErrors.origin ? 'field-error' : ''}`}>
-            <label htmlFor="origin" className="compact-label">
-              📍 {t('route.from', 'From')} <span className="required">*</span>
-              {locationVerified.origin && <span className="verified">✓</span>}
+        {/* NEW: Row-based layout - From Row */}
+        <div className="route-input-row">
+          <div className={`route-location-field ${validationErrors.origin ? 'field-error' : ''}`}>
+            <label htmlFor="origin" className="route-label">
+              <span className="label-icon origin-icon">🟢</span>
+              {t('route.from', 'From')} <span className="required">*</span>
+              {locationVerified.origin && <span className="verified-badge">✓</span>}
             </label>
-            <div className="compact-location-time">
-              <LocationAutocompleteInput
-                id="origin"
-                name="origin"
-                value={formData.origin}
-                onChange={handleOriginChange}
-                placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
-                label=""
-                required
-              />
-              <div className="compact-time">
-                <span className="time-icon">⏰</span>
-                <input
-                  type="time"
-                  id="departureTime"
-                  name="departureTime"
-                  value={formData.departureTime}
-                  onChange={handleChange}
-                  className={`compact-time-input ${validationErrors.departureTime ? 'input-error' : ''}`}
-                  style={validationErrors.departureTime ? { borderColor: '#dc2626' } : {}}
-                />
-              </div>
-            </div>
-            {(validationErrors.origin || validationErrors.departureTime) && (
-              <span className="error-text-compact">
-                {validationErrors.origin || t('route.timeRequired', 'Time required')}
-              </span>
+            <LocationAutocompleteInput
+              id="origin"
+              name="origin"
+              value={formData.origin}
+              onChange={handleOriginChange}
+              placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
+              label=""
+              required
+            />
+            {validationErrors.origin && (
+              <span className="field-error-text">{validationErrors.origin}</span>
             )}
             {locationWarnings.origin && !validationErrors.origin && (
-              <span className="warning-text-compact"><AlertTriangle size={12} /> {locationWarnings.origin}</span>
+              <span className="field-warning-text"><AlertTriangle size={12} /> {locationWarnings.origin}</span>
             )}
           </div>
           
-          <div className={`form-group-compact ${validationErrors.destination ? 'field-error' : ''}`}>
-            <label htmlFor="destination" className="compact-label">
-              🎯 {t('route.to', 'To')} <span className="required">*</span>
-              {locationVerified.destination && <span className="verified">✓</span>}
+          <div className={`route-time-field ${validationErrors.departureTime ? 'field-error' : ''}`}>
+            <label htmlFor="departureTime" className="route-label">
+              <span className="label-icon">🕐</span>
+              {t('route.departureTime', 'Departure')} <span className="required">*</span>
             </label>
-            <div className="compact-location-time">
-              <LocationAutocompleteInput
-                id="destination"
-                name="destination"
-                value={formData.destination}
-                onChange={handleDestinationChange}
-                placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
-                label=""
-                required
+            <div className="time-input-wrapper">
+              <input
+                type="time"
+                id="departureTime"
+                name="departureTime"
+                value={formData.departureTime}
+                onChange={handleChange}
+                className="route-time-input"
               />
-              <div className="compact-time optional">
-                <span className="time-icon">⏰</span>
-                <input
-                  type="time"
-                  id="arrivalTime"
-                  name="arrivalTime"
-                  value={formData.arrivalTime}
-                  onChange={handleChange}
-                  className="compact-time-input"
-                />
-              </div>
             </div>
+            {validationErrors.departureTime && (
+              <span className="field-error-text">{t('route.timeRequired', 'Required')}</span>
+            )}
+          </div>
+        </div>
+        
+        {/* Route Arrow Connector */}
+        <div className="route-connector">
+          <div className="connector-line"></div>
+          <span className="connector-arrow">↓</span>
+          <div className="connector-line"></div>
+        </div>
+        
+        {/* To Row */}
+        <div className="route-input-row">
+          <div className={`route-location-field ${validationErrors.destination ? 'field-error' : ''}`}>
+            <label htmlFor="destination" className="route-label">
+              <span className="label-icon destination-icon">🔴</span>
+              {t('route.to', 'To')} <span className="required">*</span>
+              {locationVerified.destination && <span className="verified-badge">✓</span>}
+            </label>
+            <LocationAutocompleteInput
+              id="destination"
+              name="destination"
+              value={formData.destination}
+              onChange={handleDestinationChange}
+              placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
+              label=""
+              required
+            />
             {validationErrors.destination && (
-              <span className="error-text-compact">{validationErrors.destination}</span>
+              <span className="field-error-text">{validationErrors.destination}</span>
             )}
             {locationWarnings.destination && !validationErrors.destination && (
-              <span className="warning-text-compact"><AlertTriangle size={12} /> {locationWarnings.destination}</span>
+              <span className="field-warning-text"><AlertTriangle size={12} /> {locationWarnings.destination}</span>
             )}
+          </div>
+          
+          <div className="route-time-field optional">
+            <label htmlFor="arrivalTime" className="route-label">
+              <span className="label-icon">🕐</span>
+              {t('route.arrivalTime', 'Arrival')} <span className="optional-text">({t('route.optional', 'optional')})</span>
+            </label>
+            <div className="time-input-wrapper optional">
+              <input
+                type="time"
+                id="arrivalTime"
+                name="arrivalTime"
+                value={formData.arrivalTime}
+                onChange={handleChange}
+                className="route-time-input"
+              />
+            </div>
           </div>
         </div>
         
@@ -530,19 +551,20 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               <div className="detailed-stops-view">
                 {intermediateStops.map((stop, index) => (
                   <div key={stop.id} className="stop-card">
-                    <div className="stop-header">
-                      <div className="stop-number">{t('route.stop', 'Stop')} {index + 1}</div>
+                    <div className="stop-badge-container">
+                      <span className="stop-badge">{index + 1}</span>
                       <button 
                         type="button" 
                         onClick={() => removeStop(stop.id)}
                         className="remove-stop-btn"
                         title={t('route.removeStop', 'Remove stop')}
+                        aria-label={t('route.removeStop', 'Remove stop')}
                       >
-                        <span className="btn-icon">❌</span>
+                        ✕
                       </button>
                     </div>
                     
-                    <div className="stop-form-grid">
+                    <div className="stop-form-content">
                       <div className="stop-name-field">
                         <label>
                           <span className="field-icon">📍</span>
@@ -560,11 +582,11 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                         />
                       </div>
                       
-                      <div className="stop-timing-fields">
+                      <div className="stop-timing-row">
                         <div className="timing-field">
                           <label>
-                            <span className="field-icon">🕐</span>
-                            {t('route.arrivalTime', 'Arrival Time')}
+                            <span className="field-icon">⏰</span>
+                            {t('route.arrivalTime', 'Arrival')}
                           </label>
                           <input
                             type="time"
@@ -576,8 +598,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
                         
                         <div className="timing-field">
                           <label>
-                            <span className="field-icon">🕑</span>
-                            {t('route.departureTime', 'Departure Time')}
+                            <span className="field-icon">🚌</span>
+                            {t('route.departureTime', 'Departure')}
                           </label>
                           <input
                             type="time"

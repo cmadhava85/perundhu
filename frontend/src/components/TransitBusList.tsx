@@ -30,6 +30,7 @@ interface TransitBusListProps {
   toLocationObj?: AppLocation;
   onAddStops?: (bus: Bus) => void;
   onReportIssue?: (bus: Bus) => void;
+  hasConnectingRoutes?: boolean;
 }
 
 const TransitBusList: React.FC<TransitBusListProps> = ({
@@ -44,7 +45,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   fromLocationObj,
   toLocationObj,
   onAddStops,
-  onReportIssue
+  onReportIssue,
+  hasConnectingRoutes = false
 }) => {
   const { t } = useTranslation();
   
@@ -274,6 +276,48 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     const isFromUserInput = fromLocationObj?.source === 'user-input' || fromLocationObj?.id === -1;
     const isToUserInput = toLocationObj?.source === 'user-input' || toLocationObj?.id === -1;
     const hasInvalidLocation = isFromUserInput || isToUserInput;
+    
+    // If connecting routes exist, show a compact message instead of large empty state
+    if (hasConnectingRoutes && !hasInvalidLocation) {
+      return (
+        <div className="container-sm" style={{ paddingTop: 'var(--space-4)' }}>
+          <div className="transit-card" style={{ 
+            textAlign: 'center', 
+            padding: 'var(--space-4) var(--space-6)',
+            background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+            border: '1px solid #bae6fd',
+            borderRadius: '12px'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              gap: '12px',
+              flexWrap: 'wrap'
+            }}>
+              <span style={{ fontSize: '1.5rem' }}>ℹ️</span>
+              <div>
+                <p className="text-body" style={{ 
+                  color: '#0369a1', 
+                  margin: 0,
+                  fontWeight: 600,
+                  fontSize: '0.95rem'
+                }}>
+                  {t('busList.noDirectBuses', 'No direct buses available.')}
+                </p>
+                <p className="text-caption" style={{ 
+                  color: '#0c4a6e', 
+                  margin: '4px 0 0 0',
+                  fontSize: '0.85rem'
+                }}>
+                  {t('busList.seeConnectingAbove', 'See connecting routes above with transfers.')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     
     return (
       <div className="container-sm" style={{ paddingTop: 'var(--space-8)' }}>

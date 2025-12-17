@@ -54,26 +54,18 @@ export const RouteContribution: React.FC = () => {
   const [statusMessage, setStatusMessage] = useState<string>('');
   const [errorType, setErrorType] = useState<'general' | 'duplicate'>('general');
   const [voiceTranscription, setVoiceTranscription] = useState<string>('');
-  
+  const [formKey, setFormKey] = useState<number>(0); // Key to force form reset
   // Store pre-selected bus for AddStopsToRoute component
   const preSelectedBus = navigationState?.selectedBus || undefined;
   const preSelectedFromLocation = navigationState?.fromLocation || undefined;
   const preSelectedToLocation = navigationState?.toLocation || undefined;
 
-  // Debug logging
-  console.log('RouteContribution - navigationState:', navigationState);
-  console.log('RouteContribution - preSelectedBus:', preSelectedBus);
-  console.log('RouteContribution - fromLocation:', preSelectedFromLocation);
-  console.log('RouteContribution - toLocation:', preSelectedToLocation);
-
   // When navigating from search results with a method, update the contribution method
   useEffect(() => {
     // Bypass feature flag when coming from search results
     if (navigationState?.method === 'add-stops' && navigationState?.fromSearch) {
-      console.log('Setting contribution method to addStops from search results');
       setContributionMethod('addStops');
     } else if (navigationState?.method === 'report-issue' && navigationState?.fromSearch) {
-      console.log('Setting contribution method to reportIssue from search results');
       setContributionMethod('reportIssue');
     }
   }, [navigationState?.method, navigationState?.fromSearch]);
@@ -92,10 +84,27 @@ export const RouteContribution: React.FC = () => {
       (contributionMethod === 'reportIssue' && (flags.enableReportIssue || isFromSearch));
     
     if (!isCurrentMethodEnabled) {
-      setContributionMethod(getDefaultMethod());
+      // Find the first enabled method instead of calling getDefaultMethod
+      if (flags.enableManualContribution) setContributionMethod('manual');
+      else if (flags.enablePasteContribution) setContributionMethod('paste');
+      else if (flags.enableImageContribution) setContributionMethod('image');
+      else if (flags.enableVoiceContribution) setContributionMethod('voice');
+      else if (flags.enableRouteVerification) setContributionMethod('verify');
+      else if (flags.enableAddStops) setContributionMethod('addStops');
+      else if (flags.enableReportIssue) setContributionMethod('reportIssue');
+      else setContributionMethod('manual');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contributionMethod, navigationState?.fromSearch, flags]);
+  }, [
+    contributionMethod, 
+    navigationState?.fromSearch, 
+    flags.enableManualContribution,
+    flags.enablePasteContribution,
+    flags.enableImageContribution,
+    flags.enableVoiceContribution,
+    flags.enableRouteVerification,
+    flags.enableAddStops,
+    flags.enableReportIssue
+  ]);
 
   interface ContributionData {
     busName?: string;
@@ -204,6 +213,15 @@ export const RouteContribution: React.FC = () => {
     }
   };
 
+  // Reset form to fresh state for adding a new route
+  const handleResetForm = () => {
+    setSubmissionStatus('idle');
+    setStatusMessage('');
+    setErrorType('general');
+    setVoiceTranscription('');
+    setFormKey(prev => prev + 1); // Increment key to force form remount/reset
+  };
+
   return (
     <div className="premium-contribution-page">
       {/* Compact Header */}
@@ -240,6 +258,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'manual' && (
             <div>
               <SimpleRouteForm 
+                key={formKey}
                 onSubmit={(data) => handleSecureSubmission(data, false)} 
               />
             </div>
@@ -355,7 +374,7 @@ export const RouteContribution: React.FC = () => {
               <h3 className="status-title">{t('status.success.title', 'Contribution Successful!')}</h3>
               <p className="status-message">{statusMessage}</p>
               <div className="success-actions">
-                <button className="action-btn primary" onClick={() => setSubmissionStatus('idle')}>
+                <button className="action-btn primary" onClick={handleResetForm}>
                   <span className="btn-icon">➕</span>
                   <span>{t('actions.addAnother', 'Add Another Route')}</span>
                 </button>
@@ -375,7 +394,7 @@ export const RouteContribution: React.FC = () => {
               </h3>
               <p className="status-message">{statusMessage}</p>
               <div className="error-actions">
-                <button className="action-btn primary" onClick={() => { setSubmissionStatus('idle'); setErrorType('general'); }}>
+                <button className="action-btn primary" onClick={handleResetForm}>
                   <span className="btn-icon">{errorType === 'duplicate' ? '✏️' : '🔄'}</span>
                   <span>{errorType === 'duplicate' 
                     ? t('actions.modifyDetails', 'Modify Details')

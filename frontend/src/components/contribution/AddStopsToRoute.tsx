@@ -60,6 +60,9 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const [newStops, setNewStops] = useState<StopEntry[]>([]);
   const [stopLocationQuery, setStopLocationQuery] = useState('');
   const [showStopSuggestions, setShowStopSuggestions] = useState(false);
+  const [activeStopInputIndex, setActiveStopInputIndex] = useState<number | null>(null);
+  const [highlightedStopIndex, setHighlightedStopIndex] = useState(-1);
+  const isSelectingStopRef = React.useRef(false);
   
   // Dynamic autocomplete state (DB + local + OpenStreetMap)
   const [dynamicFromSuggestions, setDynamicFromSuggestions] = useState<LocationSuggestion[]>([]);
@@ -110,10 +113,16 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     setIsLoadingStops(true);
     try {
       const stops = await getStops(busId);
-      setExistingStops(stops);
+      // Sort stops by time (departure time first, then arrival time)
+      const sortedStops = [...stops].sort((a, b) => {
+        const timeA = a.departureTime || a.arrivalTime || '00:00';
+        const timeB = b.departureTime || b.arrivalTime || '00:00';
+        return timeA.localeCompare(timeB);
+      });
+      setExistingStops(sortedStops);
       
       // Initialize new stops after existing ones
-      if (stops.length === 0) {
+      if (sortedStops.length === 0) {
         // No existing stops, start fresh with from/to as first and last
         setNewStops([]);
       }
@@ -278,6 +287,8 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     handleUpdateStop(index, 'locationId', location.id);
     setStopLocationQuery('');
     setShowStopSuggestions(false);
+    setActiveStopInputIndex(null);
+    setHighlightedStopIndex(-1);
   };
 
   // Validate stops before submission
@@ -714,36 +725,84 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                           handleUpdateStop(index, 'locationName', e.target.value);
                           setStopLocationQuery(e.target.value);
                           setShowStopSuggestions(true);
+                          setActiveStopInputIndex(index);
+                          setHighlightedStopIndex(-1);
                           fetchDynamicSuggestions(e.target.value, 'stop');
                         }}
                         onFocus={() => {
                           setStopLocationQuery(stop.locationName);
                           setShowStopSuggestions(true);
+                          setActiveStopInputIndex(index);
+                          setHighlightedStopIndex(-1);
                         }}
-                        onBlur={() => setTimeout(() => setShowStopSuggestions(false), 200)}
+                        onBlur={() => {
+                          setTimeout(() => {
+                            if (!isSelectingStopRef.current) {
+                              setShowStopSuggestions(false);
+                              setActiveStopInputIndex(null);
+                              setHighlightedStopIndex(-1);
+                            }
+                            isSelectingStopRef.current = false;
+                          }, 200);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') {
+                            setShowStopSuggestions(false);
+                            setHighlightedStopIndex(-1);
+                          } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            setShowStopSuggestions(true);
+                            setHighlightedStopIndex(prev => 
+                              prev < stopSuggestions.length - 1 ? prev + 1 : prev
+                            );
+                          } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            setHighlightedStopIndex(prev => prev > 0 ? prev - 1 : -1);
+                          } else if (e.key === 'Enter') {
+                            if (highlightedStopIndex >= 0 && stopSuggestions[highlightedStopIndex]) {
+                              e.preventDefault();
+                              handleSelectStopLocation(index, stopSuggestions[highlightedStopIndex]);
+                            }
+                          } else if (e.key === 'Tab') {
+                            setShowStopSuggestions(false);
+                            setHighlightedStopIndex(-1);
+                          }
+                        }}
                         placeholder={t('addStops.enterStopName', 'Enter stop name')}
                         className="stop-input"
+                        autoComplete="off"
                       />
-                      {isLoadingStopSuggestions && <span className="loading-indicator">⏳</span>}
-                      {showStopSuggestions && stopSuggestions.length > 0 && (
+                      {isLoadingStopSuggestions && activeStopInputIndex === index && (
+                        <span className="loading-indicator">⏳</span>
+                      )}
+                      {showStopSuggestions && activeStopInputIndex === index && stopSuggestions.length > 0 && (
                         <ul className="suggestions-list" role="listbox">
-                          {stopSuggestions.map(loc => (
-                            <li
-                              key={loc.id}
-                              role="option"
-                              tabIndex={0}
-                              onClick={() => handleSelectStopLocation(index, loc)}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                  e.preventDefault();
+                          {stopSuggestions.map((loc, locIndex) => {
+                            const isHighlighted = locIndex === highlightedStopIndex;
+                            return (
+                              <li
+                                key={loc.id}
+                                role="option"
+                                aria-selected={isHighlighted}
+                                onMouseDown={() => {
+                                  isSelectingStopRef.current = true;
+                                }}
+                                onClick={() => {
                                   handleSelectStopLocation(index, loc);
-                                }
-                              }}
-                            >
-                              <span className="loc-icon">📍</span>
-                              <span className="loc-name">{loc.name}</span>
-                            </li>
-                          ))}
+                                }}
+                                onMouseEnter={() => setHighlightedStopIndex(locIndex)}
+                                style={{
+                                  background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
+                                  fontWeight: isHighlighted ? 600 : 400,
+                                  color: isHighlighted ? '#3B82F6' : 'inherit'
+                                }}
+                              >
+                                <span className="loc-icon">→</span>
+                                <span className="loc-icon">📍</span>
+                                <span className="loc-name">{loc.name}</span>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </div>

@@ -37,11 +37,11 @@ public class StopJpaEntity {
     @NotBlank(message = "Name must not be blank")
     private String name;
 
-    @NotNull(message = "Arrival time must not be null")
+    // Nullable - origin stops don't have arrival time (bus departs from origin)
     @Column(name = "arrival_time")
     private LocalTime arrivalTime;
 
-    @NotNull(message = "Departure time must not be null")
+    // Nullable - destination stops don't have departure time (bus arrives at destination)
     @Column(name = "departure_time")
     private LocalTime departureTime;
 

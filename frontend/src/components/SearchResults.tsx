@@ -6,7 +6,8 @@ import { LoadingSkeleton } from './LoadingSkeleton';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import ReportIssue from './contribution/ReportIssue';
-import type { Bus, Stop, Location as AppLocation } from '../types';
+import ConnectingRoutes from './ConnectingRoutes';
+import type { Bus, Stop, Location as AppLocation, ConnectingRoute } from '../types';
 import { ApiError } from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/transit-design-system.css';
@@ -19,7 +20,7 @@ interface SearchResultsProps {
   stops: Stop[];  // Keep this for compatibility, but also add stopsMap
   stopsMap?: Record<number, Stop[]>;  // Add this for the complete stops data
   error?: Error | ApiError | null;
-  connectingRoutes?: unknown[];
+  connectingRoutes?: ConnectingRoute[];
   loading?: boolean;  // Add loading prop
 }
 
@@ -30,7 +31,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   stops,
   stopsMap = {},
   error,
-  connectingRoutes: _connectingRoutes = [],
+  connectingRoutes = [],
   loading = false
 }) => {
   const { t, i18n } = useTranslation();
@@ -279,6 +280,13 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           </div>
         </div>
 
+        {/* Show Connecting Routes FIRST when no direct buses */}
+        {buses.length === 0 && connectingRoutes && connectingRoutes.length > 0 && (
+          <div className="connecting-routes-section" style={{ marginBottom: '16px' }}>
+            <ConnectingRoutes connectingRoutes={connectingRoutes} />
+          </div>
+        )}
+
         <div className="bus-list-section">{useVirtualScrolling ? (
             <VirtualBusList
               buses={buses}
@@ -299,9 +307,17 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               toLocationObj={toLocation}
               onAddStops={handleAddStops}
               onReportIssue={handleReportIssue}
+              hasConnectingRoutes={connectingRoutes && connectingRoutes.length > 0}
             />
           )}
         </div>
+        
+        {/* Show Connecting Routes AFTER bus list when direct buses exist */}
+        {buses.length > 0 && connectingRoutes && connectingRoutes.length > 0 && (
+          <div className="connecting-routes-section" style={{ marginTop: '24px' }}>
+            <ConnectingRoutes connectingRoutes={connectingRoutes} />
+          </div>
+        )}
         
         <div className="map-section">
           {typeof globalThis !== 'undefined' && (globalThis as unknown as { L?: unknown }).L ? (

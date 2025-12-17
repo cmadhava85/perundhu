@@ -7,6 +7,249 @@
    COMPACT FORM STYLES - Mobile First Design
    ===================================================== */
 
+/* =====================================================
+   NEW ROW-BASED ROUTE INPUT LAYOUT
+   Better responsive design for desktop and mobile
+   ===================================================== */
+
+/* Route Input Row - Location + Time side by side */
+.route-input-row {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 1.25rem;
+  align-items: end; /* Align to bottom so inputs line up */
+  margin-bottom: 0.5rem;
+}
+
+/* Location Field */
+.route-location-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+/* Make LocationAutocompleteInput inputs match time input height */
+.route-location-field input {
+  height: 48px !important;
+  box-sizing: border-box !important;
+}
+
+/* Time Field */
+.route-time-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Labels - Fixed height for alignment */
+.route-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  min-height: 1.5rem; /* Minimum height for consistent alignment */
+  line-height: 1.4;
+  flex-wrap: wrap;
+}
+
+.label-icon {
+  font-size: 0.9rem;
+}
+
+.label-icon.origin-icon {
+  color: #22c55e;
+}
+
+.label-icon.destination-icon {
+  color: #ef4444;
+}
+
+.route-label .required {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.route-label .optional-text {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.verified-badge {
+  background: #10b981;
+  color: white;
+  font-size: 0.65rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 10px;
+  margin-left: 0.25rem;
+}
+
+/* Time Input Wrapper - Match LocationAutocompleteInput height */
+.time-input-wrapper {
+  background: white;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  height: 48px; /* Match location input height */
+  box-sizing: border-box;
+}
+
+.time-input-wrapper:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.time-input-wrapper.optional {
+  border-style: dashed;
+  background: #f9fafb;
+}
+
+.route-time-input {
+  border: none !important;
+  background: transparent !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none !important;
+  cursor: pointer;
+  color: #1f2937;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+}
+
+.route-time-input:focus {
+  outline: none !important;
+}
+
+/* Route Connector Arrow */
+.route-connector {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  color: #9ca3af;
+}
+
+.connector-line {
+  height: 2px;
+  width: 20px;
+  background: linear-gradient(90deg, #d1d5db, #e5e7eb);
+  border-radius: 1px;
+}
+
+.connector-arrow {
+  font-size: 1.2rem;
+  color: #6b7280;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* Error/Warning text */
+.field-error-text {
+  color: #dc2626;
+  font-size: 0.75rem;
+  display: block;
+}
+
+.field-warning-text {
+  color: #d97706;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.field-error .time-input-wrapper {
+  border-color: #dc2626;
+}
+
+/* =====================================================
+   RESPONSIVE BREAKPOINTS
+   ===================================================== */
+
+/* Tablet - Adjust proportions */
+@media (max-width: 768px) {
+  .route-input-row {
+    grid-template-columns: 1fr 140px;
+    gap: 0.75rem;
+  }
+  
+  .route-time-input {
+    font-size: 1rem !important;
+    padding: 0.65rem 0.5rem !important;
+  }
+}
+
+/* Mobile - Stack vertically */
+@media (max-width: 560px) {
+  .route-input-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .route-time-field {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .route-time-field .route-label {
+    grid-column: 1;
+    white-space: nowrap;
+  }
+  
+  .route-time-field .time-input-wrapper {
+    grid-column: 2;
+    max-width: 140px;
+  }
+  
+  .route-time-field .field-error-text {
+    grid-column: 1 / -1;
+  }
+  
+  .route-connector {
+    padding-left: 0.5rem;
+    justify-content: center;
+  }
+  
+  .time-input-wrapper {
+    min-height: 48px; /* Touch-friendly */
+  }
+  
+  .route-time-input {
+    font-size: 1.1rem !important;
+    padding: 0.75rem !important;
+  }
+}
+
+/* Small Mobile - Full width time */
+@media (max-width: 400px) {
+  .route-time-field {
+    grid-template-columns: 1fr;
+  }
+  
+  .route-time-field .time-input-wrapper {
+    max-width: 100%;
+  }
+}
+
+/* =====================================================
+   END NEW ROW-BASED LAYOUT
+   ===================================================== */
+
 /* Bus Number + Route Name Row */
 .bus-route-row {
   display: grid;
@@ -573,62 +816,74 @@
 .stop-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-left: 4px solid #3b82f6;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 0;
   position: relative;
   transition: all 0.2s ease;
+  display: flex;
+  overflow: hidden;
 }
 
 .stop-card:hover {
   border-color: #cbd5e1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.stop-header {
+.stop-badge-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #f1f5f9;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 1rem 0.75rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  min-width: 3.5rem;
 }
 
-.stop-number {
-  font-weight: 600;
-  color: #3b82f6;
-  font-size: 0.875rem;
-  background: #eff6ff;
-  padding: 0.375rem 0.875rem;
-  border-radius: 20px;
-  border: 1px solid #bfdbfe;
-}
-
-.remove-stop-btn {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  color: #dc2626;
-  min-height: 2.25rem;
-  min-width: 2.25rem;
+.stop-badge {
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
+  color: #3b82f6;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.remove-stop-btn:hover {
-  background: #fee2e2;
-  border-color: #f87171;
-  transform: scale(1.05);
+.stop-card .remove-stop-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  color: #ffffff;
+  font-size: 0.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
 }
 
-.stop-form-grid {
+.stop-card .remove-stop-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: #dc2626;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.stop-form-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.875rem;
+  padding: 1rem;
 }
 
 .stop-name-field {
@@ -640,14 +895,14 @@
 .stop-notes-field label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.375rem;
   font-size: 0.8125rem;
   font-weight: 600;
   color: #374151;
   margin-bottom: 0.375rem;
 }
 
-.stop-timing-fields {
+.stop-timing-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
@@ -913,20 +1168,28 @@
   
   /* Mobile stop card improvements */
   .stop-card {
+    flex-direction: column;
+  }
+  
+  .stop-badge-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    min-width: unset;
+  }
+  
+  .stop-badge {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .stop-form-content {
     padding: 0.875rem;
+    gap: 0.75rem;
   }
   
-  .stop-header {
-    margin-bottom: 0.875rem;
-    padding-bottom: 0.625rem;
-  }
-  
-  .stop-number {
-    font-size: 0.8125rem;
-    padding: 0.3125rem 0.75rem;
-  }
-  
-  .stop-timing-fields {
+  .stop-timing-row {
     grid-template-columns: 1fr 1fr;
     gap: 0.625rem;
   }
@@ -981,18 +1244,25 @@
   }
   
   /* Extra small mobile stop card improvements */
-  .stop-card {
+  .stop-badge-container {
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .stop-badge {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.8125rem;
+  }
+  
+  .stop-card .remove-stop-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.625rem;
+  }
+  
+  .stop-form-content {
     padding: 0.75rem;
-    border-left-width: 3px;
-  }
-  
-  .stop-header {
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-  }
-  
-  .stop-form-grid {
-    gap: 0.75rem;
+    gap: 0.625rem;
   }
   
   .stop-name-field label,
@@ -1008,7 +1278,7 @@
     font-size: 0.875rem;
   }
   
-  .stop-timing-fields {
+  .stop-timing-row {
     grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
   }

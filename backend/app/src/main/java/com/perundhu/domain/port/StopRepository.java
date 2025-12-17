@@ -96,4 +96,13 @@ public interface StopRepository {
     Stop saveWithBus(Stop stop, BusId busId);
 
     void delete(StopId id);
+
+    /**
+     * Update the stop order for a specific stop.
+     * This is used when recalculating stop orders based on timing.
+     * 
+     * @param stopId   The ID of the stop to update
+     * @param newOrder The new stop order value
+     */
+    void updateStopOrder(Long stopId, int newOrder);
 }

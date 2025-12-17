@@ -438,6 +438,62 @@ public class ContributionProcessingService {
         }
 
         log.info("Processed stops for bus ID {}: {} stops created", savedBus.id().value(), createdCount);
+        
+        // Recalculate stop orders based on time to ensure correct chronological order
+        if (createdCount > 0) {
+            recalculateStopOrdersByTime(savedBus.id().value());
+        }
+    }
+
+    /**
+     * Recalculate stop orders for a bus based on arrival/departure times.
+     * This ensures stops are displayed in chronological order regardless of
+     * the order they were added.
+     * 
+     * @param busId The bus ID to recalculate stop orders for
+     */
+    private void recalculateStopOrdersByTime(Long busId) {
+        log.info("Recalculating stop orders by time for bus ID: {}", busId);
+        
+        List<Stop> allStops = stopRepository.findByBusId(busId);
+        if (allStops == null || allStops.size() < 2) {
+            log.debug("Bus {} has {} stops, no reordering needed", busId, allStops == null ? 0 : allStops.size());
+            return;
+        }
+        
+        // Sort stops by time (use departure time, falling back to arrival time)
+        List<Stop> sortedStops = allStops.stream()
+            .sorted((s1, s2) -> {
+                LocalTime time1 = s1.getDepartureTime() != null ? s1.getDepartureTime() : s1.getArrivalTime();
+                LocalTime time2 = s2.getDepartureTime() != null ? s2.getDepartureTime() : s2.getArrivalTime();
+                
+                // If both have times, compare them
+                if (time1 != null && time2 != null) {
+                    return time1.compareTo(time2);
+                }
+                // If only one has a time, prioritize the one without (origin) or with only arrival (destination)
+                if (time1 == null && time2 == null) {
+                    return 0;
+                }
+                if (time1 == null) {
+                    return -1; // null time (origin) comes first
+                }
+                return 1; // non-null comes after
+            })
+            .toList();
+        
+        // Update stop orders
+        int order = 1;
+        for (Stop stop : sortedStops) {
+            if (stop.getId() != null && stop.getStopOrder() != order) {
+                stopRepository.updateStopOrder(stop.getId().value(), order);
+                log.debug("Updated stop '{}' (ID: {}) order from {} to {}", 
+                    stop.getName(), stop.getId().value(), stop.getStopOrder(), order);
+            }
+            order++;
+        }
+        
+        log.info("Recalculated stop orders for bus ID {}: {} stops reordered by time", busId, sortedStops.size());
     }
 
     /**
@@ -1309,6 +1365,9 @@ public class ContributionProcessingService {
                 log.warn("Failed to create stop '{}': {}", stopContribution.getName(), e.getMessage());
             }
         }
+        
+        // Recalculate stop orders based on time to ensure correct chronological order
+        recalculateStopOrdersByTime(savedBus.getId().value());
     }
 
     /**

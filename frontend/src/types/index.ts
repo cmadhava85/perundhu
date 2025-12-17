@@ -117,16 +117,52 @@ export interface BusLeg extends Bus {
   arrivalTime: string;
 }
 
-export interface ConnectingRoute {
+// Updated ConnectingRoute to match API response format
+export interface ConnectingRouteStop {
   id: number;
-  isDirectRoute: boolean;
-  fromLocation: string;
-  toLocation: string;
-  connectionPoint: string;
-  totalDuration: string;
-  waitTime: string;
-  firstLeg: BusLeg;
-  secondLeg: BusLeg;
+  name: string;
+  locationId: number;
+  arrivalTime: string | null;
+  departureTime: string | null;
+  sequence: number;
+  latitude: number | null;
+  longitude: number | null;
+  features?: Record<string, unknown>;
+}
+
+export interface ConnectingRouteLeg {
+  busId: number;
+  busName: string;
+  busNumber: string;
+  fromStopId: number;
+  toStopId: number;
+  fromStop: ConnectingRouteStop;
+  toStop: ConnectingRouteStop;
+  departureTime: string;
+  arrivalTime: string;
+  duration: number;
+  distance: number | null;
+}
+
+export interface ConnectingRouteLocation {
+  id: number;
+  name: string;
+  translatedName?: string;
+  latitude: number | null;
+  longitude: number | null;
+  displayName?: string;
+}
+
+export interface ConnectingRoute {
+  id: string;
+  fromLocationId: number;
+  toLocationId: number;
+  fromLocation: ConnectingRouteLocation;
+  toLocation: ConnectingRouteLocation;
+  legs: ConnectingRouteLeg[];
+  totalDuration: number;
+  totalDistance: number | null;
+  transfers: number;
 }
 
 export interface Translation {

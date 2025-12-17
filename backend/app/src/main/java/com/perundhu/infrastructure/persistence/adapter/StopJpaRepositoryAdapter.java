@@ -130,4 +130,13 @@ public class StopJpaRepositoryAdapter implements StopRepository {
 
         return result;
     }
+
+    @Override
+    public void updateStopOrder(Long stopId, int newOrder) {
+        jpaRepository.findById(stopId).ifPresent(entity -> {
+            entity.setStopOrder(newOrder);
+            entity.setUpdatedAt(java.time.LocalDateTime.now());
+            jpaRepository.save(entity);
+        });
+    }
 }

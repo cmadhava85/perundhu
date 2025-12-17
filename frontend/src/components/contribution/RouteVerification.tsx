@@ -135,7 +135,13 @@ export const RouteVerification: React.FC<RouteVerificationProps> = ({
     
     try {
       const stops = await getStops(bus.id);
-      setBusStops(stops);
+      // Sort stops by time (departure time first, then arrival time)
+      const sortedStops = [...stops].sort((a, b) => {
+        const timeA = a.departureTime || a.arrivalTime || '00:00';
+        const timeB = b.departureTime || b.arrivalTime || '00:00';
+        return timeA.localeCompare(timeB);
+      });
+      setBusStops(sortedStops);
     } catch {
       // Failed to load stops
     } finally {

@@ -128,7 +128,13 @@ const BusItem: React.FC<BusItemProps> = ({
 
             {showStops && (
               <div className="mt-3 space-y-2 max-h-48 overflow-y-auto">
-                {stops.map((stop, index) => (
+                {[...stops]
+                  .sort((a, b) => {
+                    const timeA = a.departureTime || a.arrivalTime || '00:00';
+                    const timeB = b.departureTime || b.arrivalTime || '00:00';
+                    return timeA.localeCompare(timeB);
+                  })
+                  .map((stop, index) => (
                   <div
                     key={stop.id || index}
                     className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"

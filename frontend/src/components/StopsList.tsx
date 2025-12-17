@@ -10,17 +10,24 @@ interface StopsListProps {
 const StopsList: React.FC<StopsListProps> = ({ stops }) => {
   const { t } = useTranslation();
   
+  // Sort stops by time (departure time first, then arrival time)
+  const sortedStops = [...stops].sort((a, b) => {
+    const timeA = a.departureTime || a.arrivalTime || '00:00';
+    const timeB = b.departureTime || b.arrivalTime || '00:00';
+    return timeA.localeCompare(timeB);
+  });
+  
   return (
     <div className="stops-list">
       <div className="stops-list-header">
         <h3 className="stops-title">{t('stopsList.stops', 'Stops')}</h3>
-        <div className="stops-count">{stops.length} {t('stopsList.totalStops', 'stops')}</div>
+        <div className="stops-count">{sortedStops.length} {t('stopsList.totalStops', 'stops')}</div>
       </div>
       
       <div className="stops-container">
         <div className="stops-timeline"></div>
-        {stops.length > 0 ? (
-          stops.map((stop, index) => (
+        {sortedStops.length > 0 ? (
+          sortedStops.map((stop, index) => (
             <div 
               key={stop.id || `${stop.name}-${index}`} 
               className="stop-item"
@@ -28,7 +35,7 @@ const StopsList: React.FC<StopsListProps> = ({ stops }) => {
               <div 
                 className={`stop-marker ${
                   index === 0 ? 'origin' : 
-                  index === stops.length - 1 ? 'destination' : ''
+                  index === sortedStops.length - 1 ? 'destination' : ''
                 }`}
               ></div>
               

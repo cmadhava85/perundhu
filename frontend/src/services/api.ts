@@ -317,104 +317,88 @@ interface BusDTO {
   name: string;
   operator: string;
   type: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  rating?: number;
   features?: Record<string, string>;
+  fromLocationId?: number;
+  fromLocationName?: string;
+  fromLocationNameTranslated?: string;
+  toLocationId?: number;
+  toLocationName?: string;
+  toLocationNameTranslated?: string;
 }
 
-// Generate sample stops for demonstration purposes
-const _generateSampleStops = (busId: number, fromLocation: Location, toLocation: Location): Stop[] => {
-  const sampleStopNames = [
-    'Central Station', 'City Mall', 'Airport Junction', 'Tech Park', 'University Campus',
-    'Bus Terminal', 'Railway Station', 'Government Hospital', 'Market Square', 'Shopping Complex'
-  ];
-  
-  const numStops = 3 + (busId % 4); // 3-6 stops per bus
-  const stops: Stop[] = [];
-  
-  // Add origin stop
-  stops.push({
-    id: busId * 100 + 1,
-    name: fromLocation.name,
-    arrivalTime: '',
-    departureTime: '06:00', // Will be updated with actual departure time
-    busId: busId,
-    order: 1,
-    stopOrder: 1,
-    latitude: fromLocation.latitude,
-    longitude: fromLocation.longitude
-  });
-  
-  // Add intermediate stops
-  for (let i = 0; i < numStops - 2; i++) {
-    const stopName = sampleStopNames[(busId + i) % sampleStopNames.length];
-    const hour = 6 + Math.floor((i + 1) * 2.5); // Spread stops every 2.5 hours
-    const minute = (busId * 15 + i * 10) % 60;
-    const arrivalTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-    const departureTime = `${hour.toString().padStart(2, '0')}:${(minute + 5).toString().padStart(2, '0')}`;
-    
-    stops.push({
-      id: busId * 100 + i + 2,
-      name: stopName,
-      arrivalTime: arrivalTime,
-      departureTime: departureTime,
-      busId: busId,
-      order: i + 2,
-      stopOrder: i + 2,
-      latitude: fromLocation.latitude + (i + 1) * 0.1,
-      longitude: fromLocation.longitude + (i + 1) * 0.1
-    });
-  }
-  
-  // Add destination stop
-  stops.push({
-    id: busId * 100 + numStops,
-    name: toLocation.name,
-    arrivalTime: '14:00', // Will be updated with actual arrival time
-    departureTime: '',
-    busId: busId,
-    order: numStops,
-    stopOrder: numStops,
-    latitude: toLocation.latitude,
-    longitude: toLocation.longitude
-  });
-  
-  return stops;
+// Fallback departure times when backend doesn't provide timing
+const FALLBACK_DEPARTURE_TIMES = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
+
+// Calculate arrival time from departure time and travel hours
+const calculateArrivalTime = (departureTime: string, travelHours: number): string => {
+  const [depHour, depMinute] = departureTime.split(':').map(Number);
+  const arrHour = (depHour + travelHours) % 24;
+  return `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
 };
 
 // Transform backend BusDTO to frontend Bus object
 const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation: Location): Bus => {
-  // Generate sample timing data for demonstration purposes
-  // TODO: Replace with real backend timing data when available
-  const sampleDepartureTimes = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
-  const departureTime = sampleDepartureTimes[busDTO.id % sampleDepartureTimes.length];
+  // Use actual departure/arrival times from backend if available
+  let departureTime = busDTO.departureTime;
+  let arrivalTime = busDTO.arrivalTime;
   
-  // Calculate arrival time (add 6-10 hours based on bus ID for variety)
-  const depHour = parseInt(departureTime.split(':')[0]);
-  const depMinute = parseInt(departureTime.split(':')[1]);
-  const travelHours = 6 + (busDTO.id % 5); // 6-10 hours travel time
-  const arrHour = (depHour + travelHours) % 24;
-  const arrivalTime = `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
+  // Fallback to sample times only if backend doesn't provide them
+  if (!departureTime) {
+    departureTime = FALLBACK_DEPARTURE_TIMES[busDTO.id % FALLBACK_DEPARTURE_TIMES.length];
+    logger.debug(`Bus ${busDTO.id}: No departureTime from backend, using fallback: ${departureTime}`);
+  }
+  
+  if (!arrivalTime && departureTime) {
+    // Calculate arrival time based on travel duration (6-10 hours for variety)
+    const travelHours = 6 + (busDTO.id % 5);
+    arrivalTime = calculateArrivalTime(departureTime, travelHours);
+    logger.debug(`Bus ${busDTO.id}: No arrivalTime from backend, calculated: ${arrivalTime}`);
+  }
+  
+  // Calculate duration from actual times if both are available
+  let duration = '';
+  if (departureTime && arrivalTime) {
+    const [depH, depM] = departureTime.split(':').map(Number);
+    const [arrH, arrM] = arrivalTime.split(':').map(Number);
+    let hours = arrH - depH;
+    let minutes = arrM - depM;
+    if (hours < 0) hours += 24; // Handle overnight travel
+    if (minutes < 0) {
+      hours -= 1;
+      minutes += 60;
+    }
+    duration = `${hours}h ${minutes}m`;
+  }
+  
+  // Use translated location names from backend if available
+  const fromName = busDTO.fromLocationNameTranslated || busDTO.fromLocationName || fromLocation.name;
+  const toName = busDTO.toLocationNameTranslated || busDTO.toLocationName || toLocation.name;
   
   return {
     id: busDTO.id,
     busName: busDTO.name || 'Unknown Bus',
     busNumber: busDTO.number || 'N/A',
-    from: fromLocation.name,
-    to: toLocation.name,
-    fromLocationId: fromLocation.id,
-    toLocationId: toLocation.id,
+    from: fromName,
+    to: toName,
+    fromLocationId: busDTO.fromLocationId || fromLocation.id,
+    toLocationId: busDTO.toLocationId || toLocation.id,
     fromLocation: fromLocation,
     toLocation: toLocation,
-    departureTime: departureTime,
-    arrivalTime: arrivalTime,
+    departureTime: departureTime || '00:00',
+    arrivalTime: arrivalTime || '00:00',
     category: busDTO.type || 'Express Service',
     busType: busDTO.type || 'Express Service',
     status: busDTO.id % 3 === 0 ? 'Delayed' : 'On Time',
-    duration: `${travelHours}h ${Math.floor(Math.random() * 60)}m`,
+    duration: duration,
     name: busDTO.name,
-    routeName: `${fromLocation.name} - ${toLocation.name}`,
+    routeName: `${fromName} - ${toName}`,
     isLive: false,
     availability: 'available' as const,
-    capacity: 40 + (busDTO.id % 20) // Sample capacity data
+    capacity: 40 + (busDTO.id % 20), // Sample capacity data
+    rating: busDTO.rating
   };
 };
 
@@ -1157,6 +1141,18 @@ export const retryImageProcessing = async (contributionId: string) => {
 
 // ==================== MULTI-BUS-STAND SEARCH API ====================
 
+// Backend MultiStandSearchResponse DTO interface
+interface MultiStandSearchResponseDTO {
+  fromCity: string;
+  toCity: string;
+  searchType: 'CITY_ONLY' | 'BUS_STAND_SPECIFIC' | 'WITH_DETAILS';
+  fromBusStands: BusStand[];
+  toBusStands: BusStand[];
+  buses: BusDTO[];
+  totalBuses: number;
+  busStandCombinations: number;
+}
+
 /**
  * Search for buses across all bus stands when user enters a city name.
  * For example, searching "Aruppukottai" returns buses from both 
@@ -1183,7 +1179,31 @@ export const searchBusesMultiStand = async (
       }
     });
     
-    const result: MultiStandSearchResponse = response.data;
+    const rawResult: MultiStandSearchResponseDTO = response.data;
+    
+    // Create Location objects from the city names for transformation
+    const fromLoc: Location = { 
+      id: 0, 
+      name: rawResult.fromCity, 
+      latitude: 0, 
+      longitude: 0 
+    };
+    const toLoc: Location = { 
+      id: 0, 
+      name: rawResult.toCity, 
+      latitude: 0, 
+      longitude: 0 
+    };
+    
+    // Transform BusDTO objects to Bus objects
+    const transformedBuses: Bus[] = rawResult.buses.map(busDTO => 
+      transformBusDTOToBus(busDTO, fromLoc, toLoc)
+    );
+    
+    const result: MultiStandSearchResponse = {
+      ...rawResult,
+      buses: transformedBuses
+    };
     
     logger.info(`Multi-stand search returned ${result.totalBuses} buses from ${result.fromBusStands.length} source stands`);
     

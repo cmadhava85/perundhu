@@ -141,6 +141,8 @@
     "noBuses": "No buses available for the selected route",
     "noBusesFound": "No buses found",
     "noBusesMessage": "Currently no bus route available for this selection.",
+    "noDirectBuses": "No direct buses available.",
+    "seeConnectingAbove": "See connecting routes above with transfers.",
     "contributePrompt": "If you know this route, help others by contributing the bus information.",
     "contributeButton": "Contribute Route Info",
     "locationNotFound": "Location Not Found",

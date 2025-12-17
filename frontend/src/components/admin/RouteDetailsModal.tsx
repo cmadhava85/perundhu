@@ -164,235 +164,106 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
 
         {/* Modal Content */}
         <div className="modal-content">
-          {/* Basic Route Information */}
-          <div className="details-section">
-            <h3 className="section-title">
-              <span className="section-icon">📍</span>
-              {t('admin.routes.details.basicInfo', 'Basic Information')}
-            </h3>
-            <div className="details-grid">
-              <div className="detail-item">
-                <label>{t('admin.routes.details.busName', 'Bus Name')}</label>
-                <span>{contribution.busName || 'N/A'}</span>
-              </div>
-              <div className="detail-item">
-                <label>{t('admin.routes.details.busNumber', 'Bus Number')}</label>
-                <span>{contribution.busNumber}</span>
-              </div>
-              <div className="detail-item">
-                <label>{t('admin.routes.details.submittedBy', 'Submitted By')}</label>
-                <span>{contribution.submittedBy || 'Anonymous'}</span>
-              </div>
-              <div className="detail-item">
-                <label>{t('admin.routes.details.submissionDate', 'Submission Date')}</label>
-                <span>{formatDate(contribution.submissionDate)}</span>
-              </div>
-              {contribution.processedDate && (
-                <div className="detail-item">
-                  <label>{t('admin.routes.details.processedDate', 'Processed Date')}</label>
-                  <span>{formatDate(contribution.processedDate)}</span>
+          {/* Compact Summary Row - Key Info at a Glance */}
+          <div className="quick-summary-row">
+            <div className="summary-card route-summary">
+              <div className="route-visual">
+                <div className="location-pill origin">
+                  <span className="dot">●</span>
+                  <span className="name">{contribution.fromLocationName}</span>
                 </div>
-              )}
-              {isAddStopsContribution && (
-                <div className="detail-item full-width">
-                  <label>Contribution Type</label>
-                  <span className="contribution-type-badge add-stops">
-                    🆕 Adding Stops to Existing Route
-                  </span>
+                <div className="route-arrow">
+                  <span className="arrow">→</span>
+                  <span className="distance">{calculateDistance(contribution.fromLatitude, contribution.fromLongitude, contribution.toLatitude, contribution.toLongitude)}</span>
                 </div>
-              )}
+                <div className="location-pill destination">
+                  <span className="dot">●</span>
+                  <span className="name">{contribution.toLocationName}</span>
+                </div>
+              </div>
             </div>
+            <div className="summary-card timing-summary">
+              <div className="time-block">
+                <span className="time-label">DEP</span>
+                <span className="time-value">{formatTime(contribution.departureTime)}</span>
+              </div>
+              <span className="time-separator">→</span>
+              <div className="time-block">
+                <span className="time-label">ARR</span>
+                <span className="time-value">{formatTime(contribution.arrivalTime)}</span>
+              </div>
+              <div className="duration-block">
+                <span className="duration-value">{calculateJourneyDuration(contribution.departureTime, contribution.arrivalTime)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Compact Meta Info */}
+          <div className="meta-info-row">
+            <div className="meta-item">
+              <span className="meta-label">Bus Name</span>
+              <span className="meta-value">{contribution.busName || 'N/A'}</span>
+            </div>
+            <div className="meta-item">
+              <span className="meta-label">Submitted</span>
+              <span className="meta-value">{formatDate(contribution.submissionDate)}</span>
+            </div>
+            <div className="meta-item">
+              <span className="meta-label">By</span>
+              <span className="meta-value">{contribution.submittedBy || 'Anonymous'}</span>
+            </div>
+            {isAddStopsContribution && (
+              <div className="meta-item highlight">
+                <span className="meta-badge add-stops">🆕 Adding Stops</span>
+              </div>
+            )}
           </div>
 
           {/* Existing Route Details - shown only for ADD_STOPS contributions */}
           {isAddStopsContribution && (
-            <div className="details-section existing-route-section">
-              <h3 className="section-title">
-                <span className="section-icon">📋</span>
-                Existing Route Details
-              </h3>
-              {loadingExistingBus ? (
-                <div className="loading-indicator">Loading existing route details...</div>
-              ) : existingBusDetails ? (
-                <div className="existing-route-details">
-                  <div className="details-grid">
-                    <div className="detail-item">
-                      <label>Bus Number</label>
-                      <span>{existingBusDetails.busNumber}</span>
-                    </div>
-                    <div className="detail-item">
-                      <label>Bus Name</label>
-                      <span>{existingBusDetails.busName || 'N/A'}</span>
-                    </div>
-                    <div className="detail-item">
-                      <label>From</label>
-                      <span>{existingBusDetails.fromLocation}</span>
-                    </div>
-                    <div className="detail-item">
-                      <label>To</label>
-                      <span>{existingBusDetails.toLocation}</span>
-                    </div>
-                    <div className="detail-item">
-                      <label>Departure</label>
-                      <span>{existingBusDetails.departureTime || 'N/A'}</span>
-                    </div>
-                    <div className="detail-item">
-                      <label>Arrival</label>
-                      <span>{existingBusDetails.arrivalTime || 'N/A'}</span>
-                    </div>
-                  </div>
-                  
+            <div className="compact-existing-route">
+              <div className="section-header-compact">
+                <span>📋 Existing Route</span>
+                {loadingExistingBus && <span className="loading-dot">⏳</span>}
+              </div>
+              {existingBusDetails ? (
+                <div className="existing-route-compact">
+                  <span className="existing-info">{existingBusDetails.busNumber}: {existingBusDetails.fromLocation} → {existingBusDetails.toLocation}</span>
                   {existingBusDetails.stops && existingBusDetails.stops.length > 0 && (
-                    <div className="existing-stops-section">
-                      <h4 className="subsection-title">
-                        <span className="section-icon">🚏</span>
-                        Current Stops ({existingBusDetails.stops.length})
-                      </h4>
-                      <div className="existing-stops-list">
-                        {existingBusDetails.stops
-                          .sort((a, b) => a.stopOrder - b.stopOrder)
-                          .map((stop, index) => (
-                            <div key={index} className="existing-stop-item">
-                              <div className="stop-order">{stop.stopOrder}</div>
-                              <div className="stop-details">
-                                <div className="stop-name">{stop.name}</div>
-                                {(stop.arrivalTime || stop.departureTime) && (
-                                  <div className="stop-timing">
-                                    {stop.arrivalTime && <span>Arr: {stop.arrivalTime}</span>}
-                                    {stop.departureTime && <span>Dep: {stop.departureTime}</span>}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                      </div>
+                    <div className="existing-stops-compact">
+                      {existingBusDetails.stops.sort((a, b) => a.stopOrder - b.stopOrder).map((stop, idx) => (
+                        <span key={idx} className="existing-stop-chip">{stop.stopOrder}. {stop.name}</span>
+                      ))}
                     </div>
                   )}
                 </div>
-              ) : (
-                <div className="no-data-message">
-                  Could not load existing route details for Bus ID: {getSourceBusId()}
-                </div>
+              ) : !loadingExistingBus && (
+                <span className="no-data">Could not load existing route</span>
               )}
             </div>
           )}
 
-          {/* Route Path Information */}
-          <div className="details-section">
-            <h3 className="section-title">
-              <span className="section-icon">🛣️</span>
-              {t('admin.routes.details.routePath', 'Route Path')}
-            </h3>
-            <div className="route-path-details">
-              <div className="path-item from">
-                <div className="path-header">
-                  <span className="path-icon">🔵</span>
-                  <h4>{t('admin.routes.details.origin', 'Origin')}</h4>
-                </div>
-                <div className="path-content">
-                  <div className="location-name">{contribution.fromLocationName}</div>
-                  <div className="coordinates">
-                    {t('admin.routes.details.coordinates', 'Coordinates')}: {formatCoordinates(contribution.fromLatitude, contribution.fromLongitude)}
-                  </div>
-                </div>
-              </div>
-
-              <div className="path-connector">
-                <div className="connector-line"></div>
-                <div className="distance-info">
-                  {calculateDistance(contribution.fromLatitude, contribution.fromLongitude, contribution.toLatitude, contribution.toLongitude)}
-                </div>
-              </div>
-
-              <div className="path-item to">
-                <div className="path-header">
-                  <span className="path-icon">🔴</span>
-                  <h4>{t('admin.routes.details.destination', 'Destination')}</h4>
-                </div>
-                <div className="path-content">
-                  <div className="location-name">{contribution.toLocationName}</div>
-                  <div className="coordinates">
-                    {t('admin.routes.details.coordinates', 'Coordinates')}: {formatCoordinates(contribution.toLatitude, contribution.toLongitude)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Timing Information */}
-          <div className="details-section">
-            <h3 className="section-title">
-              <span className="section-icon">⏰</span>
-              {t('admin.routes.details.timing', 'Timing Information')}
-            </h3>
-            <div className="timing-grid">
-              <div className="timing-item">
-                <div className="timing-label">{t('admin.routes.details.departure', 'Departure Time')}</div>
-                <div className="timing-value">{formatTime(contribution.departureTime)}</div>
-              </div>
-              <div className="timing-connector">→</div>
-              <div className="timing-item">
-                <div className="timing-label">{t('admin.routes.details.arrival', 'Arrival Time')}</div>
-                <div className="timing-value">{formatTime(contribution.arrivalTime)}</div>
-              </div>
-              <div className="timing-duration">
-                <div className="duration-label">{t('admin.routes.details.duration', 'Journey Duration')}</div>
-                <div className="duration-value">
-                  {calculateJourneyDuration(contribution.departureTime, contribution.arrivalTime)}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Stops Information */}
+          {/* Stops - Compact Horizontal Layout */}
           {contribution.stops && contribution.stops.length > 0 && (
-            <div className={`details-section ${isAddStopsContribution ? 'new-stops-section' : ''}`}>
-              <h3 className="section-title">
-                <span className="section-icon">🚏</span>
-                {isAddStopsContribution ? (
-                  <span className="new-badge">🆕 NEW Stops to Add ({contribution.stops.length})</span>
-                ) : (
-                  <>{t('admin.routes.details.stops', 'Intermediate Stops')} ({contribution.stops.length})</>
-                )}
-              </h3>
-              {isAddStopsContribution && (
-                <div className="new-stops-notice">
-                  ℹ️ These stops will be added to the existing route upon approval
-                </div>
-              )}
-              <div className="contributed-stops-list">
+            <div className="compact-stops-section">
+              <div className="section-header-compact">
+                <span>🚏 {isAddStopsContribution ? 'New Stops to Add' : 'Intermediate Stops'} ({contribution.stops.length})</span>
+              </div>
+              <div className="stops-chips">
                 {contribution.stops
                   .sort((a, b) => (a.stopOrder ?? 0) - (b.stopOrder ?? 0))
                   .map((stop, index) => {
-                    // Use name, or fall back to locationName, or show a placeholder
                     const displayName = stop.name || stop.locationName || `Stop ${stop.stopOrder || index + 1}`;
                     return (
-                      <div key={index} className="contributed-stop-card">
-                        {isAddStopsContribution && (
-                          <div className="stop-new-indicator">NEW</div>
-                        )}
-                        <div className="stop-header">
-                          <div className="stop-sequence-badge">{stop.stopOrder ?? index + 1}</div>
-                          <div className="stop-location-name">{displayName}</div>
-                        </div>
-                        <div className="stop-times-row">
-                          {stop.arrivalTime && (
-                            <div className="stop-time-item arrival">
-                              <span className="time-label">↓ Arrives</span>
-                              <span className="time-value">{formatTime(stop.arrivalTime)}</span>
-                            </div>
-                          )}
-                          {stop.departureTime && (
-                            <div className="stop-time-item departure">
-                              <span className="time-label">↑ Departs</span>
-                              <span className="time-value">{formatTime(stop.departureTime)}</span>
-                            </div>
-                          )}
-                        </div>
-                        {(stop.latitude && stop.longitude) && (
-                          <div className="stop-coordinates-row">
-                            📍 {formatCoordinates(stop.latitude, stop.longitude)}
-                          </div>
+                      <div key={index} className={`stop-chip ${isAddStopsContribution ? 'new' : ''}`}>
+                        <span className="chip-order">{stop.stopOrder ?? index + 1}</span>
+                        <span className="chip-name">{displayName}</span>
+                        {(stop.arrivalTime || stop.departureTime) && (
+                          <span className="chip-time">
+                            {stop.arrivalTime && `↓${stop.arrivalTime}`}
+                            {stop.arrivalTime && stop.departureTime && ' '}
+                            {stop.departureTime && `↑${stop.departureTime}`}
+                          </span>
                         )}
                       </div>
                     );
@@ -402,33 +273,34 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
             </div>
           )}
 
-          {/* Additional Information */}
-          <div className="details-section">
-            <h3 className="section-title">
-              <span className="section-icon">📝</span>
-              {t('admin.routes.details.additional', 'Additional Information')}
-            </h3>
-            <div className="additional-info">
+          {/* Coordinates - Collapsible/Minimal */}
+          {(contribution.fromLatitude || contribution.toLatitude) && (
+            <div className="coords-row">
+              <span className="coord-item">📍 From: {formatCoordinates(contribution.fromLatitude, contribution.fromLongitude)}</span>
+              <span className="coord-item">📍 To: {formatCoordinates(contribution.toLatitude, contribution.toLongitude)}</span>
+            </div>
+          )}
+
+          {/* Notes - Only if present */}
+          {(contribution.scheduleInfo || contribution.additionalNotes || contribution.validationMessage) && (
+            <div className="notes-section">
               {contribution.scheduleInfo && (
-                <div className="info-item">
-                  <label>{t('admin.routes.details.scheduleInfo', 'Schedule Information')}</label>
-                  <div className="info-content">{contribution.scheduleInfo}</div>
+                <div className="note-item">
+                  <span className="note-label">Schedule:</span> {contribution.scheduleInfo}
                 </div>
               )}
               {contribution.additionalNotes && (
-                <div className="info-item">
-                  <label>{t('admin.routes.details.notes', 'Additional Notes')}</label>
-                  <div className="info-content">{contribution.additionalNotes}</div>
+                <div className="note-item">
+                  <span className="note-label">Notes:</span> {contribution.additionalNotes}
                 </div>
               )}
               {contribution.validationMessage && (
-                <div className="info-item validation">
-                  <label>{t('admin.routes.details.validationMessage', 'Validation Message')}</label>
-                  <div className="info-content warning">{contribution.validationMessage}</div>
+                <div className="note-item warning">
+                  <span className="note-label">⚠️ Validation:</span> {contribution.validationMessage}
                 </div>
               )}
             </div>
-          </div>
+          )}
         </div>
 
         {/* Modal Actions */}

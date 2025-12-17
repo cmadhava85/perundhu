@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiService } from '../services/apiService';
+import type { RewardPoints } from '../types';
 import '../styles/UserRewards.css';
 
 interface UserRewardsProps {
   userId?: string;
-}
-
-interface RewardActivity {
-  id: number;
-  userId: string;
-  activity: string;
-  points: number;
-  timestamp: string;
-}
-
-interface UserRewardData {
-  totalPoints: number;
-  recentActivities: RewardActivity[];
 }
 
 /**
@@ -25,7 +13,7 @@ interface UserRewardData {
  */
 const UserRewards: React.FC<UserRewardsProps> = ({ userId: propUserId }) => {
   const { t } = useTranslation();
-  const [rewards, setRewards] = useState<UserRewardData | null>(null);
+  const [rewards, setRewards] = useState<RewardPoints | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -113,15 +101,15 @@ const UserRewards: React.FC<UserRewardsProps> = ({ userId: propUserId }) => {
           <p className="no-activities">{t('rewards.noActivities', 'No recent activities found.')}</p>
         ) : (
           <div className="activities-list">
-            {rewards.recentActivities.map((activity) => (
-              <div key={activity.id} className="activity-item">
+            {rewards.recentActivities.map((activity, index) => (
+              <div key={index} className="activity-item">
                 <div className="activity-details">
-                  <div className="activity-name">{activity.activity}</div>
+                  <div className="activity-name">{activity.activityType}</div>
                   <div className="activity-date">
                     {formatDate(activity.timestamp)}
                   </div>
                 </div>
-                <div className="activity-points">+{activity.points}</div>
+                <div className="activity-points">+{activity.pointsEarned}</div>
               </div>
             ))}
           </div>
