@@ -793,10 +793,9 @@ public class ContributionController {
     String clientId = getClientId(request);
     String userId = authenticationService.getCurrentUserId();
 
-    // Require authentication for paste contributions
+    // For anonymous users, generate a unique identifier (same as image contributions)
     if (userId == null || userId.equals("anonymous")) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-          .body(createErrorResponse("Login required for paste contributions"));
+      userId = "anonymous_" + clientId;
     }
 
     try {
