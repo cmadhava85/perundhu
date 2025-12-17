@@ -63,7 +63,8 @@ public class BusJpaEntity {
     @JoinColumn(name = "to_location_id")
     private LocationJpaEntity toLocation;
 
-    // Note: Bus stand feature uses the existing locations table with pattern "City - BusStandName"
+    // Note: Bus stand feature uses the existing locations table with pattern "City
+    // - BusStandName"
     // No separate bus_stands table foreign keys needed
 
     private Integer capacity;

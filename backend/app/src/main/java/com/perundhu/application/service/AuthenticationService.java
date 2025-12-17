@@ -16,10 +16,10 @@ public class AuthenticationService {
      */
     public String getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
-            
+
             // Handle different principal types
             if (principal instanceof String) {
                 String username = (String) principal;
@@ -37,7 +37,7 @@ public class AuthenticationService {
                 }
             }
         }
-        
+
         return "anonymous";
     }
 
@@ -56,11 +56,11 @@ public class AuthenticationService {
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;
         }
-        
+
         // Check for admin role
         return authentication.getAuthorities().stream()
-                .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()) 
-                               || "admin".equals(auth.getAuthority()));
+                .anyMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority())
+                        || "admin".equals(auth.getAuthority()));
     }
 
     /**

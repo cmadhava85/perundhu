@@ -207,7 +207,8 @@ public class ContributionController {
 
   /**
    * Submit stops to be added to an existing bus route.
-   * This creates a RouteContribution with type "ADD_STOPS" that requires admin approval.
+   * This creates a RouteContribution with type "ADD_STOPS" that requires admin
+   * approval.
    */
   @PostMapping("/routes/stops")
   public ResponseEntity<Map<String, Object>> submitStopsContribution(
@@ -248,8 +249,7 @@ public class ContributionController {
       }
 
       // Extract and validate required fields
-      Long busId = requestData.get("busId") != null ? 
-          Long.valueOf(requestData.get("busId").toString()) : null;
+      Long busId = requestData.get("busId") != null ? Long.valueOf(requestData.get("busId").toString()) : null;
       String busNumber = (String) requestData.get("busNumber");
       String busName = (String) requestData.get("busName");
       String fromLocationName = (String) requestData.get("fromLocationName");
@@ -277,12 +277,10 @@ public class ContributionController {
         String locationName = (String) stopData.get("locationName");
         String stopArrivalTime = (String) stopData.get("arrivalTime");
         String stopDepartureTime = (String) stopData.get("departureTime");
-        Integer order = stopData.get("order") != null ? 
-            Integer.valueOf(stopData.get("order").toString()) : null;
-        Double latitude = stopData.get("latitude") != null ? 
-            Double.valueOf(stopData.get("latitude").toString()) : null;
-        Double longitude = stopData.get("longitude") != null ? 
-            Double.valueOf(stopData.get("longitude").toString()) : null;
+        Integer order = stopData.get("order") != null ? Integer.valueOf(stopData.get("order").toString()) : null;
+        Double latitude = stopData.get("latitude") != null ? Double.valueOf(stopData.get("latitude").toString()) : null;
+        Double longitude = stopData.get("longitude") != null ? Double.valueOf(stopData.get("longitude").toString())
+            : null;
 
         if (locationName == null || locationName.isBlank()) {
           return ResponseEntity.badRequest()
@@ -312,9 +310,8 @@ public class ContributionController {
           .arrivalTime(routeArrivalTime)
           .sourceBusId(busId)
           .contributionType("ADD_STOPS")
-          .additionalNotes(additionalNotes != null ? 
-              "ADD_STOPS for bus ID: " + busId + ". " + additionalNotes :
-              "ADD_STOPS for bus ID: " + busId)
+          .additionalNotes(additionalNotes != null ? "ADD_STOPS for bus ID: " + busId + ". " + additionalNotes
+              : "ADD_STOPS for bus ID: " + busId)
           .stops(stops)
           .status("PENDING")
           .build();
@@ -382,7 +379,7 @@ public class ContributionController {
     data.put("additionalNotes", contribution.getAdditionalNotes());
     data.put("sourceBusId", contribution.getSourceBusId());
     data.put("contributionType", contribution.getContributionType());
-    
+
     if (contribution.getStops() != null && !contribution.getStops().isEmpty()) {
       List<Map<String, Object>> stopsData = new java.util.ArrayList<>();
       for (var stop : contribution.getStops()) {
@@ -397,7 +394,7 @@ public class ContributionController {
       }
       data.put("stops", stopsData);
     }
-    
+
     return data;
   }
 
@@ -793,7 +790,8 @@ public class ContributionController {
     String clientId = getClientId(request);
     String userId = authenticationService.getCurrentUserId();
 
-    // For anonymous users, generate a unique identifier (same as image contributions)
+    // For anonymous users, generate a unique identifier (same as image
+    // contributions)
     if (userId == null || userId.equals("anonymous")) {
       userId = "anonymous_" + clientId;
     }
@@ -1137,7 +1135,7 @@ public class ContributionController {
       response.put("formatDetected", formatMeta.getType().toString());
       response.put("confidence", adjustedConfidence);
       response.put("extractedBy", extractedBy);
-      
+
       // Build extracted map - use HashMap to allow null values
       Map<String, Object> extracted = new HashMap<>();
       extracted.put("busNumber", busNumber);

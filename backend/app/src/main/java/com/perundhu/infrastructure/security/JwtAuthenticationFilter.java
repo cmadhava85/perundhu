@@ -32,7 +32,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     try {
       String jwt = getJwtFromRequest(request);
 
-      // Only process if it looks like a valid JWT (has 2 dots for header.payload.signature)
+      // Only process if it looks like a valid JWT (has 2 dots for
+      // header.payload.signature)
       if (StringUtils.hasText(jwt) && isValidJwtFormat(jwt) && tokenProvider.validateToken(jwt)) {
         String username = tokenProvider.getUsernameFromToken(jwt);
         List<SimpleGrantedAuthority> authorities = tokenProvider.getAuthoritiesFromToken(jwt);

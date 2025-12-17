@@ -83,7 +83,8 @@
 }
 
 .sync-button,
-.save-server-button {
+.save-server-button,
+.sync-preprod-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -98,14 +99,25 @@
 }
 
 .sync-button:hover:not(:disabled),
-.save-server-button:hover:not(:disabled) {
+.save-server-button:hover:not(:disabled),
+.sync-preprod-button:hover:not(:disabled) {
   background: #2563eb;
 }
 
 .sync-button:disabled,
-.save-server-button:disabled {
+.save-server-button:disabled,
+.sync-preprod-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Distinct styling for Sync to Preprod button */
+.sync-preprod-button {
+  background: #8b5cf6;
+}
+
+.sync-preprod-button:hover:not(:disabled) {
+  background: #7c3aed;
 }
 
 .spin {
@@ -594,6 +606,7 @@
   
   .sync-button,
   .save-server-button,
+  .sync-preprod-button,
   .reset-button {
     padding: 0.4rem 0.75rem;
     font-size: 0.75rem;
@@ -601,6 +614,7 @@
   
   .sync-button span,
   .save-server-button span,
+  .sync-preprod-button span,
   .reset-button span {
     display: none;
   }

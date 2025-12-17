@@ -44,10 +44,13 @@ interface FeatureFlagsContextType {
   resetToDefaults: () => Promise<void>;
   syncWithBackend: () => Promise<void>;
   saveToBackend: () => Promise<void>;
+  syncToPreprod: () => Promise<void>;
   isLoading: boolean;
   isSyncing: boolean;
+  isSyncingToPreprod: boolean;
   lastSyncError: string | null;
   isBackendAvailable: boolean;
+  isPreprodAvailable: boolean;
 }
 
 // Storage key for persisted settings
@@ -97,8 +100,10 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
   const [flags, setFlags] = useState<FeatureFlags>(defaultFlags);
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isSyncingToPreprod, setIsSyncingToPreprod] = useState(false);
   const [lastSyncError, setLastSyncError] = useState<string | null>(null);
   const [isBackendAvailable, setIsBackendAvailable] = useState(false);
+  const [isPreprodAvailable, setIsPreprodAvailable] = useState(false);
 
   // Save to localStorage
   const saveToLocalStorage = useCallback((newFlags: FeatureFlags) => {
@@ -190,6 +195,55 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     }
   }, [flags, isBackendAvailable, saveToLocalStorage]);
 
+  // Sync current flags to preprod environment
+  const syncToPreprod = useCallback(async () => {
+    setIsSyncingToPreprod(true);
+    setLastSyncError(null);
+    
+    try {
+      // Convert FeatureFlags to Record<string, boolean>
+      const flagsRecord: Record<string, boolean> = {};
+      Object.entries(flags).forEach(([key, value]) => {
+        if (typeof value === 'boolean') {
+          flagsRecord[key] = value;
+        } else if (typeof value === 'number') {
+          // For numeric values like maxRequestsPerMinute, skip or convert
+          // These settings might not be supported as boolean flags
+        }
+      });
+      
+      const result = await AdminService.syncFeatureFlagsToPreprod(flagsRecord);
+      console.log('Feature flags synced to preprod:', result);
+      setIsPreprodAvailable(true);
+    } catch (error) {
+      console.error('Failed to sync feature flags to preprod:', error);
+      setIsPreprodAvailable(false);
+      if (error instanceof Error) {
+        if (error.message.includes('401') || error.message.includes('403')) {
+          setLastSyncError('Authentication failed for preprod. Please check your credentials.');
+        } else if (error.message.includes('Network Error') || error.message.includes('timeout')) {
+          setLastSyncError('Preprod server not reachable. Please try again later.');
+        } else {
+          setLastSyncError('Failed to sync to preprod: ' + error.message);
+        }
+      } else {
+        setLastSyncError('Failed to sync settings to preprod.');
+      }
+      throw error;
+    } finally {
+      setIsSyncingToPreprod(false);
+    }
+  }, [flags]);
+
+  // Check preprod availability on mount
+  useEffect(() => {
+    const checkPreprodAvailability = async () => {
+      const available = await AdminService.isPreprodAvailable();
+      setIsPreprodAvailable(available);
+    };
+    checkPreprodAvailability();
+  }, []);
+
   // Initialize on mount - try backend first, fall back to localStorage
   useEffect(() => {
     const initialize = async () => {
@@ -258,10 +312,13 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
         resetToDefaults, 
         syncWithBackend,
         saveToBackend,
+        syncToPreprod,
         isLoading, 
         isSyncing,
+        isSyncingToPreprod,
         lastSyncError,
-        isBackendAvailable
+        isBackendAvailable,
+        isPreprodAvailable
       }}
     >
       {children}

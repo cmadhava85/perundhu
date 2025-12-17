@@ -25,7 +25,8 @@ import {
   Mail,
   Zap,
   Database,
-  AlertOctagon
+  AlertOctagon,
+  Upload
 } from 'lucide-react';
 import './AdminSettingsPanel.css';
 
@@ -69,9 +70,12 @@ const AdminSettingsPanel: React.FC = () => {
     resetToDefaults, 
     saveToBackend, 
     syncWithBackend,
-    isSyncing, 
+    syncToPreprod,
+    isSyncing,
+    isSyncingToPreprod, 
     lastSyncError,
-    isBackendAvailable 
+    isBackendAvailable,
+    isPreprodAvailable 
   } = useFeatureFlags();
   const [activeTab, setActiveTab] = useState<SettingsTab>('features');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -103,6 +107,16 @@ const AdminSettingsPanel: React.FC = () => {
       setSaveMessage('Settings synced from server');
     } catch {
       setSaveMessage('Sync failed');
+    }
+    setTimeout(() => setSaveMessage(null), 3000);
+  };
+
+  const handleSyncToPreprod = async () => {
+    try {
+      await syncToPreprod();
+      setSaveMessage('Settings synced to preprod environment');
+    } catch {
+      setSaveMessage('Preprod sync failed');
     }
     setTimeout(() => setSaveMessage(null), 3000);
   };
@@ -166,6 +180,15 @@ const AdminSettingsPanel: React.FC = () => {
               {t('admin.settings.saveToServer', 'Save to Server')}
             </button>
           )}
+          <button 
+            className="sync-preprod-button"
+            onClick={handleSyncToPreprod}
+            disabled={isSyncingToPreprod || isSyncing}
+            title={isPreprodAvailable ? 'Sync settings to preprod environment' : 'Preprod not available'}
+          >
+            {isSyncingToPreprod ? <Loader2 size={16} className="spin" /> : <Upload size={16} />}
+            {t('admin.settings.syncToPreprod', 'Sync to Preprod')}
+          </button>
           <button 
             className="reset-button"
             onClick={() => setShowResetConfirm(true)}

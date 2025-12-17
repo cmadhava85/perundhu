@@ -6,6 +6,9 @@ import AuthService from './authService';
 // API URL from environment variable
 const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
+// Preprod API URL for syncing settings to preprod environment
+const PREPROD_API_URL = import.meta.env.VITE_PREPROD_API_URL || 'https://perundhu-backend-preprod-1032721240281.asia-south1.run.app';
+
 // Session storage keys for admin auth
 const ADMIN_AUTH_KEY = 'admin_auth_credentials';
 
@@ -359,6 +362,79 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
       logger.error('Failed to reset all settings', error);
       throw error;
     }
+  },
+
+  /**
+   * Sync feature flags to preprod environment
+   * This allows pushing local feature flag changes to the preprod backend
+   */
+  syncFeatureFlagsToPreprod: async (flags: Record<string, boolean>): Promise<{
+    success: boolean;
+    flags: Record<string, boolean>;
+    timestamp: string;
+    environment: string;
+  }> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      logger.info('Syncing feature flags to preprod environment');
+      const response = await axios.put(
+        `${PREPROD_API_URL}/api/admin/settings/feature-flags`,
+        flags,
+        { 
+          headers: { Authorization: authHeader },
+          timeout: 30000 // 30 second timeout for cross-environment sync
+        }
+      );
+      logger.info('Feature flags synced to preprod successfully');
+      return {
+        ...response.data,
+        environment: 'preprod'
+      };
+    } catch (error) {
+      logger.error('Failed to sync feature flags to preprod', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get feature flags from preprod environment
+   * This allows fetching the current state of feature flags in preprod
+   */
+  getFeatureFlagsFromPreprod: async (): Promise<Record<string, boolean>> => {
+    const authHeader = AdminService.getAuthHeader();
+    try {
+      logger.info('Fetching feature flags from preprod environment');
+      const response = await axios.get(`${PREPROD_API_URL}/api/admin/settings/feature-flags`, {
+        headers: { Authorization: authHeader },
+        timeout: 30000
+      });
+      return response.data;
+    } catch (error) {
+      logger.error('Failed to fetch feature flags from preprod', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Check if preprod backend is available
+   */
+  isPreprodAvailable: async (): Promise<boolean> => {
+    try {
+      const response = await axios.get(`${PREPROD_API_URL}/actuator/health`, {
+        timeout: 5000
+      });
+      return response.status === 200;
+    } catch {
+      logger.warn('Preprod backend not available');
+      return false;
+    }
+  },
+
+  /**
+   * Get preprod API URL for display purposes
+   */
+  getPreprodApiUrl: (): string => {
+    return PREPROD_API_URL;
   }
 };
 
