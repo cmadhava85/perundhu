@@ -1,5 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -231,10 +232,12 @@ public class BusScheduleController {
             }
 
             // Fallback to OpenStreetMap if no locations in database
-            log.info("No locations in database for '{}', falling back to OpenStreetMap", query);
-            List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10);
+            log.info("No locations in database for '{}', falling back to OpenStreetMap (language: {})", query,
+                    language);
+            List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
 
-            log.info("Found {} locations from OpenStreetMap for query '{}'", osmResults.size(), query);
+            log.info("Found {} locations from OpenStreetMap for query '{}' (language: {})", osmResults.size(), query,
+                    language);
             return ResponseEntity.ok(osmResults);
 
         } catch (Exception e) {
@@ -333,30 +336,29 @@ public class BusScheduleController {
                 return ResponseEntity.badRequest().build();
             }
 
-            // Sort all results by shortest route first (duration, then departure time)
+            // Sort by smart time ordering: upcoming buses first, then by departure time
+            LocalTime currentTime = LocalTime.now();
             allResults.sort((a, b) -> {
-                // 1. Sort by duration (shortest first)
-                int durationA = calculateDuration(a);
-                int durationB = calculateDuration(b);
+                // Parse departure times
+                LocalTime timeA = parseTime(a.departureTime());
+                LocalTime timeB = parseTime(b.departureTime());
 
-                if (durationA != durationB) {
-                    return Integer.compare(durationA, durationB);
+                // Handle null departure times - put them at the end
+                if (timeA == null && timeB == null) return 0;
+                if (timeA == null) return 1;
+                if (timeB == null) return -1;
+
+                // Check if buses are upcoming (departing now or in the future)
+                boolean isUpcomingA = !timeA.isBefore(currentTime);
+                boolean isUpcomingB = !timeB.isBefore(currentTime);
+
+                // Upcoming buses come first
+                if (isUpcomingA != isUpcomingB) {
+                    return isUpcomingA ? -1 : 1;
                 }
 
-                // 2. If duration is same, sort by departure time (earliest first)
-                String depA = a.departureTime() != null ? a.departureTime() : "23:59";
-                String depB = b.departureTime() != null ? b.departureTime() : "23:59";
-
-                int timeCompare = depA.compareTo(depB);
-                if (timeCompare != 0) {
-                    return timeCompare;
-                }
-
-                // 3. If same time, prefer higher rating
-                double ratingA = a.rating() != null ? a.rating() : 0.0;
-                double ratingB = b.rating() != null ? b.rating() : 0.0;
-
-                return Double.compare(ratingB, ratingA); // Higher rating first
+                // If both are upcoming or both are past, sort by departure time ascending
+                return timeA.compareTo(timeB);
             });
 
             // Store total before pagination
@@ -876,6 +878,30 @@ public class BusScheduleController {
     }
 
     /**
+     * Parse a time string (HH:mm or HH:mm:ss) into LocalTime
+     * Used for smart time-based sorting of search results
+     */
+    private LocalTime parseTime(String timeStr) {
+        if (timeStr == null || timeStr.isBlank()) {
+            return null;
+        }
+        try {
+            return LocalTime.parse(timeStr);
+        } catch (Exception e) {
+            try {
+                // Try parsing as HH:mm
+                String[] parts = timeStr.split(":");
+                if (parts.length >= 2) {
+                    return LocalTime.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                }
+            } catch (Exception ex) {
+                // Ignore parsing errors
+            }
+            return null;
+        }
+    }
+
+    /**
      * Get all locations with duplicate location names grouped together.
      * Shows district/nearby city for disambiguation.
      * 
@@ -920,6 +946,35 @@ public class BusScheduleController {
         } catch (Exception e) {
             log.error("Error getting locations with disambiguation", e);
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Get public platform statistics for footer display
+     * This is a public endpoint that doesn't require authentication
+     * 
+     * @return Map containing route count, contributor count, and city count
+     */
+    @Operation(summary = "Get public platform statistics", description = "Get public statistics about the platform including route count, contributor count, and cities covered.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved platform statistics"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
+    @GetMapping("/public-stats")
+    public ResponseEntity<java.util.Map<String, Object>> getPublicStats() {
+        log.debug("Getting public platform statistics");
+
+        try {
+            java.util.Map<String, Object> stats = busScheduleService.getPublicStats();
+            return ResponseEntity.ok(stats);
+        } catch (Exception e) {
+            log.error("Error getting public stats", e);
+            // Return default values on error to prevent UI breaking
+            java.util.Map<String, Object> defaultStats = new java.util.HashMap<>();
+            defaultStats.put("routeCount", 0);
+            defaultStats.put("contributorCount", 0);
+            defaultStats.put("cityCount", 0);
+            return ResponseEntity.ok(defaultStats);
         }
     }
 }

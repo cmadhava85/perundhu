@@ -93,6 +93,7 @@ public class ContributionProcessingService {
     private final NotificationService notificationService;
     private final RouteContributionValidationService validationService;
     private final LocationTranslationService locationTranslationService;
+    private final DataQualityValidationService dataQualityValidationService;
 
     /**
      * Scheduled job to process pending route contributions
@@ -189,6 +190,56 @@ public class ContributionProcessingService {
             return;
         }
 
+        // 1.5. Data quality validation
+        var dataQualityReport = dataQualityValidationService.validateRouteContribution(contribution);
+        if (!dataQualityReport.valid()) {
+            String errorMessages = dataQualityReport.errors().stream()
+                    .map(e -> e.code() + ": " + e.message())
+                    .reduce((a, b) -> a + "; " + b)
+                    .orElse("Data quality validation failed");
+
+            log.warn("Data quality validation failed for contribution ID {}: {}",
+                    contribution.getId(), errorMessages);
+
+            updateContributionStatus(
+                    contribution,
+                    new RejectedStatus(),
+                    "Data quality issues: " + errorMessages);
+            notificationService.notifyContributionRejected(contribution);
+            return;
+        }
+
+        // Log any warnings for review
+        if (!dataQualityReport.warnings().isEmpty()) {
+            String warningMessages = dataQualityReport.warnings().stream()
+                    .map(w -> w.code() + ": " + w.message())
+                    .reduce((a, b) -> a + "; " + b)
+                    .orElse("");
+            log.info("Data quality warnings for contribution ID {}: {}",
+                    contribution.getId(), warningMessages);
+        }
+
+        // 1.6. Validate stops if provided
+        if (contribution.getStops() != null && !contribution.getStops().isEmpty()) {
+            var stopsReport = dataQualityValidationService.validateStops(contribution.getStops());
+            if (!stopsReport.valid()) {
+                String stopErrors = stopsReport.errors().stream()
+                        .map(e -> e.code() + ": " + e.message())
+                        .reduce((a, b) -> a + "; " + b)
+                        .orElse("Stop validation failed");
+
+                log.warn("Stop validation failed for contribution ID {}: {}",
+                        contribution.getId(), stopErrors);
+
+                updateContributionStatus(
+                        contribution,
+                        new RejectedStatus(),
+                        "Stop data issues: " + stopErrors);
+                notificationService.notifyContributionRejected(contribution);
+                return;
+            }
+        }
+
         // 2. Check for existing bus routes
         if (busRepository.existsByBusNumberAndFromAndToLocations(
                 contribution.getBusNumber(),
@@ -239,8 +290,8 @@ public class ContributionProcessingService {
         // 5. Create new bus
         var newBus = Bus.create(
                 new BusId(1L), // Temporary ID, will be replaced by database
-                contribution.getBusName(),
-                contribution.getBusNumber(),
+                contribution.getBusNumber(), // Bus number (e.g., "27D")
+                contribution.getBusName() != null ? contribution.getBusName() : "Bus Route", // Descriptive name
                 fromLocation,
                 toLocation,
                 departureTime,
@@ -376,7 +427,9 @@ public class ContributionProcessingService {
                         }
                     }
 
-                    int order = stopContribution.getStopOrder() != null ? stopContribution.getStopOrder() : stopOrder;
+                    // Always use the counter-based order to ensure sequential ordering
+                    // Origin is order 1, first intermediate is order 2, etc.
+                    int order = stopOrder;
 
                     var stop = Stop.create(
                             null,
@@ -438,7 +491,7 @@ public class ContributionProcessingService {
         }
 
         log.info("Processed stops for bus ID {}: {} stops created", savedBus.id().value(), createdCount);
-        
+
         // Recalculate stop orders based on time to ensure correct chronological order
         if (createdCount > 0) {
             recalculateStopOrdersByTime(savedBus.id().value());
@@ -454,45 +507,48 @@ public class ContributionProcessingService {
      */
     private void recalculateStopOrdersByTime(Long busId) {
         log.info("Recalculating stop orders by time for bus ID: {}", busId);
-        
+
         List<Stop> allStops = stopRepository.findByBusId(busId);
         if (allStops == null || allStops.size() < 2) {
             log.debug("Bus {} has {} stops, no reordering needed", busId, allStops == null ? 0 : allStops.size());
             return;
         }
-        
+
         // Sort stops by time (use departure time, falling back to arrival time)
+        // When times are null, preserve the original stopOrder as a tiebreaker
         List<Stop> sortedStops = allStops.stream()
-            .sorted((s1, s2) -> {
-                LocalTime time1 = s1.getDepartureTime() != null ? s1.getDepartureTime() : s1.getArrivalTime();
-                LocalTime time2 = s2.getDepartureTime() != null ? s2.getDepartureTime() : s2.getArrivalTime();
-                
-                // If both have times, compare them
-                if (time1 != null && time2 != null) {
-                    return time1.compareTo(time2);
-                }
-                // If only one has a time, prioritize the one without (origin) or with only arrival (destination)
-                if (time1 == null && time2 == null) {
-                    return 0;
-                }
-                if (time1 == null) {
-                    return -1; // null time (origin) comes first
-                }
-                return 1; // non-null comes after
-            })
-            .toList();
-        
+                .sorted((s1, s2) -> {
+                    LocalTime time1 = s1.getDepartureTime() != null ? s1.getDepartureTime() : s1.getArrivalTime();
+                    LocalTime time2 = s2.getDepartureTime() != null ? s2.getDepartureTime() : s2.getArrivalTime();
+
+                    // If both have times, compare them
+                    if (time1 != null && time2 != null) {
+                        return time1.compareTo(time2);
+                    }
+                    // If neither has time, preserve original stop order
+                    if (time1 == null && time2 == null) {
+                        return Integer.compare(s1.getStopOrder(), s2.getStopOrder());
+                    }
+                    // If only s1 has time, s1 should come first (origin has departure time)
+                    if (time1 != null && time2 == null) {
+                        return -1;
+                    }
+                    // If only s2 has time, s2 should come first
+                    return 1;
+                })
+                .toList();
+
         // Update stop orders
         int order = 1;
         for (Stop stop : sortedStops) {
             if (stop.getId() != null && stop.getStopOrder() != order) {
                 stopRepository.updateStopOrder(stop.getId().value(), order);
-                log.debug("Updated stop '{}' (ID: {}) order from {} to {}", 
-                    stop.getName(), stop.getId().value(), stop.getStopOrder(), order);
+                log.debug("Updated stop '{}' (ID: {}) order from {} to {}",
+                        stop.getName(), stop.getId().value(), stop.getStopOrder(), order);
             }
             order++;
         }
-        
+
         log.info("Recalculated stop orders for bus ID {}: {} stops reordered by time", busId, sortedStops.size());
     }
 
@@ -588,10 +644,11 @@ public class ContributionProcessingService {
         String originalName = name.trim();
         String detectedLanguage = locationTranslationService.detectLanguage(originalName);
         boolean isTamilInput = "ta".equals(detectedLanguage);
-        
+
         log.debug("getOrCreateLocation called with: {} (detected language: {})", originalName, detectedLanguage);
 
-        // Strategy 0: If Tamil text, try to find existing location by translation lookup
+        // Strategy 0: If Tamil text, try to find existing location by translation
+        // lookup
         if (isTamilInput) {
             Optional<Location> translatedMatch = locationTranslationService.findLocationByAnyLanguage(originalName);
             if (translatedMatch.isPresent()) {
@@ -657,7 +714,8 @@ public class ContributionProcessingService {
         var partialMatches = locationRepository.findByName(normalizedName);
         if (!partialMatches.isEmpty()) {
             // Return the first match (most likely the correct one)
-            Location matched = partialMatches.get(0);
+            // Java 21 Sequenced Collections - getFirst()
+            Location matched = partialMatches.getFirst();
             log.debug("Found existing location by partial match: {} (ID: {})",
                     matched.name(), matched.id().value());
             if (isTamilInput) {
@@ -666,10 +724,11 @@ public class ContributionProcessingService {
             return matched;
         }
 
-        // No existing location found - create new one with English name and Tamil translation
-        log.info("Creating new location: {} (original input: {}, lat: {}, lon: {})", 
+        // No existing location found - create new one with English name and Tamil
+        // translation
+        log.info("Creating new location: {} (original input: {}, lat: {}, lon: {})",
                 normalizedName, originalName, latitude, longitude);
-        
+
         // Determine Tamil name to store
         String tamilName = null;
         if (isTamilInput) {
@@ -679,11 +738,11 @@ public class ContributionProcessingService {
             Optional<String> translatedTamil = locationTranslationService.getTamilName(normalizedName);
             tamilName = translatedTamil.orElse(null);
         }
-        
+
         // Create location with English name
         Location newLocation = locationTranslationService.createLocationWithTranslation(
                 normalizedName, latitude, longitude, tamilName);
-        
+
         log.info("Created new location: {} with Tamil translation: {}", normalizedName, tamilName);
         return newLocation;
     }
@@ -1006,25 +1065,25 @@ public class ContributionProcessingService {
                 @SuppressWarnings("unchecked")
                 List<Map<String, Object>> stopsData = (List<Map<String, Object>>) data.get("stops");
                 List<StopContribution> stops = new ArrayList<>();
-                
+
                 for (Map<String, Object> stopData : stopsData) {
                     StopContribution stop = StopContribution.builder()
                             .name((String) stopData.get("name"))
                             .arrivalTime((String) stopData.get("arrivalTime"))
                             .departureTime((String) stopData.get("departureTime"))
-                            .stopOrder(stopData.get("stopOrder") != null 
-                                    ? ((Number) stopData.get("stopOrder")).intValue() 
+                            .stopOrder(stopData.get("stopOrder") != null
+                                    ? ((Number) stopData.get("stopOrder")).intValue()
                                     : null)
-                            .latitude(stopData.get("latitude") != null 
-                                    ? convertToDouble(stopData.get("latitude"), "stop.latitude") 
+                            .latitude(stopData.get("latitude") != null
+                                    ? convertToDouble(stopData.get("latitude"), "stop.latitude")
                                     : null)
-                            .longitude(stopData.get("longitude") != null 
-                                    ? convertToDouble(stopData.get("longitude"), "stop.longitude") 
+                            .longitude(stopData.get("longitude") != null
+                                    ? convertToDouble(stopData.get("longitude"), "stop.longitude")
                                     : null)
                             .build();
                     stops.add(stop);
                 }
-                
+
                 contribution.setStops(stops);
                 log.info("DEBUG Backend: Parsed {} stops from contribution data", stops.size());
             } catch (Exception e) {
@@ -1050,27 +1109,26 @@ public class ContributionProcessingService {
         }
 
         try {
-            // Java 17 pattern matching for instanceof
-            if (value instanceof Double d) {
-                return d;
-            } else if (value instanceof Float f) {
-                return f.doubleValue();
-            } else if (value instanceof Integer i) {
-                return i.doubleValue();
-            } else if (value instanceof Long l) {
-                return l.doubleValue();
-            } else if (value instanceof String s) {
-                String strValue = s.trim();
-                if (strValue.isEmpty()) {
-                    log.warn("Empty string value for coordinate field: {}", fieldName);
-                    return null;
+            // Java 21 pattern matching for switch
+            return switch (value) {
+                case Double d -> d;
+                case Float f -> f.doubleValue();
+                case Integer i -> i.doubleValue();
+                case Long l -> l.doubleValue();
+                case String s -> {
+                    String strValue = s.trim();
+                    if (strValue.isEmpty()) {
+                        log.warn("Empty string value for coordinate field: {}", fieldName);
+                        yield null;
+                    }
+                    yield Double.parseDouble(strValue);
                 }
-                return Double.parseDouble(strValue);
-            } else {
-                log.warn("Unexpected type for coordinate field {}: {} (value: {})",
-                        fieldName, value.getClass().getSimpleName(), value);
-                return Double.parseDouble(value.toString());
-            }
+                default -> {
+                    log.warn("Unexpected type for coordinate field {}: {} (value: {})",
+                            fieldName, value.getClass().getSimpleName(), value);
+                    yield Double.parseDouble(value.toString());
+                }
+            };
         } catch (NumberFormatException e) {
             log.error("Failed to convert {} to Double: {} (value: {})", fieldName, e.getMessage(), value);
             return null;
@@ -1286,8 +1344,8 @@ public class ContributionProcessingService {
         } else {
             var newBus = Bus.create(
                     new BusId(1L),
-                    contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
-                    contribution.getBusNumber(),
+                    contribution.getBusNumber(), // Bus number (e.g., "27D")
+                    contribution.getBusName() != null ? contribution.getBusName() : "Bus Route", // Descriptive name
                     fromLocation,
                     toLocation,
                     departureTime,
@@ -1365,7 +1423,7 @@ public class ContributionProcessingService {
                 log.warn("Failed to create stop '{}': {}", stopContribution.getName(), e.getMessage());
             }
         }
-        
+
         // Recalculate stop orders based on time to ensure correct chronological order
         recalculateStopOrdersByTime(savedBus.getId().value());
     }
@@ -1501,8 +1559,8 @@ public class ContributionProcessingService {
                 // rows)
                 var newBus = Bus.create(
                         new BusId(1L), // Temporary ID, will be replaced by database
-                        contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
-                        contribution.getBusNumber(),
+                        contribution.getBusNumber(), // Bus number (e.g., "27D")
+                        contribution.getBusName() != null ? contribution.getBusName() : "Bus Route", // Descriptive name
                         fromLocation,
                         toLocation,
                         departureTime,
