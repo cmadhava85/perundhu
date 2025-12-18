@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '../../../test-utils';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 import LocationDropdown from '../../../components/search/LocationDropdown';
 import { searchLocations, validateLocation } from '../../../services/locationService';

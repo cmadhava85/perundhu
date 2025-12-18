@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '../../test-utils';
 import { describe, expect, vi, beforeEach, test } from 'vitest';
 import ConnectingRoutes from '../ConnectingRoutes';
 import * as apiService from '../../services/api';
@@ -13,54 +13,66 @@ vi.mock('../../services/api', () => ({
 describe('ConnectingRoutes Component', () => {
   const mockConnectingRoutes = [
     {
-      id: 1,
-      isDirectRoute: false,
-      firstLeg: {
-        id: 1,
-        from: 'Chennai',
-        to: 'Trichy',
-        busName: 'SETC Express',
-        busNumber: 'TN-01-1234',
-        departureTime: '06:00 AM',
-        arrivalTime: '11:30 AM'
-      },
-      connectionPoint: 'Trichy',
-      secondLeg: {
-        id: 2,
-        from: 'Trichy',
-        to: 'Madurai',
-        busName: 'TNSTC',
-        busNumber: 'TN-02-5678',
-        departureTime: '12:30 PM',
-        arrivalTime: '02:30 PM'
-      },
-      waitTime: '01:00',
-      totalDuration: '8h 30m'
+      id: 'route-1',
+      legs: [
+        {
+          busId: '1',
+          busName: 'SETC Express',
+          busNumber: 'TN-01-1234',
+          fromStopId: 'stop-1',
+          toStopId: 'stop-3',
+          fromStop: { id: 'stop-1', name: 'Chennai', order: 1 },
+          toStop: { id: 'stop-3', name: 'Trichy', order: 3 },
+          departureTime: '06:00',
+          arrivalTime: '11:30',
+          duration: 330 // 5h 30m in minutes
+        },
+        {
+          busId: '2',
+          busName: 'TNSTC',
+          busNumber: 'TN-02-5678',
+          fromStopId: 'stop-3',
+          toStopId: 'stop-4',
+          fromStop: { id: 'stop-3', name: 'Trichy', order: 1 },
+          toStop: { id: 'stop-4', name: 'Madurai', order: 2 },
+          departureTime: '12:30',
+          arrivalTime: '14:30',
+          duration: 120 // 2h in minutes
+        }
+      ],
+      transfers: 1,
+      totalDuration: 510 // 8h 30m in minutes
     },
     {
-      id: 2,
-      isDirectRoute: false,
-      firstLeg: {
-        id: 3,
-        from: 'Chennai',
-        to: 'Salem',
-        busName: 'SETC Fast',
-        busNumber: 'TN-01-9876',
-        departureTime: '07:00 AM',
-        arrivalTime: '11:00 AM'
-      },
-      connectionPoint: 'Salem',
-      secondLeg: {
-        id: 4,
-        from: 'Salem',
-        to: 'Madurai',
-        busName: 'Private AC',
-        busNumber: 'TN-03-5432',
-        departureTime: '11:30 AM',
-        arrivalTime: '03:00 PM'
-      },
-      waitTime: '00:30',
-      totalDuration: '8h 0m'
+      id: 'route-2',
+      legs: [
+        {
+          busId: '3',
+          busName: 'SETC Fast',
+          busNumber: 'TN-01-9876',
+          fromStopId: 'stop-1',
+          toStopId: 'stop-5',
+          fromStop: { id: 'stop-1', name: 'Chennai', order: 1 },
+          toStop: { id: 'stop-5', name: 'Salem', order: 2 },
+          departureTime: '07:00',
+          arrivalTime: '11:00',
+          duration: 240 // 4h in minutes
+        },
+        {
+          busId: '4',
+          busName: 'Private AC',
+          busNumber: 'TN-03-5432',
+          fromStopId: 'stop-5',
+          toStopId: 'stop-4',
+          fromStop: { id: 'stop-5', name: 'Salem', order: 1 },
+          toStop: { id: 'stop-4', name: 'Madurai', order: 2 },
+          departureTime: '11:30',
+          arrivalTime: '15:00',
+          duration: 210 // 3h 30m in minutes
+        }
+      ],
+      transfers: 1,
+      totalDuration: 480 // 8h in minutes
     }
   ];
   
@@ -126,9 +138,9 @@ describe('ConnectingRoutes Component', () => {
       expect(document.querySelector('.route-details')).toBeInTheDocument();
     });
     
-    // Check for leg cards
-    const legCards = document.querySelectorAll('.leg-card');
-    expect(legCards.length).toBe(2);
+    // Check for bus cards (now called bus-card instead of leg-card)
+    const busCards = document.querySelectorAll('.bus-card');
+    expect(busCards.length).toBe(2);
   });
 
   test('displays route details when expanded', async () => {
@@ -147,10 +159,10 @@ describe('ConnectingRoutes Component', () => {
     });
     
     // Verify route details are displayed by checking specific elements
-    const legDetails = document.querySelectorAll('.leg-details');
-    expect(legDetails.length).toBe(2);
+    const busCards = document.querySelectorAll('.bus-card');
+    expect(busCards.length).toBe(2);
     
-    const busTimeElements = document.querySelectorAll('.bus-time');
-    expect(busTimeElements.length).toBe(2);
+    const busDetails = document.querySelectorAll('.bus-details');
+    expect(busDetails.length).toBe(2);
   });
 });

@@ -55,13 +55,28 @@ public class OpenStreetMapGeocodingService {
   @Bulkhead(name = "osm")
   @Retry(name = "externalApi")
   public List<LocationDTO> searchTamilNaduLocations(String query, int limit) {
+    return searchTamilNaduLocations(query, limit, "en");
+  }
+
+  /**
+   * Search for locations in Tamil Nadu using OSM Nominatim API with language support
+   * 
+   * @param query Search query (location name)
+   * @param limit Maximum number of results
+   * @param language Language code (en or ta for Tamil)
+   * @return List of LocationDTO without coordinates (for privacy/simplicity)
+   */
+  @CircuitBreaker(name = "osm", fallbackMethod = "searchTamilNaduLocationsFallback")
+  @Bulkhead(name = "osm")
+  @Retry(name = "externalApi")
+  public List<LocationDTO> searchTamilNaduLocations(String query, int limit, String language) {
     if (query == null || query.trim().length() < 3) {
       return new ArrayList<>();
     }
 
     try {
-      List<LocationDTO> locations = fetchLocationsFromOSM(query, limit);
-      log.info("OSM search for '{}' returned {} results", query, locations.size());
+      List<LocationDTO> locations = fetchLocationsFromOSM(query, limit, language);
+      log.info("OSM search for '{}' (lang: {}) returned {} results", query, language, locations.size());
       return locations;
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
@@ -76,12 +91,15 @@ public class OpenStreetMapGeocodingService {
   /**
    * Fetch locations from OSM Nominatim API
    */
-  private List<LocationDTO> fetchLocationsFromOSM(String query, int limit) throws Exception {
+  private List<LocationDTO> fetchLocationsFromOSM(String query, int limit, String language) throws Exception {
     // Build the Nominatim API URL - restrict to Tamil Nadu, India
     String searchQuery = query.trim() + ", Tamil Nadu, India";
     String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
-    String url = String.format("%s?q=%s&format=json&limit=%d&addressdetails=1&countrycodes=in",
-        NOMINATIM_BASE_URL, encodedQuery, limit * 2); // Fetch more to filter
+    
+    // Use accept-language to get localized names (ta for Tamil, en for English)
+    String acceptLanguage = "ta".equals(language) ? "ta,en" : "en,ta";
+    String url = String.format("%s?q=%s&format=json&limit=%d&addressdetails=1&countrycodes=in&accept-language=%s",
+        NOMINATIM_BASE_URL, encodedQuery, limit * 2, acceptLanguage); // Fetch more to filter
 
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))

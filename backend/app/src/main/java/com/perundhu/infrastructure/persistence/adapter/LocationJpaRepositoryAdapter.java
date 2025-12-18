@@ -133,4 +133,9 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     public void delete(LocationId id) {
         jpaRepository.deleteById(id.getValue());
     }
+
+    @Override
+    public long count() {
+        return jpaRepository.count();
+    }
 }

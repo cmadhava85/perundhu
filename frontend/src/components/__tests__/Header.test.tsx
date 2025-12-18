@@ -1,14 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen } from '../../test-utils';
 import Header from '../Header';
 
 describe('Header Component', () => {
   test('renders header with title', () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
     
     const headerElement = screen.getByRole('heading', { name: /tamil nadu bus schedule/i });
     expect(headerElement).toBeInTheDocument();

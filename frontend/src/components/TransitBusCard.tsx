@@ -355,7 +355,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             <div className="stops-info">
               🛑 {stops.length} stops
             </div>
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'nowrap', overflow: 'hidden' }}>
               {/* Add Stops CTA for buses with 5 or fewer stops */}
               {flags.enableAddStops && stops.length <= 5 && onAddStops && (
                 <button
@@ -379,7 +379,9 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                     border: 'none',
                     cursor: 'pointer',
                     boxShadow: '0 1px 3px rgba(16, 185, 129, 0.3)',
-                    transition: 'transform 0.2s, box-shadow 0.2s'
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                   }}
                   onMouseEnter={(e) => {
                     (e.target as HTMLButtonElement).style.transform = 'scale(1.05)';
@@ -426,7 +428,9 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                     border: 'none',
                     cursor: 'pointer',
                     boxShadow: '0 1px 3px rgba(245, 158, 11, 0.3)',
-                    transition: 'transform 0.2s, box-shadow 0.2s'
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                   }}
                   onMouseEnter={(e) => {
                     (e.target as HTMLButtonElement).style.transform = 'scale(1.05)';

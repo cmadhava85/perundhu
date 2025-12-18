@@ -1,6 +1,6 @@
 package com.perundhu.adapter.in.rest;
 
-import com.perundhu.application.service.SecurityMonitoringService;
+import com.perundhu.domain.port.SecurityMonitoringPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
 public class SecurityAdminController {
 
   private static final Logger logger = LoggerFactory.getLogger(SecurityAdminController.class);
-  private final SecurityMonitoringService securityService;
+  private final SecurityMonitoringPort securityService;
 
-  public SecurityAdminController(SecurityMonitoringService securityService) {
+  public SecurityAdminController(SecurityMonitoringPort securityService) {
     this.securityService = securityService;
   }
 
@@ -27,11 +27,10 @@ public class SecurityAdminController {
    * Get real-time security statistics
    */
   @GetMapping("/stats")
-  public ResponseEntity<SecurityMonitoringService.SecurityStats> getSecurityStats() {
+  public ResponseEntity<SecurityMonitoringPort.SecurityStats> getSecurityStats() {
     logger.info("Admin accessing security statistics");
     try {
-      SecurityMonitoringService.SecurityStats stats = (SecurityMonitoringService.SecurityStats) securityService
-          .getSecurityStats();
+      SecurityMonitoringPort.SecurityStats stats = securityService.getSecurityStats();
       return ResponseEntity.ok(stats);
     } catch (Exception e) {
       logger.error("Error getting security stats", e);

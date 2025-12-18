@@ -1,4 +1,4 @@
-import { renderHook, waitFor as _waitFor } from '@testing-library/react';
+import { renderHook, waitFor as _waitFor } from '../../test-utils';
 import { vi, beforeEach, describe, it, expect, afterEach } from 'vitest';
 import { useBusLocationData } from '../useBusLocationData';
 import type { Location } from '../../types';

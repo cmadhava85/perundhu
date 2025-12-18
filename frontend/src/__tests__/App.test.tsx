@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render as rtlRender, screen, fireEvent, waitFor } from '@testing-library/react';
 import { vi, beforeEach, describe, test, expect } from 'vitest';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from '../App';
@@ -15,12 +15,16 @@ const createTestQueryClient = () => new QueryClient({
   },
 });
 
-// Wrapper component for tests
+// Simple wrapper - App has its own providers (Router, FeatureFlagsProvider, etc.)
+// So we just need QueryClient for react-query dependent components
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={createTestQueryClient()}>
     {children}
   </QueryClientProvider>
 );
+
+// Custom render function that uses the simple wrapper
+const render = (ui: React.ReactElement) => rtlRender(ui, { wrapper });
 
 // Mock window.matchMedia for theme context
 Object.defineProperty(window, 'matchMedia', {
@@ -323,7 +327,7 @@ describe('App Component', () => {
   });
 
   test('renders the application with header and footer', async () => {
-    render(<App />, { wrapper });
+    render(<App />);
     
     await waitFor(() => {
       expect(screen.getByTestId('mock-header')).toBeInTheDocument();
@@ -332,7 +336,7 @@ describe('App Component', () => {
   });
 
   test('loads locations and destinations when component mounts', async () => {
-    render(<App />, { wrapper });
+    render(<App />);
 
     // Check that search form is rendered with locations
     await waitFor(() => {
@@ -366,7 +370,7 @@ describe('App Component', () => {
 
     mockBusSearchData.searchBuses = vi.fn().mockResolvedValue(mockBuses);
 
-    render(<App />, { wrapper });
+    render(<App />);
 
     await waitFor(() => {
       expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
@@ -382,7 +386,7 @@ describe('App Component', () => {
   });
 
   test('renders without crashing', async () => {
-    render(<App />, { wrapper });
+    render(<App />);
     await waitFor(() => {
       expect(screen.getByTestId('mock-header')).toBeInTheDocument();
     });

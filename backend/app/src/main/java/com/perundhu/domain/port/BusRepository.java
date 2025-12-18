@@ -126,4 +126,11 @@ public interface BusRepository {
          * @return List of buses that pass through any from location to any to location
          */
         List<Bus> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds);
+
+        /**
+         * Get the total count of buses in the system.
+         * 
+         * @return The total number of buses
+         */
+        long count();
 }

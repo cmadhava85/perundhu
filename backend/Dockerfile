@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for Perundhu Backend
 
 # Build stage
-FROM gradle:7-jdk17 AS builder
+FROM gradle:8-jdk21 AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ COPY health-check.sh ./
 RUN gradle clean build -x test --no-daemon
 
 # Runtime stage - Use standard JRE (not alpine) for glibc compatibility with native libraries
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:21-jre-jammy
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y --no-install-recommends \

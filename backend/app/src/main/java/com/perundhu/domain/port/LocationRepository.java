@@ -68,4 +68,11 @@ public interface LocationRepository {
     Location save(Location location);
 
     void delete(LocationId id);
+
+    /**
+     * Get the total count of locations in the system.
+     * 
+     * @return The total number of locations
+     */
+    long count();
 }

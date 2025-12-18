@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Properties for log configuration -->
+    <property name="LOG_PATH" value="${LOG_PATH:-logs}" />
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [traceId=%X{traceId:-N/A}] [requestId=%X{requestId:-N/A}] %-5level %logger{36} - %msg%n" />
+    <property name="LOG_PATTERN_JSON" value='{"timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}","thread":"%thread","traceId":"%X{traceId:-N/A}","requestId":"%X{requestId:-N/A}","level":"%-5level","logger":"%logger{36}","message":"%msg"}%n' />
+
+    <!-- Console Appender with colored output for development -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%X{traceId:-N/A})] %magenta(%-40.40logger{39}) : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender for all logs -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/perundhu.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/perundhu.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Error File Appender - only ERROR level -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/perundhu-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [traceId=%X{traceId:-N/A}] [requestId=%X{requestId:-N/A}] [clientIp=%X{clientIp:-N/A}] ERROR %logger{36} - %msg%n%ex%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/perundhu-error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Performance/Slow Query Log -->
+    <appender name="PERFORMANCE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/perundhu-performance.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [traceId=%X{traceId:-N/A}] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/perundhu-performance.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>14</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Security Audit Log -->
+    <appender name="SECURITY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/perundhu-security.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [traceId=%X{traceId:-N/A}] [clientIp=%X{clientIp:-N/A}] [userId=%X{userId:-anonymous}] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/perundhu-security.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>365</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Async Appenders for better performance -->
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
+        <queueSize>1024</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>false</includeCallerData>
+    </appender>
+
+    <appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="ERROR_FILE" />
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+    <!-- Logger configurations -->
+
+    <!-- REST Controller logging -->
+    <logger name="com.perundhu.adapter.in.rest" level="INFO" additivity="true" />
+    <logger name="com.perundhu.infrastructure.logging.RestLoggingAspect" level="INFO" additivity="true" />
+
+    <!-- Service layer logging -->
+    <logger name="com.perundhu.application.service" level="INFO" additivity="true" />
+    <logger name="com.perundhu.infrastructure.logging.ServiceLoggingAspect" level="DEBUG" additivity="true" />
+
+    <!-- Persistence layer logging -->
+    <logger name="com.perundhu.adapter.out" level="INFO" additivity="true" />
+    <logger name="com.perundhu.infrastructure.logging.PersistenceLoggingAspect" level="INFO" additivity="true" />
+
+    <!-- Security logging - route to security file -->
+    <logger name="com.perundhu.infrastructure.security" level="INFO" additivity="true">
+        <appender-ref ref="SECURITY_FILE" />
+    </logger>
+
+    <!-- Exception handler logging -->
+    <logger name="com.perundhu.infrastructure.config.GlobalExceptionHandler" level="INFO" additivity="true" />
+
+    <!-- Trace context logging -->
+    <logger name="com.perundhu.infrastructure.security.TraceIdFilter" level="INFO" additivity="true" />
+
+    <!-- Performance logging - slow queries -->
+    <logger name="SLOW_QUERY" level="WARN" additivity="false">
+        <appender-ref ref="PERFORMANCE_FILE" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!-- Hibernate/JPA logging -->
+    <logger name="org.hibernate.SQL" level="WARN" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="WARN" />
+
+    <!-- Spring framework logging -->
+    <logger name="org.springframework" level="WARN" />
+    <logger name="org.springframework.web" level="INFO" />
+    <logger name="org.springframework.security" level="WARN" />
+
+    <!-- External services logging -->
+    <logger name="org.apache.http" level="WARN" />
+    <logger name="com.google" level="WARN" />
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ASYNC_FILE" />
+        <appender-ref ref="ASYNC_ERROR" />
+    </root>
+
+    <!-- Production profile - less console, more file logging -->
+    <springProfile name="prod,production">
+        <root level="INFO">
+            <appender-ref ref="ASYNC_FILE" />
+            <appender-ref ref="ASYNC_ERROR" />
+        </root>
+        <logger name="com.perundhu" level="INFO" />
+        <logger name="org.springframework" level="WARN" />
+    </springProfile>
+
+    <!-- Development profile - verbose logging -->
+    <springProfile name="dev,development,local">
+        <logger name="com.perundhu" level="DEBUG" />
+        <logger name="com.perundhu.infrastructure.logging" level="DEBUG" />
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+    </springProfile>
+
+    <!-- Test profile - minimal logging -->
+    <springProfile name="test">
+        <root level="WARN">
+            <appender-ref ref="CONSOLE" />
+        </root>
+        <logger name="com.perundhu" level="INFO" />
+    </springProfile>
+</configuration>

@@ -234,4 +234,12 @@ public interface BusScheduleService {
      * @return true if the term matches a city that has multiple bus stands
      */
     boolean isCityWithMultipleBusStands(String searchTerm);
+
+    /**
+     * Get public platform statistics for footer display.
+     * This returns aggregated counts that are safe to expose publicly.
+     * 
+     * @return Map containing routeCount, contributorCount, and cityCount
+     */
+    java.util.Map<String, Object> getPublicStats();
 }

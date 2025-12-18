@@ -64,23 +64,21 @@ public class RouteIssueController {
 
       SubmitResult result = routeIssueService.submitIssue(serviceRequest);
 
-      if (result instanceof SubmitResult.Success success) {
-        return ResponseEntity.ok(Map.of(
+      // Java 21 pattern matching for switch with record patterns
+      return switch (result) {
+        case SubmitResult.Success(Long issueId, var status) -> ResponseEntity.ok(Map.of(
             "success", true,
             "message", "Thank you for reporting! We'll review and update the information.",
-            "issueId", success.issueId(),
-            "status", success.status().name()));
-      } else if (result instanceof SubmitResult.ExistingIssue existing) {
-        return ResponseEntity.ok(Map.of(
+            "issueId", issueId,
+            "status", status.name()));
+        case SubmitResult.ExistingIssue(Long issueId, int reportCount) -> ResponseEntity.ok(Map.of(
             "success", true,
             "message", "Thank you! This issue has been reported by others too. We're looking into it.",
-            "issueId", existing.issueId(),
-            "reportCount", existing.reportCount(),
+            "issueId", issueId,
+            "reportCount", reportCount,
             "existingIssue", true));
-      } else if (result instanceof SubmitResult.ValidationError error) {
-        return ResponseEntity.badRequest().body(Map.of("error", error.error()));
-      }
-      return ResponseEntity.internalServerError().body(Map.of("error", "Unexpected error"));
+        case SubmitResult.ValidationError(String error) -> ResponseEntity.badRequest().body(Map.of("error", error));
+      };
 
     } catch (Exception e) {
       log.error("Error submitting route issue", e);
@@ -233,19 +231,20 @@ public class RouteIssueController {
       StatusUpdateResult result = routeIssueService.updateStatus(
           issueId, request.status, request.adminNotes, request.resolution);
 
-      if (result instanceof StatusUpdateResult.Success success) {
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("success", true);
-        response.put("issue", toResponse(success.issue()));
-        if (success.busDeactivated()) {
-          response.put("busDeactivated", true);
-          response.put("message", "Bus has been deactivated and will no longer appear in search results");
+      // Java 21 pattern matching for switch with record patterns
+      return switch (result) {
+        case StatusUpdateResult.Success(RouteIssue issue, boolean busDeactivated) -> {
+          Map<String, Object> response = new LinkedHashMap<>();
+          response.put("success", true);
+          response.put("issue", toResponse(issue));
+          if (busDeactivated) {
+            response.put("busDeactivated", true);
+            response.put("message", "Bus has been deactivated and will no longer appear in search results");
+          }
+          yield ResponseEntity.ok(response);
         }
-        return ResponseEntity.ok(response);
-      } else if (result instanceof StatusUpdateResult.NotFound) {
-        return ResponseEntity.notFound().build();
-      }
-      return ResponseEntity.internalServerError().body(Map.of("error", "Unexpected error"));
+        case StatusUpdateResult.NotFound() -> ResponseEntity.notFound().build();
+      };
     } catch (Exception e) {
       log.error("Error updating issue status", e);
       return ResponseEntity.internalServerError()

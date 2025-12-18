@@ -176,4 +176,9 @@ public class BusJpaRepositoryAdapter implements BusRepository {
                 .map(BusJpaEntity::toDomainModel)
                 .toList();
     }
+
+    @Override
+    public long count() {
+        return jpaRepository.count();
+    }
 }

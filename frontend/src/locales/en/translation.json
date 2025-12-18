@@ -50,6 +50,7 @@
   },
   "header": {
     "title": "Tamil Nadu Bus Schedule",
+    "subtitle": "Find your bus in seconds",
     "home": "Home",
     "schedule": "Schedule",
     "routes": "Routes",
@@ -561,10 +562,18 @@
       "imageCount": "images",
       "processedCount": "processed",
       "processingCount": "processing",
-      "descriptionShort": "Upload photos of bus schedules. AI extracts data automatically.",
+      "descriptionShort": "Upload photos of bus schedules.",
       "descriptionPlaceholder": "e.g., Bus schedule at Kochi",
       "locationPlaceholder": "e.g., Kochi",
-      "routeNamePlaceholder": "e.g., Kochi-Alappuzha"
+      "routeNamePlaceholder": "e.g., Kochi-Alappuzha",
+      "uploadSuccess": "Image uploaded successfully!",
+      "processingStarted": "Processing will complete shortly",
+      "statusProcessed": "✓ Successfully processed",
+      "statusProcessing": "✓ Uploaded - Processing...",
+      "statusReview": "Under review",
+      "statusLowConfidence": "Under review",
+      "statusFailed": "Processing failed",
+      "statusReady": "Ready to upload"
     },
     "methods": {
       "manual": "Manual Entry",

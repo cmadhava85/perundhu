@@ -37,10 +37,10 @@ export class LocationAutocompleteService {
     }
 
     try {
-      logger.debug(`🚀 FastAutocomplete: Searching for "${query}" (${query.length} chars)`);
+      logger.debug(`🚀 FastAutocomplete: Searching for "${query}" (${query.length} chars) in ${language}`);
       
       // Use fast parallel search for better performance
-      const locations = await this.searchDatabaseAndNominatimParallel(query, 10);
+      const locations = await this.searchDatabaseAndNominatimParallel(query, 10, language);
       
       if (!locations || !Array.isArray(locations)) {
         logger.error(`❌ Invalid locations result:`, locations);
@@ -92,12 +92,12 @@ export class LocationAutocompleteService {
    * Database-first search: prioritize database, then local cities, then Nominatim
    * This prevents unnecessary Nominatim API calls when we have data locally
    */
-  private async searchDatabaseAndNominatimParallel(query: string, limit: number): Promise<LocationSuggestion[]> {
-    logger.debug(`🚀 Starting database-first search for "${query}"`);
+  private async searchDatabaseAndNominatimParallel(query: string, limit: number, language: string = 'en'): Promise<LocationSuggestion[]> {
+    logger.debug(`🚀 Starting database-first search for "${query}" (language: ${language})`);
     
     try {
       // Try database first
-      const databaseResults = await this.searchDatabase(query);
+      const databaseResults = await this.searchDatabase(query, language);
       
       logger.debug(`📊 Database results: ${databaseResults.length}`);
       
@@ -116,7 +116,7 @@ export class LocationAutocompleteService {
       
       // Only call Nominatim if database and local are empty
       logger.debug(`⚠️ Database empty, falling back to Nominatim for "${query}"`);
-      const nominatimResults = await this.searchNominatimFast(query, limit);
+      const nominatimResults = await this.searchNominatimFast(query, limit, language);
       
       if (nominatimResults.length > 0) {
         logger.debug(`🌍 Using Nominatim results (${nominatimResults.length})`);
@@ -136,7 +136,7 @@ export class LocationAutocompleteService {
       
       try {
         logger.debug(`🔄 Fallback: Trying Nominatim only for "${query}"`);
-        const nominatimFallback = await this.searchNominatimFast(query, limit);
+        const nominatimFallback = await this.searchNominatimFast(query, limit, language);
         return nominatimFallback.map(loc => ({ ...loc, source: 'nominatim' }));
       } catch (nominatimError) {
         logger.error('Nominatim fallback also failed:', nominatimError);
@@ -148,15 +148,15 @@ export class LocationAutocompleteService {
   /**
    * Fast database search with timeout
    */
-  private async searchDatabase(query: string): Promise<LocationSuggestion[]> {
+  private async searchDatabase(query: string, language: string = 'en'): Promise<LocationSuggestion[]> {
     try {
-      logger.debug(`📊 Fast database search for "${query}"`);
+      logger.debug(`📊 Fast database search for "${query}" (language: ${language})`);
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1500); // Reduced to 1.5 seconds
       
       const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
-        params: { q: query.trim(), language: 'en' },
+        params: { q: query.trim(), language: language },
         signal: controller.signal
       });
       
@@ -182,10 +182,11 @@ export class LocationAutocompleteService {
   
   /**
    * Fast Nominatim search with minimal delays and single query
+   * Returns both English and Tamil names when available
    */
-  private async searchNominatimFast(query: string, limit: number): Promise<LocationSuggestion[]> {
+  private async searchNominatimFast(query: string, limit: number, language: string = 'en'): Promise<LocationSuggestion[]> {
     try {
-      logger.debug(`🌍 Fast Nominatim search for "${query}"`);
+      logger.debug(`🌍 Fast Nominatim search for "${query}" (language: ${language})`);
       
       // Use a single, optimized query instead of multiple attempts
       const searchQuery = `${query}, Tamil Nadu, India`;
@@ -193,16 +194,25 @@ export class LocationAutocompleteService {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
       
+      // Map language code to Nominatim accept-language format
+      // When Tamil, request Tamil first so 'name' field returns Tamil
+      const acceptLanguage = language === 'ta' ? 'ta,en' : 'en,ta';
+      
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?` + new URLSearchParams({
           q: searchQuery,
           format: 'json',
           countrycodes: 'in',
           limit: String(Math.min(limit, 5)), // Reduced limit for speed
-          addressdetails: '1'
+          addressdetails: '1',
+          namedetails: '1', // Get all language variants including name:ta
+          'accept-language': acceptLanguage
         }),
         {
-          headers: { 'User-Agent': 'Perundhu Bus App (https://perundhu.com)' },
+          headers: { 
+            'User-Agent': 'Perundhu Bus App (https://perundhu.com)',
+            'Accept-Language': acceptLanguage
+          },
           signal: controller.signal
         }
       );
@@ -217,7 +227,7 @@ export class LocationAutocompleteService {
       const data = await response.json();
       logger.debug(`🌍 Nominatim returned ${data.length} results`);
       
-      // Extended interface for Nominatim results
+      // Extended interface for Nominatim results with namedetails
       interface NominatimResult {
         type: string;
         addresstype: string;
@@ -227,6 +237,12 @@ export class LocationAutocompleteService {
         lat: string;
         lon: string;
         name?: string;
+        namedetails?: {
+          name?: string;
+          'name:ta'?: string;
+          'name:en'?: string;
+          [key: string]: string | undefined;
+        };
       }
       
       // Filter for valid places including bus stations and bus stops
@@ -267,13 +283,32 @@ export class LocationAutocompleteService {
       
       logger.debug(`🌍 Filtered to ${sortedResults.length} results (bus stations prioritized)`);
       
-      return sortedResults.map((result: NominatimResult) => ({
-        id: -(Math.random() * 1000000), // Unique negative ID
-        name: result.name || this.formatLocationNameSimple(result.display_name),
-        latitude: parseFloat(result.lat),
-        longitude: parseFloat(result.lon),
-        source: 'nominatim'
-      }));
+      return sortedResults.map((result: NominatimResult) => {
+        // Extract English name: prefer namedetails['name:en'] or _place_name, fallback to name
+        const englishName = result.namedetails?.['name:en'] || 
+                           result.namedetails?.['_place_name'] ||
+                           result.name || 
+                           this.formatLocationNameSimple(result.display_name);
+        
+        // Extract Tamil name: prefer namedetails['name:ta'], or if accept-language was 'ta', use name
+        const tamilName = result.namedetails?.['name:ta'] || 
+                         (language === 'ta' && result.name ? result.name : undefined);
+        
+        // When language is Tamil, swap names so translatedName shows Tamil
+        const displayName = language === 'ta' ? (tamilName || englishName) : englishName;
+        const translatedDisplayName = language === 'ta' ? englishName : tamilName;
+        
+        logger.debug(`🌍 Location: ${englishName} -> Tamil: ${tamilName || 'N/A'}`);
+        
+        return {
+          id: -(Math.random() * 1000000), // Unique negative ID
+          name: displayName,
+          translatedName: translatedDisplayName,
+          latitude: parseFloat(result.lat),
+          longitude: parseFloat(result.lon),
+          source: 'nominatim'
+        };
+      });
       
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {

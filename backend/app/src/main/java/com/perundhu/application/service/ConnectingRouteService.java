@@ -50,7 +50,8 @@ public interface ConnectingRouteService {
         .filter(route -> {
           if (route.legs() == null || route.legs().isEmpty())
             return false;
-          String depTime = route.legs().get(0).departureTime();
+          // Java 21 Sequenced Collections - getFirst()
+          String depTime = route.legs().getFirst().departureTime();
           if (depTime == null)
             return true;
           try {

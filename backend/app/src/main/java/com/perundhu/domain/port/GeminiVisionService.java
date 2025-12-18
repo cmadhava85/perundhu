@@ -30,6 +30,18 @@ public interface GeminiVisionService {
   Map<String, Object> extractBusScheduleFromBase64(String base64ImageData, String mimeType);
 
   /**
+   * Extract structured bus schedule data from base64-encoded image data with additional context.
+   * The context can include user-provided descriptions that help identify origin/destination
+   * when the image alone doesn't make it clear.
+   * 
+   * @param base64ImageData Base64-encoded image data
+   * @param mimeType        The MIME type of the image (e.g., "image/jpeg", "image/png")
+   * @param userContext     Additional context from user (e.g., "Buses from Chennai to Madurai")
+   * @return Structured data including origin, destination, routes, timings, etc.
+   */
+  Map<String, Object> extractBusScheduleFromBase64WithContext(String base64ImageData, String mimeType, String userContext);
+
+  /**
    * Check if the Gemini Vision service is available and configured.
    * 
    * @return true if the service is available, false otherwise

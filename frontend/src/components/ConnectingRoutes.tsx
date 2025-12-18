@@ -17,10 +17,11 @@ const formatDuration = (minutes: number): string => {
 };
 
 // Helper to calculate wait time between legs
-const calculateWaitTime = (leg1ArrivalTime: string, leg2DepartureTime: string): number => {
+const calculateWaitTime = (leg1ArrivalTime: string | null | undefined, leg2DepartureTime: string | null | undefined): number => {
+  if (!leg1ArrivalTime || !leg2DepartureTime) return 0;
   const parseTime = (time: string): number => {
     const [hours, minutes] = time.split(':').map(Number);
-    return hours * 60 + minutes;
+    return (hours || 0) * 60 + (minutes || 0);
   };
   const arrival = parseTime(leg1ArrivalTime);
   const departure = parseTime(leg2DepartureTime);

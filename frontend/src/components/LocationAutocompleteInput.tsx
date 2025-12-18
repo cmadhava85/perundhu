@@ -36,6 +36,14 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   const [isSelecting, setIsSelecting] = useState(false);
   const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
+  // Helper function to get display name based on language
+  const getDisplayName = (suggestion: LocationSuggestion): string => {
+    if (language === 'ta' && suggestion.translatedName) {
+      return suggestion.translatedName;
+    }
+    return suggestion.name;
+  };
+
   const handleSuggestionsCallback = useCallback((newSuggestions: LocationSuggestion[]) => {
     if (!isSelecting) {
       setSuggestions(newSuggestions);
@@ -80,10 +88,10 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
       blurTimeoutRef.current = null;
     }
     
-    // Immediately close dropdown and notify parent
+    // Immediately close dropdown and notify parent with display name
     setShowSuggestions(false);
     setSuggestions([]);
-    onChange(suggestion.name, suggestion);
+    onChange(getDisplayName(suggestion), suggestion);
     
     // Reset selecting flag after a short delay
     setTimeout(() => setIsSelecting(false), 50);
@@ -231,12 +239,20 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
                   </span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 500, color: '#1f2937' }}>
-                      {suggestion.name}
+                      {getDisplayName(suggestion)}
                       {suggestion.name.includes(' - ') && (
                         <span style={{ marginLeft: '8px', fontSize: '11px', background: '#22c55e', color: 'white', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>Bus Stand</span>
                       )}
                     </div>
-                    {suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
+                    {/* Show secondary language name if available and different */}
+                    {/* When in Tamil mode and we have translatedName (English), show it as secondary */}
+                    {language === 'ta' && suggestion.translatedName && suggestion.name !== suggestion.translatedName && (
+                      <div style={{ fontSize: '13px', color: '#6b7280', marginTop: '3px' }}>
+                        {suggestion.translatedName}
+                      </div>
+                    )}
+                    {/* When in English mode and we have translatedName (Tamil), show it as secondary */}
+                    {language !== 'ta' && suggestion.translatedName && suggestion.translatedName !== suggestion.name && (
                       <div style={{ fontSize: '13px', color: '#6b7280', marginTop: '3px' }}>
                         {suggestion.translatedName}
                       </div>

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../test-utils';
 import '@testing-library/jest-dom';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 import MapComponent from '../MapComponent';

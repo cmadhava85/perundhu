@@ -467,3 +467,47 @@
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
+
+/* Upload Success Notification Animation */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Success Status Badge */
+.status-success {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #059669;
+  font-weight: 600;
+}
+
+.status-processing {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #2563eb;
+}
+
+.status-failed {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #dc2626;
+}

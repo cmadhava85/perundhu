@@ -145,6 +145,14 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       .slice(0, 8);
   }, [locations]);
 
+  // Helper function to get display name based on current language
+  const getLocationDisplayName = useCallback((location: Location): string => {
+    if (i18n.language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  }, [i18n.language]);
+
   // Convert LocationSuggestion to Location
   const suggestionToLocation = useCallback((suggestion: LocationSuggestion): Location => ({
     id: suggestion.id,
@@ -283,7 +291,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
 
   // Select location for a stop
   const handleSelectStopLocation = (index: number, location: Location) => {
-    handleUpdateStop(index, 'locationName', location.name);
+    handleUpdateStop(index, 'locationName', getLocationDisplayName(location));
     handleUpdateStop(index, 'locationId', location.id);
     setStopLocationQuery('');
     setShowStopSuggestions(false);
@@ -439,20 +447,20 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                         tabIndex={0}
                         onClick={() => {
                           setSelectedFrom(loc);
-                          setFromQuery(loc.name);
+                          setFromQuery(getLocationDisplayName(loc));
                           setShowFromSuggestions(false);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             setSelectedFrom(loc);
-                            setFromQuery(loc.name);
+                            setFromQuery(getLocationDisplayName(loc));
                             setShowFromSuggestions(false);
                           }
                         }}
                       >
                         <span className="loc-icon">🚍</span>
-                        <span className="loc-name">{loc.name}</span>
+                        <span className="loc-name">{getLocationDisplayName(loc)}</span>
                       </li>
                     ))}
                   </ul>
@@ -488,20 +496,20 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                         tabIndex={0}
                         onClick={() => {
                           setSelectedTo(loc);
-                          setToQuery(loc.name);
+                          setToQuery(getLocationDisplayName(loc));
                           setShowToSuggestions(false);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             setSelectedTo(loc);
-                            setToQuery(loc.name);
+                            setToQuery(getLocationDisplayName(loc));
                             setShowToSuggestions(false);
                           }
                         }}
                       >
                         <span className="loc-icon">🚍</span>
-                        <span className="loc-name">{loc.name}</span>
+                        <span className="loc-name">{getLocationDisplayName(loc)}</span>
                       </li>
                     ))}
                   </ul>
@@ -664,7 +672,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                     {getStopMarker(index, existingStops.length)}
                   </div>
                   <div className="stop-details">
-                    <span className="stop-name">{stop.name}</span>
+                    <span className="stop-name">{i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name}</span>
                     <span className="stop-time">
                       {stop.arrivalTime && `Arr: ${stop.arrivalTime}`}
                       {stop.arrivalTime && stop.departureTime && ' | '}
@@ -799,7 +807,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                               >
                                 <span className="loc-icon">→</span>
                                 <span className="loc-icon">📍</span>
-                                <span className="loc-name">{loc.name}</span>
+                                <span className="loc-name">{getLocationDisplayName(loc)}</span>
                               </li>
                             );
                           })}

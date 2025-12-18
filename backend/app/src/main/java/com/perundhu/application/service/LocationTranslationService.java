@@ -76,7 +76,7 @@ public class LocationTranslationService {
         addMapping("திருப்பத்தூர்", "Tirupattur");
         addMapping("ராணிப்பேட்டை", "Ranipet");
         addMapping("செங்கல்பட்டு", "Chengalpattu");
-        
+
         // Virudhunagar district towns
         addMapping("சிவகாசி", "Sivakasi");
         addMapping("சாத்தூர்", "Sattur");
@@ -87,21 +87,21 @@ public class LocationTranslationService {
         addMapping("திருச்சுழி", "Tiruchuli");
         addMapping("வத்திராயிருப்பு", "Watrap");
         addMapping("காரியாபட்டி", "Kariapatti");
-        
+
         // Madurai district towns
         addMapping("திருமங்கலம்", "Thirumangalam");
         addMapping("மேலூர்", "Melur");
         addMapping("உசிலம்பட்டி", "Usilampatti");
         addMapping("பெரியகுளம்", "Periyakulam");
         addMapping("வாடிப்பட்டி", "Vadipatti");
-        
+
         // Tirunelveli district towns
         addMapping("அம்பாசமுத்திரம்", "Ambasamudram");
         addMapping("செங்கோட்டை", "Senkottai");
         addMapping("கூத்தனூர்", "Koothannur");
         addMapping("நெல்லை", "Nellai");
         addMapping("பாளையங்கோட்டை", "Palayamkottai");
-        
+
         // Other important towns
         addMapping("ஆத்தூர்", "Attur");
         addMapping("மேட்டூர்", "Mettur");
@@ -150,7 +150,7 @@ public class LocationTranslationService {
         addMapping("மண்டபம்", "Mandapam");
         addMapping("ராமேஸ்வரம்", "Rameswaram");
         addMapping("தொண்டி", "Thondi");
-        
+
         // Bus station names that might be entered
         addMapping("பேருந்து நிலையம்", "Bus Stand");
         addMapping("மத்திய பேருந்து நிலையம்", "Central Bus Stand");
@@ -192,7 +192,7 @@ public class LocationTranslationService {
         }
 
         String normalizedTamil = tamilName.trim().toLowerCase();
-        
+
         // First try static mappings
         if (TAMIL_TO_ENGLISH_LOCATIONS.containsKey(normalizedTamil)) {
             String english = TAMIL_TO_ENGLISH_LOCATIONS.get(normalizedTamil);
@@ -203,11 +203,11 @@ public class LocationTranslationService {
         // Try database translations (search for Tamil text in translations table)
         List<Translation> translations = translationRepository.findByLanguage("ta");
         for (Translation translation : translations) {
-            if (translation.getTranslatedValue() != null && 
-                translation.getTranslatedValue().equalsIgnoreCase(tamilName.trim())) {
+            if (translation.getTranslatedValue() != null &&
+                    translation.getTranslatedValue().equalsIgnoreCase(tamilName.trim())) {
                 // Found a Tamil translation, get the English name from location table
-                if ("location".equalsIgnoreCase(translation.getEntityType()) && 
-                    "name".equals(translation.getFieldName())) {
+                if ("location".equalsIgnoreCase(translation.getEntityType()) &&
+                        "name".equals(translation.getFieldName())) {
                     Optional<Location> location = locationRepository.findById(translation.getEntityId());
                     if (location.isPresent()) {
                         log.debug("Found database translation: {} -> {}", tamilName, location.get().getName());
@@ -230,7 +230,7 @@ public class LocationTranslationService {
         }
 
         String normalizedEnglish = englishName.trim().toLowerCase();
-        
+
         // First try static mappings
         if (ENGLISH_TO_TAMIL_LOCATIONS.containsKey(normalizedEnglish)) {
             String tamil = ENGLISH_TO_TAMIL_LOCATIONS.get(normalizedEnglish);
@@ -242,7 +242,7 @@ public class LocationTranslationService {
         List<Location> locations = locationRepository.findByName(englishName);
         for (Location location : locations) {
             Optional<Translation> translation = translationRepository.findTranslation(
-                "location", location.getId().getValue(), "ta", "name");
+                    "location", location.getId().getValue(), "ta", "name");
             if (translation.isPresent()) {
                 log.debug("Found database translation: {} -> {}", englishName, translation.get().getTranslatedValue());
                 return Optional.of(translation.get().getTranslatedValue());
@@ -264,7 +264,7 @@ public class LocationTranslationService {
         }
 
         String trimmed = locationName.trim();
-        
+
         if (isTamilText(trimmed)) {
             // Try to translate Tamil to English
             Optional<String> english = translateToEnglish(trimmed);
@@ -275,7 +275,7 @@ public class LocationTranslationService {
             log.warn("No English translation found for Tamil location: {}. Using original.", trimmed);
             return normalizePlaceName(trimmed);
         }
-        
+
         // Already English - normalize and return
         return normalizePlaceName(trimmed);
     }
@@ -291,12 +291,12 @@ public class LocationTranslationService {
         }
 
         String trimmed = locationName.trim();
-        
+
         if (isTamilText(trimmed)) {
             // Already Tamil
             return Optional.of(trimmed);
         }
-        
+
         // Try to translate English to Tamil
         return translateToTamil(trimmed);
     }
@@ -310,7 +310,7 @@ public class LocationTranslationService {
         }
 
         String trimmed = name.trim();
-        
+
         // 1. Try direct match in locations table (English names)
         Optional<Location> directMatch = locationRepository.findByExactName(trimmed);
         if (directMatch.isPresent()) {
@@ -332,8 +332,8 @@ public class LocationTranslationService {
             if (english.isPresent()) {
                 directMatch = locationRepository.findByExactName(english.get());
                 if (directMatch.isPresent()) {
-                    log.debug("Found location by Tamil-to-English translation: {} -> {}", 
-                        trimmed, english.get());
+                    log.debug("Found location by Tamil-to-English translation: {} -> {}",
+                            trimmed, english.get());
                     return directMatch;
                 }
             }
@@ -341,15 +341,15 @@ public class LocationTranslationService {
             // 4. Search in translations table for Tamil name
             List<Translation> translations = translationRepository.findByLanguage("ta");
             for (Translation translation : translations) {
-                if ("location".equalsIgnoreCase(translation.getEntityType()) && 
-                    "name".equals(translation.getFieldName()) &&
-                    translation.getTranslatedValue() != null &&
-                    translation.getTranslatedValue().equalsIgnoreCase(trimmed)) {
-                    
+                if ("location".equalsIgnoreCase(translation.getEntityType()) &&
+                        "name".equals(translation.getFieldName()) &&
+                        translation.getTranslatedValue() != null &&
+                        translation.getTranslatedValue().equalsIgnoreCase(trimmed)) {
+
                     Optional<Location> location = locationRepository.findById(translation.getEntityId());
                     if (location.isPresent()) {
-                        log.debug("Found location by translation table lookup: {} -> {}", 
-                            trimmed, location.get().getName());
+                        log.debug("Found location by translation table lookup: {} -> {}",
+                                trimmed, location.get().getName());
                         return location;
                     }
                 }
@@ -360,7 +360,8 @@ public class LocationTranslationService {
         List<Location> partialMatches = locationRepository.findByName(trimmed);
         if (!partialMatches.isEmpty()) {
             log.debug("Found location by partial match: {}", trimmed);
-            return Optional.of(partialMatches.get(0));
+            // Java 21 Sequenced Collections - getFirst()
+            return Optional.of(partialMatches.getFirst());
         }
 
         log.debug("No location found for name: {}", trimmed);
@@ -378,8 +379,8 @@ public class LocationTranslationService {
 
         // Check if translation already exists
         Optional<Translation> existing = translationRepository.findTranslation(
-            "location", location.getId().getValue(), "ta", "name");
-        
+                "location", location.getId().getValue(), "ta", "name");
+
         if (existing.isPresent()) {
             // Update existing translation
             Translation translation = existing.get();
@@ -389,12 +390,11 @@ public class LocationTranslationService {
         } else {
             // Create new translation
             Translation translation = new Translation(
-                "location", 
-                location.getId().getValue(), 
-                "ta", 
-                "name", 
-                tamilName.trim()
-            );
+                    "location",
+                    location.getId().getValue(),
+                    "ta",
+                    "name",
+                    tamilName.trim());
             translationRepository.save(translation);
             log.info("Created Tamil translation for location {}: {}", location.getName(), tamilName);
         }
@@ -403,15 +403,15 @@ public class LocationTranslationService {
     /**
      * Creates a location with both English and Tamil names
      */
-    public Location createLocationWithTranslation(String name, Double latitude, Double longitude, 
-                                                   String tamilName) {
+    public Location createLocationWithTranslation(String name, Double latitude, Double longitude,
+            String tamilName) {
         // Determine English name
         String englishName = getEnglishName(name);
-        
+
         // Create location with English name
         Location newLocation = Location.withCoordinates(null, englishName, latitude, longitude);
         Location saved = locationRepository.save(newLocation);
-        
+
         // Determine Tamil name to save
         String tamilToSave = tamilName;
         if (tamilToSave == null || tamilToSave.trim().isEmpty()) {
@@ -423,12 +423,12 @@ public class LocationTranslationService {
                 tamilToSave = tamil.orElse(null);
             }
         }
-        
+
         // Save Tamil translation if available
         if (tamilToSave != null && !tamilToSave.trim().isEmpty()) {
             saveLocationTranslation(saved, tamilToSave);
         }
-        
+
         log.info("Created location: {} (Tamil: {})", englishName, tamilToSave);
         return saved;
     }

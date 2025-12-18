@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../../../test-utils';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 import BusInfoPanel from '../BusInfoPanel';
 import type { BusLocation } from '../../../types';

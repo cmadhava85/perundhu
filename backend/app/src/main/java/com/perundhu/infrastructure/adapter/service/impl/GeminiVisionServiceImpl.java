@@ -261,6 +261,98 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     }
   }
 
+  @Override
+  @CircuitBreaker(name = "gemini", fallbackMethod = "extractBusScheduleBase64WithContextFallback")
+  @Bulkhead(name = "gemini")
+  @Retry(name = "externalApi")
+  public Map<String, Object> extractBusScheduleFromBase64WithContext(String base64ImageData, String mimeType, String userContext) {
+    if (!isAvailable()) {
+      log.warn("Gemini Vision service is not available");
+      return createErrorResponse("Gemini Vision service is not available");
+    }
+
+    try {
+      // Build the Gemini API request with user context
+      String requestBody = buildGeminiRequestWithContext(base64ImageData, mimeType, userContext);
+
+      // Call the Gemini API
+      String response = callGeminiApi(requestBody);
+
+      // Parse the response
+      return parseGeminiResponse(response);
+    } catch (Exception e) {
+      log.error("Error calling Gemini Vision API with context: {}", e.getMessage(), e);
+      return createErrorResponse("Gemini API error: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Build the JSON request body for Gemini API with user context.
+   */
+  private String buildGeminiRequestWithContext(String base64ImageData, String mimeType, String userContext) throws JsonProcessingException {
+    ObjectNode root = objectMapper.createObjectNode();
+
+    // Create contents array
+    ArrayNode contents = objectMapper.createArrayNode();
+    ObjectNode content = objectMapper.createObjectNode();
+
+    // Create parts array with text prompt and image
+    ArrayNode parts = objectMapper.createArrayNode();
+
+    // Build enhanced prompt with user context
+    String enhancedPrompt = BUS_SCHEDULE_PROMPT;
+    if (userContext != null && !userContext.trim().isEmpty()) {
+      enhancedPrompt = """
+          USER PROVIDED CONTEXT (use this to fill in missing information):
+          %s
+
+          IMPORTANT: Use the user's context above to determine:
+          - Origin/departure location if mentioned (e.g., "Buses from Chennai" means origin is Chennai)
+          - Destination if mentioned (e.g., "to Madurai" means destination is Madurai)
+          - Any other hints about routes, timing, or bus type
+
+          %s
+          """.formatted(userContext.trim(), BUS_SCHEDULE_PROMPT);
+    }
+
+    // Add text prompt
+    ObjectNode textPart = objectMapper.createObjectNode();
+    textPart.put("text", enhancedPrompt);
+    parts.add(textPart);
+
+    // Add image data
+    ObjectNode imagePart = objectMapper.createObjectNode();
+    ObjectNode inlineData = objectMapper.createObjectNode();
+    inlineData.put("mimeType", mimeType);
+    inlineData.put("data", base64ImageData);
+    imagePart.set("inlineData", inlineData);
+    parts.add(imagePart);
+
+    content.set("parts", parts);
+    contents.add(content);
+    root.set("contents", contents);
+
+    // Add generation config for JSON output
+    ObjectNode generationConfig = objectMapper.createObjectNode();
+    generationConfig.put("temperature", 0.1); // Low temperature for consistent output
+    generationConfig.put("maxOutputTokens", 8192); // Increased for extracting all routes
+    root.set("generationConfig", generationConfig);
+
+    return objectMapper.writeValueAsString(root);
+  }
+
+  /**
+   * Fallback method for extractBusScheduleFromBase64WithContext.
+   */
+  private Map<String, Object> extractBusScheduleBase64WithContextFallback(String base64ImageData, String mimeType, String userContext, Throwable t) {
+    log.warn("Gemini Vision API with context failed, using fallback. Error: {}", t.getMessage());
+    Map<String, Object> result = new HashMap<>();
+    result.put("error", "Gemini Vision service temporarily unavailable");
+    result.put("message", t.getMessage());
+    result.put("requiresManualEntry", true);
+    return result;
+  }
+
   /**
    * Build the JSON request body for Gemini API.
    */
@@ -340,7 +432,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         return createErrorResponse("No response from Gemini");
       }
 
-      JsonNode firstCandidate = candidates.get(0);
+      // Java 21 Sequenced Collections - getFirst()
+      JsonNode firstCandidate = candidates.iterator().next();
 
       // Check finish reason
       JsonNode finishReasonNode = firstCandidate.get("finishReason");
@@ -505,7 +598,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             if (!depTimes.isEmpty()) {
               route.put("departureTimes", depTimes);
               route.put("timings", depTimes);
-              route.put("departureTime", depTimes.get(0));
+              // Java 21 Sequenced Collections - getFirst()
+              route.put("departureTime", depTimes.getFirst());
             }
 
             // Field 5: Arrival times
@@ -523,7 +617,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             }
             if (!arrTimes.isEmpty()) {
               route.put("arrivalTimes", arrTimes);
-              route.put("arrivalTime", arrTimes.get(0));
+              // Java 21 Sequenced Collections - getFirst()
+              route.put("arrivalTime", arrTimes.getFirst());
             }
 
             // Field 6: Bus type
@@ -582,7 +677,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             if (!times.isEmpty()) {
               route.put("departureTimes", times);
               route.put("timings", times);
-              route.put("departureTime", times.get(0));
+              // Java 21 Sequenced Collections - getFirst()
+              route.put("departureTime", times.getFirst());
             }
 
             // Bus type from field 4 if not times
@@ -612,7 +708,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       result.put("allDepartureTimes", allTimes);
       result.put("timing", allTimes);
       if (!result.containsKey("departureTime")) {
-        result.put("departureTime", allTimes.get(0));
+        // Java 21 Sequenced Collections - getFirst()
+        result.put("departureTime", allTimes.getFirst());
       }
     }
 
@@ -1117,7 +1214,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         List<String> departureTimes = (List<String>) route.get("departureTimes");
         if (departureTimes != null && !departureTimes.isEmpty()) {
           normalizedRoute.put("timings", departureTimes);
-          normalizedRoute.put("departureTime", departureTimes.get(0));
+          // Java 21 Sequenced Collections - getFirst()
+          normalizedRoute.put("departureTime", departureTimes.getFirst());
 
           // Expand into individual schedules
           int totalSchedules = departureTimes.size();
@@ -1142,7 +1240,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
       // Set first route as primary
       if (!groupedRoutes.isEmpty()) {
-        Map<String, Object> firstRoute = groupedRoutes.get(0);
+        // Java 21 Sequenced Collections - getFirst()
+        Map<String, Object> firstRoute = groupedRoutes.getFirst();
         data.put("toLocation", firstRoute.get("toLocation"));
         data.put("destination", firstRoute.get("toLocation"));
       }
@@ -1155,7 +1254,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       data.put("boardFormat", "DEPARTURE_TIMES_ONLY");
       data.put("destinationRequired", true);
       if (!allDepartureTimes.isEmpty()) {
-        data.put("departureTime", allDepartureTimes.get(0));
+        // Java 21 Sequenced Collections - getFirst()
+        data.put("departureTime", allDepartureTimes.getFirst());
       }
     }
   }
@@ -1617,7 +1717,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               சேலம்→Salem, திருநெல்வேலி→Tirunelveli, சிவகாசி→Sivakasi, அருப்புக்கோட்டை→Aruppukkottai,
               விருதுநகர்→Virudhunagar, தேனி→Theni, திண்டுக்கல்→Dindigul, தஞ்சாவூர்→Thanjavur,
               கன்னியாகுமரி→Kanyakumari, திருப்பூர்→Tiruppur, ஈரோடு→Erode, நாமக்கல்→Namakkal,
-              கரூர்→Karur, வேலூர்→Vellore, குடியாத்தம்→Gudiyatham, கும்பகோணம்→Kumbakonam
+              கரூர்→Karur, வேலூர்→Vellore, குடியாத்தம்→Gudiyatham, கும்பகோணம்→Kumbakonam,
+              திருவனந்தபுரம்→Thiruvananthapuram, பெங்களூர்→Bangalore, ஹைதராபாத்→Hyderabad,
+              புதுச்சேரி→Pondicherry, தூத்துக்குடி→Thoothukudi, நாகர்கோவில்→Nagercoil,
+              ராமநாதபுரம்→Ramanathapuram, கடலூர்→Cuddalore, விழுப்புரம்→Villupuram,
+              செங்கல்பட்டு→Chengalpattu, தாம்பரம்→Tambaram, மதுரந்தகம்→Madurantakam
       BUS TERMS: பஸ்/வண்டி→Bus, எண்→Number, புறப்பாடு→Departure, வரவு→Arrival,
                  நிலையம்→Station, வழி→Via, மணி→hour, காலை→Morning/AM, மாலை→Evening/PM
 
@@ -1627,29 +1731,63 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         "fromLocation": "departure city in English (e.g., Chennai, Madurai) or null",
         "toLocation": "destination city in English or null",
         "departureTimes": ["06:00", "08:30"],
-        "arrivalTimes": ["12:00", "14:30"],
-        "stops": ["Trichy", "Dindigul", "Theni"],
+        "arrivalTimes": ["14:00", "16:30"],
+        "stops": ["Tambaram", "Chengalpattu", "Villupuram", "Trichy"],
         "busType": "EXPRESS/ORDINARY/DELUXE/AC/SUPER DELUXE or null",
         "via": "route description like 'via Trichy' or null",
         "confidence": 0.85,
-        "extractedFields": ["busNumber", "fromLocation", "toLocation"],
-        "warnings": ["No departure time found", "Bus type unclear"],
-        "suggestions": ["Add departure time for better accuracy"]
+        "extractedFields": ["busNumber", "fromLocation", "toLocation", "departureTimes", "arrivalTimes"],
+        "warnings": [],
+        "suggestions": []
       }
 
-      EXTRACTION RULES:
-      1. BUS NUMBER: Look for patterns like 570, 27D, A1, MTC-45, TNSTC-123, SETC-456
-      2. LOCATIONS: Extract FROM and TO - these are the most important fields
-         - Common patterns: "X to Y", "X → Y", "X - Y", "from X to Y", "X லிருந்து Y க்கு"
-         - Always output city names in English, even if input is Tamil
-      3. TIMES: Convert to 24-hour HH:MM format (06:00, 18:30)
-         - "6 AM" → "06:00", "6:30 PM" → "18:30"
-         - "காலை 6 மணி" (morning 6) → "06:00"
-      4. STOPS: List intermediate stops if mentioned after "via", "stops:", "வழி"
+      ===================== CRITICAL EXTRACTION RULES =====================
 
-      CONFIDENCE SCORING:
-      - 0.9-1.0: Found busNumber + fromLocation + toLocation + at least one time
-      - 0.7-0.89: Found fromLocation + toLocation + time (no bus number)
+      1. BUS NUMBER:
+         - Look for patterns: 570, 27D, A1, MTC-45, TNSTC-123, SETC-456
+         - Keywords: "Bus", "Route", "No", "Number", "பஸ்", "எண்"
+
+      2. LOCATIONS (fromLocation, toLocation):
+         - These are the START and END cities/towns, NOT intermediate stops
+         - Common patterns: "X to Y", "X → Y", "X - Y", "from X to Y", "X லிருந்து Y க்கு"
+         - "Departure: Chennai" means fromLocation is Chennai
+         - "Arrival: Madurai" means toLocation is Madurai
+         - Always output city names in English, even if input is Tamil
+         - Do NOT include intermediate stops in fromLocation or toLocation
+
+      3. TIME EXTRACTION (VERY IMPORTANT):
+         - DEPARTURE TIME: Look for "Departure:", "Departs:", "Dep:", "starts at", "leaves at", "புறப்பாடு"
+         - ARRIVAL TIME: Look for "Arrival:", "Arrives:", "Arr:", "reaches at", "ends at", "வரவு"
+         - Convert ALL times to 24-hour HH:MM format:
+           * "6:00 AM" → "06:00"
+           * "6 AM" → "06:00"
+           * "2:00 PM" → "14:00"
+           * "2 PM" → "14:00"
+           * "18:30" stays as "18:30"
+           * "காலை 6 மணி" (morning 6) → "06:00"
+           * "மாலை 5 மணி" (evening 5) → "17:00"
+           * "இரவு 10 மணி" (night 10) → "22:00"
+         - If text says "Departure: 6:00 AM, Arrival: 2:00 PM":
+           * departureTimes: ["06:00"]
+           * arrivalTimes: ["14:00"]
+         - If multiple departure times mentioned (e.g., "6:00 AM, 8:00 AM, 10:00 AM"):
+           * departureTimes: ["06:00", "08:00", "10:00"]
+
+      4. STOPS (Intermediate Stops):
+         - These are cities/towns BETWEEN fromLocation and toLocation
+         - Look for keywords: "Stops:", "Via:", "வழி:", "through", "stopping at"
+         - Example: "Chennai to Madurai, Stops: Tambaram, Chengalpattu, Villupuram, Trichy"
+           * fromLocation: "Chennai"
+           * toLocation: "Madurai"
+           * stops: ["Tambaram", "Chengalpattu", "Villupuram", "Trichy"]
+         - Do NOT include fromLocation or toLocation in the stops array
+         - Always output stop names in English
+
+      ===================== CONFIDENCE SCORING =====================
+      
+      - 0.9-1.0: Found busNumber + fromLocation + toLocation + departureTimes + arrivalTimes
+      - 0.8-0.89: Found busNumber + fromLocation + toLocation + at least one time
+      - 0.7-0.79: Found fromLocation + toLocation + time (no bus number)
       - 0.5-0.69: Found fromLocation + toLocation only
       - 0.3-0.49: Found partial information (only one location or only bus number)
       - 0.0-0.29: Cannot extract meaningful route data
@@ -1744,7 +1882,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         return createErrorResponse("No response from Gemini");
       }
 
-      JsonNode firstCandidate = candidates.get(0);
+      // Java 21 Sequenced Collections - getFirst() via iterator
+      JsonNode firstCandidate = candidates.iterator().next();
       JsonNode content = firstCandidate.get("content");
       if (content == null) {
         return createErrorResponse("No content in Gemini response");

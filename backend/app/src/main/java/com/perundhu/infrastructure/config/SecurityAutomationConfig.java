@@ -1,6 +1,6 @@
 package com.perundhu.infrastructure.config;
 
-import com.perundhu.application.service.SecurityMonitoringService;
+import com.perundhu.domain.port.SecurityMonitoringPort;
 import com.perundhu.application.service.InputValidationService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +30,7 @@ public class SecurityAutomationConfig {
   private static final Logger log = LoggerFactory.getLogger(SecurityAutomationConfig.class);
 
   @Autowired
-  private SecurityMonitoringService securityService;
+  private SecurityMonitoringPort securityService;
 
   @Autowired
   private InputValidationService validationService;

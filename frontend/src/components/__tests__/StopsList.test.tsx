@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within } from '../../test-utils';
 import { vi } from 'vitest';
 import StopsList from '../StopsList';
 

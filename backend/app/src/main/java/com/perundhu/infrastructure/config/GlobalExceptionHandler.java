@@ -23,12 +23,14 @@ import com.perundhu.exception.BusinessException;
 import com.perundhu.exception.InvalidRequestException;
 import com.perundhu.exception.ResourceNotFoundException;
 import com.perundhu.infrastructure.exception.RateLimitException;
+import com.perundhu.infrastructure.shared.TraceContext;
 
 import jakarta.validation.ConstraintViolationException;
 
 /**
  * Global exception handler for the application.
  * Provides consistent error responses for various exception types.
+ * All responses include traceId for request correlation.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -52,9 +54,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(
             ResourceNotFoundException ex, WebRequest request) {
 
-        logger.error("Resource not found", ex);
+        String traceId = TraceContext.getTraceId();
+        logger.error("[EXCEPTION][traceId={}] ResourceNotFoundException: {} | path={}",
+                traceId, ex.getMessage(), request.getDescription(false));
 
         Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Not Found");
         body.put("errorCode", "RESOURCE_NOT_FOUND");
         body.put("message", messageService.getMessage("resource.not.found"));
@@ -72,9 +77,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleInvalidRequestException(
             InvalidRequestException ex, WebRequest request) {
 
-        logger.error("Invalid request", ex);
+        String traceId = TraceContext.getTraceId();
+        logger.error("[EXCEPTION][traceId={}] InvalidRequestException: {} | path={}",
+                traceId, ex.getMessage(), request.getDescription(false));
 
         Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Bad Request");
         body.put("message", messageService.getMessage("validation.failed"));
         body.put("userMessage", "Please check your input and try again.");
@@ -90,9 +98,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleBusinessException(
             BusinessException ex, WebRequest request) {
 
-        logger.error("Business rule violation: {}", ex.getErrorCode(), ex);
+        String traceId = TraceContext.getTraceId();
+        logger.error("[EXCEPTION][traceId={}] BusinessException: errorCode={} | message={} | path={}",
+                traceId, ex.getErrorCode(), ex.getMessage(), request.getDescription(false));
 
         Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Business Rule Violation");
         body.put("errorCode", ex.getErrorCode());
         body.put("message", ex.getMessage());
@@ -111,9 +122,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleRateLimitException(
             RateLimitException ex, WebRequest request) {
 
-        logger.warn("Rate limit exceeded: {}", ex.getMessage());
+        String traceId = TraceContext.getTraceId();
+        logger.warn("[EXCEPTION][traceId={}] RateLimitException: {} | clientIp={} | path={}",
+                traceId, ex.getMessage(), TraceContext.getClientIp(), request.getDescription(false));
 
         Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Too Many Requests");
         body.put("errorCode", "RATE_LIMIT_EXCEEDED");
         body.put("message", ex.getMessage());
@@ -135,18 +149,22 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             MethodArgumentNotValidException ex, HttpHeaders headers,
             HttpStatusCode status, WebRequest request) {
 
-        logger.error("Validation error", ex);
-
-        Map<String, Object> body = new HashMap<>();
+        String traceId = TraceContext.getTraceId();
 
         // Get all validation errors
         String errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
+        logger.error("[EXCEPTION][traceId={}] ValidationException: {} | path={}",
+                traceId, errors, request.getDescription(false));
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Bad Request");
+        body.put("errorCode", "VALIDATION_ERROR");
         body.put("message", messageService.getMessage("validation.failed"));
         body.put("details", errors);
 
@@ -160,9 +178,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleConstraintViolationException(
             ConstraintViolationException ex, WebRequest request) {
 
-        logger.error("Constraint violation", ex);
-
-        Map<String, Object> body = new HashMap<>();
+        String traceId = TraceContext.getTraceId();
 
         // Get all constraint violations
         String errors = ex.getConstraintViolations()
@@ -170,7 +186,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
                 .collect(Collectors.joining(", "));
 
+        logger.error("[EXCEPTION][traceId={}] ConstraintViolationException: {} | path={}",
+                traceId, errors, request.getDescription(false));
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Bad Request");
+        body.put("errorCode", "CONSTRAINT_VIOLATION");
         body.put("message", messageService.getMessage("validation.failed"));
         body.put("details", errors);
 
@@ -178,24 +200,85 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * Handle IllegalArgumentException - return 400 Bad Request
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(
+            IllegalArgumentException ex, WebRequest request) {
+
+        String traceId = TraceContext.getTraceId();
+        logger.error("[EXCEPTION][traceId={}] IllegalArgumentException: {} | path={}",
+                traceId, ex.getMessage(), request.getDescription(false), ex);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
+        body.put("error", "Bad Request");
+        body.put("errorCode", "ILLEGAL_ARGUMENT");
+        body.put("message", ex.getMessage());
+        body.put("userMessage", "The provided input is invalid. Please check and try again.");
+
+        return createJsonResponse(body, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle NullPointerException - return 500 Internal Server Error
+     */
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<Object> handleNullPointerException(
+            NullPointerException ex, WebRequest request) {
+
+        String traceId = TraceContext.getTraceId();
+        logger.error("[EXCEPTION][traceId={}] NullPointerException at {} | path={}",
+                traceId, getExceptionLocation(ex), request.getDescription(false), ex);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
+        body.put("error", "Internal Server Error");
+        body.put("errorCode", "NULL_POINTER_ERROR");
+        body.put("message", messageService.getMessage("server.error"));
+        body.put("userMessage",
+                "An unexpected error occurred. Please try again later. If the problem persists, contact support with traceId: "
+                        + traceId);
+
+        return createJsonResponse(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * Fallback handler for all unhandled exceptions
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        logger.error("Unhandled error", ex);
+        String traceId = TraceContext.getTraceId();
+
+        logger.error("[EXCEPTION][traceId={}] UnhandledException: type={} | message={} | path={}",
+                traceId, ex.getClass().getSimpleName(), ex.getMessage(), request.getDescription(false), ex);
 
         Map<String, Object> body = new HashMap<>();
+        body.put("traceId", traceId);
         body.put("error", "Internal Server Error");
         body.put("errorCode", "INTERNAL_ERROR");
         body.put("message", messageService.getMessage("server.error"));
         body.put("userMessage",
-                "Something went wrong on our end. Please try again later or contact support if the problem persists.");
+                "Something went wrong on our end. Please try again later or contact support with traceId: " + traceId);
         // Only include technical details in non-production environments
         if (logger.isDebugEnabled()) {
             body.put("details", ex.getClass().getName() + ": " + ex.getMessage());
         }
 
         return createJsonResponse(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Get exception location for NullPointerException debugging
+     */
+    private String getExceptionLocation(Exception ex) {
+        StackTraceElement[] stackTrace = ex.getStackTrace();
+        if (stackTrace != null && stackTrace.length > 0) {
+            StackTraceElement element = stackTrace[0];
+            return element.getClassName() + "." + element.getMethodName() +
+                    "(" + element.getFileName() + ":" + element.getLineNumber() + ")";
+        }
+        return "unknown";
     }
 
     /**

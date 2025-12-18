@@ -237,7 +237,8 @@ public class BusTimingRecordIntegrationService {
     if (location == null) {
       List<Location> matches = locationRepository.findByName(locationName.trim());
       if (!matches.isEmpty()) {
-        location = matches.get(0);
+        // Java 21 Sequenced Collections - getFirst()
+        location = matches.getFirst();
       }
     }
 

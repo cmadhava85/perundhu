@@ -1,10 +1,10 @@
 /**
- * Centralized logging utility with metrics tracking
+ * Centralized logging utility with metrics tracking and distributed tracing support
  * Replaces direct console.log usage throughout the application
- * Provides structured logging with different log levels and performance tracking
+ * Provides structured logging with different log levels, performance tracking, and traceId correlation
  */
 
-// TraceId is passed via context to avoid circular dependencies
+import { traceContext } from './traceId';
 
 export enum LogLevel {
   DEBUG = 'DEBUG',
@@ -23,6 +23,11 @@ export enum LogCategory {
   PERFORMANCE = 'PERFORMANCE',
   GEOCODING = 'GEOCODING',
   GENERAL = 'GENERAL',
+  ADMIN = 'ADMIN',
+  NAVIGATION = 'NAVIGATION',
+  FORM = 'FORM',
+  VALIDATION = 'VALIDATION',
+  STOPS = 'STOPS',
 }
 
 interface LogContext {
@@ -263,6 +268,86 @@ class Logger {
   }
 
   /**
+   * Log a contribution action (route, image, voice, paste)
+   */
+  logContribution(action: string, type: 'route' | 'image' | 'voice' | 'paste' | 'stops', context?: Omit<LogContext, 'action' | 'category'>): void {
+    this.info(`Contribution: ${action}`, {
+      ...context,
+      category: LogCategory.CONTRIBUTION,
+      action,
+      contributionType: type,
+    });
+  }
+
+  /**
+   * Log an admin action
+   */
+  logAdminAction(action: string, resource: string, resourceId?: string | number, context?: Omit<LogContext, 'action' | 'category'>): void {
+    this.info(`Admin: ${action} ${resource}`, {
+      ...context,
+      category: LogCategory.ADMIN,
+      action,
+      resource,
+      resourceId,
+    });
+  }
+
+  /**
+   * Log a form submission
+   */
+  logFormSubmit(formName: string, success: boolean, context?: Omit<LogContext, 'category'>): void {
+    const level = success ? LogLevel.INFO : LogLevel.WARN;
+    const message = success ? `Form submitted: ${formName}` : `Form submission failed: ${formName}`;
+    
+    this.log(level, message, {
+      ...context,
+      category: LogCategory.FORM,
+      action: 'form_submit',
+      formName,
+      success,
+    });
+  }
+
+  /**
+   * Log a validation error
+   */
+  logValidationError(field: string, error: string, context?: Omit<LogContext, 'category'>): void {
+    this.warn(`Validation error: ${field}`, {
+      ...context,
+      category: LogCategory.VALIDATION,
+      action: 'validation_error',
+      field,
+      error,
+    });
+  }
+
+  /**
+   * Log stops-related actions
+   */
+  logStopsAction(action: string, busId?: number, stopsCount?: number, context?: Omit<LogContext, 'action' | 'category'>): void {
+    this.info(`Stops: ${action}`, {
+      ...context,
+      category: LogCategory.STOPS,
+      action,
+      busId,
+      stopsCount,
+    });
+  }
+
+  /**
+   * Log navigation/routing
+   */
+  logNavigation(from: string, to: string, context?: Omit<LogContext, 'category'>): void {
+    this.debug(`Navigation: ${from} → ${to}`, {
+      ...context,
+      category: LogCategory.NAVIGATION,
+      action: 'navigate',
+      from,
+      to,
+    });
+  }
+
+  /**
    * Get API metrics summary
    */
   getApiMetrics(): Record<string, ApiMetrics & { avgDuration: number; errorRate: number }> {
@@ -304,15 +389,16 @@ class Logger {
   private log(level: LogLevel, message: string, context?: LogContext): void {
     const timestamp = new Date().toISOString();
     
-    // Get traceId from context if provided, otherwise skip to avoid circular calls
-    const traceId = context?.requestId as string | undefined;
+    // Get traceId from context if provided, or from traceContext singleton
+    const traceId = (context?.traceId as string) || (context?.requestId as string) || traceContext.getTraceId();
+    const sessionId = traceContext.getSessionId();
     
     const logEntry = {
       timestamp,
       level,
       message,
       traceId,
-      sessionId: this.sessionId,
+      sessionId,
       url: globalThis.window === undefined ? undefined : globalThis.window.location.pathname,
       ...context,
     };
@@ -335,7 +421,8 @@ class Logger {
     // In production, only log warnings and errors to console
     if (this.isProduction && (level === LogLevel.WARN || level === LogLevel.ERROR)) {
       const consoleMethod = level === LogLevel.ERROR ? console.error : console.warn;
-      consoleMethod(`[${level}] ${message}`);
+      const traceTag = traceId ? `[${traceId}]` : '';
+      consoleMethod(`[${level}]${traceTag} ${message}`);
     }
 
     // Store in session storage (development only)
@@ -385,9 +472,18 @@ export const logError = (message: string, error?: unknown, context?: LogContext)
 export const logApiCall = logger.logApiCall.bind(logger);
 export const logUserAction = logger.logUserAction.bind(logger);
 export const logSearch = logger.logSearch.bind(logger);
+export const logContribution = logger.logContribution.bind(logger);
+export const logAdminAction = logger.logAdminAction.bind(logger);
+export const logFormSubmit = logger.logFormSubmit.bind(logger);
+export const logValidationError = logger.logValidationError.bind(logger);
+export const logStopsAction = logger.logStopsAction.bind(logger);
+export const logNavigation = logger.logNavigation.bind(logger);
 export const startPerformance = logger.startPerformance.bind(logger);
 export const endPerformance = logger.endPerformance.bind(logger);
 
 // Export for dashboard/debugging
 export const getApiMetrics = () => logger.getApiMetrics();
 export const getSessionLogs = () => logger.getSessionLogs();
+
+// Default export
+export default logger;

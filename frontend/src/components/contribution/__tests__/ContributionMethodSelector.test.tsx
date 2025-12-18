@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../../../test-utils';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ContributionMethodSelector } from '../ContributionMethodSelector';
 
@@ -10,18 +10,25 @@ vi.mock('react-i18next', () => ({
   })
 }));
 
-// Mock feature flags
-vi.mock('../../../config/featureFlags', () => ({
-  featureFlags: {
-    enableManualContribution: true,
-    enableVoiceContribution: true,
-    enableImageContribution: true,
-    enablePasteContribution: true,
-    enableRouteVerification: true,
-    enableAddStops: true,
-    enableReportIssue: false
-  }
-}));
+// Mock FeatureFlagsContext with all features enabled
+vi.mock('../../../contexts/FeatureFlagsContext', async (importOriginal) => {
+  const actual = await importOriginal() as Record<string, unknown>;
+  return {
+    ...actual,
+    useFeatureFlags: () => ({
+      flags: {
+        enableManualContribution: true,
+        enableVoiceContribution: true,
+        enableImageContribution: true,
+        enablePasteContribution: true,
+        enableRouteVerification: true,
+        enableAddStops: true,
+        enableReportIssue: true,
+      },
+      isLoading: false,
+    }),
+  };
+});
 
 describe('ContributionMethodSelector Component', () => {
   const defaultProps = {
@@ -41,13 +48,12 @@ describe('ContributionMethodSelector Component', () => {
     it('displays all method chips when features are enabled', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      // Component uses short labels in chips
+      // Component uses short labels in chips - note: Stops is no longer in the selector
       expect(screen.getByText('Manual')).toBeDefined();
       expect(screen.getByText('Voice')).toBeDefined();
       expect(screen.getByText('Upload')).toBeDefined();
       expect(screen.getByText('Paste')).toBeDefined();
       expect(screen.getByText('Verify')).toBeDefined();
-      expect(screen.getByText('Stops')).toBeDefined();
     });
 
     it('displays method icons', () => {
@@ -58,7 +64,6 @@ describe('ContributionMethodSelector Component', () => {
       expect(screen.getByText('📷')).toBeDefined(); // Upload
       expect(screen.getByText('📋')).toBeDefined(); // Paste
       expect(screen.getByText('✅')).toBeDefined(); // Verify
-      expect(screen.getByText('📍')).toBeDefined(); // Stops
     });
   });
 
@@ -74,14 +79,14 @@ describe('ContributionMethodSelector Component', () => {
       }
     });
 
-    it('calls onMethodChange when Stops is clicked', () => {
+    it('calls onMethodChange when Paste is clicked', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} />);
       
-      const stopsChip = screen.getByText('Stops').closest('button');
-      if (stopsChip) {
-        fireEvent.click(stopsChip);
-        expect(onMethodChange).toHaveBeenCalledWith('addStops');
+      const pasteChip = screen.getByText('Paste').closest('button');
+      if (pasteChip) {
+        fireEvent.click(pasteChip);
+        expect(onMethodChange).toHaveBeenCalledWith('paste');
       }
     });
 
@@ -97,12 +102,12 @@ describe('ContributionMethodSelector Component', () => {
     });
 
     it('shows active state for selected method', () => {
-      render(<ContributionMethodSelector {...defaultProps} selectedMethod="addStops" />);
+      render(<ContributionMethodSelector {...defaultProps} selectedMethod="paste" />);
       
-      const stopsChip = screen.getByText('Stops').closest('button');
-      if (stopsChip) {
-        expect(stopsChip.classList.contains('active')).toBe(true);
-        expect(stopsChip.getAttribute('aria-pressed')).toBe('true');
+      const pasteChip = screen.getByText('Paste').closest('button');
+      if (pasteChip) {
+        expect(pasteChip.classList.contains('active')).toBe(true);
+        expect(pasteChip.getAttribute('aria-pressed')).toBe('true');
       }
     });
   });
@@ -112,10 +117,10 @@ describe('ContributionMethodSelector Component', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} />);
       
-      const stopsChip = screen.getByText('Stops').closest('button');
-      if (stopsChip) {
-        fireEvent.keyDown(stopsChip, { key: 'Enter' });
-        expect(onMethodChange).toHaveBeenCalledWith('addStops');
+      const pasteChip = screen.getByText('Paste').closest('button');
+      if (pasteChip) {
+        fireEvent.keyDown(pasteChip, { key: 'Enter' });
+        expect(onMethodChange).toHaveBeenCalledWith('paste');
       }
     });
 
@@ -134,7 +139,7 @@ describe('ContributionMethodSelector Component', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
       const buttons = screen.getAllByRole('button');
-      expect(buttons.length).toBeGreaterThanOrEqual(6);
+      expect(buttons.length).toBeGreaterThanOrEqual(5);
     });
   });
 

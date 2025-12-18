@@ -147,17 +147,14 @@ public class ContributionAdminService {
     public RouteContribution updateRouteContributionStatus(String id, String status, String notes) {
         var contributionStatus = ContributionStatus.fromString(status);
 
-        // Java 17 pattern matching for instanceof
-        if (contributionStatus instanceof ApprovedStatus) {
-            return approveRouteContribution(id, notes)
+        // Java 21 pattern matching for switch
+        return switch (contributionStatus) {
+            case ApprovedStatus() -> approveRouteContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Route contribution not found with id: " + id));
-        } else if (contributionStatus instanceof RejectedStatus) {
-            return rejectRouteContribution(id, notes)
+            case RejectedStatus() -> rejectRouteContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Route contribution not found with id: " + id));
-        } else if (contributionStatus instanceof PendingStatus) {
-            throw new IllegalArgumentException("Cannot set status back to PENDING");
-        }
-        throw new IllegalArgumentException("Unknown status: " + status);
+            case PendingStatus() -> throw new IllegalArgumentException("Cannot set status back to PENDING");
+        };
     }
 
     /**
@@ -172,17 +169,14 @@ public class ContributionAdminService {
     public ImageContribution updateImageContributionStatus(String id, String status, String notes) {
         var contributionStatus = ContributionStatus.fromString(status);
 
-        // Java 17 pattern matching for instanceof
-        if (contributionStatus instanceof ApprovedStatus) {
-            return approveImageContribution(id, notes)
+        // Java 21 pattern matching for switch
+        return switch (contributionStatus) {
+            case ApprovedStatus() -> approveImageContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Image contribution not found with id: " + id));
-        } else if (contributionStatus instanceof RejectedStatus) {
-            return rejectImageContribution(id, notes)
+            case RejectedStatus() -> rejectImageContribution(id, notes)
                     .orElseThrow(() -> new IllegalArgumentException("Image contribution not found with id: " + id));
-        } else if (contributionStatus instanceof PendingStatus) {
-            throw new IllegalArgumentException("Cannot set status back to PENDING");
-        }
-        throw new IllegalArgumentException("Unknown status: " + status);
+            case PendingStatus() -> throw new IllegalArgumentException("Cannot set status back to PENDING");
+        };
     }
 
     /**
@@ -305,13 +299,17 @@ public class ContributionAdminService {
      */
     private <T> void addNotesToContribution(T contribution, String notes, String noteType) {
         if (notes != null && !notes.isBlank()) {
-            String currentNotes;
-            if (contribution instanceof RouteContribution rc) {
-                currentNotes = rc.getAdditionalNotes() != null ? rc.getAdditionalNotes() : "";
-                rc.setAdditionalNotes(currentNotes + "\n" + noteType + ": " + notes);
-            } else if (contribution instanceof ImageContribution ic) {
-                currentNotes = ic.getAdditionalNotes() != null ? ic.getAdditionalNotes() : "";
-                ic.setAdditionalNotes(currentNotes + "\n" + noteType + ": " + notes);
+            // Java 21 pattern matching for switch
+            switch (contribution) {
+                case RouteContribution rc -> {
+                    String currentNotes = rc.getAdditionalNotes() != null ? rc.getAdditionalNotes() : "";
+                    rc.setAdditionalNotes(currentNotes + "\n" + noteType + ": " + notes);
+                }
+                case ImageContribution ic -> {
+                    String currentNotes = ic.getAdditionalNotes() != null ? ic.getAdditionalNotes() : "";
+                    ic.setAdditionalNotes(currentNotes + "\n" + noteType + ": " + notes);
+                }
+                default -> { /* No action for other types */ }
             }
         }
     }

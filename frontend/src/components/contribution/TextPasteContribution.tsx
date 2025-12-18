@@ -101,8 +101,11 @@ Via: Chengalpattu, Villupuram, Trichy`,
         onError(response.data.reason || t('paste.errors.invalidText', 'Text validation failed'));
       }
     } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: { message?: string } } };
-      onError(axiosError.response?.data?.message || t('paste.errors.validationFailed', 'Validation failed'));
+      const axiosError = error as { response?: { data?: { userMessage?: string; message?: string } } };
+      const errorMessage = axiosError.response?.data?.userMessage || 
+                          axiosError.response?.data?.message || 
+                          t('paste.errors.validationFailed', 'Validation failed');
+      onError(errorMessage);
     } finally {
       setIsValidating(false);
     }
@@ -147,17 +150,25 @@ Via: Chengalpattu, Villupuram, Trichy`,
       if (response.data.success) {
         onSubmit(response.data.contributionId);
       } else {
-        onError(response.data.message || t('paste.errors.submitFailed', 'Submission failed'));
+        onError(response.data.userMessage || response.data.message || t('paste.errors.submitFailed', 'Submission failed'));
       }
     } catch (error: unknown) {
-      const axiosError = error as { response?: { status?: number; data?: { message?: string } } };
+      const axiosError = error as { response?: { status?: number; data?: { userMessage?: string; message?: string } } };
       
       if (axiosError.response?.status === 429) {
         onError(t('paste.errors.rateLimit', 'Too many submissions. Please try again later.'));
       } else if (axiosError.response?.status === 401) {
         onError(t('paste.errors.loginRequired', 'Please login to submit paste contributions'));
+      } else if (axiosError.response?.status === 403) {
+        onError(t('paste.errors.forbidden', 'Access denied. Please try again or contact support.'));
+      } else if (axiosError.response?.status === 500) {
+        onError(axiosError.response?.data?.userMessage || 
+                axiosError.response?.data?.message || 
+                t('paste.errors.serverError', 'Server error occurred. Please try again later.'));
       } else {
-        onError(axiosError.response?.data?.message || t('paste.errors.submitFailed', 'Submission failed'));
+        onError(axiosError.response?.data?.userMessage || 
+                axiosError.response?.data?.message || 
+                t('paste.errors.submitFailed', 'Submission failed'));
       }
     } finally {
       setIsSubmitting(false);

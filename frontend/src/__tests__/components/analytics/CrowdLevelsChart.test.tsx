@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../../test-utils';
 import { vi, describe, it, expect } from 'vitest';
 import CrowdLevelsChart, { type CrowdLevelsData } from '../../../components/analytics/CrowdLevelsChart';
 

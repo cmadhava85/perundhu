@@ -109,8 +109,9 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
 };
 
 // Helper function to calculate duration
-function calculateDuration(departureTime: string, arrivalTime: string): string {
+function calculateDuration(departureTime: string | null | undefined, arrivalTime: string | null | undefined): string {
   try {
+    if (!departureTime || !arrivalTime) return 'N/A';
     const [depHours, depMinutes] = departureTime.split(':').map(Number);
     const [arrHours, arrMinutes] = arrivalTime.split(':').map(Number);
 

@@ -221,7 +221,7 @@ public class InputValidationService implements InputValidationPort {
       ValidationResult busResult = validateBusNumber((String) data.get("busNumber"));
       if (!busResult.valid()) {
         errors.put("busNumber", busResult.message());
-      } else {
+      } else if (busResult.sanitizedValue() != null) {
         sanitizedValues.put("busNumber", busResult.sanitizedValue());
       }
     }
@@ -231,7 +231,7 @@ public class InputValidationService implements InputValidationPort {
       ValidationResult fromResult = validateLocationName((String) data.get("fromLocationName"));
       if (!fromResult.valid()) {
         errors.put("fromLocationName", fromResult.message());
-      } else {
+      } else if (fromResult.sanitizedValue() != null) {
         sanitizedValues.put("fromLocationName", fromResult.sanitizedValue());
       }
     }
@@ -240,7 +240,7 @@ public class InputValidationService implements InputValidationPort {
       ValidationResult toResult = validateLocationName((String) data.get("toLocationName"));
       if (!toResult.valid()) {
         errors.put("toLocationName", toResult.message());
-      } else {
+      } else if (toResult.sanitizedValue() != null) {
         sanitizedValues.put("toLocationName", toResult.sanitizedValue());
       }
     }
@@ -264,52 +264,43 @@ public class InputValidationService implements InputValidationPort {
       }
     }
 
-    // Pass through other fields that don't require validation
+    // Pass through other fields that don't require validation (with null-safety for ConcurrentHashMap)
     // Coordinates
-    if (data.containsKey("fromLatitude")) {
-      sanitizedValues.put("fromLatitude", data.get("fromLatitude"));
-    }
-    if (data.containsKey("fromLongitude")) {
-      sanitizedValues.put("fromLongitude", data.get("fromLongitude"));
-    }
-    if (data.containsKey("toLatitude")) {
-      sanitizedValues.put("toLatitude", data.get("toLatitude"));
-    }
-    if (data.containsKey("toLongitude")) {
-      sanitizedValues.put("toLongitude", data.get("toLongitude"));
-    }
+    putIfNotNull(sanitizedValues, "fromLatitude", data.get("fromLatitude"));
+    putIfNotNull(sanitizedValues, "fromLongitude", data.get("fromLongitude"));
+    putIfNotNull(sanitizedValues, "toLatitude", data.get("toLatitude"));
+    putIfNotNull(sanitizedValues, "toLongitude", data.get("toLongitude"));
     
     // Time fields
-    if (data.containsKey("departureTime")) {
-      sanitizedValues.put("departureTime", data.get("departureTime"));
-    }
-    if (data.containsKey("arrivalTime")) {
-      sanitizedValues.put("arrivalTime", data.get("arrivalTime"));
-    }
+    putIfNotNull(sanitizedValues, "departureTime", data.get("departureTime"));
+    putIfNotNull(sanitizedValues, "arrivalTime", data.get("arrivalTime"));
     
     // Additional metadata fields
-    if (data.containsKey("additionalNotes")) {
-      sanitizedValues.put("additionalNotes", data.get("additionalNotes"));
-    }
-    if (data.containsKey("scheduleInfo")) {
-      sanitizedValues.put("scheduleInfo", data.get("scheduleInfo"));
-    }
-    if (data.containsKey("stops")) {
-      sanitizedValues.put("stops", data.get("stops"));
-    }
-    if (data.containsKey("busName")) {
-      sanitizedValues.put("busName", data.get("busName"));
-    }
+    putIfNotNull(sanitizedValues, "additionalNotes", data.get("additionalNotes"));
+    putIfNotNull(sanitizedValues, "scheduleInfo", data.get("scheduleInfo"));
+    putIfNotNull(sanitizedValues, "stops", data.get("stops"));
+    putIfNotNull(sanitizedValues, "busName", data.get("busName"));
     
     // ADD_STOPS contribution fields
-    if (data.containsKey("sourceBusId")) {
-      sanitizedValues.put("sourceBusId", data.get("sourceBusId"));
-    }
-    if (data.containsKey("contributionType")) {
-      sanitizedValues.put("contributionType", data.get("contributionType"));
-    }
+    putIfNotNull(sanitizedValues, "sourceBusId", data.get("sourceBusId"));
+    putIfNotNull(sanitizedValues, "contributionType", data.get("contributionType"));
+    
+    // Additional paste contribution fields
+    putIfNotNull(sanitizedValues, "submittedBy", data.get("submittedBy"));
+    putIfNotNull(sanitizedValues, "source", data.get("source"));
+    putIfNotNull(sanitizedValues, "confidenceScore", data.get("confidenceScore"));
+    putIfNotNull(sanitizedValues, "validationWarnings", data.get("validationWarnings"));
 
     return new ContributionValidationResult(errors.isEmpty(), errors, sanitizedValues);
+  }
+  
+  /**
+   * Helper method to safely put a value into a ConcurrentHashMap (which doesn't allow null values)
+   */
+  private void putIfNotNull(Map<String, Object> map, String key, Object value) {
+    if (value != null) {
+      map.put(key, value);
+    }
   }
 
   @Override

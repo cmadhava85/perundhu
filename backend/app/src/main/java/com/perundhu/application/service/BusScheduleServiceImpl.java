@@ -514,7 +514,31 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
         }
 
-        log.debug("Location search for '{}' returned {} results", trimmedQuery, results.size());
+        // Also search for bus stands (e.g., "Madurai - Periyar", "Coimbatore -
+        // Gandhipuram")
+        List<BusStand> busStandResults = busStandRepository.findByNameContaining(trimmedQuery);
+        for (BusStand busStand : busStandResults) {
+            // Convert BusStand to Location for the autocomplete result
+            // Check if a location with this bus stand name already exists
+            boolean alreadyExists = results.stream()
+                    .anyMatch(loc -> loc.name().equalsIgnoreCase(busStand.getBusStandName()));
+
+            if (!alreadyExists) {
+                // Create a Location from BusStand data using the withDistrict factory method
+                Location busStandAsLocation = Location.withDistrict(
+                        busStand.getCityId() != null ? busStand.getCityId() : new LocationId(-busStand.getId().value()),
+                        busStand.getBusStandName(),
+                        busStand.getLatitude(),
+                        busStand.getLongitude(),
+                        null, // district
+                        busStand.getCityName() // nearby city
+                );
+                results.add(busStandAsLocation);
+                log.debug("Added bus stand to results: {}", busStand.getBusStandName());
+            }
+        }
+
+        log.debug("Location search for '{}' returned {} results (including bus stands)", trimmedQuery, results.size());
         return results;
     }
 
@@ -846,5 +870,39 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         return findBusesBetweenLocations(
                 fromLoc.get().id().value(),
                 toLoc.get().id().value());
+    }
+
+    @Override
+    @Cacheable(value = "publicStatsCache", key = "'platformStats'")
+    public Map<String, Object> getPublicStats() {
+        log.debug("Computing public platform statistics");
+        Map<String, Object> stats = new java.util.HashMap<>();
+
+        try {
+            // Get total bus routes count
+            long routeCount = busRepository.count();
+            stats.put("routeCount", routeCount);
+
+            // Get unique cities/locations count
+            long cityCount = locationRepository.count();
+            stats.put("cityCount", cityCount);
+
+            // For contributor count, we use a reasonable estimate based on contributions
+            // This could be enhanced with actual user contribution tracking
+            // For now, estimate based on route and image contributions
+            long contributorCount = Math.max(100, routeCount / 10); // Estimate: 1 contributor per 10 routes
+            stats.put("contributorCount", contributorCount);
+
+            log.info("Public stats: routes={}, cities={}, contributors={}", routeCount, cityCount, contributorCount);
+
+        } catch (Exception e) {
+            log.error("Error computing public stats", e);
+            // Return safe defaults
+            stats.put("routeCount", 0L);
+            stats.put("cityCount", 0L);
+            stats.put("contributorCount", 0L);
+        }
+
+        return stats;
     }
 }

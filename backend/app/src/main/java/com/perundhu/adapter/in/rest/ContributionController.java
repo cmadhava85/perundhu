@@ -1,6 +1,7 @@
 package com.perundhu.adapter.in.rest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -705,7 +706,9 @@ public class ContributionController {
       contributionData.put("busNumber", routeData.getBusNumber());
       contributionData.put("fromLocationName", routeData.getFromLocation());
       contributionData.put("toLocationName", routeData.getToLocation());
-      contributionData.put("departureTime", !routeData.getTimings().isEmpty() ? routeData.getTimings().get(0) : null);
+      // Java 21 Sequenced Collections - getFirst()
+      contributionData.put("departureTime",
+          !routeData.getTimings().isEmpty() ? routeData.getTimings().getFirst() : null);
       contributionData.put("arrivalTime", routeData.getTimings().size() > 1 ? routeData.getTimings().get(1) : null);
       contributionData.put("additionalNotes", "Voice contribution - Raw text: " + transcribedText);
       contributionData.put("submittedBy", userId);
@@ -860,6 +863,9 @@ public class ContributionController {
       String toLocation = null;
       List<String> timings = List.of();
       List<String> stops = List.of();
+      // Keep raw times separate for database storage
+      String rawDepartureTime = null;
+      String rawArrivalTime = null;
 
       if (geminiVisionService.isAvailable()) {
         log.info("Using Gemini AI for paste text extraction");
@@ -870,13 +876,40 @@ public class ContributionController {
           fromLocation = (String) geminiExtraction.get("fromLocation");
           toLocation = (String) geminiExtraction.get("toLocation");
 
+          // Extract departure times
+          List<String> departureTimes = new ArrayList<>();
           Object depTimes = geminiExtraction.get("departureTimes");
           if (depTimes instanceof List<?>) {
-            timings = ((List<?>) depTimes).stream()
+            departureTimes = ((List<?>) depTimes).stream()
                 .filter(t -> t instanceof String)
                 .map(t -> (String) t)
                 .toList();
           }
+          
+          // Extract arrival times
+          List<String> arrivalTimes = new ArrayList<>();
+          Object arrTimes = geminiExtraction.get("arrivalTimes");
+          if (arrTimes instanceof List<?>) {
+            arrivalTimes = ((List<?>) arrTimes).stream()
+                .filter(t -> t instanceof String)
+                .map(t -> (String) t)
+                .toList();
+          }
+          
+          // Store raw times for database (first time from each list)
+          rawDepartureTime = !departureTimes.isEmpty() ? departureTimes.getFirst() : null;
+          rawArrivalTime = !arrivalTimes.isEmpty() ? arrivalTimes.getFirst() : null;
+          
+          // Combine both into timings with clear labels for display
+          List<String> combinedTimings = new ArrayList<>();
+          if (!departureTimes.isEmpty()) {
+            combinedTimings.add("Dep: " + String.join(", ", departureTimes));
+          }
+          if (!arrivalTimes.isEmpty()) {
+            combinedTimings.add("Arr: " + String.join(", ", arrivalTimes));
+          }
+          // If no labeled times, just use departure times directly
+          timings = combinedTimings.isEmpty() ? departureTimes : combinedTimings;
 
           Object stopsObj = geminiExtraction.get("stops");
           if (stopsObj instanceof List<?>) {
@@ -891,8 +924,8 @@ public class ContributionController {
             adjustedConfidence = ((Number) confObj).doubleValue();
           }
 
-          log.info("Gemini extracted: bus={}, from={}, to={}, times={}, confidence={}",
-              busNumber, fromLocation, toLocation, timings.size(), adjustedConfidence);
+          log.info("Gemini extracted: bus={}, from={}, to={}, depTime={}, arrTime={}, confidence={}",
+              busNumber, fromLocation, toLocation, rawDepartureTime, rawArrivalTime, adjustedConfidence);
         }
       }
 
@@ -907,6 +940,9 @@ public class ContributionController {
         timings = routeData.getTimings();
         stops = routeData.getStops();
         adjustedConfidence = routeData.getConfidence();
+        // For regex fallback, use first timing as departure, second as arrival
+        rawDepartureTime = !timings.isEmpty() ? timings.getFirst() : null;
+        rawArrivalTime = timings.size() > 1 ? timings.get(1) : null;
       }
 
       // Check minimum confidence (30% threshold for paste)
@@ -943,8 +979,9 @@ public class ContributionController {
       contributionData.put("busNumber", busNumber);
       contributionData.put("fromLocationName", fromLocation);
       contributionData.put("toLocationName", toLocation);
-      contributionData.put("departureTime", !timings.isEmpty() ? timings.get(0) : null);
-      contributionData.put("arrivalTime", timings.size() > 1 ? timings.get(1) : null);
+      // Use raw times for database storage (not the labeled "Dep: x, Arr: y" format)
+      contributionData.put("departureTime", rawDepartureTime);
+      contributionData.put("arrivalTime", rawArrivalTime);
       contributionData.put("submittedBy", userId);
       contributionData.put("source", "PASTE");
       contributionData.put("confidenceScore", adjustedConfidence);
@@ -963,9 +1000,18 @@ public class ContributionController {
       }
       contributionData.put("additionalNotes", notes.toString());
 
-      // Add stops if extracted
+      // Add stops if extracted - convert from List<String> to List<Map<String, Object>>
       if (!stops.isEmpty()) {
-        contributionData.put("stops", stops);
+        List<Map<String, Object>> stopsData = new ArrayList<>();
+        int stopOrder = 1;
+        for (String stopName : stops) {
+          Map<String, Object> stopMap = new HashMap<>();
+          stopMap.put("name", stopName);
+          stopMap.put("stopOrder", stopOrder++);
+          // No timing info for individual stops from paste extraction
+          stopsData.add(stopMap);
+        }
+        contributionData.put("stops", stopsData);
       }
 
       // Add warnings to notes
@@ -1081,13 +1127,36 @@ public class ContributionController {
           fromLocation = (String) geminiExtraction.get("fromLocation");
           toLocation = (String) geminiExtraction.get("toLocation");
 
+          // Extract departure times
+          List<String> departureTimes = new ArrayList<>();
           Object depTimes = geminiExtraction.get("departureTimes");
           if (depTimes instanceof List<?>) {
-            timings = ((List<?>) depTimes).stream()
+            departureTimes = ((List<?>) depTimes).stream()
                 .filter(t -> t instanceof String)
                 .map(t -> (String) t)
                 .toList();
           }
+          
+          // Extract arrival times
+          List<String> arrivalTimes = new ArrayList<>();
+          Object arrTimes = geminiExtraction.get("arrivalTimes");
+          if (arrTimes instanceof List<?>) {
+            arrivalTimes = ((List<?>) arrTimes).stream()
+                .filter(t -> t instanceof String)
+                .map(t -> (String) t)
+                .toList();
+          }
+          
+          // Combine both into timings with clear labels for display
+          List<String> combinedTimings = new ArrayList<>();
+          if (!departureTimes.isEmpty()) {
+            combinedTimings.add("Dep: " + String.join(", ", departureTimes));
+          }
+          if (!arrivalTimes.isEmpty()) {
+            combinedTimings.add("Arr: " + String.join(", ", arrivalTimes));
+          }
+          // If no labeled times, just use departure times directly
+          timings = combinedTimings.isEmpty() ? departureTimes : combinedTimings;
 
           Object stopsObj = geminiExtraction.get("stops");
           if (stopsObj instanceof List<?>) {
@@ -1162,8 +1231,13 @@ public class ContributionController {
       @PathVariable String contributionId,
       HttpServletRequest request) {
 
-    String userId = authenticationService.getCurrentUserId();
     String clientId = getClientId(request);
+    String userId = authenticationService.getCurrentUserId();
+    
+    // For anonymous users, generate the same identifier used when submitting
+    if (userId == null || userId.equals("anonymous")) {
+      userId = "anonymous_" + clientId;
+    }
 
     try {
       // Security checks

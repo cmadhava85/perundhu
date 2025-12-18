@@ -4,12 +4,17 @@ import type { Location as AppLocation } from '../types';
 import { locationAutocompleteService, type LocationSuggestion } from '../services/locationAutocompleteService';
 import { findNearbyLocationFromGPS, checkLocationPermission } from '../services/nearbyLocationService';
 import { getGeolocationSupport } from '../services/geolocation';
+import { 
+  validateDifferentLocations,
+  type LocationData,
+  type ValidationResult 
+} from '../utils/validationService';
 import '../styles/transit-design-system.css';
 
 // Recent search interface
 interface RecentSearch {
-  from: { id: number; name: string };
-  to: { id: number; name: string };
+  from: { id: number; name: string; translatedName?: string };
+  to: { id: number; name: string; translatedName?: string };
   timestamp: number;
 }
 
@@ -64,6 +69,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   const [locationError, setLocationError] = useState<string | null>(null);
   const [gpsSupported, setGpsSupported] = useState(true);
   const [isFromGPS, setIsFromGPS] = useState(false); // Track if origin was set via GPS
+  
+  // Validation state
+  const [validationError, setValidationError] = useState<ValidationResult | null>(null);
   
   // Load recent searches from localStorage
   useEffect(() => {
@@ -136,8 +144,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     if (from.id === -1 || to.id === -1) return; // Don't save invalid searches
     
     const newSearch: RecentSearch = {
-      from: { id: from.id, name: from.name },
-      to: { id: to.id, name: to.name },
+      from: { id: from.id, name: from.name, translatedName: from.translatedName },
+      to: { id: to.id, name: to.name, translatedName: to.translatedName },
       timestamp: Date.now()
     };
     
@@ -203,6 +211,14 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       return location.translatedName;
     }
     return location.name;
+  };
+
+  // Helper function to get display name for recent search location
+  const getRecentSearchDisplayName = (loc: { name: string; translatedName?: string }) => {
+    if (i18n.language === 'ta' && loc.translatedName) {
+      return loc.translatedName;
+    }
+    return loc.name;
   };
 
   // Update query fields when language or locations change
@@ -298,17 +314,20 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     setSelectedFromLocation(location);
     setFromQuery(getLocationDisplayName(location));
     setShowFromSuggestions(false);
+    setValidationError(null); // Clear validation error when selecting
   };
 
     const handleToSelect = (location: AppLocation) => {
     setSelectedToLocation(location);
     setToQuery(getLocationDisplayName(location));
     setShowToSuggestions(false);
+    setValidationError(null); // Clear validation error when selecting
   };
 
-  // Handle search - allow any location but try to match with database
+  // Handle search - validate and then search
   const handleSearch = useCallback(() => {
-    setIsSearching(true);
+    // Clear previous validation errors
+    setValidationError(null);
     
     // Try to find matching locations from the database
     const selectedFrom = selectedFromLocation || locations.find(loc => 
@@ -324,8 +343,51 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       toQuery.toLowerCase().includes(loc.name.toLowerCase())
     );
     
+    // Validation 1: Check if origin is selected from list (not just typed)
+    if (!selectedFrom && fromQuery.trim().length > 0) {
+      setValidationError({
+        valid: false,
+        message: t('validation.location.selectFromList', 'Please select origin from the suggestions list'),
+        severity: 'error'
+      });
+      return;
+    }
+    
+    // Validation 2: Check if destination is selected from list
+    if (!selectedTo && toQuery.trim().length > 0) {
+      setValidationError({
+        valid: false,
+        message: t('validation.location.selectDestFromList', 'Please select destination from the suggestions list'),
+        severity: 'error'
+      });
+      return;
+    }
+    
+    // Validation 3: Check origin and destination are different
+    if (selectedFrom && selectedTo) {
+      const originData: LocationData = {
+        name: selectedFrom.name,
+        latitude: selectedFrom.latitude,
+        longitude: selectedFrom.longitude,
+        isVerified: true
+      };
+      const destData: LocationData = {
+        name: selectedTo.name,
+        latitude: selectedTo.latitude,
+        longitude: selectedTo.longitude,
+        isVerified: true
+      };
+      
+      const diffValidation = validateDifferentLocations(originData, destData);
+      if (!diffValidation.valid) {
+        setValidationError(diffValidation);
+        return;
+      }
+    }
+    
+    setIsSearching(true);
+    
     // If we found matching locations, use them
-    // If not, the search will proceed and show "no results" on the results page
     if (selectedFrom && selectedTo && onSearch) {
       saveRecentSearch(selectedFrom, selectedTo);
       onSearch(selectedFrom, selectedTo, searchOptions);
@@ -351,7 +413,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     
     // Reset searching state after a short delay
     setTimeout(() => setIsSearching(false), 500);
-  }, [selectedFromLocation, selectedToLocation, fromQuery, toQuery, searchOptions, locations, onSearch, saveRecentSearch]);
+  }, [selectedFromLocation, selectedToLocation, fromQuery, toQuery, searchOptions, locations, onSearch, saveRecentSearch, t]);
 
   // Swap locations
   const handleSwapLocations = () => {
@@ -904,6 +966,24 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             </div>
           </div>
 
+          {/* Validation Error Display */}
+          {validationError && !validationError.valid && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 16px',
+              background: validationError.severity === 'warning' ? '#FEF3C7' : '#FEE2E2',
+              border: `1px solid ${validationError.severity === 'warning' ? '#F59E0B' : '#EF4444'}`,
+              borderRadius: '8px',
+              color: validationError.severity === 'warning' ? '#92400E' : '#B91C1C',
+              fontSize: '14px'
+            }}>
+              <span>{validationError.severity === 'warning' ? '⚠️' : '❌'}</span>
+              <span>{validationError.message}</span>
+            </div>
+          )}
+
           {/* Search Button */}
           <button
             onClick={handleSearch}
@@ -1049,12 +1129,12 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ color: '#10B981' }}>●</span>
                       <span style={{ fontWeight: '500', color: '#374151', fontSize: '14px' }}>
-                        {search.from.name}
+                        {getRecentSearchDisplayName(search.from)}
                       </span>
                       <span style={{ color: '#9ca3af' }}>→</span>
                       <span style={{ color: '#EF4444' }}>●</span>
                       <span style={{ fontWeight: '500', color: '#374151', fontSize: '14px' }}>
-                        {search.to.name}
+                        {getRecentSearchDisplayName(search.to)}
                       </span>
                     </div>
                     <span style={{

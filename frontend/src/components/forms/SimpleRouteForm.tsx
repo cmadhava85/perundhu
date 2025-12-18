@@ -6,6 +6,12 @@ import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
 import { getRecaptchaToken } from '../../services/recaptchaService';
 import { isKnownLocation } from '../../services/geocodingService';
+import {
+  validateTimeFormat,
+  validateArrivalAfterDeparture,
+  validateDurationForDistance
+} from '../../utils/validationService';
+import { calculateDistance } from '../../services/geolocation';
 import './SimpleRouteForm.css';
 
 interface LocationData {
@@ -68,6 +74,10 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     destination: boolean;
   }>({ origin: false, destination: false });
   
+  // Store coordinates for distance-based validation
+  const [originCoords, setOriginCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [destCoords, setDestCoords] = useState<{ lat: number; lng: number } | null>(null);
+  
   // Track location warnings (unverified locations)
   const [locationWarnings, setLocationWarnings] = useState<{[key: string]: string}>({});
   
@@ -108,13 +118,69 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
       }
     }
     
-    // Departure time is required
-    if (!formData.departureTime?.trim()) {
-      errors.departureTime = 'Departure time is required';
+    // Check origin and destination are different
+    if (formData.origin?.trim() && formData.destination?.trim()) {
+      const originLower = formData.origin.trim().toLowerCase();
+      const destLower = formData.destination.trim().toLowerCase();
+      if (originLower === destLower) {
+        errors.destination = 'Destination must be different from origin';
+      }
     }
     
-    // Arrival time is optional but show a hint
-    // No error for missing arrival time - it will be estimated by backend
+    // Departure time is required and must be valid format
+    if (!formData.departureTime?.trim()) {
+      errors.departureTime = 'Departure time is required';
+    } else {
+      const timeValidation = validateTimeFormat(formData.departureTime);
+      if (!timeValidation.valid) {
+        errors.departureTime = timeValidation.message || 'Invalid time format (use HH:mm)';
+      }
+    }
+    
+    // Arrival time format validation (if provided)
+    if (formData.arrivalTime?.trim()) {
+      const arrivalTimeValidation = validateTimeFormat(formData.arrivalTime);
+      if (!arrivalTimeValidation.valid) {
+        errors.arrivalTime = arrivalTimeValidation.message || 'Invalid time format (use HH:mm)';
+      } else if (formData.departureTime?.trim()) {
+        // Check arrival is after departure (with overnight handling)
+        const arrivalCheck = validateArrivalAfterDeparture(
+          formData.departureTime,
+          formData.arrivalTime
+        );
+        if (!arrivalCheck.valid) {
+          errors.arrivalTime = arrivalCheck.message || 'Arrival time must be after departure time';
+        } else {
+          // If we have coordinates, validate duration is reasonable for distance
+          if (originCoords && destCoords) {
+            const distanceKm = calculateDistance(
+              originCoords.lat,
+              originCoords.lng,
+              destCoords.lat,
+              destCoords.lng
+            );
+            
+            const durationCheck = validateDurationForDistance(
+              formData.departureTime,
+              formData.arrivalTime,
+              distanceKm
+            );
+            if (!durationCheck.valid) {
+              // Show as warning, not error - could be valid for express/local buses
+              if (durationCheck.severity === 'error') {
+                errors.arrivalTime = durationCheck.message || 'Journey duration seems invalid for the distance';
+              } else {
+                warnings.arrivalTime = durationCheck.message || 
+                  `Journey duration may not be accurate for ${Math.round(distanceKm)} km`;
+              }
+            } else if (durationCheck.severity === 'warning') {
+              // Valid but with warning
+              warnings.arrivalTime = durationCheck.message || '';
+            }
+          }
+        }
+      }
+    }
     
     setValidationErrors(errors);
     setLocationWarnings(warnings);
@@ -227,6 +293,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     const wasSelected = !!(location?.lat && location?.lng);
     setLocationVerified(prev => ({ ...prev, origin: wasSelected }));
     
+    // Store coordinates for distance-based validation
+    if (wasSelected && location?.lat && location?.lng) {
+      setOriginCoords({ lat: location.lat, lng: location.lng });
+    } else {
+      setOriginCoords(null);
+    }
+    
     // Clear warning if location was verified, or if value is empty
     if (wasSelected || !value.trim()) {
       setLocationWarnings(prev => {
@@ -245,6 +318,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     // Track if location was selected from autocomplete (has lat/lng data)
     const wasSelected = !!(location?.lat && location?.lng);
     setLocationVerified(prev => ({ ...prev, destination: wasSelected }));
+    
+    // Store coordinates for distance-based validation
+    if (wasSelected && location?.lat && location?.lng) {
+      setDestCoords({ lat: location.lat, lng: location.lng });
+    } else {
+      setDestCoords(null);
+    }
     
     // Clear warning if location was verified, or if value is empty
     if (wasSelected || !value.trim()) {

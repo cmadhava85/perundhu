@@ -1,8 +1,9 @@
 package com.perundhu.infrastructure.security;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.List;
+
+import javax.crypto.SecretKey;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -42,11 +42,11 @@ public class JwtTokenProvider {
     Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
     return Jwts.builder()
-        .setSubject(username)
+        .subject(username)
         .claim("roles", roles)
-        .setIssuedAt(now)
-        .setExpiration(expiryDate)
-        .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+        .issuedAt(now)
+        .expiration(expiryDate)
+        .signWith(getSigningKey(), Jwts.SIG.HS512)
         .compact();
   }
 
@@ -57,11 +57,11 @@ public class JwtTokenProvider {
    * @return The username
    */
   public String getUsernameFromToken(String token) {
-    Claims claims = Jwts.parserBuilder()
-        .setSigningKey(getSigningKey())
+    Claims claims = Jwts.parser()
+        .verifyWith(getSigningKey())
         .build()
-        .parseClaimsJws(token)
-        .getBody();
+        .parseSignedClaims(token)
+        .getPayload();
 
     return claims.getSubject();
   }
@@ -74,11 +74,11 @@ public class JwtTokenProvider {
    */
   @SuppressWarnings("unchecked")
   public List<SimpleGrantedAuthority> getAuthoritiesFromToken(String token) {
-    Claims claims = Jwts.parserBuilder()
-        .setSigningKey(getSigningKey())
+    Claims claims = Jwts.parser()
+        .verifyWith(getSigningKey())
         .build()
-        .parseClaimsJws(token)
-        .getBody();
+        .parseSignedClaims(token)
+        .getPayload();
 
     List<String> roles = (List<String>) claims.get("roles");
 
@@ -95,7 +95,7 @@ public class JwtTokenProvider {
    */
   public boolean validateToken(String token) {
     try {
-      Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+      Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
       return true;
     } catch (Exception ex) {
       log.error("Invalid JWT token", ex);
@@ -108,7 +108,7 @@ public class JwtTokenProvider {
    *
    * @return The signing key
    */
-  private Key getSigningKey() {
+  private SecretKey getSigningKey() {
     byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
     return Keys.hmacShaKeyFor(keyBytes);
   }

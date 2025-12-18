@@ -100,7 +100,8 @@ class ImageContributionProcessingServiceTest {
               "departureTimes", List.of("06:00", "08:00"))));
 
       when(geminiVisionService.isAvailable()).thenReturn(true);
-      when(geminiVisionService.extractBusScheduleFromBase64(anyString(), anyString()))
+      // Mock the WithContext method since the test contribution has description and location
+      when(geminiVisionService.extractBusScheduleFromBase64WithContext(anyString(), anyString(), anyString()))
           .thenReturn(geminiResult);
 
       // When
@@ -142,7 +143,8 @@ class ImageContributionProcessingServiceTest {
       errorResult.put("error", "API rate limit exceeded");
 
       when(geminiVisionService.isAvailable()).thenReturn(true);
-      when(geminiVisionService.extractBusScheduleFromBase64(anyString(), anyString()))
+      // Mock the WithContext method since the test contribution has description and location
+      when(geminiVisionService.extractBusScheduleFromBase64WithContext(anyString(), anyString(), anyString()))
           .thenReturn(errorResult);
 
       // When

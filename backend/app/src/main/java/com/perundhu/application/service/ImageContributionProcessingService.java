@@ -730,8 +730,18 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     logger.info("Sending image to Gemini Vision (size: {} bytes, type: {})",
                             imageBytes.length, mimeType);
 
-                    Map<String, Object> geminiResult = geminiVisionService.extractBusScheduleFromBase64(base64Image,
-                            mimeType);
+                    // Build user context from contribution metadata (description, location, etc.)
+                    String userContext = buildUserContext(contribution);
+                    
+                    Map<String, Object> geminiResult;
+                    if (userContext != null && !userContext.isEmpty()) {
+                        logger.info("Using user context for OCR extraction: {}", userContext);
+                        geminiResult = geminiVisionService.extractBusScheduleFromBase64WithContext(base64Image,
+                                mimeType, userContext);
+                    } else {
+                        geminiResult = geminiVisionService.extractBusScheduleFromBase64(base64Image,
+                                mimeType);
+                    }
 
                     if (geminiResult != null && !geminiResult.containsKey("error")) {
                         // Add metadata
@@ -784,6 +794,50 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             errorResult.put("extractedAt", LocalDateTime.now());
             return errorResult;
         }
+    }
+
+    /**
+     * Build user context string from contribution metadata.
+     * This context helps Gemini AI understand the image better when
+     * the image alone doesn't provide complete information.
+     * 
+     * @param contribution The image contribution with metadata
+     * @return User context string or null if no useful context available
+     */
+    private String buildUserContext(ImageContribution contribution) {
+        StringBuilder context = new StringBuilder();
+        
+        // Add description if present (e.g., "Buses from Chennai", "Chennai to Madurai routes")
+        if (contribution.getDescription() != null && !contribution.getDescription().trim().isEmpty()) {
+            context.append("User description: ").append(contribution.getDescription().trim());
+        }
+        
+        // Add location if present (e.g., "Chennai Bus Stand")
+        if (contribution.getLocation() != null && !contribution.getLocation().trim().isEmpty()) {
+            if (context.length() > 0) {
+                context.append("\n");
+            }
+            context.append("Location: ").append(contribution.getLocation().trim());
+        }
+        
+        // Add route name if present (e.g., "Route 166UD")
+        if (contribution.getRouteName() != null && !contribution.getRouteName().trim().isEmpty()) {
+            if (context.length() > 0) {
+                context.append("\n");
+            }
+            context.append("Route: ").append(contribution.getRouteName().trim());
+        }
+        
+        // Add additional notes if present
+        if (contribution.getAdditionalNotes() != null && !contribution.getAdditionalNotes().trim().isEmpty()) {
+            if (context.length() > 0) {
+                context.append("\n");
+            }
+            context.append("Notes: ").append(contribution.getAdditionalNotes().trim());
+        }
+        
+        String result = context.toString().trim();
+        return result.isEmpty() ? null : result;
     }
 
     /**

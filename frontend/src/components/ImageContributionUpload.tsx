@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
-import { Upload, Camera, FileImage, AlertCircle, CheckCircle, Clock, RefreshCw, Copy } from 'lucide-react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { Upload, Camera, FileImage, AlertCircle, CheckCircle, RefreshCw, Copy, CheckCircle2 } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing, ApiError } from '../services/api';
 import { getRecaptchaToken } from '../services/recaptchaService';
 import { useTranslation } from 'react-i18next';
@@ -44,6 +44,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
   const [honeypot, setHoneypot] = useState(''); // Bot detection field
+  const [showUploadSuccess, setShowUploadSuccess] = useState(false);
+  const [_lastUploadedCount, setLastUploadedCount] = useState(0);
   
   // Use stable counter for image IDs to prevent re-renders
   const imageIdCounterRef = useRef(1);
@@ -214,6 +216,11 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       const captchaToken = await getRecaptchaToken('image_upload');
       
       const contributionData = {
+        // Map to backend expected field names
+        description: description || 'Bus schedule image',  // User's description for AI context
+        location: location || '',                          // Departure location (e.g., "Chennai")
+        routeName: routeName || '',                        // Route name/number (e.g., "166UD")
+        // Legacy fields for backward compatibility
         busName: routeName || 'Unknown Bus',
         busNumber: 'N/A',
         fromLocationName: location || 'Unknown',
@@ -238,6 +245,11 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
               : img
           )
         );
+
+        // Show upload success notification
+        setLastUploadedCount(prev => prev + 1);
+        setShowUploadSuccess(true);
+        setTimeout(() => setShowUploadSuccess(false), 4000);
 
         // Start polling for processing status - onSuccess will be called when processing completes
         pollProcessingStatus(response.contributionId, imageId, onSuccess);
@@ -284,14 +296,20 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   };
 
   const pollProcessingStatus = async (contributionId: string, imageId: string, successCallback?: (contributionId: string) => void) => {
+    let retryCount = 0;
+    const maxRetries = 3;
+    
     const pollInterval = setInterval(async () => {
       try {
         const statusResponse = await getImageProcessingStatus(contributionId);
         
+        // Reset retry count on success
+        retryCount = 0;
+        
         setUploadedImages(prev =>
           prev.map(img =>
             img.id === imageId
-              ? { ...img, status: statusResponse.status }
+              ? { ...img, status: statusResponse.status, error: undefined }
               : img
           )
         );
@@ -303,10 +321,48 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           if (statusResponse.status === 'PROCESSED' && successCallback) {
             successCallback(contributionId);
           }
+          // Handle processing failure
+          if (statusResponse.status === 'PROCESSING_FAILED') {
+            const errorMessage = t('contribution.imageUpload.processingFailed', 'Image processing failed. Please try again.');
+            setUploadedImages(prev =>
+              prev.map(img =>
+                img.id === imageId
+                  ? { ...img, error: errorMessage }
+                  : img
+              )
+            );
+            onError?.(errorMessage);
+          }
         }
       } catch (error) {
         console.error('Error polling status:', error);
-        clearInterval(pollInterval);
+        retryCount++;
+        
+        // Show error to user after max retries
+        if (retryCount >= maxRetries) {
+          clearInterval(pollInterval);
+          
+          // Extract error message from ApiError
+          let errorMessage = t('contribution.imageUpload.statusCheckFailed', 'Failed to check processing status');
+          if (error instanceof ApiError) {
+            errorMessage = error.userMessage || error.message || errorMessage;
+          } else if (error instanceof Error) {
+            errorMessage = error.message;
+          }
+          
+          // Update the image state to show the error
+          setUploadedImages(prev =>
+            prev.map(img =>
+              img.id === imageId
+                ? { ...img, error: errorMessage, processing: false }
+                : img
+            )
+          );
+          
+          // Notify parent component
+          onError?.(errorMessage);
+        }
+        // Continue polling for a few more attempts before giving up
       }
     }, 3000);
 
@@ -379,7 +435,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       case 'PROCESSED':
         return <CheckCircle className="w-4 h-4 text-green-500" />;
       case 'PROCESSING':
-        return <Clock className="w-4 h-4 text-yellow-500" />;
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
       case 'MANUAL_REVIEW_NEEDED':
         return <AlertCircle className="w-4 h-4 text-orange-500" />;
       case 'PROCESSING_FAILED':
@@ -400,22 +456,74 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     
     switch (status) {
       case 'PROCESSED':
-        return 'Successfully processed with AI';
+        return t('contribution.imageUpload.statusProcessed', '✓ Successfully processed');
       case 'PROCESSING':
-        return 'Processing with AI/OCR...';
+        return t('contribution.imageUpload.statusProcessing', '✓ Uploaded - Processing...');
       case 'MANUAL_REVIEW_NEEDED':
-        return 'Needs manual review';
+        return t('contribution.imageUpload.statusReview', 'Under review');
       case 'LOW_CONFIDENCE_OCR':
-        return 'Low confidence - manual review needed';
+        return t('contribution.imageUpload.statusLowConfidence', 'Under review');
       case 'PROCESSING_FAILED':
-        return 'Processing failed';
+        return t('contribution.imageUpload.statusFailed', 'Processing failed');
       default:
-        return 'Ready to upload';
+        return t('contribution.imageUpload.statusReady', 'Ready to upload');
     }
   };
 
+  // Reset success notification count when all images are cleared
+  useEffect(() => {
+    if (uploadedImages.length === 0) {
+      setLastUploadedCount(0);
+    }
+  }, [uploadedImages.length]);
+
   return (
     <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '1rem' }}>
+      {/* Upload Success Notification */}
+      {showUploadSuccess && (
+        <div style={{
+          position: 'fixed',
+          top: '1rem',
+          right: '1rem',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          padding: '1rem 1.5rem',
+          backgroundColor: '#059669',
+          color: 'white',
+          borderRadius: '0.75rem',
+          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+          animation: 'slideInRight 0.3s ease-out'
+        }}>
+          <CheckCircle2 style={{ width: '1.5rem', height: '1.5rem' }} />
+          <div>
+            <div style={{ fontWeight: '600', fontSize: '0.9375rem' }}>
+              {t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
+            </div>
+            <div style={{ fontSize: '0.8125rem', opacity: 0.9 }}>
+              {t('contribution.imageUpload.processingStarted', 'Processing will complete shortly')}
+            </div>
+          </div>
+          <button
+            onClick={() => setShowUploadSuccess(false)}
+            style={{
+              marginLeft: '0.5rem',
+              padding: '0.25rem',
+              background: 'transparent',
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              opacity: 0.8,
+              fontSize: '1.25rem',
+              lineHeight: 1
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {/* Compact Header */}
       <div style={{ marginBottom: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>

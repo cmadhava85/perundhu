@@ -70,7 +70,8 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   }, [buses]);
 
   // Utility functions for sorting
-  const getTimeInMinutes = (time: string): number => {
+  const getTimeInMinutes = (time: string | null | undefined): number => {
+    if (!time) return 0;
     const [hours, minutes] = time.split(':').map(Number);
     return (hours || 0) * 60 + (minutes || 0);
   };

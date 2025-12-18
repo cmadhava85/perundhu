@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Location } from '../../types';
 
 interface LocationInputProps {
@@ -33,6 +34,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
   onInputFocus,
   onInputBlur
 }) => {
+  const { i18n } = useTranslation();
   const [inputValue, setInputValue] = useState(value?.name || '');
   const [isFocused, setIsFocused] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
@@ -40,12 +42,20 @@ const LocationInput: React.FC<LocationInputProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Helper function to get display name based on current language
+  const getLocationDisplayName = (location: Location): string => {
+    if (i18n.language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  };
+
   useEffect(() => {
     // Only update input value if not currently selecting
     if (!isSelecting) {
-      setInputValue(value?.name || '');
+      setInputValue(value ? getLocationDisplayName(value) : '');
     }
-  }, [value, isSelecting]);
+  }, [value, isSelecting, i18n.language]);
 
   useEffect(() => {
     // Cleanup timeout on unmount
@@ -105,8 +115,8 @@ const LocationInput: React.FC<LocationInputProps> = ({
       blurTimeoutRef.current = null;
     }
     
-    // Immediately update UI and close dropdown
-    setInputValue(suggestion.name);
+    // Immediately update UI and close dropdown with localized name
+    setInputValue(getLocationDisplayName(suggestion));
     setIsFocused(false);
     
     // Then notify parent components
@@ -180,7 +190,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
                 <div className="suggestion-content">
                   <span className="suggestion-icon">📍</span>
                   <div className="suggestion-text">
-                    <span className="suggestion-name">{suggestion.name}</span>
+                    <span className="suggestion-name">{getLocationDisplayName(suggestion)}</span>
                     {suggestion.state && (
                       <span className="suggestion-state">{suggestion.state}</span>
                     )}

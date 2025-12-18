@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
@@ -47,11 +46,11 @@ public class JwtTokenUtil implements Serializable {
 
   // For retrieving any information from token we will need the secret key
   private Claims getAllClaimsFromToken(String token) {
-    return Jwts.parserBuilder()
-        .setSigningKey(getSigningKey())
+    return Jwts.parser()
+        .verifyWith(getSigningKey())
         .build()
-        .parseClaimsJws(token)
-        .getBody();
+        .parseSignedClaims(token)
+        .getPayload();
   }
 
   // Check if the token has expired
@@ -71,11 +70,11 @@ public class JwtTokenUtil implements Serializable {
   // 2. Sign the JWT using the HS512 algorithm and secret key.
   private String createToken(Map<String, Object> claims, String subject) {
     return Jwts.builder()
-        .setClaims(claims)
-        .setSubject(subject)
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-        .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+        .claims(claims)
+        .subject(subject)
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+        .signWith(getSigningKey(), Jwts.SIG.HS512)
         .compact();
   }
 

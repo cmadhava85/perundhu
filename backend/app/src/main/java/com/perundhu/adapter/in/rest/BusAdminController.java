@@ -78,9 +78,9 @@ public class BusAdminController {
 
     UpdateResult result = busAdminService.updateBusTiming(id, request.getDepartureTime(), request.getArrivalTime());
 
-    if (result instanceof UpdateResult.Success success) {
-      BusDetails bus = success.busDetails();
-      return ResponseEntity.ok(Map.of(
+    // Java 21 pattern matching for switch with record patterns
+    return switch (result) {
+      case UpdateResult.Success(BusDetails bus) -> ResponseEntity.ok(Map.of(
           "success", true,
           "message", "Bus timing updated successfully",
           "bus", Map.of(
@@ -91,14 +91,11 @@ public class BusAdminController {
               "arrivalTime", bus.arrivalTime() != null ? bus.arrivalTime() : "",
               "fromLocation", bus.fromLocation() != null ? bus.fromLocation() : "",
               "toLocation", bus.toLocation() != null ? bus.toLocation() : "")));
-    } else if (result instanceof UpdateResult.NotFound) {
-      return ResponseEntity.notFound().build();
-    } else if (result instanceof UpdateResult.ValidationError error) {
-      return ResponseEntity.badRequest().body(Map.of(
-          "error", error.error(),
-          "provided", error.details()));
-    }
-    return ResponseEntity.internalServerError().body(Map.of("error", "Unexpected error"));
+      case UpdateResult.NotFound() -> ResponseEntity.notFound().build();
+      case UpdateResult.ValidationError(String error, String details) -> ResponseEntity.badRequest().body(Map.of(
+          "error", error,
+          "provided", details));
+    };
   }
 
   /**

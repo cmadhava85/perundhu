@@ -25,8 +25,11 @@ import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.RouteGraphCacheService.BusSegmentData;
 import com.perundhu.application.service.RouteGraphCacheService.RouteGraphData;
 import com.perundhu.domain.model.Bus;
+import com.perundhu.domain.model.BusStand;
 import com.perundhu.domain.model.Location;
+import com.perundhu.domain.model.LocationId;
 import com.perundhu.domain.model.Stop;
+import com.perundhu.domain.port.BusStandRepository;
 import com.perundhu.domain.port.LocationRepository;
 
 /**
@@ -60,12 +63,15 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
 
   private final LocationRepository locationRepository;
   private final RouteGraphCacheService routeGraphCacheService;
+  private final BusStandRepository busStandRepository;
 
   public ConnectingRouteServiceImpl(
       LocationRepository locationRepository,
-      RouteGraphCacheService routeGraphCacheService) {
+      RouteGraphCacheService routeGraphCacheService,
+      BusStandRepository busStandRepository) {
     this.locationRepository = locationRepository;
     this.routeGraphCacheService = routeGraphCacheService;
+    this.busStandRepository = busStandRepository;
   }
 
   @Override
@@ -102,21 +108,44 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
     RouteGraphData graph = routeGraphCacheService.buildRouteGraph();
     log.debug("Graph built in {}ms", System.currentTimeMillis() - startTime);
 
-    // Use BFS to find all paths with up to maxTransfers
-    long bfsStart = System.currentTimeMillis();
-    List<RoutePath> paths = findPaths(graph, fromLocationId, toLocationId, maxTransfers);
-    log.debug("BFS found {} paths in {}ms", paths.size(), System.currentTimeMillis() - bfsStart);
+    // Expand source and destination to include related bus stands
+    // This enables finding routes via any bus stand in a city (e.g., Madurai ->
+    // Madurai Arapalayam)
+    Set<Long> fromLocationIds = expandLocationToRelatedBusStands(fromLocationId);
+    Set<Long> toLocationIds = expandLocationToRelatedBusStands(toLocationId);
 
-    log.info("Found {} potential paths", paths.size());
+    log.debug("Expanded source {} to {} locations, destination {} to {} locations",
+        fromLocationId, fromLocationIds.size(), toLocationId, toLocationIds.size());
+
+    // Use BFS to find all paths with up to maxTransfers
+    // Search from all source locations to all destination locations
+    long bfsStart = System.currentTimeMillis();
+    List<RoutePath> allPaths = new ArrayList<>();
+
+    for (Long fromId : fromLocationIds) {
+      for (Long toId : toLocationIds) {
+        if (!fromId.equals(toId)) { // Skip self-loops
+          List<RoutePath> paths = findPaths(graph, fromId, toId, maxTransfers);
+          allPaths.addAll(paths);
+        }
+      }
+    }
+
+    log.debug("BFS found {} paths in {}ms (searched {} source-dest pairs)",
+        allPaths.size(), System.currentTimeMillis() - bfsStart,
+        fromLocationIds.size() * toLocationIds.size());
+
+    log.info("Found {} potential paths", allPaths.size());
 
     // Convert paths to DTOs and filter by departure time if specified
-    List<ConnectingRouteDTO> routes = paths.stream()
+    List<ConnectingRouteDTO> routes = allPaths.stream()
         .map(path -> convertToDTO(path, fromLocation, toLocation))
         .filter(route -> route != null)
         .filter(route -> filterByDepartureTime(route, departureAfter))
         .sorted(Comparator
             .comparingInt(ConnectingRouteDTO::transfers)
             .thenComparingInt(ConnectingRouteDTO::totalDuration))
+        .distinct() // Remove duplicate routes
         .limit(MAX_RESULTS)
         .toList();
 
@@ -137,8 +166,8 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
       return true;
     }
 
-    // Check first leg's departure time
-    String departureTimeStr = route.legs().get(0).departureTime();
+    // Check first leg's departure time - using Java 21 getFirst()
+    String departureTimeStr = route.legs().getFirst().departureTime();
     if (departureTimeStr == null) {
       return true; // Include if no time info available
     }
@@ -526,8 +555,9 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         if (busSegments.isEmpty())
           continue;
 
-        BusSegmentData firstSegment = busSegments.get(0);
-        BusSegmentData lastSegment = busSegments.get(busSegments.size() - 1);
+        // Java 21 Sequenced Collections - getFirst() and getLast()
+        BusSegmentData firstSegment = busSegments.getFirst();
+        BusSegmentData lastSegment = busSegments.getLast();
         Bus bus = firstSegment.bus();
 
         // Calculate leg duration
@@ -645,6 +675,61 @@ public class ConnectingRouteServiceImpl implements ConnectingRouteService {
         location.name(), // translated name
         location.latitude(),
         location.longitude());
+  }
+
+  /**
+   * Expand a location ID to include all related bus stands in the same city.
+   * This enables finding connecting routes via any bus stand in a city.
+   * For example, if searching from "Madurai", include all Madurai bus stands
+   * like "Madurai - Arapalayam", "Madurai - Mattuthavani", etc.
+   * 
+   * @param locationId The original location ID
+   * @return Set of all related location IDs (including the original)
+   */
+  private Set<Long> expandLocationToRelatedBusStands(Long locationId) {
+    Set<Long> expandedIds = new HashSet<>();
+    expandedIds.add(locationId); // Always include the original
+
+    try {
+      // Find all bus stands that belong to this city
+      List<BusStand> cityBusStands = busStandRepository.findByCityId(new LocationId(locationId));
+
+      for (BusStand stand : cityBusStands) {
+        if (stand.getId() != null) {
+          // Bus stands may use the city ID as their location ID or have their own ID
+          // Add both the stand's ID and the city ID it references
+          expandedIds.add(stand.getId().value());
+          if (stand.getCityId() != null) {
+            expandedIds.add(stand.getCityId().value());
+          }
+        }
+      }
+
+      // Also get the location itself to check if it's a bus stand
+      Location location = locationRepository.findById(locationId).orElse(null);
+      if (location != null) {
+        String locationName = location.name();
+
+        // If this is a city name, find all bus stands with this city in their name
+        if (locationName != null && !locationName.contains(" - ")) {
+          // This might be a city name, find bus stands by city name
+          List<BusStand> standsByName = busStandRepository.findByCityName(locationName);
+          for (BusStand stand : standsByName) {
+            if (stand.getId() != null) {
+              expandedIds.add(stand.getId().value());
+            }
+          }
+        }
+      }
+
+      if (expandedIds.size() > 1) {
+        log.debug("Expanded location {} to {} related IDs: {}", locationId, expandedIds.size(), expandedIds);
+      }
+    } catch (Exception e) {
+      log.warn("Could not expand location {} to related bus stands: {}", locationId, e.getMessage());
+    }
+
+    return expandedIds;
   }
 
   // Inner classes for path state tracking
