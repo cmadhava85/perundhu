@@ -187,17 +187,17 @@ class InputValidationServiceTest {
         }
 
         @Test
-        @DisplayName("Should reject null or empty bus numbers")
-        void shouldRejectNullOrEmptyBusNumbers() {
-            // When
+        @DisplayName("Should accept null or empty bus numbers (bus number is optional)")
+        void shouldAcceptNullOrEmptyBusNumbers() {
+            // When - bus numbers are now optional per V27 migration
             ValidationResult result1 = inputValidationService.validateBusNumber(null);
             ValidationResult result2 = inputValidationService.validateBusNumber("");
             ValidationResult result3 = inputValidationService.validateBusNumber("   ");
 
-            // Then
-            assertThat(result1.valid()).isFalse();
-            assertThat(result2.valid()).isFalse();
-            assertThat(result3.valid()).isFalse();
+            // Then - all should be valid (optional field)
+            assertThat(result1.valid()).isTrue();
+            assertThat(result2.valid()).isTrue();
+            assertThat(result3.valid()).isTrue();
         }
 
         @Test
@@ -387,7 +387,7 @@ class InputValidationServiceTest {
         void shouldDetectErrorsInContributionData() {
             // Given
             Map<String, Object> data = new HashMap<>();
-            data.put("busNumber", ""); // Invalid
+            data.put("busNumber", ""); // Now valid (optional field per V27 migration)
             data.put("fromLocationName", "<script>alert('xss')</script>"); // Invalid
             data.put("fromLatitude", 91.0); // Invalid
             data.put("fromLongitude", 80.0);
@@ -398,7 +398,7 @@ class InputValidationServiceTest {
             // Then
             assertThat(result.valid()).isFalse();
             assertThat(result.errors()).isNotEmpty();
-            assertThat(result.errors()).containsKey("busNumber");
+            // busNumber is now optional, so empty string is valid
             assertThat(result.errors()).containsKey("fromLocationName");
             assertThat(result.errors()).containsKey("fromCoordinates");
         }

@@ -324,7 +324,7 @@ async function searchBuses(page: Page, source: string, destination: string): Pro
       // Click on tomorrow's date in the datepicker
       // First, find the active month view and click the correct day
       const dayToSelect = tomorrow.getDate();
-      const daySelector = `.ui-datepicker-calendar td[data-handler="selectDay"] a:text("${dayToSelect}")`;
+      const _daySelector = `.ui-datepicker-calendar td[data-handler="selectDay"] a:text("${dayToSelect}")`;
       
       // Try to click the day directly, or use JavaScript to set the value
       try {
@@ -468,7 +468,7 @@ async function closePopups(page: Page): Promise<void> {
       await page.click('body', { position: { x: 10, y: 10 } });
       await delay(500);
     }
-  } catch (e) {
+  } catch (_e) {
     // Ignore popup close errors
   }
 }
@@ -605,7 +605,7 @@ async function main(): Promise<void> {
 // EXPORT FOR PERUNDHU IMPORT
 // ============================================
 
-function convertToPerundhuFormat(results: ScrapingResult[]): unknown {
+export function convertToPerundhuFormat(results: ScrapingResult[]): unknown {
   const buses: unknown[] = [];
   
   for (const result of results) {
