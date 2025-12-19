@@ -151,7 +151,8 @@ class InputValidationServiceTest {
             ValidationResult result2 = inputValidationService.validateLocationName("São Paulo");
 
             // Then - Accept whatever the actual validation logic supports
-            // Note: The actual validation might be stricter than expected for unicode characters
+            // Note: The actual validation might be stricter than expected for unicode
+            // characters
             assertThat(result1.valid()).isIn(true, false); // Either is acceptable for this implementation
             assertThat(result2.valid()).isIn(true, false); // Either is acceptable for this implementation
         }
@@ -337,7 +338,8 @@ class InputValidationServiceTest {
             assertThat(result1.valid()).isFalse();
             assertThat(result2.valid()).isFalse();
             assertThat(result3.valid()).isFalse();
-            // Note: user..name@domain.com might be valid according to some email regex patterns
+            // Note: user..name@domain.com might be valid according to some email regex
+            // patterns
         }
 
         @Test
@@ -477,7 +479,7 @@ class InputValidationServiceTest {
         void shouldNotFlagLegitimateUserAgentsAsSuspicious() {
             // When
             boolean result = inputValidationService.isSuspiciousUserAgent(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
 
             // Then
             assertThat(result).isFalse();
@@ -533,8 +535,8 @@ class InputValidationServiceTest {
         @DisplayName("Should validate correct image files")
         void shouldValidateCorrectImageFiles() {
             // Given - JPEG signature
-            byte[] jpegContent = new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0};
-            
+            byte[] jpegContent = new byte[] { (byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0 };
+
             // When
             boolean result = inputValidationService.isValidFileUpload(jpegContent, "image/jpeg");
 
@@ -559,7 +561,7 @@ class InputValidationServiceTest {
         @DisplayName("Should reject non-image content types")
         void shouldRejectNonImageContentTypes() {
             // Given
-            byte[] content = new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0};
+            byte[] content = new byte[] { (byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0 };
 
             // When
             boolean result = inputValidationService.isValidFileUpload(content, "application/pdf");

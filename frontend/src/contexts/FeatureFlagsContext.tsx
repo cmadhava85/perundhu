@@ -35,6 +35,11 @@ export interface FeatureFlags {
   enableBusinessPartners: boolean;
   enableOsmIntegration: boolean;
   enableRealTimeUpdates: boolean;
+  
+  // Bus Reviews Feature
+  enableBusReviews: boolean;
+  busReviewsRequireLogin: boolean;
+  busReviewsAutoApprove: boolean;
 }
 
 interface FeatureFlagsContextType {
@@ -88,6 +93,11 @@ const defaultFlags: FeatureFlags = {
   enableBusinessPartners: false,
   enableOsmIntegration: false,
   enableRealTimeUpdates: false,
+  
+  // Bus Reviews Feature
+  enableBusReviews: true,
+  busReviewsRequireLogin: true,
+  busReviewsAutoApprove: true,
 };
 
 const FeatureFlagsContext = createContext<FeatureFlagsContextType | undefined>(undefined);

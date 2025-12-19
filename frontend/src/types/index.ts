@@ -364,3 +364,5 @@ export interface MultiStandCheckResponse {
   busStands: BusStand[];
 }
 
+// Re-export review types
+export * from './review';

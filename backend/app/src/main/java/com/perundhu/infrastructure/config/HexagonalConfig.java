@@ -11,6 +11,7 @@ import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.BusTimingRecordRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.LocationValidationService;
+import com.perundhu.domain.port.ReviewRepository;
 import com.perundhu.domain.port.RouteContributionRepository;
 import com.perundhu.domain.port.SkippedTimingRecordRepository;
 import com.perundhu.domain.port.StopRepository;
@@ -23,6 +24,7 @@ import com.perundhu.infrastructure.adapter.geocoding.NominatimClient;
 import com.perundhu.infrastructure.persistence.adapter.BusJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.BusTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.LocationJpaRepositoryAdapter;
+import com.perundhu.infrastructure.persistence.adapter.ReviewRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.RouteContributionRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.SkippedTimingRecordRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.adapter.StopJpaRepositoryAdapter;
@@ -30,6 +32,7 @@ import com.perundhu.infrastructure.persistence.adapter.TimingImageContributionRe
 import com.perundhu.infrastructure.persistence.adapter.TranslationJpaRepositoryAdapter;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
+import com.perundhu.infrastructure.persistence.jpa.ReviewJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.StopJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
@@ -131,5 +134,10 @@ public class HexagonalConfig {
   public TranslationService translationService(TranslationRepository translationRepository,
       TranslationProperties translationProperties) {
     return new TranslationServiceImpl(translationRepository, translationProperties);
+  }
+
+  @Bean
+  public ReviewRepository reviewRepository(ReviewJpaRepository jpaRepository) {
+    return new ReviewRepositoryAdapter(jpaRepository);
   }
 }

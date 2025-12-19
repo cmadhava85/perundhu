@@ -5,6 +5,7 @@ import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import ShareRoute from './ShareRoute';
 import JourneyTimeline from './JourneyTimeline';
+import { BusReviewSection } from './review';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
@@ -296,6 +297,16 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             {busTypeInfo.icon} {busTypeInfo.label}
           </div>
           
+          {/* Compact Rating Display */}
+          {flags.enableBusReviews && (
+            <BusReviewSection
+              busId={bus.id}
+              busName={bus.busNumber || bus.busName || 'Bus'}
+              compact={true}
+              className="ml-2"
+            />
+          )}
+          
           {/* Time Until Departure Badge */}
           {timeUntil && (
             <div style={{
@@ -528,6 +539,16 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
               />
             )}
           </div>
+          
+          {/* Bus Reviews Section */}
+          {flags.enableBusReviews && (
+            <BusReviewSection
+              busId={bus.id}
+              busName={bus.busNumber || bus.busName || 'Bus'}
+              compact={false}
+              className="mt-4"
+            />
+          )}
         </div>
       </div>
     </button>
