@@ -6,6 +6,8 @@ import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
 import { getRecaptchaToken } from '../../services/recaptchaService';
 import { isKnownLocation } from '../../services/geocodingService';
+import { checkForDuplicates, type MatchedBusInfo } from '../../services/duplicateCheckService';
+import { DuplicateMatchAlert } from '../contribution/DuplicateMatchAlert';
 import {
   validateTimeFormat,
   validateArrivalAfterDeparture,
@@ -84,6 +86,12 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
   // Honeypot field for bot detection (invisible to users)
   const [honeypot, setHoneypot] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Duplicate detection state
+  const [duplicateMatches, setDuplicateMatches] = useState<MatchedBusInfo[]>([]);
+  const [duplicateMessage, setDuplicateMessage] = useState('');
+  const [showDuplicateAlert, setShowDuplicateAlert] = useState(false);
+  const [skipDuplicateCheck, setSkipDuplicateCheck] = useState(false);
 
   // Validate form before submission
   const validateForm = (): boolean => {
@@ -203,6 +211,25 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
     setIsSubmitting(true);
     
     try {
+      // Check for duplicates before submission (unless user already chose to skip)
+      if (!skipDuplicateCheck && formData.origin && formData.destination && formData.departureTime) {
+        const duplicateResult = await checkForDuplicates({
+          fromLocation: formData.origin,
+          toLocation: formData.destination,
+          departureTime: formData.departureTime,
+          busNumber: formData.busNumber || undefined
+        });
+        
+        if (duplicateResult.hasPotentialDuplicates && duplicateResult.matches.length > 0) {
+          // Show duplicate alert and pause submission
+          setDuplicateMatches(duplicateResult.matches);
+          setDuplicateMessage(duplicateResult.message);
+          setShowDuplicateAlert(true);
+          setIsSubmitting(false);
+          return;
+        }
+      }
+      
       // Get reCAPTCHA token for spam protection
       const captchaToken = await getRecaptchaToken('manual_contribution');
       
@@ -218,9 +245,38 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
       };
       
       onSubmit(enhancedData);
+      
+      // Reset duplicate check state after successful submission
+      setSkipDuplicateCheck(false);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Handle user choosing to confirm an existing bus (from duplicate alert)
+  const handleConfirmExisting = (busId: number) => {
+    // TODO: Navigate to the existing bus page or show confirmation
+    console.log('User confirmed existing bus:', busId);
+    setShowDuplicateAlert(false);
+    setDuplicateMatches([]);
+    // Could redirect to bus details or show a "thank you for confirming" message
+  };
+
+  // Handle user choosing to add anyway despite duplicates
+  const handleAddAnyway = () => {
+    setShowDuplicateAlert(false);
+    setSkipDuplicateCheck(true);
+    // Re-trigger form submission
+    const form = document.querySelector('form');
+    if (form) {
+      form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  };
+
+  // Handle user canceling from duplicate alert
+  const handleCancelDuplicate = () => {
+    setShowDuplicateAlert(false);
+    setDuplicateMatches([]);
   };
 
   // Use stable counter for stop IDs to prevent re-renders
@@ -363,6 +419,17 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
 
   return (
     <form onSubmit={handleSubmit} className="route-form">
+      {/* Duplicate Match Alert */}
+      {showDuplicateAlert && duplicateMatches.length > 0 && (
+        <DuplicateMatchAlert
+          matches={duplicateMatches}
+          message={duplicateMessage}
+          onConfirmExisting={handleConfirmExisting}
+          onAddAnyway={handleAddAnyway}
+          onCancel={handleCancelDuplicate}
+        />
+      )}
+
       {/* Validation Error Summary */}
       {Object.keys(validationErrors).length > 0 && (
         <div className="validation-error-summary" style={{
