@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext, createContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageSquare, Star } from 'lucide-react';
 import reviewService from '../../services/reviewService';
@@ -8,30 +8,35 @@ import { StarRatingDisplay } from './StarRatingDisplay';
 import { SubmitReviewForm } from './SubmitReviewForm';
 import { ReviewList } from './ReviewList';
 
-// Import AuthContext directly to check if it exists
+// Default auth state for when AuthProvider is not available
+const defaultAuthState = { isAuthenticated: false, user: null, isLoading: false };
+
+// Create a fallback context with default values
+const FallbackAuthContext = createContext(defaultAuthState);
+
+// Try to import the real AuthContext, fall back to our own
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let AuthContext: React.Context<any> | null = null;
+let RealAuthContext: React.Context<any> | null = null;
 try {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  AuthContext = require('../../hooks/useAuth').AuthContext;
+  RealAuthContext = require('../../hooks/useAuth').AuthContext;
 } catch {
   // AuthContext not available
 }
+
+// Use the real context if available, otherwise use fallback
+const AuthContextToUse = RealAuthContext || FallbackAuthContext;
 
 /**
  * Safe hook to get auth state without requiring AuthProvider
  * Returns isAuthenticated: false if AuthProvider is not available
  */
 const useSafeAuth = () => {
-  // Always call useContext (hooks must be called unconditionally)
-  const authContext = AuthContext ? useContext(AuthContext) : null;
+  // Always call useContext unconditionally with a valid context
+  const authContext = useContext(AuthContextToUse);
   
-  if (authContext) {
-    return authContext;
-  }
-  
-  // Return default unauthenticated state if AuthProvider is not available
-  return { isAuthenticated: false, user: null, isLoading: false };
+  // Return the context value or default if context value is undefined/null
+  return authContext || defaultAuthState;
 };
 
 interface BusReviewSectionProps {
