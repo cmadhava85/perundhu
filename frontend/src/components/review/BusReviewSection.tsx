@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageSquare, Star } from 'lucide-react';
 import reviewService from '../../services/reviewService';
@@ -8,20 +8,30 @@ import { StarRatingDisplay } from './StarRatingDisplay';
 import { SubmitReviewForm } from './SubmitReviewForm';
 import { ReviewList } from './ReviewList';
 
+// Import AuthContext directly to check if it exists
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let AuthContext: React.Context<any> | null = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  AuthContext = require('../../hooks/useAuth').AuthContext;
+} catch {
+  // AuthContext not available
+}
+
 /**
  * Safe hook to get auth state without requiring AuthProvider
  * Returns isAuthenticated: false if AuthProvider is not available
  */
 const useSafeAuth = () => {
-  try {
-    // Dynamic import to avoid errors if AuthProvider is not present
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { useAuth } = require('../../hooks/useAuth');
-    return useAuth();
-  } catch {
-    // Return default unauthenticated state if AuthProvider is not available
-    return { isAuthenticated: false, user: null, isLoading: false };
+  // Always call useContext (hooks must be called unconditionally)
+  const authContext = AuthContext ? useContext(AuthContext) : null;
+  
+  if (authContext) {
+    return authContext;
   }
+  
+  // Return default unauthenticated state if AuthProvider is not available
+  return { isAuthenticated: false, user: null, isLoading: false };
 };
 
 interface BusReviewSectionProps {

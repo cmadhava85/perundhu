@@ -16,6 +16,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Export AuthContext for safe usage in components that may not have AuthProvider
+export { AuthContext };
+
 interface AuthProviderProps {
   children: ReactNode;
 }
