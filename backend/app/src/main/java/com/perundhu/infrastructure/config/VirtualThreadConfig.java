@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.support.TaskExecutorAdapter;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -51,8 +52,11 @@ public class VirtualThreadConfig {
    * Virtual thread executor for @Async annotated methods.
    * This executor creates a new virtual thread for each task,
    * allowing for efficient parallel execution of I/O-bound operations.
+   * 
+   * Marked as @Primary to be used as the default executor for @Async operations.
    */
   @Bean(name = "virtualThreadExecutor")
+  @Primary
   public AsyncTaskExecutor virtualThreadExecutor() {
     log.info("Creating Virtual Thread Executor for @Async operations");
     return new TaskExecutorAdapter(Executors.newVirtualThreadPerTaskExecutor());

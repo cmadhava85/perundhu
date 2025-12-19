@@ -85,7 +85,9 @@ public class BusJpaRepositoryAdapter implements BusRepository {
 
     @Override
     public List<Bus> findAll() {
-        return jpaRepository.findAll().stream()
+        // Use findAllWithLocations to eagerly fetch locations and prevent
+        // LazyInitializationException when called from @Async methods
+        return jpaRepository.findAllWithLocations().stream()
                 .map(BusJpaEntity::toDomainModel)
                 .toList();
     }

@@ -15,6 +15,18 @@ import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 @Repository
 public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
 
+        /**
+         * Find all buses with locations eagerly fetched.
+         * Prevents LazyInitializationException when called outside a transaction
+         * (e.g., from @Async methods).
+         */
+        @Query("""
+                SELECT b FROM BusJpaEntity b
+                LEFT JOIN FETCH b.fromLocation
+                LEFT JOIN FETCH b.toLocation
+                """)
+        List<BusJpaEntity> findAllWithLocations();
+
         // ID-based methods (currently being used by BusJpaRepositoryAdapter)
         // Only return active buses for search results
         @Query("""
