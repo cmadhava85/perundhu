@@ -94,6 +94,7 @@ public class ContributionProcessingService {
     private final RouteContributionValidationService validationService;
     private final LocationTranslationService locationTranslationService;
     private final DataQualityValidationService dataQualityValidationService;
+    private final DuplicateDetectionService duplicateDetectionService;
 
     /**
      * Scheduled job to process pending route contributions
@@ -1509,81 +1510,98 @@ public class ContributionProcessingService {
                         + contribution.getDepartureTime() + "', Arrival: '" + contribution.getArrivalTime() + "'");
             }
 
-            // 3. Check if this exact timing already exists (same route AND timing)
-            // Note: For user-contributed routes without bus number, we check by
-            // route+timing only
-            Optional<Bus> existingBusWithTiming = Optional.empty();
-            final LocalTime finalDepartureTime = departureTime;
-            final LocalTime finalArrivalTime = arrivalTime;
-
-            if (contribution.getBusNumber() != null && !contribution.getBusNumber().startsWith("GEN-")) {
-                // Real bus number - check for exact match (bus number + route + timing)
-                List<Bus> routeBuses = busRepository.findByBusNumberAndRoute(
-                        contribution.getBusNumber(),
-                        fromLocation.getId(),
-                        toLocation.getId());
-                existingBusWithTiming = routeBuses.stream()
-                        .filter(bus -> {
-                            boolean departureSame = bus.getDepartureTime() != null
-                                    && bus.getDepartureTime().equals(finalDepartureTime);
-                            if (finalArrivalTime == null) {
-                                return departureSame;
-                            }
-                            return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
-                        })
-                        .findFirst();
-            } else {
-                // Generated bus number - check by route + timing only
-                List<Bus> routeBuses = busRepository.findBusesBetweenLocations(
-                        fromLocation.getId().getValue(),
-                        toLocation.getId().getValue());
-                existingBusWithTiming = routeBuses.stream()
-                        .filter(bus -> {
-                            boolean departureSame = bus.getDepartureTime() != null
-                                    && bus.getDepartureTime().equals(finalDepartureTime);
-                            if (finalArrivalTime == null) {
-                                return departureSame;
-                            }
-                            return departureSame && finalArrivalTime.equals(bus.getArrivalTime());
-                        })
-                        .findFirst();
-            }
+            // 3. Smart duplicate detection using DuplicateDetectionService
+            // Handles: exact matches, possible duplicates (different bus#), pass-through routes
+            var duplicateResult = duplicateDetectionService.checkForDuplicate(
+                    fromLocation,
+                    toLocation,
+                    departureTime,
+                    contribution.getBusNumber());
 
             Bus savedBus;
-            if (existingBusWithTiming.isPresent()) {
-                // Exact duplicate (same route and timing) - skip
-                savedBus = existingBusWithTiming.get();
-            } else {
-                // Either new route OR same route with different timing - create new entry
-                // This allows: Bus 123 Sivakasi→Virudhunagar at 6 AM, 9 AM, 12 PM (3 separate
-                // rows)
-                var newBus = Bus.create(
-                        new BusId(1L), // Temporary ID, will be replaced by database
-                        contribution.getBusNumber(), // Bus number (e.g., "27D")
-                        contribution.getBusName() != null ? contribution.getBusName() : "Bus Route", // Descriptive name
-                        fromLocation,
-                        toLocation,
-                        departureTime,
-                        arrivalTime);
+            String integrationAction;
+            String statusMessage;
 
-                savedBus = busRepository.save(newBus);
+            switch (duplicateResult.matchType()) {
+                case EXACT_MATCH -> {
+                    // Same route + same/similar bus number + timing within window
+                    // This is a confirmation - merge stops, don't create duplicate
+                    savedBus = duplicateResult.matchedBus();
+                    integrationAction = "MERGED_WITH_EXISTING";
+                    statusMessage = String.format("Merged with existing bus %s - %s",
+                            savedBus.getBusNumber(), duplicateResult.details());
+                    log.info("Contribution {} merged with existing bus {} (confidence: {}%)",
+                            contribution.getId(), savedBus.getBusNumber(), duplicateResult.confidenceScore());
+                }
+                case POSSIBLE_DUPLICATE -> {
+                    // Same route + timing but DIFFERENT bus number - needs review
+                    // Don't auto-integrate, mark for admin decision
+                    contribution.setStatus("NEEDS_REVIEW");
+                    contribution.setValidationMessage(String.format(
+                            "Possible duplicate: %s. Admin should verify if this is the same bus or a different one.",
+                            duplicateResult.details()));
+                    contribution.setProcessedDate(LocalDateTime.now());
+                    routeContributionRepository.save(contribution);
+                    log.info("Contribution {} flagged for review - possible duplicate: {}",
+                            contribution.getId(), duplicateResult.details());
+                    return; // Exit without creating new entry
+                }
+                case PASSES_THROUGH -> {
+                    // Contribution destination is a stop on an existing longer route
+                    savedBus = duplicateResult.matchedBus();
+                    integrationAction = "LINKED_TO_PASS_THROUGH";
+                    statusMessage = String.format("Route covered by existing bus: %s", duplicateResult.details());
+                    log.info("Contribution {} linked to pass-through route: {}",
+                            contribution.getId(), duplicateResult.details());
+                }
+                case SAME_BUS_DIFFERENT_TIME -> {
+                    // Same bus number but different service time (>15 min apart)
+                    // This is a NEW service entry - create it
+                    var newBus = Bus.create(
+                            new BusId(1L),
+                            contribution.getBusNumber(),
+                            contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
+                            fromLocation,
+                            toLocation,
+                            departureTime,
+                            arrivalTime);
+                    savedBus = busRepository.save(newBus);
+                    integrationAction = "NEW_SERVICE_TIME";
+                    statusMessage = String.format("Created new service time for bus %s: %s",
+                            contribution.getBusNumber(), duplicateResult.details());
+                    log.info("Contribution {} created new service for bus {} at {}",
+                            contribution.getId(), savedBus.getBusNumber(), departureTime);
+                }
+                case NO_MATCH -> {
+                    // Completely new route - create new entry
+                    var newBus = Bus.create(
+                            new BusId(1L),
+                            contribution.getBusNumber(),
+                            contribution.getBusName() != null ? contribution.getBusName() : "Bus Route",
+                            fromLocation,
+                            toLocation,
+                            departureTime,
+                            arrivalTime);
+                    savedBus = busRepository.save(newBus);
+                    integrationAction = "NEW_ROUTE";
+                    statusMessage = "Successfully integrated new route into bus database";
+                    log.info("Contribution {} created new route: {} → {}",
+                            contribution.getId(), fromLocation.getName(), toLocation.getName());
+                }
+                default -> throw new IllegalStateException("Unknown match type: " + duplicateResult.matchType());
             }
 
-            // 4. Create/update stops if provided
-            processStops(contribution, savedBus);
+            // 4. Create/update stops if provided - merge with existing stops for duplicates
+            processStopsWithMerge(contribution, savedBus, duplicateResult.isDuplicate());
 
             // 5. Mark contribution as integrated
-            String statusMessage = existingBusWithTiming.isPresent()
-                    ? "Duplicate timing skipped - already exists in database"
-                    : "Successfully integrated into bus database";
-
             contribution.setStatus("INTEGRATED");
             contribution.setValidationMessage(statusMessage);
             contribution.setProcessedDate(LocalDateTime.now());
             routeContributionRepository.save(contribution);
 
-            log.info("Successfully integrated approved route contribution ID {} into bus database",
-                    contribution.getId());
+            log.info("Successfully integrated contribution ID {} - Action: {}",
+                    contribution.getId(), integrationAction);
 
         } catch (Exception e) {
             log.error("Error integrating approved route contribution ID {}: {}",
@@ -1597,6 +1615,90 @@ public class ContributionProcessingService {
 
             throw new RuntimeException("Failed to integrate approved contribution", e);
         }
+    }
+
+    /**
+     * Process stops with merge capability - add new stops without duplicating existing ones
+     */
+    private void processStopsWithMerge(RouteContribution contribution, Bus bus, boolean mergeMode) {
+        List<StopContribution> newStops = contribution.getStops();
+
+        if (newStops == null || newStops.isEmpty()) {
+            // Fall back to original processStops if no stops to merge
+            processStops(contribution, bus);
+            return;
+        }
+
+        if (!mergeMode) {
+            // Not merging, use original behavior
+            processStops(contribution, bus);
+            return;
+        }
+
+        // Merge mode: add only new stops
+        List<Stop> existingStops = stopRepository.findByBusId(bus.getId().getValue());
+        int addedCount = 0;
+        int skippedCount = 0;
+
+        for (StopContribution stopContrib : newStops) {
+            String stopName = stopContrib.getName();
+
+            // Check if stop already exists
+            boolean exists = existingStops.stream()
+                    .anyMatch(s -> s.getLocation() != null &&
+                            locationsMatchForMerge(s.getLocation().getName(), stopName));
+
+            if (exists) {
+                skippedCount++;
+                continue;
+            }
+
+            // Add new stop
+            try {
+                Location stopLocation = getOrCreateLocation(
+                        stopName,
+                        stopContrib.getLatitude(),
+                        stopContrib.getLongitude());
+
+                LocalTime stopTime = stopContrib.getArrivalTime() != null
+                        ? parseTimeFlexible(stopContrib.getArrivalTime())
+                        : null;
+
+                int sequence = stopContrib.getStopOrder() != null
+                        ? stopContrib.getStopOrder()
+                        : existingStops.size() + addedCount + 1;
+
+                // Use Stop.create with correct signature
+                Stop newStop = Stop.create(
+                        new com.perundhu.domain.model.StopId(0L),  // Temp ID, DB will assign
+                        stopName,
+                        stopLocation,
+                        stopTime,  // arrival time
+                        null,      // departure time
+                        sequence);
+                stopRepository.save(newStop);
+                addedCount++;
+
+            } catch (Exception e) {
+                log.warn("Failed to add stop {} to bus {}: {}",
+                        stopName, bus.getBusNumber(), e.getMessage());
+            }
+        }
+
+        if (addedCount > 0 || skippedCount > 0) {
+            log.info("Stop merge for bus {}: {} added, {} already existed",
+                    bus.getBusNumber(), addedCount, skippedCount);
+        }
+    }
+
+    /**
+     * Check if two location names match for merge purposes
+     */
+    private boolean locationsMatchForMerge(String name1, String name2) {
+        if (name1 == null || name2 == null) {
+            return false;
+        }
+        return name1.toUpperCase().trim().equals(name2.toUpperCase().trim());
     }
 
     /**
