@@ -33,23 +33,18 @@ data "google_project" "project" {
   project_id = var.project_id
 }
 
-# Enable required APIs
+# Enable required APIs (simplified - only essential services)
 resource "google_project_service" "required_apis" {
   for_each = toset([
     "compute.googleapis.com",
     "sqladmin.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
-    "pubsub.googleapis.com",
     "storage.googleapis.com",
     "secretmanager.googleapis.com",
-    "monitoring.googleapis.com",
-    "logging.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "iam.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "redis.googleapis.com",
-    "memcache.googleapis.com"
+    "servicenetworking.googleapis.com"
   ])
 
   project = var.project_id
@@ -87,19 +82,10 @@ module "database" {
   depends_on = [module.vpc]
 }
 
-# Pub/Sub for messaging
-module "pubsub" {
-  source = "../../modules/pubsub"
+# NOTE: Pub/Sub removed - app uses synchronous processing
+# Can be re-enabled later if async messaging is needed
 
-  project_id  = var.project_id
-  region      = var.region
-  environment = var.environment
-  app_name    = var.app_name
-
-  depends_on = [google_project_service.required_apis]
-}
-
-# Cloud Storage for file uploads
+# Cloud Storage for file uploads (images only)
 module "storage" {
   source = "../../modules/storage"
 
@@ -111,24 +97,8 @@ module "storage" {
   depends_on = [google_project_service.required_apis]
 }
 
-# Redis for caching - OPTIONAL for preprod (set enable_redis = false to save ~$25/month)
-module "redis" {
-  source = "../../modules/redis"
-  count  = var.enable_redis ? 1 : 0
-
-  project_id         = var.project_id
-  region             = var.region
-  environment        = var.environment
-  app_name           = var.app_name
-  vpc_network        = module.vpc.network_name
-  authorized_network = module.vpc.network_self_link
-
-  # Use smallest Redis for dev (1GB)
-  memory_size_gb = 1
-  tier           = "BASIC" # No HA for preprod
-
-  depends_on = [module.vpc]
-}
+# NOTE: Redis removed - not needed for current app scale
+# Can be re-enabled later if caching is needed
 
 # Secret Manager for environment-specific configuration
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
@@ -142,7 +112,7 @@ module "secrets" {
   db_url      = module.database.database_url
   db_username = module.database.db_user
   db_password = module.database.db_password
-  redis_auth  = var.enable_redis ? module.redis[0].redis_auth_string : ""
+  redis_auth  = "" # Redis disabled
 
   depends_on = [module.database]
 }
@@ -172,9 +142,9 @@ module "cloud_run" {
   db_name               = module.database.db_name
   db_user               = module.database.db_user
   storage_bucket_name   = module.storage.images_bucket_name
-  # Redis is optional for preprod - use empty string if disabled
-  redis_host = var.enable_redis ? module.redis[0].redis_host : ""
-  redis_port = var.enable_redis ? module.redis[0].redis_port : 6379
+  # Redis disabled - not needed for current app scale
+  redis_host = ""
+  redis_port = 6379
 
   # Cost optimization: Scale to zero, minimal resources
   min_instances = 0       # Scale to zero when idle
@@ -185,40 +155,6 @@ module "cloud_run" {
   depends_on = [module.vpc, module.database, module.storage, module.iam]
 }
 
-# Monitoring and Alerting
-module "monitoring" {
-  source = "../../modules/monitoring"
-
-  project_id         = var.project_id
-  environment        = var.environment
-  app_name           = var.app_name
-  cloud_run_service  = module.cloud_run.service_name
-  db_instance_name   = module.database.db_instance_name
-  notification_email = var.notification_email
-
-  depends_on = [module.cloud_run, module.database]
-}
-
-# Budget Alerts for cost monitoring
-module "budget" {
-  source = "../../modules/budget"
-
-  project_id         = var.project_id
-  billing_account_id = var.billing_account_id
-  environment        = var.environment
-  app_name           = var.app_name
-  budget_amount      = var.monthly_budget_amount
-  notification_email = var.notification_email
-}
-
-# Logging optimization - reduce retention to minimize costs
-module "logging" {
-  source = "../../modules/logging"
-
-  project_id                = var.project_id
-  environment               = var.environment
-  app_name                  = var.app_name
-  log_retention_days        = 7    # Minimum retention for dev
-  exclude_debug_logs        = true # Don't store debug logs
-  exclude_health_check_logs = true # Don't store health check spam
-}
+# NOTE: Monitoring, Budget, and Logging modules removed
+# Using default GCP monitoring and logging (free tier)
+# Can be re-enabled later if custom alerts/dashboards are needed

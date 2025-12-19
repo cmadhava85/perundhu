@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, MessageSquare, Calendar, User } from 'lucide-react';
-import type { Review } from '../../types/review';
-import { REVIEW_TAG_LABELS, type ReviewTag } from '../../types/review';
+import { REVIEW_TAG_LABELS, type Review, type ReviewTag } from '../../types/review';
 import reviewService from '../../services/reviewService';
 import { StarRatingDisplay } from './StarRatingDisplay';
 
@@ -80,7 +79,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
           <MessageSquare className="w-4 h-4" />
           {t('review.reviews', 'Reviews')} ({reviews.length})
@@ -88,7 +87,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
         {showWriteButton && onWriteReview && (
           <button
             onClick={onWriteReview}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+            className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 touch-manipulation"
           >
             <Star className="w-4 h-4" />
             {t('review.writeReview', 'Write a review')}
@@ -98,13 +97,14 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 
       {/* Reviews */}
       {reviews.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-          <MessageSquare className="w-8 h-8 mx-auto mb-2 opacity-50" />
-          <p>{t('review.noReviews', 'No reviews yet')}</p>
+        <div className="text-center py-10 sm:py-8 text-gray-500 dark:text-gray-400 bg-gray-50/50 dark:bg-gray-800/50 rounded-xl">
+          <MessageSquare className="w-10 h-10 sm:w-8 sm:h-8 mx-auto mb-3 opacity-50" />
+          <p className="text-base sm:text-sm">{t('review.noReviews', 'No reviews yet')}</p>
           {showWriteButton && onWriteReview && (
             <button
               onClick={onWriteReview}
-              className="mt-2 text-blue-600 dark:text-blue-400 hover:underline"
+              className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium 
+                         hover:bg-blue-700 transition-colors touch-manipulation"
             >
               {t('review.beFirst', 'Be the first to review')}
             </button>
@@ -115,12 +115,13 @@ export const ReviewList: React.FC<ReviewListProps> = ({
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-700"
+              className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700 
+                         hover:shadow-md transition-shadow"
             >
               {/* Rating and Date */}
-              <div className="flex items-center justify-between mb-2">
-                <StarRatingDisplay rating={review.rating} size="sm" showValue={false} />
-                <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <StarRatingDisplay rating={review.rating} size="md" showValue={true} />
+                <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded-full">
                   <Calendar className="w-3 h-3" />
                   {formatDate(review.createdAt)}
                 </span>
@@ -128,18 +129,18 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 
               {/* Comment */}
               {review.comment && (
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-3 leading-relaxed">
                   {review.comment}
                 </p>
               )}
 
               {/* Tags */}
               {review.tags && review.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1 mb-2">
+                <div className="flex flex-wrap gap-1.5 mb-3">
                   {review.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs bg-blue-100 dark:bg-blue-900/30 
+                      className="px-2.5 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 
                                  text-blue-700 dark:text-blue-300 rounded-full"
                     >
                       {t(`review.tag.${tag}`, REVIEW_TAG_LABELS[tag as ReviewTag] || tag)}
@@ -148,20 +149,20 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                 </div>
               )}
 
-              {/* User info */}
-              {review.userId && (
-                <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                  <User className="w-3 h-3" />
-                  {review.userId.slice(0, 8)}...
-                </div>
-              )}
-
-              {/* Travel Date */}
-              {review.travelDate && (
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {t('review.traveledOn', 'Traveled on')}: {formatDate(review.travelDate)}
-                </div>
-              )}
+              {/* User info & Travel Date */}
+              <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                {review.userId && (
+                  <span className="flex items-center gap-1">
+                    <User className="w-3 h-3" />
+                    {review.userId.slice(0, 8)}...
+                  </span>
+                )}
+                {review.travelDate && (
+                  <span>
+                    {t('review.traveledOn', 'Traveled on')}: {formatDate(review.travelDate)}
+                  </span>
+                )}
+              </div>
             </div>
           ))}
         </div>

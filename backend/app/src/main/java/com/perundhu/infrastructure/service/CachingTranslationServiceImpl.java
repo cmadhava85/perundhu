@@ -28,7 +28,6 @@ public class CachingTranslationServiceImpl implements CachingTranslationService 
     private final boolean isTestMode;
     private final Map<String, String> testCache = new ConcurrentHashMap<>();
 
-    @Autowired
     public CachingTranslationServiceImpl(TranslationJpaRepository translationRepository) {
         this.translationRepository = translationRepository;
         this.isTestMode = false;

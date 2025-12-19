@@ -2,7 +2,6 @@ package com.perundhu.infrastructure.security;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +25,11 @@ import java.util.ArrayList;
 @Profile("legacy-custom-jwt") // Only active when 'legacy-custom-jwt' profile is enabled (which we won't use)
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-  @Autowired
-  private JwtTokenUtil jwtTokenUtil;
+  private final JwtTokenUtil jwtTokenUtil;
+
+  public JwtRequestFilter(JwtTokenUtil jwtTokenUtil) {
+    this.jwtTokenUtil = jwtTokenUtil;
+  }
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

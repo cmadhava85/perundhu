@@ -1,3 +1,5 @@
+# Storage module variables - simplified
+
 variable "project_id" {
   description = "The GCP project ID"
   type        = string
@@ -16,16 +18,4 @@ variable "environment" {
 variable "app_name" {
   description = "Application name"
   type        = string
-}
-
-variable "pubsub_topic_image_processing" {
-  description = "Pub/Sub topic for image processing notifications"
-  type        = string
-  default     = ""
-}
-
-variable "enable_public_access" {
-  description = "Enable public access to static assets bucket"
-  type        = bool
-  default     = true
 }

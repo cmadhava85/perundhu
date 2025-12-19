@@ -66,8 +66,7 @@ public class HexagonalArchitectureTest {
         .should().beAnnotatedWith("org.springframework.stereotype.Component")
         .orShould().beAnnotatedWith("org.springframework.stereotype.Service")
         .orShould().beAnnotatedWith("org.springframework.stereotype.Repository")
-        .orShould().beAnnotatedWith("jakarta.persistence.Entity")
-        .orShould().beAnnotatedWith("javax.persistence.Entity");
+        .orShould().beAnnotatedWith("jakarta.persistence.Entity");
 
     rule.check(importedClasses);
   }

@@ -3,8 +3,8 @@
 
 # GCP Configuration
 project_id = "astute-strategy-406601"
-region     = "us-central1"  # Note: Database region. Cloud Run is in asia-south1
-zone       = "us-central1-a"
+region     = "asia-south1"
+zone       = "asia-south1-a"
 
 # Environment Configuration
 environment = "preprod"
@@ -12,20 +12,10 @@ app_name    = "perundhu"
 
 # Database Configuration
 db_version       = "MYSQL_8_0"
-db_instance_tier = "db-f1-micro"  # Match your existing instance tier
-
-# Monitoring Configuration
-notification_email = "your-email@example.com"  # UPDATE THIS
+db_instance_tier = "db-f1-micro"
 
 # Domain Configuration
 domain_name = "preprod.perundhu.app"
-enable_ssl  = true
-
-# Cloud Run Configuration
-max_instances  = 10
-min_instances  = 0
-cpu_limit     = "1000m"
-memory_limit  = "1Gi"
 
 # Container Image (managed by CI/CD)
 container_image = "asia-south1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:preprod-latest"

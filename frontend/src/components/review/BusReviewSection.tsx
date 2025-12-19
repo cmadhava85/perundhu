@@ -121,13 +121,14 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
             handleWriteReview();
           }}
           disabled={hasReviewed}
-          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs
+          className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-2 sm:py-0.5 rounded-full text-sm sm:text-xs
                      bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300
                      hover:bg-yellow-100 hover:text-yellow-700 dark:hover:bg-yellow-900 
-                     dark:hover:text-yellow-300 transition-colors ${className}`}
+                     dark:hover:text-yellow-300 transition-all active:scale-95 touch-manipulation
+                     disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
           style={{ whiteSpace: 'nowrap' }}
         >
-          <span style={{ color: '#facc15' }}>☆</span>
+          <span style={{ color: '#facc15', fontSize: '1.1em' }}>☆</span>
           {hasReviewed ? t('reviews.reviewed', 'Reviewed') : t('reviews.rate', 'Rate')}
         </button>
       );
@@ -139,9 +140,9 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
           e.stopPropagation();
           setShowReviewList(true);
         }}
-        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs
+        className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-2 sm:py-0.5 rounded-full text-sm sm:text-xs
                    bg-yellow-50 dark:bg-yellow-900/30 hover:bg-yellow-100 
-                   dark:hover:bg-yellow-900/50 transition-colors ${className}`}
+                   dark:hover:bg-yellow-900/50 transition-all active:scale-95 touch-manipulation ${className}`}
         style={{ whiteSpace: 'nowrap' }}
       >
         <StarRatingDisplay
@@ -158,8 +159,8 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
   return (
     <div className={`space-y-4 ${className}`}>
       {/* Header with Summary */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
             <MessageSquare className="w-5 h-5" />
             {t('review.ratingsAndReviews', 'Ratings & Reviews')}
@@ -176,8 +177,9 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
         {!hasReviewed && (
           <button
             onClick={handleWriteReview}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700
-                       transition-colors text-sm flex items-center gap-2"
+            className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-blue-600 text-white rounded-xl sm:rounded-lg 
+                       hover:bg-blue-700 transition-all text-sm font-medium flex items-center justify-center gap-2
+                       shadow-lg shadow-blue-500/25 touch-manipulation active:scale-98"
           >
             <Star className="w-4 h-4" />
             {t('review.writeReview', 'Write a Review')}
@@ -204,24 +206,34 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
 
       {/* Review List Modal (for compact view click) */}
       {showReviewList && compact && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[80vh] overflow-y-auto p-4">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                {busName} - {t('review.reviews', 'Reviews')}
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
+          onClick={() => setShowReviewList(false)}
+        >
+          <div 
+            className="bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-xl shadow-2xl w-full sm:max-w-md max-h-[85vh] overflow-hidden flex flex-col animate-slide-up sm:animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-4 border-b dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
+              <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
+                {busName}
               </h3>
               <button
                 onClick={() => setShowReviewList(false)}
-                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                className="p-2 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
               >
-                ✕
+                <span className="text-xl text-gray-500">✕</span>
               </button>
             </div>
-            <ReviewList
-              busId={busId}
-              onWriteReview={hasReviewed ? undefined : handleWriteReview}
-              showWriteButton={!hasReviewed}
-            />
+            {/* Modal Content */}
+            <div className="p-4 overflow-y-auto flex-1">
+              <ReviewList
+                busId={busId}
+                onWriteReview={hasReviewed ? undefined : handleWriteReview}
+                showWriteButton={!hasReviewed}
+              />
+            </div>
           </div>
         </div>
       )}

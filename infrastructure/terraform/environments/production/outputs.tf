@@ -1,4 +1,5 @@
 # Production Environment Outputs
+# Simplified - removed outputs for Pub/Sub, Redis, Budget, Monitoring
 
 output "project_id" {
   description = "The GCP project ID"
@@ -58,22 +59,6 @@ output "images_bucket_name" {
   value       = module.storage.images_bucket_name
 }
 
-output "backups_bucket_name" {
-  description = "The Cloud Storage bucket for backups"
-  value       = module.storage.backup_bucket_name
-}
-
-# Redis Outputs
-output "redis_host" {
-  description = "The Redis instance host"
-  value       = module.redis.redis_host
-}
-
-output "redis_port" {
-  description = "The Redis instance port"
-  value       = module.redis.redis_port
-}
-
 # Cloud Run Outputs
 output "cloud_run_service_url" {
   description = "The Cloud Run service URL"
@@ -96,8 +81,6 @@ output "application_config" {
   description = "Application configuration for deployment"
   value = {
     CLOUD_RUN_SERVICE_URL = module.cloud_run.service_url
-    REDIS_HOST            = module.redis.redis_host
-    REDIS_PORT            = module.redis.redis_port
     DB_CONNECTION_NAME    = module.database.db_connection_name
     IMAGES_BUCKET         = module.storage.images_bucket_name
   }

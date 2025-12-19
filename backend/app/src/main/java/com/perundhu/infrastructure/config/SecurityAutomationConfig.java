@@ -6,17 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import lombok.extern.slf4j.Slf4j;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 import java.time.LocalDateTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Security automation configuration for proactive threat detection and response
@@ -27,15 +24,16 @@ import org.slf4j.LoggerFactory;
 @Slf4j
 public class SecurityAutomationConfig {
 
-  private static final Logger log = LoggerFactory.getLogger(SecurityAutomationConfig.class);
-
-  @Autowired
-  private SecurityMonitoringPort securityService;
-
-  @Autowired
-  private InputValidationService validationService;
+  private final SecurityMonitoringPort securityService;
+  private final InputValidationService validationService;
 
   private ScheduledExecutorService securityExecutor;
+
+  public SecurityAutomationConfig(SecurityMonitoringPort securityService,
+                                   InputValidationService validationService) {
+    this.securityService = securityService;
+    this.validationService = validationService;
+  }
 
   @EventListener(ApplicationReadyEvent.class)
   public void initializeSecurityAutomation() {

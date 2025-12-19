@@ -10,6 +10,7 @@ interface StarRatingDisplayProps {
 
 /**
  * Component to display star rating with filled/empty stars
+ * Responsive and accessible design
  */
 export const StarRatingDisplay: React.FC<StarRatingDisplayProps> = ({
   rating,
@@ -19,15 +20,15 @@ export const StarRatingDisplay: React.FC<StarRatingDisplayProps> = ({
   className = '',
 }) => {
   const sizeStyles = {
-    sm: { fontSize: '12px', gap: '1px' },
-    md: { fontSize: '14px', gap: '2px' },
-    lg: { fontSize: '18px', gap: '2px' },
+    sm: { fontSize: '14px', gap: '2px' },
+    md: { fontSize: '16px', gap: '2px' },
+    lg: { fontSize: '20px', gap: '3px' },
   };
 
   const textSizeClasses = {
     sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base',
+    md: 'text-sm font-medium',
+    lg: 'text-base font-semibold',
   };
 
   const { fontSize, gap } = sizeStyles[size];
@@ -49,16 +50,19 @@ export const StarRatingDisplay: React.FC<StarRatingDisplayProps> = ({
         {[1, 2, 3, 4, 5].map((star) => {
           const filled = star <= Math.floor(roundedRating);
           const halfFilled = !filled && star - 0.5 <= roundedRating;
+          const isActive = filled || halfFilled;
+          const starColor = isActive ? '#facc15' : '#d1d5db';
+          const starChar = isActive ? '★' : '☆';
 
           return (
             <span
               key={star}
               style={{ 
-                color: filled || halfFilled ? '#facc15' : '#d1d5db',
+                color: starColor,
                 lineHeight: 1,
               }}
             >
-              {filled ? '★' : halfFilled ? '★' : '☆'}
+              {starChar}
             </span>
           );
         })}

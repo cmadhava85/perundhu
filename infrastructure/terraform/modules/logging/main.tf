@@ -11,15 +11,9 @@ resource "google_logging_project_bucket_config" "default" {
   description = "Default log bucket with reduced retention for ${var.environment}"
 }
 
-# Configure required log bucket retention
-resource "google_logging_project_bucket_config" "required" {
-  project        = var.project_id
-  location       = "global"
-  retention_days = var.log_retention_days
-  bucket_id      = "_Required"
-
-  description = "Required log bucket with reduced retention for ${var.environment}"
-}
+# NOTE: The _Required bucket is locked by Google and cannot be modified via Terraform
+# It maintains a fixed 400-day retention for compliance/audit logs
+# See: https://cloud.google.com/logging/docs/buckets#required-bucket
 
 # Log exclusion filter to reduce unnecessary logs
 resource "google_logging_project_exclusion" "exclude_debug_logs" {

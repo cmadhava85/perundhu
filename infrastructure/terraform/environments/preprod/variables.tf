@@ -1,4 +1,5 @@
 # Perundhu PreProd Environment Variables
+# Simplified - removed unused variables for Redis, Budget, Monitoring
 
 variable "project_id" {
   description = "The GCP project ID"
@@ -8,13 +9,13 @@ variable "project_id" {
 variable "region" {
   description = "The GCP region"
   type        = string
-  default     = "us-central1"
+  default     = "asia-south1"
 }
 
 variable "zone" {
   description = "The GCP zone"
   type        = string
-  default     = "us-central1-a"
+  default     = "asia-south1-a"
 }
 
 variable "environment" {
@@ -41,75 +42,16 @@ variable "db_instance_tier" {
   default     = "db-f1-micro" # Smallest/cheapest tier for dev
 }
 
-variable "notification_email" {
-  description = "Email for monitoring notifications"
-  type        = string
-}
-
 variable "domain_name" {
   description = "Domain name for the application"
   type        = string
   default     = "preprod.perundhu.com"
 }
 
-variable "enable_ssl" {
-  description = "Enable SSL/HTTPS"
-  type        = bool
-  default     = true
-}
-
-variable "max_instances" {
-  description = "Maximum number of Cloud Run instances"
-  type        = number
-  default     = 5
-}
-
-variable "min_instances" {
-  description = "Minimum number of Cloud Run instances"
-  type        = number
-  default     = 1
-}
-
-variable "cpu_limit" {
-  description = "CPU limit for Cloud Run instances"
-  type        = string
-  default     = "1000m"
-}
-
-variable "memory_limit" {
-  description = "Memory limit for Cloud Run instances"
-  type        = string
-  default     = "2Gi"
-}
-
 variable "container_image" {
   description = "Container image for the backend application"
   type        = string
   default     = "gcr.io/PROJECT_ID/perundhu-backend:latest"
-}
-
-variable "billing_account_id" {
-  description = "GCP Billing Account ID for budget alerts"
-  type        = string
-  default     = ""
-}
-
-variable "monthly_budget_amount" {
-  description = "Monthly budget amount in USD for alerts"
-  type        = number
-  default     = 50 # $50/month for preprod
-}
-
-variable "enable_redis" {
-  description = "Enable Redis cache (disable to save ~$25/month for dev)"
-  type        = bool
-  default     = false # Disabled by default for cost savings
-}
-
-variable "enable_high_availability" {
-  description = "Enable high availability features (disable for dev to save costs)"
-  type        = bool
-  default     = false
 }
 
 # ============================================

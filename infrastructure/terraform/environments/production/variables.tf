@@ -1,4 +1,5 @@
 # Production Environment Variables
+# Simplified - removed unused variables for Redis, Budget, Monitoring
 
 variable "project_id" {
   description = "The GCP project ID"
@@ -8,13 +9,13 @@ variable "project_id" {
 variable "region" {
   description = "The GCP region for resources"
   type        = string
-  default     = "us-central1"
+  default     = "asia-south1"
 }
 
 variable "zone" {
   description = "The GCP zone for resources"
   type        = string
-  default     = "us-central1-a"
+  default     = "asia-south1-a"
 }
 
 variable "environment" {
@@ -41,68 +42,15 @@ variable "db_instance_tier" {
   default     = "db-n1-standard-1"
 }
 
-variable "notification_email" {
-  description = "Email address for monitoring notifications"
-  type        = string
-}
-
 variable "domain_name" {
   description = "Custom domain name for the application"
   type        = string
   default     = "perundhu.app"
 }
 
-variable "frontend_custom_domain" {
-  description = "Custom domain for frontend"
-  type        = string
-  default     = "www.perundhu.app"
-}
-
-variable "enable_ssl" {
-  description = "Enable SSL/TLS for the application"
-  type        = bool
-  default     = true
-}
-
-variable "max_instances" {
-  description = "Maximum number of Cloud Run instances"
-  type        = number
-  default     = 50
-}
-
-variable "min_instances" {
-  description = "Minimum number of Cloud Run instances"
-  type        = number
-  default     = 1
-}
-
-variable "cpu_limit" {
-  description = "CPU limit for Cloud Run instances"
-  type        = string
-  default     = "2000m"
-}
-
-variable "memory_limit" {
-  description = "Memory limit for Cloud Run instances"
-  type        = string
-  default     = "2Gi"
-}
-
 variable "container_image" {
   description = "Container image for Cloud Run deployment"
   type        = string
-}
-
-variable "billing_account_id" {
-  description = "GCP Billing Account ID for budget alerts"
-  type        = string
-  default     = ""
-}
-
-variable "monthly_budget_amount" {
-  description = "Monthly budget amount in USD for alerts"
-  type        = number
-  default     = 200 # $200/month for production
 }
 
 # ============================================
