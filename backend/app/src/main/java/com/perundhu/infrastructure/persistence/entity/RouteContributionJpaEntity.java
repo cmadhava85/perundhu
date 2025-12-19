@@ -31,7 +31,7 @@ public class RouteContributionJpaEntity {
     @Column(name = "user_id")
     private String userId;
 
-    @NotBlank(message = "Bus number must not be blank")
+    // Bus number is optional - many paste contributions don't include it
     @Column(name = "bus_number")
     private String busNumber;
 

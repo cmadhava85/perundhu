@@ -866,6 +866,12 @@ public class ContributionController {
       // Keep raw times separate for database storage
       String rawDepartureTime = null;
       String rawArrivalTime = null;
+      // Bidirectional route handling
+      boolean isBidirectional = false;
+      Map<String, Object> returnRouteData = null;
+      // Multiple routes handling
+      boolean hasMultipleRoutes = false;
+      List<Map<String, Object>> additionalRoutes = new ArrayList<>();
 
       if (geminiVisionService.isAvailable()) {
         log.info("Using Gemini AI for paste text extraction");
@@ -924,8 +930,100 @@ public class ContributionController {
             adjustedConfidence = ((Number) confObj).doubleValue();
           }
 
-          log.info("Gemini extracted: bus={}, from={}, to={}, depTime={}, arrTime={}, confidence={}",
-              busNumber, fromLocation, toLocation, rawDepartureTime, rawArrivalTime, adjustedConfidence);
+          // Extract bidirectional route data
+          Object bidirectionalObj = geminiExtraction.get("isBidirectional");
+          if (bidirectionalObj instanceof Boolean) {
+            isBidirectional = (Boolean) bidirectionalObj;
+          }
+          
+          if (isBidirectional) {
+            Object returnRouteObj = geminiExtraction.get("returnRoute");
+            if (returnRouteObj instanceof Map<?, ?> returnRoute) {
+              returnRouteData = new HashMap<>();
+              returnRouteData.put("fromLocation", returnRoute.get("fromLocation"));
+              returnRouteData.put("toLocation", returnRoute.get("toLocation"));
+              
+              // Extract return route departure times
+              Object retDepTimes = returnRoute.get("departureTimes");
+              if (retDepTimes instanceof List<?> depList && !depList.isEmpty()) {
+                String firstDep = depList.getFirst() instanceof String ? (String) depList.getFirst() : null;
+                returnRouteData.put("departureTime", firstDep);
+              }
+              
+              // Extract return route arrival times
+              Object retArrTimes = returnRoute.get("arrivalTimes");
+              if (retArrTimes instanceof List<?> arrList && !arrList.isEmpty()) {
+                String firstArr = arrList.getFirst() instanceof String ? (String) arrList.getFirst() : null;
+                returnRouteData.put("arrivalTime", firstArr);
+              }
+              
+              // Extract return route stops
+              Object retStops = returnRoute.get("stops");
+              if (retStops instanceof List<?> stopList) {
+                List<String> returnStops = new ArrayList<>();
+                for (Object stop : stopList) {
+                  if (stop instanceof String) {
+                    returnStops.add((String) stop);
+                  } else if (stop instanceof Map<?, ?> stopMap) {
+                    Object name = stopMap.get("name");
+                    if (name instanceof String) {
+                      returnStops.add((String) name);
+                    }
+                  }
+                }
+                returnRouteData.put("stops", returnStops);
+              }
+              
+              log.info("Bidirectional route detected. Return route: {} -> {}", 
+                  returnRouteData.get("fromLocation"), returnRouteData.get("toLocation"));
+            }
+          }
+
+          // Extract additional routes if multiple routes detected
+          Object hasMultipleRoutesObj = geminiExtraction.get("hasMultipleRoutes");
+          hasMultipleRoutes = hasMultipleRoutesObj instanceof Boolean && (Boolean) hasMultipleRoutesObj;
+          
+          if (hasMultipleRoutes) {
+            Object additionalRoutesObj = geminiExtraction.get("additionalRoutes");
+            if (additionalRoutesObj instanceof List<?> routesList) {
+              for (Object routeObj : routesList) {
+                if (routeObj instanceof Map<?, ?> route) {
+                  Map<String, Object> routeData = new HashMap<>();
+                  routeData.put("busNumber", route.get("busNumber"));
+                  routeData.put("fromLocation", route.get("fromLocation"));
+                  routeData.put("toLocation", route.get("toLocation"));
+                  
+                  // Extract times for this route
+                  Object depTimesObj = route.get("departureTimes");
+                  if (depTimesObj instanceof List<?> depList && !depList.isEmpty()) {
+                    String firstDep = depList.getFirst() instanceof String ? (String) depList.getFirst() : null;
+                    routeData.put("departureTime", firstDep);
+                  }
+                  
+                  Object arrTimesObj = route.get("arrivalTimes");
+                  if (arrTimesObj instanceof List<?> arrList && !arrList.isEmpty()) {
+                    String firstArr = arrList.getFirst() instanceof String ? (String) arrList.getFirst() : null;
+                    routeData.put("arrivalTime", firstArr);
+                  }
+                  
+                  // Extract stops
+                  Object routeStopsObj = route.get("stops");
+                  if (routeStopsObj instanceof List<?>) {
+                    routeData.put("stops", ((List<?>) routeStopsObj).stream()
+                        .filter(s -> s instanceof String)
+                        .map(s -> (String) s)
+                        .toList());
+                  }
+                  
+                  additionalRoutes.add(routeData);
+                }
+              }
+              log.info("Multiple routes detected: {} additional routes", additionalRoutes.size());
+            }
+          }
+
+          log.info("Gemini extracted: bus={}, from={}, to={}, depTime={}, arrTime={}, confidence={}, bidirectional={}, multipleRoutes={}",
+              busNumber, fromLocation, toLocation, rawDepartureTime, rawArrivalTime, adjustedConfidence, isBidirectional, hasMultipleRoutes);
         }
       }
 
@@ -976,7 +1074,10 @@ public class ContributionController {
 
       // Create contribution data
       Map<String, Object> contributionData = new HashMap<>();
-      contributionData.put("busNumber", busNumber);
+      // Bus number is optional for paste contributions - only add if extracted
+      if (busNumber != null && !busNumber.trim().isEmpty()) {
+        contributionData.put("busNumber", busNumber);
+      }
       contributionData.put("fromLocationName", fromLocation);
       contributionData.put("toLocationName", toLocation);
       // Use raw times for database storage (not the labeled "Dep: x, Arr: y" format)
@@ -1034,11 +1135,167 @@ public class ContributionController {
       RouteContribution savedContribution = contributionInputPort
           .submitRouteContribution(validationResult.sanitizedValues(), userId);
 
+      // Submit return route contribution if bidirectional
+      RouteContribution returnContribution = null;
+      if (isBidirectional && returnRouteData != null) {
+        try {
+          Map<String, Object> returnContributionData = new HashMap<>();
+          // Bus number is the same for return route
+          if (busNumber != null && !busNumber.trim().isEmpty()) {
+            returnContributionData.put("busNumber", busNumber);
+          }
+          // Swap from/to for return route
+          returnContributionData.put("fromLocationName", returnRouteData.get("fromLocation"));
+          returnContributionData.put("toLocationName", returnRouteData.get("toLocation"));
+          returnContributionData.put("departureTime", returnRouteData.get("departureTime"));
+          returnContributionData.put("arrivalTime", returnRouteData.get("arrivalTime"));
+          returnContributionData.put("submittedBy", userId);
+          returnContributionData.put("source", "PASTE");
+          returnContributionData.put("confidenceScore", adjustedConfidence);
+          
+          // Build notes for return route
+          StringBuilder returnNotes = new StringBuilder("Paste contribution [RETURN ROUTE]");
+          if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
+            returnNotes.append(" [Extracted by Gemini AI]");
+          }
+          if (sourceAttribution != null && !sourceAttribution.trim().isEmpty()) {
+            returnNotes.append(" - Source: ").append(sourceAttribution);
+          }
+          returnNotes.append("\nLinked to onward route contribution ID: ").append(savedContribution.getId());
+          returnNotes.append("\n\nOriginal text:\n").append(pastedText);
+          returnContributionData.put("additionalNotes", returnNotes.toString());
+          
+          // Add stops if extracted for return route
+          @SuppressWarnings("unchecked")
+          List<String> returnStops = (List<String>) returnRouteData.get("stops");
+          if (returnStops != null && !returnStops.isEmpty()) {
+            List<Map<String, Object>> returnStopsData = new ArrayList<>();
+            int stopOrder = 1;
+            for (String stopName : returnStops) {
+              Map<String, Object> stopMap = new HashMap<>();
+              stopMap.put("name", stopName);
+              stopMap.put("stopOrder", stopOrder++);
+              returnStopsData.add(stopMap);
+            }
+            returnContributionData.put("stops", returnStopsData);
+          }
+          
+          // Validate return contribution data
+          InputValidationPort.ContributionValidationResult returnValidationResult = inputValidationPort
+              .validateContributionData(returnContributionData);
+          
+          if (returnValidationResult.valid()) {
+            returnContribution = contributionInputPort
+                .submitRouteContribution(returnValidationResult.sanitizedValues(), userId);
+            log.info("Return route contribution submitted: {} -> {}, id={}", 
+                returnRouteData.get("fromLocation"), returnRouteData.get("toLocation"), 
+                returnContribution.getId());
+          } else {
+            log.warn("Return route validation failed: {}", returnValidationResult.errors());
+          }
+        } catch (Exception e) {
+          log.error("Failed to submit return route contribution: {}", e.getMessage(), e);
+          // Continue with success for onward route even if return fails
+        }
+      }
+
+      // Submit additional routes if multiple routes detected
+      List<String> additionalContributionIds = new ArrayList<>();
+      if (hasMultipleRoutes && !additionalRoutes.isEmpty()) {
+        for (Map<String, Object> additionalRoute : additionalRoutes) {
+          try {
+            Map<String, Object> additionalContributionData = new HashMap<>();
+            
+            // Use bus number from additional route or fall back to primary
+            Object addBusNum = additionalRoute.get("busNumber");
+            if (addBusNum != null && !addBusNum.toString().trim().isEmpty()) {
+              additionalContributionData.put("busNumber", addBusNum.toString());
+            } else if (busNumber != null && !busNumber.trim().isEmpty()) {
+              additionalContributionData.put("busNumber", busNumber);
+            }
+            
+            additionalContributionData.put("fromLocationName", additionalRoute.get("fromLocation"));
+            additionalContributionData.put("toLocationName", additionalRoute.get("toLocation"));
+            additionalContributionData.put("departureTime", additionalRoute.get("departureTime"));
+            additionalContributionData.put("arrivalTime", additionalRoute.get("arrivalTime"));
+            additionalContributionData.put("submittedBy", userId);
+            additionalContributionData.put("source", "PASTE");
+            additionalContributionData.put("confidenceScore", adjustedConfidence);
+            
+            // Build notes for additional route
+            StringBuilder addNotes = new StringBuilder("Paste contribution [ADDITIONAL ROUTE]");
+            if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
+              addNotes.append(" [Extracted by Gemini AI]");
+            }
+            if (sourceAttribution != null && !sourceAttribution.trim().isEmpty()) {
+              addNotes.append(" - Source: ").append(sourceAttribution);
+            }
+            addNotes.append("\nPart of batch submission with primary route ID: ").append(savedContribution.getId());
+            addNotes.append("\n\nOriginal text:\n").append(pastedText);
+            additionalContributionData.put("additionalNotes", addNotes.toString());
+            
+            // Add stops if extracted for this route
+            @SuppressWarnings("unchecked")
+            List<String> addStops = (List<String>) additionalRoute.get("stops");
+            if (addStops != null && !addStops.isEmpty()) {
+              List<Map<String, Object>> addStopsData = new ArrayList<>();
+              int stopOrder = 1;
+              for (String stopName : addStops) {
+                Map<String, Object> stopMap = new HashMap<>();
+                stopMap.put("name", stopName);
+                stopMap.put("stopOrder", stopOrder++);
+                addStopsData.add(stopMap);
+              }
+              additionalContributionData.put("stops", addStopsData);
+            }
+            
+            // Validate additional contribution data
+            InputValidationPort.ContributionValidationResult addValidationResult = inputValidationPort
+                .validateContributionData(additionalContributionData);
+            
+            if (addValidationResult.valid()) {
+              RouteContribution addContribution = contributionInputPort
+                  .submitRouteContribution(addValidationResult.sanitizedValues(), userId);
+              additionalContributionIds.add(addContribution.getId());
+              log.info("Additional route contribution submitted: {} -> {}, id={}", 
+                  additionalRoute.get("fromLocation"), additionalRoute.get("toLocation"), 
+                  addContribution.getId());
+            } else {
+              log.warn("Additional route validation failed for {} -> {}: {}", 
+                  additionalRoute.get("fromLocation"), additionalRoute.get("toLocation"),
+                  addValidationResult.errors());
+            }
+          } catch (Exception e) {
+            log.error("Failed to submit additional route contribution: {}", e.getMessage(), e);
+            // Continue with other routes even if one fails
+          }
+        }
+      }
+
+      // Build list of all contribution IDs
+      List<String> allContributionIds = new ArrayList<>();
+      allContributionIds.add(savedContribution.getId());
+      if (returnContribution != null) {
+        allContributionIds.add(returnContribution.getId());
+      }
+      allContributionIds.addAll(additionalContributionIds);
+
       // Prepare response
       Map<String, Object> response = new HashMap<>();
       response.put("success", true);
-      response.put("message", "Paste contribution submitted for review");
-      response.put("contributionId", savedContribution.getId());
+      
+      if (allContributionIds.size() > 1) {
+        response.put("message", String.format("%d route contributions submitted for review", allContributionIds.size()));
+        response.put("contributionIds", allContributionIds);
+        response.put("primaryContributionId", savedContribution.getId());
+      } else {
+        response.put("message", "Paste contribution submitted for review");
+        response.put("contributionId", savedContribution.getId());
+      }
+      
+      response.put("isBidirectional", returnContribution != null);
+      response.put("hasMultipleRoutes", !additionalContributionIds.isEmpty());
+      response.put("totalContributions", allContributionIds.size());
       response.put("confidence", adjustedConfidence);
       response.put("extractedData", Map.of(
           "busNumber", busNumber != null ? busNumber : "Not detected",
@@ -1052,7 +1309,9 @@ public class ContributionController {
       response.put("extractedBy",
           geminiExtraction != null && !geminiExtraction.containsKey("error") ? "gemini-ai" : "regex-parser");
 
-      log.info("Paste contribution submitted by user {}, confidence: {}", userId, adjustedConfidence);
+      log.info("Paste contribution submitted by user {}, confidence: {}, total contributions: {}, bidirectional: {}, additionalRoutes: {}", 
+          userId, adjustedConfidence, allContributionIds.size(), 
+          returnContribution != null, additionalContributionIds.size());
 
       return ResponseEntity.ok(response);
 
@@ -1117,6 +1376,11 @@ public class ContributionController {
       List<String> stops = List.of();
       double adjustedConfidence = 0.0;
       String extractedBy = "regex-parser";
+      boolean isBidirectional = false;
+      Map<String, Object> returnRouteData = null;
+      boolean hasMultipleRoutes = false;
+      List<Map<String, Object>> additionalRoutes = new ArrayList<>();
+      List<Map<String, Object>> stopsWithTimings = new ArrayList<>();
 
       if (geminiVisionService.isAvailable()) {
         log.info("Using Gemini AI for paste text validation");
@@ -1132,7 +1396,7 @@ public class ContributionController {
           Object depTimes = geminiExtraction.get("departureTimes");
           if (depTimes instanceof List<?>) {
             departureTimes = ((List<?>) depTimes).stream()
-                .filter(t -> t instanceof String)
+                .filter(String.class::isInstance)
                 .map(t -> (String) t)
                 .toList();
           }
@@ -1142,7 +1406,7 @@ public class ContributionController {
           Object arrTimes = geminiExtraction.get("arrivalTimes");
           if (arrTimes instanceof List<?>) {
             arrivalTimes = ((List<?>) arrTimes).stream()
-                .filter(t -> t instanceof String)
+                .filter(String.class::isInstance)
                 .map(t -> (String) t)
                 .toList();
           }
@@ -1158,12 +1422,31 @@ public class ContributionController {
           // If no labeled times, just use departure times directly
           timings = combinedTimings.isEmpty() ? departureTimes : combinedTimings;
 
-          Object stopsObj = geminiExtraction.get("stops");
-          if (stopsObj instanceof List<?>) {
-            stops = ((List<?>) stopsObj).stream()
-                .filter(s -> s instanceof String)
-                .map(s -> (String) s)
-                .toList();
+          // Extract stops - can be strings or objects with name and time
+          Object pasteStopsObj = geminiExtraction.get("stops");
+          if (pasteStopsObj instanceof List<?> stopsList) {
+            List<String> stopNames = new ArrayList<>();
+            for (Object stopItem : stopsList) {
+              if (stopItem instanceof String stopName) {
+                // Simple string stop
+                stopNames.add(stopName);
+                stopsWithTimings.add(Map.of("name", stopName));
+              } else if (stopItem instanceof Map<?, ?> stopMap) {
+                // Object with name and time
+                String stopName = (String) stopMap.get("name");
+                String stopTime = (String) stopMap.get("time");
+                if (stopName != null) {
+                  stopNames.add(stopName);
+                  Map<String, Object> stopWithTime = new HashMap<>();
+                  stopWithTime.put("name", stopName);
+                  if (stopTime != null) {
+                    stopWithTime.put("time", stopTime);
+                  }
+                  stopsWithTimings.add(stopWithTime);
+                }
+              }
+            }
+            stops = stopNames;
           }
 
           Object confObj = geminiExtraction.get("confidence");
@@ -1172,6 +1455,140 @@ public class ContributionController {
           }
 
           extractedBy = "gemini-ai";
+          
+          // Check for bidirectional route
+          Object isBidirectionalObj = geminiExtraction.get("isBidirectional");
+          isBidirectional = isBidirectionalObj instanceof Boolean && (Boolean) isBidirectionalObj;
+          
+          if (isBidirectional) {
+            Object returnRouteObj = geminiExtraction.get("returnRoute");
+            if (returnRouteObj instanceof Map<?, ?> returnRoute) {
+              // Build return route data
+              returnRouteData = new HashMap<>();
+              returnRouteData.put("fromLocation", returnRoute.get("fromLocation"));
+              returnRouteData.put("toLocation", returnRoute.get("toLocation"));
+              
+              // Extract return departure times
+              List<String> returnDepTimes = new ArrayList<>();
+              Object retDepTimes = returnRoute.get("departureTimes");
+              if (retDepTimes instanceof List<?>) {
+                returnDepTimes = ((List<?>) retDepTimes).stream()
+                    .filter(t -> t instanceof String)
+                    .map(t -> (String) t)
+                    .toList();
+              }
+              
+              // Extract return arrival times
+              List<String> returnArrTimes = new ArrayList<>();
+              Object retArrTimes = returnRoute.get("arrivalTimes");
+              if (retArrTimes instanceof List<?>) {
+                returnArrTimes = ((List<?>) retArrTimes).stream()
+                    .filter(t -> t instanceof String)
+                    .map(t -> (String) t)
+                    .toList();
+              }
+              
+              // Build return timings
+              List<String> returnTimings = new ArrayList<>();
+              if (!returnDepTimes.isEmpty()) {
+                returnTimings.add("Dep: " + String.join(", ", returnDepTimes));
+              }
+              if (!returnArrTimes.isEmpty()) {
+                returnTimings.add("Arr: " + String.join(", ", returnArrTimes));
+              }
+              returnRouteData.put("timings", returnTimings);
+              
+              // Extract return stops - can be strings or objects with name and time
+              List<Map<String, Object>> returnStopsWithTimings = new ArrayList<>();
+              Object retStops = returnRoute.get("stops");
+              if (retStops instanceof List<?> retStopsList) {
+                List<String> retStopNames = new ArrayList<>();
+                for (Object stopItem : retStopsList) {
+                  if (stopItem instanceof String stopName) {
+                    retStopNames.add(stopName);
+                    returnStopsWithTimings.add(Map.of("name", stopName));
+                  } else if (stopItem instanceof Map<?, ?> stopMap) {
+                    String stopName = (String) stopMap.get("name");
+                    String stopTime = (String) stopMap.get("time");
+                    if (stopName != null) {
+                      retStopNames.add(stopName);
+                      Map<String, Object> stopWithTime = new HashMap<>();
+                      stopWithTime.put("name", stopName);
+                      if (stopTime != null) {
+                        stopWithTime.put("time", stopTime);
+                      }
+                      returnStopsWithTimings.add(stopWithTime);
+                    }
+                  }
+                }
+                returnRouteData.put("stops", retStopNames);
+                returnRouteData.put("stopsWithTimings", returnStopsWithTimings);
+              }
+              
+              // Store for response
+              geminiExtraction.put("returnRouteData", returnRouteData);
+            }
+          }
+          
+          // Check for multiple distinct routes
+          Object hasMultipleRoutesObj = geminiExtraction.get("hasMultipleRoutes");
+          hasMultipleRoutes = hasMultipleRoutesObj instanceof Boolean && (Boolean) hasMultipleRoutesObj;
+          
+          if (hasMultipleRoutes) {
+            Object additionalRoutesObj = geminiExtraction.get("additionalRoutes");
+            if (additionalRoutesObj instanceof List<?> routesList) {
+              for (Object routeObj : routesList) {
+                if (routeObj instanceof Map<?, ?> route) {
+                  Map<String, Object> routeData = new HashMap<>();
+                  routeData.put("busNumber", route.get("busNumber"));
+                  routeData.put("fromLocation", route.get("fromLocation"));
+                  routeData.put("toLocation", route.get("toLocation"));
+                  
+                  // Extract times for this route
+                  List<String> routeDepTimes = new ArrayList<>();
+                  Object depTimesObj = route.get("departureTimes");
+                  if (depTimesObj instanceof List<?>) {
+                    routeDepTimes = ((List<?>) depTimesObj).stream()
+                        .filter(t -> t instanceof String)
+                        .map(t -> (String) t)
+                        .toList();
+                  }
+                  
+                  List<String> routeArrTimes = new ArrayList<>();
+                  Object arrTimesObj = route.get("arrivalTimes");
+                  if (arrTimesObj instanceof List<?>) {
+                    routeArrTimes = ((List<?>) arrTimesObj).stream()
+                        .filter(t -> t instanceof String)
+                        .map(t -> (String) t)
+                        .toList();
+                  }
+                  
+                  List<String> routeTimings = new ArrayList<>();
+                  if (!routeDepTimes.isEmpty()) {
+                    routeTimings.add("Dep: " + String.join(", ", routeDepTimes));
+                  }
+                  if (!routeArrTimes.isEmpty()) {
+                    routeTimings.add("Arr: " + String.join(", ", routeArrTimes));
+                  }
+                  routeData.put("timings", routeTimings);
+                  
+                  // Extract stops
+                  Object routeStopsObj = route.get("stops");
+                  if (routeStopsObj instanceof List<?>) {
+                    routeData.put("stops", ((List<?>) routeStopsObj).stream()
+                        .filter(s -> s instanceof String)
+                        .map(s -> (String) s)
+                        .toList());
+                  } else {
+                    routeData.put("stops", List.of());
+                  }
+                  
+                  routeData.put("busType", route.get("busType"));
+                  additionalRoutes.add(routeData);
+                }
+              }
+            }
+          }
         }
       }
 
@@ -1212,6 +1629,20 @@ public class ContributionController {
       extracted.put("toLocation", toLocation);
       extracted.put("timings", timings);
       extracted.put("stops", stops);
+      extracted.put("stopsWithTimings", stopsWithTimings);
+      
+      // Include bidirectional route info if present
+      extracted.put("isBidirectional", isBidirectional);
+      if (isBidirectional && returnRouteData != null) {
+        extracted.put("returnRoute", returnRouteData);
+      }
+      
+      // Include multiple routes info if present
+      extracted.put("hasMultipleRoutes", hasMultipleRoutes);
+      if (hasMultipleRoutes && !additionalRoutes.isEmpty()) {
+        extracted.put("additionalRoutes", additionalRoutes);
+      }
+      
       response.put("extracted", extracted);
 
       return ResponseEntity.ok(response);

@@ -1721,7 +1721,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               திருவனந்தபுரம்→Thiruvananthapuram, பெங்களூர்→Bangalore, ஹைதராபாத்→Hyderabad,
               புதுச்சேரி→Pondicherry, தூத்துக்குடி→Thoothukudi, நாகர்கோவில்→Nagercoil,
               ராமநாதபுரம்→Ramanathapuram, கடலூர்→Cuddalore, விழுப்புரம்→Villupuram,
-              செங்கல்பட்டு→Chengalpattu, தாம்பரம்→Tambaram, மதுரந்தகம்→Madurantakam
+              செங்கல்பட்டு→Chengalpattu, தாம்பரம்→Tambaram, மதுரந்தகம்→Madurantakam,
+              குமுளி→Kumuli, தஞ்சை→Thanjavur, தின்டுக்கல்→Dindigul
       BUS TERMS: பஸ்/வண்டி→Bus, எண்→Number, புறப்பாடு→Departure, வரவு→Arrival,
                  நிலையம்→Station, வழி→Via, மணி→hour, காலை→Morning/AM, மாலை→Evening/PM
 
@@ -1730,11 +1731,40 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         "busNumber": "route/bus number like 570, 27D, MTC-45, or null if not found",
         "fromLocation": "departure city in English (e.g., Chennai, Madurai) or null",
         "toLocation": "destination city in English or null",
-        "departureTimes": ["06:00", "08:30"],
-        "arrivalTimes": ["14:00", "16:30"],
-        "stops": ["Tambaram", "Chengalpattu", "Villupuram", "Trichy"],
+        "departureTimes": ["06:10"],
+        "arrivalTimes": ["16:30"],
+        "stops": [
+          {"name": "Thanjavur", "time": "07:20"},
+          {"name": "Trichy", "time": "09:00"},
+          {"name": "Dindigul", "time": "12:00"}
+        ],
         "busType": "EXPRESS/ORDINARY/DELUXE/AC/SUPER DELUXE or null",
         "via": "route description like 'via Trichy' or null",
+        "isBidirectional": false,
+        "returnRoute": {
+          "fromLocation": "destination of forward route or null",
+          "toLocation": "origin of forward route or null",
+          "departureTimes": ["18:30"],
+          "arrivalTimes": ["03:00"],
+          "stops": [
+            {"name": "Theni", "time": "20:00"},
+            {"name": "Dindigul", "time": "22:00"},
+            {"name": "Trichy", "time": "00:05"},
+            {"name": "Thanjavur", "time": "01:30"}
+          ]
+        },
+        "hasMultipleRoutes": false,
+        "additionalRoutes": [
+          {
+            "busNumber": "another bus number or null",
+            "fromLocation": "origin",
+            "toLocation": "destination",
+            "departureTimes": ["08:00"],
+            "arrivalTimes": ["12:00"],
+            "stops": [],
+            "busType": null
+          }
+        ],
         "confidence": 0.85,
         "extractedFields": ["busNumber", "fromLocation", "toLocation", "departureTimes", "arrivalTimes"],
         "warnings": [],
@@ -1773,15 +1803,64 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
          - If multiple departure times mentioned (e.g., "6:00 AM, 8:00 AM, 10:00 AM"):
            * departureTimes: ["06:00", "08:00", "10:00"]
 
-      4. STOPS (Intermediate Stops):
+      4. STOPS WITH TIMINGS (VERY IMPORTANT):
          - These are cities/towns BETWEEN fromLocation and toLocation
          - Look for keywords: "Stops:", "Via:", "வழி:", "through", "stopping at"
-         - Example: "Chennai to Madurai, Stops: Tambaram, Chengalpattu, Villupuram, Trichy"
-           * fromLocation: "Chennai"
-           * toLocation: "Madurai"
-           * stops: ["Tambaram", "Chengalpattu", "Villupuram", "Trichy"]
+         - STOPS CAN HAVE TIMINGS! Look for patterns like:
+           * "🚍 தஞ்சை:7:20am" means stop "Thanjavur" at time "07:20"
+           * "🚍 Trichy 9:00am" means stop "Trichy" at time "09:00"
+           * "City: HH:MM" or "City HH:MMam/pm"
+         - Return stops as array of objects with "name" and "time":
+           * stops: [{"name": "Thanjavur", "time": "07:20"}, {"name": "Trichy", "time": "09:00"}]
+         - If stops don't have timings, return just name: [{"name": "Thanjavur"}, {"name": "Trichy"}]
          - Do NOT include fromLocation or toLocation in the stops array
          - Always output stop names in English
+         - Convert all times to 24-hour HH:MM format
+
+      5. BIDIRECTIONAL/ROUND-TRIP ROUTES (VERY IMPORTANT):
+         - Some texts contain BOTH forward AND return journey schedules
+         - Look for patterns indicating return journey:
+           * "from X to Y ... from Y to X" or "X to Y ... Y to X"
+           * "யிலிருந்து" (from) appearing twice with reversed locations
+           * "கும்பகோணத்திலிருந்து" (from Kumbakonam) ... "குமுளி யிலிருந்து" (from Kumuli)
+           * Two separate sets of stops/timings with different directions
+         - When detected, set "isBidirectional": true and populate "returnRoute":
+           * returnRoute.fromLocation: the destination of forward route (Y)
+           * returnRoute.toLocation: the origin of forward route (X)
+           * returnRoute.departureTimes: departure times for return journey
+           * returnRoute.arrivalTimes: arrival times for return journey (last stop time)
+           * returnRoute.stops: stops for return journey with timings
+         - EXAMPLE INPUT:
+           "✳️கும்பகோணத்திலிருந்து 🚍காலை 6:10am 🚍தஞ்சை:7:20am 🚍திருச்சி:9:00am 🚍குமுளி:4:30pm
+            ✳️குமுளி யிலிருந்து 🚍மாலை 6:30pm 🚍தேனி 8:00pm 🚍கும்பகோணம் 3:00am"
+         - CORRECT OUTPUT:
+           * fromLocation: "Kumbakonam", toLocation: "Kumuli"
+           * departureTimes: ["06:10"], arrivalTimes: ["16:30"]
+           * stops: [{"name": "Thanjavur", "time": "07:20"}, {"name": "Trichy", "time": "09:00"}, {"name": "Dindigul", "time": "12:00"}]
+           * isBidirectional: true
+           * returnRoute.fromLocation: "Kumuli", returnRoute.toLocation: "Kumbakonam"
+           * returnRoute.departureTimes: ["18:30"], returnRoute.arrivalTimes: ["03:00"]
+           * returnRoute.stops: [{"name": "Theni", "time": "20:00"}, {"name": "Dindigul", "time": "22:00"}, {"name": "Trichy", "time": "00:05"}, {"name": "Thanjavur", "time": "01:30"}]
+
+      6. POINT-TO-POINT SEGMENT INFORMATION (IMPORTANT - DO NOT CONFUSE WITH ADDITIONAL ROUTES):
+         - Text like "💠 திருச்சி- திண்டுக்கல் 1 to 1" or "Trichy-Dindigul 1 to 1" means POINT-TO-POINT segment
+         - "1 to 1" or "N to N" indicates NO intermediate stops between those cities (direct segment)
+         - These are NOT additional routes! They describe connectivity between stops on the SAME route
+         - DO NOT add these to additionalRoutes array - they are just segment descriptions
+         - Include this info in the warnings or suggestions if useful
+
+      7. MULTIPLE DISTINCT ROUTES (Only for truly SEPARATE bus services):
+         - ONLY set hasMultipleRoutes: true if text contains COMPLETELY DIFFERENT bus services with their own timings
+         - Each additional route MUST have at least one timing (departure or arrival time)
+         - If a "route" has NO timing information, it's NOT a valid additional route - ignore it
+         - Example of VALID multiple routes: "Bus 570 Chennai to Madurai 6am. Bus 123 Salem to Coimbatore 8am"
+           * Main route: busNumber: "570", fromLocation: "Chennai", toLocation: "Madurai", departureTimes: ["06:00"]
+           * hasMultipleRoutes: true
+           * additionalRoutes: [{ busNumber: "123", fromLocation: "Salem", toLocation: "Coimbatore", departureTimes: ["08:00"], ... }]
+         - Example of INVALID (do NOT add to additionalRoutes):
+           * "💠 திருச்சி- திண்டுக்கல் 1 to 1" - This is point-to-point info, NOT a route
+           * Any route segment without departure/arrival times
+         - Note: This is DIFFERENT from bidirectional routes (same bus, reverse direction)
 
       ===================== CONFIDENCE SCORING =====================
       

@@ -26,25 +26,70 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
 }) => {
   const { t: _t } = useTranslation();
 
-  // Sort all stops by order or time - don't filter any out
+  // Helper to normalize location names for comparison
+  const normalizeLocationName = (name?: string): string => {
+    if (!name) return '';
+    return name.toLowerCase().trim().replaceAll(/\s+/g, ' ');
+  };
+
+  // Get origin and destination names for filtering
+  const originName = normalizeLocationName(fromLocation || bus.from);
+  const destName = normalizeLocationName(toLocation || bus.to);
+
+  // Helper to get stop order priority
+  const getOrderPriority = (stop: Stop): number => {
+    if (stop.stopOrder !== undefined && stop.stopOrder > 0) {
+      return stop.stopOrder;
+    }
+    if (stop.order !== undefined && stop.order > 0) {
+      return stop.order;
+    }
+    return Infinity;
+  };
+
+  // Sort all stops by order or time, and filter out origin/destination
+  // since they're already shown in the header
   const allStops = useMemo(() => {
     if (!stops || stops.length === 0) return [];
     
-    return [...stops].sort((a, b) => {
-      // Sort by stopOrder first
-      if (a.stopOrder !== undefined && b.stopOrder !== undefined) {
-        return a.stopOrder - b.stopOrder;
-      }
-      // Then by order
-      if (a.order !== undefined && b.order !== undefined) {
-        return a.order - b.order;
-      }
-      // Finally by time
-      const timeA = a.departureTime || a.arrivalTime || '00:00';
-      const timeB = b.departureTime || b.arrivalTime || '00:00';
-      return timeA.localeCompare(timeB);
+    // Filter out stops that match origin or destination
+    const intermediateStops = stops.filter(stop => {
+      const stopName = normalizeLocationName(stop.name);
+      const stopTranslatedName = normalizeLocationName(stop.translatedName);
+      
+      // Check if this stop matches origin or destination
+      const isOrigin = stopName === originName || stopTranslatedName === originName;
+      const isDestination = stopName === destName || stopTranslatedName === destName;
+      
+      // Keep only intermediate stops (not origin or destination)
+      return !isOrigin && !isDestination;
     });
-  }, [stops]);
+    
+    return [...intermediateStops].sort((a, b) => {
+      // Sort by stopOrder first (but treat 0 as "no order")
+      const orderA = getOrderPriority(a);
+      const orderB = getOrderPriority(b);
+      
+      if (orderA !== orderB && orderA !== Infinity && orderB !== Infinity) {
+        return orderA - orderB;
+      }
+      
+      // If no valid order, sort by time
+      const timeA = a.departureTime || a.arrivalTime || '';
+      const timeB = b.departureTime || b.arrivalTime || '';
+      
+      if (timeA && timeB) {
+        return timeA.localeCompare(timeB);
+      }
+      
+      // Stops with time come before those without
+      if (timeA && !timeB) return -1;
+      if (!timeA && timeB) return 1;
+      
+      // Fall back to name order
+      return (a.name || '').localeCompare(b.name || '');
+    });
+  }, [stops, originName, destName]);
 
   // Calculate journey duration
   const duration = useMemo(() => {
@@ -72,7 +117,7 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
   };
 
   const hasStops = allStops.length > 0;
-  const stopCount = allStops.length;
+  const stopCount = allStops.length; // Now counts only intermediate stops
 
   return (
     <div className="journey-timeline-compact">

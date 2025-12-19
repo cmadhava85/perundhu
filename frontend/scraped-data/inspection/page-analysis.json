@@ -1,0 +1,956 @@
+{
+  "title": "TNSTC",
+  "url": "https://www.tnstc.in/OTRSOnline/",
+  "forms": [
+    {
+      "id": "",
+      "action": "https://www.tnstc.in/OTRSOnline/",
+      "method": "post",
+      "inputs": [
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenStartPlaceID",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenEndPlaceID",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtStartPlaceCode",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtEndPlaceCode",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenStartPlaceName",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenEndPlaceName",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "matchStartPlace",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "matchEndPlace",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtJourneyDate",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtReturnDate",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenCurrentDate",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenMaxNoOfPassengers",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenMaxValidReservDate",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "selectOnwardTimeSlab",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenOnwardJourneyDate",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenReturnJourneyDate",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenTotalMales",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtAdultMales",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtChildMales",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "selectStartPlace",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "selectEndPlace",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtAdultFemales",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtChildFemales",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenTotalFemales",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "selectClass",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenOnwardTimeSlab",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenClassCategoryLookupID",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "chkTatkal",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "languageType",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenAction",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenClassName",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "matchPStartPlace",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "matchPEndPlace",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtdeptDatePtrip",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "checkSingleLady",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtUserLoginID",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtPassword",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtCaptchaCode",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtRUserLoginID",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtRMobileNo",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtRUserFullName",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "txtRPassword",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        },
+        {
+          "tag": "INPUT",
+          "type": "hidden",
+          "name": "hiddenUserType",
+          "id": "",
+          "class": "",
+          "placeholder": ""
+        }
+      ]
+    }
+  ],
+  "allInputs": [
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "matchStartPlace",
+      "class": "form-control ui-autocomplete-input",
+      "placeholder": "From Place"
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "matchEndPlace",
+      "class": "form-control ui-autocomplete-input",
+      "placeholder": "To Place"
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "txtdeptDateOtrip",
+      "id": "txtdeptDateOtrip",
+      "class": "form-control hasDatepicker",
+      "placeholder": "DD/MM/YYYY"
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "txtdeptDateRtrip",
+      "id": "txtdeptDateRtrip",
+      "class": "form-control hasDatepicker",
+      "placeholder": "DD/MM/YYYY"
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "name": "",
+      "id": "chkSingleLadyCheckbox",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "email",
+      "name": "",
+      "id": "txtUserLoginID",
+      "class": "form-control",
+      "placeholder": "User Name or Email ID"
+    },
+    {
+      "tag": "INPUT",
+      "type": "password",
+      "name": "",
+      "id": "txtPassword",
+      "class": "form-control",
+      "placeholder": "Password"
+    },
+    {
+      "tag": "INPUT",
+      "type": "email",
+      "name": "",
+      "id": "txtCaptchaCode",
+      "class": "form-control",
+      "placeholder": "Captcha"
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "",
+      "id": "hidden-captcha",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "name": "remember",
+      "id": "remember-me",
+      "class": "custom-control-input",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "txtRUserLoginID",
+      "class": "form-control",
+      "placeholder": "Email ID"
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "txtRMobileNo",
+      "class": "form-control",
+      "placeholder": "Mobile Number"
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "txtRUserFullName",
+      "class": "form-control",
+      "placeholder": "User Full Name"
+    },
+    {
+      "tag": "INPUT",
+      "type": "password",
+      "name": "",
+      "id": "txtRPassword",
+      "class": "form-control",
+      "placeholder": "Password"
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "name": "remember",
+      "id": "remember-me",
+      "class": "custom-control-input",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "txtFUserLoginID",
+      "class": "form-control",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "text",
+      "name": "",
+      "id": "txtEMailID",
+      "class": "form-control",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenStartPlaceID",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenEndPlaceID",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtStartPlaceCode",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtEndPlaceCode",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenStartPlaceName",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenEndPlaceName",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "matchStartPlace",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "matchEndPlace",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtJourneyDate",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtReturnDate",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenCurrentDate",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenMaxNoOfPassengers",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenMaxValidReservDate",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "selectOnwardTimeSlab",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenOnwardJourneyDate",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenReturnJourneyDate",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenTotalMales",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtAdultMales",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtChildMales",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "selectStartPlace",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "selectEndPlace",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtAdultFemales",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtChildFemales",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenTotalFemales",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "selectClass",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenOnwardTimeSlab",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenClassCategoryLookupID",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "chkTatkal",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "languageType",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenAction",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenClassName",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "matchPStartPlace",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "matchPEndPlace",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtdeptDatePtrip",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "checkSingleLady",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtUserLoginID",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtPassword",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtCaptchaCode",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtRUserLoginID",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtRMobileNo",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtRUserFullName",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "txtRPassword",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    },
+    {
+      "tag": "INPUT",
+      "type": "hidden",
+      "name": "hiddenUserType",
+      "id": "",
+      "class": "",
+      "placeholder": ""
+    }
+  ],
+  "buttons": [
+    {
+      "tag": "BUTTON",
+      "text": "×",
+      "id": "popup-close",
+      "class": "",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "navbar-toggler",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Search Bus",
+      "id": "searchButton",
+      "class": "btn btn-primary text-4",
+      "onclick": "javascript:setSearchAction('SearchService')"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "owl-prev",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "owl-next",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "owl-dot",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "owl-dot active",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "owl-dot",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": "",
+      "class": "owl-dot",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "×",
+      "id": "",
+      "class": "close",
+      "onclick": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Login",
+      "id": "ValidateUser",
+      "class": "btn btn-primary btn-block",
+      "onclick": "javascript:setAction('ValidateUser')"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Sign up",
+      "id": "RegisterUser",
+      "class": "btn btn-primary btn-block",
+      "onclick": "javascript:setAction('RegisterUser')"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Reset Password",
+      "id": "ResetPassword",
+      "class": "btn btn-primary btn-block",
+      "onclick": "javascript:setAction('ResetPassword')"
+    }
+  ],
+  "selects": [],
+  "autocompletes": [
+    {
+      "class": "form-control ui-autocomplete-input",
+      "id": "matchStartPlace",
+      "innerHTML": ""
+    },
+    {
+      "class": "form-control ui-autocomplete-input",
+      "id": "matchEndPlace",
+      "innerHTML": ""
+    },
+    {
+      "class": "ui-menu ui-widget ui-widget-content ui-autocomplete ui-front",
+      "id": "ui-id-1",
+      "innerHTML": ""
+    },
+    {
+      "class": "ui-menu ui-widget ui-widget-content ui-autocomplete ui-front",
+      "id": "ui-id-2",
+      "innerHTML": ""
+    }
+  ],
+  "bodyClasses": ""
+}

@@ -139,14 +139,14 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
                       <div className="bus-time-row">
                         <div className="time-box departure">
                           <span>DEP</span>
-                          <strong>{leg.departureTime}</strong>
+                          <strong>{leg.departureTime || '--:--'}</strong>
                         </div>
                         <div className="duration-badge">
                           <span>⏱️ {formatDuration(leg.duration)}</span>
                         </div>
                         <div className="time-box arrival">
                           <span>ARR</span>
-                          <strong>{leg.arrivalTime}</strong>
+                          <strong>{leg.arrivalTime || '--:--'}</strong>
                         </div>
                       </div>
                     </div>

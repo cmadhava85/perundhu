@@ -110,8 +110,9 @@ public class InputValidationService implements InputValidationPort {
 
   @Override
   public ValidationResult validateBusNumber(String busNumber) {
+    // Bus number is optional - return valid if not provided
     if (busNumber == null || busNumber.trim().isEmpty()) {
-      return new ValidationResult(false, "Bus number cannot be empty", null);
+      return new ValidationResult(true, "Bus number not provided (optional)", null);
     }
 
     String sanitized = sanitizeTextInput(busNumber).toUpperCase();

@@ -5,12 +5,39 @@ import HoneypotFields from '../common/HoneypotFields';
 import { useSubmissionSecurity } from '../../hooks/useSubmissionSecurity';
 import './TextPasteContribution.css';
 
+interface StopWithTiming {
+  name: string;
+  time?: string;
+}
+
+interface ReturnRouteData {
+  fromLocation: string | null;
+  toLocation: string | null;
+  timings: string[];
+  stops: string[];
+  stopsWithTimings?: StopWithTiming[];
+}
+
+interface AdditionalRouteData {
+  busNumber: string | null;
+  fromLocation: string | null;
+  toLocation: string | null;
+  timings: string[];
+  stops: string[];
+  busType: string | null;
+}
+
 interface ExtractedData {
   busNumber: string | null;
   fromLocation: string | null;
   toLocation: string | null;
   timings: string[];
   stops: string[];
+  stopsWithTimings?: StopWithTiming[];
+  isBidirectional?: boolean;
+  returnRoute?: ReturnRouteData;
+  hasMultipleRoutes?: boolean;
+  additionalRoutes?: AdditionalRouteData[];
 }
 
 interface ValidationResponse {
@@ -76,6 +103,23 @@ Via: Chengalpattu, Villupuram, Trichy`,
     t('paste.hints.fromTo', 'Use "from...to": "from Chennai to Madurai"'),
     t('paste.hints.times', 'Include times with AM/PM: "6:00 AM" or "காலை 10 மணி"'),
   ];
+
+  // Helper function to format stops with their timings
+  const formatStopsWithTimings = (stopsWithTimings?: StopWithTiming[]): string => {
+    if (!stopsWithTimings || stopsWithTimings.length === 0) {
+      return '';
+    }
+    return stopsWithTimings
+      .map(stop => stop.time ? `${stop.name} (${stop.time})` : stop.name)
+      .join(' → ');
+  };
+
+  // Helper function to filter additional routes that have actual timings
+  const getValidAdditionalRoutes = (routes?: AdditionalRouteData[]): AdditionalRouteData[] => {
+    if (!routes) return [];
+    // Only show routes that have at least one timing (departure or arrival)
+    return routes.filter(route => route.timings && route.timings.length > 0);
+  };
 
   const handleTextChange = (text: string) => {
     setPastedText(text);
@@ -303,6 +347,13 @@ Via: Chengalpattu, Villupuram, Trichy`,
                       {validation.extracted.busNumber || '❌ Not found'}
                     </td>
                   </tr>
+                  {validation.extracted.isBidirectional && (
+                    <tr>
+                      <td colSpan={2} className="route-header">
+                        🔄 {t('paste.bidirectional.forward', 'Forward Route (Route 1)')}
+                      </td>
+                    </tr>
+                  )}
                   <tr>
                     <td>{t('paste.fields.from', 'From')}:</td>
                     <td className={validation.extracted.fromLocation ? 'found' : 'not-found'}>
@@ -326,11 +377,110 @@ Via: Chengalpattu, Villupuram, Trichy`,
                   <tr>
                     <td>{t('paste.fields.stops', 'Stops')}:</td>
                     <td className={validation.extracted.stops.length > 0 ? 'found' : 'not-found'}>
-                      {validation.extracted.stops.length > 0 
-                        ? validation.extracted.stops.join(', ') 
-                        : t('paste.fields.none', 'None')}
+                      {validation.extracted.stopsWithTimings && validation.extracted.stopsWithTimings.length > 0
+                        ? formatStopsWithTimings(validation.extracted.stopsWithTimings)
+                        : validation.extracted.stops.length > 0 
+                          ? validation.extracted.stops.join(', ') 
+                          : t('paste.fields.none', 'None')}
                     </td>
                   </tr>
+                  
+                  {/* Return Route (Bidirectional) */}
+                  {validation.extracted.isBidirectional && validation.extracted.returnRoute && (
+                    <>
+                      <tr>
+                        <td colSpan={2} className="route-header return-route">
+                          🔄 {t('paste.bidirectional.return', 'Return Route (Route 2)')}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{t('paste.fields.from', 'From')}:</td>
+                        <td className={validation.extracted.returnRoute.fromLocation ? 'found' : 'not-found'}>
+                          {validation.extracted.returnRoute.fromLocation || '❌ Not found'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{t('paste.fields.to', 'To')}:</td>
+                        <td className={validation.extracted.returnRoute.toLocation ? 'found' : 'not-found'}>
+                          {validation.extracted.returnRoute.toLocation || '❌ Not found'}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{t('paste.fields.timings', 'Timings')}:</td>
+                        <td className={(validation.extracted.returnRoute.timings?.length ?? 0) > 0 ? 'found' : 'not-found'}>
+                          {(validation.extracted.returnRoute.timings?.length ?? 0) > 0 
+                            ? validation.extracted.returnRoute.timings?.join(', ') 
+                            : t('paste.fields.none', 'None')}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{t('paste.fields.stops', 'Stops')}:</td>
+                        <td className={(validation.extracted.returnRoute.stops?.length ?? 0) > 0 ? 'found' : 'not-found'}>
+                          {validation.extracted.returnRoute.stopsWithTimings && validation.extracted.returnRoute.stopsWithTimings.length > 0
+                            ? formatStopsWithTimings(validation.extracted.returnRoute.stopsWithTimings)
+                            : (validation.extracted.returnRoute.stops?.length ?? 0) > 0 
+                              ? validation.extracted.returnRoute.stops?.join(', ') 
+                              : t('paste.fields.none', 'None')}
+                        </td>
+                      </tr>
+                    </>
+                  )}
+                  
+                  {/* Additional Routes (Multiple distinct routes) - only show if they have timings */}
+                  {validation.extracted.hasMultipleRoutes && 
+                   getValidAdditionalRoutes(validation.extracted.additionalRoutes).length > 0 && (
+                    <>
+                      {getValidAdditionalRoutes(validation.extracted.additionalRoutes).map((route, index) => (
+                        <React.Fragment key={index}>
+                          <tr>
+                            <td colSpan={2} className="route-header additional-route">
+                              🚌 {t('paste.multipleRoutes.additional', 'Additional Route')} #{index + 2}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{t('paste.fields.busNumber', 'Bus Number')}:</td>
+                            <td className={route.busNumber ? 'found' : 'not-found'}>
+                              {route.busNumber || '❌ Not found'}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{t('paste.fields.from', 'From')}:</td>
+                            <td className={route.fromLocation ? 'found' : 'not-found'}>
+                              {route.fromLocation || '❌ Not found'}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{t('paste.fields.to', 'To')}:</td>
+                            <td className={route.toLocation ? 'found' : 'not-found'}>
+                              {route.toLocation || '❌ Not found'}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{t('paste.fields.timings', 'Timings')}:</td>
+                            <td className={(route.timings?.length ?? 0) > 0 ? 'found' : 'not-found'}>
+                              {(route.timings?.length ?? 0) > 0 
+                                ? route.timings?.join(', ') 
+                                : t('paste.fields.none', 'None')}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{t('paste.fields.stops', 'Stops')}:</td>
+                            <td className={(route.stops?.length ?? 0) > 0 ? 'found' : 'not-found'}>
+                              {(route.stops?.length ?? 0) > 0 
+                                ? route.stops?.join(', ') 
+                                : t('paste.fields.none', 'None')}
+                            </td>
+                          </tr>
+                          {route.busType && (
+                            <tr>
+                              <td>{t('paste.fields.busType', 'Bus Type')}:</td>
+                              <td className="found">{route.busType}</td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </>
+                  )}
                 </tbody>
               </table>
 

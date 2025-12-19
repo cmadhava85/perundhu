@@ -1,0 +1,81 @@
+{
+  "source": "CHENNAI",
+  "totalRoutes": 1,
+  "totalBuses": 5,
+  "scrapedAt": "2025-12-19T16:09:37.587Z",
+  "routes": [
+    {
+      "source": "CHENNAI",
+      "destination": "MADURAI",
+      "buses": [
+        {
+          "busNumber": "",
+          "busType": "1",
+          "source": "CHENNAI",
+          "destination": "MADURAI",
+          "departureTime": "2",
+          "arrivalTime": "3",
+          "duration": "4",
+          "fare": "5",
+          "viaStops": [],
+          "stopDetails": [],
+          "scrapedAt": "2025-12-19T16:09:37.349Z"
+        },
+        {
+          "busNumber": "7",
+          "busType": "8",
+          "source": "CHENNAI",
+          "destination": "MADURAI",
+          "departureTime": "9",
+          "arrivalTime": "10",
+          "duration": "11",
+          "fare": "12",
+          "viaStops": [],
+          "stopDetails": [],
+          "scrapedAt": "2025-12-19T16:09:37.356Z"
+        },
+        {
+          "busNumber": "14",
+          "busType": "15",
+          "source": "CHENNAI",
+          "destination": "MADURAI",
+          "departureTime": "16",
+          "arrivalTime": "17",
+          "duration": "18",
+          "fare": "19",
+          "viaStops": [],
+          "stopDetails": [],
+          "scrapedAt": "2025-12-19T16:09:37.362Z"
+        },
+        {
+          "busNumber": "21",
+          "busType": "22",
+          "source": "CHENNAI",
+          "destination": "MADURAI",
+          "departureTime": "23",
+          "arrivalTime": "24",
+          "duration": "25",
+          "fare": "26",
+          "viaStops": [],
+          "stopDetails": [],
+          "scrapedAt": "2025-12-19T16:09:37.369Z"
+        },
+        {
+          "busNumber": "28",
+          "busType": "29",
+          "source": "CHENNAI",
+          "destination": "MADURAI",
+          "departureTime": "30",
+          "arrivalTime": "31",
+          "duration": "",
+          "fare": "",
+          "viaStops": [],
+          "stopDetails": [],
+          "scrapedAt": "2025-12-19T16:09:37.375Z"
+        }
+      ],
+      "scrapedAt": "2025-12-19T16:09:37.375Z",
+      "totalBuses": 5
+    }
+  ]
+}
