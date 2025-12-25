@@ -121,15 +121,15 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
             handleWriteReview();
           }}
           disabled={hasReviewed}
-          className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-2 sm:py-0.5 rounded-full text-sm sm:text-xs
+          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs
                      bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300
                      hover:bg-yellow-100 hover:text-yellow-700 dark:hover:bg-yellow-900 
                      dark:hover:text-yellow-300 transition-all active:scale-95 touch-manipulation
                      disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
-          style={{ whiteSpace: 'nowrap' }}
+          style={{ whiteSpace: 'nowrap', minWidth: '60px', flexShrink: 0 }}
         >
-          <span style={{ color: '#facc15', fontSize: '1.1em' }}>☆</span>
-          {hasReviewed ? t('reviews.reviewed', 'Reviewed') : t('reviews.rate', 'Rate')}
+          <span style={{ color: '#facc15', fontSize: '1em' }}>☆</span>
+          <span className="inline-block">{hasReviewed ? t('reviews.reviewed', 'Reviewed') : t('reviews.rate', 'Rate')}</span>
         </button>
       );
     }
@@ -140,10 +140,10 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
           e.stopPropagation();
           setShowReviewList(true);
         }}
-        className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-2 sm:py-0.5 rounded-full text-sm sm:text-xs
+        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs
                    bg-yellow-50 dark:bg-yellow-900/30 hover:bg-yellow-100 
                    dark:hover:bg-yellow-900/50 transition-all active:scale-95 touch-manipulation ${className}`}
-        style={{ whiteSpace: 'nowrap' }}
+        style={{ whiteSpace: 'nowrap', minWidth: '60px', flexShrink: 0 }}
       >
         <StarRatingDisplay
           rating={ratingSummary.averageRating}
