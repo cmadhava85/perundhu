@@ -7,13 +7,20 @@ interface ProtectedAdminRouteProps {
   children: React.ReactNode;
 }
 
+/**
+ * ⚠️ SECURITY WARNING: Authentication is currently DISABLED (Issue #3)
+ * This component no longer provides any protection. Any user can access admin routes.
+ * This is a TEMPORARY measure and should NOT be deployed to production.
+ * 
+ * To re-enable authentication:
+ * 1. Uncomment the useAdminAuth and useLocation hooks below
+ * 2. Uncomment the authentication check logic
+ * 3. Uncomment the admin login route in AppRoutes.tsx
+ * 4. Uncomment the imports at the top of this file
+ */
 const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({ children }) => {
   // TEMPORARILY DISABLED AUTHENTICATION CHECK (Issue #3)
   // Authentication is bypassed to allow automatic access to admin panel
-  // To re-enable authentication:
-  // 1. Uncomment the useAdminAuth and useLocation hooks below
-  // 2. Uncomment the authentication check logic
-  // 3. Uncomment the admin login route in AppRoutes.tsx
   
   // const { isAdminAuthenticated, isLoading } = useAdminAuth();
   // const location = useLocation();
