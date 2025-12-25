@@ -1126,23 +1126,48 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       e.currentTarget.style.background = 'white';
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ color: '#10B981' }}>●</span>
-                      <span style={{ fontWeight: '500', color: '#374151', fontSize: '14px' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '6px', 
+                      flex: 1, 
+                      minWidth: 0,
+                      overflow: 'hidden' 
+                    }}>
+                      <span style={{ color: '#10B981', flexShrink: 0 }}>●</span>
+                      <span style={{ 
+                        fontWeight: '500', 
+                        color: '#374151', 
+                        fontSize: '13px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        maxWidth: '40%'
+                      }}>
                         {getRecentSearchDisplayName(search.from)}
                       </span>
-                      <span style={{ color: '#9ca3af' }}>→</span>
-                      <span style={{ color: '#EF4444' }}>●</span>
-                      <span style={{ fontWeight: '500', color: '#374151', fontSize: '14px' }}>
+                      <span style={{ color: '#9ca3af', flexShrink: 0 }}>→</span>
+                      <span style={{ color: '#EF4444', flexShrink: 0 }}>●</span>
+                      <span style={{ 
+                        fontWeight: '500', 
+                        color: '#374151', 
+                        fontSize: '13px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        maxWidth: '40%'
+                      }}>
                         {getRecentSearchDisplayName(search.to)}
                       </span>
                     </div>
                     <span style={{
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: '#9ca3af',
                       background: '#f3f4f6',
-                      padding: '2px 8px',
-                      borderRadius: '10px'
+                      padding: '2px 6px',
+                      borderRadius: '10px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0
                     }}>
                       {getRelativeTime(search.timestamp)}
                     </span>
