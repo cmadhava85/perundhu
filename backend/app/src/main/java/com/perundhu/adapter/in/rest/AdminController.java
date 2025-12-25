@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perundhu.adapter.in.rest.dto.ImageContributionSummaryDTO;
 import com.perundhu.application.port.in.AdminUseCase;
 import com.perundhu.application.service.ContributionProcessingService;
 import com.perundhu.application.service.ImageContributionProcessingService;
@@ -122,23 +123,60 @@ public class AdminController {
     /**
      * Get all image contributions
      * 
-     * @return List of all image contributions
+     * @return List of all image contributions (without binary data)
      */
     @GetMapping("/contributions/images")
-    public ResponseEntity<List<?>> getAllImageContributions() {
+    public ResponseEntity<List<ImageContributionSummaryDTO>> getAllImageContributions() {
         log.info("Request to get all image contributions");
-        return ResponseEntity.ok(adminUseCase.getAllImageContributions());
+        List<ImageContribution> contributions = adminUseCase.getAllImageContributions();
+        
+        // Convert to DTOs without imageData to reduce response size
+        List<ImageContributionSummaryDTO> dtos = contributions.stream()
+            .map(this::convertToSummaryDTO)
+            .collect(java.util.stream.Collectors.toList());
+        
+        log.info("Returning {} image contributions", dtos.size());
+        return ResponseEntity.ok(dtos);
     }
 
     /**
      * Get pending image contributions
      * 
-     * @return List of pending image contributions
+     * @return List of pending image contributions (without binary data)
      */
     @GetMapping("/contributions/images/pending")
-    public ResponseEntity<List<?>> getPendingImageContributions() {
+    public ResponseEntity<List<ImageContributionSummaryDTO>> getPendingImageContributions() {
         log.info("Request to get pending image contributions");
-        return ResponseEntity.ok(adminUseCase.getPendingImageContributions());
+        List<ImageContribution> contributions = adminUseCase.getPendingImageContributions();
+        
+        // Convert to DTOs without imageData to reduce response size
+        List<ImageContributionSummaryDTO> dtos = contributions.stream()
+            .map(this::convertToSummaryDTO)
+            .collect(java.util.stream.Collectors.toList());
+        
+        log.info("Returning {} pending image contributions", dtos.size());
+        return ResponseEntity.ok(dtos);
+    }
+    
+    /**
+     * Convert ImageContribution to summary DTO (excludes binary image data)
+     */
+    private ImageContributionSummaryDTO convertToSummaryDTO(ImageContribution contribution) {
+        return ImageContributionSummaryDTO.builder()
+            .id(contribution.getId())
+            .userId(contribution.getUserId())
+            .imageUrl(contribution.getImageUrl())
+            .description(contribution.getDescription())
+            .location(contribution.getLocation())
+            .routeName(contribution.getRouteName())
+            .extractedData(contribution.getExtractedData())
+            .status(contribution.getStatus())
+            .validationMessage(contribution.getValidationMessage())
+            .additionalNotes(contribution.getAdditionalNotes())
+            .submissionDate(contribution.getSubmissionDate())
+            .processedDate(contribution.getProcessedDate())
+            .imageContentType(contribution.getImageContentType())
+            .build();
     }
 
     /**
