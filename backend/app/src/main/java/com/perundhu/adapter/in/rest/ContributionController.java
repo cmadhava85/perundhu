@@ -1671,8 +1671,11 @@ public class ContributionController {
     }
 
     try {
-      // Security checks
-      if (!performSecurityChecksAnonymous(request, clientId, "image-status")) {
+      // Skip user-agent checks for status endpoint (read-only operation)
+      // Only check if IP is blocked
+      String ipAddress = getClientIpAddress(request);
+      if (securityMonitoringPort.isIpBlocked(ipAddress)) {
+        log.warn("Blocked IP {} attempted image-status check", ipAddress);
         return createSecurityBlockedResponse();
       }
 
