@@ -1,12 +1,19 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
+// TEMPORARY: Imports commented out while authentication is bypassed
+// import { Navigate, useLocation } from 'react-router-dom';
+// import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 interface ProtectedAdminRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({ children }) => {
+  // TEMPORARY: Bypass authentication for admin access
+  // TODO: Re-enable authentication before production deployment
+  return <>{children}</>;
+
+  // Original authentication code (commented out temporarily)
+  /*
   const { isAdminAuthenticated, isLoading } = useAdminAuth();
   const location = useLocation();
 
@@ -53,6 +60,7 @@ const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({ children }) =
 
   // Render the protected content
   return <>{children}</>;
+  */
 };
 
 export default ProtectedAdminRoute;
