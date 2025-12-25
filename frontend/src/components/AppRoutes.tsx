@@ -16,7 +16,7 @@ import ConnectingRoutes from './ConnectingRoutes';
 import RouteContributionComponent from './RouteContribution';
 
 // Admin components
-import AdminLogin from './admin/AdminLogin';
+// import AdminLogin from './admin/AdminLogin'; // TEMPORARILY DISABLED (Issue #3)
 import ProtectedAdminRoute from './admin/ProtectedAdminRoute';
 
 // Lazy loaded components (used less frequently)
@@ -200,10 +200,11 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
         </ErrorBoundary>
       } />
       
-      {/* Admin Login Route */}
-      <Route path="/admin/login" element={
+      {/* Admin Login Route - TEMPORARILY DISABLED (Issue #3) */}
+      {/* To re-enable: Uncomment the Route below and the AdminLogin import at the top of this file */}
+      {/* <Route path="/admin/login" element={
         <AdminLogin />
-      } />
+      } /> */}
       
       {/* Protected Admin Dashboard */}
       <Route path="/admin" element={
