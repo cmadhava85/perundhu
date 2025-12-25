@@ -150,8 +150,8 @@ jobs:
         TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
         IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${TAG}"
         
-        # Get backend URL for frontend build
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)' 2>/dev/null || echo "https://perundhu-backend-preprod-1032721240281.asia-south1.run.app")
+        # Use the correct static backend URL for preprod
+        BACKEND_URL="https://perundhu-backend-preprod-1032721240281.asia-south1.run.app"
         echo "Using Backend URL: $BACKEND_URL"
         
         # Get Google Maps API key from Secret Manager
