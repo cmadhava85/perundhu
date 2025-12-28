@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO for image contribution summary (excludes binary image data)
  * Used to return lightweight image contribution information in API responses
+ * and for admin list endpoints to avoid sending large payloads
  */
 @Data
 @NoArgsConstructor
@@ -30,4 +31,6 @@ public class ImageContributionSummaryDTO {
     private LocalDateTime submissionDate;
     private LocalDateTime processedDate;
     private String imageContentType;
+    
+    // Excluded: imageData (byte[]) to reduce response size
 }
