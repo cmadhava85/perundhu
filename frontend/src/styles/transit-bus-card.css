@@ -82,6 +82,44 @@
   white-space: nowrap;
 }
 
+/* Status Pills - Phase 2 Visual Hierarchy */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.status-pill.on-time {
+  background: var(--semantic-success-bg);
+  color: var(--semantic-success);
+  border: 1px solid var(--semantic-success-border);
+}
+
+.status-pill.delayed {
+  background: var(--semantic-warning-bg);
+  color: var(--semantic-warning);
+  border: 1px solid var(--semantic-warning-border);
+}
+
+.status-pill.cancelled {
+  background: var(--semantic-error-bg);
+  color: var(--semantic-error);
+  border: 1px solid var(--semantic-error-border);
+}
+
+.status-pill.unknown {
+  background: var(--transit-surface-elevated);
+  color: var(--transit-text-secondary);
+  border: 1px solid var(--transit-divider);
+}
+
 .bus-name-display {
   display: flex;
   align-items: center;
@@ -151,11 +189,12 @@
 .departure-time,
 .arrival-time {
   flex: 0 0 auto;
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
+  font-size: 36px; /* Phase 2: Extra large for maximum prominence */
+  font-weight: 700;
   color: var(--transit-text-primary);
   font-variant-numeric: tabular-nums;
-  min-width: 80px;
+  min-width: 105px; /* Adjusted for larger font */
+  letter-spacing: -0.8px; /* Tighter for large size */
 }
 
 .departure-time {

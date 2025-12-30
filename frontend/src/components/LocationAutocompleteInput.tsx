@@ -219,7 +219,7 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
                   style={{
                     width: '100%',
                     padding: '14px 16px',
-                    minHeight: '48px',
+                    minHeight: '56px',
                     border: 'none',
                     background: suggestion.name.includes(' - ') ? '#f0fdf4' : 'transparent',
                     textAlign: 'left',

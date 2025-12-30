@@ -63,6 +63,7 @@ html, body {
     transition: all 200ms;
     position: relative;
     min-width: 50px;
+    min-height: 56px; /* Ensure 44px+ touch target */
     flex: 1;
     max-width: 72px;
     border-radius: 8px;
@@ -153,6 +154,7 @@ html, body {
     .bottom-nav-item {
       padding: 6px 2px;
       min-width: 44px;
+      min-height: 44px; /* Maintain minimum touch target on small screens */
     }
     
     .nav-label {

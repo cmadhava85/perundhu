@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import AnnouncementBanner from './AnnouncementBanner';
 import { getActiveAnnouncements } from '../config/announcements';
+import { triggerHaptic } from '../utils/haptic';
 import '../styles/Header.css';
 
 interface HeaderProps {
@@ -21,6 +22,53 @@ const Header: React.FC<HeaderProps> = ({
   const { t } = useTranslation();
   const [showWhatsNew, setShowWhatsNew] = useState(false);
   const [hasNewUpdates, setHasNewUpdates] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+  
+  // Scroll detection for header compression (mobile-first)
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Only compress on mobile (<768px)
+      if (window.innerWidth < 768) {
+        // Add 'scrolled' class immediately when scrolling down
+        setIsScrolled(currentScrollY > 10);
+        
+        // Compress when scrolled past 80px
+        setIsCompact(currentScrollY > 80);
+      } else {
+        setIsScrolled(currentScrollY > 10);
+        setIsCompact(false);
+      }
+      
+      ticking = false;
+    };
+    
+    const requestTick = () => {
+      if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    };
+    
+    const onScroll = () => {
+      requestTick();
+    };
+    
+    // Initial check
+    handleScroll();
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
   
   // Check for new updates (based on announcements)
   useEffect(() => {
@@ -46,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({
         <AnnouncementBanner announcements={getActiveAnnouncements()} maxVisible={3} />
       )}
       
-      <header className="app-header">
+      <header className={`app-header ${isScrolled ? 'scrolled' : ''} ${isCompact ? 'compact' : ''}`}>
         <div className="header-content">
           {/* Logo and Brand */}
           <div className="header-brand">
@@ -73,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({
                 : t('header.title', 'Tamil Nadu Bus Schedule')
               }
             </h1>
-            {!isAdmin && (
+            {!isAdmin && !isCompact && (
               <p className="header-subtitle">
                 {t('header.subtitle', 'Find your bus in seconds')}
               </p>
@@ -85,7 +133,10 @@ const Header: React.FC<HeaderProps> = ({
             {!isAdmin && (
               <button 
                 className={`whats-new-btn ${hasNewUpdates ? 'has-updates' : ''}`}
-                onClick={() => setShowWhatsNew(!showWhatsNew)}
+                onClick={() => {
+                  triggerHaptic('selection');
+                  setShowWhatsNew(!showWhatsNew);
+                }}
                 aria-label={t('header.whatsNew', "What's New")}
                 title={t('header.whatsNew', "What's New")}
               >
@@ -114,7 +165,10 @@ const Header: React.FC<HeaderProps> = ({
               <h3>✨ {t('header.whatsNewTitle', "What's New")}</h3>
               <button 
                 className="close-panel-btn"
-                onClick={() => setShowWhatsNew(false)}
+                onClick={() => {
+                  triggerHaptic('light');
+                  setShowWhatsNew(false);
+                }}
                 aria-label="Close"
               >
                 ×

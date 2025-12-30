@@ -7,6 +7,8 @@ import ShareRoute from './ShareRoute';
 import JourneyTimeline from './JourneyTimeline';
 import { BusReviewSection } from './review';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
+import SwipeableCard from './design-system/SwipeableCard';
+import { useToast } from './design-system/Toast';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
 
@@ -38,9 +40,11 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   onReportIssue
 }) => {
 
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { flags } = useFeatureFlags();
+  const { showToast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
   const isSelected = selectedBusId === bus.id;
   
   // Helper function to get display name for location
@@ -222,7 +226,50 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   const statusInfo = getBusStatus();
   const busTypeInfo = getBusTypeInfo();
 
-  return (
+  // Swipe gesture handlers with optimistic UI
+  const handleSwipeRight = useCallback(() => {
+    // Optimistic update
+    const newFavoritedState = !isFavorited;
+    setIsFavorited(newFavoritedState);
+    
+    // Haptic feedback
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
+    }
+    
+    // Show toast notification
+    showToast(
+      newFavoritedState 
+        ? t('busCard.addedToFavorites', `Bus ${bus.busNumber} added to favorites`)
+        : t('busCard.removedFromFavorites', `Bus ${bus.busNumber} removed from favorites`),
+      'success',
+      3000
+    );
+    
+    // TODO: Persist to backend
+    // If backend fails, rollback with error toast:
+    // setIsFavorited(!newFavoritedState);
+    // showToast('Failed to update favorites', 'error');
+  }, [bus, isFavorited, showToast, t]);
+
+  const handleSwipeLeft = useCallback(() => {
+    // Haptic feedback
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
+    }
+    
+    // Show toast notification
+    showToast(
+      t('busCard.shareReady', `Preparing to share Bus ${bus.busNumber}`),
+      'info',
+      2000
+    );
+    
+    // TODO: Trigger share modal
+    console.log('Sharing:', bus.busNumber);
+  }, [bus, showToast, t]);
+
+  const cardContent = (
     <button 
       className={`transit-bus-card ${isSelected ? 'selected' : ''} ${isCompact ? 'compact' : ''} ${isNextBus ? 'next-bus-highlight' : ''} fade-in`}
       onClick={handleCardClick}
@@ -348,10 +395,16 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
             </div>
           </div>
 
-          {/* Time, Duration, Time Row */}
+          {/* Time, Duration, Time Row - Phase 2: Status Pill Added */}
           <div className="time-duration-row">
-            <div className="departure-time">
-              {formatTime(bus.departureTime)}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px' }}>
+              <div className="departure-time">
+                {formatTime(bus.departureTime)}
+              </div>
+              {/* Status Pill - Phase 2 Enhancement */}
+              <span className={`status-pill ${statusInfo.className}`}>
+                {statusInfo.text}
+              </span>
             </div>
             <div className="journey-duration-center">
               {duration || '--h --m'}
@@ -380,7 +433,10 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '4px',
+                    minWidth: '44px',
+                    minHeight: '44px',
                     padding: '4px 10px',
                     background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
                     color: 'white',
@@ -429,7 +485,10 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '4px',
+                    minWidth: '44px',
+                    minHeight: '44px',
                     padding: '4px 10px',
                     background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
                     color: 'white',
@@ -552,6 +611,18 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
         </div>
       </div>
     </button>
+  );
+
+  return (
+    <SwipeableCard
+      onSwipeRight={handleSwipeRight}
+      onSwipeLeft={handleSwipeLeft}
+      swipeRightLabel="Favorite"
+      swipeLeftLabel="Share"
+      threshold={100}
+    >
+      {cardContent}
+    </SwipeableCard>
   );
 };
 

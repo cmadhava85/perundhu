@@ -2,6 +2,7 @@ import './App.css';
 import './styles/transit-design-system.css';
 import './styles/transit-bus-card.css';
 import './styles/transit-realtime.css';
+import './styles/micro-interactions.css';
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, useNavigate, useLocation } from 'react-router-dom';
@@ -15,6 +16,7 @@ import BottomNavigation from './components/BottomNavigation';
 import AppRoutes from './components/AppRoutes';
 import ErrorBoundary from './components/ErrorBoundary';
 import Loading from './components/Loading';
+import KeyboardShortcuts from './components/KeyboardShortcuts';
 
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
@@ -279,6 +281,56 @@ function AppContent() {
 
   const stops = selectedBusId && stopsMap[selectedBusId] ? stopsMap[selectedBusId] : [];
 
+  // Phase 2: Keyboard shortcuts
+  const keyboardShortcuts = [
+    {
+      key: 'f',
+      description: t('shortcuts.filters', 'Open Filters'),
+      action: () => {
+        const filtersSection = document.querySelector('.filters-section') as HTMLElement;
+        if (filtersSection) {
+          filtersSection.scrollIntoView({ behavior: 'smooth' });
+          filtersSection.focus();
+        }
+      },
+    },
+    {
+      key: 's',
+      description: t('shortcuts.search', 'Focus Search'),
+      action: () => {
+        const searchInput = document.querySelector('#from-location-input') as HTMLInputElement;
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      },
+    },
+    {
+      key: 'k',
+      description: t('shortcuts.quickSearch', 'Quick Search'),
+      action: () => {
+        const searchInput = document.querySelector('#from-location-input') as HTMLInputElement;
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      },
+      modifiers: ['ctrl' as const],
+    },
+    {
+      key: 'Escape',
+      description: t('shortcuts.closeDialogs', 'Close Dialogs'),
+      action: () => {
+        // Close any open modals or dialogs
+        const modals = document.querySelectorAll('[role="dialog"]');
+        modals.forEach(modal => {
+          const closeButton = modal.querySelector('button[aria-label*="lose"]') as HTMLButtonElement;
+          if (closeButton) closeButton.click();
+        });
+      },
+    },
+  ];
+
   return (
     <div className="transit-app app-container min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
       <Header />
@@ -313,6 +365,9 @@ function AppContent() {
         activeTab={activeTab} 
         hasResults={buses.length > 0} 
       />
+      
+      {/* Phase 2: Global Keyboard Shortcuts */}
+      <KeyboardShortcuts shortcuts={keyboardShortcuts} />
     </div>
   );
 }

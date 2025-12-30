@@ -10,6 +10,48 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   width: 100%;
   backdrop-filter: blur(10px);
+  transition: padding 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+              box-shadow 0.3s ease;
+}
+
+/* Scrolled state: enhanced shadow */
+.app-header.scrolled {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Compact state: reduced height on mobile */
+.app-header.compact {
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 767px) {
+  .app-header.compact .header-subtitle {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease, max-height 0.3s ease;
+  }
+  
+  .app-header.compact .brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .app-header.compact .logo-icon {
+    font-size: 1.25rem;
+  }
+  
+  .app-header.compact .brand-name {
+    font-size: 1rem;
+  }
+  
+  .app-header.compact .brand-tagline {
+    font-size: 0.7rem;
+  }
+  
+  .app-header.compact h1 {
+    font-size: 1.1rem;
+  }
 }
 
 .header-content {
@@ -49,12 +91,14 @@
   justify-content: center;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   overflow: hidden;
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 .logo-icon {
   font-size: 1.75rem;
   z-index: 2;
   animation: busMove 3s ease-in-out infinite;
+  transition: font-size 0.3s ease;
 }
 
 @keyframes busMove {
@@ -99,6 +143,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.1;
+  transition: font-size 0.3s ease;
 }
 
 .brand-tagline {
@@ -106,6 +151,7 @@
   color: #64748b;
   font-weight: 500;
   letter-spacing: 0.05em;
+  transition: font-size 0.3s ease;
 }
 
 /* Header Main Title */
@@ -128,6 +174,7 @@
   line-height: 1.2;
   text-align: center;
   letter-spacing: -0.025em;
+  transition: font-size 0.3s ease;
 }
 
 .header-subtitle {
@@ -135,6 +182,9 @@
   color: #64748b;
   margin: 0;
   text-align: center;
+  transition: opacity 0.2s ease, max-height 0.3s ease;
+  max-height: 2rem;
+  opacity: 1;
 }
 
 .header-actions {
@@ -146,8 +196,10 @@
 /* What's New Button */
 .whats-new-btn {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: none;
   background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
   border-radius: 10px;
@@ -243,8 +295,10 @@
 }
 
 .close-panel-btn {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: none;
   background: rgba(255, 255, 255, 0.2);
   color: white;
