@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { BusIcon, UsersIcon, CityIcon, TwitterIcon, FacebookIcon, InstagramIcon, MailIcon, InfoIcon, QuestionIcon, MailIcon as ContactIcon, LockIcon, FileIcon, PlusIcon, MicIcon, HeartIcon } from './icons';
 import '../styles/Footer.css';
 
 interface PlatformStats {
@@ -55,21 +56,21 @@ const Footer: React.FC = () => {
         {/* Stats Section */}
         <div className="footer-stats">
           <div className="stat-item">
-            <span className="stat-icon">🚌</span>
+            <span className="stat-icon"><BusIcon size={24} /></span>
             <span className="stat-number">
               {statsLoading ? '...' : formatNumber(stats?.routeCount ?? 0)}
             </span>
             <span className="stat-label">{t('footer.stats.routes', 'Bus Routes')}</span>
           </div>
           <div className="stat-item">
-            <span className="stat-icon">👥</span>
+            <span className="stat-icon"><UsersIcon size={24} /></span>
             <span className="stat-number">
               {statsLoading ? '...' : formatNumber(stats?.contributorCount ?? 0)}
             </span>
             <span className="stat-label">{t('footer.stats.contributors', 'Contributors')}</span>
           </div>
           <div className="stat-item">
-            <span className="stat-icon">🏙️</span>
+            <span className="stat-icon"><CityIcon size={24} /></span>
             <span className="stat-number">
               {statsLoading ? '...' : formatNumber(stats?.cityCount ?? 0)}
             </span>
@@ -94,16 +95,16 @@ const Footer: React.FC = () => {
             {/* Social Links */}
             <div className="social-links">
               <a href="https://twitter.com/perundhu" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Twitter">
-                <span className="social-icon">𝕏</span>
+                <span className="social-icon"><TwitterIcon size={20} /></span>
               </a>
               <a href="https://facebook.com/perundhu" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Facebook">
-                <span className="social-icon">f</span>
+                <span className="social-icon"><FacebookIcon size={20} /></span>
               </a>
               <a href="https://instagram.com/perundhu" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
-                <span className="social-icon">📷</span>
+                <span className="social-icon"><InstagramIcon size={20} /></span>
               </a>
               <a href="mailto:support@perundhu.in" className="social-link" aria-label="Email">
-                <span className="social-icon">✉️</span>
+                <span className="social-icon"><MailIcon size={20} /></span>
               </a>
             </div>
           </div>
@@ -113,15 +114,15 @@ const Footer: React.FC = () => {
             <h3 className="footer-column-title">{t('footer.quickLinks', 'Quick Links')}</h3>
             <div className="footer-links-vertical">
               <Link to="/about" className="footer-link">
-                <span className="link-icon">ℹ️</span>
+                <span className="link-icon"><InfoIcon size={16} /></span>
                 {t('footer.aboutUs', 'About Us')}
               </Link>
               <Link to="/faq" className="footer-link">
-                <span className="link-icon">❓</span>
+                <span className="link-icon"><QuestionIcon size={16} /></span>
                 {t('footer.faq', 'FAQ')}
               </Link>
               <Link to="/contact" className="footer-link">
-                <span className="link-icon">📧</span>
+                <span className="link-icon"><ContactIcon size={16} /></span>
                 {t('footer.contactUs', 'Contact Us')}
               </Link>
             </div>
@@ -132,11 +133,11 @@ const Footer: React.FC = () => {
             <h3 className="footer-column-title">{t('footer.legal', 'Legal')}</h3>
             <div className="footer-links-vertical">
               <Link to="/privacy" className="footer-link">
-                <span className="link-icon">🔒</span>
+                <span className="link-icon"><LockIcon size={16} /></span>
                 {t('footer.privacyPolicy', 'Privacy Policy')}
               </Link>
               <Link to="/terms" className="footer-link">
-                <span className="link-icon">📋</span>
+                <span className="link-icon"><FileIcon size={16} /></span>
                 {t('footer.termsOfService', 'Terms of Service')}
               </Link>
             </div>
@@ -147,11 +148,11 @@ const Footer: React.FC = () => {
             <h3 className="footer-column-title">{t('footer.contribute', 'Contribute')}</h3>
             <div className="footer-links-vertical">
               <Link to="/?tab=contribute" className="footer-link">
-                <span className="link-icon">➕</span>
+                <span className="link-icon"><PlusIcon size={16} /></span>
                 {t('footer.addRoute', 'Add Bus Route')}
               </Link>
               <Link to="/?tab=contribute" className="footer-link">
-                <span className="link-icon">🎙️</span>
+                <span className="link-icon"><MicIcon size={16} /></span>
                 {t('footer.voiceContribute', 'Voice Contribution')}
               </Link>
             </div>
@@ -164,7 +165,7 @@ const Footer: React.FC = () => {
             © {year} {t('footer.title', 'Perundhu')}. {t('footer.allRightsReserved', 'All Rights Reserved.')}
           </p>
           <p className="footer-made-with">
-            {t('footer.madeWith', 'Made with')} <span className="heart">❤️</span> {t('footer.inTamilNadu', 'in Tamil Nadu')}
+            {t('footer.madeWith', 'Made with')} <span className="heart"><HeartIcon size={16} color="#EF4444" filled /></span> {t('footer.inTamilNadu', 'in Tamil Nadu')}
           </p>
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../services/api';
 import { getUserFriendlyErrorMessage } from '../utils/errorHandling';
+import { Button } from '../design-system';
 import './ErrorDisplay.css';
 
 interface ErrorDisplayProps {
@@ -150,25 +151,30 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error, reset }) => {
           {/* Action buttons */}
           <div className="error-actions-modern">
             {reset && (
-              <button className="error-btn primary" onClick={reset}>
-                <span className="btn-icon">🔄</span>
-                <span className="btn-text">{errorContent.actionText}</span>
-              </button>
+              <Button 
+                variant="primary" 
+                size="lg"
+                onClick={reset}
+                startIcon="🔄"
+              >
+                {errorContent.actionText}
+              </Button>
             )}
             
             {isNoRoutesFound && (
-              <button 
-                className="error-btn secondary"
+              <Button 
+                variant="secondary"
+                size="lg"
                 onClick={() => {
                   const searchForm = document.querySelector('.search-form');
                   if (searchForm) {
                     searchForm.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
+                startIcon="🔍"
               >
-                <span className="btn-icon">🔍</span>
-                <span className="btn-text">{errorContent.secondaryText}</span>
-              </button>
+                {errorContent.secondaryText}
+              </Button>
             )}
           </div>
         </div>

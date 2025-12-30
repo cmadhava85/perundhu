@@ -4,6 +4,8 @@ import type { Location as AppLocation } from '../types';
 import { locationAutocompleteService, type LocationSuggestion } from '../services/locationAutocompleteService';
 import { findNearbyLocationFromGPS, checkLocationPermission } from '../services/nearbyLocationService';
 import { getGeolocationSupport } from '../services/geolocation';
+import { Skeleton } from '../design-system';
+import { triggerHaptic } from '../utils/haptic';
 import { 
   validateDifferentLocations,
   type LocationData,
@@ -500,7 +502,10 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
+                      justifyContent: 'center',
                       gap: '4px',
+                      minWidth: '44px',
+                      minHeight: '44px',
                       padding: '4px 10px',
                       background: isGettingLocation 
                         ? '#E5E7EB' 
@@ -621,14 +626,67 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   }
                 }}
                 placeholder={t('search.fromPlaceholder', 'Enter departure location')}
-                className="transit-input"
+                className={`transit-input ${validationError && !validationError.valid && validationError.message?.toLowerCase().includes('origin') ? 'error' : ''}`}
                 aria-label={t('search.from', 'From location')}
                 aria-autocomplete="list"
                 aria-controls="from-suggestions-list"
                 aria-expanded={showFromSuggestions}
                 aria-activedescendant={highlightedFromIndex >= 0 ? `from-suggestion-${highlightedFromIndex}` : undefined}
+                aria-invalid={validationError && !validationError.valid && validationError.message?.toLowerCase().includes('origin') ? 'true' : undefined}
                 autoComplete="off"
               />
+              
+              {/* Clear button for from input */}
+              {fromQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic('light');
+                    setFromQuery('');
+                    setSelectedFromLocation(null);
+                    setShowFromSuggestions(false);
+                    setIsFromGPS(false);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '44px',
+                    height: '44px',
+                    minWidth: '44px',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(107, 114, 128, 0.1)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    cursor: 'pointer',
+                    color: '#6B7280',
+                    fontSize: '18px',
+                    transition: 'all 0.2s ease',
+                    padding: 0
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(107, 114, 128, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(107, 114, 128, 0.1)';
+                  }}
+                  title={t('common.clear', 'Clear')}
+                  aria-label={t('search.clearFrom', 'Clear from location')}
+                >
+                  ✕
+                </button>
+              )}
+              
+              {/* Success indicator for valid from location */}
+              {selectedFromLocation && fromQuery && !validationError && (
+                <div className="input-success-message">
+                  ✓ {t('validation.location.valid', 'Valid location selected')}
+                </div>
+              )}
               
               {/* From Suggestions */}
               {showFromSuggestions && fromQuery.trim().length >= 2 && fromSuggestions.length === 0 && !isLoadingFrom && (
@@ -670,14 +728,17 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     marginTop: 'var(--space-1, 4px)',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
                     zIndex: 9999,
-                    padding: 'var(--space-4)',
-                    textAlign: 'center'
+                    padding: 'var(--space-3)'
                   }}
                 >
-                  <div style={{ color: 'var(--transit-primary, #6366F1)', marginBottom: 'var(--space-2)' }}>🔍</div>
-                  <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
-                    {t('search.searching', 'Searching locations...')}
-                  </div>
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} style={{ marginBottom: i < 3 ? 'var(--space-3)' : 0 }}>
+                      <Skeleton width="70%" height="16px" />
+                      <div style={{ marginTop: 'var(--space-1)' }}>
+                        <Skeleton width="40%" height="12px" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
               {showFromSuggestions && fromSuggestions.length > 0 && (
@@ -744,16 +805,22 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             {/* Swap Button */}
             <div style={{ textAlign: 'center' }}>
               <button
-                onClick={handleSwapLocations}
+                onClick={() => {
+                  triggerHaptic('light');
+                  handleSwapLocations();
+                }}
                 className="transit-button secondary"
                 style={{ 
                   borderRadius: '50%', 
-                  width: '40px', 
-                  height: '40px',
+                  width: '44px', 
+                  height: '44px',
+                  minWidth: '44px',
+                  minHeight: '44px',
                   padding: 0,
                   fontSize: 'var(--text-lg)'
                 }}
                 title={t('searchForm.swapLocations', 'Swap locations')}
+                aria-label={t('searchForm.swapLocations', 'Swap locations')}
               >
                 ⇅
               </button>
@@ -845,14 +912,66 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   }
                 }}
                 placeholder={t('search.toPlaceholder', 'Enter destination')}
-                className="transit-input"
+                className={`transit-input ${validationError && !validationError.valid && validationError.message?.toLowerCase().includes('destination') ? 'error' : ''}`}
                 aria-label={t('search.to', 'To location')}
                 aria-autocomplete="list"
                 aria-controls="to-suggestions-list"
                 aria-expanded={showToSuggestions}
                 aria-activedescendant={highlightedToIndex >= 0 ? `to-suggestion-${highlightedToIndex}` : undefined}
+                aria-invalid={validationError && !validationError.valid && validationError.message?.toLowerCase().includes('destination') ? 'true' : undefined}
                 autoComplete="off"
               />
+              
+              {/* Clear button for to input */}
+              {toQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic('light');
+                    setToQuery('');
+                    setSelectedToLocation(null);
+                    setShowToSuggestions(false);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '44px',
+                    height: '44px',
+                    minWidth: '44px',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(107, 114, 128, 0.1)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    cursor: 'pointer',
+                    color: '#6B7280',
+                    fontSize: '18px',
+                    transition: 'all 0.2s ease',
+                    padding: 0
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(107, 114, 128, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(107, 114, 128, 0.1)';
+                  }}
+                  title={t('common.clear', 'Clear')}
+                  aria-label={t('search.clearTo', 'Clear to location')}
+                >
+                  ✕
+                </button>
+              )}
+              
+              {/* Success indicator for valid to location */}
+              {selectedToLocation && toQuery && !validationError && (
+                <div className="input-success-message">
+                  ✓ {t('validation.location.valid', 'Valid location selected')}
+                </div>
+              )}
               
               {/* To Suggestions */}
               {showToSuggestions && toQuery.trim().length >= 2 && toSuggestions.length === 0 && !isLoadingTo && (
@@ -894,14 +1013,17 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     marginTop: 'var(--space-1, 4px)',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
                     zIndex: 9999,
-                    padding: 'var(--space-4)',
-                    textAlign: 'center'
+                    padding: 'var(--space-3)'
                   }}
                 >
-                  <div style={{ color: 'var(--transit-primary, #6366F1)', marginBottom: 'var(--space-2)' }}>🔍</div>
-                  <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
-                    {t('search.searching', 'Searching locations...')}
-                  </div>
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} style={{ marginBottom: i < 3 ? 'var(--space-3)' : 0 }}>
+                      <Skeleton width="70%" height="16px" />
+                      <div style={{ marginTop: 'var(--space-1)' }}>
+                        <Skeleton width="40%" height="12px" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
               {showToSuggestions && toSuggestions.length > 0 && (
@@ -966,19 +1088,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             </div>
           </div>
 
-          {/* Validation Error Display */}
+          {/* Validation Error Display - Phase 2 Enhancement */}
           {validationError && !validationError.valid && (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 16px',
-              background: validationError.severity === 'warning' ? '#FEF3C7' : '#FEE2E2',
-              border: `1px solid ${validationError.severity === 'warning' ? '#F59E0B' : '#EF4444'}`,
-              borderRadius: '8px',
-              color: validationError.severity === 'warning' ? '#92400E' : '#B91C1C',
-              fontSize: '14px'
-            }}>
+            <div className="input-error-message">
               <span>{validationError.severity === 'warning' ? '⚠️' : '❌'}</span>
               <span>{validationError.message}</span>
             </div>
@@ -986,7 +1098,10 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
           {/* Search Button */}
           <button
-            onClick={handleSearch}
+            onClick={() => {
+              triggerHaptic('medium');
+              handleSearch();
+            }}
             className="transit-button primary"
             style={{ 
               fontSize: 'var(--text-lg)', 

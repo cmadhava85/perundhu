@@ -134,7 +134,7 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
           <span className="time-compact">{formatTime(bus.departureTime)}</span>
           <span 
             className="dot-compact origin-dot" 
-            style={{ background: '#10B981', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid #fff' }}
+            style={{ background: 'var(--semantic-success, #10B981)', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid var(--transit-surface, #fff)' }}
           ></span>
           <span className="name-compact">{fromLocation || bus.from}</span>
         </div>
@@ -155,7 +155,7 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
           <span className="time-compact">{formatTime(bus.arrivalTime)}</span>
           <span 
             className="dot-compact destination-dot"
-            style={{ background: '#EF4444', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid #fff' }}
+            style={{ background: 'var(--semantic-error, #EF4444)', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid var(--transit-surface, #fff)' }}
           ></span>
           <span className="name-compact">{toLocation || bus.to}</span>
         </div>

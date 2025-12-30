@@ -240,6 +240,7 @@
 .transit-input {
   width: 100%;
   padding: var(--space-4);
+  padding-right: 56px; /* Add space for clear button */
   border: 1px solid var(--transit-divider);
   border-radius: var(--radius-md);
   font-family: var(--font-family-primary);
@@ -257,6 +258,45 @@
 
 .transit-input::placeholder {
   color: var(--transit-text-tertiary);
+}
+
+/* Phase 2: Input Error States */
+.transit-input.error {
+  border-color: var(--semantic-error);
+  background: var(--semantic-error-bg);
+}
+
+.transit-input.error:focus {
+  border-color: var(--semantic-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.input-error-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: var(--semantic-error-bg);
+  border: 1px solid var(--semantic-error-border);
+  border-radius: 6px;
+  color: var(--semantic-error);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.input-success-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: var(--semantic-success-bg);
+  border: 1px solid var(--semantic-success-border);
+  border-radius: 6px;
+  color: var(--semantic-success);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* Layout Utilities */

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { SearchIcon, BusIcon, MapIcon, LocationIcon, PlusIcon } from './icons';
+import { triggerHaptic } from '../utils/haptic';
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -17,34 +19,34 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   const tabs = [
     {
       id: 'search',
-      icon: '🔍',
+      icon: <SearchIcon size={22} />,
       label: t('nav.search', 'Search'),
       badge: null
     },
     {
       id: 'routes',
-      icon: '🚌',
+      icon: <BusIcon size={22} />,
       label: t('nav.routes', 'Routes'),
       badge: null,
       disabled: !hasResults
     },
     {
       id: 'map',
-      icon: '🗺️',
+      icon: <MapIcon size={22} />,
       label: t('nav.map', 'Map'),
       badge: null,
       disabled: !hasResults
     },
     {
       id: 'tracking',
-      icon: '📍',
+      icon: <LocationIcon size={22} />,
       label: t('nav.tracking', 'Track'),
       badge: null,
       disabled: !hasResults
     },
     {
       id: 'contribute',
-      icon: '➕',
+      icon: <PlusIcon size={22} />,
       label: t('nav.contribute', 'Contribute'),
       badge: null
     }
@@ -63,7 +65,12 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
             key={tab.id}
             data-testid={`bottom-nav-${tab.id}`}
             className={`bottom-nav-item ${activeTab === tab.id ? 'active' : ''} ${tab.disabled ? 'disabled' : ''}`}
-            onClick={() => !tab.disabled && onTabChange(tab.id)}
+            onClick={() => {
+              if (!tab.disabled) {
+                triggerHaptic('selection');
+                onTabChange(tab.id);
+              }
+            }}
             disabled={tab.disabled}
             aria-label={tab.label}
             aria-current={activeTab === tab.id ? 'page' : undefined}

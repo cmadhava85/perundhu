@@ -4,7 +4,10 @@
 .share-route-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 8px 12px;
   background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
   color: #fff;

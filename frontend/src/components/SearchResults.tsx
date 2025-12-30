@@ -308,6 +308,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               onAddStops={handleAddStops}
               onReportIssue={handleReportIssue}
               hasConnectingRoutes={connectingRoutes && connectingRoutes.length > 0}
+              isLoading={loading}
             />
           )}
         </div>

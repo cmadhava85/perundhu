@@ -6,14 +6,26 @@ const LanguageSwitcher: React.FC = () => {
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const changeLanguage = (language: string) => {
-    if (language !== currentLanguage && !isAnimating) {
+  const changeLanguage = async (language: string) => {
+    if (language !== currentLanguage && !isAnimating && !isLoading) {
       setIsAnimating(true);
-      i18n.changeLanguage(language);
+      setIsLoading(true);
       
-      // Reset animation state after transition
-      setTimeout(() => setIsAnimating(false), 300);
+      try {
+        await i18n.changeLanguage(language);
+        
+        // Reset states after transition
+        setTimeout(() => {
+          setIsAnimating(false);
+          setIsLoading(false);
+        }, 300);
+      } catch (error) {
+        console.error('Language change failed:', error);
+        setIsAnimating(false);
+        setIsLoading(false);
+      }
     }
   };
 
@@ -55,11 +67,29 @@ const LanguageSwitcher: React.FC = () => {
               onClick={() => changeLanguage(lang.code)}
               aria-pressed={currentLanguage === lang.code}
               aria-label={`Switch to ${lang.native}`}
+              disabled={isLoading}
+              style={{ cursor: isLoading ? 'wait' : 'pointer' }}
             >
               <span className="pill-flag">{lang.flag}</span>
               <span className="pill-text">{lang.shortCode}</span>
-              {currentLanguage === lang.code && (
+              {currentLanguage === lang.code && !isLoading && (
                 <div className="active-glow" />
+              )}
+              {currentLanguage === lang.code && isLoading && (
+                <span 
+                  className="loading-spinner"
+                  style={{
+                    width: '12px',
+                    height: '12px',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderTopColor: '#fff',
+                    borderRadius: '50%',
+                    animation: 'spin 0.6s linear infinite',
+                    display: 'inline-block',
+                    marginLeft: '4px'
+                  }}
+                  aria-hidden="true"
+                />
               )}
             </button>
           ))}

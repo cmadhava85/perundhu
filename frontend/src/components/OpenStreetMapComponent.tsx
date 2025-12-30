@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, memo } from 'react';
+import React, { useEffect, useRef, useMemo, memo, useState, useCallback } from 'react';
 import { logDebug, logWarn } from '../utils/logger';
 import type { Location, Stop } from '../types/index';
 import { getStopCoordinates, getStopCoordinatesAsync, getCoordinateSource } from '../utils/cityCoordinates';
@@ -34,6 +34,32 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
   const isInitializingRef = useRef<boolean>(false);
   const initializedForRef = useRef<string>('');
   const resizeHandlerRef = useRef<(() => void) | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Center on route handler
+  const handleCenterOnRoute = useCallback(() => {
+    if (mapInstanceRef.current && fromLocation && toLocation) {
+      const bounds = new (window as { L: typeof import('leaflet') }).L.LatLngBounds([
+        [fromLocation.latitude, fromLocation.longitude],
+        [toLocation.latitude, toLocation.longitude]
+      ]);
+      
+      // Add stops to bounds
+      selectedStops.forEach(stop => {
+        const coords = getStopCoordinates(stop);
+        if (coords) {
+          bounds.extend([coords.latitude, coords.longitude]);
+        }
+      });
+      
+      mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50] });
+      
+      // Haptic feedback
+      if ('vibrate' in navigator) {
+        navigator.vibrate(50);
+      }
+    }
+  }, [fromLocation, toLocation, selectedStops]);
 
   // Memoize stable keys to prevent unnecessary re-renders
   const stableMapKey = useMemo(() => {
@@ -114,9 +140,13 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
               dragging: true
             }).setView([centerLat, centerLng], 8);
 
+            // Map loaded successfully
+            setIsLoading(false);
+
             // Add error handler
             map.on('error', (e: L.LeafletEvent) => {
               void e; // Acknowledge error event
+              setIsLoading(false);
             });
 
             // Add OpenStreetMap tiles
@@ -440,11 +470,21 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
 
   return (
     <div className={`${className} osm-map-wrapper`} style={style}>
+      {/* Loading Skeleton */}
+      {isLoading && (
+        <div className="map-skeleton">
+          <div className="map-skeleton-content">
+            <div className="map-skeleton-icon" />
+            <div className="map-skeleton-text">Loading map...</div>
+          </div>
+        </div>
+      )}
+      
       <div 
         ref={mapRef} 
         id={mapId}
         className="leaflet-map-container"
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: '100%', width: '100%', opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease' }}
       />
       
       {/* Map Controls Overlay */}
@@ -466,6 +506,22 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapComponentProps> = memo(({
           )}
         </div>
       </div>
+      
+      {/* Center on Route Button - Phase 3.5 */}
+      {!isLoading && (
+        <button 
+          className="map-center-button"
+          onClick={handleCenterOnRoute}
+          aria-label="Center map on route"
+          type="button"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 6v6M1 12h6m6 0h6"/>
+          </svg>
+          <span>Center Route</span>
+        </button>
+      )}
     </div>
   );
 }, (prevProps, nextProps) => {
