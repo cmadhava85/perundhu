@@ -1,0 +1,305 @@
+/* Transit Search Form - Matching Prototype Design */
+
+.transit-search-form {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Purple Header Section */
+.transit-form-header {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  padding: 32px 24px;
+  text-align: center;
+  margin: 0;
+  border-radius: 0;
+  color: white;
+}
+
+.transit-form-header .text-title-2 {
+  color: white !important;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.transit-form-header .text-caption {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Search Form Content */
+.transit-search-form > .stack {
+  padding: 24px;
+}
+
+/* Input Fields */
+.transit-search-form .transit-input {
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.transit-search-form .transit-input:focus {
+  border-color: #6366F1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  outline: none;
+}
+
+/* Labels */
+.transit-search-form label.text-caption {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Verified Badge */
+.transit-search-form .verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Swap Button */
+.transit-search-form .swap-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #E5E7EB;
+  color: #6366F1;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.transit-search-form .swap-button:hover {
+  background: #6366F1;
+  color: white;
+  border-color: #6366F1;
+  transform: rotate(180deg);
+}
+
+/* Find Buses Button */
+.transit-search-form .transit-button.primary {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  padding: 16px 32px;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.transit-search-form .transit-button.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5558E3 0%, #7C3AED 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+}
+
+.transit-search-form .transit-button.primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Use My Location Button */
+.use-location-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.use-location-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5558E3 0%, #7C3AED 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.use-location-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Suggestions Dropdown */
+.transit-search-form .suggestions-dropdown {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  margin-top: 8px;
+}
+
+.transit-search-form .suggestion-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #F3F4F6;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.transit-search-form .suggestion-item:hover,
+.transit-search-form .suggestion-item[aria-selected="true"] {
+  background: rgba(99, 102, 241, 0.08);
+  color: #6366F1;
+}
+
+.transit-search-form .suggestion-item:last-child {
+  border-bottom: none;
+}
+
+/* Recent Searches */
+.recent-searches-container {
+  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.recent-search-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recent-search-item:hover {
+  border-color: #6366F1;
+  background: #EFF6FF;
+  transform: translateX(4px);
+}
+
+/* Quick Action Buttons */
+.transit-search-form .transit-button.secondary {
+  background: white;
+  border: 2px solid #E5E7EB;
+  color: #6B7280;
+  font-size: 0.875rem;
+  padding: 10px 16px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.transit-search-form .transit-button.secondary:hover {
+  border-color: #6366F1;
+  color: #6366F1;
+  background: #EFF6FF;
+  transform: translateY(-2px);
+}
+
+/* Keyboard Hint */
+.keyboard-hint {
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-radius: 10px;
+  border: 1px solid #BFDBFE;
+  font-weight: 500;
+}
+
+.keyboard-hint kbd {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: #FFFFFF;
+  border-radius: 6px;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+}
+
+/* Validation Error */
+.validation-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #FEE2E2;
+  border: 1px solid #EF4444;
+  border-radius: 10px;
+  color: #B91C1C;
+  font-size: 14px;
+}
+
+.validation-warning {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .transit-form-header {
+    padding: 24px 16px;
+  }
+
+  .transit-form-header .text-title-2 {
+    font-size: 1.5rem;
+  }
+
+  .transit-search-form > .stack {
+    padding: 16px;
+  }
+
+  .transit-search-form .transit-button.primary {
+    font-size: 1rem;
+    padding: 14px 24px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transit-search-form {
+  animation: fadeIn 0.4s ease-out;
+}

@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location, SearchFilters } from '../../types';
 import LocationInput from './LocationInput';
+import '../../styles/search-form.css';
 
 interface SmartSearchFormProps {
   searchFilters: SearchFilters;
@@ -122,21 +123,23 @@ const SmartSearchForm: React.FC<SmartSearchFormProps> = ({
   }, []);
 
   return (
-    <div className="search-form-container">
-      <div className="search-header">
-        <h2 className="search-title">{t('search.title', 'Find Your Bus Route')}</h2>
-        <p className="search-subtitle">
+    <div className="search-card">
+      <div className="form-header">
+        <h2 className="form-title">
+          <span>🚌</span>
+          <span>{t('search.title', 'Find Your Bus Route')}</span>
+        </h2>
+        <p className="form-subtitle">
           {t('search.subtitle', 'Search for bus routes between any two locations in your city')}
         </p>
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} noValidate>
+      <form className="form-body" onSubmit={(e) => { e.preventDefault(); handleSearch(); }} noValidate>
         {/* Location Selection */}
         <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="from-location" className="form-label">
-              <span className="label-icon">📍</span>
-              {t('search.from', 'From')}
+          <div className="input-group">
+            <label htmlFor="from-location" className="input-label">
+              <span>📍 {t('search.from', 'From')}</span>
               <span className="required-asterisk" aria-label="required">*</span>
             </label>
             <LocationInput
@@ -159,10 +162,9 @@ const SmartSearchForm: React.FC<SmartSearchFormProps> = ({
             )}
           </div>
 
-          <div className="form-group">
-            <label htmlFor="to-location" className="form-label">
-              <span className="label-icon">🎯</span>
-              {t('search.to', 'To')}
+          <div className="input-group">
+            <label htmlFor="to-location" className="input-label">
+              <span>🎯 {t('search.to', 'To')}</span>
               <span className="required-asterisk" aria-label="required">*</span>
             </label>
             <LocationInput

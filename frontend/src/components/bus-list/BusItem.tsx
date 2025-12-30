@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../../types';
-import { formatTime, calculateDuration, getBusStatusColor } from './busUtils';
+import { formatTime, calculateDuration } from './busUtils';
+import '../../styles/bus-card.css';
 
 interface BusItemProps {
   bus: Bus;
   isSelected: boolean;
   stops: Stop[];
   onSelect: () => void;
-  onBook?: () => void;
+  onAddStops?: (bus: Bus) => void;
+  onReportIssue?: (bus: Bus) => void;
+  onShare?: (bus: Bus) => void;
+  isNextBus?: boolean;
+  isFastest?: boolean;
   isCompact?: boolean;
 }
 
@@ -16,149 +21,173 @@ const BusItem: React.FC<BusItemProps> = ({
   bus, 
   isSelected, 
   stops, 
-  onSelect, 
-  onBook,
-  isCompact = false 
+  onSelect,
+  onAddStops,
+  onReportIssue,
+  onShare,
+  isNextBus = false,
+  isFastest = false,
+  isCompact: _isCompact = false 
 }) => {
   const { t } = useTranslation();
   const [showStops, setShowStops] = useState(false);
 
+  const getTimeUntilDeparture = () => {
+    if (!bus.departureTime) return null;
+    const now = new Date();
+    const [hours, minutes] = bus.departureTime.split(':').map(Number);
+    const departure = new Date();
+    departure.setHours(hours, minutes, 0, 0);
+    const diffMs = departure.getTime() - now.getTime();
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    
+    if (diffMinutes >= 0 && diffMinutes <= 60) {
+      return `${diffMinutes}m`;
+    }
+    return null;
+  };
+
+  const timeUntil = getTimeUntilDeparture();
+
+  const handleCardClick = () => {
+    setShowStops(!showStops);
+    if (onSelect) {
+      onSelect();
+    }
+  };
+
   return (
     <div
-      className={`
-        card transition-all duration-200 cursor-pointer
-        ${isSelected ? 'ring-2 ring-primary-500 bg-primary-50' : 'hover:shadow-md'}
-        ${isCompact ? 'mb-3' : 'mb-4'}
-      `}
-      onClick={onSelect}
+      className={`bus-card ${showStops ? 'expanded' : ''}`}
+      onClick={handleCardClick}
     >
-      <div className={`card-body ${isCompact ? 'p-4' : 'p-6'}`}>
-        {/* Bus Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🚌</span>
-                <div>
-                  <h3 className="font-bold text-gray-900 text-lg">{bus.busName || bus.busNumber}</h3>
-                  <p className="text-sm text-gray-600">{bus.busNumber}</p>
-                </div>
-              </div>
-              <div className={`px-2 py-1 rounded-full text-xs font-medium ${getBusStatusColor(bus.departureTime)}`}>
-                {t('bus.onTime', 'On Time')}
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <span className="flex items-center gap-1">
-                <span className="text-green-600">🟢</span>
-                {bus.from}
-              </span>
-              <span className="text-gray-400">→</span>
-              <span className="flex items-center gap-1">
-                <span className="text-red-600">🔴</span>
-                {bus.to}
-              </span>
-            </div>
-          </div>
+      {/* Highlight Banner for Next Bus or Fastest */}
+      {(isNextBus || timeUntil) && (
+        <div className="highlight-row">
+          {isNextBus && (
+            <span className="badge badge-next">🚀 {t('bus.nextBus', 'Next Bus')}</span>
+          )}
+          {timeUntil && (
+            <span className="time-badge time-urgent">
+              🔴 {t('bus.leavesIn', 'Leaves in')} {timeUntil}
+            </span>
+          )}
+        </div>
+      )}
 
-          {/* Timing */}
-          <div className="text-right">
-            <div className="font-bold text-lg text-gray-900">
-              {formatTime(bus.departureTime)}
+      {/* Fastest Badge */}
+      {isFastest && !isNextBus && (
+        <span className="badge" style={{ position: 'absolute', top: isNextBus ? '60px' : '-8px', right: '16px' }}>
+          ⚡ {t('bus.fastest', 'Fastest')}
+        </span>
+      )}
+
+      {/* Bus Header */}
+      <div className="bus-header">
+        <div className="bus-info">
+          <h3>
+            {bus.busName || bus.busNumber}
+            <span className={`expand-indicator ${showStops ? 'expanded' : ''}`}>▼</span>
+          </h3>
+          <div className="bus-number">
+            {t('bus.busNumber', 'Bus')} #{bus.busNumber}
+            {bus.registrationNumber && ` • ${bus.registrationNumber}`}
+          </div>
+          {bus.rating && (
+            <div className="rating" style={{ marginTop: '8px' }}>
+              ⭐ {bus.rating} <span style={{ color: '#9CA3AF' }}>({bus.reviewCount || 0} {t('bus.reviews', 'reviews')})</span>
             </div>
-            <div className="text-sm text-gray-600">
-              {formatTime(bus.arrivalTime)}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">
-              {calculateDuration(bus.departureTime, bus.arrivalTime)}
+          )}
+        </div>
+      </div>
+
+      {/* Journey Timeline */}
+      <div className="journey-timeline">
+        <div className="time-block">
+          <div className="time">{formatTime(bus.departureTime)}</div>
+          <div className="location">{bus.from || bus.fromLocation?.name}</div>
+        </div>
+
+        <div style={{ position: 'relative' }}>
+          <div className="journey-line">
+            <div className="bus-icon-moving">🚌</div>
+          </div>
+          <div className="duration">
+            <strong>{calculateDuration(bus.departureTime, bus.arrivalTime)}</strong>
+            <div style={{ color: '#10B981', fontWeight: 600 }}>
+              {stops.length} {t('bus.stops', 'stops')}
             </div>
           </div>
         </div>
 
-        {/* Bus Features */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4 text-sm">
-            <span className="flex items-center gap-1 text-gray-600">
-              <span>💺</span>
-              {bus.capacity || '40'} {t('bus.seats', 'seats')}
-            </span>
-            <span className="flex items-center gap-1 text-gray-600">
-              <span>❄️</span>
-              {bus.category || 'AC'}
-            </span>
-            {stops.length > 0 && (
-              <span className="flex items-center gap-1 text-gray-600">
-                <span>🚏</span>
-                {stops.length} {t('bus.stops', 'stops')}
-              </span>
-            )}
-          </div>
+        <div className="time-block">
+          <div className="time">{formatTime(bus.arrivalTime)}</div>
+          <div className="location">{bus.to || bus.toLocation?.name}</div>
+        </div>
+      </div>
 
-          {onBook && (
+      {/* Stops List */}
+      {stops.length > 0 && (
+        <div className={`stops-list ${showStops ? 'show' : ''}`}>
+          {stops.map((stop, index) => (
+            <div key={stop.id || index} className="stop-item">
+              <div className="stop-number">{index + 1}</div>
+              <div className="stop-name">{stop.name}</div>
+              <div className="stop-times">
+                {stop.arrivalTime && <span>↓ {formatTime(stop.arrivalTime)}</span>}
+                {stop.departureTime && <span>↑ {formatTime(stop.departureTime)}</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Bus Footer */}
+      <div className="bus-footer" onClick={(e) => e.stopPropagation()}>
+        <div className="action-buttons">
+          {onAddStops && (
             <button
+              className="add-stops-btn"
               onClick={(e) => {
                 e.stopPropagation();
-                onBook();
+                onAddStops(bus);
               }}
-              className="btn btn-sm btn-primary"
             >
-              {t('bus.book', 'Book Now')}
+              ➕ {t('bus.addStops', 'Add Stops')}
+            </button>
+          )}
+          {onReportIssue && (
+            <button
+              className="report-issue-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onReportIssue(bus);
+              }}
+            >
+              🚨 {t('bus.reportIssue', 'Report Issue')}
+            </button>
+          )}
+          {onShare && (
+            <button
+              className="share-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShare(bus);
+              }}
+            >
+              ↗️ {t('bus.share', 'Share')}
             </button>
           )}
         </div>
-
-        {/* Expandable Stops Section */}
-        {stops.length > 0 && (
-          <div className="border-t border-gray-200 pt-4">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowStops(!showStops);
-              }}
-              className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-700">
-                {t('bus.viewStops', 'View Stops')} ({stops.length})
-              </span>
-              <span className={`transform transition-transform ${showStops ? 'rotate-180' : ''}`}>
-                ⌄
-              </span>
-            </button>
-
-            {showStops && (
-              <div className="mt-3 space-y-2 max-h-48 overflow-y-auto">
-                {[...stops]
-                  .sort((a, b) => {
-                    const timeA = a.departureTime || a.arrivalTime || '00:00';
-                    const timeB = b.departureTime || b.arrivalTime || '00:00';
-                    return timeA.localeCompare(timeB);
-                  })
-                  .map((stop, index) => (
-                  <div
-                    key={stop.id || index}
-                    className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                      <div>
-                        <div className="font-medium text-sm text-gray-900">{stop.name}</div>
-                        {stop.arrivalTime && (
-                          <div className="text-xs text-gray-500">
-                            {formatTime(stop.arrivalTime)}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {index + 1}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        <button
+          className="view-details-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowStops(!showStops);
+          }}
+        >
+          {showStops ? t('bus.hideDetails', 'Hide Details') : t('bus.viewDetails', 'View Details')} →
+        </button>
       </div>
     </div>
   );

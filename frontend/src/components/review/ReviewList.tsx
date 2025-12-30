@@ -87,7 +87,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
         {showWriteButton && onWriteReview && (
           <button
             onClick={onWriteReview}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 touch-manipulation"
+            className="text-sm text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1 touch-manipulation"
           >
             <Star className="w-4 h-4" />
             {t('review.writeReview', 'Write a review')}
@@ -103,8 +103,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
           {showWriteButton && onWriteReview && (
             <button
               onClick={onWriteReview}
-              className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium 
-                         hover:bg-blue-700 transition-colors touch-manipulation"
+              className="mt-3 px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-medium 
+                         hover:bg-teal-700 transition-colors touch-manipulation"
             >
               {t('review.beFirst', 'Be the first to review')}
             </button>
@@ -141,7 +141,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                     <span
                       key={tag}
                       className="px-2.5 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 
-                                 text-blue-700 dark:text-blue-300 rounded-full"
+                                 text-teal-700 dark:text-blue-300 rounded-full"
                     >
                       {t(`review.tag.${tag}`, REVIEW_TAG_LABELS[tag as ReviewTag] || tag)}
                     </span>

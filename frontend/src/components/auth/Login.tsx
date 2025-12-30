@@ -115,7 +115,7 @@ const Login: React.FC = () => {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-teal-500 transition-colors ${
                     errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
                   }`}
                   placeholder={t('auth.placeholders.email')}
@@ -139,7 +139,7 @@ const Login: React.FC = () => {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                    className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-teal-500 transition-colors ${
                       errors.password ? 'border-red-300 bg-red-50' : 'border-gray-300'
                     }`}
                     placeholder={t('auth.placeholders.password')}
@@ -176,7 +176,7 @@ const Login: React.FC = () => {
                   type="checkbox"
                   checked={formData.rememberMe}
                   onChange={handleInputChange}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-teal-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
                   {t('auth.login.rememberMe')}
@@ -185,7 +185,7 @@ const Login: React.FC = () => {
 
               <Link
                 to="/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-500 font-medium"
+                className="text-sm text-teal-600 hover:text-teal-500 font-medium"
               >
                 {t('auth.login.forgotPassword')}
               </Link>
@@ -198,7 +198,7 @@ const Login: React.FC = () => {
               className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white transition-colors ${
                 isLoading
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                  : 'bg-teal-600 hover:bg-teal-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
               }`}
             >
               {isLoading ? (
@@ -258,7 +258,7 @@ const Login: React.FC = () => {
                 {t('auth.login.noAccount')}{' '}
                 <Link
                   to="/register"
-                  className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
+                  className="font-medium text-teal-600 hover:text-teal-500 transition-colors"
                 >
                   {t('auth.login.signUp')}
                 </Link>

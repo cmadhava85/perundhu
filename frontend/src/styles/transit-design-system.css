@@ -3,9 +3,9 @@
 
 :root {
   /* Primary Transit Colors */
-  --transit-primary: #0066FF;       /* Bright blue like Transit */
-  --transit-primary-dark: #0052CC;
-  --transit-primary-light: #3385FF;
+  --transit-primary: #14B8A6;       /* Teal primary color */
+  --transit-primary-dark: #0D9488;
+  --transit-primary-light: #5eead4;
   --transit-secondary: #00C853;     /* Green for on-time status */
   --transit-warning: #FF9500;       /* Orange for delays */
   --transit-danger: #FF3B30;        /* Red for alerts/cancelled */
@@ -214,7 +214,7 @@
 }
 
 .transit-button:focus {
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3);
 }
 
 .transit-button.primary {
@@ -252,7 +252,7 @@
 .transit-input:focus {
   outline: none;
   border-color: var(--transit-primary);
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
 }
 
 .transit-input::placeholder {

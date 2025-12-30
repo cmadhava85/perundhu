@@ -114,7 +114,7 @@
 
 .filter-group select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -183,7 +183,7 @@
   width: 40px;
   height: 40px;
   border: 3px solid #e5e7eb;
-  border-top-color: #667eea;
+  border-top-color: #14B8A6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -423,7 +423,7 @@
 }
 
 .bus-number-badge {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
   color: white;
   padding: 0.375rem 0.75rem;
   border-radius: 20px;
@@ -474,7 +474,7 @@
 
 .point-time {
   font-size: 0.8rem;
-  color: #667eea;
+  color: #14B8A6;
   font-weight: 500;
 }
 
@@ -535,9 +535,9 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #667eea;
+  background: #14B8A6;
   border: 2px solid white;
-  box-shadow: 0 0 0 2px #667eea;
+  box-shadow: 0 0 0 2px #14B8A6;
   z-index: 1;
 }
 
@@ -840,7 +840,7 @@
 
 .modal-field textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -1029,7 +1029,7 @@
 }
 
 .time-value {
-  color: #667eea;
+  color: #14B8A6;
   font-family: 'Courier New', monospace;
   font-size: 1rem;
 }
@@ -1103,7 +1103,7 @@
   background: #f9fafb;
   padding: 1rem;
   border-radius: 8px;
-  border-left: 3px solid #667eea;
+  border-left: 3px solid #14B8A6;
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.6;

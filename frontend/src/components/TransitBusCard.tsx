@@ -9,6 +9,7 @@ import { BusReviewSection } from './review';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
+import '../styles/bus-card.css';
 
 interface TransitBusCardProps {
   bus: Bus;

@@ -1,7 +1,7 @@
 /* Static Pages Styles */
 .static-page {
   max-width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   min-height: 100vh;
   padding: 1rem;
 }
@@ -20,7 +20,7 @@
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 1.5rem;
-  border-bottom: 3px solid #667eea;
+  border-bottom: 3px solid #14B8A6;
   padding-bottom: 0.75rem;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .contact-link {
-  color: #667eea;
+  color: #14B8A6;
   text-decoration: none;
   font-weight: 500;
 }
@@ -111,7 +111,7 @@
   content: '+';
   font-size: 1.25rem;
   font-weight: 700;
-  color: #667eea;
+  color: #14B8A6;
   transition: transform 0.2s;
 }
 
@@ -121,7 +121,7 @@
 
 .faq-item[open] {
   background: white;
-  border-color: #667eea;
+  border-color: #14B8A6;
 }
 
 .faq-answer {
@@ -139,7 +139,7 @@
 }
 
 .back-link a {
-  color: #667eea;
+  color: #14B8A6;
   text-decoration: none;
   font-weight: 500;
   display: inline-flex;
@@ -209,7 +209,7 @@
   
   .faq-item[open] {
     background: #1f2937;
-    border-color: #667eea;
+    border-color: #14B8A6;
   }
   
   .faq-answer {

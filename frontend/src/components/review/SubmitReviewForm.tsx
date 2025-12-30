@@ -157,7 +157,7 @@ export const SubmitReviewForm: React.FC<SubmitReviewFormProps> = ({
                   onClick={() => handleTagToggle(tag)}
                   className={`px-4 py-2 sm:px-3 sm:py-1 rounded-full text-sm font-medium transition-all touch-manipulation active:scale-95 ${
                     selectedTags.includes(tag)
-                      ? 'bg-blue-500 text-white shadow-md'
+                      ? 'bg-teal-500 text-white shadow-md'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
@@ -206,8 +206,8 @@ export const SubmitReviewForm: React.FC<SubmitReviewFormProps> = ({
             <button
               type="submit"
               disabled={isSubmitting || rating === 0}
-              className="flex-1 px-4 py-3 sm:py-2.5 bg-blue-600 text-white rounded-xl sm:rounded-lg font-medium
-                         hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed
+              className="flex-1 px-4 py-3 sm:py-2.5 bg-teal-600 text-white rounded-xl sm:rounded-lg font-medium
+                         hover:bg-teal-700 disabled:bg-gray-400 disabled:cursor-not-allowed
                          transition-all flex items-center justify-center gap-2 touch-manipulation active:scale-98
                          shadow-lg shadow-blue-500/25 disabled:shadow-none"
             >

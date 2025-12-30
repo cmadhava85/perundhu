@@ -63,7 +63,7 @@
 
 .example-btn {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -153,7 +153,7 @@
 
 .paste-textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -178,7 +178,7 @@
 }
 
 .validate-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   color: white;
 }
 
@@ -398,7 +398,7 @@
 
 .source-attribution input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 

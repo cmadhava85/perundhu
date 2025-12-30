@@ -10,6 +10,8 @@ import {
   type ValidationResult 
 } from '../utils/validationService';
 import '../styles/transit-design-system.css';
+import '../styles/transit-search-form.css';
+import '../styles/search-form.css';
 
 // Recent search interface
 interface RecentSearch {
@@ -65,7 +67,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   
   // GPS location detection state
   const [isGettingLocation, setIsGettingLocation] = useState(false);
-  const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt' | 'unknown'>('unknown');
+  const [_locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt' | 'unknown'>('unknown');
   const [locationError, setLocationError] = useState<string | null>(null);
   const [gpsSupported, setGpsSupported] = useState(true);
   const [isFromGPS, setIsFromGPS] = useState(false); // Track if origin was set via GPS
@@ -438,39 +440,29 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
   return (
     <div className="transit-app">
-      <div className="transit-card elevated transit-search-form">
+      <div className="search-card">
         {/* Header */}
-        <div className="stack stack-sm transit-form-header">
-          <h2 className="text-title-2">🚌 {t('searchForm.planJourney', 'Plan Your Journey')}</h2>
-          <p className="text-caption">{t('searchForm.findBestBuses', 'Find the best buses for your route')}</p>
+        <div className="form-header">
+          <h2 className="form-title">
+            <span>🚌</span>
+            <span>{t('searchForm.planJourney', 'Plan Your Journey')}</span>
+          </h2>
+          <p className="form-subtitle">{t('searchForm.findBestBuses', 'Find the best buses for your route')}</p>
         </div>
 
-        <div className="stack stack-lg">
+        <div className="form-body">
           {/* Location Inputs */}
           <div className="stack stack-md">
             {/* From Location */}
-            <div style={{ position: 'relative' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
-                <label 
-                  htmlFor="from-location-input"
-                  className="text-caption" 
-                  style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                >
+            <div className="input-group">
+              <label 
+                htmlFor="from-location-input"
+                className="input-label"
+              >
+                <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                   <span>🟢 {t('search.from', 'From')}</span>
                   {selectedFromLocation && selectedFromLocation.id !== -1 && (
-                    <span style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      padding: '2px 8px',
-                      background: isFromGPS 
-                        ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)' 
-                        : 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                      color: 'white',
-                      borderRadius: '12px',
-                      fontSize: '10px',
-                      fontWeight: '600'
-                    }}>
+                    <span className={isFromGPS ? 'gps-badge' : 'verified-badge'}>
                       {isFromGPS ? '📍 ' + t('location.nearYou', 'Near you') : '✓ ' + t('search.verified', 'Verified')}
                     </span>
                   )}
@@ -489,7 +481,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       ⚠ {t('search.selectFromList', 'Select from list')}
                     </span>
                   )}
-                </label>
+                </span>
                 
                 {/* Use My Location Button */}
                 {gpsSupported && (
@@ -497,25 +489,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     type="button"
                     onClick={handleUseMyLocation}
                     disabled={isGettingLocation}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      padding: '4px 10px',
-                      background: isGettingLocation 
-                        ? '#E5E7EB' 
-                        : locationPermission === 'granted' 
-                          ? 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)'
-                          : 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)',
-                      color: isGettingLocation ? '#6B7280' : 'white',
-                      border: 'none',
-                      borderRadius: '16px',
-                      fontSize: '11px',
-                      fontWeight: '600',
-                      cursor: isGettingLocation ? 'wait' : 'pointer',
-                      transition: 'all 0.2s ease',
-                      boxShadow: isGettingLocation ? 'none' : '0 2px 8px rgba(99, 102, 241, 0.3)'
-                    }}
+                    className="gps-button"
                     title={t('location.useMyLocation', 'Use my current location')}
                   >
                     {isGettingLocation ? (
@@ -538,7 +512,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     )}
                   </button>
                 )}
-              </div>
+              </label>
               
               {/* Location Error Message */}
               {locationError && (
@@ -576,6 +550,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
               <input
                 id="from-location-input"
                 type="text"
+                className="input-field"
                 value={fromQuery}
                 onChange={(e) => {
                   setFromQuery(e.target.value);
@@ -621,7 +596,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   }
                 }}
                 placeholder={t('search.fromPlaceholder', 'Enter departure location')}
-                className="transit-input"
                 aria-label={t('search.from', 'From location')}
                 aria-autocomplete="list"
                 aria-controls="from-suggestions-list"
@@ -674,7 +648,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     textAlign: 'center'
                   }}
                 >
-                  <div style={{ color: 'var(--transit-primary, #6366F1)', marginBottom: 'var(--space-2)' }}>🔍</div>
+                  <div style={{ color: 'var(--transit-primary, #14B8A6)', marginBottom: 'var(--space-2)' }}>🔍</div>
                   <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
                     {t('search.searching', 'Searching locations...')}
                   </div>
@@ -685,24 +659,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   ref={fromSuggestionsRef}
                   id="from-suggestions-list"
                   role="listbox"
+                  className="suggestions"
                   aria-label={t('search.fromSuggestions', 'From location suggestions')}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    background: 'var(--transit-surface, #fff)',
-                    border: '1px solid var(--transit-divider, #e5e7eb)',
-                    borderRadius: 'var(--radius-md, 8px)',
-                    marginTop: 'var(--space-1, 4px)',
-                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
-                    zIndex: 9999,
-                    maxHeight: '250px',
-                    overflowY: 'auto',
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0
-                  }}>
+                >
                   {fromSuggestions.map((location, index) => {
                     const isHighlighted = index === highlightedFromIndex;
                     return (
@@ -710,6 +669,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       key={location.id}
                       id={`from-suggestion-${index}`}
                       role="option"
+                      className={`suggestion-item ${isHighlighted ? 'highlighted' : ''}`}
                       aria-selected={isHighlighted}
                       onMouseDown={() => {
                         isSelectingFromRef.current = true;
@@ -718,20 +678,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                         handleFromSelect(location);
                       }}
                       onMouseEnter={() => setHighlightedFromIndex(index)}
-                      style={{
-                        width: '100%',
-                        padding: 'var(--space-3)',
-                        border: 'none',
-                        background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid var(--transit-divider)',
-                        transition: 'background-color 0.15s ease',
-                        fontWeight: isHighlighted ? 600 : 400,
-                        userSelect: 'none'
-                      }}
                     >
-                      <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit' }}>
+                      <div className="text-body">
                         {getLocationDisplayName(location)}
                       </div>
                     </li>
@@ -745,14 +693,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             <div style={{ textAlign: 'center' }}>
               <button
                 onClick={handleSwapLocations}
-                className="transit-button secondary"
-                style={{ 
-                  borderRadius: '50%', 
-                  width: '40px', 
-                  height: '40px',
-                  padding: 0,
-                  fontSize: 'var(--text-lg)'
-                }}
+                className="swap-button"
                 title={t('searchForm.swapLocations', 'Swap locations')}
               >
                 ⇅
@@ -760,47 +701,39 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
             </div>
 
             {/* To Location */}
-            <div style={{ position: 'relative' }}>
+            <div className="input-group">
               <label 
                 htmlFor="to-location-input"
-                className="text-caption" 
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}
+                className="input-label"
               >
-                <span>🔴 {t('search.to', 'To')}</span>
-                {selectedToLocation && selectedToLocation.id !== -1 && (
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 8px',
-                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                    color: 'white',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: '600'
-                  }}>
-                    ✓ Verified
-                  </span>
-                )}
-                {toQuery && !selectedToLocation && toQuery.length >= 2 && (
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 8px',
-                    background: '#FEF3C7',
-                    color: '#D97706',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: '600'
-                  }}>
-                    ⚠ Select from list
-                  </span>
-                )}
+                <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                  <span>🔴 {t('search.to', 'To')}</span>
+                  {selectedToLocation && selectedToLocation.id !== -1 && (
+                    <span className="verified-badge">
+                      ✓ {t('search.verified', 'Verified')}
+                    </span>
+                  )}
+                  {toQuery && !selectedToLocation && toQuery.length >= 2 && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '2px 8px',
+                      background: '#FEF3C7',
+                      color: '#D97706',
+                      borderRadius: '12px',
+                      fontSize: '10px',
+                      fontWeight: '600'
+                    }}>
+                      ⚠ {t('search.selectFromList', 'Select from list')}
+                    </span>
+                  )}
+                </span>
               </label>
               <input
                 id="to-location-input"
                 type="text"
+                className="input-field"
                 value={toQuery}
                 onChange={(e) => {
                   setToQuery(e.target.value);
@@ -845,7 +778,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   }
                 }}
                 placeholder={t('search.toPlaceholder', 'Enter destination')}
-                className="transit-input"
                 aria-label={t('search.to', 'To location')}
                 aria-autocomplete="list"
                 aria-controls="to-suggestions-list"
@@ -898,7 +830,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                     textAlign: 'center'
                   }}
                 >
-                  <div style={{ color: 'var(--transit-primary, #6366F1)', marginBottom: 'var(--space-2)' }}>🔍</div>
+                  <div style={{ color: 'var(--transit-primary, #14B8A6)', marginBottom: 'var(--space-2)' }}>🔍</div>
                   <div className="text-body" style={{ color: 'var(--transit-text-secondary)', fontWeight: 500 }}>
                     {t('search.searching', 'Searching locations...')}
                   </div>
@@ -909,24 +841,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   ref={toSuggestionsRef}
                   id="to-suggestions-list"
                   role="listbox"
+                  className="suggestions"
                   aria-label={t('search.toSuggestions', 'To location suggestions')}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    background: 'var(--transit-surface, #fff)',
-                    border: '1px solid var(--transit-divider, #e5e7eb)',
-                    borderRadius: 'var(--radius-md, 8px)',
-                    marginTop: 'var(--space-1, 4px)',
-                    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
-                    zIndex: 9999,
-                    maxHeight: '250px',
-                    overflowY: 'auto',
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0
-                  }}>
+                >
                   {toSuggestions.map((location, index) => {
                     const isHighlighted = index === highlightedToIndex;
                     return (
@@ -934,6 +851,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       key={location.id}
                       id={`to-suggestion-${index}`}
                       role="option"
+                      className={`suggestion-item ${isHighlighted ? 'highlighted' : ''}`}
                       aria-selected={isHighlighted}
                       onMouseDown={() => {
                         isSelectingToRef.current = true;
@@ -942,20 +860,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                         handleToSelect(location);
                       }}
                       onMouseEnter={() => setHighlightedToIndex(index)}
-                      style={{
-                        width: '100%',
-                        padding: 'var(--space-3)',
-                        border: 'none',
-                        background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid var(--transit-divider)',
-                        transition: 'background-color 0.15s ease',
-                        fontWeight: isHighlighted ? 600 : 400,
-                        userSelect: 'none'
-                      }}
                     >
-                      <div className="text-body" style={{ color: isHighlighted ? '#3B82F6' : 'inherit' }}>
+                      <div className="text-body">
                         {getLocationDisplayName(location)}
                       </div>
                     </li>
@@ -987,14 +893,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           {/* Search Button */}
           <button
             onClick={handleSearch}
-            className="transit-button primary"
-            style={{ 
-              fontSize: 'var(--text-lg)', 
-              fontWeight: 'var(--font-semibold)',
-              padding: 'var(--space-4) var(--space-6)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
+            className="search-button"
             disabled={!fromQuery || !toQuery || isSearching}
           >
             {isSearching ? (
@@ -1018,28 +917,8 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           
           {/* Keyboard hint */}
           {fromQuery && toQuery && selectedFromLocation && selectedToLocation && (
-            <div style={{
-              textAlign: 'center',
-              fontSize: '13px',
-              color: 'var(--transit-text-secondary, #64748b)',
-              marginTop: '4px',
-              marginBottom: '8px',
-              padding: '8px 12px',
-              background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-              borderRadius: '8px',
-              border: '1px solid #bae6fd',
-              fontWeight: '500'
-            }}>
-              💡 Press <kbd style={{
-                padding: '3px 8px',
-                background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
-                color: '#ffffff',
-                borderRadius: '4px',
-                border: 'none',
-                fontSize: '12px',
-                fontWeight: '600',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
-              }}>Enter</kbd> to search
+            <div className="keyboard-hint">
+              💡 Press <kbd className="kbd">Enter</kbd> to search
             </div>
           )}
 

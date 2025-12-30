@@ -429,7 +429,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       }
       return <AlertCircle className="w-4 h-4 text-red-500" />;
     }
-    if (processing) return <RefreshCw className="w-4 h-4 text-blue-500 animate-spin" />;
+    if (processing) return <RefreshCw className="w-4 h-4 text-teal-500 animate-spin" />;
     
     switch (status) {
       case 'PROCESSED':

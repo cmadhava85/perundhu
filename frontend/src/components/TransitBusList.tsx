@@ -1,21 +1,12 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import TransitBusCard from './TransitBusCard';
+import BusItem from './bus-list/BusItem';
+import BusListFilters from './bus-list/BusListFilters';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import '../styles/transit-design-system.css';
 import '../styles/bus-list-clean-redesign.css';
-
-// Filter and sort types
-type SortOption = 'departure' | 'arrival' | 'duration';
-type SortDirection = 'asc' | 'desc';
-
-interface FilterOptions {
-  busTypes: string[];
-  timeRange: string;
-  accessibility: boolean;
-  express: boolean;
-}
+import '../styles/bus-card.css';
 
 interface TransitBusListProps {
   buses: Bus[];
@@ -50,102 +41,16 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
 }) => {
   const { t } = useTranslation();
   
-  // State management
-  const [sortBy, setSortBy] = useState<SortOption>('departure');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-  const [showFilters, setShowFilters] = useState(false);
+  // Simplified state management matching BusListFilters
+  const [sortBy, setSortBy] = useState<'fastest' | 'cheapest' | 'earliest' | 'latest'>('earliest');
+  const [filterBy, setFilterBy] = useState<'all' | 'government' | 'private'>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  
-  const [filters, setFilters] = useState<FilterOptions>({
-    busTypes: [],
-    timeRange: 'all',
-    accessibility: false,
-    express: false
-  });
 
-  // Get available bus types
+  // Get available bus types (for summary)
   const busTypes = useMemo(() => {
     const types = [...new Set(buses.map(bus => bus.category || 'Regular').filter(Boolean))];
     return types;
   }, [buses]);
-
-  // Utility functions for sorting
-  const getTimeInMinutes = (time: string | null | undefined): number => {
-    if (!time) return 0;
-    const [hours, minutes] = time.split(':').map(Number);
-    return (hours || 0) * 60 + (minutes || 0);
-  };
-
-  const getDurationInMinutes = (bus: Bus): number => {
-    if (!bus.departureTime || !bus.arrivalTime) return 480; // Default 8 hours
-    const [depH, depM] = bus.departureTime.split(':').map(Number);
-    const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
-    
-    let totalMinutes = (arrH * 60 + arrM) - (depH * 60 + depM);
-    
-    // Handle overnight journeys
-    if (totalMinutes < 0) {
-      totalMinutes += 24 * 60; // Add 24 hours
-    }
-    
-    return totalMinutes;
-  };
-
-  const getBusQualityScore = (category: string): number => {
-    const cat = category.toLowerCase();
-    if (cat.includes('deluxe') || cat.includes('luxury')) return 5;
-    if (cat.includes('express') || cat.includes('superfast')) return 4;
-    if (cat.includes('semi') || cat.includes('sleeper')) return 3;
-    if (cat.includes('ac')) return 2;
-    return 1;
-  };
-
-  const sortByDeparture = (a: Bus, b: Bus): number => {
-    const timeA = a.departureTime || '00:00';
-    const timeB = b.departureTime || '00:00';
-    
-    const minutesA = getTimeInMinutes(timeA);
-    const minutesB = getTimeInMinutes(timeB);
-    
-    return sortDirection === 'asc' ? minutesA - minutesB : minutesB - minutesA;
-  };
-
-  const sortByArrival = (a: Bus, b: Bus): number => {
-    const timeA = a.arrivalTime || '23:59';
-    const timeB = b.arrivalTime || '23:59';
-    
-    const minutesA = getTimeInMinutes(timeA);
-    const minutesB = getTimeInMinutes(timeB);
-    
-    // If arrival times are close, prefer shorter duration
-    if (Math.abs(minutesA - minutesB) <= 15) {
-      const durationA = getDurationInMinutes(a);
-      const durationB = getDurationInMinutes(b);
-      return durationA - durationB;
-    }
-    
-    return sortDirection === 'asc' ? minutesA - minutesB : minutesB - minutesA;
-  };
-
-  const sortByDuration = (a: Bus, b: Bus): number => {
-    const durationA = getDurationInMinutes(a);
-    const durationB = getDurationInMinutes(b);
-    
-    // If durations are similar (within 30 minutes), prefer better amenities
-    if (Math.abs(durationA - durationB) <= 30) {
-      const categoryA = a.category || '';
-      const categoryB = b.category || '';
-      
-      const scoreA = getBusQualityScore(categoryA);
-      const scoreB = getBusQualityScore(categoryB);
-      
-      if (scoreA !== scoreB) {
-        return scoreB - scoreA; // Higher quality first
-      }
-    }
-    
-    return sortDirection === 'asc' ? durationA - durationB : durationB - durationA;
-  };
 
   // Find special buses: next bus, fastest
   const specialBuses = useMemo(() => {
@@ -188,9 +93,9 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     return { nextBusId, fastestBusId };
   }, [buses]);
 
-  // Filter and sort buses
+  // Filter and sort buses with simplified logic
   const filteredAndSortedBuses = useMemo(() => {
-    const filtered = buses.filter(bus => {
+    let filtered = buses.filter(bus => {
       // Search filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -203,74 +108,66 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
         }
       }
 
-      // Bus type filter
-      if (filters.busTypes.length > 0) {
-        if (!filters.busTypes.includes(bus.category || 'Regular')) {
-          return false;
-        }
-      }
-
-      // Express filter
-      if (filters.express) {
+      // Operator filter (government/private)
+      if (filterBy !== 'all') {
         const category = (bus.category || '').toLowerCase();
-        if (!category.includes('express') && !category.includes('superfast')) {
-          return false;
+        if (filterBy === 'government') {
+          // Government buses typically include: TNSTC, SETC, APSRTC, etc.
+          if (!category.includes('tnstc') && !category.includes('setc') && !category.includes('government')) {
+            return false;
+          }
+        } else if (filterBy === 'private') {
+          // Private buses
+          if (category.includes('tnstc') || category.includes('setc') || category.includes('government')) {
+            return false;
+          }
         }
       }
 
       return true;
     });
 
-    // Sort buses with improved logic using helper functions
+    // Sort buses
     filtered.sort((a, b) => {
+      const getDuration = (bus: Bus) => {
+        if (!bus.departureTime || !bus.arrivalTime) return 0;
+        const [depH, depM] = bus.departureTime.split(':').map(Number);
+        const [arrH, arrM] = bus.arrivalTime.split(':').map(Number);
+        let duration = (arrH * 60 + arrM) - (depH * 60 + depM);
+        if (duration < 0) duration += 24 * 60;
+        return duration;
+      };
+
+      const getTimeInMinutes = (time: string) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        return hours * 60 + minutes;
+      };
+
       switch (sortBy) {
-        case 'departure':
-          return sortByDeparture(a, b);
-        case 'arrival':
-          return sortByArrival(a, b);
-        case 'duration':
-          return sortByDuration(a, b);
+        case 'fastest':
+          return getDuration(a) - getDuration(b);
+        case 'cheapest':
+          // Sort by fare if available, otherwise by duration
+          if (a.fare && b.fare) return a.fare - b.fare;
+          return getDuration(a) - getDuration(b);
+        case 'earliest':
+          return getTimeInMinutes(a.departureTime) - getTimeInMinutes(b.departureTime);
+        case 'latest':
+          return getTimeInMinutes(b.departureTime) - getTimeInMinutes(a.departureTime);
         default:
           return 0;
       }
     });
 
     return filtered;
-  }, [buses, searchQuery, filters, sortBy, sortDirection]);
+  }, [buses, searchQuery, filterBy, sortBy]);
 
   // Memoized callback for bus selection to prevent re-renders
-  const handleBusSelect = useCallback((busId: number) => {
-    const selectedBus = buses.find(b => b.id === busId);
-    if (selectedBus && onSelectBus) {
-      onSelectBus(selectedBus);
+  const handleBusSelect = useCallback((bus: Bus) => {
+    if (onSelectBus) {
+      onSelectBus(bus);
     }
-  }, [buses, onSelectBus]);
-
-  // Handle filter changes
-  const handleBusTypeToggle = useCallback((type: string) => {
-    setFilters(prev => ({
-      ...prev,
-      busTypes: prev.busTypes.includes(type)
-        ? prev.busTypes.filter(t => t !== type)
-        : [...prev.busTypes, type]
-    }));
-  }, []);
-
-  // Handle sorting
-  const handleSort = useCallback((option: SortOption) => {
-    if (sortBy === option) {
-      // Toggle direction if same option is clicked
-      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-    } else {
-      // Set new sort option with appropriate default direction
-      setSortBy(option);
-      setSortDirection('asc');
-    }
-  }, [sortBy]);
-
-  const toggleSortDirection = useCallback(() => {
-    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-  }, []);
+  }, [onSelectBus]);
 
   if (buses.length === 0) {
     // Check if either location was a user-input (not from database)
@@ -387,247 +284,53 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
 
   return (
     <div className="transit-app transit-bus-list">
-      <div className="container px-2 sm:px-4">
-        {/* Unified Header + Controls Container */}
+      <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px' }}>
+        
+        {/* Results Header */}
         {showTitle && (
-          <div className="bus-list-unified-container bg-white rounded-lg sm:rounded-xl border border-gray-200 p-3 sm:p-4 mb-2 sm:mb-4 shadow-sm">
-            
-            {/* Compact Header Section */}
-            <div className="bus-list-header-section flex flex-col gap-2 mb-3 pb-3 border-b border-gray-200">
-              {/* Title + Count + Route - Better mobile layout */}
-              <div className="flex items-center justify-between gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 m-0">
-                  {t('busList.title', 'Available Buses')}
-                </h1>
-                <span className="inline-flex items-center px-3 py-1.5 bg-blue-500 text-white text-sm font-bold rounded-full shadow-sm">
-                  {filteredAndSortedBuses.length} {filteredAndSortedBuses.length === 1 ? t('busList.bus', 'bus') : t('busList.buses', 'buses')}
-                </span>
-              </div>
-              
-              {/* Route Info - Full width on mobile */}
-              {fromLocation && toLocation && (
-                <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
-                  <span className="text-red-500">📍</span>
-                  <span className="font-semibold">{fromLocation}</span>
-                  <span className="text-blue-600 font-bold text-lg">→</span>
-                  <span className="font-semibold">{toLocation}</span>
-                  <span>🎯</span>
-                </div>
-              )}
-
-              {/* Smart Sort badge - simplified */}
-              <div className="flex items-center justify-center">
-                <span className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium border border-green-200">
-                  🎯 {t('busList.smartSortedShort', 'Sorted by time - upcoming buses shown first')}
-                </span>
-              </div>
+          <div className="results-header">
+            <div className="results-count">
+              {filteredAndSortedBuses.length} {filteredAndSortedBuses.length === 1 ? t('busList.bus', 'bus') : t('busList.buses', 'buses')} {t('busList.found', 'found')}
             </div>
-
-            {/* Controls Section */}
-            <div className="bus-list-controls-section">
-              {/* Search and Filter Row */}
-              <div className="flex items-center gap-2 w-full mb-3">
-                <div 
-                  className="flex-1 flex items-center bg-gray-100 rounded-lg overflow-hidden"
-                  style={{ border: '1px solid #d1d5db' }}
-                >
-                  <span className="flex items-center justify-center w-10 text-gray-400 flex-shrink-0">🔍</span>
-                  <input
-                    type="text"
-                    placeholder={t('busList.searchPlaceholder', 'Search buses...')}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 py-2.5 pr-3 text-sm placeholder-gray-400"
-                    style={{ fontSize: '16px', border: 'none', outline: 'none', background: 'transparent' }}
-                  />
-                </div>
-                <button
-                  className={`flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 border flex-shrink-0
-                    ${showFilters 
-                      ? 'bg-blue-500 text-white border-blue-500' 
-                      : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'
-                    }`}
-                  onClick={() => setShowFilters(!showFilters)}
-                  title={t('busList.filter', 'Filter')}
-                >
-                  <span className="text-sm">🔧</span>
-                </button>
+            {fromLocation && toLocation && (
+              <div style={{ fontSize: '14px', color: '#6B7280' }}>
+                {fromLocation} → {toLocation}
               </div>
-
-              {/* Sort Controls Row - Compact */}
-              <div className="bus-sort-controls flex items-center gap-1 pt-2 border-t border-gray-100 overflow-x-auto">
-                <span className="sort-label">
-                  {t('busList.sort', 'Sort:')}
-                </span>
-                <div className="sort-buttons-container">
-                  {[
-                    { key: 'departure', label: t('busList.sortDeparture', 'Departure'), shortLabel: t('busList.sortDepartureShort', 'Dep'), icon: '🕐', description: t('busList.sortDepartureDesc', 'Earliest first') },
-                    { key: 'arrival', label: t('busList.sortArrival', 'Arrival'), shortLabel: t('busList.sortArrivalShort', 'Arr'), icon: '🏁', description: t('busList.sortArrivalDesc', 'Shortest journey') },
-                    { key: 'duration', label: t('busList.sortDuration', 'Duration'), shortLabel: t('busList.sortDurationShort', 'Time'), icon: '⏱️', description: t('busList.sortDurationDesc', 'Fastest route') }
-                  ].map(({ key, label, shortLabel, icon, description }) => (
-                    <button
-                      key={key}
-                      className={`sort-option-btn group ${sortBy === key ? 'sort-active' : ''}`}
-                      onClick={() => handleSort(key as SortOption)}
-                      title={`Sort by ${label.toLowerCase()} - ${description}`}
-                    >
-                      {/* Show icon on desktop, text on all sizes */}
-                      <span className="sort-icon hidden md:inline">{icon}</span>
-                      <span className="sort-text-mobile inline sm:hidden">{shortLabel}</span>
-                      <span className="sort-text-desktop hidden sm:inline">{label}</span>
-                      
-                      {/* Tooltip for mobile - simplified */}
-                      <div className="tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10 sm:hidden">
-                        {description}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                
-                {/* Sort order toggle */}
-                <button
-                  className="sort-direction-toggle"
-                  onClick={toggleSortDirection}
-                  title={`Sort ${sortDirection === 'asc' ? 'descending' : 'ascending'}`}
-                >
-                  <span className={`sort-direction-arrow ${sortDirection === 'desc' ? 'direction-desc' : ''}`}>
-                    ↑
-                  </span>
-                </button>
-              </div>
-
-              {/* Filters Panel - Inside unified container */}
-              {showFilters && (
-                <div className="bus-filters-panel-enhanced" style={{ 
-                  marginTop: 'var(--space-4)',
-                  paddingTop: 'var(--space-4)',
-                  borderTop: '1px solid var(--transit-divider)',
-                  backgroundColor: 'var(--transit-surface-elevated)',
-                  margin: '0 calc(-1 * var(--space-4))',
-                  padding: 'var(--space-4)',
-                  borderRadius: '0 0 var(--radius-lg) var(--radius-lg)'
-                }}>
-                  <h3 className="text-headline" style={{ 
-                    marginBottom: 'var(--space-4)',
-                    fontSize: 'var(--text-lg)',
-                    color: 'var(--transit-text-primary)'
-                  }}>
-                    🔧 {t('busList.filters', 'Filters')}
-                  </h3>
-                  
-                  <div className="stack stack-md">
-                    {/* Bus Types */}
-                    <div>
-                      <div className="text-caption" style={{ 
-                        marginBottom: 'var(--space-2)',
-                        fontWeight: 'var(--font-medium)',
-                        color: 'var(--transit-text-secondary)'
-                      }}>
-                        {t('busList.busTypes', 'Bus Types')}
-                      </div>
-                      <div className="row row-sm" style={{ flexWrap: 'wrap' }}>
-                        {busTypes.map(type => (
-                          <button
-                            key={type}
-                            className={`transit-button ${filters.busTypes.includes(type) ? 'primary' : 'secondary'}`}
-                            onClick={() => handleBusTypeToggle(type)}
-                            style={{ 
-                              padding: 'var(--space-2) var(--space-3)', 
-                              fontSize: 'var(--text-sm)',
-                              minWidth: 'auto',
-                              borderRadius: 'var(--radius-sm)'
-                            }}
-                          >
-                            {type}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Quick Filters */}
-                    <div>
-                      <div className="text-caption" style={{ 
-                        marginBottom: 'var(--space-2)',
-                        fontWeight: 'var(--font-medium)',
-                        color: 'var(--transit-text-secondary)'
-                      }}>
-                        {t('busList.quickFilters', 'Quick Filters')}
-                      </div>
-                      <div className="row row-sm" style={{ flexWrap: 'wrap' }}>
-                        <button
-                          className={`transit-button ${filters.express ? 'primary' : 'secondary'}`}
-                          onClick={() => setFilters(prev => ({ ...prev, express: !prev.express }))}
-                          style={{ 
-                            padding: 'var(--space-2) var(--space-3)', 
-                            fontSize: 'var(--text-sm)',
-                            minWidth: 'auto',
-                            borderRadius: 'var(--radius-sm)'
-                          }}
-                        >
-                          ⚡ {t('busList.expressOnly', 'Express Only')}
-                        </button>
-                        <button
-                          className={`transit-button ${filters.accessibility ? 'primary' : 'secondary'}`}
-                          onClick={() => setFilters(prev => ({ ...prev, accessibility: !prev.accessibility }))}
-                          style={{ 
-                            padding: 'var(--space-2) var(--space-3)', 
-                            fontSize: 'var(--text-sm)',
-                            minWidth: 'auto',
-                            borderRadius: 'var(--radius-sm)'
-                          }}
-                        >
-                          ♿ {t('busList.accessible', 'Accessible')}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         )}
 
-        {/* Bus Cards List */}
-        <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
+        {/* BusListFilters Component */}
+        <BusListFilters
+          sortBy={sortBy}
+          filterBy={filterBy}
+          onSortChange={setSortBy}
+          onFilterChange={setFilterBy}
+        />
+
+        {/* Bus Cards Grid */}
+        <div className="bus-grid">
           {filteredAndSortedBuses.map((bus) => {
             const busStops = stopsMap[bus.id] || stops.filter(stop => stop.busId === bus.id);
             
             return (
-              <TransitBusCard
+              <BusItem
                 key={bus.id}
                 bus={bus}
-                selectedBusId={selectedBusId || null}
+                isSelected={selectedBusId === bus.id}
                 stops={busStops}
-                onSelectBus={handleBusSelect}
-                fromLocation={fromLocationObj}
-                toLocation={toLocationObj}
-                isCompact={true}
+                onSelect={() => handleBusSelect(bus)}
                 isNextBus={bus.id === specialBuses.nextBusId}
                 isFastest={bus.id === specialBuses.fastestBusId}
                 onAddStops={onAddStops}
                 onReportIssue={onReportIssue}
+                onShare={(bus) => {
+                  // Share functionality can be added here
+                  console.log('Share bus:', bus);
+                }}
               />
             );
           })}
-        </div>
-
-        {/* Results Summary */}
-        <div className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 mt-4 sm:mt-6 text-center">
-          <div className="space-y-2 sm:space-y-3">
-            <div className="text-sm font-medium text-gray-600">Journey Summary</div>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-sm">
-              <div>
-                <strong className="text-blue-600">{filteredAndSortedBuses.length}</strong> buses available
-              </div>
-              <div>
-                <strong className="text-blue-600">{busTypes.length}</strong> service types
-              </div>
-            </div>
-            <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
-              <span>ℹ️</span>
-              <span>Times are estimated. Arrive 10 minutes early for boarding.</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

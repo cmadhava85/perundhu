@@ -28,14 +28,8 @@ const MainTabNavigation: React.FC<MainTabNavigationProps> = React.memo(({
               aria-pressed={activeMainTab === 'search'}
               aria-label={t('nav.searchTabDescription', 'Switch to search for bus routes')}
             >
-              <div className="tab-content">
-                <span className="main-tab-icon">🔍</span>
-                <div className="tab-text">
-                  <span className="main-tab-title">{t('nav.search', 'Search')}</span>
-                  <span className="main-tab-subtitle">{t('nav.searchSubtitle', 'Find Routes')}</span>
-                </div>
-              </div>
-              {activeMainTab === 'search' && <div className="active-indicator"></div>}
+              <span className="main-tab-icon">🔍</span>
+              <span className="main-tab-label">{t('nav.searchBuses', 'Search Buses')}</span>
             </button>
             
             <button
@@ -44,37 +38,10 @@ const MainTabNavigation: React.FC<MainTabNavigationProps> = React.memo(({
               aria-pressed={activeMainTab === 'contribute'}
               aria-label={t('nav.contributeTabDescription', 'Switch to contribute route data')}
             >
-              <div className="tab-content">
-                <svg className="main-tab-icon contribute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  <path d="M11 7h2v2h-2zm0 3h2v2h-2z" opacity="0.7"/>
-                </svg>
-                <div className="tab-text">
-                  <span className="main-tab-title">{t('nav.contribute', 'Contribute')}</span>
-                  <span className="main-tab-subtitle">{t('nav.contributeSubtitle', 'Share Routes')}</span>
-                </div>
-              </div>
-              {activeMainTab === 'contribute' && <div className="active-indicator"></div>}
+              <span className="main-tab-icon">🤝</span>
+              <span className="main-tab-label">{t('nav.contribute', 'Contribute')}</span>
             </button>
           </div>
-          
-          {/* Tab Indicator Line */}
-          <div className="tab-indicator-line">
-            <div className={`tab-indicator ${activeMainTab === 'contribute' ? 'contribute-active' : 'search-active'}`}></div>
-          </div>
-        </div>
-        
-        {/* Tab Context Info */}
-        <div className="tab-context">
-          {activeMainTab === 'search' ? (
-            <p className="context-text">
-              {t('nav.searchContext', 'Discover bus routes across Tamil Nadu')}
-            </p>
-          ) : (
-            <p className="context-text">
-              {t('nav.contributeContext', 'Help improve our database by sharing route information')}
-            </p>
-          )}
         </div>
       </div>
     </div>

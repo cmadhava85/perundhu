@@ -1,3 +1,6 @@
+/* Import the Prototype Design System - Complete Match */
+@import './styles/prototype-design-system.css';
+
 /* Import the new Transit Design System */
 @import './styles/transit-design-system.css';
 @import './styles/transit-bus-card.css';
@@ -5,6 +8,22 @@
 
 /* Import the new modular CSS architecture */
 @import './styles/index.css';
+
+/* App Background - Matching Prototype */
+body,
+#root,
+.App {
+  background: linear-gradient(-45deg, #BFDBFE, #93C5FD, #60A5FA, #3B82F6);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 /* Legacy styles that still need to be migrated or are component-specific */
 

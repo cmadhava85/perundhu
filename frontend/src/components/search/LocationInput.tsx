@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Location } from '../../types';
+import '../../styles/search-form.css';
 
 interface LocationInputProps {
   id?: string;
@@ -137,17 +138,23 @@ const LocationInput: React.FC<LocationInputProps> = ({
   return (
     <div className={`input-group location-input ${isFocused ? 'focused' : ''}`}>
       {label && (
-        <label className="input-label">
-          {icon && <span className="label-icon">{icon}</span>}
-          {label}
-        </label>
+        <div className="input-label">
+          <div className="label-content">
+            {icon && <span>{icon}</span>}
+            <span>{label}</span>
+            <span className="verified-badge">✓ Verified</span>
+          </div>
+          <button className="gps-button" type="button" onClick={(e) => { e.preventDefault(); /* Handle GPS */ }}>
+            📍 Use my location
+          </button>
+        </div>
       )}
       <div className="input-wrapper">
         <div className="input-container">
           <input 
             ref={inputRef}
             type="text"
-            className="smart-input location-field"
+            className="input-field"
             placeholder={placeholder}
             value={inputValue}
             onChange={handleInputChange}

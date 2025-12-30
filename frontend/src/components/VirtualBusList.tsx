@@ -3,6 +3,7 @@ import { FixedSizeList as List } from 'react-window';
 import type { Bus } from '../types';
 import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
+import '../styles/bus-card.css';
 
 interface VirtualBusListProps {
   buses: Bus[];

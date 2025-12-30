@@ -69,6 +69,8 @@ export interface Bus {
   busType?: string;
   duration?: string;
   rating?: number;
+  reviewCount?: number;
+  registrationNumber?: string;
   features?: Record<string, string>; // Bus features like AC, WiFi, etc.
 }
 

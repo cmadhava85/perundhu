@@ -1,46 +1,40 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import '../../styles/search-form.css';
 
 interface QuickActionsProps {
-  onSaveSearch: () => void;
-  onPriceAlert: () => void;
-  onShare: () => void;
+  onViewMap?: () => void;
+  onScheduleView?: () => void;
+  onSuggestions?: () => void;
 }
 
 const QuickActions: React.FC<QuickActionsProps> = ({
-  onSaveSearch,
-  onPriceAlert,
-  onShare
+  onViewMap,
+  onScheduleView,
+  onSuggestions
 }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="premium-quick-actions">
-      <div className="quick-actions-container">
-        <button className="quick-action-item save" onClick={onSaveSearch}>
-          <div className="action-icon">💾</div>
-          <div className="action-content">
-            <span className="action-title">{t('search.saveSearch', 'Save Search')}</span>
-            <span className="action-desc">{t('search.saveSearchDesc', 'Get notified of changes')}</span>
-          </div>
+    <div className="quick-actions">
+      {onViewMap && (
+        <button className="quick-button" onClick={onViewMap}>
+          <span>🗺️</span>
+          <span>{t('search.viewMap', 'View on Map')}</span>
         </button>
-        
-        <button className="quick-action-item alert" onClick={onPriceAlert}>
-          <div className="action-icon">🔔</div>
-          <div className="action-content">
-            <span className="action-title">{t('search.priceAlert', 'Price Alert')}</span>
-            <span className="action-desc">{t('search.priceAlertDesc', 'Track price drops')}</span>
-          </div>
+      )}
+      {onScheduleView && (
+        <button className="quick-button" onClick={onScheduleView}>
+          <span>🕐</span>
+          <span>{t('search.scheduleView', 'Schedule View')}</span>
         </button>
-        
-        <button className="quick-action-item share" onClick={onShare}>
-          <div className="action-icon">📤</div>
-          <div className="action-content">
-            <span className="action-title">{t('search.share', 'Share Results')}</span>
-            <span className="action-desc">{t('search.shareDesc', 'Send to friends')}</span>
-          </div>
+      )}
+      {onSuggestions && (
+        <button className="quick-button" onClick={onSuggestions}>
+          <span>💡</span>
+          <span>{t('search.suggestions', 'Suggestions')}</span>
         </button>
-      </div>
+      )}
     </div>
   );
 };

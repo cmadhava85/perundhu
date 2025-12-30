@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import '../../styles/bus-card.css';
 
 interface BusListFiltersProps {
-  sortBy: 'time' | 'duration' | 'price';
-  filterBy: 'all' | 'ac' | 'non-ac';
-  onSortChange: (sort: 'time' | 'duration' | 'price') => void;
-  onFilterChange: (filter: 'all' | 'ac' | 'non-ac') => void;
+  sortBy: 'fastest' | 'cheapest' | 'earliest' | 'latest';
+  filterBy: 'all' | 'government' | 'private';
+  onSortChange: (sort: 'fastest' | 'cheapest' | 'earliest' | 'latest') => void;
+  onFilterChange: (filter: 'all' | 'government' | 'private') => void;
 }
 
 const BusListFilters: React.FC<BusListFiltersProps> = ({
@@ -17,51 +18,54 @@ const BusListFilters: React.FC<BusListFiltersProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="card mb-4">
-      <div className="card-body">
-        <div className="flex flex-wrap items-center gap-4">
-          {/* Sort Options */}
-          <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-gray-700">
-              {t('busList.sortBy', 'Sort by')}:
-            </label>
-            <select
-              value={sortBy}
-              onChange={(e) => onSortChange(e.target.value as 'time' | 'duration' | 'price')}
-              className="form-control text-sm py-1 px-2 w-auto"
-            >
-              <option value="time">{t('busList.sortTime', 'Departure Time')}</option>
-              <option value="duration">{t('busList.sortDuration', 'Duration')}</option>
-              <option value="price">{t('busList.sortPrice', 'Price')}</option>
-            </select>
-          </div>
-
-          {/* Filter Options */}
-          <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-gray-700">
-              {t('busList.filter', 'Filter')}:
-            </label>
-            <div className="flex gap-1">
-              {(['all', 'ac', 'non-ac'] as const).map((filter) => (
-                <button
-                  key={filter}
-                  onClick={() => onFilterChange(filter)}
-                  className={`
-                    px-3 py-1 text-sm rounded-full transition-colors
-                    ${filterBy === filter
-                      ? 'bg-primary-500 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }
-                  `}
-                >
-                  {filter === 'all' && t('busList.all', 'All')}
-                  {filter === 'ac' && t('busList.ac', 'AC')}
-                  {filter === 'non-ac' && t('busList.nonAc', 'Non-AC')}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+    <div className="filter-bar">
+      <div className="filter-row">
+        <span className="filter-label">{t('busList.sortBy', 'Sort by')}:</span>
+        <button
+          className={`filter-chip ${sortBy === 'fastest' ? 'active' : ''}`}
+          onClick={() => onSortChange('fastest')}
+        >
+          ⚡ {t('busList.fastest', 'Fastest')}
+        </button>
+        <button
+          className={`filter-chip ${sortBy === 'cheapest' ? 'active' : ''}`}
+          onClick={() => onSortChange('cheapest')}
+        >
+          💰 {t('busList.cheapest', 'Cheapest')}
+        </button>
+        <button
+          className={`filter-chip ${sortBy === 'earliest' ? 'active' : ''}`}
+          onClick={() => onSortChange('earliest')}
+        >
+          🌅 {t('busList.earliest', 'Earliest')}
+        </button>
+        <button
+          className={`filter-chip ${sortBy === 'latest' ? 'active' : ''}`}
+          onClick={() => onSortChange('latest')}
+        >
+          🌙 {t('busList.latest', 'Latest')}
+        </button>
+      </div>
+      <div className="filter-row">
+        <span className="filter-label">{t('busList.operator', 'Operator')}:</span>
+        <button
+          className={`filter-chip ${filterBy === 'all' ? 'active' : ''}`}
+          onClick={() => onFilterChange('all')}
+        >
+          🚌 {t('busList.all', 'All')}
+        </button>
+        <button
+          className={`filter-chip ${filterBy === 'government' ? 'active' : ''}`}
+          onClick={() => onFilterChange('government')}
+        >
+          🏛️ {t('busList.government', 'Government')}
+        </button>
+        <button
+          className={`filter-chip ${filterBy === 'private' ? 'active' : ''}`}
+          onClick={() => onFilterChange('private')}
+        >
+          🏢 {t('busList.private', 'Private')}
+        </button>
       </div>
     </div>
   );

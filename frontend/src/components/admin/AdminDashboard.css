@@ -21,7 +21,7 @@
   font-size: 2rem;
   margin-bottom: 0.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -105,7 +105,7 @@
 }
 
 .tab-button.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
   color: white;
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
 }

@@ -177,8 +177,8 @@ export const BusReviewSection: React.FC<BusReviewSectionProps> = ({
         {!hasReviewed && (
           <button
             onClick={handleWriteReview}
-            className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-blue-600 text-white rounded-xl sm:rounded-lg 
-                       hover:bg-blue-700 transition-all text-sm font-medium flex items-center justify-center gap-2
+            className="w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-teal-600 text-white rounded-xl sm:rounded-lg 
+                       hover:bg-teal-700 transition-all text-sm font-medium flex items-center justify-center gap-2
                        shadow-lg shadow-blue-500/25 touch-manipulation active:scale-98"
           >
             <Star className="w-4 h-4" />

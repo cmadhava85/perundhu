@@ -585,7 +585,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'PROCESSING': return 'text-blue-600 bg-blue-100';
+      case 'PROCESSING': return 'text-teal-600 bg-blue-100';
       case 'PROCESSED': return 'text-green-600 bg-green-100';
       case 'APPROVED': return 'text-green-600 bg-green-100';
       case 'MANUAL_REVIEW_NEEDED': return 'text-yellow-600 bg-yellow-100';
@@ -614,7 +614,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         <span className="ml-2 text-gray-600">Loading image contributions...</span>
       </div>
     );
@@ -964,7 +964,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                                 )}
                                 <div className="flex-1 font-semibold text-gray-900 text-sm flex items-center gap-2">
                                   <span>{route.fromLocation || ocrData.origin || '?'}</span>
-                                  <span className="text-blue-500">→</span>
+                                  <span className="text-teal-500">→</span>
                                   <span>{route.toLocation}</span>
                                 </div>
                                 {route.timings && route.timings.length > 0 ? (
@@ -1018,7 +1018,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                                 )}
                               </div>
                               {route.totalSchedules && route.totalSchedules > 1 && (
-                                <div className="text-xs text-blue-600 ml-8 mt-1">
+                                <div className="text-xs text-teal-600 ml-8 mt-1">
                                   Schedule {route.scheduleIndex} of {route.totalSchedules} for this route
                                 </div>
                               )}
@@ -1115,7 +1115,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                                           {route.timings.map((time, timeIdx) => (
                                             <span 
                                               key={`time-${index}-${timeIdx}`} 
-                                              className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded border border-blue-200 flex items-center gap-1"
+                                              className="px-2 py-1 text-xs bg-blue-100 text-teal-700 rounded border border-blue-200 flex items-center gap-1"
                                             >
                                               🕐 {time}
                                               <button
@@ -1158,7 +1158,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                                               input.value = '';
                                             }
                                           }}
-                                          className="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                                          className="px-2 py-1 text-xs bg-teal-600 text-white rounded hover:bg-teal-700 flex items-center gap-1"
                                         >
                                           <svg style={{ width: '12px', height: '12px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -1234,7 +1234,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                           <span className="text-sm text-gray-600 flex items-center gap-2">
                             <span className="text-lg">🕐</span> Departure
                           </span>
-                          <span className="font-semibold text-blue-700">{ocrData.departureTime}</span>
+                          <span className="font-semibold text-teal-700">{ocrData.departureTime}</span>
                         </div>
                       )}
                       {ocrData.arrivalTime && (
@@ -1242,7 +1242,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                           <span className="text-sm text-gray-600 flex items-center gap-2">
                             <span className="text-lg">🕓</span> Arrival
                           </span>
-                          <span className="font-semibold text-blue-700">{ocrData.arrivalTime}</span>
+                          <span className="font-semibold text-teal-700">{ocrData.arrivalTime}</span>
                         </div>
                       )}
                     </div>

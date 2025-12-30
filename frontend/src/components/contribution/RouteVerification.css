@@ -6,7 +6,7 @@
 
 /* Stats Banner */
 .verification-stats-banner {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   border-radius: 16px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -70,7 +70,7 @@
 .step-badge {
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -124,13 +124,13 @@
 
 .location-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 .verified-badge {
-  position: absolute;
+  position: static;
   right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
@@ -187,7 +187,7 @@
 }
 
 .search-buses-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -233,12 +233,12 @@
 }
 
 .bus-card:hover {
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: white;
 }
 
 .bus-card.selected {
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
@@ -252,7 +252,7 @@
 }
 
 .bus-number {
-  background: #667eea;
+  background: #14B8A6;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
@@ -306,7 +306,7 @@
   width: 20px;
   height: 20px;
   border: 2px solid #e2e8f0;
-  border-top-color: #667eea;
+  border-top-color: #14B8A6;
   border-radius: 50%;
   animation: verification-spin 0.8s linear infinite;
 }
@@ -500,7 +500,7 @@
 }
 
 .radio-option input {
-  accent-color: #667eea;
+  accent-color: #14B8A6;
 }
 
 .radio-label {
@@ -521,7 +521,7 @@
 
 .select-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
@@ -540,7 +540,7 @@
 
 .comments-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
@@ -721,7 +721,7 @@
 .step-badge {
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -775,7 +775,7 @@
 
 .location-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
@@ -838,7 +838,7 @@
 }
 
 .search-buses-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -884,12 +884,12 @@
 }
 
 .bus-card:hover {
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: white;
 }
 
 .bus-card.selected {
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
@@ -903,7 +903,7 @@
 }
 
 .bus-number {
-  background: #667eea;
+  background: #14B8A6;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
@@ -957,7 +957,7 @@
   width: 20px;
   height: 20px;
   border: 2px solid #e2e8f0;
-  border-top-color: #667eea;
+  border-top-color: #14B8A6;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -1151,11 +1151,11 @@
 }
 
 .radio-option input {
-  accent-color: #667eea;
+  accent-color: #14B8A6;
 }
 
 .radio-option input:checked + .radio-label {
-  color: #667eea;
+  color: #14B8A6;
   font-weight: 600;
 }
 
@@ -1177,7 +1177,7 @@
 
 .select-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
@@ -1196,7 +1196,7 @@
 
 .comments-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 

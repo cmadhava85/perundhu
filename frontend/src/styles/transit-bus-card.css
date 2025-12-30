@@ -18,14 +18,15 @@
 }
 
 .transit-bus-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.08);
-  transform: translateY(-1px);
-  border-color: rgba(0, 102, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.15);
+  transform: translateY(-2px);
+  border-color: rgba(20, 184, 166, 0.3);
+  transition: all 0.25s ease;
 }
 
 .transit-bus-card.selected {
-  border-color: rgba(0, 102, 255, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 102, 255, 0.15), 0 0 0 1px rgba(0, 102, 255, 0.2);
+  border-color: rgba(20, 184, 166, 0.4);
+  box-shadow: 0 4px 16px rgba(20, 184, 166, 0.2), 0 0 0 2px rgba(20, 184, 166, 0.25);
 }
 
 /* Click feedback */
@@ -38,7 +39,7 @@
 .transit-card-header {
   padding: var(--space-4) var(--space-4) var(--space-3) var(--space-4);
   border-bottom: none;
-  background: linear-gradient(135deg, #FAFBFF 0%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #F8FAFF 0%, #FFFFFF 100%);
 }
 
 /* Mobile-First Bus Info Row */
@@ -220,9 +221,10 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: linear-gradient(90deg, var(--transit-primary) 0%, var(--transit-primary-light) 100%);
+  background: linear-gradient(90deg, #14B8A6 0%, #5eead4 100%);
   border-radius: 2px;
   animation: progressAnimation 3s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(20, 184, 166, 0.4);
 }
 
 .bus-moving-icon {
@@ -246,11 +248,12 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  background: var(--transit-primary);
+  background: #14B8A6;
   border-radius: 50%;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
+  box-shadow: 0 0 4px rgba(20, 184, 166, 0.5);
 }
 
 .progress-dot.start {
@@ -350,9 +353,10 @@
 .route-line {
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--transit-primary) 0%, var(--transit-primary-light) 100%);
+  background: linear-gradient(90deg, #14B8A6 0%, #5eead4 100%);
   border-radius: 2px;
   position: relative;
+  box-shadow: 0 0 8px rgba(20, 184, 166, 0.3);
 }
 
 .route-line::before,
@@ -520,8 +524,10 @@
 }
 
 .stop-simple-item:hover {
-  background: rgba(0, 102, 255, 0.04);
-  border-color: rgba(0, 102, 255, 0.1);
+  background: rgba(20, 184, 166, 0.05);
+  border-color: rgba(20, 184, 166, 0.15);
+  transform: translateX(2px);
+  transition: all 0.2s ease;
 }
 
 .stop-simple-number {
@@ -627,7 +633,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(0, 102, 255, 0.1);
+  background: rgba(20, 184, 166, 0.1);
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   color: var(--transit-primary);
@@ -640,8 +646,8 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(0.95);
+    opacity: 0.6;
+    transform: scale(1.15);
   }
 }
 

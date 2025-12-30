@@ -68,7 +68,7 @@ export const AnalyticsCards: React.FC<AnalyticsCardsProps> = ({
         <CardContent>
           <div className={`text-2xl font-bold ${
             averageDelay > 0 ? 'text-red-600' : 
-            averageDelay < 0 ? 'text-green-600' : 'text-blue-600'
+            averageDelay < 0 ? 'text-green-600' : 'text-teal-600'
           }`}>
             {formatDelay(averageDelay)}
           </div>

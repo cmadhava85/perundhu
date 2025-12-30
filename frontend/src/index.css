@@ -25,6 +25,32 @@ html, body {
 
 /* Custom styles that extend Tailwind */
 @layer components {
+  /* Animated Light Blue Gradient Background (like prototype) */
+  .bg-animated-gradient {
+    background: linear-gradient(270deg, #E0F2FE, #BAE6FD, #7DD3FC, #38BDF8);
+    background-size: 800% 800%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+  }
+  
+  .bg-animated-gradient::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
   /* Bottom Navigation Components */
   .bottom-navigation {
     position: fixed;
@@ -71,12 +97,12 @@ html, body {
   }
 
   .bottom-nav-item:not(.disabled):hover {
-    background-color: #eff6ff;
+    background-color: #f0fdfa;
   }
 
   .bottom-nav-item.active {
-    color: #2563eb;
-    background-color: #eff6ff;
+    color: #14b8a6;
+    background-color: #f0fdfa;
   }
 
   .bottom-nav-item.disabled {
@@ -178,12 +204,12 @@ html, body {
   /* Connecting Routes Component */
   .connecting-route-card {
     @apply bg-white rounded-lg shadow-md mb-6 p-6 cursor-pointer transition-all duration-300 
-    hover:shadow-lg hover:-translate-y-1 border border-transparent hover:border-blue-100 
-    dark:bg-gray-800 dark:hover:border-blue-800 dark:hover:shadow-blue-900/20;
+    hover:shadow-lg hover:-translate-y-1 border border-transparent hover:border-teal-100 
+    dark:bg-gray-800 dark:hover:border-teal-800 dark:hover:shadow-teal-900/20;
   }
 
   .connecting-route-card.expanded {
-    @apply shadow-xl ring-2 ring-blue-200 ring-opacity-50 dark:ring-blue-700 dark:ring-opacity-40;
+    @apply shadow-xl ring-2 ring-teal-200 ring-opacity-50 dark:ring-teal-700 dark:ring-opacity-40;
   }
 
   .route-summary {
@@ -199,7 +225,7 @@ html, body {
   }
 
   .route-duration {
-    @apply text-blue-600 font-medium flex items-center gap-1.5 dark:text-blue-400;
+    @apply text-teal-600 font-medium flex items-center gap-1.5 dark:text-teal-400;
   }
 
   .route-details {
@@ -219,13 +245,13 @@ html, body {
   }
 
   .leg-card {
-    @apply flex-1 bg-gradient-to-br from-blue-50 to-white rounded-lg p-5 shadow-sm border-l-4 border-blue-600 
-    hover:bg-blue-100 hover:from-blue-100 hover:to-blue-50 transition-colors duration-200
-    dark:from-blue-900/20 dark:to-gray-800 dark:hover:from-blue-900/30 dark:border-blue-500;
+    @apply flex-1 bg-gradient-to-br from-teal-50 to-white rounded-lg p-5 shadow-sm border-l-4 border-teal-600 
+    hover:bg-teal-100 hover:from-teal-100 hover:to-teal-50 transition-colors duration-200
+    dark:from-teal-900/20 dark:to-gray-800 dark:hover:from-teal-900/30 dark:border-teal-500;
   }
 
   .leg-card h4 {
-    @apply text-blue-600 mb-4 pb-2 border-b border-dashed border-gray-300 font-medium;
+    @apply text-teal-600 mb-4 pb-2 border-b border-dashed border-gray-300 font-medium;
   }
 
   .leg-details p {
@@ -245,7 +271,7 @@ html, body {
   }
 
   .departure strong, .arrival strong {
-    @apply text-base text-blue-600 font-semibold;
+    @apply text-base text-teal-600 font-semibold;
   }
 
   /* Header Component */
@@ -259,7 +285,7 @@ html, body {
   }
 
   .header-content h1 {
-    @apply text-xl md:text-2xl font-semibold text-blue-600 dark:text-blue-400;
+    @apply text-xl md:text-2xl font-semibold text-teal-600 dark:text-teal-400;
   }
 
   .header-actions {
@@ -286,7 +312,7 @@ html, body {
   }
 
   .toggle-switch input:checked + .toggle-slider {
-    @apply bg-blue-600;
+    @apply bg-teal-600;
   }
 
   .toggle-switch input:checked + .toggle-slider:before {
@@ -298,7 +324,7 @@ html, body {
   }
 
   .home-link {
-    @apply text-blue-600 hover:text-blue-700 font-medium dark:text-blue-400 dark:hover:text-blue-300;
+    @apply text-teal-600 hover:text-teal-700 font-medium dark:text-teal-400 dark:hover:text-teal-300;
   }
 
   /* Search Form Component */
@@ -316,9 +342,9 @@ html, body {
   }
 
   .form-control {
-    @apply w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+    @apply w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 
     transition-all duration-200 bg-white
-    dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-blue-500;
+    dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:border-teal-500;
   }
 
   .search-actions {
@@ -326,9 +352,9 @@ html, body {
   }
 
   .search-button {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200
-    hover:shadow-lg hover:shadow-blue-600/20
-    dark:bg-blue-700 dark:hover:bg-blue-600;
+    @apply bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200
+    hover:shadow-lg hover:shadow-teal-600/20
+    dark:bg-teal-700 dark:hover:bg-teal-600;
   }
 
   /* Bus List Component */
@@ -354,8 +380,8 @@ html, body {
   }
 
   .filter-button.active {
-    @apply border-blue-500 bg-blue-50 text-blue-700
-    dark:border-blue-600 dark:bg-blue-900/30 dark:text-blue-400;
+    @apply border-teal-500 bg-teal-50 text-teal-700
+    dark:border-teal-600 dark:bg-teal-900/30 dark:text-teal-400;
   }
 
   .no-buses {
@@ -390,8 +416,8 @@ html, body {
   }
 
   .bus-number {
-    @apply text-sm font-medium px-2 py-0.5 bg-blue-100 text-blue-800 rounded-md
-    dark:bg-blue-900/50 dark:text-blue-300;
+    @apply text-sm font-medium px-2 py-0.5 bg-teal-100 text-teal-800 rounded-md
+    dark:bg-teal-900/50 dark:text-teal-300;
   }
 
   .bus-details {
@@ -452,8 +478,8 @@ html, body {
   }
 
   .loading-spinner {
-    @apply w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin
-    dark:border-gray-700 dark:border-t-blue-500;
+    @apply w-12 h-12 border-4 border-gray-300 border-t-teal-600 rounded-full animate-spin
+    dark:border-gray-700 dark:border-t-teal-500;
   }
 
   .loading-text {
@@ -500,7 +526,7 @@ html, body {
   }
 
   .map-loading {
-    @apply absolute inset-0 bg-white/80 backdrop-blur-sm flex justify-center items-center z-10 font-semibold text-blue-600;
+    @apply absolute inset-0 bg-white/80 backdrop-blur-sm flex justify-center items-center z-10 font-semibold text-teal-600;
   }
 
   .map-error {
@@ -537,21 +563,21 @@ html, body {
   /* Card Effects */
   .card {
     @apply bg-gradient-to-br from-white/20 to-white/5 backdrop-blur border border-white/20 shadow-md transition-all duration-300
-    hover:shadow-lg hover:border-blue-200/50 hover:scale-[1.01]
-    dark:from-white/5 dark:to-white/0 dark:border-white/5 dark:hover:border-blue-800/30;
+    hover:shadow-lg hover:border-teal-200/50 hover:scale-[1.01]
+    dark:from-white/5 dark:to-white/0 dark:border-white/5 dark:hover:border-teal-800/30;
   }
 
   /* Active States */
   .active {
-    @apply relative text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 
+    @apply relative text-teal-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 
     after:w-full after:h-0.5 after:bg-current after:rounded-full after:transition-all after:duration-300
-    dark:text-blue-400;
+    dark:text-teal-400;
   }
 
   /* Focus States */
   .focus-style {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-    focus-visible:ring-offset-white dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2
+    focus-visible:ring-offset-white dark:focus-visible:ring-teal-400 dark:focus-visible:ring-offset-gray-900;
   }
 
   /* Loading States */
@@ -698,8 +724,8 @@ html, body {
   }
 
   .bg-slider.slide-english .slider-gradient {
-    @apply from-blue-500 via-blue-600 to-indigo-600
-    shadow-lg shadow-blue-500/30;
+    @apply from-teal-500 via-teal-600 to-cyan-600
+    shadow-lg shadow-teal-500/30;
   }
 
   .bg-slider.slide-tamil {
@@ -780,7 +806,7 @@ html, body {
   /* Desktop hover effects */
   @media (hover: hover) {
     .language-selector-wrapper:hover {
-      @apply shadow-2xl border-blue-200 dark:border-blue-700;
+      @apply shadow-2xl border-teal-200 dark:border-teal-700;
     }
 
     .lang-option:hover:not(.active) .lang-icon {
@@ -794,8 +820,8 @@ html, body {
 
   /* Focus states for accessibility */
   .lang-option:focus-visible {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white
-    dark:ring-blue-400 dark:ring-offset-gray-800 z-40;
+    @apply outline-none ring-2 ring-teal-500 ring-offset-2 ring-offset-white
+    dark:ring-teal-400 dark:ring-offset-gray-800 z-40;
   }
 
   /* High contrast mode support */
@@ -805,7 +831,7 @@ html, body {
     }
 
     .bg-slider.slide-english .slider-gradient {
-      @apply from-blue-700 to-blue-800;
+      @apply from-teal-700 to-teal-800;
     }
 
     .bg-slider.slide-tamil .slider-gradient {
@@ -902,13 +928,18 @@ html, body {
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  @apply text-gray-900 bg-gradient-to-b from-gray-50 to-white;
+  @apply text-gray-900;
   @apply dark:text-gray-100 dark:from-gray-900 dark:to-gray-950;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* CSS Variables for easy customization */
+  --color-primary: #14B8A6;
+  --color-primary-dark: #0D9488;
+  --color-primary-light: #5eead4;
 }
 
 body {
@@ -917,18 +948,18 @@ body {
 
 /* Responsive Link Styles */
 a {
-  @apply font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200 relative
+  @apply font-medium text-teal-600 hover:text-teal-700 transition-colors duration-200 relative
   after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current 
   after:transition-all after:duration-300 hover:after:w-full
-  dark:text-blue-400 dark:hover:text-blue-300;
+  dark:text-teal-400 dark:hover:text-teal-300;
 }
 
 /* Button Styling */
 button {
-  @apply rounded-lg border border-transparent px-4 py-2 text-sm font-medium bg-blue-600 text-white cursor-pointer 
-  transition-all duration-200 hover:bg-blue-700 hover:shadow-md hover:shadow-blue-600/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+  @apply rounded-lg border border-transparent px-4 py-2 text-sm font-medium bg-teal-600 text-white cursor-pointer 
+  transition-all duration-200 hover:bg-teal-700 hover:shadow-md hover:shadow-teal-600/20 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2
   active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed
-  dark:bg-blue-700 dark:hover:bg-blue-600 dark:hover:shadow-blue-900/30;
+  dark:bg-teal-700 dark:hover:bg-teal-600 dark:hover:shadow-teal-900/30;
 }
 
 h1 {
@@ -942,8 +973,8 @@ html {
 
 /* Selection Style */
 ::selection {
-  @apply bg-blue-200 text-inherit;
-  @apply dark:bg-blue-800;
+  @apply bg-teal-200 text-inherit;
+  @apply dark:bg-teal-800;
 }
 
 /* Custom Scrollbar */

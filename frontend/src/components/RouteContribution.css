@@ -21,7 +21,7 @@
 /* Premium Contribution Page Layout */
 .premium-contribution-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 50%, #f093fb 100%);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
   padding: var(--space-md) var(--space-sm);
@@ -924,7 +924,7 @@
 
 .section-icon {
   font-size: 1.5rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #14B8A6, #0D9488);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1253,13 +1253,13 @@
 }
 
 .form-group input[type="file"]:hover {
-  border-color: #667eea;
+  border-color: #14B8A6;
   background: #edf2f7;
 }
 
 .form-group input[type="file"]:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #14B8A6;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 

@@ -29,7 +29,7 @@ const Toast: React.FC<ToastProps> = ({
   const typeStyles = {
     success: 'bg-green-500 border-green-600',
     error: 'bg-red-500 border-red-600', 
-    info: 'bg-blue-500 border-blue-600',
+    info: 'bg-teal-500 border-teal-600',
     warning: 'bg-yellow-500 border-yellow-600'
   };
 

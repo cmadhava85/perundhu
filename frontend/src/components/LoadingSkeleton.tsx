@@ -1,5 +1,6 @@
 import React from 'react';
 import './LoadingSkeleton.css';
+import '../styles/bus-card.css';
 
 interface LoadingSkeletonProps {
   count?: number;
