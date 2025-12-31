@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 /* Styles for User Management Component */
 
 .user-management-container {

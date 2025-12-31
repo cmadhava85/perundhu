@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/form-modern.css';
+
 /* 
  * Enhanced SimpleRouteForm - Improved Accessibility and User Experience
  * Addresses layout jumping, poor alignment, and accessibility issues
@@ -101,8 +104,8 @@
 }
 
 .time-input-wrapper:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 .time-input-wrapper.optional {
@@ -134,8 +137,9 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0.25rem;
-  padding: 0.25rem 0 0.25rem 1.5rem;
+  padding: 0 0 0 1.5rem;
   color: #9ca3af;
+  margin: 0;
 }
 
 .connector-line {
@@ -287,7 +291,7 @@
   border-radius: 12px;
   padding: 1rem;
   border: 1px solid #e5e7eb;
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
   overflow: visible; /* Allow dropdowns to display outside */
   position: relative;
   z-index: 1;
@@ -497,7 +501,7 @@
   border: 1px solid #e2e8f0;
   position: relative;
   overflow: visible; /* Changed from hidden to allow dropdowns to display */
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
@@ -517,7 +521,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.5rem 0;
   font-size: 1.125rem;
   font-weight: 600;
   color: #1f2937;
@@ -636,8 +640,8 @@
 
 /* Journey duration card */
 .journey-summary {
-  margin-top: 1rem;
-  padding-top: 1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
   border-top: 1px solid #e5e7eb;
 }
 
@@ -646,7 +650,7 @@
   align-items: center;
   gap: 0.75rem;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 12px;
   border: 1px solid #bae6fd;
   animation: fadeIn 0.3s ease-out;
@@ -703,9 +707,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .stops-actions {
@@ -723,7 +727,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: #3b82f6;
+  background: #10b981;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -731,7 +735,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
   min-height: 2.5rem;
   white-space: nowrap;
 }
@@ -739,16 +743,16 @@
 .add-stop-btn:hover,
 .toggle-view-btn:hover,
 .add-first-stop-btn:hover {
-  background: #2563eb;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
 }
 
 .add-stop-btn:active,
 .toggle-view-btn:active,
 .add-first-stop-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
 .toggle-view-btn {
@@ -767,50 +771,52 @@
 /* Empty states */
 .empty-stops-state {
   text-align: center;
-  padding: 2rem 1rem;
-  background: #ffffff;
-  border: 2px dashed #d1d5db;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
   border-radius: 12px;
   color: #6b7280;
-  margin: 1rem 0;
+  margin: 0.25rem 0;
 }
 
 .empty-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  opacity: 0.6;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.4;
+  display: inline-block;
 }
 
 .empty-stops-state h4 {
-  font-size: 1.125rem;
+  font-size: 0.95rem;
   color: #1f2937;
-  margin: 0 0 0.5rem 0;
+  margin: 0.25rem 0 0.1rem 0;
   font-weight: 600;
 }
 
 .empty-stops-state p {
-  margin: 0 0 1.5rem 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  max-width: 24rem;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+  display: none;
 }
 
 /* Stops container */
 .stops-container {
   background: #ffffff;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 0.5rem;
   border: 1px solid #e2e8f0;
-  margin: 1rem 0;
+  margin: 0.25rem 0;
 }
 
 /* Detailed stops view */
 .detailed-stops-view {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .stop-card {
@@ -1030,21 +1036,19 @@
 
 /* Simple stops fallback */
 .simple-stops-fallback {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
+  display: none;
 }
 
 /* Form actions */
 .form-actions {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
   border-top: 1px solid #e5e7eb;
 }
 
 .submit-button {
   width: 100%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -1053,7 +1057,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
   position: relative;
   overflow: hidden;
   min-height: 3.5rem;
@@ -1076,12 +1080,12 @@
 
 .submit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
 }
 
 .submit-button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
 .submit-btn-content {
@@ -1113,25 +1117,25 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .route-form {
-    padding: 1rem;
-    margin: 0.5rem;
+    padding: 0.75rem;
+    margin: 0.25rem;
     border-radius: 12px;
   }
   
   .form-row {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
   .form-section {
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
   }
   
   .section-header {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
   .stops-actions {
@@ -1146,7 +1150,7 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0.5rem;
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
   
   .time-label {
@@ -1160,7 +1164,7 @@
   }
   
   .duration-card {
-    padding: 0.75rem;
+    padding: 0.5rem;
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;

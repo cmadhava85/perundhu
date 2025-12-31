@@ -1,0 +1,171 @@
+{
+  "groups": [
+    {
+      "name": "socialmedia",
+      "type": "com.perundhu.infrastructure.config.SocialMediaProperties",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties"
+    },
+    {
+      "name": "socialmedia.facebook",
+      "type": "com.perundhu.infrastructure.config.SocialMediaProperties$FacebookConfig",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties",
+      "sourceMethod": "public com.perundhu.infrastructure.config.SocialMediaProperties.FacebookConfig getFacebook() "
+    },
+    {
+      "name": "socialmedia.instagram",
+      "type": "com.perundhu.infrastructure.config.SocialMediaProperties$InstagramConfig",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties",
+      "sourceMethod": "public com.perundhu.infrastructure.config.SocialMediaProperties.InstagramConfig getInstagram() "
+    },
+    {
+      "name": "socialmedia.monitoring",
+      "type": "com.perundhu.infrastructure.config.SocialMediaProperties$MonitoringConfig",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties",
+      "sourceMethod": "public com.perundhu.infrastructure.config.SocialMediaProperties.MonitoringConfig getMonitoring() "
+    },
+    {
+      "name": "socialmedia.twitter",
+      "type": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties",
+      "sourceMethod": "public com.perundhu.infrastructure.config.SocialMediaProperties.TwitterConfig getTwitter() "
+    },
+    {
+      "name": "translation",
+      "type": "com.perundhu.infrastructure.config.TranslationProperties",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "socialmedia.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties"
+    },
+    {
+      "name": "socialmedia.facebook.access-token",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$FacebookConfig"
+    },
+    {
+      "name": "socialmedia.facebook.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$FacebookConfig"
+    },
+    {
+      "name": "socialmedia.facebook.page-id",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$FacebookConfig"
+    },
+    {
+      "name": "socialmedia.instagram.access-token",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$InstagramConfig"
+    },
+    {
+      "name": "socialmedia.instagram.branded-hashtag",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$InstagramConfig"
+    },
+    {
+      "name": "socialmedia.instagram.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$InstagramConfig"
+    },
+    {
+      "name": "socialmedia.instagram.user-id",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$InstagramConfig"
+    },
+    {
+      "name": "socialmedia.monitoring.schedule",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$MonitoringConfig"
+    },
+    {
+      "name": "socialmedia.twitter.access-token",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.access-token-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.account-handle",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.api-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.branded-hashtags",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.community-hashtags",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "socialmedia.twitter.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.perundhu.infrastructure.config.SocialMediaProperties$TwitterConfig"
+    },
+    {
+      "name": "translation.cache-expiration-minutes",
+      "type": "java.lang.Integer",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.completion-threshold",
+      "type": "java.lang.Double",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.default-language",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.enable-auto-translation",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.enable-caching",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.error-threshold",
+      "type": "java.lang.Double",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.fallback-language",
+      "type": "java.lang.String",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.quality-threshold",
+      "type": "java.lang.Double",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    },
+    {
+      "name": "translation.supported-languages",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.perundhu.infrastructure.config.TranslationProperties"
+    }
+  ],
+  "hints": []
+}

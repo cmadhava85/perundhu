@@ -1,3 +1,6 @@
+@import './design-system.css';
+@import './map-modern.css';
+
 /* Live Bus Tracker Styles */
 
 .live-bus-tracker-container {

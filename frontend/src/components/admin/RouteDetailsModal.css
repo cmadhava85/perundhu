@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 /* Route Details Modal Styles - Compact Quick Review Design */
 .route-details-modal-overlay {
   position: fixed;

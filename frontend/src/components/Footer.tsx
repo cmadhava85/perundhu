@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { BusIcon, UsersIcon, CityIcon, TwitterIcon, FacebookIcon, InstagramIcon, MailIcon, InfoIcon, QuestionIcon, MailIcon as ContactIcon, LockIcon, FileIcon, PlusIcon, MicIcon, HeartIcon } from './icons';
+import { BusIcon, UsersIcon, CityIcon, TwitterIcon, FacebookIcon, InstagramIcon, MailIcon, InfoIcon, QuestionIcon, MailIcon as ContactIcon, LockIcon, FileIcon, PlusIcon, MicIcon, HeartIcon, SearchIcon, LocationIcon, MapIcon } from './icons';
 import '../styles/Footer.css';
 
 interface PlatformStats {
@@ -45,13 +45,6 @@ const Footer: React.FC = () => {
   
   return (
     <footer className="app-footer">
-      {/* Wave decoration at top */}
-      <div className="footer-wave">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" />
-        </svg>
-      </div>
-      
       <div className="footer-container">
         {/* Stats Section */}
         <div className="footer-stats">
@@ -77,7 +70,8 @@ const Footer: React.FC = () => {
             <span className="stat-label">{t('footer.stats.cities', 'Cities Covered')}</span>
           </div>
         </div>
-        
+
+        {/* Main Footer Content - Multi Column Layout */}
         <div className="footer-main">
           {/* Brand Column */}
           <div className="footer-brand">
