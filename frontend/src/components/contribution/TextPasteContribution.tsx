@@ -65,6 +65,11 @@ export const TextPasteContribution: React.FC<TextPasteContributionProps> = ({ on
   const [isValidating, setIsValidating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    instructions: false,
+    examples: false,
+    hints: false
+  });
 
   // Example templates with various formats that parse well
   const exampleTexts = [
@@ -236,51 +241,94 @@ Via: Chengalpattu, Villupuram, Trichy`,
       {/* Hidden honeypot fields for bot detection */}
       <HoneypotFields />
       
-      <div className="instructions-section">
-        <div className="do-section">
-          <h3>✅ {t('paste.good.title', 'Good Examples to Paste:')}</h3>
-          <ul>
-            <li>{t('paste.good.official', 'Official bus schedules')}</li>
-            <li>{t('paste.good.tnstc', 'Route information from TNSTC website')}</li>
-            <li>{t('paste.good.whatsapp', 'WhatsApp messages about bus routes')}</li>
-            <li>{t('paste.good.social', 'Facebook/Twitter route announcements')}</li>
-          </ul>
-        </div>
+      {/* Collapsible Instructions Section */}
+      <div className="collapsible-section instructions-section-wrapper">
+        <button
+          type="button"
+          className="section-toggle-btn"
+          onClick={() => setExpandedSections(prev => ({ ...prev, instructions: !prev.instructions }))}
+        >
+          <span className="toggle-icon">{expandedSections.instructions ? '▼' : '▶'}</span>
+          <span className="toggle-text">📋 {t('paste.showExamples', 'Examples (Optional)')}</span>
+        </button>
+        
+        {expandedSections.instructions && (
+          <div className="instructions-section">
+            <div className="do-section">
+              <h3>✅ {t('paste.good.title', 'Good Examples to Paste:')}</h3>
+              <ul>
+                <li>{t('paste.good.official', 'Official bus schedules')}</li>
+                <li>{t('paste.good.tnstc', 'Route information from TNSTC website')}</li>
+                <li>{t('paste.good.whatsapp', 'WhatsApp messages about bus routes')}</li>
+                <li>{t('paste.good.social', 'Facebook/Twitter route announcements')}</li>
+              </ul>
+            </div>
 
-        <div className="dont-section">
-          <h3>❌ {t('paste.bad.title', "Don't Paste:")}</h3>
-          <ul>
-            <li>{t('paste.bad.personal', 'Personal travel plans ("I\'m going to...")')}</li>
-            <li>{t('paste.bad.conversations', 'Entire WhatsApp conversations')}</li>
-            <li>{t('paste.bad.spam', 'Spam or advertisements')}</li>
-            <li>{t('paste.bad.questions', 'Questions about routes')}</li>
-          </ul>
-        </div>
+            <div className="dont-section">
+              <h3>❌ {t('paste.bad.title', "Don't Paste:")}</h3>
+              <ul>
+                <li>{t('paste.bad.personal', 'Personal travel plans ("I\'m going to...")')}</li>
+                <li>{t('paste.bad.conversations', 'Entire WhatsApp conversations')}</li>
+                <li>{t('paste.bad.spam', 'Spam or advertisements')}</li>
+                <li>{t('paste.bad.questions', 'Questions about routes')}</li>
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="examples-section">
-        <h4>{t('paste.examples.title', 'Click to use example:')}</h4>
-        <div className="example-buttons">
-          {exampleTexts.map((ex, i) => (
-            <button
-              key={i}
-              className="example-btn"
-              onClick={() => handleTextChange(ex.text)}
-              type="button"
-            >
-              {ex.label}
-            </button>
-          ))}
-        </div>
+      {/* Collapsible Examples Section */}
+      <div className="collapsible-section examples-section-wrapper">
+        <button
+          type="button"
+          className="section-toggle-btn"
+          onClick={() => setExpandedSections(prev => ({ ...prev, examples: !prev.examples }))}
+        >
+          <span className="toggle-icon">{expandedSections.examples ? '▼' : '▶'}</span>
+          <span className="toggle-text">💡 {t('paste.examples.title', 'Example Formats (Optional)')}</span>
+        </button>
+        
+        {expandedSections.examples && (
+          <div className="examples-section">
+            <div className="example-buttons">
+              {exampleTexts.map((ex, i) => (
+                <button
+                  key={i}
+                  className="example-btn"
+                  onClick={() => {
+                    handleTextChange(ex.text);
+                    setExpandedSections(prev => ({ ...prev, examples: false }));
+                  }}
+                  type="button"
+                >
+                  {ex.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       
-      <div className="format-hints-section">
-        <h4>💡 {t('paste.hints.title', 'Tips for Better Parsing:')}</h4>
-        <ul className="format-hints-list">
-          {formatHints.map((hint, i) => (
-            <li key={i}>{hint}</li>
-          ))}
-        </ul>
+      {/* Collapsible Format Hints Section */}
+      <div className="collapsible-section format-hints-wrapper">
+        <button
+          type="button"
+          className="section-toggle-btn"
+          onClick={() => setExpandedSections(prev => ({ ...prev, hints: !prev.hints }))}
+        >
+          <span className="toggle-icon">{expandedSections.hints ? '▼' : '▶'}</span>
+          <span className="toggle-text">🎯 {t('paste.hints.title', 'Tips for Better Parsing (Optional)')}</span>
+        </button>
+        
+        {expandedSections.hints && (
+          <div className="format-hints-section">
+            <ul className="format-hints-list">
+              {formatHints.map((hint, i) => (
+                <li key={i}>{hint}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="paste-area">

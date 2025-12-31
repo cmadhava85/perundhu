@@ -138,6 +138,7 @@ start_backend() {
         
         # Set environment variables
         export SPRING_PROFILES_ACTIVE=dev
+        export DB_PASSWORD=""
         
         # Start backend with nohup - completely detached
         nohup ./gradlew bootRun > "$LOGS_DIR/backend.log" 2>&1 &

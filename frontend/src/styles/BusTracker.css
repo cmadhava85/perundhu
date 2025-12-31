@@ -1,3 +1,6 @@
+@import './design-system.css';
+@import './map-modern.css';
+
 /* Bus Tracker Component Styles */
 
 .bus-tracker-container {

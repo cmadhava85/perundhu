@@ -1,3 +1,5 @@
+@import '../styles/design-system.css';
+
 /* Ultra-Compact Modern Error Display Component */
 .error-display {
   min-height: 200px;

@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 .route-issues-admin-panel {
   padding: 1.5rem;
 }

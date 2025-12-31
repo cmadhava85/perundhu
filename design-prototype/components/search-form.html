@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"="width=device-width, initial-scale=1.0">
+  <title>Search Form - Responsive Design Prototype</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(270deg, #E0F2FE, #BAE6FD, #7DD3FC, #38BDF8);
+      background-size: 800% 800%;
+      animation: gradientShift 15s ease infinite;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .prototype-header {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .prototype-header h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #111827;
+      margin-bottom: 8px;
+    }
+    
+    .prototype-header p {
+      color: #6B7280;
+      font-size: clamp(0.875rem, 2vw, 1rem);
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* ========== SEARCH FORM ========== */
+    .search-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: slideUp 0.5s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Header */
+    .form-header {
+      padding: 24px;
+      background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+      color: white;
+      text-align: center;
+    }
+    
+    .form-title {
+      font-size: clamp(1.25rem, 4vw, 1.5rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .form-subtitle {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      opacity: 0.9;
+    }
+    
+    /* Form Body */
+    .form-body {
+      padding: 24px;
+    }
+    
+    /* Location Input Group */
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .input-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+    }
+    
+    .label-content {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: white;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    
+    .gps-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    }
+    
+    .gps-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+    
+    .gps-button:active {
+      transform: scale(0.98);
+    }
+    
+    /* Input Field */
+    .input-field {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 16px;
+      border: 2px solid #E5E7EB;
+      border-radius: 16px;
+      transition: all 0.3s;
+      font-family: inherit;
+      background: white;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #14B8A6;
+      box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .input-field::placeholder {
+      color: #9CA3AF;
+    }
+    
+    /* Suggestions Dropdown */
+    .suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      margin-top: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      animation: fadeIn 0.2s ease;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .suggestion-item {
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-bottom: 1px solid #F3F4F6;
+    }
+    
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+    
+    .suggestion-item:hover {
+      background: rgba(20, 184, 166, 0.05);
+    }
+    
+    .suggestion-item.highlighted {
+      background: rgba(20, 184, 166, 0.1);
+      font-weight: 600;
+    }
+    
+    .suggestion-name {
+      font-size: 15px;
+      color: #111827;
+      font-weight: 500;
+    }
+    
+    .suggestion-source {
+      font-size: 12px;
+      color: #9CA3AF;
+      margin-top: 2px;
+    }
+    
+    /* Swap Button */
+    .swap-container {
+      display: flex;
+      justify-content: center;
+      margin: 12px 0;
+    }
+    
+    .swap-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+      border: 2px solid white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .swap-button:hover {
+      background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+      transform: rotate(180deg) scale(1.1);
+      box-shadow: 0 6px 16px rgba(20, 184, 166, 0.4);
+    }
+    
+    .swap-button:active {
+      transform: rotate(180deg) scale(0.95);
+    }
+    
+    /* Search Button */
+    .search-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3);
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 56px;
+    }
+    
+    .search-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(20, 184, 166, 0.4);
+    }
+    
+    .search-button:active {
+      transform: translateY(0);
+    }
+    
+    .search-button:disabled {
+      background: #D1D5DB;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Keyboard Hint */
+    .keyboard-hint {
+      text-align: center;
+      font-size: 13px;
+      color: #6B7280;
+      margin-top: 12px;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+      border-radius: 8px;
+      border: 1px solid #BAE6FD;
+      font-weight: 500;
+    }
+    
+    .kbd {
+      padding: 3px 8px;
+      background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+      color: white;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+    
+    /* Recent Searches */
+    .recent-searches {
+      background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #E2E8F0;
+      margin-top: 24px;
+    }
+    
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .recent-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6B7280;
+    }
+    
+    .clear-button {
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: #94A3B8;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .clear-button:hover {
+      background: #F1F5F9;
+      color: #64748B;
+    }
+    
+    .recent-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .recent-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .recent-item:hover {
+      border-color: #3B82F6;
+      background: #EFF6FF;
+      transform: translateX(4px);
+    }
+    
+    .recent-route {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+    }
+    
+    .recent-route span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .recent-time {
+      font-size: 10px;
+      color: #9CA3AF;
+      background: #F3F4F6;
+      padding: 2px 6px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    
+    /* Quick Actions */
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .quick-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: white;
+      border: 2px solid #E5E7EB;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    
+    .quick-button:hover {
+      border-color: #14B8A6;
+      background: #EEF2FF;
+      color: #14B8A6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+    }
+    
+    /* Tablet & Desktop */
+    @media (min-width: 768px) {
+      body {
+        padding: 40px;
+      }
+      
+      .container {
+        max-width: 640px;
+      }
+      
+      .form-body {
+        padding: 32px;
+      }
+      
+      .search-button {
+        font-size: 20px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .container {
+        max-width: 800px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="prototype-header">
+    <h1>🔍 Search Form Component</h1>
+    <p>Responsive Design Prototype - Full interaction demo</p>
+  </div>
+  
+  <div class="container">
+    
+    <div class="search-card">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2 class="form-title">
+          <span>🚌</span>
+          <span>Plan Your Journey</span>
+        </h2>
+        <p class="form-subtitle">Find the best buses for your route</p>
+      </div>
+      
+      <!-- Form Body -->
+      <div class="form-body">
+        
+        <!-- From Location -->
+        <div class="input-group">
+          <div class="input-label">
+            <div class="label-content">
+              <span>🟢 From</span>
+              <span class="verified-badge">✓ Verified</span>
+            </div>
+            <button class="gps-button">
+              📍 Use my location
+            </button>
+          </div>
+          <input 
+            type="text" 
+            class="input-field" 
+            placeholder="Enter departure location"
+            value="கோயம்புத்தூர்"
+          >
+          
+          <!-- Suggestions (hidden by default) -->
+          <div class="suggestions" style="display: none;">
+            <div class="suggestion-item highlighted">
+              <div class="suggestion-name">கோயம்புத்தூர் (Coimbatore)</div>
+              <div class="suggestion-source">Database • 2.3km from you</div>
+            </div>
+            <div class="suggestion-item">
+              <div class="suggestion-name">Coimbatore Central Bus Stand</div>
+              <div class="suggestion-source">Database</div>
+            </div>
+            <div class="suggestion-item">
+              <div class="suggestion-name">Coimbatore Gandhipuram</div>
+              <div class="suggestion-source">OpenStreetMap</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Swap Button -->
+        <div class="swap-container">
+          <button class="swap-button">⇅</button>
+        </div>
+        
+        <!-- To Location -->
+        <div class="input-group">
+          <div class="input-label">
+            <span class="label-content">
+              <span>🔴 To</span>
+              <span class="verified-badge">✓ Verified</span>
+            </span>
+          </div>
+          <input 
+            type="text" 
+            class="input-field" 
+            placeholder="Enter destination"
+            value="சென்னை"
+          >
+        </div>
+        
+        <!-- Search Button -->
+        <button class="search-button">
+          <span>🔍</span>
+          <span>Find Buses</span>
+        </button>
+        
+        <!-- Keyboard Hint -->
+        <div class="keyboard-hint">
+          💡 Press <kbd class="kbd">Enter</kbd> to search
+        </div>
+        
+        <!-- Recent Searches -->
+        <div class="recent-searches">
+          <div class="recent-header">
+            <div class="recent-title">
+              <span>🕐</span>
+              <span>Recent Searches</span>
+            </div>
+            <button class="clear-button">Clear all</button>
+          </div>
+          
+          <div class="recent-items">
+            <div class="recent-item">
+              <div class="recent-route">
+                <span style="color: #10B981;">●</span>
+                <span>கோயம்புத்தூர்</span>
+                <span style="color: #9CA3AF;">→</span>
+                <span style="color: #EF4444;">●</span>
+                <span>சென்னை</span>
+              </div>
+              <div class="recent-time">2m ago</div>
+            </div>
+            
+            <div class="recent-item">
+              <div class="recent-route">
+                <span style="color: #10B981;">●</span>
+                <span>Madurai</span>
+                <span style="color: #9CA3AF;">→</span>
+                <span style="color: #EF4444;">●</span>
+                <span>Bangalore</span>
+              </div>
+              <div class="recent-time">1h ago</div>
+            </div>
+            
+            <div class="recent-item">
+              <div class="recent-route">
+                <span style="color: #10B981;">●</span>
+                <span>Trichy</span>
+                <span style="color: #9CA3AF;">→</span>
+                <span style="color: #EF4444;">●</span>
+                <span>Chennai</span>
+              </div>
+              <div class="recent-time">Yesterday</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="quick-button">
+            <span>🗺️</span>
+            <span>View on Map</span>
+          </button>
+          <button class="quick-button">
+            <span>🕐</span>
+            <span>Schedule View</span>
+          </button>
+          <button class="quick-button">
+            <span>💡</span>
+            <span>Suggestions</span>
+          </button>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+  
+  <script>
+    // Add basic interactions
+    const swapButton = document.querySelector('.swap-button');
+    const inputs = document.querySelectorAll('.input-field');
+    
+    swapButton.addEventListener('click', () => {
+      const temp = inputs[0].value;
+      inputs[0].value = inputs[1].value;
+      inputs[1].value = temp;
+    });
+    
+    // Simulate search
+    document.querySelector('.search-button').addEventListener('click', () => {
+      alert('Searching for buses from ' + inputs[0].value + ' to ' + inputs[1].value);
+    });
+    
+    // Recent search click
+    document.querySelectorAll('.recent-item').forEach(item => {
+      item.addEventListener('click', function() {
+        alert('Loading recent search...');
+      });
+    });
+  </script>
+  
+</body>
+</html>

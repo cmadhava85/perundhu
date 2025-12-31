@@ -7,6 +7,16 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: linear-gradient(-45deg, #E0F2FE, #BAE6FD, #7DD3FC, #38BDF8);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 #root {

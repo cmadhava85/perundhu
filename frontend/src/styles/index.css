@@ -2,6 +2,12 @@
 
 /* Import CSS Variables and Base Styles */
 @import './variables.css';
+@import './unified-design-system.css'; /* Unified design system - consistent across all screens */
+@import './glassmorphism.css';
+@import './ui-components-modern.css';
+@import './layout-modern.css';
+@import './search-modern.css';
+@import './bus-cards-modern.css';
 @import './base.css';
 @import './layout.css';
 @import './components.css';

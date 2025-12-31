@@ -7,10 +7,13 @@ import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import ReportIssue from './contribution/ReportIssue';
 import ConnectingRoutes from './ConnectingRoutes';
+import BusCardModern from './BusCardModern';
 import type { Bus, Stop, Location as AppLocation, ConnectingRoute } from '../types';
 import { ApiError } from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
+import '../styles/premium-design-system.css';
 import '../styles/transit-design-system.css';
+import '../styles/premium-bus-grid.css';
 // Using TransitBusList with new Transit design system
 
 interface SearchResultsProps {
@@ -287,29 +290,28 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           </div>
         )}
 
-        <div className="bus-list-section">{useVirtualScrolling ? (
-            <VirtualBusList
-              buses={buses}
-              onBusClick={handleSelectBus}
-              selectedBusId={selectedBusId}
-              height={600}
-            />
+        <div className="bus-list-section">
+          {buses.length === 0 ? (
+            <div className="empty-results">
+              <p>{t('searchResults.noResults', 'No buses found for this route')}</p>
+            </div>
           ) : (
-            <TransitBusList 
-              buses={buses} 
-              selectedBusId={selectedBusId} 
-              stops={Object.keys(stopsMap).length > 0 ? Object.values(stopsMap).flat() : stops}
-              stopsMap={stopsMap}
-              onSelectBus={handleSelectBus}
-              fromLocation={getLocationDisplayName(fromLocation)}
-              toLocation={getLocationDisplayName(toLocation)}
-              fromLocationObj={fromLocation}
-              toLocationObj={toLocation}
-              onAddStops={handleAddStops}
-              onReportIssue={handleReportIssue}
-              hasConnectingRoutes={connectingRoutes && connectingRoutes.length > 0}
-              isLoading={loading}
-            />
+            <div className="modern-bus-cards">
+              {buses.map((bus, index) => (
+                <BusCardModern
+                  key={bus.id}
+                  bus={bus}
+                  index={index}
+                  isSelected={selectedBusId === bus.id}
+                  onSelect={handleSelectBus}
+                  onAddStops={handleAddStops}
+                  onReportIssue={handleReportIssue}
+                  fromLocation={fromLocation}
+                  toLocation={toLocation}
+                  stops={stopsMap[bus.id] || stops.filter(s => s.busId === bus.id)}
+                />
+              ))}
+            </div>
           )}
         </div>
         

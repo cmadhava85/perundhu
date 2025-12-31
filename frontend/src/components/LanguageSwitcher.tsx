@@ -70,8 +70,8 @@ const LanguageSwitcher: React.FC = () => {
               disabled={isLoading}
               style={{ cursor: isLoading ? 'wait' : 'pointer' }}
             >
-              <span className="pill-flag">{lang.flag}</span>
-              <span className="pill-text">{lang.shortCode}</span>
+              <span className="pill-flag">🌐</span>
+              <span className="pill-text">{lang.native}</span>
               {currentLanguage === lang.code && !isLoading && (
                 <div className="active-glow" />
               )}

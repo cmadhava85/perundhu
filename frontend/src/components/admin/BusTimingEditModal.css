@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 /* Bus Timing Edit Modal Styles */
 .timing-modal-overlay {
   position: fixed;

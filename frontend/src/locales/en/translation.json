@@ -68,7 +68,25 @@
     "contactUs": "Contact Us",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "description": "Your trusted companion for Tamil Nadu bus schedules. Find routes, track buses, and plan your journey with ease.",
+    "quickLinks": "Quick Links",
+    "searchBuses": "Search Buses",
+    "trackBus": "Track Bus",
+    "routeMap": "Route Map",
+    "savedRoutes": "Saved Routes",
+    "mobileApp": "Mobile App",
+    "stats": {
+      "routes": "Bus Routes",
+      "contributors": "Contributors",
+      "cities": "Cities Covered"
+    }
+  },
+  "statistics": {
+    "totalBuses": "Total Buses",
+    "routesCovered": "Routes Covered",
+    "dailyUsers": "Daily Users",
+    "contributors": "Contributors"
   },
   "common": {
     "appName": "Perundhu",

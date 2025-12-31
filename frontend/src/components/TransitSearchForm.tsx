@@ -11,6 +11,7 @@ import {
   type LocationData,
   type ValidationResult 
 } from '../utils/validationService';
+import '../styles/premium-design-system.css';
 import '../styles/transit-design-system.css';
 
 // Recent search interface
