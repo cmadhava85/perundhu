@@ -313,7 +313,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
 
   // Wizard handlers
   const handleAddStopViaWizard = () => {
-    const lastOrder = newStops.length > 0 
+    const _lastOrder = newStops.length > 0 
       ? Math.max(...newStops.map(s => s.order)) 
       : existingStops.length;
     

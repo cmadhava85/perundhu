@@ -5,8 +5,11 @@ describe('Footer Component', () => {
   test('renders footer with copyright text', () => {
     render(<Footer />);
     
-    const footerElement = screen.getByText(/tamil nadu bus scheduler/i);
+    // Check if footer is rendered with i18n keys (since t() returns the key in tests)
+    const footerElement = screen.getByText(/footer\.title/i);
     expect(footerElement).toBeInTheDocument();
-    expect(footerElement.textContent).toContain('footer.allRightsReserved');
+    
+    // Check for other key elements that should be present
+    expect(screen.getByText(/footer\.allRightsReserved/i)).toBeInTheDocument();
   });
 });

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import TransitBusList from './TransitBusList';
-import { VirtualBusList } from './VirtualBusList';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
@@ -52,7 +50,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   };
   
   // Use virtual scrolling for large lists (50+ buses)
-  const useVirtualScrolling = buses.length > 50;
+  // const useVirtualScrolling = buses.length > 50;
   
   // Auto-select first bus when buses are loaded
   useEffect(() => {

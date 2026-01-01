@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { colors, spacing, borderRadius, shadows, textStyles, transitions } from '../tokens';
+
 import './Select.css';
 
 export type SelectSize = 'sm' | 'md' | 'lg';

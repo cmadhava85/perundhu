@@ -25,12 +25,12 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
   onSelect,
   onAddStops,
   onReportIssue,
-  onMapClick,
+  onMapClick: _onMapClick,
   fromLocation,
   toLocation,
   stops = []
 }) => {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [leavingIn, setLeavingIn] = useState<string | null>(null);
 
@@ -144,30 +144,12 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
     onSelect(bus);
   };
 
-  const status = getStatus();
-  const timeUntilDep = getTimeUntilDeparture();
+  const _status = getStatus();
+  const _timeUntilDep = getTimeUntilDeparture();
   const rating = bus.rating || 4.5;
   const reviews = bus.features?.reviewCount ? parseInt(String(bus.features.reviewCount)) : 0;
   const busTypeInfo = getBusType();
-  
-  // Determine status colors: Emerald for on-time, Amber for delayed/cancelled
-  const isDelayed = status.text === 'Delayed';
-  const isCancelled = status.text === 'Cancelled';
-  const statusColor = isCancelled ? 'red' : isDelayed ? 'amber' : 'emerald';
-  const statusBg = isCancelled 
-    ? 'bg-red-400/20 border-red-400/50 text-red-600' 
-    : isDelayed 
-    ? 'bg-amber-400/20 border-amber-400/50 text-amber-600'
-    : 'bg-emerald-400/20 border-emerald-400/50 text-emerald-600';
-
-  // Alternate background colors with app theme (emerald, cyan, amber)
-  const cardBgClass = index % 3 === 0 
-    ? 'bg-emerald-50/60 hover:bg-emerald-50/80' 
-    : index % 3 === 1
-    ? 'bg-cyan-50/60 hover:bg-cyan-50/80'
-    : 'bg-amber-50/50 hover:bg-amber-50/70';
-  
-  const cardBorderClass = index % 3 === 0
+  const _borderColorClass = index === 0
     ? 'border-emerald-200/40 hover:border-emerald-400/60'
     : index % 3 === 1
     ? 'border-cyan-200/40 hover:border-cyan-400/60'
