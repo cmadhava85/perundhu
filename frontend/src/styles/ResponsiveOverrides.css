@@ -1,3 +1,5 @@
+@import './design-system.css';
+
 /* Flexible Responsive Overrides - Prevents forced mobile layouts */
 
 /* Allow view controls to be visible at all screen sizes when needed */

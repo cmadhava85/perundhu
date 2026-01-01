@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location } from '../../types';
 import { searchBuses, getStops, getLocations, submitStopsContribution } from '../../services/api';
 import { locationAutocompleteService, type LocationSuggestion } from '../../services/locationAutocompleteService';
+import StopEntryWizard from './StopEntryWizard';
 import './AddStopsToRoute.css';
 
 interface AddStopsToRouteProps {
@@ -63,6 +65,8 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const [activeStopInputIndex, setActiveStopInputIndex] = useState<number | null>(null);
   const [highlightedStopIndex, setHighlightedStopIndex] = useState(-1);
   const isSelectingStopRef = React.useRef(false);
+  const stopInputRefs = React.useRef<(HTMLInputElement | null)[]>([]);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
   
   // Dynamic autocomplete state (DB + local + OpenStreetMap)
   const [dynamicFromSuggestions, setDynamicFromSuggestions] = useState<LocationSuggestion[]>([]);
@@ -75,6 +79,10 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  
+  // Wizard mode state
+  const [isWizardMode, setIsWizardMode] = useState(false);
+  const [wizardEditingIndex, setWizardEditingIndex] = useState<number | null>(null);
 
   // If preSelectedBus is provided, use it directly
   useEffect(() => {
@@ -230,6 +238,34 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const toSuggestions = getCombinedSuggestions(toQuery, dynamicToSuggestions);
   const stopSuggestions = getCombinedSuggestions(stopLocationQuery, dynamicStopSuggestions);
 
+  // Update dropdown position when it becomes visible or when window resizes/scrolls
+  useEffect(() => {
+    const updatePosition = () => {
+      if (showStopSuggestions && activeStopInputIndex !== null) {
+        const inputElement = stopInputRefs.current[activeStopInputIndex];
+        if (inputElement) {
+          const rect = inputElement.getBoundingClientRect();
+          setDropdownPosition({
+            top: rect.bottom + window.scrollY + 4,
+            left: rect.left + window.scrollX,
+            width: rect.width
+          });
+        }
+      }
+    };
+
+    updatePosition();
+
+    // Add listeners for scroll and resize
+    window.addEventListener('scroll', updatePosition);
+    window.addEventListener('resize', updatePosition);
+
+    return () => {
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+    };
+  }, [showStopSuggestions, activeStopInputIndex]);
+
   // Search for buses
   const handleSearchBuses = async () => {
     if (!selectedFrom || !selectedTo) return;
@@ -258,28 +294,14 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     await loadExistingStops(bus.id);
   };
 
-  // Add new stop entry
-  const handleAddStop = () => {
-    const lastOrder = newStops.length > 0 
-      ? Math.max(...newStops.map(s => s.order)) 
-      : existingStops.length;
-    
-    setNewStops([...newStops, {
-      locationName: '',
-      arrivalTime: '',
-      departureTime: '',
-      order: lastOrder + 1
-    }]);
-  };
-
-  // Update stop entry
+  // Update stop entry (for inline editing - kept for backward compatibility)
   const handleUpdateStop = (index: number, field: keyof StopEntry, value: string | number) => {
     const updated = [...newStops];
     updated[index] = { ...updated[index], [field]: value };
     setNewStops(updated);
   };
 
-  // Remove stop entry
+  // Remove stop entry (for inline editing - kept for backward compatibility)
   const handleRemoveStop = (index: number) => {
     const updated = newStops.filter((_, i) => i !== index);
     // Reorder remaining stops
@@ -287,6 +309,56 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       updated[i].order = existingStops.length + i + 1;
     }
     setNewStops(updated);
+  };
+
+  // Wizard handlers
+  const handleAddStopViaWizard = () => {
+    const _lastOrder = newStops.length > 0 
+      ? Math.max(...newStops.map(s => s.order)) 
+      : existingStops.length;
+    
+    setWizardEditingIndex(newStops.length);
+    setIsWizardMode(true);
+  };
+
+  const handleWizardComplete = (stop: StopEntry) => {
+    if (wizardEditingIndex !== null && wizardEditingIndex < newStops.length) {
+      // Updating existing stop
+      const updated = [...newStops];
+      updated[wizardEditingIndex] = stop;
+      setNewStops(updated);
+    } else {
+      // Adding new stop
+      const lastOrder = newStops.length > 0 
+        ? Math.max(...newStops.map(s => s.order)) 
+        : existingStops.length;
+      const newStop = { ...stop, order: lastOrder + 1 };
+      setNewStops([...newStops, newStop]);
+    }
+    setIsWizardMode(false);
+    setWizardEditingIndex(null);
+  };
+
+  const handleWizardCancel = () => {
+    setIsWizardMode(false);
+    setWizardEditingIndex(null);
+  };
+
+  const handleWizardAddAnother = (stop: StopEntry) => {
+    // First complete the current stop
+    if (wizardEditingIndex !== null && wizardEditingIndex < newStops.length) {
+      const updated = [...newStops];
+      updated[wizardEditingIndex] = stop;
+      setNewStops(updated);
+    } else {
+      const lastOrder = newStops.length > 0 
+        ? Math.max(...newStops.map(s => s.order)) 
+        : existingStops.length;
+      const newStop = { ...stop, order: lastOrder + 1 };
+      setNewStops([...newStops, newStop]);
+    }
+    // Then restart wizard for next stop
+    setWizardEditingIndex(newStops.length + 1);
   };
 
   // Select location for a stop
@@ -727,6 +799,9 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                     <label>{t('addStops.stopLocation', 'Stop Location')}</label>
                     <div className="autocomplete-wrapper">
                       <input
+                        ref={(el) => {
+                          if (el) stopInputRefs.current[index] = el;
+                        }}
                         type="text"
                         value={stop.locationName}
                         onChange={(e) => {
@@ -783,36 +858,48 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                       {isLoadingStopSuggestions && activeStopInputIndex === index && (
                         <span className="loading-indicator">⏳</span>
                       )}
-                      {showStopSuggestions && activeStopInputIndex === index && stopSuggestions.length > 0 && (
-                        <ul className="suggestions-list" role="listbox">
-                          {stopSuggestions.map((loc, locIndex) => {
-                            const isHighlighted = locIndex === highlightedStopIndex;
-                            return (
-                              <li
-                                key={loc.id}
-                                role="option"
-                                aria-selected={isHighlighted}
-                                onMouseDown={() => {
-                                  isSelectingStopRef.current = true;
-                                }}
-                                onClick={() => {
-                                  handleSelectStopLocation(index, loc);
-                                }}
-                                onMouseEnter={() => setHighlightedStopIndex(locIndex)}
-                                style={{
-                                  background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
-                                  fontWeight: isHighlighted ? 600 : 400,
-                                  color: isHighlighted ? '#3B82F6' : 'inherit'
-                                }}
-                              >
-                                <span className="loc-icon">→</span>
+                      {showStopSuggestions && activeStopInputIndex === index && stopSuggestions.length > 0 && 
+                        createPortal(
+                          <ul 
+                            className="suggestions-list" 
+                            role="listbox"
+                            style={{
+                              top: dropdownPosition ? `${dropdownPosition.top}px` : 'auto',
+                              left: dropdownPosition ? `${dropdownPosition.left}px` : 'auto',
+                              width: dropdownPosition ? `${dropdownPosition.width}px` : 'auto',
+                              visibility: dropdownPosition ? 'visible' : 'hidden',
+                            }}
+                          >
+                            {stopSuggestions.map((loc, locIndex) => {
+                              const isHighlighted = locIndex === highlightedStopIndex;
+                              return (
+                                <li
+                                  key={loc.id}
+                                  role="option"
+                                  aria-selected={isHighlighted}
+                                  onMouseDown={() => {
+                                    isSelectingStopRef.current = true;
+                                  }}
+                                  onClick={() => {
+                                    handleSelectStopLocation(index, loc);
+                                  }}
+                                  onMouseEnter={() => setHighlightedStopIndex(locIndex)}
+                                  style={{
+                                    background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
+                                    fontWeight: isHighlighted ? 600 : 400,
+                                    color: isHighlighted ? '#3B82F6' : 'inherit'
+                                  }}
+                                >
+                                  <span className="loc-icon">→</span>
                                 <span className="loc-icon">📍</span>
                                 <span className="loc-name">{getLocationDisplayName(loc)}</span>
                               </li>
                             );
                           })}
-                        </ul>
-                      )}
+                          </ul>,
+                          document.body
+                        )
+                      }
                     </div>
                   </div>
 
@@ -850,7 +937,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
           </div>
 
           {/* Add Stop Button */}
-          <button className="add-stop-btn" onClick={handleAddStop}>
+          <button className="add-stop-btn" onClick={handleAddStopViaWizard}>
             <span className="plus-icon">+</span>
             {t('addStops.addStop', 'Add Stop')}
           </button>
@@ -881,6 +968,20 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Wizard Modal Overlay */}
+      {isWizardMode && (
+        <div className="wizard-overlay">
+          <StopEntryWizard
+            stopIndex={wizardEditingIndex ?? newStops.length}
+            totalStops={newStops.length + 1}
+            initialStop={wizardEditingIndex !== null && wizardEditingIndex < newStops.length ? newStops[wizardEditingIndex] : undefined}
+            onComplete={handleWizardComplete}
+            onCancel={handleWizardCancel}
+            onAddAnother={handleWizardAddAnother}
+          />
         </div>
       )}
     </div>

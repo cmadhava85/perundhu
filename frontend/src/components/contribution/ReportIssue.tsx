@@ -389,91 +389,88 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
             </div>
           )}
 
-          {/* Step 2: Bus Selection */}
+          {/* Step 2: Bus Selection - Compact */}
           {(busSearched || preSelectedBus) && (
-            <div className="form-section">
-              <div className="section-header">
-                <span className="step-number">{showRouteSelection ? '2' : '1'}</span>
-                <h3>{t('reportIssue.step2', 'Select the bus with the issue')}</h3>
-              </div>
+            <div className="form-section compact-section">
+              <label className="section-label">
+                <span className="label-icon">🚌</span>
+                <span>{t('reportIssue.step2', 'Select the bus')}</span>
+              </label>
               
               {preSelectedBus ? (
-                <div className="selected-bus-card">
-                  <div className="bus-header">
-                    <span className="bus-number">{preSelectedBus.busNumber}</span>
-                    <span className="bus-name">{preSelectedBus.busName}</span>
-                  </div>
-                  <div className="bus-timing">
-                    <span className="departure">🟢 {preSelectedBus.departureTime}</span>
-                    <span className="arrow">→</span>
-                    <span className="arrival">🔴 {preSelectedBus.arrivalTime}</span>
+                <div className="selected-bus-card compact">
+                  <div className="bus-info">
+                    <div className="bus-number-badge">{preSelectedBus.busNumber}</div>
+                    <div className="bus-details">
+                      <div className="bus-name">{preSelectedBus.busName}</div>
+                      <div className="bus-timing-compact">
+                        <span>🟢 {preSelectedBus.departureTime}</span>
+                        <span className="separator">→</span>
+                        <span>🔴 {preSelectedBus.arrivalTime}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : buses.length > 0 ? (
-                <div className="buses-list">
+                <div className="buses-compact-list">
                   {buses.map(bus => (
                     <div
                       key={bus.id}
-                      className={`bus-card ${selectedBus?.id === bus.id ? 'selected' : ''}`}
+                      className={`bus-compact-card ${selectedBus?.id === bus.id ? 'selected' : ''}`}
                       onClick={() => setSelectedBus(bus)}
                     >
-                      <div className="bus-header">
-                        <span className="bus-number">{bus.busNumber}</span>
+                      <input type="radio" name="bus-select" checked={selectedBus?.id === bus.id} readOnly />
+                      <div className="bus-compact-info">
+                        <span className="bus-number-badge">{bus.busNumber}</span>
                         <span className="bus-name">{bus.busName}</span>
-                      </div>
-                      <div className="bus-timing">
-                        <span className="departure">🟢 {bus.departureTime}</span>
-                        <span className="arrow">→</span>
-                        <span className="arrival">🔴 {bus.arrivalTime}</span>
+                        <span className="bus-time-compact">{bus.departureTime} → {bus.arrivalTime}</span>
                       </div>
                     </div>
                   ))}
                   
-                  {/* Option to report without selecting a bus */}
+                  {/* General report option */}
                   <div
-                    className={`bus-card general-report ${!selectedBus ? 'selected' : ''}`}
+                    className={`bus-compact-card general ${!selectedBus ? 'selected' : ''}`}
                     onClick={() => setSelectedBus(null)}
                   >
-                    <div className="bus-header">
-                      <span className="bus-icon">🚌</span>
-                      <span className="bus-name">{t('reportIssue.generalIssue', 'General Route Issue')}</span>
+                    <input type="radio" name="bus-select" checked={!selectedBus} readOnly />
+                    <div className="bus-compact-info">
+                      <span className="general-label">🚌 {t('reportIssue.generalIssue', 'General Route Issue')}</span>
                     </div>
-                    <p className="general-note">{t('reportIssue.generalIssueDesc', 'Report an issue that applies to the entire route')}</p>
                   </div>
                 </div>
               ) : (
-                <div className="no-buses-found">
-                  <p>{t('reportIssue.noBusesFound', 'No buses found for this route.')}</p>
-                  <p className="hint">{t('reportIssue.noBusesHint', 'You can still report that a bus should exist on this route.')}</p>
+                <div className="no-buses-compact">
+                  <p>{t('reportIssue.noBusesFound', 'No buses found. You can still report this route.')}</p>
                 </div>
               )}
             </div>
           )}
 
-          {/* Step 3: Issue Type */}
+          {/* Step 3: Issue Type - Compact Dropdown */}
           {(selectedBus || busSearched || preSelectedBus) && (
-            <div className="form-section">
-              <div className="section-header">
-                <span className="step-number">{showRouteSelection ? '3' : '2'}</span>
-                <h3>{t('reportIssue.step3', 'What\'s the issue?')}</h3>
-              </div>
+            <div className="form-section compact-section">
+              <label className="issue-type-label">
+                <span className="label-icon">❓</span>
+                <span>{t('reportIssue.step3', 'What\'s the issue?')}</span>
+                <span className="required">*</span>
+              </label>
               
-              <div className="issue-types-grid">
+              <select
+                value={issueType || ''}
+                onChange={(e) => {
+                  setIssueType((e.target.value || null) as IssueType | null);
+                  setSubmitError(null);
+                }}
+                className="issue-type-select"
+              >
+                <option value="">{t('reportIssue.selectIssueType', 'Select an issue...')}</option>
                 {issueTypes.map(type => (
-                  <div
-                    key={type.value}
-                    className={`issue-type-card ${issueType === type.value ? 'selected' : ''}`}
-                    onClick={() => {
-                      setIssueType(type.value);
-                      setSubmitError(null);
-                    }}
-                  >
-                    <span className="type-icon">{type.icon}</span>
-                    <span className="type-label">{type.label}</span>
-                    <span className="type-desc">{type.description}</span>
-                  </div>
+                  <option key={type.value} value={type.value}>
+                    {type.icon} {type.label}
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
           )}
 

@@ -1,0 +1,198 @@
+@import '../../styles/design-system.css';
+
+/**
+ * Empty State Component Styles
+ * Friendly, helpful empty states with illustrations
+ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  min-height: 300px;
+  animation: fadeIn 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.empty-state__icon {
+  margin-bottom: var(--space-6);
+  animation: slideInDown 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.empty-state__illustration {
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive illustration sizing */
+@media (max-width: 767px) {
+  .empty-state__illustration {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.empty-state__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-3) 0;
+  animation: slideInUp 0.5s cubic-bezier(0.32, 0.72, 0, 1) 0.1s both;
+}
+
+@media (max-width: 767px) {
+  .empty-state__title {
+    font-size: 1.25rem;
+  }
+}
+
+.empty-state__description {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-6) 0;
+  max-width: 400px;
+  line-height: 1.6;
+  animation: slideInUp 0.5s cubic-bezier(0.32, 0.72, 0, 1) 0.2s both;
+}
+
+@media (max-width: 767px) {
+  .empty-state__description {
+    font-size: 0.875rem;
+  }
+}
+
+.empty-state__action {
+  min-width: 200px;
+  animation: slideInUp 0.5s cubic-bezier(0.32, 0.72, 0, 1) 0.3s both;
+}
+
+@media (max-width: 767px) {
+  .empty-state__action {
+    min-width: 160px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .empty-state,
+  .empty-state__icon,
+  .empty-state__title,
+  .empty-state__description,
+  .empty-state__action {
+    animation: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .empty-state__title {
+    color: var(--color-neutral-100);
+  }
+  
+  .empty-state__description {
+    color: var(--color-neutral-300);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .empty-state__illustration {
+    filter: contrast(1.2);
+  }
+}
+
+/* Compact variant for smaller spaces */
+.empty-state--compact {
+  min-height: 200px;
+  padding: var(--space-8) var(--space-4);
+}
+
+.empty-state--compact .empty-state__illustration {
+  width: 120px;
+  height: 120px;
+}
+
+.empty-state--compact .empty-state__title {
+  font-size: 1.125rem;
+}
+
+.empty-state--compact .empty-state__description {
+  font-size: 0.875rem;
+  margin-bottom: var(--space-4);
+}
+
+/* Inline variant for list items */
+.empty-state--inline {
+  flex-direction: row;
+  text-align: left;
+  min-height: auto;
+  padding: var(--space-4);
+}
+
+.empty-state--inline .empty-state__icon {
+  margin-right: var(--space-4);
+  margin-bottom: 0;
+}
+
+.empty-state--inline .empty-state__illustration {
+  width: 80px;
+  height: 80px;
+}
+
+.empty-state--inline .empty-state__title {
+  font-size: 1rem;
+  margin-bottom: var(--space-2);
+}
+
+.empty-state--inline .empty-state__description {
+  font-size: 0.875rem;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .empty-state--inline {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .empty-state--inline .empty-state__icon {
+    margin-right: 0;
+    margin-bottom: var(--space-3);
+  }
+}

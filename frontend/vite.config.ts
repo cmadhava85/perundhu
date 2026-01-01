@@ -53,6 +53,13 @@ export default defineConfig({
     port: 5173,
     open: false,
     strictPort: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
+    },
     hmr: {
       overlay: true,
       timeout: 60000,

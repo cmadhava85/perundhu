@@ -7,6 +7,16 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: linear-gradient(-45deg, #E0F2FE, #BAE6FD, #7DD3FC, #38BDF8);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 #root {
@@ -63,6 +73,7 @@ html, body {
     transition: all 200ms;
     position: relative;
     min-width: 50px;
+    min-height: 56px; /* Ensure 44px+ touch target */
     flex: 1;
     max-width: 72px;
     border-radius: 8px;
@@ -153,6 +164,7 @@ html, body {
     .bottom-nav-item {
       padding: 6px 2px;
       min-width: 44px;
+      min-height: 44px; /* Maintain minimum touch target on small screens */
     }
     
     .nav-label {

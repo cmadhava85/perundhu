@@ -344,9 +344,12 @@ public class BusScheduleController {
                 LocalTime timeB = parseTime(b.departureTime());
 
                 // Handle null departure times - put them at the end
-                if (timeA == null && timeB == null) return 0;
-                if (timeA == null) return 1;
-                if (timeB == null) return -1;
+                if (timeA == null && timeB == null)
+                    return 0;
+                if (timeA == null)
+                    return 1;
+                if (timeB == null)
+                    return -1;
 
                 // Check if buses are upcoming (departing now or in the future)
                 boolean isUpcomingA = !timeA.isBefore(currentTime);
@@ -974,6 +977,7 @@ public class BusScheduleController {
             defaultStats.put("routeCount", 0);
             defaultStats.put("contributorCount", 0);
             defaultStats.put("cityCount", 0);
+            defaultStats.put("dailyUsers", 0);
             return ResponseEntity.ok(defaultStats);
         }
     }

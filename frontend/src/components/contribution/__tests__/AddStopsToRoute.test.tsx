@@ -145,17 +145,50 @@ describe('AddStopsToRoute Component', () => {
     it('can remove a stop entry', async () => {
       render(<AddStopsToRoute {...defaultProps} preSelectedBus={mockBus} />);
       
+      // Click Add Stop button to open wizard
       await waitFor(() => {
         const addButton = screen.getByRole('button', { name: /Add Stop/i });
         fireEvent.click(addButton);
       });
 
-      // Find and click remove button
-      const removeButton = screen.getByTitle('Remove stop');
-      fireEvent.click(removeButton);
+      // Fill in stop name in wizard
+      const stopNameInput = await screen.findByPlaceholderText(/e\.g\., Central Metro Station/i);
+      fireEvent.change(stopNameInput, { target: { value: 'Test Stop' } });
 
-      // Stop input should be gone
-      expect(screen.queryByPlaceholderText('Enter stop name')).toBeNull();
+      // Click Next button to proceed through wizard
+      const nextButton = screen.getByRole('button', { name: /Next/i });
+      fireEvent.click(nextButton);
+
+      // Fill in arrival time
+      await waitFor(async () => {
+        const arrivalInput = await screen.findByPlaceholderText(/e\.g\., 09:30/i);
+        fireEvent.change(arrivalInput, { target: { value: '10:00' } });
+      });
+
+      // Click Next to move to departure time
+      const nextButton2 = screen.getByRole('button', { name: /Next/i });
+      fireEvent.click(nextButton2);
+
+      // Fill in departure time
+      await waitFor(async () => {
+        const departureInput = await screen.findByPlaceholderText(/e\.g\., 09:35/i);
+        fireEvent.change(departureInput, { target: { value: '10:05' } });
+      });
+
+      // Click Finish/Complete button
+      const finishButton = screen.getByRole('button', { name: /Finish|Complete/i });
+      fireEvent.click(finishButton);
+
+      // Now find and click remove button
+      await waitFor(() => {
+        const removeButton = screen.getByTitle('Remove stop');
+        fireEvent.click(removeButton);
+      });
+
+      // Stop should be removed - verify there are no stop entries
+      await waitFor(() => {
+        expect(screen.queryByTitle('Remove stop')).toBeNull();
+      });
     });
   });
 

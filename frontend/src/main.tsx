@@ -8,6 +8,7 @@ import App from './App'
 import './i18n.ts' // Import i18n configuration
 import { queryClient } from './lib/queryClient'
 import { initializeSecurity } from './utils/reactSecurity'
+import { ToastProvider } from './components/design-system/Toast'
 
 // Initialize security measures (disabled in development for debugging)
 initializeSecurity();
@@ -15,8 +16,10 @@ initializeSecurity();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ToastProvider>
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </ToastProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

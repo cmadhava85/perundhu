@@ -1,13 +1,18 @@
+@import './design-system.css';
+
 /* CSS Custom Properties (Variables) for consistent theming */
+/* Based on DESIGN_PROTOTYPE_ANALYSIS - Modern, Glassmorphic Design System */
 :root {
-  /* Modern color palette */
-  --primary-color: #2563eb;
-  --secondary-color: #3b82f6;
-  --accent-color: #f59e0b;
-  --success-color: #10b981;
-  --error-color: #ef4444;
-  --warning-color: #f59e0b;
-  --info-color: #3b82f6;
+  /* Modern color palette - Cyan/Teal primary with Green secondary */
+  --primary-color: #0EA5E9; /* Cyan Blue */
+  --primary-dark: #06B6D4;  /* Dark Cyan */
+  --secondary-color: #10B981; /* Green */
+  --secondary-dark: #059669;  /* Dark Green */
+  --accent-color: #F59E0B;
+  --success-color: #10B981;
+  --error-color: #EF4444;
+  --warning-color: #F59E0B;
+  --info-color: #3B82F6;
   
   /* Text colors */
   --text-color: #1f2937;
@@ -26,17 +31,28 @@
   --border-focus: #2563eb;
   --border-error: #ef4444;
   
-  /* Shadows */
+  /* Shadows - Enhanced for depth */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(14, 165, 233, 0.5);
+  --shadow-glow-lg: 0 0 40px rgba(14, 165, 233, 0.8);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.3);
   
-  /* Animations */
+  /* Animations - Material Design timing */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slower: 400ms cubic-bezier(0.4, 0, 0.2, 1);
   --bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* Glassmorphism properties */
+  --glass-blur: blur(20px) saturate(180%);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   
   /* Spacing system */
   --space-xs: 0.25rem;
@@ -142,4 +158,41 @@
     --transition-slow: 0ms;
     --bounce: 0ms;
   }
+}
+
+/* Global animations for prototype design */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideDown {
+  0% { transform: translateY(-10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }

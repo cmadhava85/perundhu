@@ -1027,7 +1027,7 @@ export const ImageContributionAdminPanel: React.FC = () => {
                           
                           {/* EDIT MODE */}
                           {isEditMode && editedRoutes.map((route, index) => (
-                            <div key={`edit-${route.fromLocation}-${route.toLocation}-${index}`} className="p-4 rounded-lg border-2 border-amber-300 bg-amber-50">
+                            <div key={`edit-route-${index}`} className="p-4 rounded-lg border-2 border-amber-300 bg-amber-50">
                               <div className="flex items-start gap-2 mb-3">
                                 <div className="rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 bg-amber-600">
                                   <span className="text-white font-bold text-xs">{index + 1}</span>

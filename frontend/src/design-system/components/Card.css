@@ -1,0 +1,38 @@
+/* Card Component Styles */
+
+.ds-card {
+  /* Default state */
+}
+
+/* Interactive card hover */
+.ds-card-interactive:hover:not([aria-disabled="true"]) {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.ds-card-interactive:active:not([aria-disabled="true"]) {
+  transform: translateY(-2px);
+}
+
+/* Focus state for accessibility */
+.ds-card-interactive:focus-visible {
+  outline: 2px solid #14B8A6;
+  outline-offset: 2px;
+}
+
+/* Selected state */
+.ds-card-selected {
+  border-color: #14B8A6 !important;
+}
+
+/* Elevated variant */
+.ds-card-elevated {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .ds-card-interactive:active:not([aria-disabled="true"]) {
+    transform: scale(0.98);
+  }
+}

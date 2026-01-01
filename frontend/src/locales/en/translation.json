@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Perundhu",
-    "tagline": "Your Bus Journey Planner",
+    "tagline": "Bus in Seconds",
     "loading": "Loading...",
     "error": "No routes found for this selection. Please try different locations.",
     "close": "Close",
@@ -68,11 +68,30 @@
     "contactUs": "Contact Us",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "description": "Your trusted companion for Tamil Nadu bus schedules. Find routes, track buses, and plan your journey with ease.",
+    "quickLinks": "Quick Links",
+    "searchBuses": "Search Buses",
+    "trackBus": "Track Bus",
+    "routeMap": "Route Map",
+    "savedRoutes": "Saved Routes",
+    "mobileApp": "Mobile App",
+    "stats": {
+      "routes": "Bus Routes",
+      "contributors": "Contributors",
+      "cities": "Cities Covered",
+      "dailyUsers": "Daily Users"
+    }
+  },
+  "statistics": {
+    "totalBuses": "Total Buses",
+    "routesCovered": "Routes Covered",
+    "dailyUsers": "Daily Users",
+    "contributors": "Contributors"
   },
   "common": {
     "appName": "Perundhu",
-    "tagline": "Your Bus Travel Planner",
+    "tagline": "Bus in Seconds",
     "loading": "Loading...",
     "error": "No routes for this selection. Try different locations.",
     "close": "Close",
@@ -130,6 +149,10 @@
     "edit": "Edit",
     "newSearch": "New Search",
     "new": "New",
+    "noResults": "No buses found for this route",
+    "noResultsDescription": "We couldn't find any buses operating on this route. You can help by contributing this route information.",
+    "contributeRoute": "Contribute Route Info",
+    "backHome": "Back to Home",
     "error": {
       "title": "No Routes Found",
       "message": "No routes found for this selection. Please try different locations.",
@@ -761,11 +784,13 @@
       "statusAll": "All",
       "statusPending": "Pending",
       "statusApproved": "Approved",
+      "statusIntegrationFailed": "Integration Failed",
       "statusRejected": "Rejected",
       "gridView": "Grid View",
       "listView": "List View",
       "pendingCount": "Pending",
       "approvedCount": "Approved",
+      "integrationFailedCount": "Integration Failed",
       "rejectedCount": "Rejected",
       "refresh": "Refresh",
       "loading": "Loading routes...",

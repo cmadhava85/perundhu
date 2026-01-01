@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ConnectingRoute } from '../types';
+import { EmptyState } from './design-system/EmptyState';
 import '../styles/ConnectingRoutes.css';
+import './design-system/empty-state.css';
 
 interface ConnectingRoutesProps {
   connectingRoutes: ConnectingRoute[];
@@ -32,9 +34,17 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
   const { t } = useTranslation();
   const [expandedRouteId, setExpandedRouteId] = useState<string | null>(null);
   
-  // If no routes, don't render component
+  // If no routes, show empty state
   if (!connectingRoutes || connectingRoutes.length === 0) {
-    return null;
+    return (
+      <div className="connecting-routes" data-testid="connecting-routes">
+        <EmptyState
+          type="no-connecting-routes"
+          title={t('connectingRoutes.noRoutes', 'No connecting routes available')}
+          description={t('connectingRoutes.noRoutesDescription', 'Try selecting different locations or check back later')}
+        />
+      </div>
+    );
   }
   
   const toggleRoute = (routeId: string) => {

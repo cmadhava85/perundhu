@@ -83,6 +83,20 @@ export const preventDevToolsShortcuts = (): void => {
   if (!isProduction()) return;
 
   document.addEventListener('keydown', (e) => {
+    // Don't block anything if user is typing in a form field
+    const target = e.target as HTMLElement;
+    const isFormField = 
+      target.tagName === 'INPUT' || 
+      target.tagName === 'TEXTAREA' || 
+      target.tagName === 'SELECT' || 
+      target.contentEditable === 'true' ||
+      target.closest('input, textarea, select, [contenteditable="true"], [role="combobox"], [role="listbox"], .form-input, .form-select, .form-textarea');
+    
+    // Only prevent shortcuts when NOT in form fields
+    if (isFormField) {
+      return;
+    }
+
     // F12 - DevTools
     if (e.key === 'F12') {
       e.preventDefault();

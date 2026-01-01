@@ -138,9 +138,17 @@ start_backend() {
         
         # Set environment variables
         export SPRING_PROFILES_ACTIVE=dev
+        export DB_URL=${DB_URL:-jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true}
+        export DB_USERNAME=${DB_USERNAME:-root}
+        export DB_PASSWORD=${DB_PASSWORD:-root}
         
         # Start backend with nohup - completely detached
-        nohup ./gradlew bootRun > "$LOGS_DIR/backend.log" 2>&1 &
+        # Pass database credentials as system properties to ensure they reach Gradle/Spring
+        nohup ./gradlew bootRun \
+            -Dspring.datasource.password="$DB_PASSWORD" \
+            -Dspring.datasource.username="$DB_USERNAME" \
+            -Dspring.datasource.url="$DB_URL" \
+            > "$LOGS_DIR/backend.log" 2>&1 &
         echo $! > "$PID_DIR/backend.pid"
     )
     

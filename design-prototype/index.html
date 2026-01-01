@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perundhu Design Prototypes - Index</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(270deg, #E0F2FE, #BAE6FD, #7DD3FC, #38BDF8);
+      background-size: 800% 800%;
+      animation: gradientShift 15s ease infinite;
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 48px;
+    }
+    
+    .header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 16px;
+      font-weight: 800;
+    }
+    
+    .header p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      opacity: 0.95;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    
+    .card {
+      background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+      border-radius: 16px;
+      padding: 24px;
+      border: 2px solid #E5E7EB;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(20, 184, 166, 0.3);
+      border-color: #14B8A6;
+    }
+    
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+    
+    .card-description {
+      font-size: 14px;
+      color: #6B7280;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .card-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .badge {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .badge-component {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+    
+    .badge-page {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    
+    .badge-responsive {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    
+    .info-box {
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      border: 2px solid #BFDBFE;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    
+    .info-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1E40AF;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .info-content {
+      color: #1E40AF;
+      line-height: 1.8;
+    }
+    
+    .info-content ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .info-content li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    
+    .info-content li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+      color: #10B981;
+    }
+    
+    .quick-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+      color: white;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #14B8A6;
+      border: 2px solid #14B8A6;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+      
+      .section {
+        padding: 20px;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+      <h1>🎨 Perundhu Design Prototypes</h1>
+      <p>Responsive, Rich UI Components - Ready for Figma</p>
+    </div>
+    
+    <!-- Info Box -->
+    <div class="info-box">
+      <div class="info-title">
+        <span>💡</span>
+        <span>How to Use These Prototypes</span>
+      </div>
+      <div class="info-content">
+        <ul>
+          <li>Open any HTML file below in your browser</li>
+          <li>Resize browser window to test responsive behavior</li>
+          <li>Copy HTML code and import to Figma (see guide below)</li>
+          <li>Use as reference to update your React components</li>
+          <li>All prototypes include sample data and animations</li>
+        </ul>
+      </div>
+      <div class="quick-links">
+        <a href="./FIGMA_INTEGRATION_GUIDE.md" class="btn">
+          <span>📖</span>
+          <span>Read Figma Integration Guide</span>
+        </a>
+        <a href="./README.md" class="btn btn-secondary">
+          <span>📋</span>
+          <span>Full Documentation</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Individual Components -->
+    <div class="section">
+      <h2 class="section-title">
+        <span>🧩</span>
+        <span>Individual Components</span>
+      </h2>
+      <div class="grid">
+        
+        <a href="./components/bus-card.html" class="card">
+          <span class="card-icon">🚌</span>
+          <div class="card-title">Bus Card</div>
+          <div class="card-description">
+            Complete bus card with journey timeline, status badges, and interactive elements. Includes 3 variants with sample data.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-component">Component</span>
+            <span class="badge badge-responsive">Responsive</span>
+          </div>
+        </a>
+        
+        <a href="./components/search-form.html" class="card">
+          <span class="card-icon">🔍</span>
+          <div class="card-title">Search Form</div>
+          <div class="card-description">
+            Interactive search form with autocomplete, GPS location, recent searches, and validation states.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-component">Component</span>
+            <span class="badge badge-responsive">Responsive</span>
+          </div>
+        </a>
+        
+        <a href="./components/header.html" class="card">
+          <span class="card-icon">📱</span>
+          <div class="card-title">App Header</div>
+          <div class="card-description">
+            Sticky header with brand logo, navigation, language switcher, and "What's New" panel. Includes mobile bottom nav.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-component">Component</span>
+            <span class="badge badge-responsive">Responsive</span>
+          </div>
+        </a>
+        
+        <a href="./components/contribution-form.html" class="card">
+          <span class="card-icon">🤝</span>
+          <div class="card-title">Contribution Form</div>
+          <div class="card-description">
+            User contribution interface with image upload, voice recording, and route details. Includes rewards system.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-component">Component</span>
+            <span class="badge badge-responsive">Responsive</span>
+          </div>
+        </a>
+        
+      </div>
+    </div>
+    
+    <!-- Complete Pages -->
+    <div class="section">
+      <h2 class="section-title">
+        <span>📄</span>
+        <span>Complete Page Layouts</span>
+      </h2>
+      <div class="grid">
+        
+        <a href="./pages/home.html" class="card">
+          <span class="card-icon">🏠</span>
+          <div class="card-title">Home Page</div>
+          <div class="card-description">
+            Complete home page with header, search form, stats cards, bus grid, and mobile bottom navigation. Fully responsive.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-page">Full Page</span>
+            <span class="badge badge-responsive">Responsive</span>
+          </div>
+        </a>
+        
+        <a href="./pages/home-with-tabs.html" class="card" style="border: 3px solid #10B981;">
+          <span class="card-icon">✨</span>
+          <div class="card-title">Search + Contribution (Tabbed) ✨ NEW</div>
+          <div class="card-description">
+            <strong>Enhanced UX!</strong> Unified interface with tabs to switch between bus search and contribution features. Mobile-optimized with touch-friendly navigation.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-page">Full Page</span>
+            <span class="badge badge-responsive">Responsive</span>
+          </div>
+        </a>
+        
+      </div>
+    </div>
+    
+    <!-- Design System -->
+    <div class="section">
+      <h2 class="section-title">
+        <span>🎨</span>
+        <span>Design System</span>
+      </h2>
+      <div class="grid">
+        
+        <a href="./assets/design-tokens.css" class="card">
+          <span class="card-icon">📐</span>
+          <div class="card-title">Design Tokens</div>
+          <div class="card-description">
+            Complete design system with colors, typography, spacing, shadows, and breakpoints. Ready to import into your project.
+          </div>
+          <div class="card-meta">
+            <span class="badge badge-component">CSS</span>
+          </div>
+        </a>
+        
+      </div>
+    </div>
+    
+    <!-- Features Showcase -->
+    <div class="section">
+      <h2 class="section-title">
+        <span>✨</span>
+        <span>Features Included</span>
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        
+        <div style="padding: 20px; background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border-radius: 12px; border: 2px solid #BBF7D0;">
+          <div style="font-size: 32px; margin-bottom: 12px;">📱</div>
+          <div style="font-weight: 700; color: #166534; margin-bottom: 8px;">Mobile-First Design</div>
+          <div style="font-size: 14px; color: #15803D;">Optimized for touch, min 44px targets, responsive layouts</div>
+        </div>
+        
+        <div style="padding: 20px; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border-radius: 12px; border: 2px solid #BFDBFE;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🎭</div>
+          <div style="font-weight: 700; color: #1E40AF; margin-bottom: 8px;">Animations & Transitions</div>
+          <div style="font-size: 14px; color: #1E40AF;">Smooth animations, hover effects, micro-interactions</div>
+        </div>
+        
+        <div style="padding: 20px; background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-radius: 12px; border: 2px solid #FCD34D;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🌐</div>
+          <div style="font-weight: 700; color: #92400E; margin-bottom: 8px;">Tamil + English Support</div>
+          <div style="font-size: 14px; color: #92400E;">Bilingual UI with Tamil fonts, RTL ready</div>
+        </div>
+        
+        <div style="padding: 20px; background: linear-gradient(135deg, #FCE7F3 0%, #FBCFE8 100%); border-radius: 12px; border: 2px solid #F9A8D4;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🎨</div>
+          <div style="font-weight: 700; color: #9F1239; margin-bottom: 8px;">Rich UI Elements</div>
+          <div style="font-size: 14px; color: #9F1239;">Gradients, shadows, badges, progress bars</div>
+        </div>
+        
+        <div style="padding: 20px; background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border-radius: 12px; border: 2px solid #DDD6FE;">
+          <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+          <div style="font-weight: 700; color: #5B21B6; margin-bottom: 8px;">High Performance</div>
+          <div style="font-size: 14px; color: #5B21B6;">CSS-only animations, optimized rendering</div>
+        </div>
+        
+        <div style="padding: 20px; background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%); border-radius: 12px; border: 2px solid #FED7AA;">
+          <div style="font-size: 32px; margin-bottom: 12px;">♿</div>
+          <div style="font-weight: 700; color: #9A3412; margin-bottom: 8px;">Accessibility Ready</div>
+          <div style="font-size: 14px; color: #9A3412;">ARIA labels, keyboard navigation, semantic HTML</div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Technical Specs -->
+    <div class="section">
+      <h2 class="section-title">
+        <span>⚙️</span>
+        <span>Technical Specifications</span>
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        
+        <div>
+          <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #111827;">📏 Breakpoints</h3>
+          <ul style="list-style: none; padding: 0; color: #6B7280; line-height: 2;">
+            <li>• Mobile: 375px - 640px</li>
+            <li>• Tablet: 768px - 1024px</li>
+            <li>• Desktop: 1280px+</li>
+            <li>• Wide: 1536px+</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #111827;">🎨 Colors</h3>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div style="width: 48px; height: 48px; background: #14B8A6; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" title="Primary - Teal"></div>
+            <div style="width: 48px; height: 48px; background: #10B981; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" title="Success"></div>
+            <div style="width: 48px; height: 48px; background: #EF4444; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" title="Error"></div>
+            <div style="width: 48px; height: 48px; background: #F59E0B; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" title="Warning"></div>
+            <div style="width: 48px; height: 48px; background: #3B82F6; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" title="Info"></div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #111827;">🔤 Typography</h3>
+          <ul style="list-style: none; padding: 0; color: #6B7280; line-height: 2;">
+            <li>• System Font Stack</li>
+            <li>• Base: 16px (mobile), 18px (desktop)</li>
+            <li>• Scale: 12px - 48px</li>
+            <li>• Weights: 400, 500, 600, 700</li>
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div style="text-align: center; color: white; padding: 40px 20px;">
+      <p style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Ready to bring your design to life? 🚀</p>
+      <p style="opacity: 0.9; margin-bottom: 24px;">Start by opening any prototype above, then follow the Figma Integration Guide</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="./FIGMA_INTEGRATION_GUIDE.md" class="btn">
+          <span>📖</span>
+          <span>Figma Integration Guide</span>
+        </a>
+        <a href="./README.md" class="btn btn-secondary">
+          <span>📚</span>
+          <span>Documentation</span>
+        </a>
+      </div>
+    </div>
+    
+  </div>
+  
+</body>
+</html>
