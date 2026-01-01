@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../services/api';
-import { getUserFriendlyErrorMessage } from '../utils/errorHandling';
+import { getUserFriendlyErrorMessage } from '../utils/errorUtils';
 import { Button } from '../design-system';
 import './ErrorDisplay.css';
 

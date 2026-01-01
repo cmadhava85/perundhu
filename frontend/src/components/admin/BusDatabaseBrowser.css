@@ -1,6 +1,5 @@
 /* Bus Database Browser Styles */
 @import '../../styles/design-system.css';
-@import '../../styles/admin-modern.css';
 
 .bus-database-browser {
   padding: var(--space-lg);

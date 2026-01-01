@@ -1,6 +1,6 @@
 import { logger } from '../utils/logger';
 import L from 'leaflet';
-import { getEnv } from '../utils/envUtils';
+import { getEnv } from '../utils/environment';
 
 // Extend the Window interface to include initMap
 declare global {

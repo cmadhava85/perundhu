@@ -1,6 +1,5 @@
 /* Route Admin Panel Styles */
 @import '../../styles/design-system.css';
-@import '../../styles/admin-modern.css';
 
 .route-admin-panel {
   max-width: 1400px;

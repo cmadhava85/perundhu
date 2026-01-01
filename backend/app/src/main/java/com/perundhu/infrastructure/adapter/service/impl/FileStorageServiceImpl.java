@@ -1,6 +1,5 @@
 package com.perundhu.infrastructure.adapter.service.impl;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -43,9 +41,6 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Value("${app.file.base-url:http://localhost:8080}")
   private String baseUrl;
 
-  @Autowired
-  private ImageCompressionService imageCompressionService;
-
   private static final List<String> SUPPORTED_FORMATS = Arrays.asList(
       "image/jpeg", "image/jpg", "image/png", "image/gif", "image/bmp", "image/webp");
 
@@ -61,16 +56,6 @@ public class FileStorageServiceImpl implements FileStorageService {
       }
 
       long originalSize = imageFile.getSize();
-      
-      // Compress image to reduce storage and improve upload speed
-      byte[] compressedImageBytes = imageCompressionService.compressImage(
-          imageFile.getInputStream(), 
-          imageFile.getContentType()
-      );
-      
-      float compressionRatio = ImageCompressionService.getCompressionRatio(originalSize, compressedImageBytes.length);
-      log.info("Compressed image: {} -> {} bytes ({:.1f}% reduction)", 
-          originalSize, compressedImageBytes.length, compressionRatio);
 
       // Generate secure filename
       String secureFilename = generateSecureFilename(imageFile.getOriginalFilename(), userId);
@@ -89,15 +74,15 @@ public class FileStorageServiceImpl implements FileStorageService {
         log.info("Created user directory: {}", userDir);
       }
 
-      // Store the compressed image
+      // Store the original image without compression
       Path destinationFile = userDir.resolve(secureFilename);
-      Files.copy(new ByteArrayInputStream(compressedImageBytes), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+      Files.copy(imageFile.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
       // Generate accessible URL
       String imageUrl = String.format("%s/api/images/%s/%s", baseUrl, userId, secureFilename);
 
-      log.info("Successfully stored image file: {} -> {} (compressed from {} to {} bytes)", 
-          imageFile.getOriginalFilename(), imageUrl, originalSize, compressedImageBytes.length);
+      log.info("Successfully stored image file: {} -> {} ({} bytes)", 
+          imageFile.getOriginalFilename(), imageUrl, originalSize);
       return imageUrl;
 
     } catch (Exception e) {

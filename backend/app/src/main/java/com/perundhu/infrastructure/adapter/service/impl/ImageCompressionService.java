@@ -1,6 +1,7 @@
 package com.perundhu.infrastructure.adapter.service.impl;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ImageCompressionService {
 
   private static final int MAX_IMAGE_WIDTH = 1920;
-  private static final float JPEG_QUALITY = 0.80f; // 80% quality
+  private static final float JPEG_QUALITY = 0.95f; // 95% quality - high quality for OCR
   private static final int MAX_DIMENSION = 2560; // Max height or width
   
   /**
@@ -102,7 +103,7 @@ public class ImageCompressionService {
   }
   
   /**
-   * Resize image using high-quality resampling
+   * Resize image using high-quality bicubic interpolation
    * 
    * @param originalImage Original buffered image
    * @param targetWidth Target width
@@ -113,6 +114,12 @@ public class ImageCompressionService {
     BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
     
     Graphics2D graphics2D = resizedImage.createGraphics();
+    
+    // Use high-quality rendering hints for better image quality
+    graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+    graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+    graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    
     graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
     graphics2D.dispose();
     
@@ -120,7 +127,7 @@ public class ImageCompressionService {
   }
   
   /**
-   * Compress image to JPEG format with quality setting
+   * Compress image to JPEG format with adaptive quality setting
    * 
    * @param image Buffered image to compress
    * @return Compressed JPEG bytes

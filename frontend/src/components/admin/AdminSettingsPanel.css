@@ -1,6 +1,5 @@
 /* Admin Settings Panel Styles */
 @import '../../styles/design-system.css';
-@import '../../styles/admin-modern.css';
 
 .admin-settings-panel {
   padding: var(--space-lg);

@@ -137,14 +137,14 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   }, []);
 
   return (
-    <div className={`location-autocomplete-container ${className}`} style={{ position: 'relative' }}>
+    <div className={`location-autocomplete-container ${className}`} style={{ position: 'relative', overflow: 'visible' }}>
       {label && (
         <label htmlFor={id} style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>
           {label}
         </label>
       )}
       
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', overflow: 'visible' }}>
         <input
           type="text"
           id={id}
@@ -185,10 +185,11 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
           <ul 
             style={{
               position: 'absolute',
-              top: '100%',
+              bottom: id === 'destination' ? '100%' : 'auto',
+              top: id === 'destination' ? 'auto' : '100%',
               left: 0,
               right: 0,
-              margin: '4px 0 0 0',
+              margin: id === 'destination' ? '0 0 4px 0' : '4px 0 0 0',
               padding: 0,
               listStyle: 'none',
               background: 'white',
