@@ -3,13 +3,13 @@
 @import './layout-modern.css';
 
 .app-header {
-  background: linear-gradient(135deg, #16a085 0%, #138d75 100%);
+  background: linear-gradient(135deg, #87CEEB 0%, #ADD8E6 100%);
   padding: 16px 20px;
   border-bottom: none;
   position: sticky;
   top: 0;
   z-index: 60;
-  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.2);
+  box-shadow: 0 2px 8px rgba(135, 206, 235, 0.3);
   width: 100%;
   backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(10px) saturate(180%);
@@ -19,8 +19,8 @@
 
 /* Scrolled state: enhanced shadow and glassmorphism */
 .app-header.scrolled {
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
-  background: linear-gradient(135deg, #16a085 0%, #138d75 100%);
+  box-shadow: 0 4px 12px rgba(135, 206, 235, 0.4);
+  background: linear-gradient(135deg, #87CEEB 0%, #ADD8E6 100%);
 }
 
 /* Compact state: reduced height on mobile */
@@ -65,12 +65,41 @@
   max-width: 1400px;
   margin: 0 auto;
   gap: var(--space-md);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
-/* Brand/Logo Section */
-.header-brand {
+/* Left Section: Back Button + Logo + Title */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   flex-shrink: 0;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 1.25rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-2px);
+}
+
+.back-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-link {
@@ -85,26 +114,12 @@
   transform: scale(1.02);
 }
 
-.brand-logo {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: width 0.3s ease, height 0.3s ease;
-}
-
 .logo-icon {
-  font-size: 1.75rem;
+  font-size: 2rem;
   z-index: 2;
   animation: busMove 3s ease-in-out infinite;
   transition: font-size 0.3s ease;
-  color: #14b8a6;
+  flex-shrink: 0;
 }
 
 @keyframes busMove {
@@ -113,32 +128,11 @@
   75% { transform: translateX(-2px); }
 }
 
-.logo-animation {
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 20px;
-}
-
-.wheel {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  animation: wheelSpin 1s linear infinite;
-}
-
-@keyframes wheelSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.brand-text {
+.header-title-group {
   display: flex;
   flex-direction: column;
   gap: 0;
+  white-space: nowrap;
 }
 
 .brand-name {
@@ -146,53 +140,60 @@
   font-weight: 800;
   color: white;
   line-height: 1.1;
-  transition: font-size 0.3s ease;
-}
-
-.brand-tagline {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  transition: font-size 0.3s ease;
-  font-size: 0.75rem;
-  color: #64748b;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  transition: font-size 0.3s ease;
-}
-
-/* Header Main Title */
-.header-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  text-align: center;
-}
-
-.app-header h1 {
-  font-size: 2rem;
-  font-weight: 900;
-  color: white;
   margin: 0;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  transition: font-size 0.3s ease;
 }
 
 .header-subtitle {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  letter-spacing: 0.02em;
   margin: 0;
-  text-align: center;
-  transition: opacity 0.2s ease, max-height 0.3s ease;
-  max-height: 2rem;
-  opacity: 1;
-  font-weight: 400;
+  transition: font-size 0.3s ease;
 }
 
-.header-actions {
+.language-switcher-wrapper {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.language-dropdown {
+  padding: 8px 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: visible;
+}
+
+.language-dropdown:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.language-dropdown:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: white;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.language-dropdown option {
+  background: #1f2937;
+  color: white;
+  padding: 8px 12px;
+}
+
+/* Right Section: What's New + Language Switcher */
+.header-right {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -203,8 +204,6 @@
   display: flex;
   align-items: center;
 }
-
-/* What's New Button */
 .whats-new-btn {
   position: relative;
   width: 44px;
@@ -468,31 +467,96 @@
 @media (max-width: 767px) {
   .app-header {
     padding: 12px 16px;
-    background: linear-gradient(135deg, #16a085 0%, #138d75 100%);
+    background: linear-gradient(135deg, #87CEEB 0%, #ADD8E6 100%);
   }
   
   .header-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
   }
   
-  /* Language switcher - top row, full width */
-  .header-actions {
+  /* Header Left - single row on mobile */
+  .header-left {
     display: flex;
+    align-items: center;
     gap: 8px;
-    width: 100%;
-    margin-bottom: 12px;
+    flex: 1;
+  }
+  
+  .brand-link {
+    flex: 1;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-icon {
+    font-size: 1.5rem;
     flex-shrink: 0;
+  }
+  
+  .header-title-group {
+    white-space: nowrap;
+    min-width: 0;
+  }
+  
+  .brand-name {
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .header-subtitle {
+    font-size: 0.65rem;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Header Right - same row */
+  .header-right {
+    display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
+  .whats-new-btn {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .whats-new-icon {
+    font-size: 1.2rem;
+  }
+  
+  .back-button {
+    display: none;
   }
   
   .language-switcher-wrapper {
-    margin-left: 0;
     flex-shrink: 0;
     display: flex;
     align-items: center;
+  }
+  
+  .language-dropdown {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    white-space: nowrap;
   }
   
   .modern-language-switcher {
@@ -551,108 +615,6 @@
   .accent-line {
     display: none;
   }
-  
-  /* Logo and brand - second row */
-  .header-brand {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 16px;
-    gap: 8px;
-  }
-  
-  .brand-link {
-    flex: 0 1 auto;
-    gap: 8px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  
-  .brand-name {
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  
-  .brand-tagline {
-    font-size: 0.7rem;
-    opacity: 0.9;
-  }
-  
-  .brand-logo {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-  }
-  
-  .logo-icon {
-    font-size: 1.5rem;
-  }
-  
-  .whats-new-btn {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1.5px solid rgba(255, 255, 255, 0.3);
-    display: none;
-  }
-  
-  .whats-new-icon {
-    font-size: 1.2rem;
-  }
-  
-  /* Title and subtitle - centered below everything */
-  .header-main {
-    width: 100%;
-    flex: none;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .app-header h1 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-  
-  .header-subtitle {
-    display: block !important;
-    font-size: 0.85rem;
-    opacity: 1;
-    max-height: unset;
-    color: rgba(255, 255, 255, 0.95);
-  }
-  
-  .home-link {
-    padding: 6px 12px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1.5px solid rgba(255, 255, 255, 0.3);
-    font-size: 0.9rem;
-  }
-  
-  .button-text {
-    display: none;
-  }
-  
-  .button-icon {
-    font-size: 1rem;
-  }
-  
-  /* Full width What's New panel on mobile */
-  .whats-new-panel {
-    right: 8px;
-    left: 8px;
-    width: auto;
-    max-width: none;
-  }
 }
 
 /* Mobile (max-width: 575px) */
@@ -661,9 +623,8 @@
     padding: 10px 12px;
   }
   
-  .brand-logo {
-    width: 36px;
-    height: 36px;
+  .header-left {
+    gap: 6px;
   }
   
   .logo-icon {
@@ -674,16 +635,12 @@
     font-size: 0.95rem;
   }
   
-  .brand-tagline {
+  .header-subtitle {
     font-size: 0.65rem;
   }
   
-  .app-header h1 {
-    font-size: 1.1rem;
-  }
-  
-  .header-subtitle {
-    font-size: 0.8rem;
+  .header-right {
+    gap: 6px;
   }
   
   .whats-new-btn {
@@ -694,6 +651,12 @@
   .whats-new-icon {
     font-size: 1rem;
   }
+  
+  .back-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
 }
 
 /* Very Small Mobile (max-width: 360px) */
@@ -702,13 +665,16 @@
     font-size: 0.75rem;
   }
   
-  .brand-logo {
-    width: 32px;
-    height: 32px;
-  }
-  
   .logo-icon {
     font-size: 1.125rem;
+  }
+  
+  .brand-name {
+    font-size: 0.85rem;
+  }
+  
+  .header-subtitle {
+    font-size: 0.6rem;
   }
   
   .whats-new-btn {

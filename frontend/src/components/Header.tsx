@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from './LanguageSwitcher';
 import AnnouncementBanner from './AnnouncementBanner';
 import { getActiveAnnouncements } from '../config/announcements';
 import { triggerHaptic } from '../utils/haptic';
@@ -19,11 +18,12 @@ const Header: React.FC<HeaderProps> = ({
   isAdmin = false,
   showAnnouncements = true
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showWhatsNew, setShowWhatsNew] = useState(false);
   const [hasNewUpdates, setHasNewUpdates] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   // Scroll detection for header compression (mobile-first)
   useEffect(() => {
@@ -96,41 +96,27 @@ const Header: React.FC<HeaderProps> = ({
       
       <header className={`app-header ${isScrolled ? 'scrolled' : ''} ${isCompact ? 'compact' : ''}`}>
         <div className="header-content">
-          {/* Logo and Brand */}
-          <div className="header-brand">
+          {/* Left Section: Back Button + Bus Icon + Title */}
+          <div className="header-left">
+            {isAdmin && (
+              <a href="/" className="back-button" aria-label="Back to home">
+                <span className="back-icon">←</span>
+              </a>
+            )}
+            
             <a href="/" className="brand-link" aria-label="Go to home page">
-              <div className="brand-logo">
-                <span className="logo-icon" aria-hidden="true">🚌</span>
-                <div className="logo-animation">
-                  <span className="wheel wheel-front"></span>
-                  <span className="wheel wheel-back"></span>
-                </div>
-              </div>
-              <div className="brand-text">
-                <span className="brand-name">பேருந்து</span>
-                <span className="brand-tagline">Perundhu</span>
+              <span className="logo-icon" aria-hidden="true">🚌</span>
+              <div className="header-title-group">
+                <h1 className="brand-name">பேருந்து</h1>
+                <p className="header-subtitle">{t('common.tagline', 'Bus in Seconds')}</p>
               </div>
             </a>
           </div>
-          
-          {/* Title */}
-          <div className="header-main">
-            <h1>
-              {isAdmin 
-                ? t('header.adminTitle', 'Admin Dashboard') 
-                : t('header.title', 'Tamil Nadu Bus Schedule')
-              }
-            </h1>
-            {!isAdmin && !isCompact && (
-              <p className="header-subtitle">
-                {t('header.subtitle', 'Find your bus in seconds')}
-              </p>
-            )}
-          </div>
-          
-          <div className="header-actions">
-            {/* What's New Button */}
-            {!isAdmin && (
+
+          {/* Right Section: Actions */}
+          <div className="header-right">
+            {/* What's New Button - Disabled for now */}
+            {/* {!isAdmin && (
               <button 
                 className={`whats-new-btn ${hasNewUpdates ? 'has-updates' : ''}`}
                 onClick={() => {
@@ -143,23 +129,25 @@ const Header: React.FC<HeaderProps> = ({
                 <span className="whats-new-icon">✨</span>
                 {hasNewUpdates && <span className="update-badge" aria-label="New updates available"></span>}
               </button>
-            )}
+            )} */}
             
-            {isAdmin && (
-              <a href="/" className="home-link modern-button">
-                <span className="button-icon">🏠</span>
-                <span className="button-text">{t('header.backToHome', 'Back to Home')}</span>
-              </a>
-            )}
-            
+            {/* Language Switcher Dropdown */}
             <div className="language-switcher-wrapper">
-              <LanguageSwitcher />
+              <select 
+                value={i18n.language} 
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                className="language-dropdown"
+                aria-label="Select language"
+              >
+                <option value="en">🌐 English</option>
+                <option value="ta">🌐 தமிழ்</option>
+              </select>
             </div>
           </div>
         </div>
         
-        {/* What's New Dropdown Panel */}
-        {showWhatsNew && (
+        {/* What's New Dropdown Panel - Disabled for now */}
+        {/* {showWhatsNew && (
           <div className="whats-new-panel">
             <div className="whats-new-header">
               <h3>✨ {t('header.whatsNewTitle', "What's New")}</h3>
@@ -193,6 +181,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
         )}
+        */ }
       </header>
     </>
   );

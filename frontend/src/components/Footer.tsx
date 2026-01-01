@@ -8,6 +8,7 @@ interface PlatformStats {
   routeCount: number;
   contributorCount: number;
   cityCount: number;
+  dailyUsers?: number;
 }
 
 const Footer: React.FC = () => {
@@ -20,10 +21,13 @@ const Footer: React.FC = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('/api/v1/bus-schedules/public-stats');
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        const response = await fetch(`${apiUrl}/api/v1/bus-schedules/public-stats`);
         if (response.ok) {
           const data = await response.json();
           setStats(data);
+        } else {
+          console.warn('Failed to fetch stats: response not ok', response.status);
         }
       } catch (error) {
         console.warn('Failed to fetch platform stats:', error);
@@ -69,6 +73,15 @@ const Footer: React.FC = () => {
             </span>
             <span className="stat-label">{t('footer.stats.cities', 'Cities Covered')}</span>
           </div>
+          {stats?.dailyUsers !== undefined && (
+            <div className="stat-item">
+              <span className="stat-icon">👥</span>
+              <span className="stat-number">
+                {statsLoading ? '...' : formatNumber(stats?.dailyUsers ?? 0)}
+              </span>
+              <span className="stat-label">{t('footer.stats.dailyUsers', 'Daily Users')}</span>
+            </div>
+          )}
         </div>
 
         {/* Main Footer Content - Multi Column Layout */}
@@ -133,21 +146,6 @@ const Footer: React.FC = () => {
               <Link to="/terms" className="footer-link">
                 <span className="link-icon"><FileIcon size={16} /></span>
                 {t('footer.termsOfService', 'Terms of Service')}
-              </Link>
-            </div>
-          </div>
-          
-          {/* Contribute Column */}
-          <div className="footer-column">
-            <h3 className="footer-column-title">{t('footer.contribute', 'Contribute')}</h3>
-            <div className="footer-links-vertical">
-              <Link to="/?tab=contribute" className="footer-link">
-                <span className="link-icon"><PlusIcon size={16} /></span>
-                {t('footer.addRoute', 'Add Bus Route')}
-              </Link>
-              <Link to="/?tab=contribute" className="footer-link">
-                <span className="link-icon"><MicIcon size={16} /></span>
-                {t('footer.voiceContribute', 'Voice Contribution')}
               </Link>
             </div>
           </div>

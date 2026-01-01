@@ -196,32 +196,31 @@
   }
 }
 
-/* Mobile - Stack vertically */
-@media (max-width: 560px) {
+/* Mobile - Stack vertically at 640px and below */
+@media (max-width: 640px) {
   .route-input-row {
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
   
   .route-time-field {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.5rem;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
   }
   
   .route-time-field .route-label {
-    grid-column: 1;
-    white-space: nowrap;
+    width: 100%;
   }
   
   .route-time-field .time-input-wrapper {
-    grid-column: 2;
-    max-width: 140px;
+    width: 100%;
+    max-width: 100%;
   }
   
   .route-time-field .field-error-text {
-    grid-column: 1 / -1;
+    width: 100%;
   }
   
   .route-connector {
@@ -236,17 +235,6 @@
   .route-time-input {
     font-size: 1.1rem !important;
     padding: 0.75rem !important;
-  }
-}
-
-/* Small Mobile - Full width time */
-@media (max-width: 400px) {
-  .route-time-field {
-    grid-template-columns: 1fr;
-  }
-  
-  .route-time-field .time-input-wrapper {
-    max-width: 100%;
   }
 }
 
@@ -295,6 +283,15 @@
   overflow: visible; /* Allow dropdowns to display outside */
   position: relative;
   z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .route-details-compact {
+    padding: 0.75rem;
+    margin: -0.75rem -0.75rem 0.25rem -0.75rem;
+  }
 }
 
 /* Form Row Compact - Stacked on Mobile */

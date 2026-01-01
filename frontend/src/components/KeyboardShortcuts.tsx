@@ -22,11 +22,47 @@ export const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({ shortcuts 
   const { t } = useTranslation();
 
   useEffect(() => {
+    // Helper function to check if element is a form control
+    const isFormControl = (element: Element): boolean => {
+      const formElements = ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'];
+      
+      // Check if element itself is a form control
+      if (formElements.includes(element.tagName)) {
+        return true;
+      }
+      
+      // Check if element is contentEditable
+      if ((element as HTMLElement).contentEditable === 'true') {
+        return true;
+      }
+      
+      // Check if element is inside a form control or has specific data attributes
+      const currentElement = element as HTMLElement;
+      if (currentElement.closest('input, textarea, select, [contenteditable="true"], [role="combobox"], [role="listbox"], .form-input, .form-select, .form-textarea')) {
+        return true;
+      }
+      
+      return false;
+    };
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Show/hide help with ? key
+      const target = event.target as Element;
+      const hasModifiers = event.ctrlKey || event.metaKey || event.altKey || event.shiftKey;
+      
+      // Check if user is interacting with a form control
+      const inFormControl = isFormControl(target);
+
+      // Show/hide help with ? key (only outside form controls)
       if (event.key === '?' && !event.ctrlKey && !event.metaKey) {
-        event.preventDefault();
-        setShowHelp(prev => !prev);
+        if (!inFormControl) {
+          event.preventDefault();
+          setShowHelp(prev => !prev);
+        }
+        return;
+      }
+
+      // Skip ALL shortcuts if in form control without modifiers
+      if (inFormControl && !hasModifiers) {
         return;
       }
 
@@ -42,9 +78,15 @@ export const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({ shortcuts 
             return false;
           });
 
+        // Skip shortcuts that would interfere with form input
         if (event.key.toLowerCase() === shortcut.key.toLowerCase() && modifiersMatch) {
-          event.preventDefault();
-          shortcut.action();
+          // Only execute shortcut if:
+          // 1. NOT in a form control, OR
+          // 2. In a form control but has modifiers (like Ctrl+S)
+          if (!inFormControl || hasModifiers) {
+            event.preventDefault();
+            shortcut.action();
+          }
           return;
         }
       }

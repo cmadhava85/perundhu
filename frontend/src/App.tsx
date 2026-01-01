@@ -282,6 +282,8 @@ function AppContent() {
   const stops = selectedBusId && stopsMap[selectedBusId] ? stopsMap[selectedBusId] : [];
 
   // Phase 2: Keyboard shortcuts
+  // CRITICAL: All shortcuts that use single letters (f, s, k) MUST have modifiers
+  // to prevent blocking normal text input in form fields
   const keyboardShortcuts = [
     {
       key: 'f',
@@ -293,6 +295,7 @@ function AppContent() {
           filtersSection.focus();
         }
       },
+      modifiers: ['ctrl' as const], // Add Ctrl modifier to prevent blocking 'F'/'f' in forms
     },
     {
       key: 's',
@@ -304,6 +307,7 @@ function AppContent() {
           searchInput.select();
         }
       },
+      modifiers: ['ctrl' as const], // Add Ctrl modifier to prevent blocking 'S'/'s' in forms
     },
     {
       key: 'k',
@@ -315,7 +319,7 @@ function AppContent() {
           searchInput.select();
         }
       },
-      modifiers: ['ctrl' as const],
+      modifiers: ['ctrl' as const], // Ctrl modifier already present
     },
     {
       key: 'Escape',
@@ -328,6 +332,7 @@ function AppContent() {
           if (closeButton) closeButton.click();
         });
       },
+      // Escape doesn't need modifiers as it's not a typing key
     },
   ];
 

@@ -202,9 +202,11 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     }
   };
   
-  // Refs to track if we're clicking on suggestions
+  // Refs to track if we're clicking on suggestions and input refs for focus management
   const fromSuggestionsRef = useRef<HTMLUListElement>(null);
   const toSuggestionsRef = useRef<HTMLUListElement>(null);
+  const fromInputRef = useRef<HTMLInputElement>(null);
+  const toInputRef = useRef<HTMLInputElement>(null);
   const isSelectingFromRef = useRef(false);
   const isSelectingToRef = useRef(false);
 
@@ -314,17 +316,31 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
   // Handle location selection
     const handleFromSelect = (location: AppLocation) => {
+    // Immediately reset the selecting flag to prevent blur timeout from reopening dropdown
+    isSelectingFromRef.current = false;
+    
     setSelectedFromLocation(location);
     setFromQuery(getLocationDisplayName(location));
     setShowFromSuggestions(false);
     setValidationError(null); // Clear validation error when selecting
+    // Move focus to the TO input after selecting FROM location
+    setTimeout(() => {
+      toInputRef.current?.focus();
+    }, 0);
   };
 
     const handleToSelect = (location: AppLocation) => {
+    // Immediately reset the selecting flag to prevent blur timeout from reopening dropdown
+    isSelectingToRef.current = false;
+    
     setSelectedToLocation(location);
     setToQuery(getLocationDisplayName(location));
     setShowToSuggestions(false);
     setValidationError(null); // Clear validation error when selecting
+    // Keep focus on the TO input, or move to search button if you prefer
+    setTimeout(() => {
+      toInputRef.current?.focus();
+    }, 0);
   };
 
   // Handle search - validate and then search
@@ -453,11 +469,11 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           <div className="stack stack-md">
             {/* From Location */}
             <div style={{ position: 'relative' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-2)', gap: '12px' }}>
                 <label 
                   htmlFor="from-location-input"
                   className="text-caption" 
-                  style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}
                 >
                   <span>🟢 {t('search.from', 'From')}</span>
                   {selectedFromLocation && selectedFromLocation.id !== -1 && (
@@ -494,7 +510,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   )}
                 </label>
                 
-                {/* Use My Location Button */}
+                {/* Use My Location Button - Positioned outside the input container */}
                 {gpsSupported && (
                   <button
                     type="button"
@@ -505,9 +521,9 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '4px',
-                      minWidth: '44px',
-                      minHeight: '44px',
-                      padding: '4px 10px',
+                      whiteSpace: 'nowrap',
+                      minWidth: 'fit-content',
+                      padding: '8px 16px',
                       background: isGettingLocation 
                         ? '#E5E7EB' 
                         : locationPermission === 'granted' 
@@ -516,11 +532,12 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                       color: isGettingLocation ? '#6B7280' : 'white',
                       border: 'none',
                       borderRadius: '16px',
-                      fontSize: '11px',
+                      fontSize: '12px',
                       fontWeight: '600',
                       cursor: isGettingLocation ? 'wait' : 'pointer',
                       transition: 'all 0.2s ease',
-                      boxShadow: isGettingLocation ? 'none' : '0 2px 8px rgba(99, 102, 241, 0.3)'
+                      boxShadow: isGettingLocation ? 'none' : '0 2px 8px rgba(99, 102, 241, 0.3)',
+                      marginTop: '2px'
                     }}
                     title={t('location.useMyLocation', 'Use my current location')}
                   >
@@ -579,7 +596,11 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   </button>
                 </div>
               )}
+              
+              {/* Input Container */}
+              <div style={{ position: 'relative', width: '100%' }}>
               <input
+                ref={fromInputRef}
                 id="from-location-input"
                 type="text"
                 value={fromQuery}
@@ -680,13 +701,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                 >
                   ✕
                 </button>
-              )}
-              
-              {/* Success indicator for valid from location */}
-              {selectedFromLocation && fromQuery && !validationError && (
-                <div className="input-success-message">
-                  ✓ {t('validation.location.valid', 'Valid location selected')}
-                </div>
               )}
               
               {/* From Suggestions */}
@@ -801,6 +815,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   })}
                 </ul>
               )}
+              </div>
             </div>
 
             {/* Swap Button */}
@@ -829,44 +844,50 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
 
             {/* To Location */}
             <div style={{ position: 'relative' }}>
-              <label 
-                htmlFor="to-location-input"
-                className="text-caption" 
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}
-              >
-                <span>🔴 {t('search.to', 'To')}</span>
-                {selectedToLocation && selectedToLocation.id !== -1 && (
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 8px',
-                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                    color: 'white',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: '600'
-                  }}>
-                    ✓ Verified
-                  </span>
-                )}
-                {toQuery && !selectedToLocation && toQuery.length >= 2 && (
-                  <span style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 8px',
-                    background: '#FEF3C7',
-                    color: '#D97706',
-                    borderRadius: '12px',
-                    fontSize: '10px',
-                    fontWeight: '600'
-                  }}>
-                    ⚠ Select from list
-                  </span>
-                )}
-              </label>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: 'var(--space-2)' }}>
+                <label 
+                  htmlFor="to-location-input"
+                  className="text-caption" 
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}
+                >
+                  <span>🔴 {t('search.to', 'To')}</span>
+                  {selectedToLocation && selectedToLocation.id !== -1 && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '2px 8px',
+                      background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                      color: 'white',
+                      borderRadius: '12px',
+                      fontSize: '10px',
+                      fontWeight: '600'
+                    }}>
+                      ✓ Verified
+                    </span>
+                  )}
+                  {toQuery && !selectedToLocation && toQuery.length >= 2 && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '2px 8px',
+                      background: '#FEF3C7',
+                      color: '#D97706',
+                      borderRadius: '12px',
+                      fontSize: '10px',
+                      fontWeight: '600'
+                    }}>
+                      ⚠ Select from list
+                    </span>
+                  )}
+                </label>
+              </div>
+              
+              {/* Input Container */}
+              <div style={{ position: 'relative', width: '100%' }}>
               <input
+                ref={toInputRef}
                 id="to-location-input"
                 type="text"
                 value={toQuery}
@@ -965,13 +986,6 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                 >
                   ✕
                 </button>
-              )}
-              
-              {/* Success indicator for valid to location */}
-              {selectedToLocation && toQuery && !validationError && (
-                <div className="input-success-message">
-                  ✓ {t('validation.location.valid', 'Valid location selected')}
-                </div>
               )}
               
               {/* To Suggestions */}
@@ -1086,6 +1100,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
                   })}
                 </ul>
               )}
+              </div>
             </div>
           </div>
 

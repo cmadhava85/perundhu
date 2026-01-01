@@ -249,7 +249,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         // Show upload success notification
         setLastUploadedCount(prev => prev + 1);
         setShowUploadSuccess(true);
-        setTimeout(() => setShowUploadSuccess(false), 4000);
+        // Increased timeout from 4000ms to 8000ms for larger files
+        setTimeout(() => setShowUploadSuccess(false), 8000);
 
         // Start polling for processing status - onSuccess will be called when processing completes
         pollProcessingStatus(response.contributionId, imageId, onSuccess);
@@ -499,10 +500,14 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           <CheckCircle2 style={{ width: '1.5rem', height: '1.5rem' }} />
           <div>
             <div style={{ fontWeight: '600', fontSize: '0.9375rem' }}>
-              {t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
+              {_lastUploadedCount > 1 
+                ? t('contribution.imageUpload.multipleUploadSuccess', 'Images uploaded successfully!')
+                : t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
             </div>
             <div style={{ fontSize: '0.8125rem', opacity: 0.9 }}>
-              {t('contribution.imageUpload.processingStarted', 'Processing will complete shortly')}
+              {_lastUploadedCount > 1 
+                ? `${_lastUploadedCount} image${_lastUploadedCount > 1 ? 's' : ''} ${t('contribution.imageUpload.processingStarted', 'are processing')}`
+                : t('contribution.imageUpload.processingStarted', 'Processing will complete shortly')}
             </div>
           </div>
           <button

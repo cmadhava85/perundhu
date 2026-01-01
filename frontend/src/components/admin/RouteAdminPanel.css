@@ -422,6 +422,10 @@
   border-left: 4px solid #ef4444;
 }
 
+.route-card.status-integration-failed {
+  border-left: 4px solid #d97706;
+}
+
 .route-card-header {
   padding: 1rem;
   display: flex;
@@ -668,6 +672,10 @@
   background-color: #fee2e2;
 }
 
+.routes-table tr.status-integration-failed {
+  background-color: #fed7aa;
+}
+
 /* Status badge */
 .status-badge {
   display: inline-flex;
@@ -692,6 +700,11 @@
 .status-badge.rejected {
   background-color: #fee2e2;
   color: #b91c1c;
+}
+
+.status-badge.integration-failed {
+  background-color: #fed7aa;
+  color: #92400e;
 }
 
 /* Action buttons in table */
