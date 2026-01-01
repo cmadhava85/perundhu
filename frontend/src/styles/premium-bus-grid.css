@@ -32,7 +32,7 @@
 /* Desktop: 3 columns */
 @media (min-width: 1024px) {
   .modern-bus-cards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     padding: 1.5rem;
     max-width: 1920px;
@@ -40,10 +40,10 @@
   }
 }
 
-/* Large Desktop: 4 columns */
+/* Large Desktop: 3 columns */
 @media (min-width: 1536px) {
   .modern-bus-cards {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2.5rem;
   }
 }

@@ -54,8 +54,9 @@ const RouteAdminPanel: React.FC = () => {
           data = await AdminService.getPendingRouteContributions();
         } else {
           data = await AdminService.getRouteContributions();
-          // Filter by status if not 'all'
-          data = data.filter(c => c.status?.toLowerCase() === statusFilter);
+          // Filter by status if not 'all' - convert filter to uppercase to match status values
+          const filterStatusUpper = statusFilter.toUpperCase();
+          data = data.filter(c => c.status === filterStatusUpper);
         }
         
         if (isMounted) {
@@ -128,8 +129,9 @@ const RouteAdminPanel: React.FC = () => {
         data = await AdminService.getPendingRouteContributions();
       } else {
         data = await AdminService.getRouteContributions();
-        // Filter by status if not 'all'
-        data = data.filter(c => c.status?.toLowerCase() === statusFilter);
+        // Filter by status if not 'all' - convert filter to uppercase to match status values
+        const filterStatusUpper = statusFilter.toUpperCase();
+        data = data.filter(c => c.status === filterStatusUpper);
       }
       
       setRoutes(data);
@@ -376,7 +378,7 @@ ${result.sqlExample}`;
   };
 
   // Get appropriate CSS class for status
-  const getStatusClass = (status?: ContributionStatus) => {
+  const getStatusClass = (status?: ContributionStatus | string) => {
     if (!status) return 'status-badge';
     switch (status) {
       case ContributionStatus.PENDING:
@@ -385,13 +387,15 @@ ${result.sqlExample}`;
         return 'status-badge approved';
       case ContributionStatus.REJECTED:
         return 'status-badge rejected';
+      case 'INTEGRATION_FAILED':
+        return 'status-badge integration-failed';
       default:
         return 'status-badge';
     }
   };
 
   // Get row class for styling
-  const getRowClass = (status?: ContributionStatus) => {
+  const getRowClass = (status?: ContributionStatus | string) => {
     if (!status) return '';
     switch (status) {
       case ContributionStatus.PENDING:
@@ -400,6 +404,8 @@ ${result.sqlExample}`;
         return 'status-approved';
       case ContributionStatus.REJECTED:
         return 'status-rejected';
+      case 'INTEGRATION_FAILED':
+        return 'status-integration-failed';
       default:
         return '';
     }
@@ -580,6 +586,7 @@ ${result.sqlExample}`;
               <option value="all">{t('admin.routes.statusAll', 'All')}</option>
               <option value="pending">{t('admin.routes.statusPending', 'Pending')}</option>
               <option value="approved">{t('admin.routes.statusApproved', 'Approved')}</option>
+              <option value="integration_failed">{t('admin.routes.statusIntegrationFailed', 'Integration Failed')}</option>
               <option value="rejected">{t('admin.routes.statusRejected', 'Rejected')}</option>
             </select>
           </div>
@@ -611,6 +618,10 @@ ${result.sqlExample}`;
             <div className="stat-item">
               <span className="stat-value">{routes.filter(r => r.status === ContributionStatus.APPROVED).length}</span>
               <span className="stat-label">{t('admin.routes.approvedCount')}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value">{routes.filter(r => r.status === 'INTEGRATION_FAILED').length}</span>
+              <span className="stat-label">{t('admin.routes.integrationFailedCount', 'Failed')}</span>
             </div>
             <div className="stat-item">
               <span className="stat-value">{routes.filter(r => r.status === ContributionStatus.REJECTED).length}</span>

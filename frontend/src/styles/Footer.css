@@ -63,7 +63,7 @@
 /* Main Footer Grid */
 .footer-main {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: var(--space-xl);
   padding: var(--space-md) 0;
 }
@@ -222,10 +222,10 @@
    RESPONSIVE DESIGN
    =========================================== */
 
-/* Tablet Landscape (768px - 991px) */
-@media (max-width: 991px) {
+/* Tablet Landscape and up (768px+) - Keep 3 columns */
+@media (max-width: 1199px) {
   .footer-main {
-    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: var(--space-lg);
   }
 
@@ -247,7 +247,7 @@
   }
 }
 
-/* Tablet Portrait (576px - 767px) */
+/* Tablet Portrait (576px - 767px) - Switch to 2 columns when space is tight */
 @media (max-width: 767px) {
   .app-footer {
     margin-bottom: 80px;
@@ -272,7 +272,7 @@
   }
 
   .footer-main {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: var(--space-lg);
   }
 
@@ -353,9 +353,13 @@
   }
 
   .footer-main {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
     padding: var(--space-sm) 0;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
   }
 
   .footer-logo-container {

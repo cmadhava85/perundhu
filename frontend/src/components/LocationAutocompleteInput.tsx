@@ -79,22 +79,19 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   };
 
   const handleSuggestionClick = (suggestion: LocationSuggestion) => {
-    // Mark as selecting FIRST to prevent blur from interfering
-    setIsSelecting(true);
-    
     // Clear any pending blur timeout
     if (blurTimeoutRef.current) {
       clearTimeout(blurTimeoutRef.current);
       blurTimeoutRef.current = null;
     }
     
-    // Immediately close dropdown and notify parent with display name
+    // Close dropdown immediately and notify parent with display name
     setShowSuggestions(false);
     setSuggestions([]);
     onChange(getDisplayName(suggestion), suggestion);
     
-    // Reset selecting flag after a short delay
-    setTimeout(() => setIsSelecting(false), 50);
+    // Mark as not selecting anymore - blur won't interfere since dropdown is already hidden
+    setIsSelecting(false);
   };
 
   const handleFocus = () => {

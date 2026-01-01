@@ -293,7 +293,29 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         <div className="bus-list-section">
           {buses.length === 0 ? (
             <div className="empty-results">
-              <p>{t('searchResults.noResults', 'No buses found for this route')}</p>
+              <div className="empty-state-container">
+                <div className="empty-state-icon">🚌</div>
+                <h2 className="empty-state-title">{t('searchResults.noResults', 'No buses found for this route')}</h2>
+                <p className="empty-state-description">
+                  {t('searchResults.noResultsDescription', 'We couldn\'t find any buses operating on this route. You can help by contributing this route information.')}
+                </p>
+                <div className="empty-state-actions">
+                  <Link 
+                    to="/contribution" 
+                    className="btn-contribute"
+                  >
+                    <span className="btn-icon">📝</span>
+                    {t('searchResults.contributeRoute', 'Contribute Route Info')}
+                  </Link>
+                  <button 
+                    className="btn-secondary-empty"
+                    onClick={() => navigate('/')}
+                  >
+                    <span className="btn-icon">🏠</span>
+                    {t('searchResults.backHome', 'Back to Home')}
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="modern-bus-cards">
