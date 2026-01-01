@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../types';
 import { getCurrentPosition } from '../services/geolocation';
+import { useAuth } from '../hooks/useAuth';
+import { getOrCreateDeviceId } from '../utils/deviceId';
 import '../styles/BusTracker.css';
 
 interface BusTrackerProps {
@@ -12,9 +14,11 @@ interface BusTrackerProps {
 /**
  * Component for crowd-sourced bus tracking
  * Allows users to report when they've boarded a bus at a specific stop
+ * Supports both authenticated users (for rewards) and anonymous tracking (device ID)
  */
 const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
   const { t } = useTranslation();
+  const { user, isAuthenticated } = useAuth();
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedStopId, setSelectedStopId] = useState<number | null>(null);
   const [isTracking, setIsTracking] = useState(false);
@@ -23,10 +27,26 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     localStorage.getItem('perundhu-tracking-enabled') === 'true'
   );
   const [lastReportTime, setLastReportTime] = useState<Date | null>(null);
+  const [boardingTime, setBoardingTime] = useState<Date | null>(null);
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const [movementDetected, setMovementDetected] = useState<boolean>(false);
   const [busStops, setBusStops] = useState<Stop[]>([]);
   const [isOnboard, setIsOnboard] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [reportCount, setReportCount] = useState(0);
+  const [gpsAccuracy, setGpsAccuracy] = useState<number | null>(null);
+  const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
+  const [reporterId, setReporterId] = useState<string>('');
+
+  // Initialize reporter ID (user ID if authenticated, device ID if anonymous)
+  useEffect(() => {
+    if (isAuthenticated && user?.id) {
+      setReporterId(`user_${user.id}`);
+    } else {
+      const deviceId = getOrCreateDeviceId();
+      setReporterId(`device_${deviceId}`);
+    }
+  }, [user, isAuthenticated]);
 
   // Handle bus selection
   const handleBusSelect = (busId: number) => {
@@ -34,6 +54,15 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     setBusStops(stops[busId] || []);
     setSelectedStopId(null);
   };
+
+  // Update current time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, []);
 
   // Handle stop selection
   const handleStopSelect = (stopId: number) => {
@@ -63,11 +92,22 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     try {
       // Request permission for location tracking
       const position = await getCurrentPosition();
+      const now = new Date();
       setUserLocation(position);
+      setGpsAccuracy(position.coords.accuracy);
       setIsTracking(true);
       setIsOnboard(true);
+      setBoardingTime(now);
+      setLastReportTime(now);
+      setReportCount(1);
       setError(null);
-      setLastReportTime(new Date());
+      
+      // Request battery information
+      if ('getBattery' in navigator) {
+        (navigator as any).getBattery?.().then((battery: any) => {
+          setBatteryLevel(Math.round(battery.level * 100));
+        });
+      }
       
       // Report initial location
       reportLocation(position, selectedBusId, selectedStopId);
@@ -83,6 +123,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
   const stopTracking = () => {
     setIsTracking(false);
     setIsOnboard(false);
+    setBoardingTime(null);
     reportDisembark();
   };
 
@@ -93,13 +134,14 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
     stopId: number | null
   ) => {
     try {
-      // In a real implementation, you would call an API endpoint:
+      // Report location with reporter ID (user ID or device ID)
       await fetch('/api/v1/bus-tracking/report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           busId,
           stopId,
+          reporterId,  // Use hybrid identifier (user_xxx or device_xxx)
           timestamp: new Date().toISOString(),
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -109,6 +151,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
       });
 
       setLastReportTime(new Date());
+      setReportCount(reportCount + 1);
     } catch (_error) {
       // Failed to report location
     }
@@ -204,16 +247,28 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
 
   return (
     <div className="bus-tracker">
-      <h3>{t('busTracker.title', 'Help Track Buses')}</h3>
+      <div className="tracker-header-section">
+        <h3>{t('busTracker.title', 'Help Track Buses')}</h3>
+      </div>
+
+      {!isAuthenticated && (
+        <div className="anonymous-banner">
+          <span className="banner-icon">👤</span>
+          <div className="banner-content">
+            <p>{t('busTracker.anonymousTracking', 'Tracking anonymously using device ID')}</p>
+          </div>
+        </div>
+      )}
       
       {error && (
         <div className="tracker-error">
-          {error}
+          <span className="error-icon">⚠️</span>
+          <span>{error}</span>
           <button onClick={() => setError(null)}>✕</button>
         </div>
       )}
 
-      <div className="tracker-toggle">
+      <div className="tracker-toggle-section">
         <label className="toggle-switch">
           <input 
             type="checkbox" 
@@ -225,51 +280,103 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
         </label>
         <span className="tracker-toggle-label">{t('busTracker.enableTracking', 'Enable bus tracking')}</span>
       </div>
+
+      {/* Info Cards showing current stats */}
+      {trackingEnabled && (
+        <div className="tracking-stats-row">
+          {isOnboard && boardingTime && (
+            <div className="stat-card">
+              <span className="stat-icon">⏱️</span>
+              <div className="stat-content">
+                <label>{t('busTracker.trackedTime', 'Time tracked')}</label>
+                <span className="stat-value">{calculateDuration(boardingTime, currentTime)}</span>
+              </div>
+            </div>
+          )}
+          
+          {gpsAccuracy !== null && (
+            <div className="stat-card">
+              <span className="stat-icon">📍</span>
+              <div className="stat-content">
+                <label>{t('busTracker.gpsAccuracy', 'GPS Accuracy')}</label>
+                <span className="stat-value">{Math.round(gpsAccuracy)}m</span>
+              </div>
+            </div>
+          )}
+          
+          {reportCount > 0 && (
+            <div className="stat-card">
+              <span className="stat-icon">📤</span>
+              <div className="stat-content">
+                <label>{t('busTracker.reports', 'Location reports')}</label>
+                <span className="stat-value">{reportCount}</span>
+              </div>
+            </div>
+          )}
+
+          {batteryLevel !== null && (
+            <div className="stat-card">
+              <span className={`stat-icon ${batteryLevel < 20 ? 'warning' : ''}`}>🔋</span>
+              <div className="stat-content">
+                <label>{t('busTracker.batteryLevel', 'Battery')}</label>
+                <span className="stat-value">{batteryLevel}%</span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       
       {trackingEnabled ? (
         <>
           {!isOnboard && (
             <>
               <div className="tracker-section">
-                <label>{t('busTracker.selectBus', 'Select your bus:')}</label>
-                <select 
-                  value={selectedBusId || ''} 
-                  onChange={(e) => handleBusSelect(Number(e.target.value))}
-                  className="tracker-select"
-                >
-                  <option value="">{t('busTracker.chooseBus', '-- Choose bus --')}</option>
-                  {buses.map((bus, index) => (
-                    <option key={`bus-${bus.id || index}`} value={bus.id}>
-                      {bus.busNumber} {bus.busName && `- ${bus.busName}`} {(bus.from || bus.to) && 
-                        `(${bus.from || t('busTracker.unknown')} to ${bus.to || t('busTracker.unknown')})`}
-                    </option>
-                  ))}
-                </select>
+                <label className="section-label">{t('busTracker.selectBus', 'Select your bus:')}</label>
+                <div className="select-wrapper">
+                  <select 
+                    value={selectedBusId || ''} 
+                    onChange={(e) => handleBusSelect(Number(e.target.value))}
+                    className="tracker-select"
+                  >
+                    <option value="">{t('busTracker.chooseBus', '-- Choose bus --')}</option>
+                    {buses.map((bus, index) => (
+                      <option key={`bus-${bus.id || index}`} value={bus.id}>
+                        {bus.busNumber} {bus.busName && `- ${bus.busName}`} {(bus.from || bus.to) && 
+                          `(${bus.from || t('busTracker.unknown')} to ${bus.to || t('busTracker.unknown')})`}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="select-arrow">▼</span>
+                </div>
               </div>
 
               {selectedBusId && busStops.length > 0 && (
                 <div className="tracker-section">
-                  <label>{t('busTracker.selectStop', 'Select the stop you boarded at:')}</label>
-                  <select 
-                    value={selectedStopId || ''} 
-                    onChange={(e) => handleStopSelect(Number(e.target.value))}
-                    className="tracker-select"
-                  >
-                    <option value="">{t('busTracker.chooseStop', '-- Choose stop --')}</option>
-                    {busStops.map((stop, index) => (
-                      <option key={`stop-${stop.id || index}`} value={stop.id}>
-                        {stop.name} {stop.departureTime ? `(${stop.departureTime})` : ''}
-                      </option>
-                    ))}
-                  </select>
+                  <label className="section-label">{t('busTracker.selectStop', 'Select the stop you boarded at:')}</label>
+                  <div className="select-wrapper">
+                    <select 
+                      value={selectedStopId || ''} 
+                      onChange={(e) => handleStopSelect(Number(e.target.value))}
+                      className="tracker-select"
+                    >
+                      <option value="">{t('busTracker.chooseStop', '-- Choose stop --')}</option>
+                      {busStops.map((stop, index) => (
+                        <option key={`stop-${stop.id || index}`} value={stop.id}>
+                          {stop.name} {stop.departureTime ? `(${stop.departureTime})` : ''}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="select-arrow">▼</span>
+                  </div>
                 </div>
               )}
 
               {selectedBusId && selectedStopId && (
                 <button 
-                  className="tracker-button" 
+                  className="tracker-button primary" 
                   onClick={startTracking}
                 >
+                  <span className="button-icon">✓</span>
                   {t('busTracker.startTracking', 'I\'m boarding this bus')}
                 </button>
               )}
@@ -278,46 +385,69 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
 
           {isOnboard && (
             <div className="tracking-active">
-              <div className="tracking-status">
+              <div className="tracking-status-badge">
                 <span className="tracking-indicator"></span>
                 {t('busTracker.activelyTracking', 'Actively tracking your bus')}
               </div>
               
               <div className="bus-info-card">
                 <h4>{buses.find(b => b.id === selectedBusId)?.busName}</h4>
-                <p>{buses.find(b => b.id === selectedBusId)?.busNumber}</p>
+                <p className="bus-number-info">{buses.find(b => b.id === selectedBusId)?.busNumber}</p>
                 {lastReportTime && (
                   <p className="last-report">
-                    {t('busTracker.lastUpdate', 'Last update')}: {formatTime(lastReportTime)}
+                    📡 {t('busTracker.lastUpdate', 'Last update')}: {formatTime(lastReportTime)}
                   </p>
                 )}
               </div>
 
               <button 
-                className="stop-tracking-button" 
+                className="tracker-button secondary" 
                 onClick={stopTracking}
               >
+                <span className="button-icon">🛑</span>
                 {t('busTracker.stopTracking', 'I\'ve reached my destination')}
               </button>
             </div>  
           )}
 
           <div className="tracker-info">
-            <h4>{t('busTracker.howItWorks', 'How it works:')}</h4>
-            <ul>
-              <li>{t('busTracker.step1', 'Select the bus you\'re boarding')}</li>
-              <li>{t('busTracker.step2', 'Choose the stop where you boarded')}</li>
-              <li>{t('busTracker.step3', 'Tap "I\'m boarding this bus" when you get on')}</li>
-              <li>{t('busTracker.step4', 'Your location helps others track this bus')}</li>
-              <li>{t('busTracker.step5', 'Tap "I\'ve reached my destination" when you get off')}</li>
+            <h4>ℹ️ {t('busTracker.howItWorks', 'How it works:')}</h4>
+            <ul className="tracker-steps">
+              <li><span className="step-number">1</span>{t('busTracker.step1', 'Select the bus you\'re boarding')}</li>
+              <li><span className="step-number">2</span>{t('busTracker.step2', 'Choose the stop where you boarded')}</li>
+              <li><span className="step-number">3</span>{t('busTracker.step3', 'Tap "I\'m boarding this bus" when you get on')}</li>
+              <li><span className="step-number">4</span>{t('busTracker.step4', 'Your location helps others track this bus')}</li>
+              <li><span className="step-number">5</span>{t('busTracker.step5', 'Tap "I\'ve reached my destination" when you get off')}</li>
             </ul>
-            <p className="tracker-note">{t('busTracker.privacyNote', 'Your location is only shared while you\'re on the bus. Battery usage is optimized.')}</p>
+            <div className="tracker-benefits">
+              <h5>🎁 {t('busTracker.benefits', 'Benefits:')}</h5>
+              <ul>
+                <li>🚌 {t('busTracker.helpOthers', 'Help others find buses in real-time')}</li>
+                <li>📍 {t('busTracker.improveData', 'Improve our bus tracking database')}</li>
+                <li>💡 {t('busTracker.makeTransport', 'Make public transport more reliable')}</li>
+                <li>🔐 {t('busTracker.privacyProtected', 'Your privacy is protected')}</li>
+              </ul>
+            </div>
+            <p className="tracker-note">
+              <strong>ℹ️ {t('busTracker.privacyNote', 'Your location is only shared while you\'re on the bus. Battery usage is optimized.')}</strong>
+            </p>
           </div>
         </>
       ) : (
-        <p className="tracker-disabled-message">
-          {t('busTracker.trackingDisabled', 'Enable bus tracking to help other travelers by reporting your bus location.')}
-        </p>
+        <div className="tracker-disabled">
+          <p className="tracker-disabled-message">
+            {t('busTracker.trackingDisabled', 'Enable bus tracking to help other travelers by reporting your bus location.')}
+          </p>
+          <div className="disabled-benefits">
+            <h5>🚀 {t('busTracker.whyTrack', 'Why track buses?')}</h5>
+            <ul>
+              <li>{t('busTracker.whyHelp', 'Help others find accurate bus locations in real-time')}</li>
+              <li>{t('busTracker.whyImprove', 'Improve our bus tracking database')}</li>
+              <li>{t('busTracker.whyReliable', 'Make public transport more reliable for everyone')}</li>
+              <li>{t('busTracker.whyPrivacy', 'Simple and secure - your privacy is protected')}</li>
+            </ul>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -325,7 +455,19 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
 
 // Helper function to format time
 const formatTime = (date: Date): string => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+};
+
+// Helper function to calculate duration between two dates
+const calculateDuration = (startTime: Date, endTime: Date): string => {
+  const diffMs = endTime.getTime() - startTime.getTime();
+  const minutes = Math.floor(diffMs / 60000);
+  const seconds = Math.floor((diffMs % 60000) / 1000);
+  
+  if (minutes === 0) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
 };
 
 export default BusTracker;

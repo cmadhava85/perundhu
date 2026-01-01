@@ -1,0 +1,196 @@
+@import './design-system.css';
+
+/* Tracker Status Component Styles */
+
+/* Error Message */
+.map-error {
+  padding: 1rem 1.5rem;
+  margin: 0;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  border-bottom: 1px solid #fca5a5;
+  font-weight: 500;
+  border-radius: 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.map-error::before {
+  content: '⚠️';
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Loading State */
+.map-loading {
+  padding: 1.5rem;
+  margin: 0;
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #0369a1;
+  border-bottom: 1px solid #7dd3fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  border-radius: 0;
+  min-height: 60px;
+  font-size: 0.95rem;
+}
+
+.map-loading::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(3, 105, 161, 0.3);
+  border-radius: 50%;
+  border-top-color: #0369a1;
+  border-right-color: #0369a1;
+  animation: spin 1.2s linear infinite;
+  flex-shrink: 0;
+}
+
+/* Active Trackers Display */
+.active-trackers {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-bottom: 1px solid #a7f3d0;
+  font-size: 0.9rem;
+  color: #166534;
+  font-weight: 500;
+  border-radius: 0;
+  flex-wrap: wrap;
+}
+
+.active-trackers strong {
+  color: #15803d;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.tracking-indicator {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  flex-shrink: 0;
+}
+
+/* Refresh Information */
+.refresh-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-top: 1px solid #bae6fd;
+  font-size: 0.85rem;
+  color: #0369a1;
+  border-radius: 0;
+  font-weight: 500;
+}
+
+.refresh-info p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.refresh-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    opacity: 0.7;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .map-error,
+  .map-loading,
+  .active-trackers,
+  .refresh-info {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .map-loading {
+    min-height: 50px;
+  }
+
+  .tracking-indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .refresh-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 0.95rem;
+  }
+
+  .active-trackers strong {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-error,
+  .map-loading,
+  .active-trackers,
+  .refresh-info {
+    padding: 0.65rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .map-error::before,
+  .map-loading::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  .active-trackers {
+    justify-content: center;
+  }
+
+  .refresh-info {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .refresh-info p {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,240 @@
+@import './design-system.css';
+
+/* Bus Info Panel Styles */
+
+.bus-info-panel {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  max-width: 340px;
+  z-index: 1000;
+  animation: slideInUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid #e5e7eb;
+  backdrop-filter: blur(4px);
+}
+
+.bus-info-panel .close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+}
+
+.bus-info-panel .close-button:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+  transform: scale(1.05);
+}
+
+.bus-info-panel .close-button:active {
+  transform: scale(0.95);
+}
+
+.bus-info-content {
+  padding-top: 0.5rem;
+}
+
+.bus-info-content h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: -0.3px;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.info-value {
+  color: #1f2937;
+  font-weight: 600;
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* Confidence Indicator */
+.confidence-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.confidence-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.confidence-bar-bg {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.confidence-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, currentColor 0%, currentColor 100%);
+  box-shadow: 0 0 6px currentColor;
+}
+
+.confidence-value {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 700;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+/* Bus Info Window for Google Maps */
+.bus-info-window {
+  padding: 12px;
+  max-width: 280px;
+  font-size: 13px;
+  background: white;
+  border-radius: 6px;
+}
+
+.bus-info-window h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.bus-info-window .info-grid {
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.bus-info-window .info-row {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.bus-info-window .info-row:last-child {
+  border-bottom: none;
+}
+
+.bus-info-window .info-label {
+  font-size: 0.8rem;
+}
+
+.bus-info-window .info-value {
+  font-size: 0.85rem;
+}
+
+.bus-info-window .confidence-indicator {
+  gap: 0.25rem;
+  padding-top: 0.5rem;
+}
+
+.bus-info-window .confidence-label {
+  font-size: 0.8rem;
+}
+
+.bus-info-window .confidence-bar-bg {
+  height: 8px;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bus-info-panel {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 1.25rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info-value {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .bus-info-panel {
+    padding: 1rem;
+  }
+
+  .bus-info-panel .close-button {
+    width: 28px;
+    height: 28px;
+    font-size: 1.25rem;
+  }
+
+  .bus-info-content h3 {
+    font-size: 1.1rem;
+  }
+}

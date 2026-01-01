@@ -8,6 +8,7 @@ import MapLegend from './map/MapLegend';
 import BusInfoPanel from './map/BusInfoPanel';
 import TrackerStatus from './map/TrackerStatus';
 import useBusLocationData from '../hooks/useBusLocationData';
+import '../styles/CombinedMapTracker.css';
 
 interface CombinedMapTrackerProps {
   fromLocation: Location;

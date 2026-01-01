@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { BusLocation } from '../../types';
+import '../../styles/BusInfoPanel.css';
 
 interface BusInfoPanelProps {
   bus: BusLocation;

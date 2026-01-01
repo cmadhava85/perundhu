@@ -2,6 +2,22 @@ import { logger } from '../utils/logger';
 import L from 'leaflet';
 import { getEnv } from '../utils/environment';
 
+// Fix for Leaflet default icons
+import 'leaflet/dist/leaflet.css';
+
+// Set default icon for Leaflet
+const DefaultIcon = L.icon({
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+  shadowAnchor: [12, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
 // Extend the Window interface to include initMap
 declare global {
   interface Window {
@@ -76,15 +92,15 @@ class LeafletMapService implements IMapService {
         throw new Error(`Element with ID '${elementId}' has no dimensions (${rect.width}x${rect.height}). Ensure the container has explicit width and height.`);
       }
       
-      // Ensure element is properly positioned and stable
+      // Ensure element is properly positioned
       const computedStyle = window.getComputedStyle(element);
       if (computedStyle.position === 'static') {
         element.style.position = 'relative';
       }
       
-      // Add a small delay to ensure DOM stability
-      if (element.offsetParent === null && element !== document.body) {
-        logger.warn('Map container may not be properly attached to DOM');
+      // Check if element is connected to DOM
+      if (!element.isConnected) {
+        throw new Error('Map container is not connected to DOM');
       }
       
       // Clean up any existing map with better error handling
@@ -96,16 +112,8 @@ class LeafletMapService implements IMapService {
         }
       }
       
-      // Wait for any pending DOM updates
-      requestAnimationFrame(() => {
-        // Double-check that element still exists after async operation
-        const elementCheck = document.getElementById(elementId);
-        if (elementCheck) {
-          this.initializeLeafletMap(elementCheck, options);
-        } else {
-          logger.error('Element disappeared during map initialization');
-        }
-      });
+      // Initialize map directly without requestAnimationFrame delay
+      this.initializeLeafletMap(element, options);
       
     } catch (error) {
       logger.error('Error creating Leaflet map:', error);
@@ -208,55 +216,131 @@ class LeafletMapService implements IMapService {
       throw new Error('Map not initialized. Call createMap first.');
     }
     
-    const marker = L.marker(position, {
-      icon: options.icon,
-      title: options.title,
-      alt: options.alt,
-      zIndexOffset: options.zIndexOffset,
-      opacity: options.opacity || 1
-    }).addTo(this.map);
+    // Validate position
+    if (!Array.isArray(position) || position.length !== 2 || !Number.isFinite(position[0]) || !Number.isFinite(position[1])) {
+      throw new Error(`Invalid position: ${JSON.stringify(position)}`);
+    }
     
-    this.markers.push(marker);
-    return marker;
+    try {
+      // Use provided icon or default
+      const icon = options.icon || DefaultIcon;
+      
+      const marker = L.marker(position, {
+        icon,
+        title: options.title,
+        alt: options.alt,
+        zIndexOffset: options.zIndexOffset,
+        opacity: options.opacity || 1
+      }).addTo(this.map);
+      
+      this.markers.push(marker);
+      return marker;
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      logger.warn(`Error adding marker at ${position}: ${errorMsg}`);
+      throw error;
+    }
   }
   
   clearMarkers(): void {
-    this.markers.forEach(marker => {
-      marker.remove();
-    });
-    this.markers = [];
+    try {
+      if (!Array.isArray(this.markers)) {
+        this.markers = [];
+        return;
+      }
+      
+      this.markers.forEach((marker, index) => {
+        try {
+          // Check if marker exists and is a valid Leaflet object
+          if (marker && typeof marker === 'object' && marker.remove && typeof marker.remove === 'function') {
+            marker.remove();
+          }
+        } catch (error) {
+          logger.warn(`Error removing marker ${index} during cleanup`);
+        }
+      });
+    } catch (error) {
+      logger.warn('Error during clearMarkers');
+    } finally {
+      this.markers = [];
+    }
   }
   
   clearRoutes(): void {
-    this.routes.forEach(route => {
-      route.remove();
-    });
-    this.routes = [];
+    try {
+      if (!Array.isArray(this.routes)) {
+        this.routes = [];
+        return;
+      }
+      
+      this.routes.forEach((route, index) => {
+        try {
+          // Check if route exists and is a valid Leaflet object
+          if (route && typeof route === 'object' && route.remove && typeof route.remove === 'function') {
+            route.remove();
+          }
+        } catch (error) {
+          logger.warn(`Error removing route ${index} during cleanup`);
+        }
+      });
+    } catch (error) {
+      logger.warn('Error during clearRoutes');
+    } finally {
+      this.routes = [];
+    }
   }
   
   cleanup(): void {
     logger.debug('Cleaning up Leaflet map...');
     
-    // Clear markers
-    this.clearMarkers();
-    
-    // Clear routes
-    this.clearRoutes();
-    
-    // Remove map instance
-    if (this.map) {
+    try {
+      // Clear markers and routes first
       try {
-        // Remove all event listeners
-        this.map.off();
-        
-        // Remove the map
-        this.map.remove();
-        this.map = null;
-        logger.debug('Leaflet map cleaned up successfully');
+        this.clearMarkers();
       } catch (error) {
-        logger.error('Error during Leaflet cleanup:', error);
-        this.map = null; // Force cleanup even if error occurs
+        logger.warn('Error clearing markers during cleanup');
       }
+      
+      try {
+        this.clearRoutes();
+      } catch (error) {
+        logger.warn('Error clearing routes during cleanup');
+      }
+      
+      // Remove map instance
+      if (this.map && typeof this.map === 'object') {
+        try {
+          // Remove all event listeners
+          if (this.map.off && typeof this.map.off === 'function') {
+            try {
+              this.map.off();
+            } catch (e) {
+              logger.debug('Error removing map listeners');
+            }
+          }
+          
+          // Remove the map
+          if (this.map.remove && typeof this.map.remove === 'function') {
+            try {
+              this.map.remove();
+            } catch (e) {
+              logger.debug('Error calling map.remove()');
+            }
+          }
+          logger.debug('Leaflet map cleaned up successfully');
+        } catch (error) {
+          logger.warn('Error removing map instance');
+        } finally {
+          this.map = null;
+        }
+      }
+    } catch (error) {
+      logger.error('Error during Leaflet cleanup');
+    } finally {
+      // Force reset state even if error occurs
+      this.map = null;
+      this.markers = [];
+      this.routes = [];
     }
   }
   

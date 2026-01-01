@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Perundhu",
-    "tagline": "Bus in Seconds",
+    "tagline": "Your Bus Journey Planner",
     "loading": "Loading...",
     "error": "No routes found for this selection. Please try different locations.",
     "close": "Close",
@@ -68,30 +68,11 @@
     "contactUs": "Contact Us",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "faq": "FAQ",
-    "description": "Your trusted companion for Tamil Nadu bus schedules. Find routes, track buses, and plan your journey with ease.",
-    "quickLinks": "Quick Links",
-    "searchBuses": "Search Buses",
-    "trackBus": "Track Bus",
-    "routeMap": "Route Map",
-    "savedRoutes": "Saved Routes",
-    "mobileApp": "Mobile App",
-    "stats": {
-      "routes": "Bus Routes",
-      "contributors": "Contributors",
-      "cities": "Cities Covered",
-      "dailyUsers": "Daily Users"
-    }
-  },
-  "statistics": {
-    "totalBuses": "Total Buses",
-    "routesCovered": "Routes Covered",
-    "dailyUsers": "Daily Users",
-    "contributors": "Contributors"
+    "faq": "FAQ"
   },
   "common": {
     "appName": "Perundhu",
-    "tagline": "Bus in Seconds",
+    "tagline": "Your Bus Travel Planner",
     "loading": "Loading...",
     "error": "No routes for this selection. Try different locations.",
     "close": "Close",
@@ -149,10 +130,6 @@
     "edit": "Edit",
     "newSearch": "New Search",
     "new": "New",
-    "noResults": "No buses found for this route",
-    "noResultsDescription": "We couldn't find any buses operating on this route. You can help by contributing this route information.",
-    "contributeRoute": "Contribute Route Info",
-    "backHome": "Back to Home",
     "error": {
       "title": "No Routes Found",
       "message": "No routes found for this selection. Please try different locations.",
@@ -685,7 +662,23 @@
     "step4": "Your location helps others track this bus",
     "step5": "Tap \"I've reached my destination\" when you get off",
     "privacyNote": "Your location is only shared while you're on the bus. Battery usage is optimized.",
-    "unknown": "Unknown"
+    "trackedTime": "Time tracked",
+    "gpsAccuracy": "GPS Accuracy",
+    "reports": "Location reports",
+    "batteryLevel": "Battery",
+    "benefits": "Benefits:",
+    "helpOthers": "Help others find buses in real-time",
+    "improveData": "Improve our bus tracking database",
+    "makeTransport": "Make public transport more reliable",
+    "privacyProtected": "Your privacy is protected",
+    "anonymousTracking": "Tracking anonymously using device ID",
+    "whyTrack": "Why track buses?",
+    "whyHelp": "Help others find accurate bus locations in real-time",
+    "whyImprove": "Improve our bus tracking database",
+    "whyReliable": "Make public transport more reliable for everyone",
+    "whyPrivacy": "Simple and secure - your privacy is protected",
+    "unknown": "Unknown",
+    "enableTracking": "Enable bus tracking"
   },
   "liveTracker": {
     "title": "Live Bus Tracking",
@@ -784,13 +777,11 @@
       "statusAll": "All",
       "statusPending": "Pending",
       "statusApproved": "Approved",
-      "statusIntegrationFailed": "Integration Failed",
       "statusRejected": "Rejected",
       "gridView": "Grid View",
       "listView": "List View",
       "pendingCount": "Pending",
       "approvedCount": "Approved",
-      "integrationFailedCount": "Integration Failed",
       "rejectedCount": "Rejected",
       "refresh": "Refresh",
       "loading": "Loading routes...",
