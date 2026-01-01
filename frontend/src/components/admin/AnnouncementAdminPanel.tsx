@@ -12,12 +12,10 @@ import {
   CheckCircle,
   Clock,
   TrendingUp,
-  Tag,
   Calendar,
   Users,
   Zap,
-  Save,
-  Copy
+  Save
 } from 'lucide-react';
 import AnnouncementService, { type Announcement, type AnnouncementStats } from '../../services/announcementService';
 import './AnnouncementAdminPanel.css';

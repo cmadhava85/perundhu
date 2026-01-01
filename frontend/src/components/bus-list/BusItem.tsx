@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../../types';
-import { formatTime, calculateDuration, getBusStatusColor } from './busUtils';
+import { formatTime, calculateDuration } from './busUtils';
 
 interface BusItemProps {
   bus: Bus;
@@ -22,15 +22,14 @@ const BusItem: React.FC<BusItemProps> = ({
   isSelected, 
   stops, 
   onSelect, 
-  onBook,
-  isCompact = false 
+  onBook
 }) => {
   const { t } = useTranslation();
   const [showStops, setShowStops] = useState(false);
   
   // Determine status color: Emerald for on-time, Amber for delays
   const isDelayed = bus.departureTime > new Date().toLocaleTimeString('en-US', { hour12: false });
-  const statusColor = isDelayed ? 'amber' : 'emerald';
+  // const statusColor = isDelayed ? 'amber' : 'emerald';
   const statusBg = isDelayed ? 'bg-amber-400/20 border-amber-400/50 text-amber-600' : 'bg-emerald-400/20 border-emerald-400/50 text-emerald-600';
 
   return (

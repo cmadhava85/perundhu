@@ -1,5 +1,7 @@
 package com.perundhu.adapter.in.rest;
 
+import com.perundhu.adapter.in.rest.dto.AnnouncementDTO;
+import com.perundhu.adapter.in.rest.mapper.AnnouncementMapper;
 import com.perundhu.infrastructure.adapter.service.AnnouncementService;
 import com.perundhu.infrastructure.persistence.entity.AnnouncementJpaEntity;
 import lombok.RequiredArgsConstructor;
@@ -23,27 +25,30 @@ import java.util.Map;
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;
+    private final AnnouncementMapper announcementMapper = new AnnouncementMapper();
 
     /**
      * Get all active announcements (public endpoint)
      */
     @GetMapping("/v1/announcements")
-    public ResponseEntity<List<AnnouncementJpaEntity>> getActiveAnnouncements() {
+    public ResponseEntity<List<AnnouncementDTO>> getActiveAnnouncements() {
         log.info("Fetching active announcements");
-        return ResponseEntity.ok(announcementService.getActiveAnnouncements());
+        List<AnnouncementJpaEntity> entities = announcementService.getActiveAnnouncements();
+        return ResponseEntity.ok(announcementMapper.toDTOList(entities));
     }
 
     /**
      * Get announcements by target audience (public endpoint)
      */
     @GetMapping("/v1/announcements/audience/{audience}")
-    public ResponseEntity<List<AnnouncementJpaEntity>> getAnnouncementsByAudience(
+    public ResponseEntity<List<AnnouncementDTO>> getAnnouncementsByAudience(
             @PathVariable String audience) {
         log.info("Fetching announcements for audience: {}", audience);
         try {
             AnnouncementJpaEntity.TargetAudience targetAudience = AnnouncementJpaEntity.TargetAudience
                     .valueOf(audience.toUpperCase());
-            return ResponseEntity.ok(announcementService.getAnnouncementsByAudience(targetAudience));
+            List<AnnouncementJpaEntity> entities = announcementService.getAnnouncementsByAudience(targetAudience);
+            return ResponseEntity.ok(announcementMapper.toDTOList(entities));
         } catch (IllegalArgumentException e) {
             log.error("Invalid audience: {}", audience);
             return ResponseEntity.badRequest().build();
@@ -77,9 +82,10 @@ public class AnnouncementController {
      */
     @GetMapping("/admin/announcements")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<AnnouncementJpaEntity>> getAllAnnouncements() {
+    public ResponseEntity<List<AnnouncementDTO>> getAllAnnouncements() {
         log.info("Admin: Fetching all announcements");
-        return ResponseEntity.ok(announcementService.getAllAnnouncements());
+        List<AnnouncementJpaEntity> entities = announcementService.getAllAnnouncements();
+        return ResponseEntity.ok(announcementMapper.toDTOList(entities));
     }
 
     /**
@@ -87,9 +93,10 @@ public class AnnouncementController {
      */
     @GetMapping("/admin/announcements/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AnnouncementJpaEntity> getAnnouncement(@PathVariable Long id) {
+    public ResponseEntity<AnnouncementDTO> getAnnouncement(@PathVariable Long id) {
         log.info("Admin: Fetching announcement with ID: {}", id);
         return announcementService.getAnnouncement(id)
+                .map(announcementMapper::toDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -99,15 +106,16 @@ public class AnnouncementController {
      */
     @PostMapping("/admin/announcements")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AnnouncementJpaEntity> createAnnouncement(
-            @RequestBody AnnouncementJpaEntity announcement,
+    public ResponseEntity<AnnouncementDTO> createAnnouncement(
+            @RequestBody AnnouncementDTO announcement,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
         log.info("Admin: Creating announcement with ID: {}", announcement.getUniqueId());
         try {
             announcement.setCreatedBy(userId != null ? userId : "admin");
             announcement.setUpdatedBy(userId != null ? userId : "admin");
-            AnnouncementJpaEntity created = announcementService.createAnnouncement(announcement);
-            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+            AnnouncementJpaEntity entity = announcementMapper.toEntity(announcement);
+            AnnouncementJpaEntity created = announcementService.createAnnouncement(entity);
+            return ResponseEntity.status(HttpStatus.CREATED).body(announcementMapper.toDTO(created));
         } catch (IllegalArgumentException e) {
             log.error("Failed to create announcement: {}", e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -119,15 +127,16 @@ public class AnnouncementController {
      */
     @PutMapping("/admin/announcements/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AnnouncementJpaEntity> updateAnnouncement(
+    public ResponseEntity<AnnouncementDTO> updateAnnouncement(
             @PathVariable Long id,
-            @RequestBody AnnouncementJpaEntity announcement,
+            @RequestBody AnnouncementDTO announcement,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
         log.info("Admin: Updating announcement with ID: {}", id);
         try {
             announcement.setUpdatedBy(userId != null ? userId : "admin");
-            AnnouncementJpaEntity updated = announcementService.updateAnnouncement(id, announcement);
-            return ResponseEntity.ok(updated);
+            AnnouncementJpaEntity entity = announcementMapper.toEntity(announcement);
+            AnnouncementJpaEntity updated = announcementService.updateAnnouncement(id, entity);
+            return ResponseEntity.ok(announcementMapper.toDTO(updated));
         } catch (IllegalArgumentException e) {
             log.error("Failed to update announcement: {}", e.getMessage());
             return ResponseEntity.notFound().build();
@@ -155,14 +164,14 @@ public class AnnouncementController {
      */
     @PostMapping("/admin/announcements/{id}/publish")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AnnouncementJpaEntity> publishAnnouncement(
+    public ResponseEntity<AnnouncementDTO> publishAnnouncement(
             @PathVariable Long id,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
         log.info("Admin: Publishing announcement with ID: {}", id);
         try {
             AnnouncementJpaEntity published = announcementService.publishAnnouncement(id,
                     userId != null ? userId : "admin");
-            return ResponseEntity.ok(published);
+            return ResponseEntity.ok(announcementMapper.toDTO(published));
         } catch (IllegalArgumentException e) {
             log.error("Failed to publish announcement: {}", e.getMessage());
             return ResponseEntity.notFound().build();
@@ -174,14 +183,14 @@ public class AnnouncementController {
      */
     @PostMapping("/admin/announcements/{id}/unpublish")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AnnouncementJpaEntity> unpublishAnnouncement(
+    public ResponseEntity<AnnouncementDTO> unpublishAnnouncement(
             @PathVariable Long id,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
         log.info("Admin: Unpublishing announcement with ID: {}", id);
         try {
             AnnouncementJpaEntity unpublished = announcementService.unpublishAnnouncement(id,
                     userId != null ? userId : "admin");
-            return ResponseEntity.ok(unpublished);
+            return ResponseEntity.ok(announcementMapper.toDTO(unpublished));
         } catch (IllegalArgumentException e) {
             log.error("Failed to unpublish announcement: {}", e.getMessage());
             return ResponseEntity.notFound().build();
@@ -193,10 +202,11 @@ public class AnnouncementController {
      */
     @GetMapping("/admin/announcements/status/{status}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<AnnouncementJpaEntity>> getAnnouncementsByStatus(
+    public ResponseEntity<List<AnnouncementDTO>> getAnnouncementsByStatus(
             @PathVariable String status) {
         log.info("Admin: Fetching announcements with status: {}", status);
-        return ResponseEntity.ok(announcementService.getAnnouncementsByStatus(status));
+        List<AnnouncementJpaEntity> entities = announcementService.getAnnouncementsByStatus(status);
+        return ResponseEntity.ok(announcementMapper.toDTOList(entities));
     }
 
     /**

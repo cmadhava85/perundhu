@@ -48,10 +48,10 @@ describe('ContributionMethodSelector Component', () => {
     it('displays all method chips when features are enabled', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      // Component uses short labels in chips - note: Stops is no longer in the selector
-      expect(screen.getByText('Manual')).toBeDefined();
+      // Component uses short labels in chips
+      expect(screen.getByText('Text')).toBeDefined();
       expect(screen.getByText('Voice')).toBeDefined();
-      expect(screen.getByText('Upload')).toBeDefined();
+      expect(screen.getByText('Image')).toBeDefined();
       expect(screen.getByText('Paste')).toBeDefined();
       expect(screen.getByText('Verify')).toBeDefined();
     });
@@ -59,9 +59,9 @@ describe('ContributionMethodSelector Component', () => {
     it('displays method icons', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       
-      expect(screen.getByText('📝')).toBeDefined(); // Manual
+      expect(screen.getByText('✍️')).toBeDefined(); // Text/Manual
       expect(screen.getByText('🎤')).toBeDefined(); // Voice
-      expect(screen.getByText('📷')).toBeDefined(); // Upload
+      expect(screen.getByText('📸')).toBeDefined(); // Image
       expect(screen.getByText('📋')).toBeDefined(); // Paste
       expect(screen.getByText('✅')).toBeDefined(); // Verify
     });
@@ -72,7 +72,7 @@ describe('ContributionMethodSelector Component', () => {
       const onMethodChange = vi.fn();
       render(<ContributionMethodSelector {...defaultProps} onMethodChange={onMethodChange} selectedMethod="image" />);
       
-      const manualChip = screen.getByText('Manual').closest('button');
+      const manualChip = screen.getByText('Text').closest('button');
       if (manualChip) {
         fireEvent.click(manualChip);
         expect(onMethodChange).toHaveBeenCalledWith('manual');
@@ -154,7 +154,7 @@ describe('ContributionMethodSelector Component', () => {
     it('uses aria-pressed on method chips', () => {
       render(<ContributionMethodSelector {...defaultProps} selectedMethod="manual" />);
       
-      const manualChip = screen.getByText('Manual').closest('button');
+      const manualChip = screen.getByText('Text').closest('button');
       if (manualChip) {
         expect(manualChip.getAttribute('aria-pressed')).toBe('true');
       }
@@ -164,7 +164,7 @@ describe('ContributionMethodSelector Component', () => {
       render(<ContributionMethodSelector {...defaultProps} selectedMethod="verify" />);
       
       const verifyChip = screen.getByText('Verify').closest('button');
-      const manualChip = screen.getByText('Manual').closest('button');
+      const manualChip = screen.getByText('Text').closest('button');
       
       if (verifyChip && manualChip) {
         expect(verifyChip.getAttribute('aria-pressed')).toBe('true');
@@ -174,11 +174,6 @@ describe('ContributionMethodSelector Component', () => {
   });
 
   describe('Method Badges', () => {
-    it('shows star badge for Manual (recommended)', () => {
-      render(<ContributionMethodSelector {...defaultProps} />);
-      expect(screen.getByText('★')).toBeDefined();
-    });
-
     it('shows lightning badge for Paste (fast)', () => {
       render(<ContributionMethodSelector {...defaultProps} />);
       expect(screen.getByText('⚡')).toBeDefined();

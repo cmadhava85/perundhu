@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AnnouncementBanner from './AnnouncementBanner';
 import { getActiveAnnouncements } from '../config/announcements';
-import { triggerHaptic } from '../utils/haptic';
 import '../styles/Header.css';
 
 interface HeaderProps {
@@ -19,11 +18,11 @@ const Header: React.FC<HeaderProps> = ({
   showAnnouncements = true
 }) => {
   const { t, i18n } = useTranslation();
-  const [showWhatsNew, setShowWhatsNew] = useState(false);
-  const [hasNewUpdates, setHasNewUpdates] = useState(false);
+  const [_showWhatsNew, _setShowWhatsNew] = useState(false);
+  const [_hasNewUpdates, _setHasNewUpdates] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [_isMenuOpen, _setIsMenuOpen] = useState(false);
   
   // Scroll detection for header compression (mobile-first)
   useEffect(() => {
@@ -78,12 +77,12 @@ const Header: React.FC<HeaderProps> = ({
       try {
         const dismissed = JSON.parse(dismissedStr);
         const undismissedCount = announcements.filter(a => !dismissed.ids?.includes(a.id)).length;
-        setHasNewUpdates(undismissedCount > 0);
+        _setHasNewUpdates(undismissedCount > 0);
       } catch {
-        setHasNewUpdates(announcements.length > 0);
+        _setHasNewUpdates(announcements.length > 0);
       }
     } else {
-      setHasNewUpdates(announcements.length > 0);
+      _setHasNewUpdates(announcements.length > 0);
     }
   }, []);
   

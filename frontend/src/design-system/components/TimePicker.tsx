@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { colors, spacing, borderRadius, shadows, textStyles, transitions, typography } from '../tokens';
+
 import './TimePicker.css';
 
 export type TimeFormat = '12h' | '24h';

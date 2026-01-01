@@ -73,7 +73,7 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
           ...a,
           id: a.id || a.uniqueId,
           dismissible: a.isDismissible,
-          type: a.type.toLowerCase() as any
+          type: (a.type.toLowerCase() as 'info' | 'warning' | 'success' | 'new-feature' | 'maintenance')
         }));
         setDisplayAnnouncements(converted);
       } catch (error) {

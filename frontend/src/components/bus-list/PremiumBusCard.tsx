@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop } from '../../types';
-import { ChevronDown, MapPin, Clock, Users, Wind, AlertCircle, CheckCircle } from 'lucide-react';
+import { ChevronDown, Clock, CheckCircle } from 'lucide-react';
 import './premium-bus-card.css';
 
 interface PremiumBusCardProps {
