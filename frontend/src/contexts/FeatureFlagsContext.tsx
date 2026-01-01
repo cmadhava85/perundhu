@@ -55,7 +55,6 @@ interface FeatureFlagsContextType {
   isSyncingToPreprod: boolean;
   lastSyncError: string | null;
   isBackendAvailable: boolean;
-  isPreprodAvailable: boolean;
 }
 
 // Storage key for persisted settings
@@ -113,7 +112,6 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
   const [isSyncingToPreprod, setIsSyncingToPreprod] = useState(false);
   const [lastSyncError, setLastSyncError] = useState<string | null>(null);
   const [isBackendAvailable, setIsBackendAvailable] = useState(false);
-  const [isPreprodAvailable, setIsPreprodAvailable] = useState(false);
 
   // Save to localStorage
   const saveToLocalStorage = useCallback((newFlags: FeatureFlags) => {
@@ -224,10 +222,8 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       
       const result = await AdminService.syncFeatureFlagsToPreprod(flagsRecord);
       console.log('Feature flags synced to preprod:', result);
-      setIsPreprodAvailable(true);
     } catch (error) {
       console.error('Failed to sync feature flags to preprod:', error);
-      setIsPreprodAvailable(false);
       if (error instanceof Error) {
         if (error.message.includes('401') || error.message.includes('403')) {
           setLastSyncError('Authentication failed for preprod. Please check your credentials.');
@@ -244,15 +240,6 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       setIsSyncingToPreprod(false);
     }
   }, [flags]);
-
-  // Check preprod availability on mount
-  useEffect(() => {
-    const checkPreprodAvailability = async () => {
-      const available = await AdminService.isPreprodAvailable();
-      setIsPreprodAvailable(available);
-    };
-    checkPreprodAvailability();
-  }, []);
 
   // Initialize on mount - try backend first, fall back to localStorage
   useEffect(() => {
@@ -327,8 +314,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
         isSyncing,
         isSyncingToPreprod,
         lastSyncError,
-        isBackendAvailable,
-        isPreprodAvailable
+        isBackendAvailable
       }}
     >
       {children}

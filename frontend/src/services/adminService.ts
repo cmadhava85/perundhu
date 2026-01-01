@@ -440,10 +440,18 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
   isPreprodAvailable: async (): Promise<boolean> => {
     try {
       const response = await axios.get(`${PREPROD_API_URL}/actuator/health`, {
-        timeout: 5000
+        timeout: 5000,
+        // Don't include credentials - health endpoint may be protected
+        validateStatus: (status) => status === 200 // Only accept 200, ignore 403/401
       });
       return response.status === 200;
-    } catch {
+    } catch (error) {
+      // Check if it's a 403 (forbidden) or 401 (unauthorized) - endpoint exists but needs auth
+      if (axios.isAxiosError(error) && (error.response?.status === 403 || error.response?.status === 401)) {
+        // Endpoint exists, just protected - consider it available
+        logger.debug('Preprod health endpoint is protected (403/401), considering it available');
+        return true;
+      }
       logger.warn('Preprod backend not available');
       return false;
     }

@@ -560,25 +560,125 @@ class SystemSettingsServiceTest {
 }
 ```
 
+#### Domain Model Tests (Pure Unit Tests - No Mocks)
+
+**Pattern**: Organize tests into nested classes by concern, use @DisplayName for clarity
+
+```java
+@DisplayName("Location Domain Model")
+class LocationTest {
+  
+  @Nested
+  @DisplayName("Constructor Validation")
+  class ConstructorValidationTests {
+    @Test
+    @DisplayName("Should create location with valid parameters")
+    void shouldCreateLocationWithValidParameters() {
+      LocationId id = new LocationId(1L);
+      Location location = new Location(id, "Chennai", "சென்னை", 13.0827, 80.2707);
+      
+      assertThat(location.id()).isEqualTo(id);
+      assertThat(location.name()).isEqualTo("Chennai");
+    }
+  }
+  
+  @Nested
+  @DisplayName("Coordinate Validation")
+  class CoordinateValidationTests {
+    @Test
+    @DisplayName("Should validate latitude range [-90, 90]")
+    void shouldValidateLatitudeRange() {
+      Location validNorth = new Location(new LocationId(1L), "North", null, 90.0, 0.0);
+      assertThat(validNorth.hasValidCoordinates()).isTrue();
+    }
+  }
+}
+```
+
+**Key Patterns**:
+- Use nested test classes with `@Nested` and `@DisplayName` for organization
+- Group related tests by concern (validation, timing, features, etc.)
+- Test both happy path and error cases
+- Test immutable updates (with-methods) verify original is unchanged
+- Use domain models directly, not DTOs
+
 ```java
 // Domain model test - Pure unit test (no mocks needed)
 @Test
 void shouldValidateBusNumber() {
-    assertThrows(DomainValidationException.class, () -> {
-        new Bus(new BusId(1L), "", "Bus Name");
+    assertThrows(IllegalArgumentException.class, () -> {
+        new Bus(new BusId(1L), "", "Bus Name", "Op", "Express",
+            new Location(...), new Location(...), 
+            LocalTime.of(8, 0), LocalTime.of(14, 0), 50, List.of());
     });
 }
 
-// Domain model test - immutable update
+// Domain model test - immutable update with record
 @Test
-void shouldCreateNewInstanceWithUpdatedValue() {
-    SystemSetting original = new SystemSetting(1L, "key", "value1", "cat", "desc", null, null);
-    SystemSetting updated = original.withValue("value2");
+void shouldCreateNewInstanceWithUpdatedDepartureTime() {
+    Bus original = new Bus(new BusId(1L), "BUS-001", "Express", ...);
+    Bus updated = original.withDepartureTime(LocalTime.of(9, 0));
     
-    assertThat(updated.getSettingValue()).isEqualTo("value2");
-    assertThat(original.getSettingValue()).isEqualTo("value1"); // Original unchanged
+    assertThat(original.departureTime()).isEqualTo(LocalTime.of(8, 0)); // Original unchanged
+    assertThat(updated.departureTime()).isEqualTo(LocalTime.of(9, 0));  // New value
 }
+```
+
+#### Service Layer Test Pattern (BusTrackingServiceReporterIdTest)
+
+**Key aspects to test with reporter ID**:
+- Distinguish between device ID (anonymous) and user ID (authenticated) tracking
+- Verify reporter ID is captured in service layer
+- Test validation with reporter ID present
+- Verify audit trail captures reporter information
+- Test data quality tracking per reporter
+
+```java
+@ExtendWith(MockitoExtension.class)
+@DisplayName("Bus Tracking Service - Reporter ID Tests")
+class BusTrackingServiceReporterIdTest {
+  
+  @Mock
+  private BusRepository busRepository;
+  
+  @Mock
+  private RouteValidationService routeValidationService;
+  
+  @InjectMocks
+  private BusTrackingServiceImpl busTrackingService;
+  
+  @Nested
+  @DisplayName("Device ID / Reporter ID Tests")
+  class ReporterIdTests {
+    
+    @Test
+    @DisplayName("Should accept device ID format in location report")
+    void shouldAcceptDeviceIdFormat() {
+      String deviceId = "device_1234567890_abc123xyz";
+      BusLocationReportDTO report = createReportWithReporter(deviceId);
+      
+      assertThat(report.userId()).isEqualTo(deviceId);
+      assertThat(report.userId()).matches("^device_\\d+_[a-z0-9]+$");
+    }
+    
+    @Test
+    @DisplayName("Should track anonymous (device) contributions")
+    void shouldTrackAnonymousContributions() {
+      BusLocationReportDTO report = createReportWithReporter("device_1234567890_abc123xyz");
+      
+      // Verify device ID is captured
+      assertThat(report.userId()).contains("device_");
+      assertThat(report.userId()).isNotNull();
+    }
+  }
 }
+```
+
+**Reporter ID Test Pattern**:
+- Device IDs start with `device_` (anonymous tracking)
+- User IDs start with `user_` (authenticated tracking)  
+- Both should be tracked and auditable
+- Validation should work with both formats
 ```
 
 ### Integration Tests

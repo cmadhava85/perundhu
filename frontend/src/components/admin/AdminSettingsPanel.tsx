@@ -74,8 +74,7 @@ const AdminSettingsPanel: React.FC = () => {
     isSyncing,
     isSyncingToPreprod, 
     lastSyncError,
-    isBackendAvailable,
-    isPreprodAvailable 
+    isBackendAvailable
   } = useFeatureFlags();
   const [activeTab, setActiveTab] = useState<SettingsTab>('features');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -184,7 +183,7 @@ const AdminSettingsPanel: React.FC = () => {
             className="sync-preprod-button"
             onClick={handleSyncToPreprod}
             disabled={isSyncingToPreprod || isSyncing}
-            title={isPreprodAvailable ? 'Sync settings to preprod environment' : 'Preprod not available'}
+            title={'Sync settings to preprod environment'}
           >
             {isSyncingToPreprod ? <Loader2 size={16} className="spin" /> : <Upload size={16} />}
             {t('admin.settings.syncToPreprod', 'Sync to Preprod')}

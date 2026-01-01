@@ -248,6 +248,69 @@ Use lazy loading for routes and heavy components
 
 ## Testing
 
+### Utility Tests (Follow deviceId.test.ts Pattern)
+
+Test pure functions and utilities with Vitest. Use clear test organization:
+
+```typescript
+// __tests__/utils/deviceId.test.ts
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { getOrCreateDeviceId, clearDeviceId, getDeviceId } from '../../utils/deviceId';
+
+describe('deviceId Utility', () => {
+  const DEVICE_ID_KEY = 'perundhu_device_id';
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  describe('getOrCreateDeviceId()', () => {
+    it('should create a new device ID if none exists', () => {
+      const deviceId = getOrCreateDeviceId();
+      
+      expect(deviceId).toBeDefined();
+      expect(deviceId).toMatch(/^device_\d+_[a-z0-9]+$/);
+    });
+
+    it('should return the same device ID on subsequent calls', () => {
+      const firstCall = getOrCreateDeviceId();
+      const secondCall = getOrCreateDeviceId();
+      
+      expect(firstCall).toBe(secondCall);
+    });
+
+    it('should store device ID in localStorage', () => {
+      const deviceId = getOrCreateDeviceId();
+      
+      const stored = localStorage.getItem(DEVICE_ID_KEY);
+      expect(stored).toBe(deviceId);
+    });
+  });
+
+  describe('clearDeviceId()', () => {
+    it('should remove device ID from localStorage', () => {
+      getOrCreateDeviceId();
+      expect(localStorage.getItem(DEVICE_ID_KEY)).toBeDefined();
+      
+      clearDeviceId();
+      
+      expect(localStorage.getItem(DEVICE_ID_KEY)).toBeNull();
+    });
+  });
+});
+```
+
+**Key patterns for utility tests**:
+- Test both creation and retrieval paths
+- Test persistence (localStorage, sessionStorage, etc.)
+- Test format/structure validation
+- Test edge cases (null, empty, invalid input)
+- Clean up after each test (clear mocks, localStorage, etc.)
+
 ### Service Tests (Follow adminService.test.ts pattern)
 ```typescript
 // __tests__/services/featureService.test.ts
@@ -280,15 +343,93 @@ describe('FeatureService', () => {
 });
 ```
 
+### Component Tests (Follow BusTracker.test.tsx Pattern)
+
+Test component behavior with user interactions, state changes, and async operations:
+
+```typescript
+// __tests__/components/BusTracker.test.tsx
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import BusTracker from '../../components/BusTracker';
+import { useAuth } from '../../hooks/useAuth';
+import { getOrCreateDeviceId } from '../../utils/deviceId';
+
+vi.mock('../../hooks/useAuth');
+vi.mock('../../utils/deviceId');
+
+describe('BusTracker Component with Device ID', () => {
+  const mockDeviceId = 'device_1234567890_abc123xyz';
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+    
+    (getOrCreateDeviceId as any).mockReturnValue(mockDeviceId);
+    
+    // Mock authenticated user
+    (useAuth as any).mockReturnValue({
+      user: null,
+      isAuthenticated: false,
+      isLoading: false,
+    });
+  });
+
+  describe('Anonymous Tracking', () => {
+    it('should show anonymous banner when user is not authenticated', () => {
+      render(<BusTracker buses={[]} stops={{}} />);
+
+      expect(screen.getByText(/Tracking anonymously/i)).toBeInTheDocument();
+    });
+
+    it('should use device ID as reporterId when not authenticated', async () => {
+      global.fetch = vi.fn().mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({})
+      });
+
+      render(<BusTracker buses={mockBuses} stops={mockStops} />);
+
+      // Select bus and stop
+      fireEvent.change(screen.getByDisplayValue('-- Choose bus --'), {
+        target: { value: '1' }
+      });
+
+      fireEvent.click(screen.getByText(/I'm boarding/i));
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith(
+          '/api/v1/bus-tracking/report',
+          expect.objectContaining({
+            body: expect.stringContaining(mockDeviceId)
+          })
+        );
+      });
+    });
+  });
+});
+```
+
+**Key patterns for component tests**:
+- Mock external hooks and utilities
+- Test both authenticated and anonymous flows
+- Test async operations with `waitFor`
+- Verify API calls include correct data (device ID, reporter ID, etc.)
+- Test user interactions (fireEvent.change, fireEvent.click)
+- Clean up localStorage and mocks in beforeEach
+
 ### Unit Tests with Vitest
 - Test component behavior, not implementation details
 - Use React Testing Library best practices
 - Mock external dependencies
+- Use screen queries (getByText, getByRole, etc.)
 
 ### E2E Tests with Playwright
 - Test critical user journeys
 - Use data-testid for stable selectors
 - Test across different viewports
+- Test with and without authentication
+- Verify error handling and edge cases
 
 ## Anti-Patterns to Avoid
 
