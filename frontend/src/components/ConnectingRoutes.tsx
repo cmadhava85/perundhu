@@ -57,7 +57,7 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
 
   // Sort routes by duration (fastest first) and get the first one as fastest
   const sortedRoutes = [...connectingRoutes].sort((a, b) => a.totalDuration - b.totalDuration);
-  const fastestRoute = sortedRoutes[0];
+  const _fastestRoute = sortedRoutes[0];
   
   return (
     <div className="connecting-routes" data-testid="connecting-routes">

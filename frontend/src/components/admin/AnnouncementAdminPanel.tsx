@@ -64,7 +64,7 @@ const INITIAL_FORM: FormState = {
 };
 
 export const AnnouncementAdminPanel: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { _i18n } = useTranslation();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [stats, setStats] = useState<AnnouncementStats | null>(null);
   const [loading, setLoading] = useState(true);

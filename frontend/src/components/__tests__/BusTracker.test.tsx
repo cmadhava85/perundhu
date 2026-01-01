@@ -50,7 +50,7 @@ describe('BusTracker Component with Device ID', () => {
     localStorage.clear();
     
     // Mock authenticated user
-    (useAuth as any).mockReturnValue({
+    (useAuth as unknown as jest.Mock).mockReturnValue({
       user: null,
       isAuthenticated: false,
       isLoading: false,
@@ -60,10 +60,10 @@ describe('BusTracker Component with Device ID', () => {
     });
 
     // Mock device ID
-    (getOrCreateDeviceId as any).mockReturnValue(mockDeviceId);
+    (getOrCreateDeviceId as unknown as jest.Mock).mockReturnValue(mockDeviceId);
 
     // Mock geolocation
-    (global.navigator.geolocation as any) = {
+    (global.navigator.geolocation as unknown) = {
       watchPosition: vi.fn((success) => {
         success({
           coords: {
@@ -79,7 +79,7 @@ describe('BusTracker Component with Device ID', () => {
     };
 
     // Reset fetch mock
-    (global.fetch as any).mockReset();
+    (global.fetch as unknown as jest.Mock).mockReset();
   });
 
   afterEach(() => {
@@ -97,7 +97,7 @@ describe('BusTracker Component with Device ID', () => {
     });
 
     it('should use device ID as reporterId when not authenticated', async () => {
-      (global.fetch as any).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({})
       });
@@ -120,7 +120,7 @@ describe('BusTracker Component with Device ID', () => {
       fireEvent.click(startButton);
 
       await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalledWith(
+        expect((global.fetch as unknown as jest.Mock)).toHaveBeenCalledWith(
           '/api/v1/bus-tracking/report',
           expect.objectContaining({
             method: 'POST',
@@ -136,14 +136,14 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
-      expect(getOrCreateDeviceId).toHaveBeenCalled();
+      expect((getOrCreateDeviceId as unknown as jest.Mock)).toHaveBeenCalled();
     });
   });
 
   describe('Authenticated User Tracking', () => {
     beforeEach(() => {
       // Mock authenticated user
-      (useAuth as any).mockReturnValue({
+      (useAuth as unknown as jest.Mock).mockReturnValue({
         user: { id: 'user_john@example.com', email: 'john@example.com', role: 'USER' },
         isAuthenticated: true,
         isLoading: false,
@@ -162,7 +162,7 @@ describe('BusTracker Component with Device ID', () => {
     });
 
     it('should use user ID as reporterId when authenticated', async () => {
-      (global.fetch as any).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({})
       });
@@ -185,7 +185,7 @@ describe('BusTracker Component with Device ID', () => {
       fireEvent.click(startButton);
 
       await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalledWith(
+        expect((global.fetch as unknown as jest.Mock)).toHaveBeenCalledWith(
           '/api/v1/bus-tracking/report',
           expect.objectContaining({
             method: 'POST',
@@ -198,7 +198,7 @@ describe('BusTracker Component with Device ID', () => {
 
   describe('Report Location', () => {
     it('should send reporterId in location report', async () => {
-      (global.fetch as any).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({})
       });
@@ -218,8 +218,8 @@ describe('BusTracker Component with Device ID', () => {
       fireEvent.click(screen.getByText(/I'm boarding this bus/i));
 
       await waitFor(() => {
-        const call = (global.fetch as any).mock.calls[0];
-        const body = JSON.parse(call[1].body);
+        const call = ((global.fetch as unknown as jest.Mock).mock.calls[0] as unknown[]);
+        const body = JSON.parse((call[1] as { body: string }).body);
 
         expect(body).toHaveProperty('reporterId');
         expect(body.reporterId).toBe(mockDeviceId);
@@ -227,7 +227,7 @@ describe('BusTracker Component with Device ID', () => {
     });
 
     it('should include all required fields in location report', async () => {
-      (global.fetch as any).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({})
       });
@@ -247,8 +247,8 @@ describe('BusTracker Component with Device ID', () => {
       fireEvent.click(screen.getByText(/I'm boarding this bus/i));
 
       await waitFor(() => {
-        const call = (global.fetch as any).mock.calls[0];
-        const body = JSON.parse(call[1].body);
+        const call = ((global.fetch as unknown as jest.Mock).mock.calls[0] as unknown[]);
+        const body = JSON.parse((call[1] as { body: string }).body);
 
         expect(body).toHaveProperty('busId', 1);
         expect(body).toHaveProperty('stopId', 1);
@@ -292,7 +292,7 @@ describe('BusTracker Component with Device ID', () => {
 
   describe('Disembarkation', () => {
     it('should handle stopping tracking', async () => {
-      (global.fetch as any).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({})
       });

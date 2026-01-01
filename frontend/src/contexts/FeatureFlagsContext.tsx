@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from 'react';
 import AdminService from '../services/adminService';
 
 /**
@@ -300,22 +300,24 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     }
   }, [saveToLocalStorage, isBackendAvailable]);
 
+  const contextValue = useMemo(() => ({
+    flags, 
+    updateFlag, 
+    updateFlags, 
+    resetToDefaults, 
+    syncWithBackend,
+    saveToBackend,
+    syncToPreprod,
+    isLoading, 
+    isSyncing,
+    isSyncingToPreprod,
+    lastSyncError,
+    isBackendAvailable
+  }), [flags, updateFlag, updateFlags, resetToDefaults, syncWithBackend, saveToBackend, syncToPreprod, isLoading, isSyncing, isSyncingToPreprod, lastSyncError, isBackendAvailable]);
+
   return (
     <FeatureFlagsContext.Provider 
-      value={{ 
-        flags, 
-        updateFlag, 
-        updateFlags, 
-        resetToDefaults, 
-        syncWithBackend,
-        saveToBackend,
-        syncToPreprod,
-        isLoading, 
-        isSyncing,
-        isSyncingToPreprod,
-        lastSyncError,
-        isBackendAvailable
-      }}
+      value={contextValue}
     >
       {children}
     </FeatureFlagsContext.Provider>
