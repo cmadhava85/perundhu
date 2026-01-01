@@ -55,10 +55,9 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
     }
   };
 
-  // Find the fastest route (shortest duration)
-  const fastestRoute = connectingRoutes.reduce((fastest, route) => {
-    return route.totalDuration < fastest.totalDuration ? route : fastest;
-  }, connectingRoutes[0]);
+  // Sort routes by duration (fastest first) and get the first one as fastest
+  const sortedRoutes = [...connectingRoutes].sort((a, b) => a.totalDuration - b.totalDuration);
+  const fastestRoute = sortedRoutes[0];
   
   return (
     <div className="connecting-routes" data-testid="connecting-routes">
@@ -69,8 +68,9 @@ const ConnectingRoutes: React.FC<ConnectingRoutesProps> = ({ connectingRoutes })
         </p>
       </div>
       
-      {connectingRoutes.map((route) => {
-        const isFastest = route.id === fastestRoute.id;
+      {sortedRoutes.map((route) => {
+        // Only mark the first route as fastest (after sorting)
+        const isFastest = sortedRoutes.indexOf(route) === 0;
         const legs = route.legs;
         const firstLeg = legs[0];
         const lastLeg = legs.at(-1)!;

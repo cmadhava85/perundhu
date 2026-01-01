@@ -1,11 +1,8 @@
 /* Import the new Transit Design System */
 @import './styles/transit-design-system.css';
-@import './styles/transit-bus-card-modern.css';
-@import './styles/search-form-modern.css';
 @import './styles/transit-realtime.css';
 
 /* Import the new modular CSS architecture */
-@import './styles/index.css';
 
 /* Enhanced Search Layout - Component specific styles */
 .enhanced-search-layout {

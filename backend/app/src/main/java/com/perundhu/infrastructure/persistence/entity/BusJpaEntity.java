@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.lang.Nullable;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,7 +51,7 @@ public class BusJpaEntity {
     @NotNull(message = "Departure time must not be null")
     private LocalTime departureTime;
 
-    @NotNull(message = "Arrival time must not be null")
+    @Nullable
     private LocalTime arrivalTime;
 
     @NotNull(message = "From location must not be null")

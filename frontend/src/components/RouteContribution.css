@@ -349,10 +349,11 @@
   max-width: 800px;
   margin: 0 auto;
   box-shadow: 0 15px 50px rgba(16, 185, 129, 0.15);
-  overflow: visible;
+  overflow: visible !important;
   animation: slideInUp 0.8s ease-out 0.2s both;
   position: relative;
   padding: 1.5rem;
+  z-index: 100;
 }
 
 @media (max-width: 640px) {
@@ -669,12 +670,18 @@
   padding: 1.5rem;
   border-radius: 0 0 24px 24px;
   backdrop-filter: blur(10px);
+  overflow: visible !important;
+  position: relative;
+  z-index: 100;
 }
 
 /* Enhanced Form Styling */
 .route-form, .image-form {
   max-width: 600px;
   margin: 0 auto;
+  overflow: visible !important;
+  position: relative;
+  z-index: 100;
 }
 
 .form-group {
@@ -1287,7 +1294,7 @@
   padding: 1.25rem;
   border: 1px solid #e2e8f0;
   position: relative;
-  overflow: hidden;
+  overflow: visible !important;
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -1320,7 +1327,7 @@
   padding: 1.25rem;
   border: 1px solid #e2e8f0;
   position: relative;
-  overflow: hidden;
+  overflow: visible !important;
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;

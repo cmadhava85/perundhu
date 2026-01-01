@@ -1,6 +1,5 @@
 /* Footer Component Styles - Modern Design */
 @import './design-system.css';
-@import './layout-modern.css';
 
 .app-footer {
   background: linear-gradient(135deg, #6366f1 0%, #5b4cff 100%);

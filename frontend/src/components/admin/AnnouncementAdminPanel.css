@@ -1,6 +1,5 @@
 /* AnnouncementAdminPanel.css */
 @import '../../styles/design-system.css';
-@import '../../styles/admin-modern.css';
 
 .announcement-admin-panel {
   padding: var(--space-lg) var(--space-md);

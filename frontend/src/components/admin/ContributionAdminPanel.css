@@ -1,7 +1,6 @@
 /* ContributionAdminPanel.css */
 /* Modern, mobile-first admin panel with compact design */
 @import '../../styles/design-system.css';
-@import '../../styles/admin-modern.css';
 
 .admin-panel {
   padding: var(--space-sm);

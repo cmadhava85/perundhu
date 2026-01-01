@@ -1,6 +1,5 @@
 /* Header Component Styles - Prototype Design System */
 @import './design-system.css';
-@import './layout-modern.css';
 
 .app-header {
   background: linear-gradient(135deg, #87CEEB 0%, #ADD8E6 100%);
