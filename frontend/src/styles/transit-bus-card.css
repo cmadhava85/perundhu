@@ -1,9 +1,13 @@
+@import './design-system.css';
+
 /* Modern Transit Bus Card - Inspired by Transit & Moovit */
 
 .transit-bus-card {
-  background: var(--transit-surface);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--transit-divider);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
   transition: var(--transition-base);
   margin-bottom: var(--space-2);
@@ -14,13 +18,15 @@
   font-family: inherit;
   padding: 0;
   outline: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-md);
 }
 
 .transit-bus-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.08);
-  transform: translateY(-1px);
-  border-color: rgba(0, 102, 255, 0.2);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px) saturate(200%);
+  border-color: rgba(0, 102, 255, 0.3);
 }
 
 .transit-bus-card.selected {
@@ -80,6 +86,44 @@
   letter-spacing: 0.5px;
   text-align: center;
   white-space: nowrap;
+}
+
+/* Status Pills - Phase 2 Visual Hierarchy */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.status-pill.on-time {
+  background: var(--semantic-success-bg);
+  color: var(--semantic-success);
+  border: 1px solid var(--semantic-success-border);
+}
+
+.status-pill.delayed {
+  background: var(--semantic-warning-bg);
+  color: var(--semantic-warning);
+  border: 1px solid var(--semantic-warning-border);
+}
+
+.status-pill.cancelled {
+  background: var(--semantic-error-bg);
+  color: var(--semantic-error);
+  border: 1px solid var(--semantic-error-border);
+}
+
+.status-pill.unknown {
+  background: var(--transit-surface-elevated);
+  color: var(--transit-text-secondary);
+  border: 1px solid var(--transit-divider);
 }
 
 .bus-name-display {
@@ -151,11 +195,12 @@
 .departure-time,
 .arrival-time {
   flex: 0 0 auto;
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
+  font-size: 36px; /* Phase 2: Extra large for maximum prominence */
+  font-weight: 700;
   color: var(--transit-text-primary);
   font-variant-numeric: tabular-nums;
-  min-width: 80px;
+  min-width: 105px; /* Adjusted for larger font */
+  letter-spacing: -0.8px; /* Tighter for large size */
 }
 
 .departure-time {

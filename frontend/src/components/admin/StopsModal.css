@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 /* Stops Modal Styles */
 .stops-modal-overlay {
   position: fixed;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * TNSTC Bus Route Scraper
  * 

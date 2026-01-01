@@ -1,20 +1,23 @@
 /* Bus Database Browser Styles */
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 .bus-database-browser {
-  padding: 1.5rem;
+  padding: var(--space-lg);
   max-width: 100%;
 }
 
 .bus-database-browser .panel-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-lg);
 }
 
 .bus-database-browser .panel-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text-primary, #1f2937);
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -29,17 +32,17 @@
 
 /* Filters */
 .bus-database-browser .filters-container {
-  background: var(--surface-primary, #ffffff);
-  border: 1px solid var(--border-light, #e5e7eb);
-  border-radius: var(--radius-lg, 0.75rem);
-  padding: 1rem;
-  margin-bottom: 1rem;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
 .bus-database-browser .search-row {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
 .bus-database-browser .search-box {
@@ -49,10 +52,10 @@
 
 .bus-database-browser .search-icon {
   position: absolute;
-  left: 0.75rem;
+  left: var(--space-md);
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-tertiary, #9ca3af);
+  color: var(--text-tertiary);
 }
 
 .bus-database-browser .search-input {

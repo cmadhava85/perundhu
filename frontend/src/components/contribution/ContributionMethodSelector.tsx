@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import { useFeatureFlags } from "../../contexts/FeatureFlagsContext";
 import './ContributionMethodSelector.css';
 
+type ContributionMethod = 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue';
+
 interface ContributionMethodSelectorProps {
-  selectedMethod: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue';
-  onMethodChange: (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue') => void;
+  selectedMethod: ContributionMethod;
+  onMethodChange: (method: ContributionMethod) => void;
 }
 
 export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProps> = ({
@@ -15,7 +17,7 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
   const { t } = useTranslation();
   const { flags } = useFeatureFlags();
 
-  const handleKeyDown = (method: 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'addStops' | 'reportIssue') => (e: React.KeyboardEvent) => {
+  const handleKeyDown = (method: ContributionMethod) => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onMethodChange(method);
@@ -25,17 +27,17 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
   return (
     <div className="compact-method-selector">
       <div className="method-chips" aria-label={t('method.selectMethod', 'Select contribution method')}>
-        {flags.enableManualContribution && (
+        {flags.enableImageContribution && (
           <button 
-            className={`method-chip ${selectedMethod === 'manual' ? 'active' : ''}`}
-            onClick={() => onMethodChange('manual')}
-            onKeyDown={handleKeyDown('manual')}
-            aria-pressed={selectedMethod === 'manual'}
+            className={`method-chip ${selectedMethod === 'image' ? 'active' : ''}`}
+            onClick={() => onMethodChange('image')}
+            onKeyDown={handleKeyDown('image')}
+            aria-pressed={selectedMethod === 'image'}
             type="button"
+            title={t('method.image.title', 'Upload an image of the bus schedule')}
           >
-            <span className="chip-icon">📝</span>
-            <span className="chip-label">{t('method.manual.short', 'Manual')}</span>
-            <span className="chip-badge recommended">★</span>
+            <span className="chip-icon">📸</span>
+            <span className="chip-label">{t('method.image.label', 'Image')}</span>
           </button>
         )}
 
@@ -46,22 +48,24 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             onKeyDown={handleKeyDown('voice')}
             aria-pressed={selectedMethod === 'voice'}
             type="button"
+            title={t('method.voice.title', 'Record voice contribution')}
           >
             <span className="chip-icon">🎤</span>
-            <span className="chip-label">{t('method.voice.short', 'Voice')}</span>
+            <span className="chip-label">{t('method.voice.label', 'Voice')}</span>
           </button>
         )}
 
-        {flags.enableImageContribution && (
+        {flags.enableManualContribution && (
           <button 
-            className={`method-chip ${selectedMethod === 'image' ? 'active' : ''}`}
-            onClick={() => onMethodChange('image')}
-            onKeyDown={handleKeyDown('image')}
-            aria-pressed={selectedMethod === 'image'}
+            className={`method-chip ${selectedMethod === 'manual' ? 'active' : ''}`}
+            onClick={() => onMethodChange('manual')}
+            onKeyDown={handleKeyDown('manual')}
+            aria-pressed={selectedMethod === 'manual'}
             type="button"
+            title={t('method.manual.title', 'Manually enter route information')}
           >
-            <span className="chip-icon">📷</span>
-            <span className="chip-label">{t('method.image.short', 'Upload')}</span>
+            <span className="chip-icon">✍️</span>
+            <span className="chip-label">{t('method.text.label', 'Text')}</span>
           </button>
         )}
 
@@ -72,9 +76,10 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             onKeyDown={handleKeyDown('paste')}
             aria-pressed={selectedMethod === 'paste'}
             type="button"
+            title={t('method.paste.title', 'Paste route information')}
           >
             <span className="chip-icon">📋</span>
-            <span className="chip-label">{t('method.paste.short', 'Paste')}</span>
+            <span className="chip-label">{t('method.paste.label', 'Paste')}</span>
             <span className="chip-badge fast">⚡</span>
           </button>
         )}
@@ -86,9 +91,10 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
             onKeyDown={handleKeyDown('verify')}
             aria-pressed={selectedMethod === 'verify'}
             type="button"
+            title={t('method.verify.title', 'Verify existing route information')}
           >
             <span className="chip-icon">✅</span>
-            <span className="chip-label">{t('method.verify.short', 'Verify')}</span>
+            <span className="chip-label">{t('method.verify.label', 'Verify')}</span>
           </button>
         )}
 

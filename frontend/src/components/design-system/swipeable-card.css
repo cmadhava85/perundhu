@@ -1,0 +1,190 @@
+@import '../../styles/design-system.css';
+
+/* Swipeable Card Component Styles */
+
+.swipeable-card-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg, 12px);
+  touch-action: pan-y; /* Allow vertical scrolling */
+  user-select: none;
+}
+
+.swipe-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.swipe-background--right {
+  left: 0;
+  background: linear-gradient(90deg, 
+    var(--semantic-success, #10b981) 0%, 
+    var(--semantic-success-bg, #ecfdf5) 100%
+  );
+  justify-content: flex-start;
+  padding-left: var(--space-6, 24px);
+}
+
+.swipe-background--left {
+  right: 0;
+  background: linear-gradient(270deg, 
+    var(--transit-primary, #0d9488) 0%, 
+    var(--transit-primary-light, #99f6e4) 100%
+  );
+  justify-content: flex-end;
+  padding-right: var(--space-6, 24px);
+}
+
+.swipe-background.active {
+  animation: swipePulse 0.3s ease;
+}
+
+@keyframes swipePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.swipe-action-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  color: white;
+}
+
+.swipe-background--right .swipe-action-content {
+  animation: slideInFromLeft 0.3s ease;
+}
+
+.swipe-background--left .swipe-action-content {
+  animation: slideInFromRight 0.3s ease;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.swipe-action-content svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.swipe-action-label {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.swipeable-card-content {
+  position: relative;
+  z-index: 2;
+  background: var(--transit-surface, white);
+  will-change: transform;
+}
+
+.swipeable-card-content.swiping {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.swipeable-card-content.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Desktop: Hide swipe gestures (not applicable) */
+@media (min-width: 768px) {
+  .swipe-background {
+    display: none;
+  }
+  
+  .swipeable-card-content {
+    transform: none !important;
+  }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .swipeable-card-content,
+  .swipe-background {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .swipe-background.active {
+    animation: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .swipe-background--right {
+    background: var(--semantic-success, #10b981);
+    border: 2px solid var(--semantic-success-border, #059669);
+  }
+  
+  .swipe-background--left {
+    background: var(--transit-primary, #0d9488);
+    border: 2px solid var(--transit-primary-dark, #0f766e);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .swipeable-card-content {
+    background: var(--transit-surface-elevated, #1f2937);
+  }
+  
+  .swipe-background--right {
+    background: linear-gradient(90deg, 
+      rgba(16, 185, 129, 0.9) 0%, 
+      rgba(16, 185, 129, 0.3) 100%
+    );
+  }
+  
+  .swipe-background--left {
+    background: linear-gradient(270deg, 
+      rgba(13, 148, 136, 0.9) 0%, 
+      rgba(13, 148, 136, 0.3) 100%
+    );
+  }
+}
+
+/* Touch feedback optimization */
+.swipeable-card-container {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Performance: Use GPU acceleration */
+.swipeable-card-content,
+.swipe-background {
+  transform: translate3d(0, 0, 0);
+}

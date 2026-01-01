@@ -1,0 +1,512 @@
+/* ============================================================
+   PREMIUM BUS CARD - Modern Design
+   ============================================================ */
+
+.bus-card-premium {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.bus-card-premium:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border-color: #d1d5db;
+}
+
+/* Badges Section */
+.bus-card-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-next {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.badge-urgent {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  animation: pulse 2s infinite;
+}
+
+.badge-fastest {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Header Section */
+.bus-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.bus-card-title h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.bus-card-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.bus-card-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.rating-stars {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.rating-count {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Journey Timeline */
+.bus-card-journey {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 12px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+  border-radius: 8px;
+  border: 1px solid #dcfce7;
+}
+
+.journey-item {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.journey-time {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.journey-location {
+  font-size: 12px;
+  color: #6b7280;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+}
+
+.journey-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 0 8px;
+}
+
+.connector-line {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+  border-radius: 1px;
+}
+
+.connector-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.duration-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.connector-icon {
+  font-size: 16px;
+}
+
+/* Stops Section */
+.bus-card-view-stops {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  margin: 12px 0;
+  background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+  border: 1.5px solid #a5f3fc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bus-card-view-stops:hover {
+  background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
+  border-color: #67e8f9;
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.15);
+}
+
+.view-stops-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.stops-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  white-space: nowrap;
+}
+
+.expand-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0891b2;
+  flex: 1;
+}
+
+.bus-card-stops {
+  margin: 12px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.stops-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.stops-header h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stops-icon {
+  font-size: 16px;
+}
+
+.stops-toggle {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 600;
+}
+
+.stops-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stop-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.stop-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.stop-name {
+  flex: 0 1 auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stop-times {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.stop-time {
+  font-weight: 700;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.stop-time-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.stop-time-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stop-time-value {
+  font-weight: 700;
+  color: #374151;
+  font-size: 12px;
+}
+
+.stop-arrival,
+.stop-departure {
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Status & Features */
+.bus-card-features {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-on\ time {
+  background: #d1fae5;
+  color: #065f46;
+  border-color: #6ee7b7;
+}
+
+.status-delayed {
+  background: #fed7aa;
+  color: #92400e;
+  border-color: #fbbf24;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.features-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.feature-tag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* Action Buttons */
+.bus-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  text-transform: capitalize;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-add {
+  background: #10b981 !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.btn-add:hover {
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5) !important;
+  transform: translateY(-2px);
+  background: #059669 !important;
+}
+
+.btn-report {
+  background: #f59e0b !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+}
+
+.btn-report:hover {
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.5) !important;
+  transform: translateY(-2px);
+  background: #d97706 !important;
+}
+
+.btn-share {
+  background: #0ea5e9 !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3) !important;
+}
+
+.btn-share:hover {
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5) !important;
+  transform: translateY(-2px);
+  background: #06b6d4 !important;
+}
+
+/* Fare Section */
+.bus-card-fare {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #059669;
+  padding: 8px 0;
+}
+
+/* Animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .bus-card-premium {
+    padding: 12px;
+  }
+
+  .bus-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bus-card-rating {
+    align-items: flex-start;
+  }
+
+  .journey-connector {
+    padding: 0 4px;
+  }
+
+  .connector-line {
+    width: 24px;
+  }
+
+  .btn {
+    font-size: 10px;
+    padding: 8px 10px;
+    gap: 3px;
+  }
+}

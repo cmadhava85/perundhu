@@ -72,6 +72,31 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       - Times may be displayed in various formats (digital, handwritten, printed)
       - Route numbers often include suffixes like UD, D, E, A, B, C (e.g., 166UD, 42A)
       - Board headers usually show the station name (origin)
+      - IMPORTANT: Look for a header or title that indicates the origin station
+      - IMPORTANT: If one station is listed at the top (origin) and multiple destinations follow, treat each destination as a separate route FROM that origin
+      - IMPORTANT: Look for BIDIRECTIONAL routes with arrows pointing both ways (← → or ↔)
+      - IMPORTANT: Look for DASH/HYPHEN format routes like "ORIGIN-DESTINATION" (e.g., "Mysuru-Udupi" means FROM Mysuru TO Udupi)
+      - IMPORTANT: When you see "STATION_A → STATION_B" with two sets of times, this is a BIDIRECTIONAL route:
+        * Times on LEFT = Departure from STATION_A going TO STATION_B
+        * Times on RIGHT = Departure from STATION_B going back TO STATION_A (NOT arrival times!)
+        * Extract as TWO separate routes
+      - IMPORTANT: When you see "STATION_A-STATION_B" (dash format), it means FROM STATION_A TO STATION_B
+      If you see a layout like:
+      [HEADER: ORIGIN STATION NAME]
+      [LIST OF DESTINATIONS WITH TIMES]
+
+      Then extract it as:
+      - Origin = the header station
+      - Each row = a separate route FROM that origin TO each listed destination
+
+      BIDIRECTIONAL ROUTE PATTERN:
+      If you see a layout like:
+      [STATION_A ↔ STATION_B]
+      [TIME1, TIME2, ...] [TIME3, TIME4, ...]
+
+      Then extract it as TWO routes:
+      - Route 1: STATION_A → STATION_B with times from left column
+      - Route 2: STATION_B → STATION_A with times from right column
 
       LANGUAGE HANDLING:
       The text may be in Tamil (தமிழ்), English, or mixed. Always output in English.
@@ -110,6 +135,14 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       | திருவனந்தபுரம் | Thiruvananthapuram |
       | கொச்சி | Kochi |
       | பாலக்காடு | Palakkad |
+      | ஆலங்குடி | Aalangudi |
+      | அரியலூர் | Ariyalur |
+      | அரந்தாங்கி | Aranthangi |
+      | பெரம்பலூர் | Perambalur |
+      | நாகப்பட்டினம் | Nagapattinam |
+      | ஜயங்கொண்டம் | Jayamkondam |
+      | கராईக்குடி | Karaikudi |
+      | தோண்டி | Thondi |
 
       Tamil Bus Terms:
       | Tamil | English |
@@ -132,31 +165,54 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       END
 
       FIELD RULES:
-      - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.)
+      - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.) OR - if no number
       - from_location: Origin station (use ORIGIN if same as board location, or - if not shown)
       - to_location: Final destination in English (REQUIRED - never leave blank)
       - via_stops: Intermediate stops comma-separated (use - if none shown)
       - dep_time: Departure time(s) in HH:MM 24-hour format, comma-separated for multiple times
       - arr_time: Arrival time(s) in HH:MM format (use - if not shown)
-      - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.)
+      - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.) or - if not shown
 
       TIME EXTRACTION RULES:
       - Convert 12-hour to 24-hour format (6:00 AM → 06:00, 6:00 PM → 18:00)
       - If time shows seconds (19:41:00), output as HH:MM only (19:41)
       - Tamil time indicators: காலை = AM, மாலை/இரவு = PM
       - Extract ALL times shown for each route, comma-separated
+      - Handle both 12-hour format (3:25PM) and 24-hour format
 
       EXAMPLES:
 
-      Example 1 - Departure board:
-      ORIGIN:ARUPPUKKOTTAI
-      TYPE:departure_board
+      Example 1 - Destination board (single origin, multiple destinations):
+      ORIGIN:TRICHY
+      TYPE:destination_table
       ROUTES:
-      -|ARUPPUKKOTTAI|MADURAI|-|19:41|-|ORDINARY
-      101|ARUPPUKKOTTAI|CHENNAI|Madurai,Trichy|21:00|-|EXPRESS
+      -|ORIGIN|AALANGUDI|-|15:25,21:05|-|-
+      -|ORIGIN|ARIYALUR|-|15:30|-|-
+      -|ORIGIN|ARANTHANGI|-|21:40|-|-
+      -|ORIGIN|PERAMBALUR|-|21:50|-|-
       END
 
-      Example 2 - Full route schedule:
+      Example 2 - Bidirectional route (two-way service):
+      ORIGIN:SALEM
+      TYPE:route_schedule
+      ROUTES:
+      -|SALEM|KRISHNAGIRI|-|01:35,12:45|-|-
+      -|KRISHNAGIRI|SALEM|-|05:00,15:15|-|-
+      -|SALEM|DHARMAPURI|Dharmapuri|08:40,18:40|-|-
+      -|DHARMAPURI|SALEM|-|11:00,21:00|-|-
+      END
+
+      Example 3 - Dash format routes (FROM-TO notation):
+      ORIGIN:-
+      TYPE:route_schedule
+      ROUTES:
+      -|MYSURU|UDUPI|-|06:15,10:45|11:20,15:40|-
+      -|KRISHNAGIRI|UDUPI|-|06:15,10:45|11:40,15:45|-
+      -|SALEM|UDUPI|-|07:25,12:30|12:20,17:30|-
+      -|TIRUPATI|UDUPI|-|07:45|14:50|-
+      END
+
+      Example 4 - Departure board with route numbers:
       ORIGIN:MADURAI
       TYPE:route_schedule
       ROUTES:
@@ -166,15 +222,24 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
       CRITICAL INSTRUCTIONS:
       1. Count all visible routes and extract EVERY one - do not skip
-      2. If you cannot read a field clearly, use your best interpretation
-      3. Always use - for genuinely missing/unavailable information
-      4. Route numbers can be missing (use -) but destinations are usually always shown
-      5. Pay special attention to:
-         - Faded or low-contrast text
-         - Handwritten additions or corrections
-         - Multiple time columns (weekday/weekend/holiday schedules)
-      6. For boards showing only times without route numbers, still extract each row as a separate route
-      7. Double-check your count matches the visible rows in the image
+      2. If you see a destination board pattern (header + multiple destination rows), use ORIGIN in from_location field
+      3. If you see a BIDIRECTIONAL route pattern (A ↔ B with two time columns), extract as TWO separate routes:
+         - First route: A → B with times from left column
+         - Second route: B → A with times from right column
+      4. If you see DASH FORMAT routes (A-B notation), parse the dash to extract FROM and TO locations:
+         - "ORIGIN-DESTINATION" means FROM ORIGIN TO DESTINATION
+         - Extract as a single route with the parsed origin and destination
+      5. Each destination row becomes a separate route
+      6. Always extract and list ALL departure times shown for each destination
+      7. If you cannot read a field clearly, use your best interpretation
+      8. Always use - for genuinely missing/unavailable information
+      9. Route numbers can be missing (use -) but destinations are usually always shown
+      10. Pay special attention to:
+          - Faded or low-contrast text
+          - Handwritten additions or corrections
+          - Multiple time columns (could be bidirectional routes or weekday/weekend/holiday schedules)
+      11. For boards showing times without route numbers, still extract each row as a separate route using -
+      12. Double-check your count matches the visible rows in the image
       """;
 
   @Value("${gemini.api.key:}")
@@ -265,7 +330,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   @CircuitBreaker(name = "gemini", fallbackMethod = "extractBusScheduleBase64WithContextFallback")
   @Bulkhead(name = "gemini")
   @Retry(name = "externalApi")
-  public Map<String, Object> extractBusScheduleFromBase64WithContext(String base64ImageData, String mimeType, String userContext) {
+  public Map<String, Object> extractBusScheduleFromBase64WithContext(String base64ImageData, String mimeType,
+      String userContext) {
     if (!isAvailable()) {
       log.warn("Gemini Vision service is not available");
       return createErrorResponse("Gemini Vision service is not available");
@@ -289,7 +355,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   /**
    * Build the JSON request body for Gemini API with user context.
    */
-  private String buildGeminiRequestWithContext(String base64ImageData, String mimeType, String userContext) throws JsonProcessingException {
+  private String buildGeminiRequestWithContext(String base64ImageData, String mimeType, String userContext)
+      throws JsonProcessingException {
     ObjectNode root = objectMapper.createObjectNode();
 
     // Create contents array
@@ -344,7 +411,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   /**
    * Fallback method for extractBusScheduleFromBase64WithContext.
    */
-  private Map<String, Object> extractBusScheduleBase64WithContextFallback(String base64ImageData, String mimeType, String userContext, Throwable t) {
+  private Map<String, Object> extractBusScheduleBase64WithContextFallback(String base64ImageData, String mimeType,
+      String userContext, Throwable t) {
     log.warn("Gemini Vision API with context failed, using fallback. Error: {}", t.getMessage());
     Map<String, Object> result = new HashMap<>();
     result.put("error", "Gemini Vision service temporarily unavailable");
@@ -1863,7 +1931,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
          - Note: This is DIFFERENT from bidirectional routes (same bus, reverse direction)
 
       ===================== CONFIDENCE SCORING =====================
-      
+
       - 0.9-1.0: Found busNumber + fromLocation + toLocation + departureTimes + arrivalTimes
       - 0.8-0.89: Found busNumber + fromLocation + toLocation + at least one time
       - 0.7-0.79: Found fromLocation + toLocation + time (no bus number)

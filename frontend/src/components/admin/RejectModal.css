@@ -1,3 +1,6 @@
+@import '../../styles/design-system.css';
+@import '../../styles/admin-modern.css';
+
 .modal-overlay {
   position: fixed;
   top: 0;

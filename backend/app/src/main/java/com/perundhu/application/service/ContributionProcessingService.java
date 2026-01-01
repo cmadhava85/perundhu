@@ -274,12 +274,12 @@ public class ContributionProcessingService {
             if (contribution.getDepartureTime() == null || contribution.getDepartureTime().trim().isEmpty()) {
                 throw new IllegalArgumentException("Departure time is required");
             }
-            if (contribution.getArrivalTime() == null || contribution.getArrivalTime().trim().isEmpty()) {
-                throw new IllegalArgumentException("Arrival time is required");
-            }
-
+            // Arrival time is optional - will be estimated during integration if missing
+            
             departureTime = LocalTime.parse(contribution.getDepartureTime());
-            arrivalTime = LocalTime.parse(contribution.getArrivalTime());
+            arrivalTime = contribution.getArrivalTime() != null && !contribution.getArrivalTime().trim().isEmpty() 
+                ? LocalTime.parse(contribution.getArrivalTime()) 
+                : null;
         } catch (Exception e) {
             updateContributionStatus(
                     contribution,
@@ -1781,12 +1781,12 @@ public class ContributionProcessingService {
      * - "HHMM" (e.g., "0630")
      * 
      * @param timeStr The time string to parse
-     * @return Parsed LocalTime
-     * @throws IllegalArgumentException if time cannot be parsed
+     * @return Parsed LocalTime, or null if time string is null/empty
+     * @throws IllegalArgumentException if time cannot be parsed (and is not null/empty)
      */
     private LocalTime parseTimeFlexible(String timeStr) {
         if (timeStr == null || timeStr.isBlank()) {
-            throw new IllegalArgumentException("Time string cannot be null or empty");
+            return null; // Allow null arrival time - will be estimated later
         }
 
         String normalized = timeStr.trim();

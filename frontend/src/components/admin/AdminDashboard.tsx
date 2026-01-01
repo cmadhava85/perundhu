@@ -8,6 +8,7 @@ import { ImageContributionAdminPanel } from './ImageContributionAdminPanel';
 import RouteIssuesAdminPanel from './RouteIssuesAdminPanel';
 import AdminSettingsPanel from './AdminSettingsPanel';
 import BusDatabaseBrowser from './BusDatabaseBrowser';
+import AnnouncementAdminPanel from './AnnouncementAdminPanel';
 
 /**
  * Admin Dashboard component that serves as the main entry point for admin functionality
@@ -16,7 +17,7 @@ const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { logout } = useAdminAuth();
-  const [activeTab, setActiveTab] = useState<'routes' | 'images' | 'issues' | 'busdb' | 'users' | 'settings'>('routes');
+  const [activeTab, setActiveTab] = useState<'routes' | 'images' | 'issues' | 'busdb' | 'announcements' | 'users' | 'settings'>('routes');
 
   const handleLogout = () => {
     logout();
@@ -70,6 +71,13 @@ const AdminDashboard: React.FC = () => {
           {t('admin.tabs.busdb', 'Bus Database')}
         </button>
         <button 
+          className={`tab-button ${activeTab === 'announcements' ? 'active' : ''}`}
+          onClick={() => setActiveTab('announcements')}
+        >
+          <span className="tab-icon">📢</span>
+          {t('admin.tabs.announcements', 'Announcements')}
+        </button>
+        <button 
           className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
           onClick={() => setActiveTab('users')}
         >
@@ -90,6 +98,7 @@ const AdminDashboard: React.FC = () => {
         {activeTab === 'images' && <ImageContributionAdminPanel />}
         {activeTab === 'issues' && <RouteIssuesAdminPanel />}
         {activeTab === 'busdb' && <BusDatabaseBrowser />}
+        {activeTab === 'announcements' && <AnnouncementAdminPanel />}
         {activeTab === 'users' && <div className="coming-soon">
           <div className="coming-soon-icon">👥</div>
           <h3>{t('admin.comingSoon.title', 'Coming Soon')}</h3>

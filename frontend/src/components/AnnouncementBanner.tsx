@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import AnnouncementService from '../services/announcementService';
 import '../styles/AnnouncementBanner.css';
 
+// Simplified local announcement interface for static announcements
 export interface Announcement {
-  id: string;
-  type: 'info' | 'warning' | 'success' | 'new-feature' | 'maintenance';
+  id?: string | number;
+  type: 'info' | 'warning' | 'success' | 'new-feature' | 'maintenance' | 'INFO' | 'WARNING' | 'SUCCESS' | 'NEW_FEATURE' | 'MAINTENANCE';
   titleKey: string;
   messageKey: string;
   titleFallback: string;
@@ -13,16 +15,23 @@ export interface Announcement {
   linkTextKey?: string;
   linkTextFallback?: string;
   dismissible?: boolean;
-  expiresAt?: string; // ISO date string
-  priority?: number; // Higher = more important
+  isDismissible?: boolean;
+  expiresAt?: string;
+  priority?: number;
+  uniqueId?: string;
+  isActive?: boolean;
+  targetUsers?: 'ALL' | 'ADMIN' | 'CONTRIBUTORS' | 'REGULAR_USERS';
+  displayBanner?: boolean;
+  displayModal?: boolean;
+  status?: 'DRAFT' | 'PUBLISHED';
 }
 
 interface AnnouncementBannerProps {
   announcements?: Announcement[];
   maxVisible?: number;
+  fetchFromAPI?: boolean;
 }
 
-// Default announcements - can be replaced with API fetch
 const defaultAnnouncements: Announcement[] = [
   {
     id: 'welcome-2024',
@@ -43,12 +52,40 @@ const STORAGE_KEY = 'perundhu_dismissed_announcements';
 
 const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({ 
   announcements = defaultAnnouncements,
-  maxVisible = 1
+  maxVisible = 1,
+  fetchFromAPI = true
 }) => {
   const { t } = useTranslation();
-  const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
+  const [displayAnnouncements, setDisplayAnnouncements] = useState<Announcement[]>(announcements);
+  const [dismissedIds, setDismissedIds] = useState<Set<string | number>>(new Set());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [loading, setLoading] = useState(fetchFromAPI);
+
+  // Load announcements from API
+  useEffect(() => {
+    if (!fetchFromAPI) return;
+
+    const loadAnnouncements = async () => {
+      try {
+        const apiAnnouncements = await AnnouncementService.getActiveAnnouncements();
+        const converted: Announcement[] = apiAnnouncements.map(a => ({
+          ...a,
+          id: a.id || a.uniqueId,
+          dismissible: a.isDismissible,
+          type: (a.type.toLowerCase() as 'info' | 'warning' | 'success' | 'new-feature' | 'maintenance')
+        }));
+        setDisplayAnnouncements(converted);
+      } catch (error) {
+        console.warn('Failed to load announcements from API, using defaults:', error);
+        setDisplayAnnouncements(announcements);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAnnouncements();
+  }, [fetchFromAPI, announcements]);
 
   // Load dismissed announcements from localStorage
   useEffect(() => {
@@ -64,25 +101,31 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
   }, []);
 
   // Filter valid announcements (not expired, not dismissed)
-  const validAnnouncements = announcements.filter(a => {
-    if (dismissedIds.has(a.id)) return false;
+  const validAnnouncements = displayAnnouncements.filter(a => {
+    if (a.id && (dismissedIds.has(String(a.id)) || dismissedIds.has(a.id))) return false;
     if (a.expiresAt && new Date(a.expiresAt) < new Date()) return false;
     return true;
   }).sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
-  const dismissAnnouncement = useCallback((id: string) => {
+  const dismissAnnouncement = useCallback((id: string | number | undefined) => {
+    if (id === undefined) return;
+    
     setIsAnimating(true);
     setTimeout(() => {
       const newDismissed = new Set(dismissedIds);
-      newDismissed.add(id);
+      newDismissed.add(String(id));
       setDismissedIds(newDismissed);
       
-      // Persist to localStorage
+      // Persist to localStorage and API
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ 
           ids: Array.from(newDismissed),
           lastUpdated: new Date().toISOString()
         }));
+        // Track dismiss in backend
+        if (typeof id === 'number') {
+          AnnouncementService.trackDismiss(id);
+        }
       } catch (e) {
         console.warn('Failed to save dismissed announcements:', e);
       }
@@ -100,12 +143,12 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
     
     const timer = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % validAnnouncements.length);
-    }, 8000); // Rotate every 8 seconds
+    }, 8000);
 
     return () => clearInterval(timer);
   }, [validAnnouncements.length]);
 
-  if (validAnnouncements.length === 0) {
+  if (loading || validAnnouncements.length === 0) {
     return null;
   }
 
@@ -115,7 +158,9 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
   if (!currentAnnouncement) return null;
 
   const getTypeIcon = (type: Announcement['type']) => {
-    switch (type) {
+    const normalizedType = String(type).toLowerCase();
+    switch (normalizedType) {
+      case 'new_feature':
       case 'new-feature': return '✨';
       case 'warning': return '⚠️';
       case 'success': return '✅';
@@ -126,7 +171,8 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
   };
 
   const getTypeClass = (type: Announcement['type']) => {
-    return `announcement-${type}`;
+    const normalizedType = String(type).toLowerCase().replace('_', '-');
+    return `announcement-${normalizedType}`;
   };
 
   return (
@@ -178,7 +224,7 @@ const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
           )}
         </div>
         
-        {currentAnnouncement.dismissible !== false && (
+        {(currentAnnouncement.dismissible !== false && currentAnnouncement.isDismissible !== false) && (
           <button 
             className="announcement-dismiss"
             onClick={() => dismissAnnouncement(currentAnnouncement.id)}

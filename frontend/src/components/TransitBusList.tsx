@@ -3,8 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TransitBusCard from './TransitBusCard';
 import type { Bus, Stop, Location as AppLocation } from '../types';
+import { Button, BusCardSkeleton, SkeletonGroup } from '../design-system';
+import FilterBottomSheet, { type FilterGroup } from './FilterBottomSheet';
+import PullToRefresh from './design-system/PullToRefresh';
+import { EmptyState } from './design-system/EmptyState';
 import '../styles/transit-design-system.css';
 import '../styles/bus-list-clean-redesign.css';
+import './design-system/pull-to-refresh.css';
+import './design-system/empty-state.css';
 
 // Filter and sort types
 type SortOption = 'departure' | 'arrival' | 'duration';
@@ -31,6 +37,8 @@ interface TransitBusListProps {
   onAddStops?: (bus: Bus) => void;
   onReportIssue?: (bus: Bus) => void;
   hasConnectingRoutes?: boolean;
+  onRefresh?: () => Promise<void>;
+  isLoading?: boolean;
 }
 
 const TransitBusList: React.FC<TransitBusListProps> = ({
@@ -46,7 +54,9 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   toLocationObj,
   onAddStops,
   onReportIssue,
-  hasConnectingRoutes = false
+  hasConnectingRoutes = false,
+  onRefresh,
+  isLoading = false,
 }) => {
   const { t } = useTranslation();
   
@@ -54,6 +64,7 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   const [sortBy, setSortBy] = useState<SortOption>('departure');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [showFilters, setShowFilters] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
   const [filters, setFilters] = useState<FilterOptions>({
@@ -69,12 +80,72 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     return types;
   }, [buses]);
 
+  // Filter groups for mobile bottom sheet
+  const filterGroups = useMemo((): FilterGroup[] => [
+    {
+      id: 'busTypes',
+      title: t('filters.busType', 'Bus Type'),
+      multiSelect: true,
+      options: busTypes.map(type => ({
+        id: type,
+        label: type,
+        value: type,
+        selected: filters.busTypes.includes(type)
+      }))
+    },
+    {
+      id: 'features',
+      title: t('filters.features', 'Features'),
+      multiSelect: true,
+      options: [
+        {
+          id: 'express',
+          label: t('filters.express', 'Express/Fast'),
+          value: 'express',
+          selected: filters.express
+        },
+        {
+          id: 'accessibility',
+          label: t('filters.accessibility', 'Accessible'),
+          value: 'accessibility',
+          selected: filters.accessibility
+        }
+      ]
+    }
+  ], [busTypes, filters, t]);
+
+  const activeFilterCount = useMemo(() => {
+    return filters.busTypes.length + (filters.express ? 1 : 0) + (filters.accessibility ? 1 : 0);
+  }, [filters]);
+
   // Utility functions for sorting
   const getTimeInMinutes = (time: string | null | undefined): number => {
     if (!time) return 0;
     const [hours, minutes] = time.split(':').map(Number);
     return (hours || 0) * 60 + (minutes || 0);
   };
+
+  // Handle filter apply from bottom sheet
+  const handleApplyFilters = useCallback((newFilterGroups: FilterGroup[]) => {
+    const busTypesGroup = newFilterGroups.find(g => g.id === 'busTypes');
+    const featuresGroup = newFilterGroups.find(g => g.id === 'features');
+
+    setFilters({
+      busTypes: busTypesGroup?.options.filter(o => o.selected).map(o => o.value) || [],
+      express: featuresGroup?.options.find(o => o.id === 'express')?.selected || false,
+      accessibility: featuresGroup?.options.find(o => o.id === 'accessibility')?.selected || false,
+      timeRange: filters.timeRange
+    });
+  }, [filters.timeRange]);
+
+  const handleClearAllFilters = useCallback(() => {
+    setFilters({
+      busTypes: [],
+      timeRange: 'all',
+      accessibility: false,
+      express: false
+    });
+  }, []);
 
   const getDurationInMinutes = (bus: Bus): number => {
     if (!bus.departureTime || !bus.arrivalTime) return 480; // Default 8 hours
@@ -272,6 +343,36 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
     setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
   }, []);
 
+  // Pull to refresh handler
+  const handleRefresh = useCallback(async () => {
+    if (onRefresh) {
+      // Add minimum delay for smooth animation
+      const minDelay = new Promise(resolve => setTimeout(resolve, 800));
+      await Promise.all([onRefresh(), minDelay]);
+    } else {
+      // Fallback: simulate refresh with delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }, [onRefresh]);
+
+  // Use loading state from props
+  if (isLoading) {
+    return (
+      <div className="transit-app transit-bus-list">
+        <div className="container px-2 sm:px-4">
+          <div style={{ marginTop: 'var(--space-6)' }}>
+            <SkeletonGroup spacing={4}>
+              <BusCardSkeleton />
+              <BusCardSkeleton />
+              <BusCardSkeleton />
+              <BusCardSkeleton />
+            </SkeletonGroup>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (buses.length === 0) {
     // Check if either location was a user-input (not from database)
     const isFromUserInput = fromLocationObj?.source === 'user-input' || fromLocationObj?.id === -1;
@@ -363,20 +464,14 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
               <p className="text-body" style={{ color: 'var(--transit-text-secondary)', marginBottom: 'var(--space-4)' }}>
                 {t('busList.contributePrompt', 'If you know this route, help others by contributing the bus information.')}
               </p>
-              <Link 
-                to="/contribute" 
-                className="transit-button transit-button-primary"
-                style={{ 
-                  display: 'inline-flex', 
-                  alignItems: 'center', 
-                  gap: '8px',
-                  padding: '12px 24px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'none'
-                }}
-              >
-                ✏️ {t('busList.contributeButton', 'Contribute Route Info')}
+              <Link to="/contribute" style={{ textDecoration: 'none' }}>
+                <Button 
+                  variant="primary"
+                  size="lg"
+                  startIcon="✏️"
+                >
+                  {t('busList.contributeButton', 'Contribute Route Info')}
+                </Button>
               </Link>
             </div>
           )}
@@ -386,10 +481,11 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
   }
 
   return (
-    <div className="transit-app transit-bus-list">
-      <div className="container px-2 sm:px-4">
-        {/* Unified Header + Controls Container */}
-        {showTitle && (
+    <PullToRefresh onRefresh={handleRefresh}>
+      <div className="transit-app transit-bus-list">
+        <div className="container px-2 sm:px-4">
+          {/* Unified Header + Controls Container */}
+          {showTitle && (
           <div className="bus-list-unified-container bg-white rounded-lg sm:rounded-xl border border-gray-200 p-3 sm:p-4 mb-2 sm:mb-4 shadow-sm">
             
             {/* Compact Header Section */}
@@ -443,14 +539,27 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
                 </div>
                 <button
                   className={`flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 border flex-shrink-0
-                    ${showFilters 
+                    ${activeFilterCount > 0
                       ? 'bg-blue-500 text-white border-blue-500' 
                       : 'bg-white text-gray-500 border-gray-300 hover:bg-gray-50'
                     }`}
-                  onClick={() => setShowFilters(!showFilters)}
+                  onClick={() => {
+                    // Mobile: open bottom sheet, Desktop: toggle inline filters
+                    if (window.innerWidth < 768) {
+                      setShowMobileFilters(true);
+                    } else {
+                      setShowFilters(!showFilters);
+                    }
+                  }}
                   title={t('busList.filter', 'Filter')}
+                  aria-label={t('busList.filter', 'Filter')}
                 >
                   <span className="text-sm">🔧</span>
+                  {activeFilterCount > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                      {activeFilterCount}
+                    </span>
+                  )}
                 </button>
               </div>
 
@@ -589,48 +698,76 @@ const TransitBusList: React.FC<TransitBusListProps> = ({
 
         {/* Bus Cards List */}
         <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
-          {filteredAndSortedBuses.map((bus) => {
-            const busStops = stopsMap[bus.id] || stops.filter(stop => stop.busId === bus.id);
-            
-            return (
-              <TransitBusCard
-                key={bus.id}
-                bus={bus}
-                selectedBusId={selectedBusId || null}
-                stops={busStops}
-                onSelectBus={handleBusSelect}
-                fromLocation={fromLocationObj}
-                toLocation={toLocationObj}
-                isCompact={true}
-                isNextBus={bus.id === specialBuses.nextBusId}
-                isFastest={bus.id === specialBuses.fastestBusId}
-                onAddStops={onAddStops}
-                onReportIssue={onReportIssue}
-              />
-            );
-          })}
+          {filteredAndSortedBuses.length > 0 ? (
+            filteredAndSortedBuses.map((bus) => {
+              const busStops = stopsMap[bus.id] || stops.filter(stop => stop.busId === bus.id);
+              
+              return (
+                <TransitBusCard
+                  key={bus.id}
+                  bus={bus}
+                  selectedBusId={selectedBusId || null}
+                  stops={busStops}
+                  onSelectBus={handleBusSelect}
+                  fromLocation={fromLocationObj}
+                  toLocation={toLocationObj}
+                  isCompact={true}
+                  isNextBus={bus.id === specialBuses.nextBusId}
+                  isFastest={bus.id === specialBuses.fastestBusId}
+                  onAddStops={onAddStops}
+                  onReportIssue={onReportIssue}
+                />
+              );
+            })
+          ) : (
+            <EmptyState
+              type="no-results"
+              title={t('busList.noResults', 'No buses found')}
+              description={activeFilterCount > 0 
+                ? t('busList.noResultsFiltered', 'Try removing some filters to see more results')
+                : t('busList.noResultsDefault', 'Try adjusting your search or selecting different locations')
+              }
+              action={activeFilterCount > 0 ? {
+                label: t('busList.clearFilters', 'Clear All Filters'),
+                onClick: handleClearAllFilters
+              } : undefined}
+            />
+          )}
         </div>
 
         {/* Results Summary */}
-        <div className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 mt-4 sm:mt-6 text-center">
-          <div className="space-y-2 sm:space-y-3">
-            <div className="text-sm font-medium text-gray-600">Journey Summary</div>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-sm">
-              <div>
-                <strong className="text-blue-600">{filteredAndSortedBuses.length}</strong> buses available
+        {filteredAndSortedBuses.length > 0 && (
+          <div className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 mt-4 sm:mt-6 text-center">
+            <div className="space-y-2 sm:space-y-3">
+              <div className="text-sm font-medium text-gray-600">Journey Summary</div>
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-sm">
+                <div>
+                  <strong className="text-blue-600">{filteredAndSortedBuses.length}</strong> buses available
+                </div>
+                <div>
+                  <strong className="text-blue-600">{busTypes.length}</strong> service types
+                </div>
               </div>
-              <div>
-                <strong className="text-blue-600">{busTypes.length}</strong> service types
+              <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
+                <span>ℹ️</span>
+                <span>Times are estimated. Arrive 10 minutes early for boarding.</span>
               </div>
-            </div>
-            <div className="flex items-center justify-center gap-1 text-xs text-gray-500">
-              <span>ℹ️</span>
-              <span>Times are estimated. Arrive 10 minutes early for boarding.</span>
             </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+
+      {/* Phase 2: Mobile Filter Bottom Sheet */}
+      <FilterBottomSheet
+        isOpen={showMobileFilters}
+        onClose={() => setShowMobileFilters(false)}
+        filterGroups={filterGroups}
+        onApplyFilters={handleApplyFilters}
+        onClearAll={handleClearAllFilters}
+        activeFilterCount={activeFilterCount}
+      />
+      </div>
+    </PullToRefresh>
   );
 };
 

@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Location as AppLocation } from '../types';
 import '../styles/share-route.css';
@@ -154,6 +155,24 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
   // Check if native share is supported
   const supportsNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
 
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && showModal) {
+        setShowModal(false);
+        onClose?.();
+      }
+    };
+
+    if (showModal) {
+      document.addEventListener('keydown', handleEscapeKey);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [showModal, onClose]);
+
   // Share options
   const shareOptions: ShareOption[] = [
     {
@@ -220,7 +239,7 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
       </button>
 
       {/* Share Modal */}
-      {showModal && (
+      {showModal && createPortal(
         <div 
           className="share-modal-overlay"
           onClick={() => setShowModal(false)}
@@ -266,6 +285,7 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
                     }
                   }}
                   style={{ '--option-color': option.color } as React.CSSProperties}
+                  aria-label={option.label}
                 >
                   <span className="option-icon">{option.icon}</span>
                   <span className="option-label">{option.label}</span>
@@ -290,7 +310,8 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
               </button>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
