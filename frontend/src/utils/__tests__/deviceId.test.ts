@@ -88,7 +88,7 @@ describe('deviceId Utility', () => {
 
   describe('getDeviceId()', () => {
     it('should return existing device ID without creating new one', () => {
-      const originalId = getOrCreateDeviceId();
+      getOrCreateDeviceId();
       clearDeviceId(); // Remove from storage
       
       const retrieved = getDeviceId();
@@ -97,15 +97,15 @@ describe('deviceId Utility', () => {
     });
 
     it('should return device ID if it exists', () => {
-      const originalId = getOrCreateDeviceId();
+      const createdId = getOrCreateDeviceId();
       
       const retrieved = getDeviceId();
       
-      expect(retrieved).toBe(originalId);
+      expect(retrieved).toBe(createdId);
     });
 
     it('should not modify localStorage when getting existing device ID', () => {
-      const originalId = getOrCreateDeviceId();
+      getOrCreateDeviceId();
       const beforeCount = localStorage.length;
       
       getDeviceId();

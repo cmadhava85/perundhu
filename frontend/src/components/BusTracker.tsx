@@ -104,8 +104,8 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
       
       // Request battery information
       if ('getBattery' in navigator) {
-        (navigator as any).getBattery?.().then((battery: any) => {
-          setBatteryLevel(Math.round(battery.level * 100));
+        (navigator as unknown).getBattery?.().then((battery: unknown) => {
+          setBatteryLevel(Math.round((battery as { level: number }).level * 100));
         });
       }
       

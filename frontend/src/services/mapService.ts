@@ -255,11 +255,11 @@ class LeafletMapService implements IMapService {
           if (marker && typeof marker === 'object' && marker.remove && typeof marker.remove === 'function') {
             marker.remove();
           }
-        } catch (error) {
+        } catch (_error) {
           logger.warn(`Error removing marker ${index} during cleanup`);
         }
       });
-    } catch (error) {
+    } catch (_error) {
       logger.warn('Error during clearMarkers');
     } finally {
       this.markers = [];
@@ -279,11 +279,11 @@ class LeafletMapService implements IMapService {
           if (route && typeof route === 'object' && route.remove && typeof route.remove === 'function') {
             route.remove();
           }
-        } catch (error) {
+        } catch (_error) {
           logger.warn(`Error removing route ${index} during cleanup`);
         }
       });
-    } catch (error) {
+    } catch (_error) {
       logger.warn('Error during clearRoutes');
     } finally {
       this.routes = [];
@@ -297,13 +297,13 @@ class LeafletMapService implements IMapService {
       // Clear markers and routes first
       try {
         this.clearMarkers();
-      } catch (error) {
+      } catch (_error) {
         logger.warn('Error clearing markers during cleanup');
       }
       
       try {
         this.clearRoutes();
-      } catch (error) {
+      } catch (_error) {
         logger.warn('Error clearing routes during cleanup');
       }
       
@@ -314,7 +314,7 @@ class LeafletMapService implements IMapService {
           if (this.map.off && typeof this.map.off === 'function') {
             try {
               this.map.off();
-            } catch (e) {
+            } catch (_e) {
               logger.debug('Error removing map listeners');
             }
           }
@@ -323,18 +323,18 @@ class LeafletMapService implements IMapService {
           if (this.map.remove && typeof this.map.remove === 'function') {
             try {
               this.map.remove();
-            } catch (e) {
+            } catch (_e) {
               logger.debug('Error calling map.remove()');
             }
           }
           logger.debug('Leaflet map cleaned up successfully');
-        } catch (error) {
+        } catch (_error) {
           logger.warn('Error removing map instance');
         } finally {
           this.map = null;
         }
       }
-    } catch (error) {
+    } catch (_error) {
       logger.error('Error during Leaflet cleanup');
     } finally {
       // Force reset state even if error occurs
