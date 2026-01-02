@@ -90,16 +90,17 @@ public class OpenStreetMapGeocodingService {
 
   /**
    * Fetch locations from OSM Nominatim API
+   * First tries Tamil Nadu, then falls back to broader South India search
    */
   private List<LocationDTO> fetchLocationsFromOSM(String query, int limit, String language) throws Exception {
-    // Build the Nominatim API URL - restrict to Tamil Nadu, India
-    String searchQuery = query.trim() + ", Tamil Nadu, India";
-    String encodedQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8);
+    // First try: Search in Tamil Nadu specifically
+    String tamilNaduQuery = query.trim() + ", Tamil Nadu, India";
+    String encodedQuery = URLEncoder.encode(tamilNaduQuery, StandardCharsets.UTF_8);
     
     // Use accept-language to get localized names (ta for Tamil, en for English)
     String acceptLanguage = "ta".equals(language) ? "ta,en" : "en,ta";
     String url = String.format("%s?q=%s&format=json&limit=%d&addressdetails=1&countrycodes=in&accept-language=%s",
-        NOMINATIM_BASE_URL, encodedQuery, limit * 2, acceptLanguage); // Fetch more to filter
+        NOMINATIM_BASE_URL, encodedQuery, limit * 2, acceptLanguage);
 
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))
@@ -112,17 +113,52 @@ public class OpenStreetMapGeocodingService {
     HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
     if (response.statusCode() != 200) {
-      log.warn("OSM Nominatim API returned status {}", response.statusCode());
+      log.warn("OSM Nominatim API returned status {} for Tamil Nadu search", response.statusCode());
       return new ArrayList<>();
     }
 
-    return parseOSMResults(response.body(), limit);
+    List<LocationDTO> results = parseOSMResults(response.body(), limit);
+    
+    // If no results found in Tamil Nadu, try broader South India search
+    // (for locations in neighboring states like Kerala, Karnataka)
+    if (results.isEmpty()) {
+      log.info("No results in Tamil Nadu for '{}', trying South India search", query);
+      String southIndiaQuery = query.trim() + ", India";
+      encodedQuery = URLEncoder.encode(southIndiaQuery, StandardCharsets.UTF_8);
+      url = String.format("%s?q=%s&format=json&limit=%d&addressdetails=1&countrycodes=in&accept-language=%s",
+          NOMINATIM_BASE_URL, encodedQuery, limit * 2, acceptLanguage);
+
+      request = HttpRequest.newBuilder()
+          .uri(URI.create(url))
+          .header("User-Agent", USER_AGENT)
+          .header("Accept", "application/json")
+          .timeout(Duration.ofSeconds(10))
+          .GET()
+          .build();
+
+      response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        results = parseOSMResults(response.body(), limit, true); // Allow non-TN results
+        log.info("South India search found {} results for '{}'", results.size(), query);
+      }
+    }
+    
+    return results;
   }
 
   /**
    * Parse OSM JSON results into LocationDTO list
    */
   private List<LocationDTO> parseOSMResults(String jsonBody, int limit) throws Exception {
+    return parseOSMResults(jsonBody, limit, false);
+  }
+
+  /**
+   * Parse OSM JSON results into LocationDTO list
+   * @param allowOutsideTamilNadu if true, allows results from neighboring states (Kerala, Karnataka, etc.)
+   */
+  private List<LocationDTO> parseOSMResults(String jsonBody, int limit, boolean allowOutsideTamilNadu) throws Exception {
     JsonNode results = objectMapper.readTree(jsonBody);
     List<LocationDTO> locations = new ArrayList<>();
 
@@ -133,8 +169,8 @@ public class OpenStreetMapGeocodingService {
 
       String displayName = result.has("display_name") ? result.get("display_name").asText() : "";
 
-      // Skip if not in Tamil Nadu
-      if (!isInTamilNadu(result, displayName)) {
+      // Skip if not in Tamil Nadu (unless we're doing a broader search)
+      if (!allowOutsideTamilNadu && !isInTamilNadu(result, displayName)) {
         continue;
       }
 

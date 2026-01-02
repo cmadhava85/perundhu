@@ -40,8 +40,9 @@ public class LocationResolutionService {
     // Cache for resolved locations
     private final ConcurrentHashMap<String, LocationResolution> resolutionCache;
 
-    // Static list of known Tamil Nadu cities for fuzzy matching
+    // Static list of known Tamil Nadu and neighboring state cities for fuzzy matching
     private static final List<String> KNOWN_CITIES = List.of(
+            // Tamil Nadu cities
             "CHENNAI", "COIMBATORE", "MADURAI", "TRICHY", "SALEM", "TIRUNELVELI",
             "KANYAKUMARI", "THANJAVUR", "ERODE", "VELLORE", "TIRUPPUR", "KARUR",
             "KUMBAKONAM", "THOOTHUKUDI", "PATTUKKOTTAI", "VIRUDHUNAGAR", "THENI",
@@ -53,7 +54,12 @@ public class LocationResolutionService {
             "TIRUVARUR", "KARAIKAL", "PONDICHERRY", "OOTY", "COONOOR", "METTUPALAYAM",
             "POLLACHI", "UDUMALPET", "PALANI", "KODAIKANAL", "TENKASI", "SANKARANKOVIL",
             "KOVILPATTI", "TUTICORIN", "TIRUCHENDUR", "ARUPPUKKOTTAI", "PARAMAKUDI",
-            "RAMESWARAM", "MANDAPAM", "PAMBAN", "DHANUSHKODI");
+            "RAMESWARAM", "MANDAPAM", "PAMBAN", "DHANUSHKODI",
+            // Neighboring state cities (Karnataka)
+            "MYSURU", "HASSAN", "CHIKMAGALUR", "MANGALORE", "UDUPI",
+            // Neighboring state cities (Kerala)
+            "THRISSUR", "GURUVAYUR", "KOCHI", "THIRUVANANTHAPURAM", "PALAKKAD",
+            "ERNAKULAM", "ALAPPUZHA", "KOLLAM", "KANNUR", "KOZHIKODE");
 
     // Tamil patterns for common cities (for Tamil OCR text)
     private static final Map<String, String[]> TAMIL_PATTERNS = new HashMap<>();
