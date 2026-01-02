@@ -2,13 +2,13 @@
 -- Add missing columns to buses table to match BusJpaEntity
 
 -- Add capacity column
-ALTER TABLE buses ADD COLUMN capacity INTEGER DEFAULT 50;
+ALTER TABLE buses ADD COLUMN IF NOT EXISTS capacity INTEGER DEFAULT 50;
 
 -- Add category column
-ALTER TABLE buses ADD COLUMN category VARCHAR(50) DEFAULT 'Regular';
+ALTER TABLE buses ADD COLUMN IF NOT EXISTS category VARCHAR(50) DEFAULT 'Regular';
 
 -- Add active column (this is the one causing the 500 error)
-ALTER TABLE buses ADD COLUMN active BOOLEAN DEFAULT TRUE;
+ALTER TABLE buses ADD COLUMN IF NOT EXISTS active BOOLEAN DEFAULT TRUE;
 
 -- Update existing records to have reasonable defaults
 UPDATE buses SET 
