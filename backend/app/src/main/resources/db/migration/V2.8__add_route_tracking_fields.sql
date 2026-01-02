@@ -11,6 +11,6 @@ ALTER TABLE route_contributions ADD COLUMN IF NOT EXISTS route_group_id VARCHAR(
 CREATE INDEX IF NOT EXISTS idx_route_contributions_source_image_id ON route_contributions(source_image_id);
 CREATE INDEX IF NOT EXISTS idx_route_contributions_route_group_id ON route_contributions(route_group_id);
 
--- Comment on columns
-COMMENT ON COLUMN route_contributions.source_image_id IS 'ID of the image contribution this route was extracted from';
-COMMENT ON COLUMN route_contributions.route_group_id IS 'Groups related schedules together (e.g., FROM-TO-VIA)';
+-- Column descriptions (for documentation):
+-- source_image_id: ID of the image contribution this route was extracted from
+-- route_group_id: Groups related schedules together (e.g., FROM-TO-VIA)

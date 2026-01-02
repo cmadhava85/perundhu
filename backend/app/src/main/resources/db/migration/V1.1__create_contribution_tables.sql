@@ -1,6 +1,6 @@
 -- Create the route_contributions table
 CREATE TABLE IF NOT EXISTS route_contributions (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     bus_number VARCHAR(50) NOT NULL,
     from_location VARCHAR(255),
     to_location VARCHAR(255),
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS route_contributions (
 
 -- Create the image_contributions table
 CREATE TABLE IF NOT EXISTS image_contributions (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     bus_number VARCHAR(50),
     image_url VARCHAR(1000) NOT NULL,
     description TEXT,

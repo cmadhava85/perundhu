@@ -3,4 +3,4 @@
 -- MODIFIED: To standardize on 'stops' (plural) table name
 
 -- Set strict SQL mode to catch errors
-SET SQL_MODE = 'STRICT
+SET SQL_MODE = 'STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO';
