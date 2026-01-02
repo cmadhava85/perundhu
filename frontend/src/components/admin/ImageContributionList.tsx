@@ -18,6 +18,7 @@ const ImageContributionList: React.FC = () => {
   const { t } = useTranslation();
   const [contributions, setContributions] = useState<ImageContribution[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  // Default to PENDING to only show images that need approval
   const [filter, setFilter] = useState<ContributionStatus | 'ALL'>('PENDING');
   const [rejectModalOpen, setRejectModalOpen] = useState<boolean>(false);
   const [selectedContribution, setSelectedContribution] = useState<ImageContribution | null>(null);
@@ -157,6 +158,12 @@ const ImageContributionList: React.FC = () => {
 
   return (
     <div>
+      {filter === 'PENDING' && contributions.length > 0 && (
+        <div className="info-banner">
+          <span>⚠️ Showing {contributions.length} images pending approval</span>
+        </div>
+      )}
+      
       <div className="filter-controls">
         <div className="filter-group">
           <span className="filter-label">{t('admin.filter.status', 'Status')}:</span>
@@ -165,8 +172,8 @@ const ImageContributionList: React.FC = () => {
             value={filter} 
             onChange={(e) => setFilter(e.target.value as ContributionStatus | 'ALL')}
           >
+            <option value="PENDING">{t('admin.filter.pending', 'Pending (Needs Approval)')}</option>
             <option value="ALL">{t('admin.filter.all', 'All')}</option>
-            <option value="PENDING">{t('admin.filter.pending', 'Pending')}</option>
             <option value="APPROVED">{t('admin.filter.approved', 'Approved')}</option>
             <option value="REJECTED">{t('admin.filter.rejected', 'Rejected')}</option>
           </select>

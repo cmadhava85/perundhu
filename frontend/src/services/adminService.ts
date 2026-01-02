@@ -193,6 +193,22 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     return response.data;
   },
 
+  getPendingImageContributionsPaged: async (page: number, size: number): Promise<any> => {
+    const authHeader = AdminService.getAuthHeader();
+    const response = await axios.get(`${API_URL}/api/admin/contributions/images/pending?page=${page}&size=${size}`, {
+      headers: { Authorization: authHeader }
+    });
+    return response.data;
+  },
+
+  getImageContributionsPaged: async (page: number, size: number): Promise<any> => {
+    const authHeader = AdminService.getAuthHeader();
+    const response = await axios.get(`${API_URL}/api/admin/contributions/images?page=${page}&size=${size}`, {
+      headers: { Authorization: authHeader }
+    });
+    return response.data;
+  },
+
   approveImageContribution: async (id: number): Promise<ImageContribution> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.post(
