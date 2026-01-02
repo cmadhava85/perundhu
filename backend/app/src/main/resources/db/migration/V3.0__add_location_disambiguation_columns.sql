@@ -15,8 +15,7 @@ ALTER TABLE locations ADD COLUMN district VARCHAR(255) NULL;
 ALTER TABLE locations ADD COLUMN nearby_city VARCHAR(255) NULL;
 
 -- Add index for faster lookups by name (useful for duplicate name detection)
--- Drop first if exists to avoid errors on re-run
-CREATE INDEX idx_locations_name ON locations(name);
+CREATE INDEX IF NOT EXISTS idx_locations_name ON locations(name);
 
 -- Add composite index for name + district lookups
-CREATE INDEX idx_locations_name_district ON locations(name, district);
+CREATE INDEX IF NOT EXISTS idx_locations_name_district ON locations(name, district);

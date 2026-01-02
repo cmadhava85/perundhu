@@ -5,24 +5,16 @@
 -- Fix MATHAVARAMBUSSTAND -> MATHAVARAM
 UPDATE locations 
 SET name = 'MATHAVARAM' 
-WHERE UPPER(name) = 'MATHAVARAMBUSSTAND' 
-   OR UPPER(name) = 'MATHAVARAMBUSSTATION';
+WHERE UPPER(name) IN ('MATHAVARAMBUSSTAND', 'MATHAVARAMBUSSTATION');
 
--- Fix any other locations with concatenated BUS STAND suffixes
--- (These may have been created without spaces)
+-- Fix any other locations with BUS STAND suffixes (with spaces)
 UPDATE locations
-SET name = REPLACE(REPLACE(UPPER(name), 'BUSSTAND', ''), 'BUSSTATION', '')
+SET name = TRIM(REGEXP_SUBSTR(name, '^[^ ]+ [^ ]+ [^ ]+'))
+WHERE UPPER(name) LIKE '% BUS STAND'
+   OR UPPER(name) LIKE '% BUS STATION';
+
+-- Fix locations with concatenated BUSSTAND (no spaces)
+UPDATE locations
+SET name = REGEXP_REPLACE(UPPER(name), '(BUSSTAND|BUSSTATION)$', '')
 WHERE UPPER(name) LIKE '%BUSSTAND'
    OR UPPER(name) LIKE '%BUSSTATION';
-
--- Fix locations with spaced suffixes
-UPDATE locations
-SET name = TRIM(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(name), 
-    ' BUS STAND', ''), 
-    ' BUS STATION', ''),
-    ' STAND', ''),
-    ' STATION', ''))
-WHERE UPPER(name) LIKE '% BUS STAND'
-   OR UPPER(name) LIKE '% BUS STATION'
-   OR UPPER(name) LIKE '% STAND'
-   OR UPPER(name) LIKE '% STATION';
