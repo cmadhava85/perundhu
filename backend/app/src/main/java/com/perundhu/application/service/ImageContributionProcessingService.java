@@ -447,17 +447,47 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             // Generate route group ID for grouping related schedules
             String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, viaStops);
 
-            // Create StopContribution objects from via stops
+            // Create StopContribution objects from stops data (with per-stop timing if available)
             List<StopContribution> stops = new ArrayList<>();
-            int stopOrder = 1;
-            for (String stopName : viaStops) {
-                String validatedStopName = validateAndResolveLocation(stopName);
-                if (validatedStopName != null) {
-                    StopContribution stop = StopContribution.builder()
-                            .name(validatedStopName)
-                            .stopOrder(stopOrder++)
-                            .build();
-                    stops.add(stop);
+            
+            // First, check for the new "stops" field with detailed timing info
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> stopsWithTiming = (List<Map<String, Object>>) routeData.get("stops");
+            
+            if (stopsWithTiming != null && !stopsWithTiming.isEmpty()) {
+                // Use detailed stop information with per-stop arrival/departure times
+                int stopOrder = 1;
+                for (Map<String, Object> stopData : stopsWithTiming) {
+                    String stopName = (String) stopData.get("name");
+                    String arrivalTime = (String) stopData.get("arrivalTime");
+                    String departureTime = (String) stopData.get("departureTime");
+                    
+                    if (stopName != null && !stopName.isBlank()) {
+                        String validatedStopName = validateAndResolveLocation(stopName);
+                        if (validatedStopName != null) {
+                            StopContribution stop = StopContribution.builder()
+                                    .name(validatedStopName)
+                                    .arrivalTime(arrivalTime)
+                                    .departureTime(departureTime)
+                                    .stopOrder(stopOrder++)
+                                    .build();
+                            stops.add(stop);
+                        }
+                    }
+                }
+                logger.info("Created {} stops with detailed per-stop timings", stops.size());
+            } else if (!viaStops.isEmpty()) {
+                // Fall back to simple via stops without timing
+                int stopOrder = 1;
+                for (String stopName : viaStops) {
+                    String validatedStopName = validateAndResolveLocation(stopName);
+                    if (validatedStopName != null) {
+                        StopContribution stop = StopContribution.builder()
+                                .name(validatedStopName)
+                                .stopOrder(stopOrder++)
+                                .build();
+                        stops.add(stop);
+                    }
                 }
             }
 
@@ -497,7 +527,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 }
 
                 logger.debug("Created {} routes for {} -> {} (departures: {}, stops: {})",
-                        routes.size(), validatedFrom, validatedTo, totalSchedules, viaStops.size());
+                        routes.size(), validatedFrom, validatedTo, totalSchedules, stops.size());
             } else {
                 logger.warn("No departure times found for route {} -> {}", origin, destination);
             }

@@ -161,17 +161,24 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       ORIGIN:station_name
       TYPE:departure_board|route_schedule|destination_table|arrival_board
       ROUTES:
-      bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+      bus_num|from_location|to_location|dep_time|arr_time|bus_type|stops_data
       END
+
+      STOP-LEVEL TIMING FORMAT (optional, included in stops_data field):
+      If image shows DETAILED STOP TIMINGS (arrival and departure at each stop), use this format in the last field:
+      STOPS:[stop1@arr1-dep1,stop2@arr2-dep2,stop3@arr3-dep3,...]
+      Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Vadalur@02:57-,Panruti Arch@03:40-]
+      Use - for missing times (e.g., 02:57- means arrival at 02:57, no separate departure shown)
+      If only name shown, use format like: stop_name@ (with no times)
 
       FIELD RULES:
       - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.) OR - if no number
       - from_location: Origin station (use ORIGIN if same as board location, or - if not shown)
       - to_location: Final destination in English (REQUIRED - never leave blank)
-      - via_stops: Intermediate stops comma-separated (use - if none shown)
-      - dep_time: Departure time(s) in HH:MM 24-hour format, comma-separated for multiple times
-      - arr_time: Arrival time(s) in HH:MM format (use - if not shown)
+      - dep_time: Departure time(s) from origin in HH:MM 24-hour format, comma-separated for multiple times
+      - arr_time: Arrival time(s) at destination in HH:MM format (use - if not shown)
       - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.) or - if not shown
+      - stops_data: Either comma-separated stop names (old format), OR detailed STOPS:[...] format with per-stop timings
 
       TIME EXTRACTION RULES:
       - Convert 12-hour to 24-hour format (6:00 AM → 06:00, 6:00 PM → 18:00)
@@ -179,6 +186,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       - Tamil time indicators: காலை = AM, மாலை/இரவு = PM
       - Extract ALL times shown for each route, comma-separated
       - Handle both 12-hour format (3:25PM) and 24-hour format
+      - For stop-level timings: capture BOTH arrival and departure at each intermediate stop
+      - If only one time shown at a stop (common for through routes), use format: time- (arrival only) or -time (departure only)
 
       EXAMPLES:
 
@@ -216,30 +225,46 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       ORIGIN:MADURAI
       TYPE:route_schedule
       ROUTES:
-      166UD|MADURAI|CHENNAI|Dindigul,Trichy,Villupuram|06:00,14:30|12:00,20:30|EXPRESS
-      42A|MADURAI|COIMBATORE|Palani,Pollachi|07:30,15:00|-|ORDINARY
+      166UD|MADURAI|CHENNAI|06:00,14:30|12:00,20:30|EXPRESS|Dindigul,Trichy,Villupuram
+      42A|MADURAI|COIMBATORE|07:30,15:00|-|ORDINARY|Palani,Pollachi
+      END
+
+      Example 5 - Route with detailed STOP-LEVEL TIMINGS (arrival and departure at each intermediate stop):
+      ORIGIN:TIRUVALUR
+      TYPE:route_schedule
+      ROUTES:
+      245E|TIRUVALUR|CHENNAI|12:55|-|ORDINARY|STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Sethiyathope X Road@02:37-,Vadalur@02:57-,Panruti Arch@03:40-,Vikravandi tollgate@04:43-,Tindivanam@05:10-,Athur tollgate@05:33-,Melmaruvathur@05:45-,Chengalpattu bypass@06:25-]
       END
 
       CRITICAL INSTRUCTIONS:
       1. Count all visible routes and extract EVERY one - do not skip
-      2. If you see a destination board pattern (header + multiple destination rows), use ORIGIN in from_location field
-      3. If you see a BIDIRECTIONAL route pattern (A ↔ B with two time columns), extract as TWO separate routes:
+      2. If image shows DETAILED STOP TIMINGS (each intermediate stop has arrival and/or departure time):
+         - MUST use the STOPS:[...] format in the last field with per-stop timing
+         - Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02]
+         - This is MORE IMPORTANT than simple via lists
+      3. If you see a destination board pattern (header + multiple destination rows), use ORIGIN in from_location field
+      4. If you see a BIDIRECTIONAL route pattern (A ↔ B with two time columns), extract as TWO separate routes:
          - First route: A → B with times from left column
          - Second route: B → A with times from right column
-      4. If you see DASH FORMAT routes (A-B notation), parse the dash to extract FROM and TO locations:
+      5. If you see DASH FORMAT routes (A-B notation), parse the dash to extract FROM and TO locations:
          - "ORIGIN-DESTINATION" means FROM ORIGIN TO DESTINATION
          - Extract as a single route with the parsed origin and destination
-      5. Each destination row becomes a separate route
-      6. Always extract and list ALL departure times shown for each destination
-      7. If you cannot read a field clearly, use your best interpretation
-      8. Always use - for genuinely missing/unavailable information
-      9. Route numbers can be missing (use -) but destinations are usually always shown
-      10. Pay special attention to:
+      6. Each destination row becomes a separate route
+      7. Always extract and list ALL departure times shown for each destination
+      8. If you cannot read a field clearly, use your best interpretation
+      9. Always use - for genuinely missing/unavailable information
+      10. Route numbers can be missing (use -) but destinations are usually always shown
+      11. Pay special attention to:
           - Faded or low-contrast text
           - Handwritten additions or corrections
           - Multiple time columns (could be bidirectional routes or weekday/weekend/holiday schedules)
-      11. For boards showing times without route numbers, still extract each row as a separate route using -
-      12. Double-check your count matches the visible rows in the image
+      12. For boards showing times without route numbers, still extract each row as a separate route using -
+      13. Double-check your count matches the visible rows in the image
+      14. VERY IMPORTANT: If you see a "Timelines" or "Timing" section with stops and their arrival/departure times:
+          - This is stop-level timing information that MUST be captured in STOPS:[...] format
+          - Do NOT lose this information by only listing stop names in the via field
+          - Format each stop as: stopName@arrivalTime-departureTime
+          - Use - for missing times (e.g., @02:57- means arrival at 02:57, no departure shown)
       """;
 
   @Value("${gemini.api.key:}")
@@ -614,7 +639,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
           if (isNewFormat) {
             // NEW FORMAT:
-            // bus_num|from_location|to_location|via_stops|dep_time|arr_time|bus_type
+            // bus_num|from_location|to_location|dep_time|arr_time|bus_type|stops_data
 
             // Field 1: From location
             if (parts.length > 1 && !parts[1].trim().equals("-") && !parts[1].trim().isEmpty()) {
@@ -635,25 +660,10 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               route.put("toLocation", normalizeLocationName(parts[2].trim()));
             }
 
-            // Field 3: Via stops (intermediate stops)
-            if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
-              List<String> via = new ArrayList<>();
-              for (String v : parts[3].split(",")) {
-                v = v.trim();
-                if (!v.isEmpty()) {
-                  via.add(normalizeLocationName(v));
-                }
-              }
-              if (!via.isEmpty()) {
-                route.put("via", via);
-                route.put("intermediateStops", via);
-              }
-            }
-
-            // Field 4: Departure times
+            // Field 3: Departure times
             List<String> depTimes = new ArrayList<>();
-            if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
-              for (String t : parts[4].split(",")) {
+            if (parts.length > 3 && !parts[3].trim().equals("-") && !parts[3].trim().isEmpty()) {
+              for (String t : parts[3].split(",")) {
                 t = t.trim();
                 if (looksLikeTime(t)) {
                   String normalized = normalizeTime(t);
@@ -670,10 +680,10 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               route.put("departureTime", depTimes.getFirst());
             }
 
-            // Field 5: Arrival times
+            // Field 4: Arrival times
             List<String> arrTimes = new ArrayList<>();
-            if (parts.length > 5 && !parts[5].trim().equals("-") && !parts[5].trim().isEmpty()) {
-              for (String t : parts[5].split(",")) {
+            if (parts.length > 4 && !parts[4].trim().equals("-") && !parts[4].trim().isEmpty()) {
+              for (String t : parts[4].split(",")) {
                 t = t.trim();
                 if (looksLikeTime(t)) {
                   String normalized = normalizeTime(t);
@@ -689,9 +699,33 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               route.put("arrivalTime", arrTimes.getFirst());
             }
 
-            // Field 6: Bus type
+            // Field 5: Bus type
+            if (parts.length > 5 && !parts[5].trim().equals("-") && !parts[5].trim().isEmpty()) {
+              route.put("busType", parts[5].trim().toUpperCase());
+            }
+
+            // Field 6: Stops data (can be old format or new STOPS:[...] format)
             if (parts.length > 6 && !parts[6].trim().equals("-") && !parts[6].trim().isEmpty()) {
-              route.put("busType", parts[6].trim().toUpperCase());
+              String stopsData = parts[6].trim();
+              
+              // Check if it's the new STOPS:[...] format with per-stop timings
+              if (stopsData.startsWith("STOPS:[") && stopsData.endsWith("]")) {
+                // Parse detailed stop-level timings
+                parseStopLevelTimings(route, stopsData);
+              } else {
+                // Old format: just comma-separated stop names
+                List<String> via = new ArrayList<>();
+                for (String v : stopsData.split(",")) {
+                  v = v.trim();
+                  if (!v.isEmpty()) {
+                    via.add(normalizeLocationName(v));
+                  }
+                }
+                if (!via.isEmpty()) {
+                  route.put("via", via);
+                  route.put("intermediateStops", via);
+                }
+              }
             }
 
           } else {
@@ -2071,6 +2105,104 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     } catch (Exception e) {
       log.error("Error parsing Gemini text extraction response: {}", e.getMessage(), e);
       return createErrorResponse("Failed to parse response: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Parse stop-level timing information from the STOPS:[...] format.
+   * Format: STOPS:[stop1@arr1-dep1,stop2@arr2-dep2,stop3@arr3-dep3,...]
+   * Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Vadalur@02:57-]
+   * 
+   * @param route The route map to update with stops information
+   * @param stopsData The STOPS:[...] data string
+   */
+  private void parseStopLevelTimings(Map<String, Object> route, String stopsData) {
+    try {
+      // Extract content between STOPS:[ and ]
+      String content = stopsData.substring(7, stopsData.length() - 1); // Remove "STOPS:[" and "]"
+      
+      List<Map<String, Object>> stops = new ArrayList<>();
+      List<String> stopNames = new ArrayList<>();
+      
+      // Split by comma, but be careful with times that might have commas
+      String[] stopEntries = content.split(",(?=\\w+@)"); // Split before stop names
+      
+      for (String entry : stopEntries) {
+        entry = entry.trim();
+        if (entry.isEmpty()) continue;
+        
+        // Format: stopName@arrivalTime-departureTime or stopName@time- or stopName@-time or stopName@
+        if (entry.contains("@")) {
+          int atIndex = entry.lastIndexOf("@");
+          String stopName = entry.substring(0, atIndex).trim();
+          String timingPart = entry.substring(atIndex + 1).trim();
+          
+          stopNames.add(normalizeLocationName(stopName));
+          
+          Map<String, Object> stop = new HashMap<>();
+          stop.put("name", normalizeLocationName(stopName));
+          
+          if (!timingPart.isEmpty() && !timingPart.equals("-")) {
+            // Parse timing: arrival-departure format
+            if (timingPart.contains("-")) {
+              String[] times = timingPart.split("-", 2);
+              
+              // Arrival time (before dash)
+              if (!times[0].trim().isEmpty() && looksLikeTime(times[0].trim())) {
+                String normalized = normalizeTime(times[0].trim());
+                if (normalized != null) {
+                  stop.put("arrivalTime", normalized);
+                }
+              }
+              
+              // Departure time (after dash)
+              if (times.length > 1 && !times[1].trim().isEmpty() && looksLikeTime(times[1].trim())) {
+                String normalized = normalizeTime(times[1].trim());
+                if (normalized != null) {
+                  stop.put("departureTime", normalized);
+                }
+              }
+            } else if (looksLikeTime(timingPart)) {
+              // Single time - could be arrival only
+              String normalized = normalizeTime(timingPart);
+              if (normalized != null) {
+                stop.put("arrivalTime", normalized);
+              }
+            }
+          }
+          
+          stops.add(stop);
+        } else {
+          // Just a stop name without timing
+          stopNames.add(normalizeLocationName(entry.trim()));
+          Map<String, Object> stop = new HashMap<>();
+          stop.put("name", normalizeLocationName(entry.trim()));
+          stops.add(stop);
+        }
+      }
+      
+      if (!stops.isEmpty()) {
+        route.put("stops", stops);
+        route.put("via", stopNames);
+        route.put("intermediateStops", stopNames);
+        log.info("Parsed {} stops with timing information", stops.size());
+      }
+      
+    } catch (Exception e) {
+      log.warn("Error parsing stop-level timings: {}", e.getMessage());
+      // Fall back to treating it as a simple via list
+      String content = stopsData.substring(7, stopsData.length() - 1);
+      List<String> via = new ArrayList<>();
+      for (String v : content.split(",")) {
+        String cleaned = v.replaceAll("@.*", "").trim(); // Remove timing info
+        if (!cleaned.isEmpty()) {
+          via.add(normalizeLocationName(cleaned));
+        }
+      }
+      if (!via.isEmpty()) {
+        route.put("via", via);
+        route.put("intermediateStops", via);
+      }
     }
   }
 
