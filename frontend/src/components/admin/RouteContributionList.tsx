@@ -32,11 +32,13 @@ const RouteContributionList: React.FC = () => {
       if (statusFilter === 'all') {
         data = await AdminService.getRouteContributions();
       } else if (statusFilter === 'pending') {
-        data = await AdminService.getPendingRouteContributions();
+        data = await AdminService.getRouteContributions();
+        data = data.filter((c: RouteContribution) => c.status === 'PENDING_REVIEW');
       } else {
         data = await AdminService.getRouteContributions();
-        // Filter by status if not 'all'
-        data = data.filter((c: RouteContribution) => c.status?.toLowerCase() === statusFilter);
+        // Filter by status if not 'all' - convert filter to uppercase
+        const statusUpper = statusFilter.toUpperCase();
+        data = data.filter((c: RouteContribution) => c.status === statusUpper);
       }
       
       setContributions(data);
@@ -135,18 +137,16 @@ const RouteContributionList: React.FC = () => {
   // Get appropriate CSS class for status
   const getStatusClass = (status?: string) => {
     if (!status) return 'status-badge';
-    switch (status.toLowerCase()) {
-      case 'pending':
+    switch (status) {
+      case 'PENDING_REVIEW':
         return 'status-badge pending';
-      case 'approved':
+      case 'APPROVED':
         return 'status-badge approved';
-      case 'rejected':
+      case 'REJECTED':
         return 'status-badge rejected';
-      case 'integration_failed':
+      case 'INTEGRATION_FAILED':
         return 'status-badge integration-failed';
-      case 'pending_review':
-        return 'status-badge pending-review';
-      case 'integrated':
+      case 'INTEGRATED':
         return 'status-badge integrated';
       default:
         return 'status-badge';
