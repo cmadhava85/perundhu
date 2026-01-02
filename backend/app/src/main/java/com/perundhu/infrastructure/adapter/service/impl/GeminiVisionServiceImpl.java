@@ -81,6 +81,26 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         * Times on RIGHT = Departure from STATION_B going back TO STATION_A (NOT arrival times!)
         * Extract as TWO separate routes
       - IMPORTANT: When you see "STATION_A-STATION_B" (dash format), it means FROM STATION_A TO STATION_B
+
+      TABLE-STRUCTURED SCHEDULES (Important!):
+      If image shows a TABLE FORMAT with:
+      - Column headers = Stop names (e.g., "Sathyamangalam", "Parees A", "Kumbakonam", "Mayavaram")
+      - Each column = times for that specific stop
+      - Each row = a different departure time from origin
+      Then extract it as:
+      - The board header/title = Origin station
+      - Each COLUMN header = A via/intermediate stop
+      - Times in each column = Departure times FROM origin going TO that stop
+      - Each ROW = All the times shown for stops in that departure slot
+      Example: If you see columns [Sathyamangalam | Parees A | Kumbakonam | Mayavaram]
+      And row shows times [6:00 AM | 7:05 AM | 9:15 AM | 10:20 AM]
+      Then extract as MULTIPLE routes, each starting from same origin with same departure time:
+      - Route 1: origin → Sathyamangalam @ 06:00
+      - Route 2: origin → Parees A @ 07:05 (departure from origin is 06:00 + time difference)
+      - Route 3: origin → Kumbakonam @ 09:15
+      - Route 4: origin → Mayavaram @ 10:20
+
+      STANDARD LAYOUT (Non-table):
       If you see a layout like:
       [HEADER: ORIGIN STATION NAME]
       [LIST OF DESTINATIONS WITH TIMES]
@@ -188,6 +208,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       - Handle both 12-hour format (3:25PM) and 24-hour format
       - For stop-level timings: capture BOTH arrival and departure at each intermediate stop
       - If only one time shown at a stop (common for through routes), use format: time- (arrival only) or -time (departure only)
+      - CRITICAL: Do NOT append stop names to comma-separated times!
+        Wrong: "06:00,07:05,09:15,10:20Sathyamangalam"
+        Correct: dep_time=06:00,07:05,09:15,10:20 and stops_data=Sathyamangalam (or STOPS:[...] format)
 
       EXAMPLES:
 
@@ -235,6 +258,22 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       ROUTES:
       245E|TIRUVALUR|CHENNAI|12:55|-|ORDINARY|STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Sethiyathope X Road@02:37-,Vadalur@02:57-,Panruti Arch@03:40-,Vikravandi tollgate@04:43-,Tindivanam@05:10-,Athur tollgate@05:33-,Melmaruvathur@05:45-,Chengalpattu bypass@06:25-]
       END
+
+      Example 6 - TABLE-STRUCTURED SCHEDULE (column headers = stops, rows = different time slots):
+      ORIGIN:SATHYAMANGALAM
+      TYPE:departure_board
+      ROUTES:
+      -|ORIGIN|PAREES A|Parees A|06:00|-|-|-
+      -|ORIGIN|KUMBAKONAM|Kumbakonam|07:05|-|-|-
+      -|ORIGIN|MAYAVARAM|Mayavaram|09:15|-|-|-
+      -|ORIGIN|CHIDAMBARAM|Chidambaram|10:20|-|-|-
+      -|ORIGIN|TRICHY|Trichy|11:23|-|-|-
+      -|ORIGIN|ARIYALUR|Ariyalur|12:05|-|-|-
+      END
+      Note: In table format, each row represents a departure time FOR THAT COLUMN'S DESTINATION
+      The board header = origin station
+      Column headers (Parees A, Kumbakonam, etc.) = each destination gets its own route entry
+      Times shown under each column = departure time from origin to that destination
 
       CRITICAL INSTRUCTIONS:
       1. Count all visible routes and extract EVERY one - do not skip

@@ -12,6 +12,16 @@ const PREPROD_API_URL = import.meta.env.VITE_PREPROD_API_URL || 'https://perundh
 // Session storage keys for admin auth
 const ADMIN_AUTH_KEY = 'admin_auth_credentials';
 
+// Paginated response type
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  size: number;
+  totalPages: number;
+  duration_ms?: number;
+}
+
 // Integration result types
 export interface IntegrationResult {
   manualIntegrationRequired?: boolean;
@@ -193,7 +203,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     return response.data;
   },
 
-  getPendingImageContributionsPaged: async (page: number, size: number): Promise<any> => {
+  getPendingImageContributionsPaged: async (page: number, size: number): Promise<PaginatedResponse<ImageContribution>> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.get(`${API_URL}/api/admin/contributions/images/pending?page=${page}&size=${size}`, {
       headers: { Authorization: authHeader }
@@ -201,7 +211,7 @@ WHERE id = 'c500a4dc-844f-4757-9f42-871663d2901f';
     return response.data;
   },
 
-  getImageContributionsPaged: async (page: number, size: number): Promise<any> => {
+  getImageContributionsPaged: async (page: number, size: number): Promise<PaginatedResponse<ImageContribution>> => {
     const authHeader = AdminService.getAuthHeader();
     const response = await axios.get(`${API_URL}/api/admin/contributions/images?page=${page}&size=${size}`, {
       headers: { Authorization: authHeader }
