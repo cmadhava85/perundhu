@@ -13,14 +13,14 @@ SET FOREIGN_KEY_CHECKS=0;
 ALTER TABLE child_table DROP FOREIGN KEY fk_name;
 */
 
--- Create a backup of the existing table data (if any)
-DROP TABLE IF EXISTS route_contributions_backup;
-
-CREATE TABLE route_contributions_backup AS 
-SELECT * FROM route_contributions;
+-- Create a backup of the existing table data (if any) for safety
+-- DROP TABLE IF EXISTS route_contributions_backup;
+-- CREATE TABLE route_contributions_backup AS 
+-- SELECT * FROM route_contributions;
 
 -- Modify the ID column to use TEXT type which can store strings of any length
-ALTER TABLE route_contributions MODIFY COLUMN id TEXT NOT NULL;
+-- NOTE: This operation is skipped as it requires table restructuring
+-- ALTER TABLE route_contributions MODIFY COLUMN id TEXT NOT NULL;
 
 -- If you encounter issues even after this migration, try recreating the table completely
 /*

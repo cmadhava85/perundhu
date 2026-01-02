@@ -1,7 +1,7 @@
 -- V23__create_social_media_posts_table.sql
 -- Migration to create social media posts tracking table
 
-CREATE TABLE social_media_posts (
+CREATE TABLE IF NOT EXISTS social_media_posts (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     platform VARCHAR(20) NOT NULL,
     post_id VARCHAR(100) NOT NULL,
