@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -340,8 +340,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             List<Map<String, Object>> routesArray = (List<Map<String, Object>>) extractedData.get("routes");
             if (routesArray != null && !routesArray.isEmpty()) {
                 for (Map<String, Object> routeData : routesArray) {
-                    String fromLocation = safeGetString(routeData, "fromLocation");
-                    String toLocation = safeGetString(routeData, "toLocation");
+                    String fromLocation = (String) routeData.get("fromLocation");
+                    String toLocation = (String) routeData.get("toLocation");
 
                     // Create one route per departure time
                     List<RouteContribution> expandedRoutes = createExpandedRoutesFromGeminiData(
@@ -357,8 +357,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             List<Map<String, Object>> multipleRoutes = (List<Map<String, Object>>) extractedData.get("multipleRoutes");
             if (multipleRoutes != null && !multipleRoutes.isEmpty()) {
                 for (Map<String, Object> routeData : multipleRoutes) {
-                    String fromLocation = safeGetString(routeData, "fromLocation");
-                    String toLocation = safeGetString(routeData, "toLocation");
+                    String fromLocation = (String) routeData.get("fromLocation");
+                    String toLocation = (String) routeData.get("toLocation");
 
                     // Create one route per departure time
                     List<RouteContribution> expandedRoutes = createExpandedRoutesFromGeminiData(
@@ -385,6 +385,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
      * Create expanded route contributions - one per departure time.
      * If a route has 97 departure times (like Madurai), this creates 97
      * RouteContribution entries.
+     * 
+     * Also handles extracting and storing intermediate stops from the "via" array.
      */
     @SuppressWarnings("unchecked")
     private List<RouteContribution> createExpandedRoutesFromGeminiData(
@@ -396,8 +398,30 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         List<RouteContribution> routes = new ArrayList<>();
 
         try {
-            String routeNumber = safeGetString(routeData, "routeNumber");
-            String via = safeGetString(routeData, "via");
+            String routeNumber = (String) routeData.get("routeNumber");
+            
+            // Extract via/stops - can be either a String or List<String>
+            List<String> viaStops = new ArrayList<>();
+            Object viaObj = routeData.get("via");
+            if (viaObj instanceof List<?> viaList) {
+                for (Object stop : viaList) {
+                    if (stop instanceof String) {
+                        viaStops.add((String) stop);
+                    }
+                }
+            } else if (viaObj instanceof String viaStr && !viaStr.isBlank()) {
+                viaStops.add(viaStr);
+            }
+            
+            // Also check for "intermediateStops" field
+            Object intermediateStopsObj = routeData.get("intermediateStops");
+            if (intermediateStopsObj instanceof List<?> stopsList && viaStops.isEmpty()) {
+                for (Object stop : stopsList) {
+                    if (stop instanceof String) {
+                        viaStops.add((String) stop);
+                    }
+                }
+            }
 
             // Get all departure times
             List<String> departureTimes = (List<String>) routeData.get("departureTimes");
@@ -406,7 +430,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             }
 
             // Fallback to single departureTime
-            String singleDepartureTime = safeGetString(routeData, "departureTime");
+            String singleDepartureTime = (String) routeData.get("departureTime");
             if ((departureTimes == null || departureTimes.isEmpty()) && singleDepartureTime != null) {
                 departureTimes = List.of(singleDepartureTime);
             }
@@ -421,7 +445,21 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             }
 
             // Generate route group ID for grouping related schedules
-            String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, via);
+            String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, viaStops);
+
+            // Create StopContribution objects from via stops
+            List<StopContribution> stops = new ArrayList<>();
+            int stopOrder = 1;
+            for (String stopName : viaStops) {
+                String validatedStopName = validateAndResolveLocation(stopName);
+                if (validatedStopName != null) {
+                    StopContribution stop = StopContribution.builder()
+                            .name(validatedStopName)
+                            .stopOrder(stopOrder++)
+                            .build();
+                    stops.add(stop);
+                }
+            }
 
             // Create one route contribution per departure time
             if (departureTimes != null && !departureTimes.isEmpty()) {
@@ -434,6 +472,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     // Estimate arrival time based on departure and route
                     String estimatedArrival = estimateArrivalTime(departureTime, validatedFrom, validatedTo);
 
+                    String viaInfo = !viaStops.isEmpty() ? "Via: " + String.join(", ", viaStops) : null;
+                    
                     RouteContribution route = RouteContribution.builder()
                             .id(UUID.randomUUID().toString())
                             .userId(contribution.getUserId())
@@ -442,11 +482,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             .toLocationName(validatedTo)
                             .departureTime(departureTime)
                             .arrivalTime(estimatedArrival)
-                            .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
+                            .scheduleInfo(viaInfo)
                             .submissionDate(LocalDateTime.now())
                             .status("APPROVED")
                             .sourceImageId(contribution.getId())
                             .routeGroupId(routeGroupId)
+                            .stops(!stops.isEmpty() ? stops : null)
                             .additionalNotes(
                                     String.format("[Gemini AI] Auto-approved schedule %d of %d from image: %s",
                                             scheduleIndex, totalSchedules, contribution.getId()))
@@ -455,8 +496,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     routes.add(route);
                 }
 
-                logger.debug("Created {} routes for {} -> {} (departures: {})",
-                        routes.size(), validatedFrom, validatedTo, totalSchedules);
+                logger.debug("Created {} routes for {} -> {} (departures: {}, stops: {})",
+                        routes.size(), validatedFrom, validatedTo, totalSchedules, viaStops.size());
             } else {
                 logger.warn("No departure times found for route {} -> {}", origin, destination);
             }
@@ -479,10 +520,22 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             Map<String, Object> routeData) {
 
         try {
-            String routeNumber = safeGetString(routeData, "routeNumber");
-            String via = safeGetString(routeData, "via");
-            String departureTime = safeGetString(routeData, "departureTime");
+            String routeNumber = (String) routeData.get("routeNumber");
+            String departureTime = (String) routeData.get("departureTime");
             List<String> departureTimes = (List<String>) routeData.get("departureTimes");
+
+            // Extract via/stops - can be either a String or List<String>
+            List<String> viaStops = new ArrayList<>();
+            Object viaObj = routeData.get("via");
+            if (viaObj instanceof List<?> viaList) {
+                for (Object stop : viaList) {
+                    if (stop instanceof String) {
+                        viaStops.add((String) stop);
+                    }
+                }
+            } else if (viaObj instanceof String viaStr && !viaStr.isBlank()) {
+                viaStops.add(viaStr);
+            }
 
             // Validate locations
             String validatedFrom = validateAndResolveLocation(origin);
@@ -502,7 +555,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             }
 
             // Generate route group ID for grouping related schedules
-            String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, via);
+            String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, viaStops);
+
+            String viaInfo = !viaStops.isEmpty() ? "Via: " + String.join(", ", viaStops) : null;
 
             return RouteContribution.builder()
                     .id(UUID.randomUUID().toString())
@@ -511,7 +566,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     .fromLocationName(validatedFrom)
                     .toLocationName(validatedTo)
                     .departureTime(primaryDepartureTime)
-                    .scheduleInfo(via != null && !via.isBlank() ? "Via: " + via : null)
+                    .scheduleInfo(viaInfo)
                     .submissionDate(LocalDateTime.now())
                     .status("APPROVED")
                     .sourceImageId(contribution.getId())
@@ -730,18 +785,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     logger.info("Sending image to Gemini Vision (size: {} bytes, type: {})",
                             imageBytes.length, mimeType);
 
-                    // Build user context from contribution metadata (description, location, etc.)
-                    String userContext = buildUserContext(contribution);
-                    
-                    Map<String, Object> geminiResult;
-                    if (userContext != null && !userContext.isEmpty()) {
-                        logger.info("Using user context for OCR extraction: {}", userContext);
-                        geminiResult = geminiVisionService.extractBusScheduleFromBase64WithContext(base64Image,
-                                mimeType, userContext);
-                    } else {
-                        geminiResult = geminiVisionService.extractBusScheduleFromBase64(base64Image,
-                                mimeType);
-                    }
+                    Map<String, Object> geminiResult = geminiVisionService.extractBusScheduleFromBase64(base64Image,
+                            mimeType);
 
                     if (geminiResult != null && !geminiResult.containsKey("error")) {
                         // Add metadata
@@ -794,50 +839,6 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             errorResult.put("extractedAt", LocalDateTime.now());
             return errorResult;
         }
-    }
-
-    /**
-     * Build user context string from contribution metadata.
-     * This context helps Gemini AI understand the image better when
-     * the image alone doesn't provide complete information.
-     * 
-     * @param contribution The image contribution with metadata
-     * @return User context string or null if no useful context available
-     */
-    private String buildUserContext(ImageContribution contribution) {
-        StringBuilder context = new StringBuilder();
-        
-        // Add description if present (e.g., "Buses from Chennai", "Chennai to Madurai routes")
-        if (contribution.getDescription() != null && !contribution.getDescription().trim().isEmpty()) {
-            context.append("User description: ").append(contribution.getDescription().trim());
-        }
-        
-        // Add location if present (e.g., "Chennai Bus Stand")
-        if (contribution.getLocation() != null && !contribution.getLocation().trim().isEmpty()) {
-            if (context.length() > 0) {
-                context.append("\n");
-            }
-            context.append("Location: ").append(contribution.getLocation().trim());
-        }
-        
-        // Add route name if present (e.g., "Route 166UD")
-        if (contribution.getRouteName() != null && !contribution.getRouteName().trim().isEmpty()) {
-            if (context.length() > 0) {
-                context.append("\n");
-            }
-            context.append("Route: ").append(contribution.getRouteName().trim());
-        }
-        
-        // Add additional notes if present
-        if (contribution.getAdditionalNotes() != null && !contribution.getAdditionalNotes().trim().isEmpty()) {
-            if (context.length() > 0) {
-                context.append("\n");
-            }
-            context.append("Notes: ").append(contribution.getAdditionalNotes().trim());
-        }
-        
-        String result = context.toString().trim();
-        return result.isEmpty() ? null : result;
     }
 
     /**
@@ -917,12 +918,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 logger.info("Processing {} routes from Gemini data for expansion", routesArray.size());
 
                 for (Map<String, Object> routeData : routesArray) {
-                    String routeFrom = safeGetString(routeData, "fromLocation");
-                    String routeTo = safeGetString(routeData, "toLocation");
+                    String routeFrom = (String) routeData.get("fromLocation");
+                    String routeTo = (String) routeData.get("toLocation");
                     if (routeTo == null) {
-                        routeTo = safeGetString(routeData, "destination");
+                        routeTo = (String) routeData.get("destination");
                     }
-                    String via = safeGetString(routeData, "via");
+                    String via = (String) routeData.get("via");
 
                     // Validate locations
                     String validatedFrom = validateAndResolveLocation(routeFrom);
@@ -943,7 +944,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
                     // If no times found, use single departureTime
                     if (departureTimes == null || departureTimes.isEmpty()) {
-                        String singleTime = safeGetString(routeData, "departureTime");
+                        String singleTime = (String) routeData.get("departureTime");
                         if (singleTime != null) {
                             departureTimes = List.of(singleTime);
                         }
@@ -959,7 +960,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     logger.info("Expanding route {} -> {} with {} departure times",
                             validatedFrom, validatedTo, departureTimes.size());
 
-                    String busNumber = safeGetString(routeData, "routeNumber");
+                    String busNumber = (String) routeData.get("routeNumber");
                     if (busNumber == null || busNumber.isBlank()) {
                         busNumber = "TNSTC"; // Default bus operator for Tamil Nadu routes
                     }
@@ -994,9 +995,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
             if (multipleRoutes != null && !multipleRoutes.isEmpty()) {
                 for (Map<String, Object> routeData : multipleRoutes) {
-                    String routeFrom = safeGetString(routeData, "fromLocation");
-                    String routeTo = safeGetString(routeData, "toLocation");
-                    String via = safeGetString(routeData, "via");
+                    String routeFrom = (String) routeData.get("fromLocation");
+                    String routeTo = (String) routeData.get("toLocation");
+                    String via = (String) routeData.get("via");
 
                     // Validate origin and destination
                     String validatedFrom = validateAndResolveLocation(routeFrom);
@@ -1033,7 +1034,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     List<Map<String, String>> validatedStops = validateStops(stopsData);
 
                     // Get the single departure time (from expanded routes)
-                    String departureTime = safeGetString(routeData, "departureTime");
+                    String departureTime = (String) routeData.get("departureTime");
 
                     // Fallback to timings array if departureTime not set
                     @SuppressWarnings("unchecked")
@@ -1042,12 +1043,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     // Create one route per entry (each entry now has a single departure time)
                     RouteContribution additionalRoute = createRouteContributionWithDepartureTime(
                             contribution,
-                            safeGetString(routeData, "routeNumber"),
+                            (String) routeData.get("routeNumber"),
                             validatedFrom,
                             validatedTo,
                             via,
-                            safeGetString(routeData, "operatorName"),
-                            safeGetString(routeData, "fare"),
+                            (String) routeData.get("operatorName"),
+                            (String) routeData.get("fare"),
                             departureTime,
                             routeTimings,
                             validatedStops,
@@ -1183,7 +1184,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             String status) {
 
         // Generate route group ID for grouping related schedules
-        String routeGroupId = generateRouteGroupId(fromLocation, toLocation, via);
+        // Convert via string to list for the method
+        List<String> viaStops = via != null && !via.isBlank() ? List.of(via.split(",\\s*")) : new ArrayList<>();
+        String routeGroupId = generateRouteGroupId(fromLocation, toLocation, viaStops);
 
         // Estimate arrival time based on departure and route
         String estimatedArrival = estimateArrivalTime(departureTime, fromLocation, toLocation);
@@ -1245,7 +1248,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     /**
      * Generate a route group ID for grouping related schedules
      */
-    private String generateRouteGroupId(String from, String to, String via) {
+    private String generateRouteGroupId(String from, String to, List<String> viaStops) {
         StringBuilder groupId = new StringBuilder();
         if (from != null) {
             groupId.append(from.toUpperCase().trim());
@@ -1254,8 +1257,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         if (to != null) {
             groupId.append(to.toUpperCase().trim());
         }
-        if (via != null && !via.isBlank()) {
-            groupId.append("-").append(via.toUpperCase().trim());
+        if (!viaStops.isEmpty()) {
+            groupId.append("-").append(String.join("-", viaStops).toUpperCase().trim());
         }
         return groupId.toString();
     }
@@ -1514,34 +1517,5 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         logger.debug("Could not parse time: {}", timeStr);
         return null;
-    }
-
-    /**
-     * Safely extract a string value from a map that might contain a String or a List.
-     * If the value is a List, returns the first element.
-     * If the value is a String, returns it directly.
-     * If the value is null or empty list, returns null.
-     */
-    private String safeGetString(Map<String, Object> map, String key) {
-        Object value = map.get(key);
-        if (value == null) {
-            return null;
-        }
-        
-        if (value instanceof String) {
-            return (String) value;
-        }
-        
-        if (value instanceof List) {
-            List<?> list = (List<?>) value;
-            if (list.isEmpty()) {
-                return null;
-            }
-            Object firstElement = list.get(0);
-            return firstElement != null ? firstElement.toString() : null;
-        }
-        
-        // For any other type, convert to string
-        return value.toString();
     }
 }
