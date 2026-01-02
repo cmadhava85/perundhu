@@ -54,15 +54,27 @@ public interface ImageContributionOutputPort {
   /**
    * Find all image contributions with pagination
    */
-  default List<ImageContribution> findAll(int page, int size) {
-    return findAll(); // Default implementation for backward compatibility
-  }
+  List<ImageContribution> findAllPaged(int page, int size);
 
   /**
    * Find image contributions by status with pagination
    */
+  List<ImageContribution> findByStatusPaged(String status, int page, int size);
+
+  /**
+   * Find all image contributions with pagination (legacy method)
+   */
+  @Deprecated
+  default List<ImageContribution> findAll(int page, int size) {
+    return findAllPaged(page, size);
+  }
+
+  /**
+   * Find image contributions by status with pagination (legacy method)
+   */
+  @Deprecated
   default List<ImageContribution> findByStatus(String status, int page, int size) {
-    return findByStatus(status); // Default implementation for backward compatibility
+    return findByStatusPaged(status, page, size);
   }
 
   /**

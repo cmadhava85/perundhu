@@ -140,22 +140,44 @@ public class AdminController {
     }
 
     /**
-     * Get pending image contributions
+     * Get pending image contributions with pagination
+     * Improved performance through pagination and parallel processing
      * 
-     * @return List of pending image contributions (without binary data)
+     * @param page   Page number (default 0)
+     * @param size   Page size (default 20)
+     * @return Paginated list of pending image contributions
      */
     @GetMapping("/contributions/images/pending")
-    public ResponseEntity<List<ImageContributionSummaryDTO>> getPendingImageContributions() {
-        log.info("Request to get pending image contributions");
-        List<ImageContribution> contributions = adminUseCase.getPendingImageContributions();
+    public ResponseEntity<Map<String, Object>> getPendingImageContributions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        log.info("Request to get pending image contributions - page: {}, size: {}", page, size);
         
-        // Convert to DTOs without imageData to reduce response size
-        List<ImageContributionSummaryDTO> dtos = contributions.stream()
+        long startTime = System.currentTimeMillis();
+        
+        // Use paged query from repository - much faster than loading all
+        List<ImageContribution> contributions = adminUseCase.getPendingImageContributionsPaged(page, size);
+        long totalCount = adminUseCase.countPendingImageContributions();
+        
+        // Convert to DTOs using parallel stream for faster processing
+        List<ImageContributionSummaryDTO> dtos = contributions.parallelStream()
             .map(this::convertToSummaryDTO)
             .collect(java.util.stream.Collectors.toList());
         
-        log.info("Returning {} pending image contributions", dtos.size());
-        return ResponseEntity.ok(dtos);
+        long duration = System.currentTimeMillis() - startTime;
+        log.info("Returning {} pending image contributions (total: {}) in {}ms", 
+            dtos.size(), totalCount, duration);
+        
+        // Return paginated response with metadata
+        Map<String, Object> response = new java.util.HashMap<>();
+        response.put("data", dtos);
+        response.put("total", totalCount);
+        response.put("page", page);
+        response.put("size", size);
+        response.put("totalPages", (int) Math.ceil((double) totalCount / size));
+        response.put("duration_ms", duration);
+        
+        return ResponseEntity.ok(response);
     }
     
     /**

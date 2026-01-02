@@ -61,6 +61,38 @@ public interface AdminUseCase {
    * @return List of pending image contributions
    */
   List<ImageContribution> getPendingImageContributions();
+  
+  /**
+   * Get pending image contributions with pagination
+   * 
+   * @param page Page number (0-indexed)
+   * @param size Page size
+   * @return Paginated list of pending image contributions
+   */
+  List<ImageContribution> getPendingImageContributionsPaged(int page, int size);
+  
+  /**
+   * Get all image contributions with pagination
+   * 
+   * @param page Page number (0-indexed)
+   * @param size Page size
+   * @return Paginated list of all image contributions
+   */
+  List<ImageContribution> getImageContributionsPaged(int page, int size);
+  
+  /**
+   * Count pending image contributions
+   * 
+   * @return Total count of pending image contributions
+   */
+  long countPendingImageContributions();
+  
+  /**
+   * Count all image contributions
+   * 
+   * @return Total count of all image contributions
+   */
+  long countAllImageContributions();
 
   /**
    * Approve an image contribution
