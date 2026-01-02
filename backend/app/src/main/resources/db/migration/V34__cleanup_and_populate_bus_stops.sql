@@ -6,22 +6,25 @@
 -- These are truncated, corrupted, or redundant entries
 SET @duplicate_ids = '11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36';
 
--- Step 1: Remove dependent route_contributions records first
--- Delete route contributions that reference the duplicate locations
-DELETE FROM route_contributions WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
+-- Step 1: Remove dependent user_tracking_sessions records
+DELETE FROM user_tracking_sessions WHERE start_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
+   OR end_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
+
+-- Step 2: Remove dependent trip_statistics records
+DELETE FROM trip_statistics WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
    OR to_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
 
--- Step 2: Remove dependent buses records
--- Delete buses that have these locations as from/to points
+-- Step 3: Remove dependent connecting_routes records
+DELETE FROM connecting_routes WHERE connection_point_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
+
+-- Step 4: Remove dependent buses records
 DELETE FROM buses WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
    OR to_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
 
--- Step 3: Remove dependent stops records
--- Delete stops that reference the duplicate locations
+-- Step 5: Remove dependent stops records
 DELETE FROM stops WHERE location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
 
--- Step 4: Remove duplicate bus stop location entries
--- Removed old/truncated/duplicate entries, kept the most complete versions
+-- Step 6: Remove duplicate bus stop location entries
 DELETE FROM locations WHERE id IN (
   11,    -- Duplicate: Madurai - Mattuthavani (truncated)
   14,    -- Duplicate: Madurai - Mattuthavani (truncated)
@@ -42,7 +45,7 @@ DELETE FROM locations WHERE id IN (
   36     -- Old: Erode - Old Bus Stand (replaced by newer)
 );
 
--- Step 5: Add missing city bus stops to ensure comprehensive coverage
+-- Step 7: Add missing city bus stops to ensure comprehensive coverage
 -- Adding bus stops for districts and cities not yet covered or with limited coverage
 INSERT INTO locations (name, latitude, longitude, district, nearby_city) VALUES 
 -- Dharmapuri district
