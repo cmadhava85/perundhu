@@ -103,12 +103,81 @@ async function scrapeTNSTCBuses() {
 
     // Navigate to TNSTC website
     await page.goto(TNSTC_URL);
+    await page.waitForTimeout(1500);
     
-    // Close any popup
+    // Close initial popup (appears on page load)
     try {
-      await page.getByRole('button', { name: '×' }).click();
+      console.log('🔒 Closing initial page load popup...');
+      await page.waitForTimeout(1000);
+      
+      // Method 1: Try to find and click specific close button selectors
+      const closeSelectors = [
+        'button:has-text("×")',
+        'button:has-text("X")',
+        'button[aria-label*="close"]',
+        'button[aria-label*="Close"]',
+        '[role="button"][aria-label*="close"]',
+        '[role="button"][aria-label*="Close"]',
+        '.modal-close',
+        '.popup-close',
+        '.btn-close',
+        'button.close',
+      ];
+      
+      for (const selector of closeSelectors) {
+        try {
+          const btn = page.locator(selector).first();
+          if (await btn.count() > 0) {
+            console.log(`  🔘 Found close button with selector: ${selector}, clicking...`);
+            await btn.click();
+            await page.waitForTimeout(500);
+          }
+        } catch (e) {
+          // Continue to next selector
+        }
+      }
+      
+      // Method 2: Press Escape key multiple times (wrapped in try-catch)
+      try {
+        for (let i = 0; i < 3; i++) {
+          await page.keyboard.press('Escape');
+          await page.waitForTimeout(200);
+        }
+      } catch (e) {
+        console.log('  ⚠️  Escape key press failed, continuing...');
+      }
+      
+      // Method 3: Hide popups/modals via JavaScript
+      try {
+        await page.evaluate(() => {
+          const popups = document.querySelectorAll(
+            '[role="dialog"], [class*="modal"], [class*="popup"], [class*="overlay"], ' +
+            '.popup, .modal, .overlay, .modal-backdrop, .fade, ' +
+            '[id*="popup"], [id*="modal"], [id*="dialog"]'
+          );
+          popups.forEach((p: any) => {
+            try {
+              p.style.display = 'none !important';
+              p.style.visibility = 'hidden';
+              p.style.opacity = '0';
+              p.setAttribute('aria-hidden', 'true');
+              // If it has a parent, hide parent too
+              if (p.parentElement) {
+                p.parentElement.style.display = 'none';
+              }
+            } catch (e) {
+              // Ignore individual popup errors
+            }
+          });
+        });
+      } catch (e) {
+        console.log('  ⚠️  JavaScript popup hiding failed, continuing...');
+      }
+      
+      await page.waitForTimeout(1000);
+      console.log('✓ Initial popup close attempts completed');
     } catch (e) {
-      console.log('No popup to close');
+      console.log('⚠️  Error during popup close:', e);
     }
 
     // All prefixes to iterate through
@@ -121,41 +190,69 @@ async function scrapeTNSTCBuses() {
     // Test if fields exist
     const testField = page.locator('input[placeholder="From Place"]').first();
     try {
-      await testField.waitFor({ state: 'visible', timeout: 5000 });
+      console.log('⏳ Waiting for form fields to appear...');
+      await testField.waitFor({ state: 'visible', timeout: 10000 });
       console.log('✓ Form fields found and visible');
     } catch (e) {
-      console.log('❌ Form fields not found or not visible:', e);
-      return;
+      console.log('❌ Form fields not found. Trying to diagnose...');
+      // Try to see what elements are on the page
+      const pageTitle = await page.title();
+      console.log(`  Page title: ${pageTitle}`);
+      const formFields = await page.locator('input').count();
+      console.log(`  Found ${formFields} input fields on page`);
+      const modals = await page.locator('[role="dialog"]').count();
+      console.log(`  Found ${modals} modal dialogs`);
+      const overlays = await page.locator('[class*="overlay"]').count();
+      console.log(`  Found ${overlays} overlay elements`);
+      throw new Error('Form fields still not accessible after popup close attempts');
     }
     
     // Fill Source field with actual city name
-    const fromField = page.locator('input[placeholder="From Place"]').first();
-    await fromField.click();
-    await fromField.fill('');
-    await fromField.type(fromLocation);
-    await page.waitForTimeout(1000);
-
+    console.log(`\n✍️  Filling Source field with: ${fromLocation}`);
     try {
-      const dropdownOptions = await page.locator('ul[id^="ui-id"] li, div[role="option"]').all();
-      let foundMatch = false;
+      const fromField = page.locator('input[placeholder="From Place"]').first();
+      console.log('  Clicking field...');
+      await fromField.click({ timeout: 5000 });
+      console.log('  Field clicked');
       
-      for (const option of dropdownOptions) {
-        const text = await option.textContent();
-        if (text && text.toUpperCase().includes(fromLocation.toUpperCase())) {
-          await option.click();
-          console.log(`✓ Selected Source: ${fromLocation}`);
-          foundMatch = true;
-          await page.waitForTimeout(500);
-          break;
+      // Clear and type
+      await page.waitForTimeout(200);
+      await fromField.clear();
+      await page.waitForTimeout(100);
+      
+      console.log(`  Typing: ${fromLocation}`);
+      await fromField.type(fromLocation, { delay: 50 });
+      
+      console.log('  Typed, waiting for dropdown...');
+      await page.waitForTimeout(1000);
+      
+      // Look for any li element with matching text
+      const options = page.locator('li');
+      const count = await options.count();
+      console.log(`📋 Found ${count} li elements total`);
+      
+      let selected = false;
+      for (let i = 0; i < Math.min(count, 20); i++) {
+        try {
+          const text = await options.nth(i).textContent();
+          if (text && text.includes(fromLocation)) {
+            console.log(`✅ Found match: ${text.substring(0, 50)}`);
+            await options.nth(i).click({ timeout: 3000 });
+            console.log(`✓ Selected Source: ${fromLocation}`);
+            selected = true;
+            await page.waitForTimeout(500);
+            break;
+          }
+        } catch (e) {
+          // continue
         }
       }
       
-      if (!foundMatch) {
-        console.log(`❌ Could not find source location in dropdown`);
-        return;
+      if (!selected) {
+        console.log(`⚠️  No matching option found`);
       }
     } catch (e) {
-      console.log(`❌ Error selecting Source location: ${e}`);
+      console.log(`❌ Error filling source: ${e}`);
       return;
     }
 
@@ -175,30 +272,47 @@ async function scrapeTNSTCBuses() {
 
       try {
         // Fill Destination field with actual city name
+        console.log(`\n✍️  Filling Destination field with: ${toLocation}`);
         const toField = page.locator('input[placeholder="To Place"]').first();
-        await toField.click();
-        await toField.fill('');
-        await toField.type(toLocation);
-        await page.waitForTimeout(1000);
-
-        // Select Destination location from dropdown
-        const dropdownOptions = await page.locator('ul[id^="ui-id"] li, div[role="option"]').all();
-        let foundLocation = false;
+        console.log('  Clicking field...');
+        await toField.click({ timeout: 5000 });
+        console.log('  Field clicked');
         
-        for (const option of dropdownOptions) {
-          const text = await option.textContent();
-          if (text && text.toUpperCase().includes(toLocation.toUpperCase())) {
-            await option.click();
-            foundLocation = true;
-            console.log(`  ✓ Selected Destination: ${toLocation}`);
-            await page.waitForTimeout(500);
-            break;
+        // Clear and type
+        await page.waitForTimeout(200);
+        await toField.clear();
+        await page.waitForTimeout(100);
+        
+        console.log(`  Typing: ${toLocation}`);
+        await toField.type(toLocation, { delay: 50 });
+        
+        console.log('  Typed, waiting for dropdown...');
+        await page.waitForTimeout(1000);
+        
+        // Look for any li element with matching text
+        const options = page.locator('li');
+        const count = await options.count();
+        console.log(`📋 Found ${count} li elements`);
+        
+        let selected = false;
+        for (let i = 0; i < Math.min(count, 20); i++) {
+          try {
+            const text = await options.nth(i).textContent();
+            if (text && text.includes(toLocation)) {
+              console.log(`✅ Found match: ${text.substring(0, 50)}`);
+              await options.nth(i).click({ timeout: 3000 });
+              console.log(`✓ Selected Destination: ${toLocation}`);
+              selected = true;
+              await page.waitForTimeout(500);
+              break;
+            }
+          } catch (e) {
+            // continue
           }
         }
         
-        if (!foundLocation) {
-          console.log(`  ⚠️  Could not find Destination location in dropdown, skipping...`);
-          continue;
+        if (!selected) {
+          console.log(`⚠️  No matching destination option found`);
         }
 
         // Select date - approximately 7 days from now
@@ -239,9 +353,38 @@ async function scrapeTNSTCBuses() {
           await page.waitForLoadState('networkidle').catch(() => {});
           await page.waitForTimeout(1000);
 
+          // Helper function to close popups
+          const closePopup = async () => {
+            try {
+              // Try clicking close button
+              const closeBtn = await page.locator('[class*="close"], [aria-label*="close"], .btn-close, button[aria-label="Close"]').first().count().catch(() => 0);
+              if (closeBtn > 0) {
+                await page.locator('[class*="close"], [aria-label*="close"], .btn-close, button[aria-label="Close"]').first().click().catch(() => {});
+                await page.waitForTimeout(300);
+              }
+              
+              // Try pressing Escape
+              await page.keyboard.press('Escape');
+              await page.waitForTimeout(300);
+              
+              // Hide overlay/modal via JS
+              await page.evaluate(() => {
+                const popups = document.querySelectorAll('[id*="popup"], [class*="modal"], [class*="overlay"], .popup-overlay, #popup-overlay, [role="dialog"]');
+                popups.forEach((p: any) => {
+                  p.style.display = 'none';
+                  p.style.visibility = 'hidden';
+                });
+              }).catch(() => {});
+              
+              await page.waitForTimeout(200);
+            } catch (e) {
+              // Ignore close errors
+            }
+          };
+
           // Count buses found
           const busRowsSelector = 'div[class*="service-row"], tr[class*="bus"], div[class*="bus-result"], .service-row, [class*="bus-service"], div[class*="bus"], .bus-row, [id*="service"]';
-          let busElements = await page.locator(busRowsSelector).all();
+          const busElements = await page.locator(busRowsSelector).all();
           const busRowCount = busElements.length;
 
           console.log(`  ✓ Found ${busRowCount} buses`);
@@ -255,51 +398,85 @@ async function scrapeTNSTCBuses() {
               totalBuses: busRowCount,
             };
             
-            // Extract details from each bus result (limit to 5 buses per route)
-            const busesToExtract = Math.min(busRowCount, 5);
-            for (let busIndex = 0; busIndex < busesToExtract; busIndex++) {
+            // Extract details from ALL buses on this route via popup
+            console.log(`  📋 Extracting details from all ${busRowCount} buses via popups...`);
+            for (let busIndex = 0; busIndex < busRowCount; busIndex++) {
               try {
-                // Re-fetch bus elements to avoid stale references
+                // Close any existing popups before proceeding
+                await closePopup();
+                await page.waitForTimeout(300);
+                
+                // Re-fetch fresh bus elements to avoid stale references
                 const freshBusElements = await page.locator(busRowsSelector).all();
                 
                 if (busIndex >= freshBusElements.length) {
+                  console.log(`    ℹ️  Reached end of bus list at index ${busIndex}`);
                   break;
                 }
                 
                 const busElement = freshBusElements[busIndex];
                 const busText = await busElement.textContent();
                 
-                // Try to click on the bus row to view details
+                // Parse bus details from visible text first
+                const busDetails = parseBusDetails(busText || '', fromLocation, toLocation);
                 let stopsData: BusStop[] = [];
+                
                 try {
-                  const clickableLink = busElement.locator('a, [role="button"], .clickable, button').first();
-                  const isClickable = await clickableLink.count().catch(() => 0);
+                  // Find and click the hyperlink to open detail popup
+                  const busLink = busElement.locator('a').first();
+                  const linkExists = await busLink.count().catch(() => 0);
                   
-                  if (isClickable > 0) {
-                    await clickableLink.click();
+                  if (linkExists > 0) {
+                    // Scroll into view before clicking
+                    await busElement.scrollIntoViewIfNeeded();
+                    await page.waitForTimeout(300);
+                    
+                    console.log(`    🔗 Bus ${busIndex + 1}/${busRowCount}: Clicking hyperlink...`);
+                    
+                    // Click to open detail popup
+                    await busLink.click();
+                    
+                    // Wait for detail popup to appear
+                    try {
+                      const detailPopup = page.locator('[role="dialog"], [class*="modal"], [class*="popup"], .modal-content, [class*="detail"]').first();
+                      await detailPopup.waitFor({ state: 'visible', timeout: 3000 });
+                    } catch (e) {
+                      // Popup might be visible immediately or via different selector
+                    }
+                    
                     await page.waitForTimeout(1500);
                     
-                    // Extract stops from detail page
+                    // Extract stops data from the detail popup
                     stopsData = await extractStops(page);
                     
-                    // Go back to search results
-                    await page.goBack().catch(() => {});
+                    console.log(`    ✓ Bus ${busIndex + 1}/${busRowCount}: Extracted ${stopsData.length} stops`);
+                    
+                    // Close the detail popup by multiple methods
+                    console.log(`    🔒 Closing detail popup...`);
+                    await closePopup();
                     await page.waitForTimeout(800);
+                  } else {
+                    console.log(`    ℹ️  Bus ${busIndex + 1}/${busRowCount}: No hyperlink found`);
                   }
                 } catch (clickError) {
-                  console.log(`    ℹ️  Could not click for details on bus ${busIndex + 1}`);
+                  console.log(`    ⚠️  Bus ${busIndex + 1}/${busRowCount}: ${String(clickError).substring(0, 45)}`);
+                  // Still try to close popup before moving to next bus
+                  await closePopup();
+                  await page.waitForTimeout(500);
                 }
                 
-                // Parse bus details from the text
-                const busDetails = parseBusDetails(busText || '', fromLocation, toLocation);
+                // Add stops to bus details
                 if (stopsData.length > 0) {
                   busDetails.stops = stopsData;
                 }
                 
                 routeData.buses.push(busDetails);
-                console.log(`    ✓ Bus ${busIndex + 1}: ${busDetails.serviceName} (${busDetails.price}) - ${busDetails.stops?.length || 0} stops`);
+                const stopCount = stopsData.length || 0;
+                console.log(`    ✅ Bus ${busIndex + 1}/${busRowCount}: ${busDetails.serviceName.substring(0, 20).trim()} | ${stopCount} stops | ₹${busDetails.price}`);
               } catch (e) {
-                console.log(`    ⚠️  Could not extract bus ${busIndex + 1}: ${e}`);
+                console.log(`    ❌ Error with bus ${busIndex + 1}: ${String(e).substring(0, 40)}`);
+                // Close popup before proceeding
+                await closePopup().catch(() => {});
               }
             }
             
@@ -307,61 +484,7 @@ async function scrapeTNSTCBuses() {
             allData.totalBuses += busRowCount;
             searchCount++;
             
-            // If we've successfully got data, break to avoid popup issues
-            if (searchCount >= 3) {
-              console.log(`\n✅ Reached search limit (${searchCount} routes). Ending search.`);
-              break;
-            }
-          }
-          
-          // Navigate back to search form for next destination
-          if (searchCount < 3) {
-            try {
-              // Try to close any popup overlay
-              await page.evaluate(() => {
-                const popups = document.querySelectorAll('[id*="popup"], [class*="modal"], [class*="overlay"]');
-                popups.forEach((p: any) => {
-                  if (p.style && p.style.display !== 'none') {
-                    p.style.display = 'none';
-                  }
-                });
-              }).catch(() => {});
-              
-              await page.waitForTimeout(300);
-            } catch (popupError) {
-              console.log(`  ℹ️  Could not close popup`);
-            }
-            
-            // Navigate back to search form
-            try {
-              await page.goto(TNSTC_URL);
-              await page.waitForTimeout(1000);
-            } catch (navError) {
-              console.log(`  ⚠️  Navigation error: ${navError}`);
-              break; // Exit if navigation fails
-            }
-            
-            // Re-select source location for next iteration
-            try {
-              const fromFieldAgain = page.locator('input[placeholder="From Place"]').first();
-              await fromFieldAgain.click({ timeout: 3000 });
-              await fromFieldAgain.fill('');
-              await fromFieldAgain.type(fromLocation);
-              await page.waitForTimeout(800);
-              
-              const dropdownOptionsAgain = await page.locator('ul[id^="ui-id"] li, div[role="option"]').all();
-              for (const option of dropdownOptionsAgain) {
-                const text = await option.textContent();
-                if (text && text.toUpperCase().includes(fromLocation.toUpperCase())) {
-                  await option.click();
-                  await page.waitForTimeout(500);
-                  break;
-                }
-              }
-            } catch (resetError) {
-              console.log(`  ⚠️  Could not reset form: ${resetError}`);
-              break; // Exit if reset fails
-            }
+            console.log(`  ✅ Completed: ${fromLocation} → ${toLocation} (${routeData.buses.length}/${busRowCount} buses with details)\n`);
           }
 
         } catch (e) {
