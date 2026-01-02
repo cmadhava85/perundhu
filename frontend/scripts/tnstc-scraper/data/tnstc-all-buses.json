@@ -1,6 +1,140 @@
 {
-  "routes": [],
-  "totalRoutes": 0,
-  "totalBuses": 0,
-  "scrapedAt": "2026-01-02T02:24:45.132Z"
+  "routes": [
+    {
+      "fromPlace": "CHENNAI",
+      "toPlace": "MADURAI",
+      "date": "2026-01-02",
+      "buses": [
+        {
+          "serviceName": "SETC\n          NON AC SLEEPER SEATER",
+          "serviceCode": "",
+          "busNumber": "",
+          "departureTime": "04:00",
+          "arrivalTime": "11:00",
+          "duration": "9h 00m",
+          "fromPlace": "CHENNAI",
+          "toPlace": "MADURAI",
+          "busType": "NON AC SLEEPER SEATER",
+          "price": "9.00",
+          "operatorName": "SETC\n          NON AC SLEEPER SEATER",
+          "stops": [
+            {
+              "stopName": "Service Details\n        \t\n        \n         \n      \n     \n     \n  \n  \n    \n    \n        \n          \n             \n\n\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tService Code :\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t0400KCBMADNS\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tRoute No. :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t137NS\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tFrom Place :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tTo Place :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tJourney Date:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t07/01/2026\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tJourney Hours *:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t9:00\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tTotal Kms *:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t436.00\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tCorporation :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tSETC\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t  \n\t\t                            \n\t\t                              \n\t\t                                  \n\t\t                                  \t\n\t\t                                    \t\n\t\t                                    \t\n\t\t                                     \n\t\t                                    \n\t\t                                    \tAdult Fare **\n\t\t                                    \t\n\t\t                                    437\n\t\t                                    \n\t\t                                    \tChild Fare **\n\t\t                                    \t\n\t\t                                    NA\n\t\t                                  \n\t\t                              \n\t\t                            \n\t\t                          \n\t\t\t\t\t\t\t    \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\tSl. No\n\t\t\t\t\t\t\t\t\t\t\t\t\tCity\n\t\t\t\t\t\t\t\t\t\t\t\t\tLand Mark \n\t\t\t\t\t\t\t\t\t\t\t\t\tDep. Time \n\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t1\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI KALAIGNAR CBT\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:00\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t2\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tGUDUVANCHERY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:05\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t3\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tSRM UNIVERSITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:10\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t4\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMARAIMALAI NAGAR BUSSTOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t5\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMAHINDRA CITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t6\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU TOLL\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:40\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t7\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU BYPASS\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:50\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t8\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMELMARUVATHUR BUS STOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t05:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t9\n\t\t\t\t\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\t\t\t\t\tMATTUTHAVANI BS\n\t\t\t\t\t\t\t\t\t\t\t\t\t12:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t*Distance and Journey hours are approximate.\n\t\t            \t\t\t\t**Concessions and Levies are applicable as per rules.",
+              "arrivalTime": "",
+              "departureTime": ""
+            },
+            {
+              "stopName": "Service Details\n        \t\n        \n         \n      \n     \n     \n  \n  \n    \n    \n        \n          \n             \n\n\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tService Code :\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t0400KCBMADNS\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tRoute No. :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t137NS\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tFrom Place :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tTo Place :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tJourney Date:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t07/01/2026\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tJourney Hours *:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t9:00\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tTotal Kms *:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t436.00\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tCorporation :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tSETC\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t  \n\t\t                            \n\t\t                              \n\t\t                                  \n\t\t                                  \t\n\t\t                                    \t\n\t\t                                    \t\n\t\t                                     \n\t\t                                    \n\t\t                                    \tAdult Fare **\n\t\t                                    \t\n\t\t                                    437\n\t\t                                    \n\t\t                                    \tChild Fare **\n\t\t                                    \t\n\t\t                                    NA\n\t\t                                  \n\t\t                              \n\t\t                            \n\t\t                          \n\t\t\t\t\t\t\t    \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\tSl. No\n\t\t\t\t\t\t\t\t\t\t\t\t\tCity\n\t\t\t\t\t\t\t\t\t\t\t\t\tLand Mark \n\t\t\t\t\t\t\t\t\t\t\t\t\tDep. Time \n\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t1\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI KALAIGNAR CBT\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:00\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t2\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tGUDUVANCHERY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:05\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t3\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tSRM UNIVERSITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:10\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t4\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMARAIMALAI NAGAR BUSSTOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t5\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMAHINDRA CITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t6\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU TOLL\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:40\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t7\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU BYPASS\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:50\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t8\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMELMARUVATHUR BUS STOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t05:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t9\n\t\t\t\t\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\t\t\t\t\tMATTUTHAVANI BS\n\t\t\t\t\t\t\t\t\t\t\t\t\t12:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t*Distance and Journey hours are approximate.\n\t\t            \t\t\t\t**Concessions and Levies are applicable as per rules.",
+              "arrivalTime": "",
+              "departureTime": ""
+            },
+            {
+              "stopName": "",
+              "arrivalTime": "",
+              "departureTime": ""
+            },
+            {
+              "stopName": "Service Code :\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t0400KCBMADNS\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tRoute No. :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t137NS\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tFrom Place :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tTo Place :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tJourney Date:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t07/01/2026\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tJourney Hours *:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t9:00\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tTotal Kms *:\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t436.00\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tCorporation :\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\tSETC\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t  \n\t\t                            \n\t\t                              \n\t\t                                  \n\t\t                                  \t\n\t\t                                    \t\n\t\t                                    \t\n\t\t                                     \n\t\t                                    \n\t\t                                    \tAdult Fare **\n\t\t                                    \t\n\t\t                                    437\n\t\t                                    \n\t\t                                    \tChild Fare **\n\t\t                                    \t\n\t\t                                    NA\n\t\t                                  \n\t\t                              \n\t\t                            \n\t\t                          \n\t\t\t\t\t\t\t    \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\tSl. No\n\t\t\t\t\t\t\t\t\t\t\t\t\tCity\n\t\t\t\t\t\t\t\t\t\t\t\t\tLand Mark \n\t\t\t\t\t\t\t\t\t\t\t\t\tDep. Time \n\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t1\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI KALAIGNAR CBT\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:00\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t2\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tGUDUVANCHERY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:05\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t3\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tSRM UNIVERSITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:10\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t4\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMARAIMALAI NAGAR BUSSTOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t5\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMAHINDRA CITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t6\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU TOLL\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:40\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t7\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU BYPASS\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:50\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t8\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMELMARUVATHUR BUS STOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t05:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t9\n\t\t\t\t\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\t\t\t\t\tMATTUTHAVANI BS\n\t\t\t\t\t\t\t\t\t\t\t\t\t12:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t*Distance and Journey hours are approximate.\n\t\t            \t\t\t\t**Concessions and Levies are applicable as per rules.",
+              "arrivalTime": "",
+              "departureTime": ""
+            },
+            {
+              "stopName": "Service Code :",
+              "arrivalTime": "",
+              "departureTime": "0400KCBMADNS"
+            },
+            {
+              "stopName": "From Place :",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "Journey Date:",
+              "arrivalTime": "",
+              "departureTime": "07/01/2026"
+            },
+            {
+              "stopName": "Total Kms *:",
+              "arrivalTime": "",
+              "departureTime": "436.00"
+            },
+            {
+              "stopName": "Adult Fare **\n\t\t                                    \t\n\t\t                                    437\n\t\t                                    \n\t\t                                    \tChild Fare **\n\t\t                                    \t\n\t\t                                    NA",
+              "arrivalTime": "",
+              "departureTime": "Adult Fare **\n\t\t                                    \t\n\t\t                                    437\n\t\t                                    \n\t\t                                    \tChild Fare **\n\t\t                                    \t\n\t\t                                    NA"
+            },
+            {
+              "stopName": "Adult Fare **\n\t\t                                    \t\n\t\t                                    437\n\t\t                                    \n\t\t                                    \tChild Fare **\n\t\t                                    \t\n\t\t                                    NA",
+              "arrivalTime": "",
+              "departureTime": ""
+            },
+            {
+              "stopName": "Sl. No\n\t\t\t\t\t\t\t\t\t\t\t\t\tCity\n\t\t\t\t\t\t\t\t\t\t\t\t\tLand Mark \n\t\t\t\t\t\t\t\t\t\t\t\t\tDep. Time \n\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t1\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI KALAIGNAR CBT\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:00\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t2\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tGUDUVANCHERY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:05\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t3\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tSRM UNIVERSITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:10\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t4\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMARAIMALAI NAGAR BUSSTOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t5\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMAHINDRA CITY\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:30\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t6\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU TOLL\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:40\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t7\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENGALPATTU BYPASS\n\t\t\t\t\t\t\t\t\t\t\t\t\t04:50\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t8\n\t\t\t\t\t\t\t\t\t\t\t\t\tCHENNAI-KILAMBAKKAM-KCBT\n\t\t\t\t\t\t\t\t\t\t\t\t\tMELMARUVATHUR BUS STOP\n\t\t\t\t\t\t\t\t\t\t\t\t\t05:20\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t9\n\t\t\t\t\t\t\t\t\t\t\t\t\tMADURAI\n\t\t\t\t\t\t\t\t\t\t\t\t\tMATTUTHAVANI BS\n\t\t\t\t\t\t\t\t\t\t\t\t\t12:30",
+              "arrivalTime": "",
+              "departureTime": "Sl. No"
+            },
+            {
+              "stopName": "Sl. No",
+              "arrivalTime": "",
+              "departureTime": "City"
+            },
+            {
+              "stopName": "1",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "2",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "3",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "4",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "5",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "6",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "7",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "8",
+              "arrivalTime": "",
+              "departureTime": "CHENNAI-KILAMBAKKAM-KCBT"
+            },
+            {
+              "stopName": "9",
+              "arrivalTime": "",
+              "departureTime": "MADURAI"
+            },
+            {
+              "stopName": "",
+              "arrivalTime": "",
+              "departureTime": ""
+            }
+          ]
+        }
+      ],
+      "totalBuses": 58
+    }
+  ],
+  "totalRoutes": 1,
+  "totalBuses": 58,
+  "scrapedAt": "2026-01-02T02:48:19.817Z"
 }

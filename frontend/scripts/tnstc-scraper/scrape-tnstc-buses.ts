@@ -163,7 +163,7 @@ async function scrapeTNSTCBuses() {
     console.log(`\n🚌 Starting searches for destinations from ${fromLocation}...`);
     let searchCount = 0;
 
-    for (let cityIndex = 1; cityIndex < LOCATIONS.length && searchCount < 10; cityIndex++) {
+    for (let cityIndex = 1; cityIndex < LOCATIONS.length && searchCount < 3; cityIndex++) {
       const toLocation = LOCATIONS[cityIndex];
       
       if (toLocation === fromLocation) {
@@ -240,17 +240,11 @@ async function scrapeTNSTCBuses() {
           await page.waitForTimeout(1000);
 
           // Count buses found
-          const busRowsSelector = 'div[class*="service-row"], tr[class*="bus"], div[class*="bus-result"], .service-row, [class*="bus-service"]';
-          const busRowCount = await page.locator(busRowsSelector).count();
+          const busRowsSelector = 'div[class*="service-row"], tr[class*="bus"], div[class*="bus-result"], .service-row, [class*="bus-service"], div[class*="bus"], .bus-row, [id*="service"]';
+          let busElements = await page.locator(busRowsSelector).all();
+          const busRowCount = busElements.length;
 
           console.log(`  ✓ Found ${busRowCount} buses`);
-          
-          // Debug: Log page title and some content indicators
-          const pageTitle = await page.title();
-          const hasResults = await page.locator('body').textContent();
-          if (busRowCount === 0 && hasResults && hasResults.includes('bus')) {
-            console.log(`  💡 Page title: ${pageTitle}`);
-          }
           
           if (busRowCount > 0) {
             const routeData: RouteData = {
@@ -261,29 +255,112 @@ async function scrapeTNSTCBuses() {
               totalBuses: busRowCount,
             };
             
+            // Extract details from each bus result (limit to 5 buses per route)
+            const busesToExtract = Math.min(busRowCount, 5);
+            for (let busIndex = 0; busIndex < busesToExtract; busIndex++) {
+              try {
+                // Re-fetch bus elements to avoid stale references
+                const freshBusElements = await page.locator(busRowsSelector).all();
+                
+                if (busIndex >= freshBusElements.length) {
+                  break;
+                }
+                
+                const busElement = freshBusElements[busIndex];
+                const busText = await busElement.textContent();
+                
+                // Try to click on the bus row to view details
+                let stopsData: BusStop[] = [];
+                try {
+                  const clickableLink = busElement.locator('a, [role="button"], .clickable, button').first();
+                  const isClickable = await clickableLink.count().catch(() => 0);
+                  
+                  if (isClickable > 0) {
+                    await clickableLink.click();
+                    await page.waitForTimeout(1500);
+                    
+                    // Extract stops from detail page
+                    stopsData = await extractStops(page);
+                    
+                    // Go back to search results
+                    await page.goBack().catch(() => {});
+                    await page.waitForTimeout(800);
+                  }
+                } catch (clickError) {
+                  console.log(`    ℹ️  Could not click for details on bus ${busIndex + 1}`);
+                }
+                
+                // Parse bus details from the text
+                const busDetails = parseBusDetails(busText || '', fromLocation, toLocation);
+                if (stopsData.length > 0) {
+                  busDetails.stops = stopsData;
+                }
+                
+                routeData.buses.push(busDetails);
+                console.log(`    ✓ Bus ${busIndex + 1}: ${busDetails.serviceName} (${busDetails.price}) - ${busDetails.stops?.length || 0} stops`);
+              } catch (e) {
+                console.log(`    ⚠️  Could not extract bus ${busIndex + 1}: ${e}`);
+              }
+            }
+            
             allData.routes.push(routeData);
             allData.totalBuses += busRowCount;
             searchCount++;
+            
+            // If we've successfully got data, break to avoid popup issues
+            if (searchCount >= 3) {
+              console.log(`\n✅ Reached search limit (${searchCount} routes). Ending search.`);
+              break;
+            }
           }
           
           // Navigate back to search form for next destination
-          await page.goto(TNSTC_URL);
-          await page.waitForTimeout(1000);
-          
-          // Re-select source location for next iteration
-          const fromFieldAgain = page.locator('input[placeholder="From Place"]').first();
-          await fromFieldAgain.click();
-          await fromFieldAgain.fill('');
-          await fromFieldAgain.type(fromLocation);
-          await page.waitForTimeout(800);
-          
-          const dropdownOptionsAgain = await page.locator('ul[id^="ui-id"] li, div[role="option"]').all();
-          for (const option of dropdownOptionsAgain) {
-            const text = await option.textContent();
-            if (text && text.toUpperCase().includes(fromLocation.toUpperCase())) {
-              await option.click();
-              await page.waitForTimeout(500);
-              break;
+          if (searchCount < 3) {
+            try {
+              // Try to close any popup overlay
+              await page.evaluate(() => {
+                const popups = document.querySelectorAll('[id*="popup"], [class*="modal"], [class*="overlay"]');
+                popups.forEach((p: any) => {
+                  if (p.style && p.style.display !== 'none') {
+                    p.style.display = 'none';
+                  }
+                });
+              }).catch(() => {});
+              
+              await page.waitForTimeout(300);
+            } catch (popupError) {
+              console.log(`  ℹ️  Could not close popup`);
+            }
+            
+            // Navigate back to search form
+            try {
+              await page.goto(TNSTC_URL);
+              await page.waitForTimeout(1000);
+            } catch (navError) {
+              console.log(`  ⚠️  Navigation error: ${navError}`);
+              break; // Exit if navigation fails
+            }
+            
+            // Re-select source location for next iteration
+            try {
+              const fromFieldAgain = page.locator('input[placeholder="From Place"]').first();
+              await fromFieldAgain.click({ timeout: 3000 });
+              await fromFieldAgain.fill('');
+              await fromFieldAgain.type(fromLocation);
+              await page.waitForTimeout(800);
+              
+              const dropdownOptionsAgain = await page.locator('ul[id^="ui-id"] li, div[role="option"]').all();
+              for (const option of dropdownOptionsAgain) {
+                const text = await option.textContent();
+                if (text && text.toUpperCase().includes(fromLocation.toUpperCase())) {
+                  await option.click();
+                  await page.waitForTimeout(500);
+                  break;
+                }
+              }
+            } catch (resetError) {
+              console.log(`  ⚠️  Could not reset form: ${resetError}`);
+              break; // Exit if reset fails
             }
           }
 
