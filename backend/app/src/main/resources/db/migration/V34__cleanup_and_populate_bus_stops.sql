@@ -2,29 +2,25 @@
 -- Purpose: Remove duplicate entries and ensure all major Tamil Nadu cities have bus stops
 -- Date: 2026-01-02
 
--- Step 1: Remove dependent stop records first (foreign key constraint)
--- Delete stops that reference the duplicate locations we want to remove
-DELETE FROM stops WHERE location_id IN (
-  11,    -- Duplicate: Madurai - Mattuthavani (truncated)
-  14,    -- Duplicate: Madurai - Mattuthavani (truncated)
-  78,    -- Duplicate: Madurai - Mattuthavani (truncated)
-  81,    -- Duplicate: Aruppukottai - Main Bus Stand (duplicate of 141)
-  80,    -- Duplicate: Sivakasi - Bus Stand (duplicate of 132)
-  104,   -- Corrupted: Erode - Bus St Bus Station
-  95,    -- Duplicate: SALEM OLD BUS STAND (duplicate of 30, removed)
-  94,    -- Duplicate: SALEM TOWN BUS STAND (duplicate of 31, removed)
-  97,    -- Duplicate: Tiruppur - Koyil vazhi bus stand (duplicate of 98)
-  39,    -- Old: Tiruppur - New Bus Stand (replaced by 96)
-  40,    -- Old: Tiruppur - Old Bus Stand (replaced by 97/98)
-  54,    -- Old: Kumbakonam - New Bus Stand (replaced by 117)
-  55,    -- Old: Kumbakonam - Old Bus Stand (replaced by newer)
-  43,    -- Old: Dindigul - New Bus Stand (replaced by 122)
-  44,    -- Old: Dindigul - Old Bus Stand (replaced by newer)
-  35,    -- Old: Erode - New Bus Stand (replaced by 100, 101)
-  36     -- Old: Erode - Old Bus Stand (replaced by newer)
-);
+-- Duplicate location IDs to be removed
+-- These are truncated, corrupted, or redundant entries
+SET @duplicate_ids = '11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36';
 
--- Step 2: Remove duplicate bus stop location entries
+-- Step 1: Remove dependent route_contributions records first
+-- Delete route contributions that reference the duplicate locations
+DELETE FROM route_contributions WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
+   OR to_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
+
+-- Step 2: Remove dependent buses records
+-- Delete buses that have these locations as from/to points
+DELETE FROM buses WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
+   OR to_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
+
+-- Step 3: Remove dependent stops records
+-- Delete stops that reference the duplicate locations
+DELETE FROM stops WHERE location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
+
+-- Step 4: Remove duplicate bus stop location entries
 -- Removed old/truncated/duplicate entries, kept the most complete versions
 DELETE FROM locations WHERE id IN (
   11,    -- Duplicate: Madurai - Mattuthavani (truncated)
@@ -46,7 +42,7 @@ DELETE FROM locations WHERE id IN (
   36     -- Old: Erode - Old Bus Stand (replaced by newer)
 );
 
--- Step 3: Add missing city bus stops to ensure comprehensive coverage
+-- Step 5: Add missing city bus stops to ensure comprehensive coverage
 -- Adding bus stops for districts and cities not yet covered or with limited coverage
 INSERT INTO locations (name, latitude, longitude, district, nearby_city) VALUES 
 -- Dharmapuri district
