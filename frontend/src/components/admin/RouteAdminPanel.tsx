@@ -13,8 +13,9 @@ import { AlertCircle, XCircle, CheckCircle } from 'lucide-react';
  */
 const RouteAdminPanel: React.FC = () => {
   const { t } = useTranslation();
-  const [routes, setRoutes] = useState<RouteContribution[]>([]);
-  const [filteredRoutes, setFilteredRoutes] = useState<RouteContribution[]>([]);
+  const [allRoutes, setAllRoutes] = useState<RouteContribution[]>([]); // All routes for stats calculation
+  const [routes, setRoutes] = useState<RouteContribution[]>([]); // Filtered routes based on status filter
+  const [filteredRoutes, setFilteredRoutes] = useState<RouteContribution[]>([]); // Further filtered by search
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('pending');
@@ -46,22 +47,28 @@ const RouteAdminPanel: React.FC = () => {
         if (isMounted) {
           setLoading(true);
         }
-        let data;
         
+        // Always load ALL routes for stats calculation
+        const allData = await AdminService.getRouteContributions();
+        if (isMounted) {
+          setAllRoutes(allData);
+        }
+        
+        // Then filter based on status filter for display
+        let filteredData;
         if (statusFilter === 'all') {
-          data = await AdminService.getRouteContributions();
+          filteredData = allData;
         } else if (statusFilter === 'pending') {
-          data = await AdminService.getPendingRouteContributions();
+          filteredData = allData.filter(c => c.status === ContributionStatus.PENDING_REVIEW);
         } else {
-          data = await AdminService.getRouteContributions();
           // Filter by status if not 'all' - convert filter to uppercase to match status values
           const filterStatusUpper = statusFilter.toUpperCase();
-          data = data.filter(c => c.status === filterStatusUpper);
+          filteredData = allData.filter(c => c.status === filterStatusUpper);
         }
         
         if (isMounted) {
-          setRoutes(data);
-          setFilteredRoutes(data);
+          setRoutes(filteredData);
+          setFilteredRoutes(filteredData);
           setError(null);
         }
       } catch (_err) {
@@ -121,21 +128,25 @@ const RouteAdminPanel: React.FC = () => {
   const loadRoutes = async () => {
     try {
       setLoading(true);
-      let data;
       
+      // Always load ALL routes for stats calculation
+      const allData = await AdminService.getRouteContributions();
+      setAllRoutes(allData);
+      
+      // Then filter based on status filter for display
+      let filteredData;
       if (statusFilter === 'all') {
-        data = await AdminService.getRouteContributions();
+        filteredData = allData;
       } else if (statusFilter === 'pending') {
-        data = await AdminService.getPendingRouteContributions();
+        filteredData = allData.filter(c => c.status === ContributionStatus.PENDING_REVIEW);
       } else {
-        data = await AdminService.getRouteContributions();
         // Filter by status if not 'all' - convert filter to uppercase to match status values
         const filterStatusUpper = statusFilter.toUpperCase();
-        data = data.filter(c => c.status === filterStatusUpper);
+        filteredData = allData.filter(c => c.status === filterStatusUpper);
       }
       
-      setRoutes(data);
-      setFilteredRoutes(data);
+      setRoutes(filteredData);
+      setFilteredRoutes(filteredData);
       setError(null);
     } catch (_err) {
       setError('Failed to load route contributions. Please try again later.');
@@ -612,19 +623,19 @@ ${result.sqlExample}`;
         <div className="action-stats-row">
           <div className="route-stats">
             <div className="stat-item">
-              <span className="stat-value">{routes.filter(r => r.status === ContributionStatus.PENDING).length}</span>
+              <span className="stat-value">{allRoutes.filter(r => r.status === ContributionStatus.PENDING_REVIEW).length}</span>
               <span className="stat-label">{t('admin.routes.pendingCount')}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{routes.filter(r => r.status === ContributionStatus.APPROVED).length}</span>
+              <span className="stat-value">{allRoutes.filter(r => r.status === ContributionStatus.APPROVED).length}</span>
               <span className="stat-label">{t('admin.routes.approvedCount')}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{routes.filter(r => r.status === 'INTEGRATION_FAILED').length}</span>
+              <span className="stat-value">{allRoutes.filter(r => r.status === ContributionStatus.INTEGRATION_FAILED).length}</span>
               <span className="stat-label">{t('admin.routes.integrationFailedCount', 'Failed')}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{routes.filter(r => r.status === ContributionStatus.REJECTED).length}</span>
+              <span className="stat-value">{allRoutes.filter(r => r.status === ContributionStatus.REJECTED).length}</span>
               <span className="stat-label">{t('admin.routes.rejectedCount')}</span>
             </div>
           </div>

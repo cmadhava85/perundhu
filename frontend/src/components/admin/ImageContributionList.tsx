@@ -18,8 +18,8 @@ const ImageContributionList: React.FC = () => {
   const { t } = useTranslation();
   const [contributions, setContributions] = useState<ImageContribution[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  // Default to PENDING to only show images that need approval
-  const [filter, setFilter] = useState<ContributionStatus | 'ALL'>('PENDING');
+  // Default to PENDING_REVIEW to only show images that need approval
+  const [filter, setFilter] = useState<ContributionStatus | 'ALL'>('PENDING_REVIEW');
   const [rejectModalOpen, setRejectModalOpen] = useState<boolean>(false);
   const [selectedContribution, setSelectedContribution] = useState<ImageContribution | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -41,7 +41,7 @@ const ImageContributionList: React.FC = () => {
       let response: PaginatedResponse;
       
       // Call API with pagination parameters
-      if (filter === 'PENDING') {
+      if (filter === 'PENDING_REVIEW') {
         const result = await AdminService.getPendingImageContributionsPaged?.(page, pageSize) ||
                        await AdminService.getPendingImageContributions();
         response = Array.isArray(result) 
@@ -148,6 +148,19 @@ const ImageContributionList: React.FC = () => {
     setPreviewImage(null);
   };
 
+  /**
+   * Get the correct image URL for a contribution
+   * If imageUrl is a placeholder path (/images/contributions/...), 
+   * convert it to the actual API endpoint to fetch from DB
+   */
+  const getImageUrl = (contribution: ImageContribution): string => {
+    if (!contribution.id) return '';
+    
+    // Use the new API endpoint to serve image data from database
+    const API_URL = import.meta.env.VITE_API_URL || 'https://perundhu-backend-preprod-1032721240281.asia-south1.run.app';
+    return `${API_URL}/api/admin/contributions/images/${contribution.id}/data`;
+  };
+
   const markImageAsLoaded = (id: string) => {
     setLoadedImageIds(prev => new Set(prev).add(id));
   };
@@ -158,7 +171,7 @@ const ImageContributionList: React.FC = () => {
 
   return (
     <div>
-      {filter === 'PENDING' && contributions.length > 0 && (
+      {filter === 'PENDING_REVIEW' && contributions.length > 0 && (
         <div className="info-banner">
           <span>⚠️ Showing {contributions.length} images pending approval</span>
         </div>
@@ -172,10 +185,12 @@ const ImageContributionList: React.FC = () => {
             value={filter} 
             onChange={(e) => setFilter(e.target.value as ContributionStatus | 'ALL')}
           >
-            <option value="PENDING">{t('admin.filter.pending', 'Pending (Needs Approval)')}</option>
+            <option value="PENDING_REVIEW">{t('admin.filter.pending', 'Pending (Needs Approval)')}</option>
             <option value="ALL">{t('admin.filter.all', 'All')}</option>
             <option value="APPROVED">{t('admin.filter.approved', 'Approved')}</option>
             <option value="REJECTED">{t('admin.filter.rejected', 'Rejected')}</option>
+            <option value="INTEGRATED">{t('admin.filter.integrated', 'Integrated')}</option>
+            <option value="INTEGRATION_FAILED">{t('admin.filter.integrationFailed', 'Integration Failed')}</option>
           </select>
         </div>
         
@@ -224,16 +239,16 @@ const ImageContributionList: React.FC = () => {
                   <td>{contribution.id}</td>
                   <td>
                     <div className="thumbnail-container">
-                      {contribution.imageUrl && (
+                      {contribution.id && (
                         <img 
-                          src={contribution.imageUrl} 
+                          src={getImageUrl(contribution)} 
                           alt="Bus" 
                           className="thumbnail"
                           loading="lazy"
-                          onClick={() => openImagePreview(contribution.imageUrl)}
+                          onClick={() => openImagePreview(getImageUrl(contribution))}
                           onLoad={() => markImageAsLoaded(String(contribution.id))}
                           onError={(e) => {
-                            console.error('Failed to load image:', contribution.imageUrl);
+                            console.error('Failed to load image:', getImageUrl(contribution));
                             e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><text x="10" y="30" fill="red">Error</text></svg>';
                           }}
                         />
@@ -254,12 +269,12 @@ const ImageContributionList: React.FC = () => {
                     <div className="action-buttons">
                       <button 
                         className="btn btn-view"
-                        onClick={() => openImagePreview(contribution.imageUrl)}
+                        onClick={() => openImagePreview(getImageUrl(contribution))}
                         title={t('admin.button.view', 'View Image')}
                       >
                         👁️
                       </button>
-                      {contribution.status === 'PENDING' && (
+                      {contribution.status === 'PENDING_REVIEW' && (
                         <>
                           <button 
                             className="btn btn-approve" 

@@ -65,6 +65,23 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       You are an expert OCR system specialized in extracting bus schedule information from Tamil Nadu bus timing boards.
 
       TASK: Extract ALL bus routes and schedules from this image with maximum accuracy.
+      
+      🚨 CRITICAL PATTERN - TWO-COLUMN DEPARTURE TIMES ONLY (TSS/TNSTC Boards):
+      MANY TAMIL NADU BUS BOARDS SHOW THIS LAYOUT (Departure times ONLY, no arrival times):
+      
+      LEFT COLUMN: "STATION_A → STATION_B"      |  RIGHT COLUMN: "STATION_B → STATION_A"
+      Departure Times (6 times in 2 sub-columns)|  Departure Times (6 times in 2 sub-columns)
+      07:45    17:35                             |  05:30    10:15
+      14:30    20:35                             |  07:00    13:10
+      17:00    23:10                             |  08:40    21:35
+      
+      CRITICAL EXTRACTION: Each time = ONE DEPARTURE (no arrival times shown!)
+      - LEFT: Hosur→Chennai departing 07:45, 14:30, 17:00, 17:35, 20:35, 23:10 (6 routes)
+      - RIGHT: Chennai→Hosur departing 05:30, 07:00, 08:40, 10:15, 13:10, 21:35 (6 routes)
+      
+      RESULT: 12 SEPARATE ROUTES extracted (6 Hosur→Chennai + 6 Chennai→Hosur)
+      Each time represents ONE departure. Mark arrival time as "-" (not shown on board).
+      DO NOT assume or calculate arrival times - if not shown on board, use "-"
 
       IMAGE ANALYSIS TIPS:
       - Look carefully at ALL rows/columns in the image
@@ -109,14 +126,36 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       - Origin = the header station
       - Each row = a separate route FROM that origin TO each listed destination
 
-      BIDIRECTIONAL ROUTE PATTERN:
+      BIDIRECTIONAL ROUTE PATTERN - DEPARTURE TIMES ONLY:
+      (When no arrival times are shown on the board)
+      
       If you see a layout like:
-      [STATION_A ↔ STATION_B]
-      [TIME1, TIME2, ...] [TIME3, TIME4, ...]
-
-      Then extract it as TWO routes:
-      - Route 1: STATION_A → STATION_B with times from left column
-      - Route 2: STATION_B → STATION_A with times from right column
+      LEFT COLUMN:
+      [STATION_A → STATION_B]
+      [DEP1: 07:45]
+      [DEP2: 14:30]
+      [DEP3: 17:00]
+      
+      RIGHT COLUMN:
+      [STATION_B → STATION_A]
+      [DEP4: 05:30]
+      [DEP5: 07:00]
+      [DEP6: 08:40]
+      
+      Then IMPORTANT - Extract as follows:
+      - Each time in left column = ONE departure-only route: STATION_A → STATION_B
+        * Time (e.g., 07:45) = Departure FROM STATION_A
+        * NO arrival time shown = Use "-" for arrival time field
+        * If 3 times shown: this is 3 BUSES for this direction with different departure times
+      
+      - Each time in right column = ONE departure-only route: STATION_B → STATION_A
+        * Time (e.g., 05:30) = Departure FROM STATION_B
+        * NO arrival time shown = Use "-" for arrival time field
+        * If 3 times shown: this is 3 BUSES for this direction with different departure times
+      
+      CRITICAL - DO NOT assume or calculate arrival times.
+      If times are not shown on board = use "-"
+      Extract as 6 separate routes total (3 Hosur→Chennai + 3 Chennai→Hosur), each with departure time and "-" for arrival.
 
       LANGUAGE HANDLING:
       The text may be in Tamil (தமிழ்), English, or mixed. Always output in English.
@@ -204,8 +243,23 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       - Convert 12-hour to 24-hour format (6:00 AM → 06:00, 6:00 PM → 18:00)
       - If time shows seconds (19:41:00), output as HH:MM only (19:41)
       - Tamil time indicators: காலை = AM, மாலை/இரவு = PM
-      - Extract ALL times shown for each route, comma-separated
+      - Extract ALL times shown for each route, comma-separated for MULTIPLE BUSES
       - Handle both 12-hour format (3:25PM) and 24-hour format
+      
+      CRITICAL FOR DEPARTURE-ONLY TIMES:
+      - When a board shows ONLY departure times (no arrival times shown):
+        * Each time = ONE departure for ONE bus schedule
+        * Use "-" for arrival time field (means "not shown on board")
+        * DO NOT assume or calculate arrival times
+        * DO NOT use journey duration to estimate arrival
+      - Example from image (departure times only):
+        TIME 1: "07:45" = Route: Hosur→Chennai, dep_time=07:45, arr_time=- (not shown)
+        TIME 2: "14:30" = Route: Hosur→Chennai, dep_time=14:30, arr_time=- (not shown)
+        TIME 3: "17:00" = Route: Hosur→Chennai, dep_time=17:00, arr_time=- (not shown)
+      - Create 3 separate extraction entries (one for each departure time)
+      - Do NOT merge times: dep_time=07:45,14:30,17:00 with arr_time=-
+        Instead: Create 3 separate routes with individual departure times
+
       - For stop-level timings: capture BOTH arrival and departure at each intermediate stop
       - If only one time shown at a stop (common for through routes), use format: time- (arrival only) or -time (departure only)
       - CRITICAL: Do NOT append stop names to comma-separated times!
@@ -233,6 +287,40 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       -|SALEM|DHARMAPURI|Dharmapuri|08:40,18:40|-|-
       -|DHARMAPURI|SALEM|-|11:00,21:00|-|-
       END
+
+      Example 3B - TWO-COLUMN BIDIRECTIONAL DEPARTURE-ONLY TIMES (Most Important for TSS boards!):
+      This is the EXACT layout from the image: left column (Hosur→Chennai) and right column (Chennai→Hosur)
+      Each column shows 6 DEPARTURE TIMES ONLY (no arrival times visible on board)
+      Times are displayed in 2 sub-columns (left and right side of each main column)
+      
+      ORIGIN:Hosur
+      TYPE:route_schedule
+      ROUTES:
+      -|Hosur|Chennai|-|07:45|-|-
+      -|Hosur|Chennai|-|14:30|-|-
+      -|Hosur|Chennai|-|17:00|-|-
+      -|Hosur|Chennai|-|17:35|-|-
+      -|Hosur|Chennai|-|20:35|-|-
+      -|Hosur|Chennai|-|23:10|-|-
+      -|Chennai|Hosur|-|05:30|-|-
+      -|Chennai|Hosur|-|07:00|-|-
+      -|Chennai|Hosur|-|08:40|-|-
+      -|Chennai|Hosur|-|10:15|-|-
+      -|Chennai|Hosur|-|13:10|-|-
+      -|Chennai|Hosur|-|21:35|-|-
+      END
+      
+      EXTRACTION EXPLANATION:
+      - Left column header: "Hosur → Chennai" (departure times only, no arrival times shown)
+        Times: 07:45, 14:30, 17:00, 17:35, 20:35, 23:10
+        Create 6 separate routes, each with one departure time and "-" for arrival
+      - Right column header: "Chennai → Hosur" (departure times only, no arrival times shown)
+        Times: 05:30, 07:00, 08:40, 10:15, 13:10, 21:35
+        Create 6 separate routes, each with one departure time and "-" for arrival
+      - Result: 12 SEPARATE routes total (6 Hosur→Chennai + 6 Chennai→Hosur)
+      - Each route has one departure time and "-" for arrival (since not shown on board)
+      - DO NOT assume or calculate arrival times
+      - Do NOT merge: Create individual entries for each departure
 
       Example 3 - Dash format routes (FROM-TO notation):
       ORIGIN:-

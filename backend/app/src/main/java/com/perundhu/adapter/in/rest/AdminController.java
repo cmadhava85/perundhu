@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -602,4 +604,55 @@ public class AdminController {
     public static class RejectContributionRequest {
         private String reason;
     }
+
+    /**
+     * Serve image data for contributions
+     * Returns the actual binary image from database
+     * 
+     * @param id The contribution ID
+     * @return Image binary data with appropriate content type
+     */
+    @GetMapping("/contributions/images/{id}/data")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<byte[]> getImageData(@PathVariable String id) {
+        try {
+            log.debug("Request to fetch image data for contribution: {}", id);
+            
+            // Fetch the contribution with image data
+            Optional<ImageContribution> optionalContribution = imageContributionOutputPort.findById(id);
+            
+            if (optionalContribution.isEmpty()) {
+                log.warn("Image contribution not found: {}", id);
+                return ResponseEntity.notFound().build();
+            }
+            
+            ImageContribution contribution = optionalContribution.get();
+            byte[] imageData = contribution.getImageData();
+            
+            // If no image data in database, return 404
+            if (imageData == null || imageData.length == 0) {
+                log.warn("Image data not found for contribution: {}", id);
+                return ResponseEntity.notFound().build();
+            }
+            
+            // Determine content type (default to JPEG)
+            String contentType = contribution.getImageContentType();
+            if (contentType == null || contentType.isBlank()) {
+                contentType = "image/jpeg"; // Default fallback
+            }
+            
+            // Return image data with appropriate headers
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, contentType)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, 
+                            "inline; filename=\"" + id + ".jpg\"")
+                    .header(HttpHeaders.CACHE_CONTROL, "public, max-age=3600") // Cache for 1 hour
+                    .body(imageData);
+                    
+        } catch (Exception e) {
+            log.error("Error retrieving image data for contribution {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
+
