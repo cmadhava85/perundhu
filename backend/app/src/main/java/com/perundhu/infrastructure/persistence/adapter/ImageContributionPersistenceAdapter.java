@@ -3,6 +3,8 @@ package com.perundhu.infrastructure.persistence.adapter;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.perundhu.domain.model.ImageContribution;
@@ -79,5 +81,23 @@ public class ImageContributionPersistenceAdapter implements ImageContributionOut
     public Optional<ImageContribution> findByImageUrl(String imageUrl) {
         return repository.findByImageUrl(imageUrl)
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public List<ImageContribution> findAllPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<ImageContribution> findByStatusPaged(String status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findByStatus(status, pageable)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

@@ -254,10 +254,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       8. If you cannot read a field clearly, use your best interpretation
       9. Always use - for genuinely missing/unavailable information
       10. Route numbers can be missing (use -) but destinations are usually always shown
-      11. Pay special attention to:
-          - Faded or low-contrast text
-          - Handwritten additions or corrections
-          - Multiple time columns (could be bidirectional routes or weekday/weekend/holiday schedules)
+      11. Pay special attention to faded/low-contrast text, handwritten corrections, multiple time columns
       12. For boards showing times without route numbers, still extract each row as a separate route using -
       13. Double-check your count matches the visible rows in the image
       14. VERY IMPORTANT: If you see a "Timelines" or "Timing" section with stops and their arrival/departure times:
@@ -265,6 +262,14 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
           - Do NOT lose this information by only listing stop names in the via field
           - Format each stop as: stopName@arrivalTime-departureTime
           - Use - for missing times (e.g., @02:57- means arrival at 02:57, no departure shown)
+      15. MULTIPLE SERVICES PER DAY: If same route appears with different times, extract as separate routes
+      16. SPECIAL STOPS (toll gates, fuel stops, breaks): Include with format: STOPS:[...,Toll Gate@time-,...] or Tea Break@04:20-04:35
+      17. ROUTE VARIANTS: If board shows "166-Exp" vs "166-Local", extract each variant as separate route
+      18. REVERSE DIRECTION: If board shows A→B and B→A, extract as TWO routes with swapped origin/destination
+      19. DURATION-BASED: If "Duration: 6h 30m" shown instead of arrival, leave arr_time as dash
+      20. MULTIPLE TABLES: Extract from all visible sections (Daily, Holiday, Weekend schedules)
+      21. POOR QUALITY: For faded/overlapping text, use best interpretation; prioritize handwritten over printed if clearer
+      22. FARE/CATEGORY INFO: Only extract if in separate time columns, not for fares alone
       """;
 
   @Value("${gemini.api.key:}")
@@ -816,6 +821,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     }
 
     if (!routes.isEmpty()) {
+      // Post-process routes to handle special cases
+      routes = enhanceRouteData(routes, result);
+      
       result.put("routes", routes);
       // Log details of each route for debugging
       for (int i = 0; i < routes.size(); i++) {
@@ -2250,4 +2258,145 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     response.put("retryAfterSeconds", 30);
     return response;
   }
+
+  /**
+   * Enhance route data by handling special cases:
+   * - Route variants (Express vs Local, -Exp, -HD, -WD, etc.)
+   * - Multiple services per day (same route number with different times)
+   * - Special stops (toll gates, fuel stops, breaks)
+   * - Bidirectional routes
+   */
+  @SuppressWarnings("unchecked")
+  private List<Map<String, Object>> enhanceRouteData(List<Map<String, Object>> routes, Map<String, Object> boardMetadata) {
+    List<Map<String, Object>> enhancedRoutes = new ArrayList<>();
+    Map<String, List<Map<String, Object>>> routesByKey = new HashMap<>();
+    
+    // Group routes by a composite key (route_num + from + to) to detect duplicates
+    for (Map<String, Object> route : routes) {
+      String routeNum = route.getOrDefault("routeNumber", "-").toString();
+      String fromLoc = route.getOrDefault("fromLocation", "-").toString();
+      String toLoc = route.getOrDefault("destination", "-").toString();
+      
+      // Create composite key for grouping
+      String compositeKey = routeNum + "|" + fromLoc + "|" + toLoc;
+      
+      routesByKey.computeIfAbsent(compositeKey, k -> new ArrayList<>()).add(route);
+    }
+    
+    // Process each group
+    for (List<Map<String, Object>> routeGroup : routesByKey.values()) {
+      if (routeGroup.size() == 1) {
+        // Single route - add as-is with enhancements
+        Map<String, Object> route = routeGroup.get(0);
+        enhanceIndividualRoute(route);
+        enhancedRoutes.add(route);
+      } else {
+        // Multiple routes with same number/from/to - handle as multiple services per day
+        for (Map<String, Object> route : routeGroup) {
+          enhanceIndividualRoute(route);
+          enhancedRoutes.add(route);
+        }
+        log.info("Found {} services for route {} (same origin/destination)", routeGroup.size(), 
+                 routeGroup.get(0).get("routeNumber"));
+      }
+    }
+    
+    return enhancedRoutes;
+  }
+  
+  /**
+   * Enhance individual route data
+   */
+  private void enhanceIndividualRoute(Map<String, Object> route) {
+    // Detect and tag route variants (Express, Local, Holiday, Weekday, etc.)
+    String routeNum = route.getOrDefault("routeNumber", "-").toString();
+    String variant = detectRouteVariant(routeNum);
+    if (!variant.isEmpty()) {
+      route.put("variant", variant);
+      log.debug("Detected route variant: {} for route {}", variant, routeNum);
+    }
+    
+    // Enhance stops data with special stop type detection
+    if (route.containsKey("stops")) {
+      List<Map<String, Object>> stops = (List<Map<String, Object>>) route.get("stops");
+      for (Map<String, Object> stop : stops) {
+        String stopName = stop.getOrDefault("name", "").toString();
+        String stopType = detectStopType(stopName);
+        if (!stopType.equals("passenger")) {
+          stop.put("type", stopType);
+          log.debug("Detected special stop type: {} for stop {}", stopType, stopName);
+        }
+      }
+    }
+    
+    // Mark routes with detailed timing information
+    if (route.containsKey("stops")) {
+      route.put("hasDetailedStopTimings", true);
+    }
+  }
+  
+  /**
+   * Detect route variant from route number
+   * Examples: 166-Exp, 166-HD, 166-WD, 166-Local, 42A, etc.
+   */
+  private String detectRouteVariant(String routeNumber) {
+    if (routeNumber == null || routeNumber.equals("-") || routeNumber.isEmpty()) {
+      return "";
+    }
+    
+    String upper = routeNumber.toUpperCase();
+    
+    // Check for explicit variant indicators
+    if (upper.contains("-EXP") || upper.contains("EXP")) return "EXPRESS";
+    if (upper.contains("-LOCAL") || upper.contains("LOCAL")) return "LOCAL";
+    if (upper.contains("-HD") || upper.contains("HD")) return "HOLIDAY";
+    if (upper.contains("-WD") || upper.contains("WD")) return "WEEKDAY";
+    if (upper.contains("-SUN") || upper.contains("SUN")) return "SUNDAY";
+    if (upper.contains("-SAT") || upper.contains("SAT")) return "SATURDAY";
+    if (upper.contains("-FRI") || upper.contains("FRI")) return "FRIDAY";
+    
+    // Check for suffixes that indicate type
+    if (upper.endsWith("D")) return "DELUXE";
+    if (upper.endsWith("A")) return "AC";
+    if (upper.endsWith("E")) return "EXPRESS";
+    if (upper.endsWith("U")) return "ULTRA";
+    
+    return "";
+  }
+  
+  /**
+   * Detect special stop type from stop name
+   * Examples: "Tea Break", "Toll Gate", "Fuel Stop", etc.
+   */
+  private String detectStopType(String stopName) {
+    if (stopName == null || stopName.isEmpty()) {
+      return "passenger";
+    }
+    
+    String upper = stopName.toUpperCase().trim();
+    
+    // Check for special stop indicators
+    if (upper.contains("TEA BREAK") || upper.contains("TEA") || upper.contains("BREAK")) {
+      return "break";
+    }
+    if (upper.contains("TOLL") || upper.contains("TOLL GATE") || upper.contains("TOLL PLAZA")) {
+      return "toll";
+    }
+    if (upper.contains("FUEL") || upper.contains("PETROL") || upper.contains("GAS")) {
+      return "fuel";
+    }
+    if (upper.contains("REST") || upper.contains("RESTROOM")) {
+      return "rest";
+    }
+    if (upper.contains("LUNCH") || upper.contains("DINNER")) {
+      return "meal";
+    }
+    if (upper.contains("WAIT") || upper.contains("WAIT TIME")) {
+      return "wait";
+    }
+    
+    // Default to passenger stop
+    return "passenger";
+  }
 }
+

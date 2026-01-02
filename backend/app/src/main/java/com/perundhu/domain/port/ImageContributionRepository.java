@@ -79,4 +79,23 @@ public interface ImageContributionRepository {
      * @return The number of image contributions with the specified status
      */
     long countByStatus(String status);
+
+    /**
+     * Find all image contributions with pagination using limit and offset
+     * 
+     * @param offset The number of records to skip
+     * @param limit  The number of records to return
+     * @return Paginated list of image contributions
+     */
+    List<ImageContribution> findAllPaged(int offset, int limit);
+
+    /**
+     * Find image contributions by status with pagination
+     * 
+     * @param status The status to filter by
+     * @param offset The number of records to skip
+     * @param limit  The number of records to return
+     * @return Paginated list of image contributions with the specified status
+     */
+    List<ImageContribution> findByStatusPaged(String status, int offset, int limit);
 }
