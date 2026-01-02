@@ -9,13 +9,13 @@
 
 -- Add district column for administrative district name (MySQL compatible)
 -- MySQL 8.0+ supports IF NOT EXISTS, for older versions use stored procedure
-ALTER TABLE locations ADD COLUMN IF NOT EXISTS district VARCHAR(255) NULL;
+ALTER TABLE locations ADD COLUMN district VARCHAR(255) NULL;
 
 -- Add nearby_city column for disambiguation (nearest major city/town)
-ALTER TABLE locations ADD COLUMN IF NOT EXISTS nearby_city VARCHAR(255) NULL;
+ALTER TABLE locations ADD COLUMN nearby_city VARCHAR(255) NULL;
 
 -- Add index for faster lookups by name (useful for duplicate name detection)
-CREATE INDEX IF NOT EXISTS idx_locations_name ON locations(name);
+CREATE INDEX idx_locations_name ON locations(name);
 
 -- Add composite index for name + district lookups
-CREATE INDEX IF NOT EXISTS idx_locations_name_district ON locations(name, district);
+CREATE INDEX idx_locations_name_district ON locations(name, district);

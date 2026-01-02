@@ -1,0 +1,78 @@
+# Docker Compose - Local MySQL Testing Environment
+# Usage: docker-compose -f docker-compose.mysql-local.yml up -d
+# This file tests Flyway migrations against MySQL 8.0 (matching preprod)
+
+version: '3.8'
+
+services:
+  # MySQL Database (matching preprod environment)
+  db:
+    image: mysql:8.0
+    container_name: perundhu-db-mysql-local
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=perundhu
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=perundhu_user
+      - MYSQL_PASSWORD=perundhu_password
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - perundhu-mysql-local
+
+  # Java Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: perundhu-backend-mysql-local
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql-local
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+      - SPRING_DATASOURCE_USERNAME=perundhu_user
+      - SPRING_DATASOURCE_PASSWORD=perundhu_password
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_FLYWAY_ENABLED=true
+      - SPRING_FLYWAY_LOCATIONS=classpath:db/migration
+      - SPRING_FLYWAY_BASELINE_ON_MIGRATE=true
+      - SPRING_FLYWAY_CLEAN_DISABLED=true
+      - SPRING_FLYWAY_VALIDATE_ON_MIGRATE=false
+      - SPRING_FLYWAY_OUT_OF_ORDER=true
+      - LOGGING_LEVEL_ORG_FLYWAYDB=DEBUG
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    restart: unless-stopped
+    networks:
+      - perundhu-mysql-local
+
+volumes:
+  mysql-data:
+    name: perundhu-mysql-local-data
+
+networks:
+  perundhu-mysql-local:
+    name: perundhu-mysql-local
+    driver: bridge

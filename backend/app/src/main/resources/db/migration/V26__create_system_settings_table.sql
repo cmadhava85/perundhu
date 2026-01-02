@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS system_settings (
 -- Add comments for documentation
 ALTER TABLE system_settings COMMENT = 'Stores system configuration settings and feature flags';
 
--- Insert default feature flag settings
-INSERT INTO system_settings (setting_key, setting_value, category, description) VALUES
+-- Insert default feature flag settings (ignore duplicates)
+INSERT IGNORE INTO system_settings (setting_key, setting_value, category, description) VALUES
 -- Contribution method toggles
 ('feature.contribution.manual.enabled', 'true', 'features', 'Enable manual route contribution'),
 ('feature.contribution.image.enabled', 'true', 'features', 'Enable image-based route contribution'),

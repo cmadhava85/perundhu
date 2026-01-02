@@ -3,10 +3,10 @@
 
 -- Add OSM-specific fields to locations table for caching OSM data
 ALTER TABLE locations 
-ADD COLUMN IF NOT EXISTS osm_node_id BIGINT NULL,
-ADD COLUMN IF NOT EXISTS osm_way_id BIGINT NULL,
-ADD COLUMN IF NOT EXISTS last_osm_update TIMESTAMP NULL,
-ADD COLUMN IF NOT EXISTS osm_tags JSON NULL;
+ADD COLUMN osm_node_id BIGINT NULL,
+ADD COLUMN osm_way_id BIGINT NULL,
+ADD COLUMN last_osm_update TIMESTAMP NULL,
+ADD COLUMN osm_tags JSON NULL;
 
 -- Create table for caching OSM bus stop data
 CREATE TABLE osm_bus_stops (
@@ -72,10 +72,10 @@ CREATE TABLE osm_route_stops (
 
 -- Enhanced connecting_routes table with OSM support
 ALTER TABLE connecting_routes 
-ADD COLUMN IF NOT EXISTS is_osm_discovered BOOLEAN DEFAULT FALSE,
-ADD COLUMN IF NOT EXISTS osm_route_ref VARCHAR(50) NULL,
-ADD COLUMN IF NOT EXISTS osm_network VARCHAR(100) NULL,
-ADD COLUMN IF NOT EXISTS osm_operator VARCHAR(100) NULL;
+ADD COLUMN is_osm_discovered BOOLEAN DEFAULT FALSE,
+ADD COLUMN osm_route_ref VARCHAR(50) NULL,
+ADD COLUMN osm_network VARCHAR(100) NULL,
+ADD COLUMN osm_operator VARCHAR(100) NULL;
 
 -- Table for OSM API rate limiting and caching
 CREATE TABLE osm_api_cache (
