@@ -2,6 +2,19 @@
 
 /* Styles for Image Contribution List Component */
 
+.info-banner {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  color: #856404;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .loading {
   text-align: center;
   padding: 2rem;
