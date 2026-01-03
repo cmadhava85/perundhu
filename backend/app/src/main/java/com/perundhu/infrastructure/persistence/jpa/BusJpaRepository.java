@@ -130,6 +130,8 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * correct order
          * Uses JOIN FETCH to load locations in single query (prevents N+1)
          * Only returns active buses
+         * IMPORTANT: This includes buses where toLocation is NOT the final destination
+         * Example: Chennai → Madurai bus that passes through Trichy (if searching Chennai → Trichy)
          * 
          * @param fromLocationId The ID of the origin location
          * @param toLocationId   The ID of the destination location
