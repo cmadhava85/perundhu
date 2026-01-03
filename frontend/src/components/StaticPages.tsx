@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import '../styles/static-pages.css';
+import { UploadIcon, CheckIcon, AlertIcon } from './icons';
 
 /**
  * About Us Page
@@ -48,11 +49,105 @@ export const AboutUs: React.FC = () => {
 };
 
 /**
- * Contact Us Page
+ * Contact Us Page with Feedback Form
  */
 export const ContactUs: React.FC = () => {
   const { t } = useTranslation();
-  
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  const [feedbackData, setFeedbackData] = useState({
+    category: 'suggestion',
+    message: '',
+    email: '',
+    screenshot: null as File | null,
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFeedbackChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFeedbackData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleScreenshotSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError(t('pages.contact.fileTooLarge', 'Screenshot must be less than 5MB'));
+        return;
+      }
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setError(t('pages.contact.invalidFileType', 'Please upload an image file'));
+        return;
+      }
+      setFeedbackData(prev => ({ ...prev, screenshot: file }));
+      setError('');
+    }
+  };
+
+  const handleSubmitFeedback = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!feedbackData.message.trim()) {
+      setError(t('pages.contact.messageRequired', 'Please enter your feedback'));
+      return;
+    }
+
+    if (!feedbackData.email.trim()) {
+      setError(t('pages.contact.emailRequired', 'Please enter your email'));
+      return;
+    }
+
+    setSubmitting(true);
+    setError('');
+
+    try {
+      // Prepare FormData for file upload
+      const formData = new FormData();
+      formData.append('category', feedbackData.category);
+      formData.append('message', feedbackData.message);
+      formData.append('email', feedbackData.email);
+      formData.append('userAgent', navigator.userAgent);
+      formData.append('timestamp', new Date().toISOString());
+      formData.append('pageUrl', window.location.href);
+      
+      if (feedbackData.screenshot) {
+        formData.append('screenshot', feedbackData.screenshot);
+      }
+
+      // Send feedback to backend
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(t('pages.contact.submitError', 'Failed to submit feedback'));
+      }
+
+      setSubmitted(true);
+      setFeedbackData({
+        category: 'suggestion',
+        message: '',
+        email: '',
+        screenshot: null,
+      });
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setShowFeedbackForm(false);
+      }, 3000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('pages.contact.submitError', 'Failed to submit feedback'));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="static-page">
       <div className="static-page-container">
@@ -78,7 +173,133 @@ export const ContactUs: React.FC = () => {
         
         <section className="content-section">
           <h2>{t('pages.contact.feedbackTitle', 'Feedback')}</h2>
-          <p>{t('pages.contact.feedbackText', 'Have suggestions to improve our service? We are always looking for ways to enhance your experience. Share your ideas through the contribution feature in the app.')}</p>
+          
+          {!showFeedbackForm ? (
+            <div className="feedback-intro">
+              <p>{t('pages.contact.feedbackText', 'Have suggestions to improve our service? We are always looking for ways to enhance your experience. Share your ideas through the contribution feature in the app.')}</p>
+              <button 
+                className="btn-primary feedback-btn"
+                onClick={() => setShowFeedbackForm(true)}
+              >
+                {t('pages.contact.sendFeedback', 'Send Feedback')}
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmitFeedback} className="feedback-form">
+              {submitted && (
+                <div className="feedback-success">
+                  <CheckIcon size={24} />
+                  <p>{t('pages.contact.thankYou', 'Thank you for your feedback!')}</p>
+                </div>
+              )}
+              
+              {error && (
+                <div className="feedback-error">
+                  <AlertIcon size={24} />
+                  <p>{error}</p>
+                </div>
+              )}
+              
+              <div className="form-group">
+                <label htmlFor="category">{t('pages.contact.feedbackType', 'Feedback Type')}</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={feedbackData.category}
+                  onChange={handleFeedbackChange}
+                  className="form-control"
+                >
+                  <option value="suggestion">{t('pages.contact.type.suggestion', 'Suggestion')}</option>
+                  <option value="bug">{t('pages.contact.type.bug', 'Bug Report')}</option>
+                  <option value="feature">{t('pages.contact.type.feature', 'Feature Request')}</option>
+                  <option value="general">{t('pages.contact.type.general', 'General Feedback')}</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">{t('pages.contact.yourFeedback', 'Your Feedback')}</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={feedbackData.message}
+                  onChange={handleFeedbackChange}
+                  placeholder={t('pages.contact.feedbackPlaceholder', 'Tell us what you think...')}
+                  rows={5}
+                  className="form-control"
+                  disabled={submitting}
+                />
+                <small>{feedbackData.message.length}/500</small>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">{t('pages.contact.yourEmail', 'Your Email')}</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={feedbackData.email}
+                  onChange={handleFeedbackChange}
+                  placeholder={t('pages.contact.emailPlaceholder', 'your.email@example.com')}
+                  className="form-control"
+                  disabled={submitting}
+                />
+                <small>{t('pages.contact.emailNote', 'So we can follow up with you')}</small>
+              </div>
+              
+              <div className="form-group">
+                <label>{t('pages.contact.uploadScreenshot', 'Upload Screenshot (Optional)')}</label>
+                <div className="file-upload-container">
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleScreenshotSelect}
+                    accept="image/*"
+                    className="file-input-hidden"
+                    disabled={submitting}
+                  />
+                  <button
+                    type="button"
+                    className="btn-secondary file-upload-btn"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={submitting}
+                  >
+                    <UploadIcon size={18} />
+                    {feedbackData.screenshot 
+                      ? feedbackData.screenshot.name 
+                      : t('pages.contact.chooseFile', 'Choose File')}
+                  </button>
+                  <small>{t('pages.contact.screenshotNote', 'Max 5MB • PNG, JPG, GIF')}</small>
+                </div>
+                {feedbackData.screenshot && (
+                  <div className="screenshot-preview">
+                    <img 
+                      src={URL.createObjectURL(feedbackData.screenshot)} 
+                      alt="Preview"
+                      style={{ maxWidth: '150px', maxHeight: '150px' }}
+                    />
+                  </div>
+                )}
+              </div>
+              
+              <div className="form-actions">
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={submitting}
+                >
+                  {submitting ? t('pages.contact.sending', 'Sending...') : t('pages.contact.submit', 'Submit Feedback')}
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => setShowFeedbackForm(false)}
+                  disabled={submitting}
+                >
+                  {t('common.cancel', 'Cancel')}
+                </button>
+              </div>
+            </form>
+          )}
         </section>
         
         <section className="content-section">

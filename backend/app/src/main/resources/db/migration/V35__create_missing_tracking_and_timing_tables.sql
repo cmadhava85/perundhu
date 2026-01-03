@@ -4,6 +4,34 @@
 -- This migration ensures all entities have corresponding database tables
 
 -- =====================
+-- IMAGE CONTRIBUTION TIMING TABLE (MUST BE FIRST - referenced by other tables)
+-- =====================
+
+-- Create timing_image_contributions table (images of bus timing boards)
+CREATE TABLE IF NOT EXISTS timing_image_contributions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50),
+    image_url VARCHAR(500) NOT NULL,
+    thumbnail_url VARCHAR(500),
+    origin_location VARCHAR(200) NOT NULL,
+    origin_location_tamil VARCHAR(200),
+    origin_latitude DECIMAL(10, 8),
+    origin_longitude DECIMAL(11, 8),
+    board_type VARCHAR(50),
+    description TEXT,
+    submission_date DATETIME NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
+    validation_message TEXT,
+    processed_date DATETIME,
+    processed_by VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_timing_image_user_id (user_id),
+    INDEX idx_timing_image_status (status),
+    INDEX idx_timing_image_submission (submission_date)
+);
+
+-- =====================
 -- USER TRACKING TABLES
 -- =====================
 
@@ -101,30 +129,3 @@ CREATE TABLE IF NOT EXISTS skipped_timing_records (
     INDEX idx_skipped_to_location (to_location_id)
 );
 
--- =====================
--- IMAGE CONTRIBUTION TIMING TABLE
--- =====================
-
--- Create timing_image_contributions table (images of bus timing boards)
-CREATE TABLE IF NOT EXISTS timing_image_contributions (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(50),
-    image_url VARCHAR(500) NOT NULL,
-    thumbnail_url VARCHAR(500),
-    origin_location VARCHAR(200) NOT NULL,
-    origin_location_tamil VARCHAR(200),
-    origin_latitude DECIMAL(10, 8),
-    origin_longitude DECIMAL(11, 8),
-    board_type VARCHAR(50),
-    description TEXT,
-    submission_date DATETIME NOT NULL,
-    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-    validation_message TEXT,
-    processed_date DATETIME,
-    processed_by VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_timing_image_user_id (user_id),
-    INDEX idx_timing_image_status (status),
-    INDEX idx_timing_image_submission (submission_date)
-);

@@ -1,28 +1,49 @@
--- V32: Fix image_contributions table structure
--- Simplified migration that doesn't use complex procedures (which fail on some MySQL versions)
--- Keep INT id to avoid UUID compatibility issues
--- Just ensure the table has all needed columns
-
--- Ensure status column is properly defined
-ALTER TABLE image_contributions MODIFY COLUMN status VARCHAR(20) NOT NULL DEFAULT 'PENDING';
-
--- Ensure description column size is adequate
-ALTER TABLE image_contributions MODIFY COLUMN description VARCHAR(1000) NULL;
+-- V32: Add optional columns to image_contributions table
+-- Simplified migration that safely adds new columns if they don't exist
 
 -- Add user_id column if it doesn't exist
-ALTER TABLE image_contributions ADD COLUMN IF NOT EXISTS user_id VARCHAR(50) DEFAULT 'system';
+SET @col_exists = (
+    SELECT COUNT(*) 
+    FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME='image_contributions' AND COLUMN_NAME='user_id'
+);
+
+SET @sql = IF(@col_exists=0, 
+    'ALTER TABLE image_contributions ADD COLUMN user_id VARCHAR(50) DEFAULT "system"', 
+    'SELECT 1 /* Column already exists */'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- Add processed_date column if it doesn't exist
-ALTER TABLE image_contributions ADD COLUMN IF NOT EXISTS processed_date TIMESTAMP NULL;
+SET @col_exists = (
+    SELECT COUNT(*) 
+    FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME='image_contributions' AND COLUMN_NAME='processed_date'
+);
+
+SET @sql = IF(@col_exists=0, 
+    'ALTER TABLE image_contributions ADD COLUMN processed_date TIMESTAMP NULL', 
+    'SELECT 1 /* Column already exists */'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- Add validation_message column if it doesn't exist
-ALTER TABLE image_contributions ADD COLUMN IF NOT EXISTS validation_message TEXT NULL;
+SET @col_exists = (
+    SELECT COUNT(*) 
+    FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME='image_contributions' AND COLUMN_NAME='validation_message'
+);
 
--- Update indexes with safe DROP IF EXISTS pattern
-DROP INDEX IF EXISTS idx_image_contributions_bus_number ON image_contributions;
-DROP INDEX IF EXISTS idx_image_contributions_status ON image_contributions;
-DROP INDEX IF EXISTS idx_image_contributions_user_id ON image_contributions;
+SET @sql = IF(@col_exists=0, 
+    'ALTER TABLE image_contributions ADD COLUMN validation_message TEXT NULL', 
+    'SELECT 1 /* Column already exists */'
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
--- Create new indexes
-CREATE INDEX idx_image_contributions_status ON image_contributions(status);
-CREATE INDEX idx_image_contributions_user_id ON image_contributions(user_id);
+
