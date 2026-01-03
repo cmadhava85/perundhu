@@ -792,13 +792,20 @@ export const submitImageContribution = async (data: ImageContribution, file: Fil
       }
     }
 
+    // Calculate timeout based on file size: ~2MB per second upload speed expected
+    // Minimum 30s, maximum 5 minutes
+    const fileSizeInMB = file.size / (1024 * 1024);
+    const estimatedTimeSeconds = Math.max(30, Math.min(300, fileSizeInMB * 2));
+    const timeoutMs = estimatedTimeSeconds * 1000;
+
     const response = await api.post(
       `/api/v1/contributions/images`,
       formData,
       {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        timeout: timeoutMs // Dynamic timeout based on file size
       }
     );
 

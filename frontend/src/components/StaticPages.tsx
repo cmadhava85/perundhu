@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Upload, CheckCircle, Error } from '@mui/icons-material';
 import '../styles/static-pages.css';
-import { UploadIcon, CheckIcon, AlertIcon } from './icons';
 
 /**
  * About Us Page
@@ -111,7 +111,7 @@ export const ContactUs: React.FC = () => {
       formData.append('message', feedbackData.message);
       formData.append('email', feedbackData.email);
       formData.append('userAgent', navigator.userAgent);
-      formData.append('timestamp', new Date().toISOString());
+      formData.append('timestamp', (new Date()).toISOString());
       formData.append('pageUrl', window.location.href);
       
       if (feedbackData.screenshot) {
@@ -125,7 +125,8 @@ export const ContactUs: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(t('pages.contact.submitError', 'Failed to submit feedback'));
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw 'Failed to submit feedback';
       }
 
       setSubmitted(true);
@@ -141,8 +142,9 @@ export const ContactUs: React.FC = () => {
         setSubmitted(false);
         setShowFeedbackForm(false);
       }, 3000);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t('pages.contact.submitError', 'Failed to submit feedback'));
+    } catch (err: unknown) {
+      const errorMessage = (err instanceof Error) ? (err as Error).message : t('pages.contact.submitError', 'Failed to submit feedback');
+      setError(String(errorMessage));
     } finally {
       setSubmitting(false);
     }
@@ -188,14 +190,14 @@ export const ContactUs: React.FC = () => {
             <form onSubmit={handleSubmitFeedback} className="feedback-form">
               {submitted && (
                 <div className="feedback-success">
-                  <CheckIcon size={24} />
+                  <CheckCircle sx={{ fontSize: 24 }} />
                   <p>{t('pages.contact.thankYou', 'Thank you for your feedback!')}</p>
                 </div>
               )}
               
               {error && (
                 <div className="feedback-error">
-                  <AlertIcon size={24} />
+                  <Error sx={{ fontSize: 24 }} />
                   <p>{error}</p>
                 </div>
               )}
@@ -263,7 +265,7 @@ export const ContactUs: React.FC = () => {
                     onClick={() => fileInputRef.current?.click()}
                     disabled={submitting}
                   >
-                    <UploadIcon size={18} />
+                    <Upload sx={{ fontSize: 18 }} />
                     {feedbackData.screenshot 
                       ? feedbackData.screenshot.name 
                       : t('pages.contact.chooseFile', 'Choose File')}
