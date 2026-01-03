@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * 1. Static pattern matching (fast, for common cities)
  * 2. Database lookup (known locations)
  * 3. Fuzzy matching with known cities
- * 4. OpenStreetMap/Nominatim API (for unknown locations)
+ * 4. Overpass API (for unknown locations)
  * 5. Accept as-is if all else fails (for manual review)
  * 
  * Results are cached to minimize repeated lookups.
@@ -41,7 +41,8 @@ public class LocationResolutionService {
     private final ConcurrentHashMap<String, LocationResolution> resolutionCache;
 
     // Static list of known Tamil Nadu cities for fuzzy matching
-    // Note: Cities from neighboring states (Kerala, Karnataka) are resolved via OpenStreetMap
+    // Note: Cities from neighboring states (Kerala, Karnataka) are resolved via
+    // OpenStreetMap
     // for better scalability and dynamic support of any city in South India
     private static final List<String> KNOWN_CITIES = List.of(
             "CHENNAI", "COIMBATORE", "MADURAI", "TRICHY", "SALEM", "TIRUNELVELI",
@@ -156,16 +157,16 @@ public class LocationResolutionService {
             }
         }
 
-        // Step 7: OpenStreetMap/Nominatim lookup (for unknown locations)
+        // Step 7: Overpass API lookup (for unknown locations)
         // This is slower but can find smaller towns and villages
         try {
-            Optional<GeocodingPort.GeocodingResult> osmResult = geocodingClient.searchTamilNadu(rawText);
-            if (osmResult.isPresent()) {
-                GeocodingPort.GeocodingResult result = osmResult.get();
+            Optional<GeocodingPort.GeocodingResult> overpassResult = geocodingClient.searchTamilNadu(rawText);
+            if (overpassResult.isPresent()) {
+                GeocodingPort.GeocodingResult result = overpassResult.get();
                 String canonicalName = result.getCanonicalName();
                 if (canonicalName != null && !canonicalName.isEmpty()) {
                     log.info("Geocoding resolved '{}' -> '{}'", rawText, canonicalName);
-                    return LocationResolution.fromNominatim(
+                    return LocationResolution.fromOverpass(
                             canonicalName,
                             rawText,
                             result.getLatitude(),
@@ -247,7 +248,7 @@ public class LocationResolutionService {
             EXACT, // Exact match in known list
             DATABASE, // Found in database
             FUZZY, // Fuzzy string matching
-            NOMINATIM, // OpenStreetMap lookup
+            OVERPASS, // Overpass API lookup
             UNVERIFIED, // Accepted but needs verification
             UNKNOWN // Could not resolve
         }
@@ -299,17 +300,17 @@ public class LocationResolutionService {
                     .build();
         }
 
-        public static LocationResolution fromNominatim(String name, String original,
+        public static LocationResolution fromOverpass(String name, String original,
                 double lat, double lon, double confidence) {
             return LocationResolution.builder()
                     .resolvedName(name)
                     .originalText(original)
                     .confidence(confidence)
-                    .source(ResolutionSource.NOMINATIM)
+                    .source(ResolutionSource.OVERPASS)
                     .latitude(lat)
                     .longitude(lon)
                     .verified(false)
-                    .message("New location from OpenStreetMap - please verify")
+                    .message("New location from Overpass API - please verify")
                     .build();
         }
 

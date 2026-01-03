@@ -8,37 +8,27 @@ interface CacheEntry {
   timestamp: number;
 }
 
-// Nominatim API response type
-interface NominatimResult {
-  place_id: number;
-  licence: string;
-  osm_type: string;
-  osm_id: number;
-  lat: string;
-  lon: string;
-  display_name: string;
-  class: string;
+// Overpass API response type
+interface OverpassResult {
   type: string;
-  importance: number;
-  addresstype?: string;
-  address?: {
-    city?: string;
-    town?: string;
-    village?: string;
-    state?: string;
-    state_district?: string;
-    country?: string;
-    country_code?: string;
+  id: number;
+  lat: number;
+  lon: number;
+  tags: {
+    name: string;
+    place?: string;
+    amenity?: string;
+    [key: string]: string | undefined;
   };
 }
 
 /**
  * Hybrid geocoding service that uses database first, then external APIs
- * Enhanced to support all Indian cities with improved city name formatting
+ * Enhanced to support all Tamil Nadu locations with Overpass API
  */
 export class GeocodingService {
-  private static readonly NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org';
-  private static readonly REQUEST_DELAY = 1100; // Nominatim rate limit: 1 req/sec
+  private static readonly OVERPASS_API_URL = 'https://overpass-api.de/api/interpreter';
+  private static readonly REQUEST_DELAY = 1100; // Rate limit for Overpass
   private static readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
   private static lastRequestTime = 0;
   
@@ -47,6 +37,15 @@ export class GeocodingService {
   
   // Enhanced list of Indian cities for instant suggestions (Tamil Nadu cities prioritized)
   private static readonly COMMON_CITIES = [
+    // PRIORITY 0: Chennai Neighborhoods & Localities (For better UX)
+    'Adyar', 'Besant Nagar', 'Velachery', 'Madipakkam', 'Perambur', 'Thiruvanmiyur', 
+    'Mylapore', 'Teynampet', 'T. Nagar', 'Kodambakkam', 'Nungambakkam', 'Chetpet', 
+    'Alwarpet', 'Mandaveli', 'Santhome', 'Tiruvanmiyur', 'Palavakkam', 'Kovalam',
+    'Kannagi Nagar', 'Srinivasa Nagar', 'Medavakkam', 'Kottivakkam', 'Thiruvanmiyur',
+    'Ramakrishnapuram', 'Virugambakkam', 'Kilpauk', 'Vepery', 'Chepauk', 'Royapettah',
+    'Egmore', 'George Town', 'Purasavakkam', 'Chetpet', 'Nolambur', 'Mogappair',
+    'Ambattur', 'Avadi', 'Vandalur', 'Padur', 'Thiruporur', 'Mahabalipuram',
+    
     // PRIORITY 1: Tamil Nadu Cities (Most Comprehensive)
     'Chennai', 'Madurai', 'Coimbatore', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Tiruppur', 
     'Dindigul', 'Thanjavur', 'Ranipet', 'Sivakasi', 'Karur', 'Udhagamandalam', 'Hosur', 
@@ -169,11 +168,11 @@ export class GeocodingService {
       
       // Only use external API if database results are insufficient
       if (databaseResults.length < 3) {
-        const nominatimResults = await GeocodingService.searchNominatimOptimized(query, Math.max(5, limit - databaseResults.length));
+        const overpassResults = await GeocodingService.searchOverpassOptimized(query, Math.max(5, limit - databaseResults.length));
 
         const combinedResults = [
-          ...databaseResults.map(loc => ({ ...loc, source: 'database' as const })),
-          ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' as const }))
+          ...databaseResults.map((loc: Location) => ({ ...loc, source: 'database' as const })),
+          ...overpassResults.map((loc: Location) => ({ ...loc, source: 'overpass' as const }))
         ];
         
         const finalResults = GeocodingService.deduplicateResults(combinedResults).slice(0, limit);
@@ -223,27 +222,27 @@ export class GeocodingService {
       // Continue with empty database results, will fallback to Nominatim
     }
     
-    // 2. Only use Nominatim if database results are insufficient
-    let nominatimResults: Location[] = [];
-    try {
-      const nominatimLimit = Math.max(5, limit - databaseResults.length);
-      logger.debug(`Fetching ${nominatimLimit} results from Nominatim for "${query}"`, { category: LogCategory.SEARCH });
+// 2. Only use Overpass if database results are insufficient
+      let overpassResults: Location[] = [];
+      try {
+        const overpassLimit = Math.max(5, limit - databaseResults.length);
+        logger.debug(`Fetching ${overpassLimit} results from Overpass API for "${query}"`, { category: LogCategory.SEARCH });
+        
+        // Use optimized Overpass search
+        overpassResults = await GeocodingService.searchOverpassOptimized(query, overpassLimit);
+        logger.debug(`Overpass API returned ${overpassResults.length} results for "${query}"`, { category: LogCategory.SEARCH });
+      } catch (error) {
+        logger.error('Overpass API search failed', error, { category: LogCategory.SEARCH });
+      }
       
-      // Use optimized Nominatim search
-      nominatimResults = await GeocodingService.searchNominatimOptimized(query, nominatimLimit);
-      logger.debug(`Nominatim returned ${nominatimResults.length} results for "${query}"`, { category: LogCategory.SEARCH });
-    } catch (error) {
-      logger.error('Nominatim search failed', error, { category: LogCategory.SEARCH });
-    }
-    
-    // 3. Combine and deduplicate results (Database + Nominatim only)
-    const combinedResults = [
-      ...databaseResults.map(loc => ({ ...loc, source: 'database' as const })),
-      ...nominatimResults.map(loc => ({ ...loc, source: 'nominatim' as const }))
+      // 3. Combine and deduplicate results (Database + Overpass only)
+      const combinedResults = [
+        ...databaseResults.map(loc => ({ ...loc, source: 'database' as const })),
+        ...overpassResults.map(loc => ({ ...loc, source: 'overpass' as const }))
     ];
     
     if (combinedResults.length === 0) {
-      logger.debug(`No results found for "${query}" in database or OpenStreetMap Nominatim`, { category: LogCategory.SEARCH });
+      logger.debug(`No results found for "${query}" in database or Overpass API`, { category: LogCategory.SEARCH });
       return [];
     }
     
@@ -279,10 +278,10 @@ export class GeocodingService {
   }
 
   /**
-   * Search Nominatim specifically for city names, not roads or streets
+   * Search Overpass specifically for city names, not roads or streets
    * This implements the requirement to prioritize city names over road/street names
    */
-  public static async searchNominatimCitiesOnly(query: string, limit: number): Promise<Location[]> {
+  public static async searchOverpassCitiesOnly(query: string, limit: number): Promise<Location[]> {
     // Rate limiting: wait if last request was too recent
     const now = Date.now();
     const timeSinceLastRequest = now - GeocodingService.lastRequestTime;
@@ -292,7 +291,7 @@ export class GeocodingService {
     GeocodingService.lastRequestTime = Date.now();
 
     try {
-      // Enhanced search strategy specifically for cities/towns
+      // Enhanced search strategy specifically for cities/towns using Overpass
       const searchQueries = [];
       
       if (query.length <= 4) {
@@ -312,7 +311,7 @@ export class GeocodingService {
         );
       }
 
-      let allResults: NominatimResult[] = [];
+      let allResults: OverpassResult[] = [];
 
       for (const searchQuery of searchQueries) {
         const params = new URLSearchParams({
@@ -321,63 +320,57 @@ export class GeocodingService {
           countrycodes: 'in',
           limit: String(Math.min(limit, 8)),
           addressdetails: '1'
-          // Note: Removed class/type restrictions as they don't filter effectively on Nominatim side
+          // Note: Overpass API uses POST with QL queries
         });
 
-        logger.debug(`🏙️ Nominatim city search: "${searchQuery}"`);
+        logger.debug(`🏙️ Overpass API city search: "${searchQuery}"`);
         
-        const response = await fetch(`${GeocodingService.NOMINATIM_BASE_URL}/search?${params}`, {
+        // Build Overpass QL query for Tamil Nadu cities
+        const bbox = '8.0,76.0,13.5,80.5'; // [south, west, north, east]
+        const overpassQL = `
+          [bbox:${bbox}];
+          (
+            node["place"~"city|town|village|hamlet"]["name"~"${query}","i"];
+            way["place"~"city|town|village|hamlet"]["name"~"${query}","i"];
+            relation["place"~"city|town|village|hamlet"]["name"~"${query}","i"];
+          );
+          out center ${limit};
+        `.trim();
+
+        const response = await fetch(`${GeocodingService.OVERPASS_API_URL}`, {
+          method: 'POST',
+          body: overpassQL,
           headers: {
             'User-Agent': 'Perundhu Bus App (https://perundhu.com)'
           }
         });
 
         if (!response.ok) {
-          logger.warn(`Nominatim city query failed for "${searchQuery}": ${response.status}`);
+          logger.warn(`Overpass API city query failed for "${searchQuery}": ${response.status}`);
           continue;
         }
 
-        const data: NominatimResult[] = await response.json();
-        logger.debug(`🔍 Nominatim raw response for "${searchQuery}": ${data.length} results`);
+        const data = await response.json();
+        const elements = data.elements || [];
+        logger.debug(`🔍 Overpass API raw response for "${searchQuery}": ${elements.length} results`);
         
-        if (data.length > 0) {
+        if (elements.length > 0) {
           // Log all results for debugging
-          data.forEach((result: NominatimResult, index: number) => {
-            logger.debug(`  ${index + 1}. ${result.display_name} [class: ${result.class}, type: ${result.type}]`);
+          elements.forEach((element: OverpassResult, index: number) => {
+            logger.debug(`  ${index + 1}. ${element.tags?.name} [lat: ${element.lat}, lon: ${element.lon}]`);
           });
           
-          // Filter to only include cities, towns, villages - exclude roads, highways, etc.
-          const cityResults = data.filter((result: NominatimResult) => {
-            // More comprehensive filtering to include state districts and counties
-            const isValidPlace = (
-              result.type === 'city' || 
-              result.type === 'town' || 
-              result.type === 'village' || 
-              result.type === 'hamlet' ||
-              result.addresstype === 'city' ||
-              result.addresstype === 'town' ||
-              result.addresstype === 'village' ||
-              result.addresstype === 'state_district' ||
-              result.addresstype === 'county' ||
-              (result.class === 'boundary' && result.type === 'administrative' && result.address?.state_district)
-            );
-            
-            const isNotRoad = (
-              result.class !== 'highway' && 
-              result.class !== 'landuse' &&
-              !result.type.includes('road') &&
-              !result.type.includes('street') &&
-              result.type !== 'industrial'
-            );
-            
-            const isAccepted = isValidPlace && isNotRoad;
-            logger.debug(`    Filter: ${result.display_name} -> ${isAccepted} (place: ${isValidPlace}, notRoad: ${isNotRoad})`);
-            return isAccepted;
+          // Filter to only include cities, towns, villages
+          const cityResults = elements.filter((element: OverpassResult) => {
+            const placeType = element.tags?.place;
+            const isValidPlace = placeType && ['city', 'town', 'village', 'hamlet'].includes(placeType);
+            logger.debug(`    Filter: ${element.tags?.name} -> ${isValidPlace} (place: ${placeType})`);
+            return isValidPlace;
           });
           
-          logger.debug(`✅ Filtered to ${cityResults.length} valid city/town results out of ${data.length} total`);
-          cityResults.forEach((result: NominatimResult, index: number) => {
-            logger.debug(`    ${index + 1}. ✓ ${result.display_name}`);
+          logger.debug(`✅ Filtered to ${cityResults.length} valid city/town results out of ${elements.length} total`);
+          cityResults.forEach((result: OverpassResult, index: number) => {
+            logger.debug(`    ${index + 1}. ✓ ${result.tags?.name}`);
           });
           
           allResults = allResults.concat(cityResults);
@@ -388,21 +381,21 @@ export class GeocodingService {
             break;
           }
         } else {
-          logger.debug(`❌ No results from Nominatim for "${searchQuery}"`);
+          logger.debug(`❌ No results from Overpass API for "${searchQuery}"`);
         }
 
         // Reduced delay between queries
         await new Promise(resolve => setTimeout(resolve, 200));
       }
 
-      // Sort by city importance and type
-      const getScore = (result: NominatimResult) => {
+      // Sort by place type importance
+      const getScore = (result: OverpassResult) => {
+        const placeType = result.tags?.place;
         let score = 0;
-        if (result.type === 'city') score += 100;
-        if (result.type === 'town') score += 90;
-        if (result.type === 'village') score += 80;
-        if (result.type === 'hamlet') score += 70;
-        score += (result.importance || 0) * 10;
+        if (placeType === 'city') score += 100;
+        if (placeType === 'town') score += 90;
+        if (placeType === 'village') score += 80;
+        if (placeType === 'hamlet') score += 70;
         return score;
       };
       
@@ -411,13 +404,13 @@ export class GeocodingService {
 
       const finalResults = sortedResults.slice(0, limit).map((result, index) => ({
         id: -(index + 1000), // Different ID range for city-only results
-        name: GeocodingService.formatLocationName(result.display_name),
-        latitude: parseFloat(result.lat),
-        longitude: parseFloat(result.lon),
-        source: 'nominatim' as const
+        name: result.tags?.name || 'Unknown',
+        latitude: result.lat,
+        longitude: result.lon,
+        source: 'overpass' as const
       }));
       
-      logger.debug(`🎯 Final Nominatim city results (${finalResults.length}):`);
+      logger.debug(`🎯 Final Overpass API city results (${finalResults.length}):`);
       finalResults.forEach((result, index) => {
         logger.debug(`  ${index + 1}. ${result.name} (${result.latitude}, ${result.longitude})`);
       });
@@ -425,15 +418,15 @@ export class GeocodingService {
       return finalResults;
 
     } catch (error) {
-      logger.error('Nominatim city search failed:', error);
+      logger.error('Overpass API city search failed:', error);
       return [];
     }
   }
 
   /**
-   * Optimized Nominatim search with reduced API calls
+   * Optimized Overpass API search with reduced API calls
    */
-  public static async searchNominatimOptimized(query: string, limit: number): Promise<Location[]> {
+  public static async searchOverpassOptimized(query: string, limit: number): Promise<Location[]> {
     // Rate limiting: wait if last request was too recent
     const now = Date.now();
     const timeSinceLastRequest = now - GeocodingService.lastRequestTime;
@@ -443,108 +436,74 @@ export class GeocodingService {
     GeocodingService.lastRequestTime = Date.now();
 
     try {
-      // Enhanced search strategy for partial matches like "Arup"
-      const searchQueries = [];
+      // Enhanced search strategy for partial matches using Overpass API
+      const bbox = '8.0,76.0,13.5,80.5'; // Tamil Nadu [south, west, north, east]
       
-      if (query.length <= 4) {
-        // For short queries like "Arup", try multiple variations
-        const variations = GeocodingService.generateQueryVariations(query);
-        searchQueries.push(
-          ...variations.map(v => `${v} Tamil Nadu`),
-          ...variations.map(v => `${v} Virudhunagar`),  // Aruppukkottai is in Virudhunagar district
-          `${query}* Tamil Nadu`,  // Wildcard search
-          `${query} Tamil Nadu India`   // Less restrictive
+      let allResults: OverpassResult[] = [];
+      
+      // Build Overpass QL query with fuzzy matching
+      const overpassQL = `
+        [bbox:${bbox}];
+        (
+          node["place"]["name"~"${query}","i"];
+          way["place"]["name"~"${query}","i"];
+          relation["place"]["name"~"${query}","i"];
+          node["amenity"~"bus_station|bus_stop"]["name"~"${query}","i"];
+          way["amenity"~"bus_station|bus_stop"]["name"~"${query}","i"];
         );
+        out center ${limit};
+      `.trim();
+
+      logger.debug(`🔍 Overpass API query for "${query}"`);
+      
+      const response = await fetch(`${GeocodingService.OVERPASS_API_URL}`, {
+        method: 'POST',
+        body: overpassQL,
+        headers: {
+          'User-Agent': 'Perundhu Bus App (https://perundhu.com)'
+        }
+      });
+
+      if (!response.ok) {
+        logger.warn(`Overpass API query failed: ${response.status}`);
+        return [];
+      }
+
+      const data = await response.json();
+      allResults = data.elements || [];
+      
+      if (allResults.length > 0) {
+        logger.debug(`🏙️ Found ${allResults.length} results from Overpass API for "${query}"`);
       } else {
-        // For longer queries, use standard approach
-        searchQueries.push(
-          `${query}, Tamil Nadu, India`,
-          `${query} city, Tamil Nadu, India`
-        );
+        logger.debug(`❌ No results from Overpass API for "${query}"`);
       }
 
-      let allResults: NominatimResult[] = [];
+      // Sort results by place type importance
+      allResults.sort((a, b) => {
+        const getScore = (element: OverpassResult) => {
+          const placeType = element.tags?.place;
+          let score = 0;
+          if (placeType === 'city') score += 100;
+          if (placeType === 'town') score += 90;
+          if (placeType === 'village') score += 80;
+          if (placeType === 'hamlet') score += 70;
+          if (element.tags?.amenity === 'bus_station') score += 60;
+          if (element.tags?.amenity === 'bus_stop') score += 50;
+          return score;
+        };
+        return getScore(b) - getScore(a);
+      });
 
-      for (const searchQuery of searchQueries) {
-        const params = new URLSearchParams({
-          q: searchQuery,
-          format: 'json',
-          countrycodes: 'in',
-          limit: String(Math.min(limit, 8)), // Increased for better partial matches
-          addressdetails: '1',
-          // Remove bounded restriction for short queries to allow partial matches
-          ...(query.length > 4 && { bounded: '1', viewbox: '76.0,8.0,80.5,13.5' })
-        });
-
-        logger.debug(`🔍 Nominatim query: "${searchQuery}"`);
-        
-        const response = await fetch(`${GeocodingService.NOMINATIM_BASE_URL}/search?${params}`, {
-          headers: {
-            'User-Agent': 'Perundhu Bus App (https://perundhu.com)'
-          }
-        });
-
-        if (!response.ok) {
-          logger.warn(`Nominatim query failed for "${searchQuery}": ${response.status}`);
-          continue;
-        }
-
-        const data: NominatimResult[] = await response.json();
-        if (data.length > 0) {
-          logger.debug(`🏙️ Found ${data.length} results for "${searchQuery}": ${data.map((r: NominatimResult) => r.display_name).join(', ')}`);
-          
-          // Check if any result contains Aruppukottai/Aruppukkottai (both spellings)
-          const hasAruppukottai = data.some((item: NominatimResult) =>
-            item.display_name?.toLowerCase().includes('aruppukottai') || 
-            item.display_name?.toLowerCase().includes('aruppukkottai')
-          );
-          if (hasAruppukottai) {
-            logger.debug('🎯 Aruppukottai found in Nominatim results!');
-          }
-          
-          allResults = allResults.concat(data);
-          
-          // Stop early if we have enough good results
-          if (allResults.length >= limit) {
-            break;
-          }
-        } else {
-          logger.debug(`❌ No results for "${searchQuery}"`);
-        }
-
-        // Reduced delay between queries
-        await new Promise(resolve => setTimeout(resolve, 200));
-      }
-
-      // Filter and prioritize results (simplified)
-      const filteredResults = allResults
-        .filter(result => {
-          const displayName = result.display_name.toLowerCase();
-          return displayName.includes('india') || displayName.includes('tamil nadu');
-        })
-        .sort((a, b) => {
-          // Simple priority scoring
-          const getScore = (result: NominatimResult) => {
-            let score = 0;
-            if (result.type === 'city' || result.addresstype === 'city') score += 100;
-            if (result.type === 'town' || result.addresstype === 'town') score += 90;
-            if (result.class === 'highway' || result.addresstype === 'road') score -= 50;
-            score += (result.importance || 0) * 10;
-            return score;
-          };
-          return getScore(b) - getScore(a);
-        });
-
-      return filteredResults.slice(0, limit).map((result, index) => ({
+      return allResults.slice(0, limit).map((result: OverpassResult, index) => ({
         id: -(index + 1),
-        name: GeocodingService.formatLocationName(result.display_name),
-        latitude: parseFloat(result.lat),
-        longitude: parseFloat(result.lon),
-        source: 'nominatim' as const
+        name: result.tags?.name || 'Unknown',
+        latitude: result.lat,
+        longitude: result.lon,
+        source: 'overpass' as const
       }));
 
     } catch (error) {
-      logger.error('Nominatim search failed:', error);
+      logger.error('Overpass API search failed:', error);
       return [];
     }
   }
@@ -801,38 +760,6 @@ export const searchLocationsWithGeocoding = GeocodingService.searchLocations;
 // Export the universal location name formatter for consistent display
 export const formatLocationNameUniversal = GeocodingService.formatLocationNameUniversal;
 
-// Test function for Srivilliputhur geocoding - add this at the end of the file for debugging
-export const testSrivilliputhurGeocoding = async (): Promise<void> => {
-  logger.debug('🔍 Testing Srivilliputhur geocoding...');
-  
-  try {
-    // Clear cache first to ensure fresh results
-    GeocodingService.clearCache();
-    
-    // Test the search function
-    const results = await GeocodingService.searchLocations('Srivilliputhur', 5);
-    
-    logger.debug(`✅ Found ${results.length} results for "Srivilliputhur":`);
-    results.forEach((result, index) => {
-      logger.debug(`${index + 1}. ${result.name} (${result.source}) - Lat: ${result.latitude}, Lng: ${result.longitude}`);
-    });
-    
-    if (results.length === 0) {
-      logger.debug('❌ No results found. Testing direct Nominatim call...');
-      
-      // Test direct Nominatim call
-      const directResults = await GeocodingService.searchNominatimOptimized('Srivilliputhur', 3);
-      logger.debug(`Direct Nominatim results: ${directResults.length}`);
-      directResults.forEach((result, index) => {
-        logger.debug(`  ${index + 1}. ${result.name} - Lat: ${result.latitude}, Lng: ${result.longitude}`);
-      });
-    }
-    
-  } catch (error) {
-    logger.error('❌ Test failed:', error);
-  }
-};
-
 /**
  * Check if a location name is a known/recognized city
  * This helps reduce false "location not recognized" warnings
@@ -862,8 +789,3 @@ export const isKnownLocation = (locationName: string): boolean => {
   
   return false;
 };
-
-// Make test function available globally for debugging
-if (typeof window !== 'undefined') {
-  (window as Window & { testSrivilliputhurGeocoding?: typeof testSrivilliputhurGeocoding }).testSrivilliputhurGeocoding = testSrivilliputhurGeocoding;
-}

@@ -1,3 +1,0 @@
--- This migration was a duplicate of V1__init.sql
--- All tables and indexes are already created in V1__init.sql
--- No changes needed in this version

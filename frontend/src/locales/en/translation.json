@@ -72,7 +72,7 @@
   },
   "common": {
     "appName": "Perundhu",
-    "tagline": "Your Bus Travel Planner",
+    "tagline": "Bus in Seconds",
     "loading": "Loading...",
     "error": "No routes for this selection. Try different locations.",
     "close": "Close",
@@ -490,7 +490,7 @@
     "locationWarningDescription": "Some locations were not selected from suggestions. You can still submit, but selecting from the autocomplete dropdown ensures better accuracy."
   },
   "contribution": {
-    "communityPowered": "Community Powered",
+    "communityPowered": "People Powered",
     "heroTitle": "Share Your Route Knowledge",
     "heroDescription": "Help fellow travelers by contributing accurate bus route information. Your local knowledge makes a difference!",
     "cardTitle": "Add Route Information",
@@ -1089,7 +1089,7 @@
       "feature2": "Real-time bus tracking powered by community contributions",
       "feature3": "Easy-to-use search to find the best routes",
       "feature4": "Support for multiple languages including Tamil and English",
-      "communityTitle": "Community Powered",
+      "communityTitle": "People Powered",
       "communityText": "Our platform is powered by contributions from travelers like you. By sharing route information, bus timings, and real-time location updates, our community helps keep the data accurate and up-to-date.",
       "teamTitle": "Our Team",
       "teamText": "Perundhu is built by a passionate team of developers and transit enthusiasts who believe in making public transportation accessible to all."

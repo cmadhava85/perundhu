@@ -180,6 +180,123 @@ public class LocationController {
   }
 
   /**
+   * Search for neighborhoods and localities (e.g., Adyar, Besant Nagar, T. Nagar)
+   * This endpoint directly queries OpenStreetMap Nominatim API for neighborhood-level locations
+   * within Tamil Nadu. Perfect for city-specific neighborhoods and localities.
+   */
+  @Operation(summary = "Search neighborhoods and localities", description = """
+      Search for neighborhoods, localities, and suburbs within Tamil Nadu.
+      Supports queries like: Adyar, Besant Nagar, T. Nagar, Kodambakkam, etc.
+      Returns results from OpenStreetMap with full coordinates for mapping.
+      """)
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Neighborhoods found", content = @Content(schema = @Schema(implementation = LocationDTO.class))),
+      @ApiResponse(responseCode = "400", description = "Query too short (minimum 2 characters)"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/neighborhoods")
+  public ResponseEntity<List<LocationDTO>> searchNeighborhoods(
+      @Parameter(description = "Neighborhood/locality name (minimum 2 characters)", required = true) @RequestParam("q") String query,
+      @Parameter(description = "City name to narrow search (e.g., Chennai, Madurai)", required = false) @RequestParam(required = false) String city,
+      @Parameter(description = "Language code (en, ta)") @RequestParam(defaultValue = "en") String language) {
+    
+    log.info("Neighborhood search: query='{}', city='{}', language='{}'", query, city, language);
+
+    if (query == null || query.trim().length() < 2) {
+      log.warn("Query too short for neighborhood search: '{}'", query);
+      return ResponseEntity.badRequest().build();
+    }
+
+    try {
+      // Build search query with city context if provided
+      String searchQuery = query.trim();
+      if (city != null && !city.isBlank()) {
+        searchQuery = searchQuery + ", " + city.trim();
+      }
+
+      List<LocationDTO> neighborhoods = geocodingService.searchTamilNaduLocations(searchQuery, 15, language);
+      log.info("Found {} neighborhoods for query '{}'", neighborhoods.size(), query);
+      return ResponseEntity.ok(neighborhoods);
+    } catch (Exception e) {
+      log.error("Error in neighborhood search for query: '{}', city: '{}'", query, city, e);
+      return ResponseEntity.internalServerError().build();
+    }
+  }
+
+  /**
+   * Search locations with neighborhood-aware autocomplete
+   * Combines database locations with neighborhood-level OSM results
+   */
+  @Operation(summary = "Neighborhood-aware location search", description = """
+      Search for both database locations and OSM neighborhoods.
+      Falls back to neighborhood search if exact location not found in database.
+      Perfect for finding neighborhoods within cities.
+      """)
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Locations found"),
+      @ApiResponse(responseCode = "400", description = "Query too short"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/search-comprehensive")
+  public ResponseEntity<List<LocationDTO>> searchComprehensive(
+      @Parameter(description = "Search query", required = true) @RequestParam("q") String query,
+      @Parameter(description = "Language code (en, ta)") @RequestParam(defaultValue = "en") String language) {
+    
+    log.info("Comprehensive location search: query='{}', language='{}'", query, language);
+
+    if (query == null || query.trim().length() < 2) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    try {
+      List<Location> dbLocations = busScheduleService.searchLocationsByName(query.trim());
+      List<LocationDTO> locations = dbLocations.stream()
+          .map(location -> LocationDTO.of(location.id().value(), location.name()))
+          .toList();
+      
+      // If no exact matches in database, search OSM for neighborhoods
+      if (locations.isEmpty()) {
+        log.info("No database locations found for '{}', searching OSM for neighborhoods", query);
+        try {
+          // Call OSM with a timeout - if it fails, return empty to let frontend fallback to client-side Nominatim
+          List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 20, language);
+          log.info("Found {} OSM results (neighborhoods/localities) for '{}'", osmResults.size(), query);
+          return ResponseEntity.ok(osmResults);
+        } catch (Exception osmError) {
+          log.warn("OSM search failed for '{}', returning empty to trigger client-side fallback: {}", query, osmError.getMessage());
+          // Return empty list to trigger client-side Nominatim fallback
+          return ResponseEntity.ok(new ArrayList<>());
+        }
+      }
+
+      // Enhance database results with OSM neighborhood results
+      List<LocationDTO> allResults = new ArrayList<>(locations);
+      try {
+        List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
+        
+        // Add OSM results that don't duplicate database results
+        for (LocationDTO osmResult : osmResults) {
+          boolean isDuplicate = allResults.stream()
+              .anyMatch(dbLoc -> dbLoc.getName().equalsIgnoreCase(osmResult.getName()));
+          if (!isDuplicate) {
+            allResults.add(osmResult);
+          }
+        }
+      } catch (Exception osmError) {
+        log.warn("OSM enhancement failed for '{}', using database results only: {}", query, osmError.getMessage());
+        // Just use database results if OSM fails
+      }
+
+      log.info("Comprehensive search found {} total results for '{}'", allResults.size(), query);
+      return ResponseEntity.ok(allResults);
+    } catch (Exception e) {
+      log.error("Error in comprehensive search for query: '{}'", query, e);
+      // Return empty list instead of error to allow client-side fallback
+      return ResponseEntity.ok(new ArrayList<>());
+    }
+  }
+
+  /**
    * Update coordinates for locations using geocoding
    */
   @Operation(summary = "Update location coordinates", description = "Updates coordinates for locations that are missing them using OpenStreetMap geocoding service")
