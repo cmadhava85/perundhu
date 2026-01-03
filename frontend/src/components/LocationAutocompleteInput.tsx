@@ -185,11 +185,11 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
           <ul 
             style={{
               position: 'absolute',
-              bottom: id === 'destination' ? '100%' : 'auto',
-              top: id === 'destination' ? 'auto' : '100%',
+              bottom: (id === 'destination' || id === 'origin') ? '100%' : 'auto',
+              top: (id === 'destination' || id === 'origin') ? 'auto' : '100%',
               left: 0,
               right: 0,
-              margin: id === 'destination' ? '0 0 4px 0' : '4px 0 0 0',
+              margin: (id === 'destination' || id === 'origin') ? '0 0 4px 0' : '4px 0 0 0',
               padding: 0,
               listStyle: 'none',
               background: 'white',

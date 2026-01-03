@@ -108,6 +108,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
+  z-index: auto;
 }
 
 .location-input-group label {
@@ -119,6 +121,7 @@
 .autocomplete-wrapper {
   position: relative;
   overflow: visible !important;
+  z-index: 10000;
 }
 
 .location-input,

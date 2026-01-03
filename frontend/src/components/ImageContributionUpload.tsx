@@ -46,6 +46,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [honeypot, setHoneypot] = useState(''); // Bot detection field
   const [showUploadSuccess, setShowUploadSuccess] = useState(false);
   const [_lastUploadedCount, setLastUploadedCount] = useState(0);
+  const [showBottomSuccess, setShowBottomSuccess] = useState(false);
+  const [bottomSuccessContributionId, setBottomSuccessContributionId] = useState('');
   
   // Use stable counter for image IDs to prevent re-renders
   const imageIdCounterRef = useRef(1);
@@ -251,6 +253,11 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         setShowUploadSuccess(true);
         // Increased timeout from 4000ms to 8000ms for larger files
         setTimeout(() => setShowUploadSuccess(false), 8000);
+
+        // Show bottom success message
+        setBottomSuccessContributionId(response.contributionId);
+        setShowBottomSuccess(true);
+        setTimeout(() => setShowBottomSuccess(false), 6000);
 
         // Start polling for processing status - onSuccess will be called when processing completes
         pollProcessingStatus(response.contributionId, imageId, onSuccess);
@@ -952,6 +959,69 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           )}
         </div>
       )}
+
+      {/* Bottom Success Message - Positioned at bottom when submit button is used */}
+      {showBottomSuccess && (
+        <div style={{
+          position: 'fixed',
+          bottom: '2rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 9998,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+          padding: '1.25rem 2rem',
+          backgroundColor: '#10b981',
+          color: 'white',
+          borderRadius: '0.75rem',
+          boxShadow: '0 20px 50px rgba(16, 185, 129, 0.4), 0 10px 30px rgba(0, 0, 0, 0.2)',
+          animation: 'slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          maxWidth: '90vw',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)'
+        }}>
+          <CheckCircle2 style={{ width: '2rem', height: '2rem', flexShrink: 0 }} />
+          <div>
+            <div style={{ fontWeight: '700', fontSize: '1rem', marginBottom: '0.25rem' }}>
+              ✓ {t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
+            </div>
+            <div style={{ fontSize: '0.875rem', opacity: 0.95 }}>
+              {t('contribution.imageUpload.processingMessage', 'Your image is being processed')}
+            </div>
+          </div>
+          <button
+            onClick={() => setShowBottomSuccess(false)}
+            style={{
+              marginLeft: '1rem',
+              padding: '0.5rem',
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              borderRadius: '0.5rem',
+              fontSize: '1.5rem',
+              lineHeight: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '2rem',
+              height: '2rem',
+              transition: 'all 0.2s',
+              flexShrink: 0
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255, 255, 255, 0.2)';
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
     </div>
   );
 };
