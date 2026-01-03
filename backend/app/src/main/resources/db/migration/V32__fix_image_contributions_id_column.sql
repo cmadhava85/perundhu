@@ -1,178 +1,28 @@
--- Fix image_contributions table id column to support UUID strings
--- Change from INT AUTO_INCREMENT to VARCHAR(36) to accommodate UUID format
+-- V32: Fix image_contributions table structure
+-- Simplified migration that doesn't use complex procedures (which fail on some MySQL versions)
+-- Keep INT id to avoid UUID compatibility issues
+-- Just ensure the table has all needed columns
 
--- Drop existing data if any (safe for new feature)
-TRUNCATE TABLE image_contributions;
+-- Ensure status column is properly defined
+ALTER TABLE image_contributions MODIFY COLUMN status VARCHAR(20) NOT NULL DEFAULT 'PENDING';
 
--- Drop the primary key constraint
-ALTER TABLE image_contributions DROP PRIMARY KEY;
+-- Ensure description column size is adequate
+ALTER TABLE image_contributions MODIFY COLUMN description VARCHAR(1000) NULL;
 
--- First, remove AUTO_INCREMENT by changing to BIGINT
-ALTER TABLE image_contributions MODIFY COLUMN id BIGINT NOT NULL;
+-- Add user_id column if it doesn't exist
+ALTER TABLE image_contributions ADD COLUMN IF NOT EXISTS user_id VARCHAR(50) DEFAULT 'system';
 
--- Now change from BIGINT to VARCHAR(50) to safely accommodate UUID
-ALTER TABLE image_contributions MODIFY COLUMN id VARCHAR(50) NOT NULL;
+-- Add processed_date column if it doesn't exist
+ALTER TABLE image_contributions ADD COLUMN IF NOT EXISTS processed_date TIMESTAMP NULL;
 
--- Re-add primary key constraint
-ALTER TABLE image_contributions ADD PRIMARY KEY (id);
+-- Add validation_message column if it doesn't exist
+ALTER TABLE image_contributions ADD COLUMN IF NOT EXISTS validation_message TEXT NULL;
 
--- Update other columns to match current entity definition
--- MySQL requires separate ALTER statements for DROP COLUMN IF EXISTS pattern
--- Using stored procedure to safely drop columns if they exist
+-- Update indexes with safe DROP IF EXISTS pattern
+DROP INDEX IF EXISTS idx_image_contributions_bus_number ON image_contributions;
+DROP INDEX IF EXISTS idx_image_contributions_status ON image_contributions;
+DROP INDEX IF EXISTS idx_image_contributions_user_id ON image_contributions;
 
-DROP PROCEDURE IF EXISTS drop_column_if_exists;
-
-DELIMITER //
-CREATE PROCEDURE drop_column_if_exists()
-BEGIN
-    -- Drop bus_number if exists
-    IF EXISTS (SELECT 1 FROM information_schema.columns 
-               WHERE table_schema = DATABASE() 
-               AND table_name = 'image_contributions' 
-               AND column_name = 'bus_number') THEN
-        ALTER TABLE image_contributions DROP COLUMN bus_number;
-    END IF;
-    
-    -- Drop submitted_by if exists
-    IF EXISTS (SELECT 1 FROM information_schema.columns 
-               WHERE table_schema = DATABASE() 
-               AND table_name = 'image_contributions' 
-               AND column_name = 'submitted_by') THEN
-        ALTER TABLE image_contributions DROP COLUMN submitted_by;
-    END IF;
-    
-    -- Drop rejection_reason if exists
-    IF EXISTS (SELECT 1 FROM information_schema.columns 
-               WHERE table_schema = DATABASE() 
-               AND table_name = 'image_contributions' 
-               AND column_name = 'rejection_reason') THEN
-        ALTER TABLE image_contributions DROP COLUMN rejection_reason;
-    END IF;
-END //
-DELIMITER ;
-
-CALL drop_column_if_exists();
-DROP PROCEDURE IF EXISTS drop_column_if_exists;
-
--- Add new columns if they don't exist (using procedure pattern)
-DROP PROCEDURE IF EXISTS add_columns_if_not_exist;
-
-DELIMITER //
-CREATE PROCEDURE add_columns_if_not_exist()
-BEGIN
-    -- Add user_id if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'user_id') THEN
-        ALTER TABLE image_contributions ADD COLUMN user_id VARCHAR(50) NOT NULL DEFAULT 'system';
-        ALTER TABLE image_contributions MODIFY COLUMN user_id VARCHAR(50) NOT NULL;
-    END IF;
-    
-    -- Add location if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'location') THEN
-        ALTER TABLE image_contributions ADD COLUMN location VARCHAR(100);
-    END IF;
-    
-    -- Add route_name if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'route_name') THEN
-        ALTER TABLE image_contributions ADD COLUMN route_name VARCHAR(100);
-    END IF;
-    
-    -- Add processed_date if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'processed_date') THEN
-        ALTER TABLE image_contributions ADD COLUMN processed_date TIMESTAMP NULL;
-    END IF;
-    
-    -- Add additional_notes if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'additional_notes') THEN
-        ALTER TABLE image_contributions ADD COLUMN additional_notes VARCHAR(1000);
-    END IF;
-    
-    -- Add validation_message if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'validation_message') THEN
-        ALTER TABLE image_contributions ADD COLUMN validation_message TEXT;
-    END IF;
-    
-    -- Add extracted_data if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'extracted_data') THEN
-        ALTER TABLE image_contributions ADD COLUMN extracted_data TEXT;
-    END IF;
-    
-    -- Add image_content_type if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'image_content_type') THEN
-        ALTER TABLE image_contributions ADD COLUMN image_content_type VARCHAR(50);
-    END IF;
-    
-    -- Add image_data if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND column_name = 'image_data') THEN
-        ALTER TABLE image_contributions ADD COLUMN image_data LONGBLOB;
-    END IF;
-END //
-DELIMITER ;
-
-CALL add_columns_if_not_exist();
-DROP PROCEDURE IF EXISTS add_columns_if_not_exist;
-
--- Update existing column constraints
-ALTER TABLE image_contributions MODIFY COLUMN description VARCHAR(1000);
-ALTER TABLE image_contributions MODIFY COLUMN status VARCHAR(20) NOT NULL;
-
--- Update indexes (drop first, then create)
-DROP PROCEDURE IF EXISTS update_indexes;
-
-DELIMITER //
-CREATE PROCEDURE update_indexes()
-BEGIN
-    -- Drop old index if exists
-    IF EXISTS (SELECT 1 FROM information_schema.statistics 
-               WHERE table_schema = DATABASE() 
-               AND table_name = 'image_contributions' 
-               AND index_name = 'idx_image_contributions_bus_number') THEN
-        DROP INDEX idx_image_contributions_bus_number ON image_contributions;
-    END IF;
-    
-    -- Create user_id index if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.statistics 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND index_name = 'idx_image_contributions_user_id') THEN
-        CREATE INDEX idx_image_contributions_user_id ON image_contributions(user_id);
-    END IF;
-    
-    -- Create status index if not exists
-    IF NOT EXISTS (SELECT 1 FROM information_schema.statistics 
-                   WHERE table_schema = DATABASE() 
-                   AND table_name = 'image_contributions' 
-                   AND index_name = 'idx_image_contributions_status') THEN
-        CREATE INDEX idx_image_contributions_status ON image_contributions(status);
-    END IF;
-END //
-DELIMITER ;
-
-CALL update_indexes();
-DROP PROCEDURE IF EXISTS update_indexes;
+-- Create new indexes
+CREATE INDEX idx_image_contributions_status ON image_contributions(status);
+CREATE INDEX idx_image_contributions_user_id ON image_contributions(user_id);
