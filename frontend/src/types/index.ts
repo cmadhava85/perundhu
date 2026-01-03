@@ -24,7 +24,7 @@ export interface Location {
   translatedNames?: {
     [key: string]: string;
   };
-  source?: 'database' | 'map' | 'local' | 'offline' | 'nominatim' | 'google' | 'user-input'; // Added user-input for manual entries
+  source?: 'database' | 'map' | 'local' | 'offline' | 'overpass' | 'nominatim' | 'google' | 'user-input'; // Added user-input for manual entries
   state?: string; // Added state property
 }
 

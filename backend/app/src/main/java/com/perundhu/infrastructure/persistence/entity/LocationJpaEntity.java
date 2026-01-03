@@ -77,6 +77,8 @@ public class LocationJpaEntity {
                 .longitude(location.longitude())
                 .district(location.district())
                 .nearbyCity(location.nearbyCity())
+                // OSM fields are not mapped from domain model as domain model doesn't include them
+                // They are preserved from the database entity when updating
                 .build();
     }
 

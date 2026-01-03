@@ -227,7 +227,6 @@ export const RouteContribution: React.FC = () => {
       {/* Compact Header */}
       <div className="compact-header">
         <div className="header-left">
-          <span className="header-badge">✨ {t('contribution.communityPowered', 'Community Powered')}</span>
           <h1 className="header-title">{t('contribution.heroTitleShort', 'Share Route Knowledge')}</h1>
         </div>
         {!AuthService.isAuthenticated() && (

@@ -31,7 +31,7 @@ export const AboutUs: React.FC = () => {
         </section>
         
         <section className="content-section">
-          <h2>{t('pages.about.communityTitle', 'Community Powered')}</h2>
+          <h2>{t('pages.about.communityTitle', 'People Powered')}</h2>
           <p>{t('pages.about.communityText', 'Our platform is powered by contributions from travelers like you. By sharing route information, bus timings, and real-time location updates, our community helps keep the data accurate and up-to-date.')}</p>
         </section>
         

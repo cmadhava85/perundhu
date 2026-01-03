@@ -34,7 +34,7 @@ import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.ConnectingRouteService;
-import com.perundhu.application.service.OpenStreetMapGeocodingService;
+import com.perundhu.application.service.OverpassGeocodingService;
 import com.perundhu.domain.model.Location;
 import com.perundhu.infrastructure.exception.RateLimitException;
 
@@ -58,14 +58,14 @@ public class BusScheduleController {
     private static final Logger log = LoggerFactory.getLogger(BusScheduleController.class);
     private final BusScheduleService busScheduleService;
     private final ConnectingRouteService connectingRouteService;
-    private final OpenStreetMapGeocodingService geocodingService;
+    private final OverpassGeocodingService geocodingService;
     private final RateLimiter globalRateLimiter;
     private final ConcurrentHashMap<String, RateLimiter> userRateLimiters;
 
     public BusScheduleController(
             BusScheduleService busScheduleService,
             ConnectingRouteService connectingRouteService,
-            OpenStreetMapGeocodingService geocodingService,
+            OverpassGeocodingService geocodingService,
             RateLimiter globalRateLimiter,
             ConcurrentHashMap<String, RateLimiter> userRateLimiters) {
         this.busScheduleService = busScheduleService;
@@ -175,10 +175,10 @@ public class BusScheduleController {
 
     /**
      * Autocomplete endpoint for location search - public access for contribution
-     * forms. Does not return coordinates for privacy. Falls back to OpenStreetMap
+     * forms. Does not return coordinates for privacy. Falls back to Overpass API
      * if location not found in database. Supports Tamil and English search.
      */
-    @Operation(summary = "Location autocomplete", description = "Search locations with autocomplete. Falls back to OpenStreetMap if not found in database. Supports Tamil and English.")
+    @Operation(summary = "Location autocomplete", description = "Search locations with autocomplete. Falls back to Overpass API if not found in database. Supports Tamil and English.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved location suggestions"),
             @ApiResponse(responseCode = "400", description = "Query too short (minimum 2 characters)", content = @Content),
@@ -231,18 +231,31 @@ public class BusScheduleController {
                 return ResponseEntity.ok(result);
             }
 
-            // Fallback to OpenStreetMap if no locations in database
-            log.info("No locations in database for '{}', falling back to OpenStreetMap (language: {})", query,
+            // Fallback to Overpass API if no locations in database
+            log.info("No locations in database for '{}', falling back to Overpass API (language: {})", query,
                     language);
-            List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
-
-            log.info("Found {} locations from OpenStreetMap for query '{}' (language: {})", osmResults.size(), query,
-                    language);
-            return ResponseEntity.ok(osmResults);
+            try {
+                List<LocationDTO> overpassResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
+                
+                if (!overpassResults.isEmpty()) {
+                    log.info("Found {} locations from Overpass API for query '{}' (language: {})", 
+                            overpassResults.size(), query, language);
+                    return ResponseEntity.ok(overpassResults);
+                }
+            } catch (Exception overpassError) {
+                log.warn("Overpass search failed for '{}': {}, will return empty list to trigger client-side fallback", 
+                        query, overpassError.getMessage());
+            }
+            
+            // Return empty list if both database and Overpass fail/return nothing
+            // This allows frontend to fall back to instant suggestions or client-side Overpass
+            log.info("No results from database or Overpass for query '{}', returning empty for client-side fallback", query);
+            return ResponseEntity.ok(new ArrayList<>());
 
         } catch (Exception e) {
             log.error("Error in location autocomplete search for query: '{}'", query, e);
-            return ResponseEntity.internalServerError().build();
+            // Return empty list instead of error to allow client-side fallback
+            return ResponseEntity.ok(new ArrayList<>());
         }
     }
 
@@ -664,9 +677,9 @@ public class BusScheduleController {
 
     /**
      * Manually trigger coordinate updates for locations missing them
-     * This endpoint uses OpenStreetMap to fetch coordinates
+     * This endpoint uses Overpass API to fetch coordinates
      */
-    @Operation(summary = "Update missing coordinates", description = "Manually trigger coordinate updates for locations missing them using OpenStreetMap.")
+    @Operation(summary = "Update missing coordinates", description = "Manually trigger coordinate updates for locations missing them using Overpass API.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Coordinate update process completed"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
@@ -691,10 +704,10 @@ public class BusScheduleController {
     }
 
     /**
-     * Discover intermediate bus stops between two locations using OSM data
+     * Discover intermediate bus stops between two locations using Overpass data
      * This endpoint finds actual bus stops that could be used as intermediate stops
      */
-    @Operation(summary = "Discover intermediate stops", description = "Discover intermediate bus stops between two locations using OpenStreetMap data.")
+    @Operation(summary = "Discover intermediate stops", description = "Discover intermediate bus stops between two locations using Overpass API data.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully discovered intermediate stops"),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
@@ -718,10 +731,10 @@ public class BusScheduleController {
     }
 
     /**
-     * Discover actual bus routes using OSM data
+     * Discover actual bus routes using Overpass data
      * This finds real-world bus routes that might connect the locations
      */
-    @Operation(summary = "Discover OSM routes", description = "Discover actual bus routes using OpenStreetMap data that might connect the locations.")
+    @Operation(summary = "Discover OSM routes", description = "Discover actual bus routes using Overpass API data that might connect the locations.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully discovered OSM routes"),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)

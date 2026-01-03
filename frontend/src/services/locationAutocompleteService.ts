@@ -11,6 +11,15 @@ export interface LocationSuggestion {
   source?: string;
 }
 
+export interface LocationDTO {
+  id?: number;
+  name: string;
+  translatedName?: string;
+  latitude?: number;
+  longitude?: number;
+  source?: string;
+}
+
 /**
  * Ultra-fast location autocomplete service with instant suggestions
  */
@@ -40,7 +49,7 @@ export class LocationAutocompleteService {
       logger.debug(`🚀 FastAutocomplete: Searching for "${query}" (${query.length} chars) in ${language}`);
       
       // Use fast parallel search for better performance
-      const locations = await this.searchDatabaseAndNominatimParallel(query, 10, language);
+      const locations = await this.searchDatabaseAndOverpassParallel(query, 10, language);
       
       if (!locations || !Array.isArray(locations)) {
         logger.error(`❌ Invalid locations result:`, locations);
@@ -93,13 +102,46 @@ export class LocationAutocompleteService {
   }
 
   /**
-   * Database-first search: prioritize database, then local cities, then Nominatim
-   * This prevents unnecessary Nominatim API calls when we have data locally
+   * Comprehensive search: Use new backend /search-comprehensive endpoint
+   * This now searches both database AND locations via Overpass API
+   * Falls back to old methods if the new endpoint fails
    */
-  private async searchDatabaseAndNominatimParallel(query: string, limit: number, language: string = 'en'): Promise<LocationSuggestion[]> {
-    logger.debug(`🚀 Starting database-first search for "${query}" (language: ${language})`);
+  private async searchDatabaseAndOverpassParallel(query: string, limit: number, language: string = 'en'): Promise<LocationSuggestion[]> {
+    logger.debug(`🚀 Starting comprehensive search for "${query}" (language: ${language})`);
     
     try {
+      // Try new comprehensive endpoint first (backend does database + OSM search)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      
+      try {
+        const response = await api.get(
+          `/api/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
+          { signal: controller.signal }
+        );
+        
+        clearTimeout(timeoutId);
+        const results = response.data || [];
+        
+        if (results.length > 0) {
+          logger.debug(`✅ Comprehensive search found ${results.length} results (database + neighborhoods)`);
+          return results.map((loc: LocationDTO) => ({
+            id: loc.id || -(Math.random() * 1000000),
+            name: loc.name,
+            translatedName: loc.translatedName,
+            latitude: loc.latitude,
+            longitude: loc.longitude,
+            source: loc.source || 'mixed'
+          }));
+        }
+      } catch (comprehensiveError) {
+        clearTimeout(timeoutId);
+        logger.error(`Comprehensive endpoint failed, falling back to legacy search`, comprehensiveError);
+      }
+      
+      // Fallback to legacy database-first search
+      logger.debug(`⚠️ Comprehensive endpoint unavailable, using legacy database-first search for "${query}"`);
+      
       // Try database first
       const databaseResults = await this.searchDatabase(query, language);
       
@@ -107,43 +149,43 @@ export class LocationAutocompleteService {
       
       // If database has results, use them and skip Nominatim
       if (databaseResults.length > 0) {
-        logger.debug(`✅ Using database results (${databaseResults.length}) - skipping Nominatim`);
+        logger.debug(`✅ Using database results (${databaseResults.length})`);
         return databaseResults.map(loc => ({ ...loc, source: 'database' }));
       }
       
       // Check instant suggestions (local cities list) before Nominatim
       const instantResults = GeocodingService.getInstantSuggestions(query, limit);
       if (instantResults.length > 0) {
-        logger.debug(`⚡ Using instant suggestions (${instantResults.length}) - skipping Nominatim`);
+        logger.debug(`⚡ Using instant suggestions (${instantResults.length})`);
         return this.convertToSuggestions(instantResults).map(loc => ({ ...loc, source: 'local' }));
       }
       
       // Only call Nominatim if database and local are empty
-      logger.debug(`⚠️ Database empty, falling back to Nominatim for "${query}"`);
+      logger.debug(`🌍 Calling Nominatim for neighborhoods of "${query}"`);
       const nominatimResults = await this.searchNominatimFast(query, limit, language);
       
       if (nominatimResults.length > 0) {
-        logger.debug(`🌍 Using Nominatim results (${nominatimResults.length})`);
+        logger.debug(`🌍 Nominatim found ${nominatimResults.length} results`);
         return nominatimResults.map(loc => ({ ...loc, source: 'nominatim' }));
       }
       
-      logger.debug(`❌ No results found from database, local, or Nominatim`);
+      logger.debug(`❌ No results found from any source`);
       return [];
       
     } catch (error) {
-      logger.error('Database-first search failed:', error);
-      // Fallback to instant suggestions, then Nominatim
-      const instantResults = GeocodingService.getInstantSuggestions(query, limit);
+      logger.error('Comprehensive search failed:', error);
+      // Fallback to instant suggestions
+      const instantResults = GeocodingService.getInstantSuggestions(query, 10);
       if (instantResults.length > 0) {
         return this.convertToSuggestions(instantResults).map(loc => ({ ...loc, source: 'local' }));
       }
       
       try {
-        logger.debug(`🔄 Fallback: Trying Nominatim only for "${query}"`);
-        const nominatimFallback = await this.searchNominatimFast(query, limit, language);
+        logger.debug(`🔄 Final fallback: Trying Nominatim for "${query}"`);
+        const nominatimFallback = await this.searchNominatimFast(query, 10, language);
         return nominatimFallback.map(loc => ({ ...loc, source: 'nominatim' }));
       } catch (nominatimError) {
-        logger.error('Nominatim fallback also failed:', nominatimError);
+        logger.error('All search methods failed:', nominatimError);
         return [];
       }
     }
@@ -473,6 +515,116 @@ export class LocationAutocompleteService {
     );
     
     return districtName ? `${cityName}, ${districtName}` : cityName;
+  }
+
+  /**
+   * Search for neighborhoods and localities within a city
+   * This uses the backend endpoint that queries OSM Nominatim API for neighborhood data
+   * @param query Neighborhood name (e.g., "Adyar", "Besant Nagar")
+   * @param city Optional city name to narrow the search
+   * @param language Language code for results
+   * @returns Promise with neighborhood suggestions
+   */
+  async searchNeighborhoods(
+    query: string,
+    city?: string,
+    language: string = 'en'
+  ): Promise<LocationSuggestion[]> {
+    if (query.length < 2) {
+      return [];
+    }
+
+    try {
+      logger.debug(`🏘️ Neighborhood search for "${query}" in city "${city || 'any'}" (language: ${language})`);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+      const searchParams = new URLSearchParams({
+        q: query.trim(),
+        language: language
+      });
+
+      if (city) {
+        searchParams.append('city', city.trim());
+      }
+
+      const response = await api.get(`/api/v1/locations/neighborhoods?${searchParams}`, {
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      const results = response.data || [];
+      logger.debug(`🏘️ Found ${results.length} neighborhoods for "${query}"`);
+
+      // Convert to LocationSuggestion format
+      return results.map((location: LocationDTO) => ({
+        id: location.id || -(Math.random() * 1000000),
+        name: location.name,
+        translatedName: location.translatedName,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        source: 'nominatim-neighborhoods'
+      }));
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        logger.warn(`Neighborhood search timed out for "${query}"`);
+      } else {
+        logger.error(`Error searching neighborhoods for "${query}":`, error);
+      }
+      return [];
+    }
+  }
+
+  /**
+   * Search locations comprehensively (database + neighborhoods)
+   * Combines both database locations and OSM neighborhood results for better coverage
+   * @param query Search query
+   * @param language Language code
+   * @returns Promise with all matching locations and neighborhoods
+   */
+  async searchComprehensive(
+    query: string,
+    language: string = 'en'
+  ): Promise<LocationSuggestion[]> {
+    if (query.length < 2) {
+      return [];
+    }
+
+    try {
+      logger.debug(`🔍 Comprehensive search for "${query}" (language: ${language})`);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      const response = await api.get(
+        `/api/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
+        { signal: controller.signal }
+      );
+
+      clearTimeout(timeoutId);
+
+      const results = response.data || [];
+      logger.debug(`🔍 Comprehensive search found ${results.length} results for "${query}"`);
+
+      // Convert to LocationSuggestion format, preserving both database and OSM results
+      return results.map((location: LocationDTO) => ({
+        id: location.id || -(Math.random() * 1000000),
+        name: location.name,
+        translatedName: location.translatedName,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        source: location.source || 'mixed'
+      }));
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        logger.warn(`Comprehensive search timed out for "${query}"`);
+      } else {
+        logger.error(`Error in comprehensive search for "${query}":`, error);
+      }
+      return [];
+    }
   }
 
   /**

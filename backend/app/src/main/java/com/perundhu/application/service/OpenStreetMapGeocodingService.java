@@ -59,10 +59,11 @@ public class OpenStreetMapGeocodingService {
   }
 
   /**
-   * Search for locations in Tamil Nadu using OSM Nominatim API with language support
+   * Search for locations in Tamil Nadu using OSM Nominatim API with language
+   * support
    * 
-   * @param query Search query (location name)
-   * @param limit Maximum number of results
+   * @param query    Search query (location name)
+   * @param limit    Maximum number of results
    * @param language Language code (en or ta for Tamil)
    * @return List of LocationDTO without coordinates (for privacy/simplicity)
    */
@@ -96,7 +97,7 @@ public class OpenStreetMapGeocodingService {
     // First try: Search in Tamil Nadu specifically
     String tamilNaduQuery = query.trim() + ", Tamil Nadu, India";
     String encodedQuery = URLEncoder.encode(tamilNaduQuery, StandardCharsets.UTF_8);
-    
+
     // Use accept-language to get localized names (ta for Tamil, en for English)
     String acceptLanguage = "ta".equals(language) ? "ta,en" : "en,ta";
     String url = String.format("%s?q=%s&format=json&limit=%d&addressdetails=1&countrycodes=in&accept-language=%s",
@@ -118,7 +119,7 @@ public class OpenStreetMapGeocodingService {
     }
 
     List<LocationDTO> results = parseOSMResults(response.body(), limit);
-    
+
     // If no results found in Tamil Nadu, try broader South India search
     // (for locations in neighboring states like Kerala, Karnataka)
     if (results.isEmpty()) {
@@ -143,7 +144,7 @@ public class OpenStreetMapGeocodingService {
         log.info("South India search found {} results for '{}'", results.size(), query);
       }
     }
-    
+
     return results;
   }
 
@@ -156,9 +157,12 @@ public class OpenStreetMapGeocodingService {
 
   /**
    * Parse OSM JSON results into LocationDTO list
-   * @param allowOutsideTamilNadu if true, allows results from neighboring states (Kerala, Karnataka, etc.)
+   * 
+   * @param allowOutsideTamilNadu if true, allows results from neighboring states
+   *                              (Kerala, Karnataka, etc.)
    */
-  private List<LocationDTO> parseOSMResults(String jsonBody, int limit, boolean allowOutsideTamilNadu) throws Exception {
+  private List<LocationDTO> parseOSMResults(String jsonBody, int limit, boolean allowOutsideTamilNadu)
+      throws Exception {
     JsonNode results = objectMapper.readTree(jsonBody);
     List<LocationDTO> locations = new ArrayList<>();
 
@@ -175,9 +179,26 @@ public class OpenStreetMapGeocodingService {
       }
 
       String name = extractPlaceName(result, displayName);
-      // Create LocationDTO without coordinates for search display (ID is null since
-      // not from DB)
-      locations.add(LocationDTO.of((Long) null, name));
+      
+      // Extract coordinates from OSM response
+      Double latitude = null;
+      Double longitude = null;
+      
+      if (result.has("lat") && result.has("lon")) {
+        try {
+          latitude = result.get("lat").asDouble();
+          longitude = result.get("lon").asDouble();
+        } catch (Exception e) {
+          log.debug("Could not parse coordinates from OSM result for '{}'", name);
+        }
+      }
+      
+      // Create LocationDTO with coordinates if available (ID is null since not from DB)
+      if (latitude != null && longitude != null) {
+        locations.add(LocationDTO.withCoordinates((Long) null, name, latitude, longitude));
+      } else {
+        locations.add(LocationDTO.of((Long) null, name));
+      }
     }
 
     return locations;
