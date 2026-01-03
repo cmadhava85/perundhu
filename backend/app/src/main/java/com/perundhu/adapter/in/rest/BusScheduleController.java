@@ -305,32 +305,30 @@ public class BusScheduleController {
                     return ResponseEntity.badRequest().build();
                 }
 
-                // Get direct buses with language support
+                // Get direct buses with language support - these are buses with fromLocation → toLocation
                 List<BusDTO> directBuses = busScheduleService.findBusesBetweenLocations(fromLocationId, toLocationId,
                         lang);
-                log.info("Found {} direct buses", directBuses.size());
+                log.info("Found {} direct buses (Madurai → Coimbatore)", directBuses.size());
 
-                // Get buses passing through (intermediate stops) with language support
-                List<BusDTO> viaBuses = busScheduleService.findBusesPassingThroughLocations(fromLocationId,
-                        toLocationId, lang);
-                log.info("Found {} buses via intermediate stops", viaBuses.size());
-
-                // Get continuing buses if enabled
+                // Get continuing buses if enabled - buses that pass through toLocation but continue further
                 List<BusDTO> continuingBuses = new ArrayList<>();
                 if (includeContinuing) {
                     continuingBuses = busScheduleService.findBusesContinuingBeyondDestination(fromLocationId,
                             toLocationId);
-                    log.info("Found {} buses continuing beyond destination", continuingBuses.size());
+                    log.info("Found {} buses continuing beyond destination (Madurai → ... → Coimbatore → ...)", 
+                            continuingBuses.size());
                 }
+
+                // NOTE: Removed viaBuses from results
+                // viaBuses (findBusesPassingThroughLocations) returns buses like "Madurai-Chennai Daily" 
+                // that pass through both locations but are destined elsewhere.
+                // These are NOT relevant for regular search - only for connecting routes feature.
+                // Users searching "Madurai → Coimbatore" should NOT see buses like "Madurai → Chennai"
+                // even if they pass through Coimbatore as an intermediate stop.
 
                 // Combine results and remove duplicates
                 Set<Long> seenBusIds = new HashSet<>();
                 for (BusDTO bus : directBuses) {
-                    if (seenBusIds.add(bus.id())) {
-                        allResults.add(bus);
-                    }
-                }
-                for (BusDTO bus : viaBuses) {
                     if (seenBusIds.add(bus.id())) {
                         allResults.add(bus);
                     }
@@ -796,8 +794,15 @@ public class BusScheduleController {
             List<ConnectingRouteDTO> connectingRoutes = connectingRouteService.findConnectingRoutes(fromLocationId,
                     toLocationId, maxTransfers);
 
-            log.info("Returning {} connecting routes", connectingRoutes.size());
-            return ResponseEntity.ok(connectingRoutes);
+            // Filter out direct routes (0 transfers) - this endpoint should only return connecting routes
+            List<ConnectingRouteDTO> filteredRoutes = connectingRoutes.stream()
+                    .filter(route -> route.transfers() > 0)
+                    .toList();
+
+            log.info("Returning {} connecting routes (filtered from {} total routes, removed {} direct routes)", 
+                    filteredRoutes.size(), connectingRoutes.size(), 
+                    connectingRoutes.size() - filteredRoutes.size());
+            return ResponseEntity.ok(filteredRoutes);
         } catch (Exception e) {
             log.error("Error getting connecting routes from {} to {}", fromLocationId, toLocationId, e);
             return ResponseEntity.internalServerError().build();
