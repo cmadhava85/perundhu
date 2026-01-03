@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS user_tracking_sessions (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user_tracking_start_location FOREIGN KEY (start_location_id) REFERENCES locations(id),
     CONSTRAINT fk_user_tracking_end_location FOREIGN KEY (end_location_id) REFERENCES locations(id),
-    CONSTRAINT fk_user_tracking_bus FOREIGN KEY (bus_id) REFERENCES buses(id)
+    CONSTRAINT fk_user_tracking_bus FOREIGN KEY (bus_id) REFERENCES buses(id),
+    UNIQUE KEY uk_session_id (session_id),
+    INDEX idx_user_tracking_user_id (user_id),
+    INDEX idx_user_tracking_session_id (session_id)
 );
-
-CREATE INDEX idx_user_tracking_user_id ON user_tracking_sessions(user_id);
-CREATE INDEX idx_user_tracking_session_id ON user_tracking_sessions(session_id);
 
 -- =====================
 -- BUS TIMING TABLES
@@ -54,12 +54,11 @@ CREATE TABLE IF NOT EXISTS bus_timing_records (
     CONSTRAINT fk_timing_from_location FOREIGN KEY (from_location_id) REFERENCES locations(id),
     CONSTRAINT fk_timing_to_location FOREIGN KEY (to_location_id) REFERENCES locations(id),
     CONSTRAINT fk_timing_bus FOREIGN KEY (bus_id) REFERENCES buses(id),
-    UNIQUE KEY uk_bus_timing (from_location_id, to_location_id, departure_time, timing_type)
+    UNIQUE KEY uk_bus_timing (from_location_id, to_location_id, departure_time, timing_type),
+    INDEX idx_bus_timing_bus_id (bus_id),
+    INDEX idx_bus_timing_from_location (from_location_id),
+    INDEX idx_bus_timing_to_location (to_location_id)
 );
-
-CREATE INDEX idx_bus_timing_bus_id ON bus_timing_records(bus_id);
-CREATE INDEX idx_bus_timing_from_location ON bus_timing_records(from_location_id);
-CREATE INDEX idx_bus_timing_to_location ON bus_timing_records(to_location_id);
 
 -- Create extracted_bus_timings table (extracted from images)
 CREATE TABLE IF NOT EXISTS extracted_bus_timings (
@@ -72,10 +71,9 @@ CREATE TABLE IF NOT EXISTS extracted_bus_timings (
     night_timings JSON,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_extracted_timing_contribution FOREIGN KEY (contribution_id) REFERENCES timing_image_contributions(id)
+    CONSTRAINT fk_extracted_timing_contribution FOREIGN KEY (contribution_id) REFERENCES timing_image_contributions(id),
+    INDEX idx_extracted_timing_contribution (contribution_id)
 );
-
-CREATE INDEX idx_extracted_timing_contribution ON extracted_bus_timings(contribution_id);
 
 -- Create skipped_timing_records table (records skipped during processing)
 CREATE TABLE IF NOT EXISTS skipped_timing_records (
@@ -97,12 +95,11 @@ CREATE TABLE IF NOT EXISTS skipped_timing_records (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_skipped_from_location FOREIGN KEY (from_location_id) REFERENCES locations(id),
     CONSTRAINT fk_skipped_to_location FOREIGN KEY (to_location_id) REFERENCES locations(id),
-    CONSTRAINT fk_skipped_contribution FOREIGN KEY (contribution_id) REFERENCES timing_image_contributions(id)
+    CONSTRAINT fk_skipped_contribution FOREIGN KEY (contribution_id) REFERENCES timing_image_contributions(id),
+    INDEX idx_skipped_contribution (contribution_id),
+    INDEX idx_skipped_from_location (from_location_id),
+    INDEX idx_skipped_to_location (to_location_id)
 );
-
-CREATE INDEX idx_skipped_contribution ON skipped_timing_records(contribution_id);
-CREATE INDEX idx_skipped_from_location ON skipped_timing_records(from_location_id);
-CREATE INDEX idx_skipped_to_location ON skipped_timing_records(to_location_id);
 
 -- =====================
 -- IMAGE CONTRIBUTION TIMING TABLE
@@ -126,16 +123,8 @@ CREATE TABLE IF NOT EXISTS timing_image_contributions (
     processed_date DATETIME,
     processed_by VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_timing_image_user_id (user_id),
+    INDEX idx_timing_image_status (status),
+    INDEX idx_timing_image_submission (submission_date)
 );
-
-CREATE INDEX idx_timing_image_user_id ON timing_image_contributions(user_id);
-CREATE INDEX idx_timing_image_status ON timing_image_contributions(status);
-CREATE INDEX idx_timing_image_submission ON timing_image_contributions(submission_date);
-
--- =====================
--- ENSURE UNIQUE CONSTRAINTS
--- =====================
-
--- Add unique constraint for user tracking sessions
-ALTER TABLE user_tracking_sessions ADD CONSTRAINT uk_session_id UNIQUE (session_id);
