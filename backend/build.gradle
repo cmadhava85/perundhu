@@ -8,6 +8,8 @@
 
 buildscript {
     repositories {
+        // Use explicit Maven Central URL instead of deprecated mirror
+        maven { url 'https://repo1.maven.org/maven2' }
         mavenCentral()
         // Add Spring milestone repository to access prerelease versions
         maven { url 'https://repo.spring.io/milestone' }
@@ -41,7 +43,8 @@ configurations {
 }
 
 repositories {
-    // Use Maven Central for resolving dependencies.
+    // Use explicit Maven Central URL instead of deprecated mirror
+    maven { url 'https://repo1.maven.org/maven2' }
     mavenCentral()
     // Add Spring milestone repository to access prerelease versions
     maven { url 'https://repo.spring.io/milestone' }
