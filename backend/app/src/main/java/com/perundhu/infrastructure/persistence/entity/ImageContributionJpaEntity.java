@@ -38,7 +38,7 @@ public class ImageContributionJpaEntity {
     @Column(name = "image_url", nullable = false, length = 1000)
     private String imageUrl;
 
-    @Column(name = "status", nullable = false, length = 20)
+    @Column(name = "status", nullable = false, length = 100)
     private String status;
 
     @Column(name = "submission_date", nullable = false)

@@ -47,8 +47,12 @@ export class LocationAutocompleteService {
         return [];
       }
       
+      // Remove duplicate locations
+      const deduplicatedLocations = this.deduplicateResults(locations);
+      logger.debug(`🔍 Deduplication: ${locations.length} -> ${deduplicatedLocations.length} unique results`);
+      
       // Prioritize bus stands for better user experience
-      const prioritizedLocations = this.prioritizeBusStands(locations);
+      const prioritizedLocations = this.prioritizeBusStands(deduplicatedLocations);
       const suggestions = this.convertToSuggestions(prioritizedLocations);
       logger.debug(`✅ Converted to ${suggestions.length} suggestions (bus stands prioritized)`);
       
@@ -249,35 +253,47 @@ export class LocationAutocompleteService {
       const validResults = data.filter((result: NominatimResult) => {
         // Accept bus stations and bus stops with high priority
         const isBusStationOrStop = result.type === 'bus_station' || 
-                                    result.type === 'bus_stop' || 
-                                    result.class === 'amenity' ||
-                                    result.class === 'highway'; // bus_stop is often under highway class
+                                    result.type === 'bus_stop' ||
+                                    (result.class === 'amenity' && 
+                                     (result.type === 'bus_station' || 
+                                      result.type === 'bus_stop' ||
+                                      result.type?.includes('bus')));
         
-        // Accept various place types
+        // Accept various place types (cities, towns, villages, etc.)
         const isValidPlace = (
           ['city', 'town', 'village', 'hamlet'].includes(result.type) ||
           ['city', 'town', 'village', 'state_district', 'county'].includes(result.addresstype) ||
           (result.class === 'boundary' && result.type === 'administrative' && result.address?.state_district)
         );
         
-        // Exclude roads and highways
-        const isNotRoad = (
-          result.class !== 'highway' && 
-          result.class !== 'landuse' &&
-          !result.type.includes('road') && 
-          !result.type.includes('street') &&
-          result.type !== 'industrial'
+        // Exclude only pure roads/streets/highways that are NOT bus-related
+        const isNotRoad = !(
+          (result.class === 'highway' && !result.type?.includes('bus')) ||
+          result.class === 'landuse' ||
+          (result.type?.includes('road') && !result.type?.includes('bus')) || 
+          (result.type?.includes('street') && !result.type?.includes('bus')) ||
+          result.type === 'industrial'
         );
         
         return (isBusStationOrStop || isValidPlace) && isNotRoad;
       });
       
-      // Sort results: bus stations/stops first, then other places
+      // Sort results: bus stations/stops first, then cities/towns, then other places
       const sortedResults = validResults.sort((a: NominatimResult, b: NominatimResult) => {
-        const aIsBusStationOrStop = a.type === 'bus_station' || a.type === 'bus_stop';
-        const bIsBusStationOrStop = b.type === 'bus_station' || b.type === 'bus_stop';
+        const aIsBusStationOrStop = a.type === 'bus_station' || a.type === 'bus_stop' || a.type?.includes('bus');
+        const bIsBusStationOrStop = b.type === 'bus_station' || b.type === 'bus_stop' || b.type?.includes('bus');
+        
+        const aIsCity = ['city', 'town', 'village'].includes(a.type);
+        const bIsCity = ['city', 'town', 'village'].includes(b.type);
+        
+        // Priority 1: Bus stations/stops
         if (aIsBusStationOrStop && !bIsBusStationOrStop) return -1;
         if (!aIsBusStationOrStop && bIsBusStationOrStop) return 1;
+        
+        // Priority 2: Cities/towns/villages
+        if (aIsCity && !bIsCity) return -1;
+        if (!aIsCity && bIsCity) return 1;
+        
         return 0;
       });
       
@@ -321,21 +337,20 @@ export class LocationAutocompleteService {
   }
 
   /**
-   * Remove duplicate locations based on name similarity
+   * Remove duplicate locations based on exact name match only
+   * Keep bus stand variants (e.g., "Sivakasi - Bus Stop") separate from generic locations (e.g., "Sivakasi")
    */
   private deduplicateResults(locations: LocationSuggestion[]): LocationSuggestion[] {
     const filtered: LocationSuggestion[] = [];
+    const seen = new Set<string>();
     
     for (const location of locations) {
-      const isDuplicate = filtered.some(existing => {
-        const normalize = (str: string) => str.toLowerCase().replace(/[^\w\s]/g, '').trim();
-        const name1 = normalize(location.name);
-        const name2 = normalize(existing.name);
-        
-        return name1 === name2 || name1.includes(name2) || name2.includes(name1);
-      });
+      // Create a key based on exact name match
+      // This allows "Sivakasi" and "Sivakasi - Bus Stop" to coexist
+      const key = location.name.toLowerCase();
       
-      if (!isDuplicate) {
+      if (!seen.has(key)) {
+        seen.add(key);
         filtered.push(location);
       }
     }

@@ -44,6 +44,7 @@ CREATE TABLE locations (
     latitude DOUBLE,
     longitude DOUBLE,
     district VARCHAR(100),
+    nearby_city VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -139,14 +140,14 @@ CREATE TABLE image_contributions (
 
 CREATE TABLE route_issues (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    bus_number VARCHAR(50),
+    bus_id BIGINT,
     issue_type VARCHAR(100),
     description TEXT,
     status VARCHAR(20) DEFAULT 'OPEN',
     reported_by VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     resolved_at TIMESTAMP,
-    CONSTRAINT fk_issue_bus FOREIGN KEY (bus_number) REFERENCES buses(bus_number)
+    CONSTRAINT fk_issue_bus FOREIGN KEY (bus_id) REFERENCES buses(id)
 );
 
 -- =====================
@@ -222,7 +223,7 @@ CREATE INDEX idx_image_contributions_bus_number ON image_contributions(bus_numbe
 
 -- Route issues indices
 CREATE INDEX idx_route_issues_status ON route_issues(status);
-CREATE INDEX idx_route_issues_bus ON route_issues(bus_number);
+CREATE INDEX idx_route_issues_bus ON route_issues(bus_id);
 
 -- OSM indices
 CREATE INDEX idx_osm_bus_stops_osm_id ON osm_bus_stops(osm_id);
