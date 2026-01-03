@@ -1,34 +1,13 @@
 -- V34: Cleanup duplicate bus stops and populate comprehensive bus stop data across Tamil Nadu
 -- Purpose: Remove duplicate entries and ensure all major Tamil Nadu cities have bus stops
 -- Date: 2026-01-02
--- Note: This migration is designed to be environment-agnostic
+-- Note: Simplified to only affect tables that are guaranteed to exist
 
--- Duplicate location IDs to be removed (if they exist)
--- These are truncated, corrupted, or redundant entries
+-- Cleanup Strategy: Remove duplicate location entries and their dependencies
+-- Only deletes from core tables that exist in V1 migration
 
--- Safe deletion: Only delete records that reference these duplicate location IDs
--- This approach allows the migration to work even if some tables don't exist
-
--- Try to delete from user_tracking_sessions if it exists and has data
-DELETE IGNORE FROM user_tracking_sessions WHERE start_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
-   OR end_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
-
--- Try to delete from trip_statistics if it exists and has data
-DELETE IGNORE FROM trip_statistics WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
-   OR to_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
-
--- Delete from connecting_routes (if it has data)
-DELETE IGNORE FROM connecting_routes WHERE connection_point_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
-
--- Delete from buses (if it has data)
-DELETE IGNORE FROM buses WHERE from_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36)
-   OR to_location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
-
--- Delete from stops (if it has data)
-DELETE IGNORE FROM stops WHERE location_id IN (11,14,78,81,80,104,95,94,97,39,40,54,55,43,44,35,36);
-
--- Step 6: Remove duplicate bus stop location entries
-DELETE IGNORE FROM locations WHERE id IN (
+-- Step 1: Delete from stops that reference duplicate locations
+DELETE FROM stops WHERE location_id IN (
   11,    -- Duplicate: Madurai - Mattuthavani (truncated)
   14,    -- Duplicate: Madurai - Mattuthavani (truncated)
   78,    -- Duplicate: Madurai - Mattuthavani (truncated)
@@ -48,7 +27,40 @@ DELETE IGNORE FROM locations WHERE id IN (
   36     -- Old: Erode - Old Bus Stand (replaced by newer)
 );
 
--- Step 7: Add missing city bus stops to ensure comprehensive coverage
+-- Step 2: Delete from connecting_routes that reference duplicate locations
+DELETE FROM connecting_routes WHERE connection_point_id IN (
+  11, 14, 78, 81, 80, 104, 95, 94, 97, 39, 40, 54, 55, 43, 44, 35, 36
+);
+
+-- Step 3: Delete from buses that reference duplicate locations
+DELETE FROM buses WHERE from_location_id IN (
+  11, 14, 78, 81, 80, 104, 95, 94, 97, 39, 40, 54, 55, 43, 44, 35, 36
+) OR to_location_id IN (
+  11, 14, 78, 81, 80, 104, 95, 94, 97, 39, 40, 54, 55, 43, 44, 35, 36
+);
+
+-- Step 4: Remove duplicate bus stop location entries
+DELETE FROM locations WHERE id IN (
+  11,    -- Duplicate: Madurai - Mattuthavani (truncated)
+  14,    -- Duplicate: Madurai - Mattuthavani (truncated)
+  78,    -- Duplicate: Madurai - Mattuthavani (truncated)
+  81,    -- Duplicate: Aruppukottai - Main Bus Stand (duplicate of 141)
+  80,    -- Duplicate: Sivakasi - Bus Stand (duplicate of 132)
+  104,   -- Corrupted: Erode - Bus St Bus Station
+  95,    -- Duplicate: SALEM OLD BUS STAND (duplicate of 30, removed)
+  94,    -- Duplicate: SALEM TOWN BUS STAND (duplicate of 31, removed)
+  97,    -- Duplicate: Tiruppur - Koyil vazhi bus stand (duplicate of 98)
+  39,    -- Old: Tiruppur - New Bus Stand (replaced by 96)
+  40,    -- Old: Tiruppur - Old Bus Stand (replaced by 97/98)
+  54,    -- Old: Kumbakonam - New Bus Stand (replaced by 117)
+  55,    -- Old: Kumbakonam - Old Bus Stand (replaced by newer)
+  43,    -- Old: Dindigul - New Bus Stand (replaced by 122)
+  44,    -- Old: Dindigul - Old Bus Stand (replaced by newer)
+  35,    -- Old: Erode - New Bus Stand (replaced by 100, 101)
+  36     -- Old: Erode - Old Bus Stand (replaced by newer)
+);
+
+-- Step 5: Add missing city bus stops to ensure comprehensive coverage
 -- Adding bus stops for districts and cities not yet covered or with limited coverage
 INSERT INTO locations (name, latitude, longitude, district, nearby_city) VALUES 
 -- Dharmapuri district
