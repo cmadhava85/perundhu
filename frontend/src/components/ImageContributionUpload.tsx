@@ -44,8 +44,6 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
   const [honeypot, setHoneypot] = useState(''); // Bot detection field
-  const [showUploadSuccess, setShowUploadSuccess] = useState(false);
-  const [_lastUploadedCount, setLastUploadedCount] = useState(0);
   const [showBottomSuccess, setShowBottomSuccess] = useState(false);
   const [bottomSuccessContributionId, setBottomSuccessContributionId] = useState('');
   
@@ -65,11 +63,27 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const handleFileSelect = useCallback((files: FileList | null) => {
     if (!files) return;
 
-    const acceptedFiles = Array.from(files).filter(file => {
+    const acceptedFiles: File[] = [];
+    const rejectedFiles: {file: File, reason: string}[] = [];
+
+    Array.from(files).forEach(file => {
       const isImage = file.type.startsWith('image/');
       const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
-      return isImage && isValidSize;
+      
+      if (!isImage) {
+        rejectedFiles.push({file, reason: 'File must be an image (JPG, PNG, GIF, etc.)'});
+      } else if (!isValidSize) {
+        rejectedFiles.push({file, reason: `File "${file.name}" is too large (${formatFileSize(file.size)}). Maximum size is 10MB.`});
+      } else {
+        acceptedFiles.push(file);
+      }
     });
+
+    // Show error message for rejected files
+    if (rejectedFiles.length > 0) {
+      const errorMessages = rejectedFiles.map(rf => rf.reason).join('\n');
+      onError?.(errorMessages);
+    }
 
     const newImages: UploadedImage[] = acceptedFiles.map(file => ({
       file,
@@ -80,7 +94,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     }));
     
     setUploadedImages(prev => [...prev, ...newImages]);
-  }, []);
+  }, [onError]);
 
   const filteredAndSortedImages = useMemo(() => {
     const filtered = uploadedImages.filter(image => {
@@ -248,12 +262,6 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           )
         );
 
-        // Show upload success notification
-        setLastUploadedCount(prev => prev + 1);
-        setShowUploadSuccess(true);
-        // Increased timeout from 4000ms to 8000ms for larger files
-        setTimeout(() => setShowUploadSuccess(false), 8000);
-
         // Show bottom success message
         setBottomSuccessContributionId(response.contributionId);
         setShowBottomSuccess(true);
@@ -412,10 +420,19 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     
     try {
       const pendingImages = uploadedImages.filter(img => !img.contributionId && !img.processing);
+      const totalToUpload = pendingImages.length;
+      let successCount = 0;
 
       for (const image of pendingImages) {
         await submitImage(image.id);
+        successCount++;
         await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
+      // Show single batch completion message
+      if (successCount > 0) {
+        // The message will show automatically when the last image's submitImage completes
+        // The bottom success message is already displayed by the last submitImage call
       }
     } finally {
       setIsSubmitting(false);
@@ -478,64 +495,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     }
   };
 
-  // Reset success notification count when all images are cleared
-  useEffect(() => {
-    if (uploadedImages.length === 0) {
-      setLastUploadedCount(0);
-    }
-  }, [uploadedImages.length]);
-
   return (
     <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '1rem' }}>
-      {/* Upload Success Notification */}
-      {showUploadSuccess && (
-        <div style={{
-          position: 'fixed',
-          top: '1rem',
-          right: '1rem',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.75rem',
-          padding: '1rem 1.5rem',
-          backgroundColor: '#059669',
-          color: 'white',
-          borderRadius: '0.75rem',
-          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
-          animation: 'slideInRight 0.3s ease-out'
-        }}>
-          <CheckCircle2 style={{ width: '1.5rem', height: '1.5rem' }} />
-          <div>
-            <div style={{ fontWeight: '600', fontSize: '0.9375rem' }}>
-              {_lastUploadedCount > 1 
-                ? t('contribution.imageUpload.multipleUploadSuccess', 'Images uploaded successfully!')
-                : t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
-            </div>
-            <div style={{ fontSize: '0.8125rem', opacity: 0.9 }}>
-              {_lastUploadedCount > 1 
-                ? `${_lastUploadedCount} image${_lastUploadedCount > 1 ? 's' : ''} ${t('contribution.imageUpload.processingStarted', 'are processing')}`
-                : t('contribution.imageUpload.processingStarted', 'Processing will complete shortly')}
-            </div>
-          </div>
-          <button
-            onClick={() => setShowUploadSuccess(false)}
-            style={{
-              marginLeft: '0.5rem',
-              padding: '0.25rem',
-              background: 'transparent',
-              border: 'none',
-              color: 'white',
-              cursor: 'pointer',
-              opacity: 0.8,
-              fontSize: '1.25rem',
-              lineHeight: 1
-            }}
-          >
-            ×
-          </button>
-        </div>
-      )}
-
       {/* Compact Header */}
       <div style={{ marginBottom: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
