@@ -13,11 +13,15 @@ CREATE TEMPORARY TABLE location_id_mapping (
 );
 
 -- Insert all duplicate IDs that should be merged (exclude the minimum ID for each location)
+-- For each location name, all duplicate IDs map to the minimum ID for that name
 INSERT INTO location_id_mapping (old_id, new_id)
-SELECT l2.id as old_id, l1.id as new_id
-FROM locations l1
-INNER JOIN locations l2 ON LOWER(TRIM(l1.name)) = LOWER(TRIM(l2.name))
-WHERE l1.id < l2.id;
+SELECT 
+    l.id as old_id,
+    MIN(l2.id) as new_id
+FROM locations l
+INNER JOIN locations l2 ON LOWER(TRIM(l.name)) = LOWER(TRIM(l2.name))
+WHERE l.id != (SELECT MIN(l3.id) FROM locations l3 WHERE LOWER(TRIM(l3.name)) = LOWER(TRIM(l.name)))
+GROUP BY l.id, LOWER(TRIM(l.name));
 
 -- Step 2: Update all foreign key references from duplicates to primary IDs
 UPDATE bus_stops bs
