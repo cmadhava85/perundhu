@@ -20,7 +20,7 @@ describe('deviceId Utility', () => {
       const deviceId = getOrCreateDeviceId();
       
       expect(deviceId).toBeDefined();
-      expect(deviceId).toMatch(/^device_\d+_[a-z0-9]+$/);
+      expect(deviceId).toMatch(/^device_[a-z0-9]+_[a-z0-9]+$/);
     });
 
     it('should store device ID in localStorage', () => {
@@ -66,7 +66,7 @@ describe('deviceId Utility', () => {
   describe('clearDeviceId()', () => {
     it('should remove device ID from localStorage', () => {
       getOrCreateDeviceId();
-      expect(localStorage.getItem(DEVICE_ID_KEY)).toBeDefined();
+      expect(localStorage.getItem(DEVICE_ID_KEY)).not.toBeNull();
       
       clearDeviceId();
       
@@ -88,12 +88,11 @@ describe('deviceId Utility', () => {
 
   describe('getDeviceId()', () => {
     it('should return existing device ID without creating new one', () => {
-      getOrCreateDeviceId();
-      clearDeviceId(); // Remove from storage
+      const createdId = getOrCreateDeviceId();
       
       const retrieved = getDeviceId();
       
-      expect(retrieved).toBeNull();
+      expect(retrieved).toBe(createdId);
     });
 
     it('should return device ID if it exists', () => {
@@ -114,6 +113,7 @@ describe('deviceId Utility', () => {
     });
 
     it('should return null if device ID has never been created', () => {
+      localStorage.clear();
       const retrieved = getDeviceId();
       
       expect(retrieved).toBeNull();
@@ -148,8 +148,11 @@ describe('deviceId Utility', () => {
       const parts = deviceId.split('_');
       const timestamp = parts[1];
       
-      expect(Number.isInteger(Number(timestamp))).toBe(true);
-      expect(Number(timestamp)).toBeGreaterThan(0);
+      // Timestamp is in base36 format
+      expect(timestamp).toBeDefined();
+      expect(timestamp.length).toBeGreaterThan(0);
+      // Base36 can contain 0-9 and a-z
+      expect(timestamp).toMatch(/^[a-z0-9]+$/);
     });
 
     it('should generate device ID with valid random component', () => {

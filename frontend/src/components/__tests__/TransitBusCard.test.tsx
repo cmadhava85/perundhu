@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '../../test-utils';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import TransitBusCard from '../TransitBusCard';
+import { ToastProvider } from '../design-system/Toast';
 import type { Bus, Stop, Location } from '../../types';
 
 // Mock react-i18next
@@ -76,43 +77,64 @@ describe('TransitBusCard Component', () => {
     onAddStops: vi.fn()
   };
 
+  // Helper function to render component with required providers
+  const renderWithProviders = (component: React.ReactElement) => {
+    return render(
+      <ToastProvider>
+        {component}
+      </ToastProvider>
+    );
+  };
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   describe('Basic Rendering', () => {
     it('renders without crashing', () => {
-      expect(() => render(<TransitBusCard {...defaultProps} />)).not.toThrow();
+      expect(() => render(
+        <ToastProvider>
+          <TransitBusCard {...defaultProps} />
+        </ToastProvider>
+      )).not.toThrow();
     });
 
     it('displays bus number', () => {
-      render(<TransitBusCard {...defaultProps} />);
+      render(
+        <ToastProvider>
+          <TransitBusCard {...defaultProps} />
+        </ToastProvider>
+      );
       expect(screen.getByText('TN01AB1234')).toBeDefined();
     });
 
     it('displays bus number or name in header', () => {
       // Component shows busNumber || busName || 'Bus' in the header
-      render(<TransitBusCard {...defaultProps} />);
+      render(
+        <ToastProvider>
+          <TransitBusCard {...defaultProps} />
+        </ToastProvider>
+      );
       // TN01AB1234 is shown because busNumber takes priority
       expect(screen.getByText('TN01AB1234')).toBeDefined();
     });
 
     it('displays departure and arrival times', () => {
-      render(<TransitBusCard {...defaultProps} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} />);
       // Use getAllByText since times can appear multiple times (in header and stops list)
       expect(screen.getAllByText('06:00').length).toBeGreaterThan(0);
       expect(screen.getAllByText('12:00').length).toBeGreaterThan(0);
     });
 
     it('displays fare when available', () => {
-      render(<TransitBusCard {...defaultProps} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} />);
       // Fare is split into currency and amount
       expect(screen.getByText('₹')).toBeDefined();
       expect(screen.getByText('350')).toBeDefined();
     });
 
     it('displays duration', () => {
-      render(<TransitBusCard {...defaultProps} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} />);
       expect(screen.getByText('6h 0m')).toBeDefined();
     });
   });
@@ -120,7 +142,7 @@ describe('TransitBusCard Component', () => {
   describe('Selection behavior', () => {
     it('calls onSelectBus when card is clicked', () => {
       const onSelectBus = vi.fn();
-      render(<TransitBusCard {...defaultProps} onSelectBus={onSelectBus} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} onSelectBus={onSelectBus} />);
       
       const card = screen.getByText('TN01AB1234').closest('.transit-bus-card, [class*="bus-card"], button');
       if (card) {
@@ -130,7 +152,7 @@ describe('TransitBusCard Component', () => {
     });
 
     it('shows selected state when bus is selected', () => {
-      render(<TransitBusCard {...defaultProps} selectedBusId={1} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} selectedBusId={1} />);
       
       // Component should have selected styling - check for any indicator
       const busNumber = screen.getByText('TN01AB1234');
@@ -140,7 +162,7 @@ describe('TransitBusCard Component', () => {
 
   describe('Stops display', () => {
     it('displays stops count when stops are available', () => {
-      render(<TransitBusCard {...defaultProps} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} />);
       // The stops info contains icon, number, and text in separate elements: "🛑 4 stops"
       // Use a more flexible matcher
       const stopsInfo = screen.getByText((content, element) => {
@@ -152,7 +174,7 @@ describe('TransitBusCard Component', () => {
 
   describe('Add Stops button', () => {
     it('shows Add Stops button when bus has no stops and onAddStops provided', () => {
-      render(
+      renderWithProviders(
         <TransitBusCard 
           {...defaultProps} 
           bus={mockBusWithNoStops}
@@ -169,7 +191,7 @@ describe('TransitBusCard Component', () => {
 
     it('calls onAddStops when Add Stops button is clicked', () => {
       const onAddStops = vi.fn();
-      render(
+      renderWithProviders(
         <TransitBusCard 
           {...defaultProps} 
           bus={mockBusWithNoStops}
@@ -195,7 +217,7 @@ describe('TransitBusCard Component', () => {
         { id: 5, name: 'Stop 5', arrivalTime: '10:00', departureTime: '10:05', order: 5, busId: 1 },
         { id: 6, name: 'Stop 6', arrivalTime: '11:00', departureTime: '11:05', order: 6, busId: 1 }
       ];
-      render(<TransitBusCard {...defaultProps} stops={manyStops} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} stops={manyStops} />);
       
       // Should not show Add Stops for bus with 6 stops (threshold is <=5)
       const addStopsButton = screen.queryByRole('button', { name: /Add Stops/i });
@@ -205,7 +227,7 @@ describe('TransitBusCard Component', () => {
 
   describe('Special indicators', () => {
     it('shows Next Bus badge when isNextBus is true', () => {
-      render(<TransitBusCard {...defaultProps} isNextBus={true} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} isNextBus={true} />);
       
       // Look for Next Bus indicator
       const nextBusBadge = screen.queryByText(/Next/i);
@@ -215,7 +237,7 @@ describe('TransitBusCard Component', () => {
     });
 
     it('shows Fastest badge when isFastest is true', () => {
-      render(<TransitBusCard {...defaultProps} isFastest={true} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} isFastest={true} />);
       
       const fastestBadge = screen.queryByText(/Fastest/i);
       if (fastestBadge) {
@@ -224,7 +246,7 @@ describe('TransitBusCard Component', () => {
     });
 
     it('shows Cheapest badge when isCheapest is true', () => {
-      render(<TransitBusCard {...defaultProps} isCheapest={true} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} isCheapest={true} />);
       
       const cheapestBadge = screen.queryByText(/Cheapest/i);
       if (cheapestBadge) {
@@ -235,7 +257,7 @@ describe('TransitBusCard Component', () => {
 
   describe('Compact mode', () => {
     it('renders in compact mode when isCompact is true', () => {
-      render(<TransitBusCard {...defaultProps} isCompact={true} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} isCompact={true} />);
       
       // Should still render essential info - bus number is shown (busNumber || busName)
       expect(screen.getByText('TN01AB1234')).toBeDefined();
@@ -244,7 +266,7 @@ describe('TransitBusCard Component', () => {
 
   describe('Accessibility', () => {
     it('is keyboard navigable', () => {
-      render(<TransitBusCard {...defaultProps} />);
+      renderWithProviders(<TransitBusCard {...defaultProps} />);
       
       // The component is a button element which is keyboard navigable
       const busNumber = screen.getByText('TN01AB1234');

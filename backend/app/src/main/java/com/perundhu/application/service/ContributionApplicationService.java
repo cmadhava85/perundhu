@@ -95,6 +95,7 @@ public class ContributionApplicationService implements ContributionInputPort {
 
   @Override
   public List<Map<String, Object>> getUserContributions(String userId) {
+    log.debug("Fetching all contributions for user: {}", userId);
     List<Map<String, Object>> result = new ArrayList<>();
 
     // Get route contributions
@@ -147,6 +148,7 @@ public class ContributionApplicationService implements ContributionInputPort {
 
   @Override
   public List<Map<String, Object>> getAllContributions() {
+    log.debug("Fetching all contributions from database");
     List<Map<String, Object>> result = new ArrayList<>();
 
     // Get all route contributions
@@ -170,31 +172,41 @@ public class ContributionApplicationService implements ContributionInputPort {
 
   @Override
   public List<RouteContribution> getPendingRouteContributions() {
-    return routeContributionOutputPort.findByStatus("PENDING");
+    log.debug("Fetching pending route contributions");
+    List<RouteContribution> pending = routeContributionOutputPort.findByStatus("PENDING");
+    log.debug("Found {} pending route contributions", pending.size());
+    return pending;
   }
 
   @Override
   public List<ImageContribution> getPendingImageContributions() {
-    return imageContributionOutputPort.findByStatus("PENDING");
+    log.debug("Fetching pending image contributions");
+    List<ImageContribution> pending = imageContributionOutputPort.findByStatus("PENDING");
+    log.debug("Found {} pending image contributions", pending.size());
+    return pending;
   }
 
   @Override
   public void approveRouteContribution(String contributionId, String adminId) {
+    log.info("Approving route contribution {} by admin: {}", contributionId, adminId);
     updateContributionStatus(contributionId, "APPROVED", "Approved by admin: " + adminId);
   }
 
   @Override
   public void rejectRouteContribution(String contributionId, String reason, String adminId) {
+    log.info("Rejecting route contribution {} - Reason: {} by admin: {}", contributionId, reason, adminId);
     updateContributionStatus(contributionId, "REJECTED", reason + " (Admin: " + adminId + ")");
   }
 
   @Override
   public void approveImageContribution(String contributionId, String adminId) {
+    log.info("Approving image contribution {} by admin: {}", contributionId, adminId);
     updateContributionStatus(contributionId, "APPROVED", "Approved by admin: " + adminId);
   }
 
   @Override
   public void rejectImageContribution(String contributionId, String reason, String adminId) {
+    log.info("Rejecting image contribution {} - Reason: {} by admin: {}", contributionId, reason, adminId);
     updateContributionStatus(contributionId, "REJECTED", reason + " (Admin: " + adminId + ")");
   }
 

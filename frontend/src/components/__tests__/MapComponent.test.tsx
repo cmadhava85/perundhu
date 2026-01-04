@@ -1,4 +1,4 @@
-import { render, screen } from '../../test-utils';
+import { render, screen, waitFor } from '../../test-utils';
 import '@testing-library/jest-dom';
 import { vi, beforeEach, describe, it, expect } from 'vitest';
 import MapComponent from '../MapComponent';
@@ -42,6 +42,41 @@ describe('MapComponent', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    // Mock HTMLElement properties for map container dimensions
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      get: function() {
+        if (this.id?.includes('map-container')) return 450;
+        return 0;
+      }
+    });
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+      configurable: true,
+      get: function() {
+        if (this.id?.includes('map-container')) return 100;
+        return 0;
+      }
+    });
+    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
+      configurable: true,
+      get: function() {
+        if (this.id?.includes('map-container')) return 100;
+        return 0;
+      }
+    });
+    Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
+      configurable: true,
+      get: function() {
+        if (this.id?.includes('map-container')) return 450;
+        return 0;
+      }
+    });
+    Object.defineProperty(HTMLElement.prototype, 'isConnected', {
+      configurable: true,
+      get: function() {
+        return true;
+      }
+    });
   });
 
   it('renders the map container', () => {
@@ -54,9 +89,11 @@ describe('MapComponent', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   
-  it('initializes the map service', () => {
+  it('initializes the map service', async () => {
     render(<MapComponent {...mockProps} />);
-    expect(mapService.init).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mapService.init).toHaveBeenCalled();
+    }, { timeout: 5000 });
   });
   
   it('applies custom styles when provided', () => {

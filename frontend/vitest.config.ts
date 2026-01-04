@@ -23,6 +23,9 @@ export default defineConfig({
         isolate: true
       }
     },
+    // Silent unhandled worker pool errors that don't affect test results
+    silent: false,
+    reporter: 'default',
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

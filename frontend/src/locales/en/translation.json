@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Perundhu",
-    "tagline": "Your Bus Journey Planner",
+    "tagline": "Bus in Seconds",
     "loading": "Loading...",
     "error": "No routes found for this selection. Please try different locations.",
     "close": "Close",

@@ -14,16 +14,33 @@ Object.defineProperty(import.meta, 'env', {
   writable: true
 });
 
-// Mock localStorage and other browser APIs
+// Setup localStorage with a working implementation
+const localStorageMock = (() => {
+  let store: Record<string, string> = {};
+
+  return {
+    getItem: (key: string) => store[key] || null,
+    setItem: (key: string, value: string) => {
+      store[key] = value.toString();
+    },
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
+    key: (index: number) => {
+      const keys = Object.keys(store);
+      return keys[index] || null;
+    },
+    get length() {
+      return Object.keys(store).length;
+    }
+  };
+})();
+
 Object.defineProperty(window, 'localStorage', {
-  value: {
-    getItem: vi.fn(),
-    setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn(),
-    length: 0,
-    key: vi.fn(),
-  },
+  value: localStorageMock,
   writable: true,
 });
 
@@ -182,15 +199,25 @@ vi.mock('i18next', () => ({
 vi.mock('./services/offlineService');
 
 // Mock axios for API tests
-vi.mock('axios', () => ({
-  default: {
+vi.mock('axios', () => {
+  const mockAxios = {
+    get: vi.fn().mockResolvedValue({ data: {} }),
+    post: vi.fn().mockResolvedValue({ data: {} }),
+    put: vi.fn().mockResolvedValue({ data: {} }),
+    delete: vi.fn().mockResolvedValue({ data: {} }),
+    patch: vi.fn().mockResolvedValue({ data: {} }),
     create: vi.fn().mockReturnValue({
       get: vi.fn().mockResolvedValue({ data: [] }),
       post: vi.fn().mockResolvedValue({ data: {} }),
+      put: vi.fn().mockResolvedValue({ data: {} }),
       interceptors: {
         request: { use: vi.fn(), eject: vi.fn() },
         response: { use: vi.fn(), eject: vi.fn() }
       }
     })
-  }
-}));
+  };
+  
+  return {
+    default: mockAxios
+  };
+});

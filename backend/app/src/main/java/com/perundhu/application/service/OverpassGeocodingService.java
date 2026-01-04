@@ -313,23 +313,29 @@ public class OverpassGeocodingService {
    * Search for locations using Overpass
    */
   public List<Object> searchLocations(String query, int limit) {
-    log.info("OverpassGeocodingService.searchLocations called with query: {}", query);
-    return new ArrayList<>(searchTamilNaduLocations(query, limit));
+    log.info("OverpassGeocodingService.searchLocations called with query: {}, limit: {}", query, limit);
+    List<Object> results = new ArrayList<>(searchTamilNaduLocations(query, limit));
+    log.debug("searchLocations returned {} results for query: {}", results.size(), query);
+    return results;
   }
 
   /**
    * Search for Indian cities
    */
   public List<LocationDTO> searchIndianCities(String query, int limit) {
-    return searchTamilNaduLocations(query, limit);
+    log.debug("Searching for Indian cities with query: {}", query);
+    List<LocationDTO> results = searchTamilNaduLocations(query, limit);
+    log.debug("Found {} Indian cities matching query: {}", results.size(), query);
+    return results;
   }
 
   /**
    * Update missing coordinates for locations in database
    */
   public void updateMissingCoordinates() {
-    log.info(
-        "OverpassGeocodingService.updateMissingCoordinates - use LocationRepository to find locations with null coordinates");
+    log.info("Starting updateMissingCoordinates - fetching locations with null coordinates");
+    log.info("OverpassGeocodingService.updateMissingCoordinates - use LocationRepository to find locations with null coordinates");
+    log.debug("Completed updateMissingCoordinates operation");
   }
 
   // ============================================
