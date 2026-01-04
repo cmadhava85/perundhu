@@ -152,9 +152,16 @@ public class FeedbackController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserFeedback> getFeedback(@PathVariable Long id) {
+        log.info("Fetching feedback details for ID: {}", id);
         return feedbackOutputPort.findFeedbackById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(feedback -> {
+                    log.debug("Feedback found for ID: {}", id);
+                    return ResponseEntity.ok(feedback);
+                })
+                .orElseGet(() -> {
+                    log.warn("Feedback not found for ID: {}", id);
+                    return ResponseEntity.notFound().build();
+                });
     }
 
     /**
@@ -163,6 +170,7 @@ public class FeedbackController {
     @GetMapping("/stats/overview")
     public ResponseEntity<Map<String, Object>> getFeedbackStats() {
         try {
+            log.debug("Fetching feedback statistics");
             Map<String, Object> stats = new HashMap<>();
             stats.put("newCount", feedbackOutputPort.countFeedbackByStatus("new"));
             stats.put("acknowledgedCount", feedbackOutputPort.countFeedbackByStatus("acknowledged"));
@@ -175,6 +183,7 @@ public class FeedbackController {
             stats.put("featureCount", feedbackOutputPort.countFeedbackByCategory("feature"));
             stats.put("generalCount", feedbackOutputPort.countFeedbackByCategory("general"));
 
+            log.info("Feedback stats computed - Total: {}", stats);
             return ResponseEntity.ok(stats);
         } catch (Exception e) {
             log.error("Error retrieving feedback statistics", e);

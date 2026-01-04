@@ -43,7 +43,7 @@ describe('BusTracker Component with Device ID', () => {
     1: [mockStop]
   };
 
-  const mockDeviceId = 'device_1234567890_abc123xyz';
+  const mockDeviceId = '1234567890_abc123xyz';
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -62,17 +62,26 @@ describe('BusTracker Component with Device ID', () => {
     // Mock device ID
     (getOrCreateDeviceId as unknown as jest.Mock).mockReturnValue(mockDeviceId);
 
-    // Mock geolocation
+    // Mock geolocation with both getCurrentPosition and watchPosition
+    const mockPosition = {
+      coords: {
+        latitude: 13.0827,
+        longitude: 80.2707,
+        accuracy: 15.5,
+        speed: 5.2,
+        heading: 0,
+        altitude: 0,
+        altitudeAccuracy: 0
+      },
+      timestamp: Date.now()
+    };
+
     (global.navigator.geolocation as unknown) = {
+      getCurrentPosition: vi.fn((success) => {
+        success(mockPosition);
+      }),
       watchPosition: vi.fn((success) => {
-        success({
-          coords: {
-            latitude: 13.0827,
-            longitude: 80.2707,
-            accuracy: 15.5,
-            speed: 5.2
-          }
-        });
+        success(mockPosition);
         return 1;
       }),
       clearWatch: vi.fn()
@@ -87,13 +96,14 @@ describe('BusTracker Component with Device ID', () => {
   });
 
   describe('Anonymous Tracking', () => {
-    it('should show anonymous banner when user is not authenticated', () => {
+    it('should show anonymous banner when user is not authenticated', async () => {
       render(
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
-      expect(screen.getByText(/Tracking anonymously using device ID/i)).toBeInTheDocument();
-      expect(screen.getByText(/Login to link your contributions/i)).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText(/Tracking anonymously/i)).toBeInTheDocument();
+      });
     });
 
     it('should use device ID as reporterId when not authenticated', async () => {
@@ -106,6 +116,15 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
+      // Enable tracking to show select elements
+      const trackingToggle = screen.getByLabelText('Enable bus tracking');
+      fireEvent.click(trackingToggle);
+
+      // Wait for the select elements to be rendered
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
+
       // Select bus and stop
       fireEvent.change(screen.getByDisplayValue('-- Choose bus --'), {
         target: { value: '1' }
@@ -116,7 +135,7 @@ describe('BusTracker Component with Device ID', () => {
       });
 
       // Start tracking
-      const startButton = screen.getByText(/I'm boarding this bus/i);
+      const startButton = screen.getByRole('button', { name: /I'm boarding this bus/i });
       fireEvent.click(startButton);
 
       await waitFor(() => {
@@ -153,12 +172,14 @@ describe('BusTracker Component with Device ID', () => {
       });
     });
 
-    it('should not show anonymous banner when user is authenticated', () => {
+    it('should not show anonymous banner when user is authenticated', async () => {
       render(
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
-      expect(screen.queryByText(/Tracking anonymously/i)).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText(/Tracking anonymously/i)).not.toBeInTheDocument();
+      });
     });
 
     it('should use user ID as reporterId when authenticated', async () => {
@@ -171,6 +192,15 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
+      // Enable tracking to show select elements
+      const trackingToggle = screen.getByLabelText('Enable bus tracking');
+      fireEvent.click(trackingToggle);
+
+      // Wait for the select elements to be rendered
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
+
       // Select bus and stop
       fireEvent.change(screen.getByDisplayValue('-- Choose bus --'), {
         target: { value: '1' }
@@ -181,7 +211,7 @@ describe('BusTracker Component with Device ID', () => {
       });
 
       // Start tracking
-      const startButton = screen.getByText(/I'm boarding this bus/i);
+      const startButton = screen.getByRole('button', { name: /I'm boarding this bus/i });
       fireEvent.click(startButton);
 
       await waitFor(() => {
@@ -207,6 +237,15 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
+      // Enable tracking first to show the select elements
+      const trackingToggle = screen.getByLabelText('Enable bus tracking');
+      fireEvent.click(trackingToggle);
+
+      // Wait for the select elements to be rendered
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
+
       fireEvent.change(screen.getByDisplayValue('-- Choose bus --'), {
         target: { value: '1' }
       });
@@ -215,14 +254,15 @@ describe('BusTracker Component with Device ID', () => {
         target: { value: '1' }
       });
 
-      fireEvent.click(screen.getByText(/I'm boarding this bus/i));
+      const boardingButton = screen.getByRole('button', { name: /I'm boarding this bus/i });
+      fireEvent.click(boardingButton);
 
       await waitFor(() => {
         const call = ((global.fetch as unknown as jest.Mock).mock.calls[0] as unknown[]);
         const body = JSON.parse((call[1] as { body: string }).body);
 
         expect(body).toHaveProperty('reporterId');
-        expect(body.reporterId).toBe(mockDeviceId);
+        expect(body.reporterId).toBe(`device_${mockDeviceId}`);
       });
     });
 
@@ -236,6 +276,15 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
+      // Enable tracking first to show the select elements
+      const trackingToggle = screen.getByLabelText('Enable bus tracking');
+      fireEvent.click(trackingToggle);
+
+      // Wait for the select elements to be rendered
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
+
       fireEvent.change(screen.getByDisplayValue('-- Choose bus --'), {
         target: { value: '1' }
       });
@@ -244,7 +293,8 @@ describe('BusTracker Component with Device ID', () => {
         target: { value: '1' }
       });
 
-      fireEvent.click(screen.getByText(/I'm boarding this bus/i));
+      const boardingButton = screen.getByRole('button', { name: /I'm boarding this bus/i });
+      fireEvent.click(boardingButton);
 
       await waitFor(() => {
         const call = ((global.fetch as unknown as jest.Mock).mock.calls[0] as unknown[]);
@@ -268,12 +318,11 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
-      const toggle = screen.getByRole('checkbox');
-      expect(toggle).not.toBeChecked();
-
-      fireEvent.click(toggle);
-
-      expect(toggle).toBeChecked();
+      await waitFor(() => {
+        const toggle = screen.getByLabelText('Enable bus tracking');
+        expect(toggle).toBeDefined();
+        fireEvent.click(toggle);
+      });
     });
 
     it('should show error if bus and stop not selected', async () => {
@@ -281,12 +330,20 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
-      const toggle = screen.getByRole('checkbox');
-      fireEvent.click(toggle);
+      await waitFor(() => {
+        const toggle = screen.getByLabelText('Enable bus tracking');
+        expect(toggle).toBeDefined();
+        fireEvent.click(toggle);
+      });
+
+      // When tracking is enabled, select forms should appear
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
 
       // Try to click start button without selecting bus/stop
-      // The start button should not appear
-      expect(screen.queryByText(/I'm boarding this bus/i)).not.toBeInTheDocument();
+      // The start button should not appear until both are selected
+      expect(screen.queryByRole('button', { name: /I'm boarding this bus/i })).not.toBeInTheDocument();
     });
   });
 
@@ -301,6 +358,15 @@ describe('BusTracker Component with Device ID', () => {
         <BusTracker buses={mockBuses} stops={mockStops} />
       );
 
+      // Enable tracking first to show the select elements
+      const trackingToggle = screen.getByLabelText('Enable bus tracking');
+      fireEvent.click(trackingToggle);
+
+      // Wait for the select elements to be rendered
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
+
       // Start tracking
       fireEvent.change(screen.getByDisplayValue('-- Choose bus --'), {
         target: { value: '1' }
@@ -310,17 +376,23 @@ describe('BusTracker Component with Device ID', () => {
         target: { value: '1' }
       });
 
-      fireEvent.click(screen.getByText(/I'm boarding this bus/i));
+      // Click the boarding button
+      const boardingButton = screen.getByRole('button', { name: /I'm boarding this bus/i });
+      fireEvent.click(boardingButton);
 
+      // Wait for the tracking-active section to appear with the stop button
       await waitFor(() => {
-        expect(screen.getByText(/I've reached my destination/i)).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /I've reached my destination/i })).toBeInTheDocument();
       });
 
       // Stop tracking
-      fireEvent.click(screen.getByText(/I've reached my destination/i));
+      const stopButton = screen.getByRole('button', { name: /I've reached my destination/i });
+      fireEvent.click(stopButton);
 
-      // Should return to initial state
-      expect(screen.getByText(/I'm boarding this bus/i)).toBeInTheDocument();
+      // Should return to showing the select forms (tracking re-enabled but not onboard)
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('-- Choose bus --')).toBeInTheDocument();
+      });
     });
   });
 

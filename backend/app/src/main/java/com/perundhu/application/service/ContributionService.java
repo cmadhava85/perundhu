@@ -153,6 +153,7 @@ public class ContributionService {
 
         // Get user's contributions
         List<Map<String, Object>> contributions = getUserContributions(userId);
+        logger.debug("Found {} total contributions for user: {}", contributions.size(), userId);
 
         Map<String, Object> analytics = new HashMap<>();
 
@@ -196,6 +197,9 @@ public class ContributionService {
         // Calculate contribution streak (days with contributions)
         analytics.put("contributionStreak", calculateContributionStreak(contributions));
 
+        logger.info("Analytics computed for user {}: {} total, {} approved, {}% success rate", 
+            userId, contributions.size(), approvedCount, 
+            (long)((double)approvedCount / Math.max(contributions.size(), 1) * 100));
         return analytics;
     }
 
@@ -218,6 +222,7 @@ public class ContributionService {
 
         // Get all route contributions
         List<RouteContribution> routeContributions = routeContributionOutputPort.findAll();
+        logger.debug("Found {} route contributions", routeContributions.size());
         for (RouteContribution contribution : routeContributions) {
             Map<String, Object> contributionMap = new HashMap<>();
             contributionMap.put("id", contribution.getId());
@@ -230,6 +235,7 @@ public class ContributionService {
 
         // Get all image contributions
         List<ImageContribution> imageContributions = imageContributionOutputPort.findAll();
+        logger.debug("Found {} image contributions", imageContributions.size());
         for (ImageContribution contribution : imageContributions) {
             Map<String, Object> contributionMap = new HashMap<>();
             contributionMap.put("id", contribution.getId());
@@ -240,6 +246,7 @@ public class ContributionService {
             allContributions.add(contributionMap);
         }
 
+        logger.info("Total contributions retrieved: {}", allContributions.size());
         return allContributions;
     }
 

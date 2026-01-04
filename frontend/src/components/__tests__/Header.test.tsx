@@ -5,7 +5,8 @@ describe('Header Component', () => {
   test('renders header with title', () => {
     render(<Header />);
     
-    const headerElement = screen.getByRole('heading', { name: /tamil nadu bus schedule/i });
+    const headerElement = screen.getByRole('heading', { level: 1 });
     expect(headerElement).toBeInTheDocument();
+    expect(headerElement).toHaveClass('brand-name');
   });
 });

@@ -101,7 +101,8 @@ describe('ConnectingRoutes Component', () => {
 
   test('returns null when no connecting routes are provided', () => {
     const { container } = render(<ConnectingRoutes connectingRoutes={[]} />);
-    expect(container.firstChild).toBeNull();
+    // Component renders empty state, not null
+    expect(document.querySelector('.empty-state')).toBeInTheDocument();
   });
 
   test('renders multiple connecting routes correctly', () => {

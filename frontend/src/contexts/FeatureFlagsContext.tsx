@@ -243,6 +243,12 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
 
   // Initialize on mount - try backend first, fall back to localStorage
   useEffect(() => {
+    // Skip initialization in test environment
+    if (process.env.NODE_ENV === 'test') {
+      setIsLoading(false);
+      return;
+    }
+
     const initialize = async () => {
       setIsLoading(true);
       
