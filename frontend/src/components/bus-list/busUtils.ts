@@ -1,14 +1,10 @@
 /**
  * Utility functions for bus list components
  */
+import { formatTimeWithoutSeconds } from '../../utils/timeUtils';
 
 export const formatTime = (time: string) => {
-  try {
-    const date = new Date(`2000-01-01T${time}`);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  } catch {
-    return time;
-  }
+  return formatTimeWithoutSeconds(time);
 };
 
 export const calculateDuration = (departure: string, arrival: string) => {

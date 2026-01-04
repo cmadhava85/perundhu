@@ -98,7 +98,8 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   // Format time display
   const formatTime = (time: string) => {
     if (!time || time === 'Unknown') return '--:--';
-    return time;
+    const parts = time.split(':');
+    return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
   };
 
   // Get bus status
@@ -469,6 +470,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
                     bus={bus}
                     fromLocation={fromLocation}
                     toLocation={toLocation}
+                    stops={stops}
                   />
                 </div>
               )}

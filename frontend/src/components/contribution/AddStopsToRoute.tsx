@@ -84,6 +84,15 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const [isWizardMode, setIsWizardMode] = useState(false);
   const [wizardEditingIndex, setWizardEditingIndex] = useState<number | null>(null);
 
+  // Helper function to get display name based on current language
+  // (Simple version for use in useEffect - memoized version defined later)
+  const getDisplayName = (location: Location): string => {
+    if (i18n.language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  };
+
   // If preSelectedBus is provided, use it directly
   useEffect(() => {
     console.log('AddStopsToRoute useEffect - preSelectedBus changed:', preSelectedBus);
@@ -102,6 +111,20 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       loadExistingStops(preSelectedBus.id);
     }
   }, []);
+
+  // Auto-populate from/to locations when provided
+  useEffect(() => {
+    if (preSelectedFromLocation && !selectedFrom) {
+      console.log('Auto-populating fromLocation:', preSelectedFromLocation);
+      setSelectedFrom(preSelectedFromLocation);
+      setFromQuery(getDisplayName(preSelectedFromLocation));
+    }
+    if (preSelectedToLocation && !selectedTo) {
+      console.log('Auto-populating toLocation:', preSelectedToLocation);
+      setSelectedTo(preSelectedToLocation);
+      setToQuery(getDisplayName(preSelectedToLocation));
+    }
+  }, [preSelectedFromLocation, preSelectedToLocation]);
 
   // Load locations on mount
   useEffect(() => {
@@ -176,13 +199,17 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     query: string, 
     type: 'from' | 'to' | 'stop'
   ) => {
-    if (query.trim().length < 3) {
+    console.log(`🔍 fetchDynamicSuggestions called for "${query}" (type: ${type}, length: ${query.length})`);
+    
+    if (query.trim().length < 2) {
+      console.log(`⏭️ Query too short (${query.trim().length} chars), clearing suggestions`);
       if (type === 'from') setDynamicFromSuggestions([]);
       else if (type === 'to') setDynamicToSuggestions([]);
       else setDynamicStopSuggestions([]);
       return;
     }
     
+    console.log(`📡 Starting API call for "${query}"`);
     if (type === 'from') setIsLoadingFrom(true);
     else if (type === 'to') setIsLoadingTo(true);
     else setIsLoadingStopSuggestions(true);
@@ -190,6 +217,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     locationAutocompleteService.getDebouncedSuggestions(
       query,
       (suggestions) => {
+        console.log(`✅ Got ${suggestions.length} suggestions for "${query}" (type: ${type})`);
         if (type === 'from') {
           setDynamicFromSuggestions(suggestions);
           setIsLoadingFrom(false);
@@ -378,6 +406,10 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       return false;
     }
 
+    // Get the route's departure and arrival times
+    const routeDepartureTime = selectedBus?.departureTime;
+    const routeArrivalTime = selectedBus?.arrivalTime;
+
     for (const stop of newStops) {
       if (!stop.locationName.trim()) {
         onError?.(t('addStops.missingLocation', 'Please enter location for all stops'));
@@ -386,6 +418,58 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
       if (!stop.arrivalTime && !stop.departureTime) {
         onError?.(t('addStops.missingTime', 'Please enter at least arrival or departure time for all stops'));
         return false;
+      }
+
+      // Validate that stop times are between route departure and arrival times
+      if (routeDepartureTime && routeArrivalTime) {
+        // Convert times to minutes for comparison
+        const parseTime = (timeStr: string): number => {
+          const [hours, minutes] = timeStr.split(':').map(Number);
+          return hours * 60 + minutes;
+        };
+
+        const routeDepMinutes = parseTime(routeDepartureTime);
+        const routeArrMinutes = parseTime(routeArrivalTime);
+        
+        // Check arrival time
+        if (stop.arrivalTime) {
+          const stopArrMinutes = parseTime(stop.arrivalTime);
+          if (stopArrMinutes < routeDepMinutes || stopArrMinutes > routeArrMinutes) {
+            onError?.(
+              t('addStops.arrivalTimeOutOfRange', 
+                'Stop arrival time must be between route departure ({{depTime}}) and arrival ({{arrTime}})',
+                { depTime: routeDepartureTime, arrTime: routeArrivalTime }
+              )
+            );
+            return false;
+          }
+        }
+
+        // Check departure time
+        if (stop.departureTime) {
+          const stopDepMinutes = parseTime(stop.departureTime);
+          if (stopDepMinutes < routeDepMinutes || stopDepMinutes > routeArrMinutes) {
+            onError?.(
+              t('addStops.departureTimeOutOfRange', 
+                'Stop departure time must be between route departure ({{depTime}}) and arrival ({{arrTime}})',
+                { depTime: routeDepartureTime, arrTime: routeArrivalTime }
+              )
+            );
+            return false;
+          }
+        }
+
+        // Check that arrival is before or at the same time as departure for the same stop
+        if (stop.arrivalTime && stop.departureTime) {
+          const stopArrMinutes = parseTime(stop.arrivalTime);
+          const stopDepMinutes = parseTime(stop.departureTime);
+          if (stopArrMinutes > stopDepMinutes) {
+            onError?.(
+              t('addStops.invalidStopTiming', 'Stop arrival time must be before or equal to departure time')
+            );
+            return false;
+          }
+        }
       }
     }
 
@@ -738,7 +822,13 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
 
           {existingStops.length > 0 ? (
             <div className="existing-stops-list">
-              {existingStops.map((stop, index) => (
+              {existingStops.map((stop, index) => {
+                const formatTimeWithoutSecs = (time?: string) => {
+                  if (!time) return '';
+                  const parts = time.split(':');
+                  return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
+                };
+                return (
                 <div key={stop.id} className={`existing-stop-item ${index === 0 ? 'first' : ''} ${index === existingStops.length - 1 ? 'last' : ''}`}>
                   <div className="stop-marker">
                     {getStopMarker(index, existingStops.length)}
@@ -746,13 +836,14 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
                   <div className="stop-details">
                     <span className="stop-name">{i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name}</span>
                     <span className="stop-time">
-                      {stop.arrivalTime && `Arr: ${stop.arrivalTime}`}
+                      {stop.arrivalTime && `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}`}
                       {stop.arrivalTime && stop.departureTime && ' | '}
-                      {stop.departureTime && `Dep: ${stop.departureTime}`}
+                      {stop.departureTime && `Dep: ${formatTimeWithoutSecs(stop.departureTime)}`}
                     </span>
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
           ) : (
             <div className="no-stops-message">
@@ -936,11 +1027,11 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
             ))}
           </div>
 
-          {/* Add Stop Button */}
-          <button className="add-stop-btn" onClick={handleAddStopViaWizard}>
+          {/* Add Stop Button - Hidden, using wizard-based addition only */}
+          {/* <button className="add-stop-btn" onClick={handleAddStopViaWizard}>
             <span className="plus-icon">+</span>
             {t('addStops.addStop', 'Add Stop')}
-          </button>
+          </button> */}
 
           {/* Action Buttons */}
           <div className="action-buttons">

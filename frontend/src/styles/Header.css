@@ -65,6 +65,7 @@
   margin: 0 auto;
   gap: var(--space-md);
   flex-wrap: nowrap;
+  position: relative;
 }
 
 /* Left Section: Back Button + Logo + Title */
@@ -524,6 +525,10 @@
     justify-content: flex-end;
     gap: 8px;
     flex-shrink: 0;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
   .whats-new-btn {

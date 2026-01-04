@@ -169,7 +169,7 @@ const BusTimingEditModal: React.FC<BusTimingEditModalProps> = ({ bus, onClose, o
               )}
               {bus.departureTime && (
                 <span className="current-value">
-                  {t('admin.timing.current', 'Current')}: {bus.departureTime}
+                  {t('admin.timing.current', 'Current')}: {bus.departureTime.split(':').slice(0, 2).join(':')}
                 </span>
               )}
             </div>
@@ -196,7 +196,7 @@ const BusTimingEditModal: React.FC<BusTimingEditModalProps> = ({ bus, onClose, o
               )}
               {bus.arrivalTime && !validationErrors.arrivalTime && (
                 <span className="current-value">
-                  {t('admin.timing.current', 'Current')}: {bus.arrivalTime}
+                  {t('admin.timing.current', 'Current')}: {bus.arrivalTime.split(':').slice(0, 2).join(':')}
                 </span>
               )}
             </div>

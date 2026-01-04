@@ -469,7 +469,7 @@ ${result.sqlExample}`;
               {route.departureTime ? (
                 <span className="timing-item">
                   <span className="timing-label">Dep:</span>
-                  <span className="timing-value">{route.departureTime}</span>
+                  <span className="timing-value">{route.departureTime.split(':').slice(0, 2).join(':')}</span>
                 </span>
               ) : (
                 <span className="timing-item timing-missing">
@@ -480,7 +480,7 @@ ${result.sqlExample}`;
               {route.arrivalTime && (
                 <span className="timing-item">
                   <span className="timing-label">Arr:</span>
-                  <span className="timing-value">{route.arrivalTime}</span>
+                  <span className="timing-value">{route.arrivalTime.split(':').slice(0, 2).join(':')}</span>
                 </span>
               )}
             </div>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { StopEntry } from './AddStopsToRoute';
+import { locationAutocompleteService, type LocationSuggestion } from '../../services/locationAutocompleteService';
 import './StopEntryWizard.css';
 
 interface StopEntryWizardProps {
@@ -22,7 +23,7 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
   onCancel,
   onAddAnother
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentStep, setCurrentStep] = useState<WizardStep>('name');
   const [formData, setFormData] = useState<StopEntry>(
     initialStop || {
@@ -33,9 +34,69 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
     }
   );
 
+  // Autocomplete state
+  const [stopLocationQuery, setStopLocationQuery] = useState(initialStop?.locationName || '');
+  const [dynamicStopSuggestions, setDynamicStopSuggestions] = useState<LocationSuggestion[]>([]);
+  const [showStopSuggestions, setShowStopSuggestions] = useState(false);
+  const [isLoadingStopSuggestions, setIsLoadingStopSuggestions] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const stopInputRef = useRef<HTMLInputElement>(null);
+  const isSelectingRef = useRef(false);
+
   const steps: WizardStep[] = ['name', 'arrival', 'departure', 'notes', 'review'];
   const currentStepIndex = steps.indexOf(currentStep);
   const progressPercentage = ((currentStepIndex + 1) / steps.length) * 100;
+
+  // Fetch dynamic suggestions for stop location
+  const fetchDynamicSuggestions = useCallback((query: string) => {
+    console.log(`🔍 Wizard: fetchDynamicSuggestions called for "${query}" (length: ${query.length})`);
+    
+    if (query.trim().length < 2) {
+      console.log(`⏭️ Wizard: Query too short (${query.trim().length} chars), clearing suggestions`);
+      setDynamicStopSuggestions([]);
+      setShowStopSuggestions(false);
+      return;
+    }
+    
+    console.log(`📡 Wizard: Starting API call for "${query}"`);
+    setIsLoadingStopSuggestions(true);
+    
+    locationAutocompleteService.getDebouncedSuggestions(
+      query,
+      (suggestions) => {
+        console.log(`✅ Wizard: Got ${suggestions.length} suggestions for "${query}"`);
+        console.log(`📋 Wizard: Suggestions:`, suggestions);
+        setDynamicStopSuggestions(suggestions);
+        setIsLoadingStopSuggestions(false);
+        if (suggestions.length > 0) {
+          setShowStopSuggestions(true);
+        }
+      },
+      i18n.language
+    );
+  }, [i18n.language]);
+
+  // Helper function to get display name based on current language
+  const getLocationDisplayName = useCallback((suggestion: LocationSuggestion): string => {
+    if (i18n.language === 'ta' && suggestion.translatedName) {
+      return suggestion.translatedName;
+    }
+    return suggestion.name;
+  }, [i18n.language]);
+
+  // Handle stop location selection
+  const handleSelectStopLocation = (suggestion: LocationSuggestion) => {
+    const displayName = getLocationDisplayName(suggestion);
+    setFormData({ ...formData, locationName: displayName });
+    setStopLocationQuery(displayName);
+    setShowStopSuggestions(false);
+    setHighlightedIndex(-1);
+  };
+
+  // Debug: Log render state
+  React.useEffect(() => {
+    console.log(`🎯 Wizard render state - showSuggestions: ${showStopSuggestions}, count: ${dynamicStopSuggestions.length}`);
+  }, [showStopSuggestions, dynamicStopSuggestions]);
 
   const handleNext = () => {
     // Validation
@@ -90,14 +151,104 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
             <p className="step-description">
               {t('addStops.stopNameHint', 'What is the name of this bus stop?')}
             </p>
-            <input
-              type="text"
-              placeholder={t('addStops.stopNamePlaceholder', 'e.g., Central Metro Station')}
-              value={formData.locationName}
-              onChange={(e) => setFormData({ ...formData, locationName: e.target.value })}
-              autoFocus
-              className="wizard-input"
-            />
+            <div className="autocomplete-wrapper">
+              <input
+                ref={stopInputRef}
+                type="text"
+                placeholder={t('addStops.stopNamePlaceholder', 'e.g., Central Metro Station')}
+                value={stopLocationQuery}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setStopLocationQuery(value);
+                  setFormData({ ...formData, locationName: value });
+                  setShowStopSuggestions(true);
+                  setHighlightedIndex(-1);
+                  fetchDynamicSuggestions(value);
+                }}
+                onFocus={() => {
+                  setShowStopSuggestions(true);
+                  setHighlightedIndex(-1);
+                }}
+                onBlur={() => {
+                  setTimeout(() => {
+                    if (!isSelectingRef.current) {
+                      setShowStopSuggestions(false);
+                      setHighlightedIndex(-1);
+                    }
+                    isSelectingRef.current = false;
+                  }, 200);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    setShowStopSuggestions(false);
+                    setHighlightedIndex(-1);
+                  } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    setShowStopSuggestions(true);
+                    setHighlightedIndex(prev => 
+                      prev < dynamicStopSuggestions.length - 1 ? prev + 1 : prev
+                    );
+                  } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    setHighlightedIndex(prev => prev > 0 ? prev - 1 : -1);
+                  } else if (e.key === 'Enter') {
+                    if (highlightedIndex >= 0 && dynamicStopSuggestions[highlightedIndex]) {
+                      e.preventDefault();
+                      handleSelectStopLocation(dynamicStopSuggestions[highlightedIndex]);
+                    }
+                  } else if (e.key === 'Tab') {
+                    setShowStopSuggestions(false);
+                    setHighlightedIndex(-1);
+                  }
+                }}
+                autoFocus
+                className="wizard-input"
+                autoComplete="off"
+              />
+              {isLoadingStopSuggestions && <span className="loading-indicator">⏳</span>}
+              {showStopSuggestions && dynamicStopSuggestions.length > 0 ? (
+                  <ul 
+                    className="suggestions-list" 
+                    role="listbox"
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      right: 0,
+                      marginTop: '4px',
+                    }}
+                  >
+                    {dynamicStopSuggestions.map((loc, locIndex) => {
+                      const isHighlighted = locIndex === highlightedIndex;
+                      return (
+                        <li
+                          key={loc.id}
+                          role="option"
+                          aria-selected={isHighlighted}
+                          onMouseDown={() => {
+                            isSelectingRef.current = true;
+                          }}
+                          onClick={() => {
+                            handleSelectStopLocation(loc);
+                          }}
+                          onMouseEnter={() => setHighlightedIndex(locIndex)}
+                          style={{
+                            background: isHighlighted ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
+                            fontWeight: isHighlighted ? 600 : 400,
+                            color: isHighlighted ? '#3B82F6' : 'inherit',
+                            cursor: 'pointer',
+                            padding: '12px 16px',
+                            listStyle: 'none'
+                          }}
+                        >
+                          <span className="loc-icon">📍</span>
+                          <span className="loc-name">{getLocationDisplayName(loc)}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+              ) : null}
+            </div>
           </div>
         )}
 
@@ -178,13 +329,13 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
               {formData.arrivalTime && (
                 <div className="review-item">
                   <label>🕐 Arrival Time</label>
-                  <div className="review-value">{formData.arrivalTime}</div>
+                  <div className="review-value">{formData.arrivalTime.split(':').slice(0, 2).join(':')}</div>
                 </div>
               )}
               {formData.departureTime && (
                 <div className="review-item">
                   <label>🚌 Departure Time</label>
-                  <div className="review-value">{formData.departureTime}</div>
+                  <div className="review-value">{formData.departureTime.split(':').slice(0, 2).join(':')}</div>
                 </div>
               )}
             </div>

@@ -15,12 +15,17 @@ export const formatDate = (date: string): string => {
 /**
  * Format time for display in charts and stats
  * @param time Time string to format
- * @returns Formatted time string
+ * @returns Formatted time string (HH:MM without seconds)
  */
 export const formatTime = (time: string): string => {
-  const t = new Date(`1970-01-01T${time}`);
-  return t.toLocaleTimeString(undefined, { 
-    hour: '2-digit', 
-    minute: '2-digit' 
-  });
+  if (!time) return '--:--';
+  try {
+    const parts = time.split(':');
+    if (parts.length >= 2) {
+      return `${parts[0]}:${parts[1]}`;
+    }
+    return time;
+  } catch {
+    return time;
+  }
 };

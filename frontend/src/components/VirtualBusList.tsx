@@ -52,7 +52,7 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
             <div className="time-display">
               <div className="departure-info">
                 <span className="time-label">Departs</span>
-                <span className="time-value">{bus.departureTime}</span>
+                <span className="time-value">{bus.departureTime.split(':').slice(0, 2).join(':')}</span>
                 <span className="location-name">{bus.fromLocation?.name}</span>
               </div>
 
@@ -67,7 +67,7 @@ export const VirtualBusList: React.FC<VirtualBusListProps> = ({
 
               <div className="arrival-info">
                 <span className="time-label">Arrives</span>
-                <span className="time-value">{bus.arrivalTime}</span>
+                <span className="time-value">{bus.arrivalTime.split(':').slice(0, 2).join(':')}</span>
                 <span className="location-name">{bus.toLocation?.name}</span>
               </div>
             </div>
