@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import type { Bus, Location as AppLocation } from '../types';
+import type { Bus, Location as AppLocation, Stop } from '../types';
 import '../styles/share-route.css';
 
 interface ShareRouteProps {
   bus: Bus;
   fromLocation: AppLocation;
   toLocation: AppLocation;
+  stops?: Stop[];
   onClose?: () => void;
 }
 
@@ -27,6 +28,7 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
   bus,
   fromLocation,
   toLocation,
+  stops,
   onClose
 }) => {
   const { t, i18n } = useTranslation();
@@ -34,12 +36,12 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
   const [showModal, setShowModal] = useState(false);
 
   // Get display name based on language
-  const getDisplayName = (location: AppLocation): string => {
+  const getDisplayName = useCallback((location: AppLocation): string => {
     if (i18n.language === 'ta' && location.translatedName) {
       return location.translatedName;
     }
     return location.name;
-  };
+  }, [i18n.language]);
 
   // Generate share text
   const generateShareText = useCallback((): string => {
@@ -65,12 +67,31 @@ const ShareRoute: React.FC<ShareRouteProps> = ({
       lines.push(`⏳ ${t('share.duration', 'Duration')}: ${bus.duration}`);
     }
 
+    // Add stops if available
+    if (stops && stops.length > 0) {
+      lines.push(``);
+      lines.push(`🛑 ${t('share.stops', 'Intermediate Stops')}:`);
+      stops.forEach((stop, index) => {
+        const formatTimeWithoutSecs = (time?: string) => {
+          if (!time) return '';
+          const parts = time.split(':');
+          return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
+        };
+        const stopName = i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name;
+        const arrivalTime = stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : '';
+        const departureTime = stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : '';
+        const times = [arrivalTime, departureTime].filter(t => t).join(' | ');
+        const timeInfo = times ? ` (${times})` : '';
+        lines.push(`  ${index + 1}. ${stopName}${timeInfo}`);
+      });
+    }
+
     lines.push(``);
     lines.push(`📱 ${t('share.via', 'Shared via')} Perundhu - Tamil Nadu Bus Tracker`);
-    lines.push(`🔗 ${window.location.origin}`);
+    lines.push(`🔗 https://perundhu.app`);
 
     return lines.join('\n');
-  }, [bus, fromLocation, toLocation, t, i18n.language]);
+  }, [bus, fromLocation, toLocation, stops, t, i18n.language, getDisplayName]);
 
   // Generate URL for sharing
   const generateShareUrl = useCallback((): string => {

@@ -456,7 +456,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
 
 // Helper function to format time
 const formatTime = (date: Date): string => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
 // Helper function to calculate duration between two dates

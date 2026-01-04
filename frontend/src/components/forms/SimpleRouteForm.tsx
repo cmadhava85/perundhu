@@ -656,14 +656,15 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
             {t('route.intermediateStops', 'Intermediate Stops')} ({intermediateStops.length} {t('route.stops', 'stops')})
           </h3>
           <div className="stops-actions">
-            <button 
+            {/* Add Stop button hidden - using "Add First Stop" button instead */}
+            {/* <button 
               type="button" 
               onClick={addStop}
               className="add-stop-btn"
             >
               <span className="btn-icon">➕</span>
               {t('route.addStop', 'Add Stop')}
-            </button>
+            </button> */}
             {intermediateStops.length > 0 && (
               <button 
                 type="button" 

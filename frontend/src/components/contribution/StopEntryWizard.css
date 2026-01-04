@@ -4,7 +4,8 @@
 .stop-entry-wizard {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
+  max-height: 90vh;
   background: white;
   border-radius: 16px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
@@ -27,8 +28,8 @@
 .wizard-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
+  gap: 12px;
+  padding: 12px 16px;
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   position: relative;
@@ -90,18 +91,19 @@
 
 /* Wizard Content */
 .wizard-content {
-  flex: 1;
-  padding: 40px 32px;
+  flex: 0 1 auto;
+  padding: 16px 20px;
   overflow-y: auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  position: relative;
 }
 
 .wizard-step {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
   width: 100%;
   max-width: 500px;
   text-align: center;
@@ -119,12 +121,12 @@
 }
 
 .step-icon {
-  font-size: 4rem;
+  font-size: 3rem;
   line-height: 1;
 }
 
 .wizard-step h2 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1e293b;
   margin: 0;
@@ -142,10 +144,10 @@
 .wizard-input,
 .wizard-textarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: 11px 14px;
   border: 2px solid #e2e8f0;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: inherit;
   transition: all 0.3s ease;
   background: #f8fafc;
@@ -162,7 +164,68 @@
 
 .wizard-textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 80px;
+}
+
+/* Autocomplete Wrapper for Wizard */
+.wizard-step .autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+}
+
+.wizard-step .autocomplete-wrapper .loading-indicator {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.wizard-step .autocomplete-wrapper .suggestions-list {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.wizard-step .autocomplete-wrapper .suggestions-list li {
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1e293b;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.wizard-step .autocomplete-wrapper .suggestions-list li:hover {
+  background: #f0f9ff;
+  color: #3b82f6;
+}
+
+.wizard-step .autocomplete-wrapper .suggestions-list li .loc-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.wizard-step .autocomplete-wrapper .suggestions-list li .loc-name {
+  flex: 1;
+  word-break: break-word;
 }
 
 .step-note {
@@ -175,8 +238,8 @@
 .review-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 20px;
+  gap: 8px;
+  padding: 14px;
   background: #f0f9ff;
   border: 2px solid #bae6fd;
   border-radius: 10px;
@@ -186,8 +249,8 @@
 .review-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 12px;
+  gap: 4px;
+  padding: 10px;
   background: white;
   border-radius: 8px;
   border-left: 4px solid #3b82f6;
@@ -216,8 +279,8 @@
 /* Wizard Footer */
 .wizard-footer {
   display: flex;
-  gap: 12px;
-  padding: 20px 24px;
+  gap: 10px;
+  padding: 14px 16px;
   background: #f8fafc;
   border-top: 1px solid #e2e8f0;
   justify-content: space-between;
@@ -234,10 +297,10 @@
 .btn-primary,
 .btn-secondary,
 .btn-success {
-  padding: 12px 24px;
+  padding: 10px 18px;
   border: none;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -298,33 +361,33 @@
   }
 
   .wizard-header {
-    padding: 16px 16px;
-    gap: 12px;
+    padding: 12px 12px;
+    gap: 10px;
   }
 
   .step-counter {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .step-counter .current {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .wizard-content {
-    padding: 24px 12px;
+    padding: 16px 12px;
   }
 
   .wizard-step {
     max-width: 100%;
-    gap: 16px;
+    gap: 12px;
   }
 
   .step-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .wizard-step h2 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .step-description {
@@ -333,12 +396,12 @@
 
   .wizard-input,
   .wizard-textarea {
-    padding: 12px 14px;
-    font-size: 0.95rem;
+    padding: 10px 12px;
+    font-size: 0.9rem;
   }
 
   .wizard-footer {
-    padding: 16px;
+    padding: 12px;
     gap: 8px;
     flex-direction: column;
   }
@@ -346,8 +409,8 @@
   .btn-primary,
   .btn-secondary,
   .btn-success {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    padding: 9px 14px;
+    font-size: 0.85rem;
   }
 
   .button-group {
@@ -363,15 +426,15 @@
 
 @media (max-width: 480px) {
   .wizard-header {
-    padding: 12px 12px;
+    padding: 10px 10px;
   }
 
   .step-counter {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .wizard-content {
-    padding: 16px 8px;
+    padding: 12px 8px;
   }
 
   .wizard-step {
@@ -379,11 +442,11 @@
   }
 
   .step-icon {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .wizard-step h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .step-description {
@@ -392,18 +455,18 @@
 
   .wizard-input,
   .wizard-textarea {
-    padding: 10px 12px;
-    font-size: 0.9rem;
+    padding: 9px 11px;
+    font-size: 0.85rem;
   }
 
   .wizard-footer {
-    padding: 12px;
+    padding: 10px;
   }
 
   .btn-primary,
   .btn-secondary,
   .btn-success {
-    padding: 10px 12px;
-    font-size: 0.85rem;
+    padding: 8px 10px;
+    font-size: 0.8rem;
   }
 }

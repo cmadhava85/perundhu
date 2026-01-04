@@ -135,7 +135,7 @@ const FallbackMapComponent: React.FC<FallbackMapComponentProps> = ({
                     <div className="stop-details">
                       <div className="stop-name">{stop.name}</div>
                       {stop.arrivalTime && (
-                        <div className="stop-time">🕐 {stop.arrivalTime}</div>
+                        <div className="stop-time">🕐 {stop.arrivalTime.split(':').slice(0, 2).join(':')}</div>
                       )}
                       {coords && (
                         <div className="stop-coordinates">

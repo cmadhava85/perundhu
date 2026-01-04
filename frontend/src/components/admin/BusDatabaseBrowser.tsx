@@ -339,12 +339,12 @@ const BusDatabaseBrowser: React.FC = () => {
                     <td className="location-cell">{bus.origin || '-'}</td>
                     <td className="location-cell">{bus.destination || '-'}</td>
                     <td className="time-cell">
-                      {bus.departureTime || (
+                      {bus.departureTime ? bus.departureTime.split(':').slice(0, 2).join(':') : (
                         <span className="missing-time">⚠️ Missing</span>
                       )}
                     </td>
                     <td className="time-cell">
-                      {bus.arrivalTime || (
+                      {bus.arrivalTime ? bus.arrivalTime.split(':').slice(0, 2).join(':') : (
                         <span className="missing-time">⚠️ Missing</span>
                       )}
                     </td>

@@ -337,12 +337,12 @@ const StopsModal: React.FC<StopsModalProps> = ({ busId, onClose, onUpdate }) => 
                         <div className="stop-timing">
                           {stop.arrivalTime && (
                             <span className="timing-badge arrival">
-                              <Clock size={12} /> {stop.arrivalTime}
+                              <Clock size={12} /> {stop.arrivalTime.split(':').slice(0, 2).join(':')}
                             </span>
                           )}
                           {stop.departureTime && (
                             <span className="timing-badge departure">
-                              <Clock size={12} /> {stop.departureTime}
+                              <Clock size={12} /> {stop.departureTime.split(':').slice(0, 2).join(':')}
                             </span>
                           )}
                           {!stop.arrivalTime && !stop.departureTime && (

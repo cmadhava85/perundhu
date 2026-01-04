@@ -195,7 +195,7 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
       {/* Journey Timeline Section */}
       <div className="bus-card-journey">
         <div className="journey-item">
-          <div className="journey-time">{bus.departureTime || '--:--'}</div>
+          <div className="journey-time">{bus.departureTime ? bus.departureTime.split(':').slice(0, 2).join(':') : '--:--'}</div>
           <div className="journey-location">{getLocationDisplayName(fromLocation)}</div>
         </div>
 
@@ -209,7 +209,7 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
         </div>
 
         <div className="journey-item">
-          <div className="journey-time">{bus.arrivalTime || '--:--'}</div>
+          <div className="journey-time">{bus.arrivalTime ? bus.arrivalTime.split(':').slice(0, 2).join(':') : '--:--'}</div>
           <div className="journey-location">{getLocationDisplayName(toLocation)}</div>
         </div>
       </div>
@@ -247,18 +247,24 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
                   return time.substring(0, 5); // Get first 5 chars (HH:MM)
                 };
                 
+                const isFirstStop = idx === 0;
+                const isLastStop = idx === stops.length - 1;
+                let stopColor = '#6B7280'; // default gray
+                if (isFirstStop) stopColor = '#10B981'; // green for departure
+                if (isLastStop) stopColor = '#EF4444'; // red for destination
+                
                 return (
                   <div key={stop.id || idx} className="stop-item">
-                    <div className="stop-number">{idx + 1}</div>
-                    <div className="stop-name">{stop.name}</div>
-                    {stop.arrivalTime && (
-                      <div className="stop-times">
-                        <span className="stop-time">↓ {formatTime(stop.arrivalTime)}</span>
-                        {stop.departureTime && (
-                          <span className="stop-time">↑ {formatTime(stop.departureTime)}</span>
-                        )}
+                    <div className="stop-number" style={{ background: stopColor }}>
+                      {idx + 1}
+                    </div>
+                    <div className="stop-content">
+                      <div className="stop-name-full">{stop.name}</div>
+                      <div className="stop-timing-info">
+                        {stop.arrivalTime && <span>Arr: {formatTime(stop.arrivalTime)}</span>}
+                        {stop.departureTime && <span>Dep: {formatTime(stop.departureTime)}</span>}
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
@@ -302,7 +308,49 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
           className="btn btn-share"
           onClick={(e) => {
             e.stopPropagation();
-            const text = `${bus.number || 'Bus'} ${bus.name || ''} - ${bus.arrivalTime || 'Check'}`;
+            
+            const formatTimeWithoutSecs = (time?: string) => {
+              if (!time) return '';
+              const parts = time.split(':');
+              return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
+            };
+            
+            const shareLines = [
+              `🚌 Bus Route Information`,
+              ``,
+              `🚍 Bus: ${bus.name || bus.number || 'Bus'}`,
+              `⏰ Departure: ${bus.departureTime || 'Check'}`,
+              `⏱️ Arrival: ${bus.arrivalTime || 'Check'}`,
+            ];
+            
+            if (bus.fare) {
+              shareLines.push(`💰 Fare: ₹${bus.fare}`);
+            }
+            
+            if (bus.duration) {
+              shareLines.push(`⏳ Duration: ${bus.duration}`);
+            }
+
+            // Add stops if available
+            if (stops && stops.length > 0) {
+              shareLines.push(``);
+              shareLines.push(`🛑 Intermediate Stops:`);
+              stops.forEach((stop, idx) => {
+                const stopName = i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name;
+                const arrivalTime = stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : '';
+                const departureTime = stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : '';
+                const times = [arrivalTime, departureTime].filter(t => t).join(' | ');
+                const timeInfo = times ? ` (${times})` : '';
+                shareLines.push(`  ${idx + 1}. ${stopName}${timeInfo}`);
+              });
+            }
+            
+            shareLines.push(``);
+            shareLines.push(`📱 Shared via Perundhu - Tamil Nadu Bus Tracker`);
+            shareLines.push(`🔗 https://perundhu.app`);
+            
+            const text = shareLines.join('\n');
+            
             if (navigator.share) {
               navigator.share({ title: 'Share Bus', text });
             } else {

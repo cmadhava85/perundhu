@@ -30,20 +30,20 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       badge: null,
       disabled: !hasResults
     },
-    {
-      id: 'map',
-      icon: <MapIcon size={22} />,
-      label: t('nav.map', 'Map'),
-      badge: null,
-      disabled: !hasResults
-    },
-    {
-      id: 'tracking',
-      icon: <LocationIcon size={22} />,
-      label: t('nav.tracking', 'Track'),
-      badge: null,
-      disabled: !hasResults
-    },
+    // {
+    //   id: 'map',
+    //   icon: <MapIcon size={22} />,
+    //   label: t('nav.map', 'Map'),
+    //   badge: null,
+    //   disabled: !hasResults
+    // },
+    // {
+    //   id: 'tracking',
+    //   icon: <LocationIcon size={22} />,
+    //   label: t('nav.tracking', 'Track'),
+    //   badge: null,
+    //   disabled: !hasResults
+    // },
     {
       id: 'contribute',
       icon: <PlusIcon size={22} />,

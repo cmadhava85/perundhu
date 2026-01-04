@@ -3,6 +3,29 @@
  */
 
 /**
+ * Format a time string to HH:MM format without seconds
+ * Removes seconds from time strings (HH:MM:SS -> HH:MM)
+ * 
+ * @param timeString The time string to format
+ * @returns Formatted time string in HH:MM format
+ */
+export const formatTimeWithoutSeconds = (timeString?: string): string => {
+  if (!timeString || timeString === 'Unknown') return '--:--';
+  
+  try {
+    // Remove seconds if present
+    const parts = timeString.split(':');
+    if (parts.length >= 2) {
+      return `${parts[0]}:${parts[1]}`;
+    }
+    return timeString;
+  } catch (error) {
+    console.error('Error formatting time:', error);
+    return '--:--';
+  }
+};
+
+/**
  * Format a time string to a standardized display format
  * Handles both 12-hour (e.g., "06:00 AM") and 24-hour (e.g., "06:00") formats
  * 

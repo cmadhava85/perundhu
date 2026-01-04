@@ -97,7 +97,8 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
 
   const formatTime = (timeString?: string) => {
     if (!timeString) return 'N/A';
-    return timeString;
+    const parts = timeString.split(':');
+    return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : timeString;
   };
 
   const formatCoordinates = (lat?: number, lng?: number) => {

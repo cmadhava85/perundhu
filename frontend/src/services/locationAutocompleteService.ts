@@ -40,8 +40,8 @@ export class LocationAutocompleteService {
     query: string, 
     language: string = 'en'
   ): Promise<LocationSuggestion[]> {
-    // Return empty for very short queries (less than 3 characters)
-    if (query.length < LocationAutocompleteService.MIN_QUERY_LENGTH) {
+    // Return empty for very short queries (less than 2 characters)
+    if (query.length < 2) {
       return [];
     }
 
@@ -475,6 +475,15 @@ export class LocationAutocompleteService {
       clearTimeout(this.debounceTimeout);
     }
 
+    // Check minimum query length immediately without waiting for debounce
+    if (query.trim().length < 2) {
+      logger.debug(`⏭️ Query too short (${query.length} chars) - skipping API call`);
+      callback([]); // Immediately return empty results
+      return;
+    }
+
+    logger.debug(`🔄 Debounced search queued for "${query}" (${query.length} chars)`);
+
     // Use faster debounce delays for better UX
     const delay = query.length <= 3 ? 
       LocationAutocompleteService.INSTANT_DEBOUNCE : 
@@ -482,7 +491,9 @@ export class LocationAutocompleteService {
 
     this.debounceTimeout = setTimeout(async () => {
       try {
+        logger.debug(`📡 Executing debounced search for "${query}" after ${delay}ms delay`);
         const suggestions = await this.getLocationSuggestions(query, language);
+        logger.debug(`✅ Debounced search returned ${suggestions.length} suggestions`);
         // Use requestIdleCallback to prevent blocking UI updates
         if (typeof requestIdleCallback !== 'undefined') {
           requestIdleCallback(() => callback(suggestions));
