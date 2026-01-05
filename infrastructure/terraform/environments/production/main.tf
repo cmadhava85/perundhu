@@ -16,7 +16,7 @@ terraform {
 
   # Backend configuration for storing state
   backend "gcs" {
-    bucket = "perundhu-terraform-state-production"
+    bucket = "perundhu-prod-001-tf-state-1767644488"
     prefix = "production/state"
   }
 }

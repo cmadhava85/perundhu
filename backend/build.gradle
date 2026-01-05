@@ -143,6 +143,9 @@ dependencies {
     // GCP Secret Manager for reading secrets in preprod/prod environments
     implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager:5.9.0'
     
+    // reCAPTCHA Enterprise for bot protection and fraud detection
+    implementation 'com.google.cloud:google-cloud-recaptchaenterprise:2.0.0'
+    
     // Spring Cloud Bootstrap (required for bootstrap.yml processing)
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0'
     

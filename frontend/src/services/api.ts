@@ -723,11 +723,16 @@ export const handleApiError = (error: unknown): never => {
  * Submit a user-contributed bus route
  * 
  * @param data Route contribution data
+ * @param recaptchaToken Optional reCAPTCHA Enterprise token for security
  * @returns Promise with the submission result
  */
-export const submitRouteContribution = async (data: RouteContribution) => {
+export const submitRouteContribution = async (data: RouteContribution, recaptchaToken?: string | null) => {
   try {
-    const response = await api.post(`/api/v1/contributions/routes`, data);
+    const headers: Record<string, string> = {};
+    if (recaptchaToken) {
+      headers['X-reCAPTCHA-Token'] = recaptchaToken;
+    }
+    const response = await api.post(`/api/v1/contributions/routes`, data, { headers });
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -778,9 +783,10 @@ export const submitStopsContribution = async (data: AddStopsSubmission) => {
  * 
  * @param data Metadata about the image
  * @param file The image file to upload
+ * @param recaptchaToken Optional reCAPTCHA Enterprise token for security
  * @returns Promise with the submission result
  */
-export const submitImageContribution = async (data: ImageContribution, file: File) => {
+export const submitImageContribution = async (data: ImageContribution, file: File, recaptchaToken?: string | null) => {
   try {
     const formData = new FormData();
     formData.append('image', file);
@@ -798,13 +804,18 @@ export const submitImageContribution = async (data: ImageContribution, file: Fil
     const estimatedTimeSeconds = Math.max(30, Math.min(300, fileSizeInMB * 2));
     const timeoutMs = estimatedTimeSeconds * 1000;
 
+    const headers: Record<string, string> = {
+      'Content-Type': 'multipart/form-data'
+    };
+    if (recaptchaToken) {
+      headers['X-reCAPTCHA-Token'] = recaptchaToken;
+    }
+
     const response = await api.post(
       `/api/v1/contributions/images`,
       formData,
       {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+        headers,
         timeout: timeoutMs // Dynamic timeout based on file size
       }
     );

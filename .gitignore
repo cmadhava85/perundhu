@@ -56,4 +56,4 @@ __pycache__/
 .env
 
 # Cloud SQL proxy
-cloud_sql_proxy
+cloud_sql_proxy.secrets-production-checklist.txt

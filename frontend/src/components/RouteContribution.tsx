@@ -12,6 +12,7 @@ import { RouteVerification } from './contribution/RouteVerification';
 import { AddStopsToRoute } from './contribution/AddStopsToRoute';
 import { ReportIssue } from './contribution/ReportIssue';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
+import { useRecaptcha, addRecaptchaTokenToHeaders } from '../hooks/useRecaptcha';
 import type { Bus } from '../types';
 import './RouteContribution.css';
 
@@ -19,6 +20,7 @@ export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
   const routerLocation = useLocation();
   const { flags } = useFeatureFlags();
+  const { executeRecaptcha, isConfigured } = useRecaptcha();
   
   // Get pre-selected bus from navigation state (from search results "Add Stops" button)
   const navigationState = routerLocation.state as { 
@@ -123,6 +125,9 @@ export const RouteContribution: React.FC = () => {
   const handleSecureSubmission = async (data: ContributionData, isImage: boolean) => {
     setSubmissionStatus('submitting');
     try {
+      // Generate reCAPTCHA token for SUBMIT_CONTRIBUTION action
+      const recaptchaToken = isConfigured() ? await executeRecaptcha('SUBMIT_CONTRIBUTION') : null;
+
       if (isImage && data.file) {
         const contributionData = {
           busName: data.busName || 'Unknown Bus',
@@ -131,7 +136,7 @@ export const RouteContribution: React.FC = () => {
           toLocationName: data.toLocationName || 'Unknown',
           notes: data.description || 'Route contribution image'
         };
-        await submitImageContribution(contributionData, data.file);
+        await submitImageContribution(contributionData, data.file, recaptchaToken);
       } else if (!isImage) {
         // For non-image contributions, we need to pass the full route data
         // The data should include all required RouteContribution fields
@@ -153,7 +158,7 @@ export const RouteContribution: React.FC = () => {
           departureTime: data.departureTime || '',
           arrivalTime: data.arrivalTime || '',
           stops: formattedStops
-        });
+        }, recaptchaToken);
       }
       setSubmissionStatus('success');
       setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
