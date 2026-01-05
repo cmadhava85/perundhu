@@ -2,41 +2,46 @@
 -- Purpose: Clean up data quality by removing duplicate location entries
 -- Date: 2026-01-04
 -- Safety: Production-safe migration with proper constraints handling
+-- Optimized: Using indexed temp table and batch operations for performance
 
 -- Disable foreign key checks temporarily to allow updates
 SET FOREIGN_KEY_CHECKS=0;
 
--- Step 1: Create mapping of duplicate location IDs to primary IDs
+-- Step 1: Create indexed temporary table for the mapping
 CREATE TEMPORARY TABLE location_id_mapping (
   old_id INT PRIMARY KEY,
-  new_id INT NOT NULL
+  new_id INT NOT NULL,
+  INDEX idx_new_id (new_id)
 );
 
--- Insert all duplicate IDs that should be merged (exclude the minimum ID for each location)
--- For each location name, all duplicate IDs map to the minimum ID for that name
+-- Step 2: Insert duplicate mappings using a more efficient approach
+-- First, get the min ID for each location name
 INSERT INTO location_id_mapping (old_id, new_id)
 SELECT 
     l.id as old_id,
-    MIN(l2.id) as new_id
+    (
+        SELECT MIN(l2.id) 
+        FROM locations l2 
+        WHERE LOWER(TRIM(l2.name)) = LOWER(TRIM(l.name))
+    ) as new_id
 FROM locations l
-INNER JOIN locations l2 ON LOWER(TRIM(l.name)) = LOWER(TRIM(l2.name))
-WHERE l.id != (SELECT MIN(l3.id) FROM locations l3 WHERE LOWER(TRIM(l3.name)) = LOWER(TRIM(l.name)))
-GROUP BY l.id, LOWER(TRIM(l.name));
+WHERE l.id > (
+    SELECT MIN(l2.id) 
+    FROM locations l2 
+    WHERE LOWER(TRIM(l2.name)) = LOWER(TRIM(l.name))
+);
 
--- Step 2: Update all foreign key references from duplicates to primary IDs
+-- Step 3: Update all foreign key references from duplicates to primary IDs
+-- Using direct join for better performance
 UPDATE bus_stops bs
-SET bs.location_id = (
-    SELECT new_id FROM location_id_mapping 
-    WHERE old_id = bs.location_id 
-    LIMIT 1
-)
-WHERE bs.location_id IN (SELECT old_id FROM location_id_mapping);
+INNER JOIN location_id_mapping lm ON bs.location_id = lm.old_id
+SET bs.location_id = lm.new_id;
 
--- Step 3: Delete the duplicate location records
+-- Step 4: Delete the duplicate location records
 DELETE FROM locations
 WHERE id IN (SELECT old_id FROM location_id_mapping);
 
--- Step 4: Clean up temporary table
+-- Step 5: Clean up temporary table
 DROP TEMPORARY TABLE IF EXISTS location_id_mapping;
 
 -- Re-enable foreign key checks

@@ -372,7 +372,7 @@ jobs:
           --min-instances 0 \
           --max-instances 10 \
           --concurrency 80 \
-          --timeout 300s \
+          --timeout 600s \
           --cpu-throttling \
           --labels="env=preprod"
         
