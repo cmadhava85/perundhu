@@ -372,8 +372,9 @@ jobs:
           --min-instances 0 \
           --max-instances 10 \
           --concurrency 80 \
-          --timeout 600s \
+          --timeout 1200s \
           --cpu-throttling \
+          --no-gen2 \
           --labels="env=preprod"
         
         echo "✅ Backend deployed"
