@@ -106,8 +106,25 @@ public class Review {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
-    
-    // Builder pattern
+        /**
+     * Create an edited version of this review.
+     * Preserves original createdAt and only updates the fields being edited.
+     */
+    public Review edit(Integer newRating, String newComment, List<String> newTags, LocalDate newTravelDate) {
+        return builder()
+                .id(this.id)
+                .busId(this.busId)
+                .userId(this.userId)
+                .rating(newRating != null ? newRating : this.rating)
+                .comment(newComment != null ? newComment : this.comment)
+                .tags(newTags != null ? newTags : this.tags)
+                .travelDate(newTravelDate != null ? newTravelDate : this.travelDate)
+                .status(this.status)
+                .createdAt(this.createdAt)
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+        // Builder pattern
     public static Builder builder() {
         return new Builder();
     }

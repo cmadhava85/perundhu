@@ -207,6 +207,45 @@ public class ReviewController {
         }
     }
     
+    /**
+     * Edit user's own review
+     */
+    @PutMapping("/{reviewId}")
+    public ResponseEntity<?> editReview(
+            @PathVariable Long reviewId,
+            @Valid @RequestBody EditReviewRequest request,
+            @RequestHeader(value = "X-User-Id", required = false) String userId) {
+        
+        if (!reviewsEnabled) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(new ErrorResponse("Reviews feature is currently disabled"));
+        }
+        
+        if (userId == null || userId.isBlank()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse("Please log in to edit reviews"));
+        }
+        
+        try {
+            Review review = reviewService.editReview(
+                    reviewId,
+                    userId,
+                    request.rating(),
+                    request.comment(),
+                    request.tags(),
+                    request.travelDate()
+            );
+            
+            return ResponseEntity.ok(toResponse(review));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ErrorResponse(e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(e.getMessage()));
+        }
+    }
+    
     // ============ Admin Endpoints ============
     
     /**
@@ -259,6 +298,19 @@ public class ReviewController {
             @Min(value = 1, message = "Rating must be at least 1")
             @Max(value = 5, message = "Rating must be at most 5")
             int rating,
+            
+            @Size(max = 500, message = "Comment cannot exceed 500 characters")
+            String comment,
+            
+            List<String> tags,
+            
+            LocalDate travelDate
+    ) {}
+    
+    public record EditReviewRequest(
+            @Min(value = 1, message = "Rating must be at least 1")
+            @Max(value = 5, message = "Rating must be at most 5")
+            Integer rating,
             
             @Size(max = 500, message = "Comment cannot exceed 500 characters")
             String comment,

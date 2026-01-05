@@ -66,6 +66,14 @@ export const reviewService = {
     await api.delete(`/api/reviews/${reviewId}`);
   },
 
+  /**
+   * Edit user's own review
+   */
+  async editReview(reviewId: number, request: SubmitReviewRequest): Promise<Review> {
+    const response = await api.put<Review>(`/api/reviews/${reviewId}`, request);
+    return response.data;
+  },
+
   // ============ Admin Methods ============
 
   /**

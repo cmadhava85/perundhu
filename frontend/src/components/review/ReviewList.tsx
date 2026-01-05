@@ -1,14 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Star, MessageSquare, Calendar, User } from 'lucide-react';
+import { Star, MessageSquare, Calendar, User, Edit2, Trash2 } from 'lucide-react';
 import { REVIEW_TAG_LABELS, type Review, type ReviewTag } from '../../types/review';
 import reviewService from '../../services/reviewService';
 import { StarRatingDisplay } from './StarRatingDisplay';
+import { EditReviewForm } from './EditReviewForm';
+
+// Fallback auth context
+const defaultAuthState = { isAuthenticated: false, user: null, isLoading: false };
+const FallbackAuthContext = React.createContext(defaultAuthState);
+
+let RealAuthContext: React.Context<any> | null = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  RealAuthContext = require('../../hooks/useAuth').AuthContext;
+} catch {
+  // AuthContext not available
+}
+
+const AuthContextToUse = RealAuthContext || FallbackAuthContext;
+
+const useSafeAuth = () => {
+  const authContext = useContext(AuthContextToUse);
+  return authContext || defaultAuthState;
+};
 
 interface ReviewListProps {
   busId: number;
+  busName?: string;
   onWriteReview?: () => void;
   showWriteButton?: boolean;
+  onRefresh?: () => void;
 }
 
 /**
@@ -16,13 +38,18 @@ interface ReviewListProps {
  */
 export const ReviewList: React.FC<ReviewListProps> = ({
   busId,
+  busName = '',
   onWriteReview,
   showWriteButton = true,
+  onRefresh,
 }) => {
   const { t } = useTranslation();
+  const { user, isAuthenticated } = useSafeAuth();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [editingReviewId, setEditingReviewId] = useState<number | null>(null);
+  const [deletingReviewId, setDeletingReviewId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -53,6 +80,43 @@ export const ReviewList: React.FC<ReviewListProps> = ({
     } catch {
       return dateString;
     }
+  };
+
+  const handleDeleteReview = async (reviewId: number) => {
+    if (!window.confirm(t('review.confirmDelete', 'Are you sure you want to delete this review?'))) {
+      return;
+    }
+
+    setDeletingReviewId(reviewId);
+    try {
+      await reviewService.deleteReview(reviewId);
+      setReviews(prev => prev.filter(r => r.id !== reviewId));
+      onRefresh?.();
+    } catch (err) {
+      console.error('Failed to delete review:', err);
+      setError(t('review.deleteError', 'Failed to delete review'));
+    } finally {
+      setDeletingReviewId(null);
+    }
+  };
+
+  const handleEditSuccess = () => {
+    setEditingReviewId(null);
+    // Refresh reviews
+    const fetchReviews = async () => {
+      try {
+        const data = await reviewService.getReviewsForBus(busId);
+        setReviews(data);
+      } catch (err) {
+        console.error('Failed to refresh reviews:', err);
+      }
+    };
+    fetchReviews();
+    onRefresh?.();
+  };
+
+  const isOwnReview = (review: Review) => {
+    return isAuthenticated && user && review.userId === user.id;
   };
 
   if (isLoading) {
@@ -118,13 +182,34 @@ export const ReviewList: React.FC<ReviewListProps> = ({
               className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700 
                          hover:shadow-md transition-shadow"
             >
-              {/* Rating and Date */}
+              {/* Rating, Date, and Actions */}
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <StarRatingDisplay rating={review.rating} size="md" showValue={true} />
                 <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded-full">
                   <Calendar className="w-3 h-3" />
                   {formatDate(review.createdAt)}
                 </span>
+                
+                {/* Edit/Delete Buttons */}
+                {isOwnReview(review) && (
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => setEditingReviewId(review.id)}
+                      className="p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors touch-manipulation"
+                      title={t('review.edit', 'Edit')}
+                    >
+                      <Edit2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteReview(review.id)}
+                      disabled={deletingReviewId === review.id}
+                      className="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900 transition-colors touch-manipulation disabled:opacity-50"
+                      title={t('review.delete', 'Delete')}
+                    >
+                      <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400" />
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Comment */}
@@ -163,6 +248,16 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                   </span>
                 )}
               </div>
+
+              {/* Edit Modal */}
+              {editingReviewId === review.id && (
+                <EditReviewForm
+                  review={review}
+                  busName={busName}
+                  onSuccess={handleEditSuccess}
+                  onCancel={() => setEditingReviewId(null)}
+                />
+              )}
             </div>
           ))}
         </div>
