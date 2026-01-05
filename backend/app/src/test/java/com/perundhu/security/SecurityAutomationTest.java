@@ -3,10 +3,14 @@ package com.perundhu.security;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.perundhu.infrastructure.security.RecaptchaValidationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
@@ -27,6 +31,13 @@ import org.springframework.test.context.TestPropertySource;
 })
 @AutoConfigureWebMvc
 public class SecurityAutomationTest {
+
+  // Mock dependencies required by admin auth controller
+  @MockBean
+  private RecaptchaValidationService recaptchaValidationService;
+
+  @MockBean
+  private AuthenticationManager authenticationManager;
 
   private MockSecurityStats testStats;
 
