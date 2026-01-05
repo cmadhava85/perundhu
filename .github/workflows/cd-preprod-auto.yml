@@ -374,7 +374,6 @@ jobs:
           --concurrency 80 \
           --timeout 1200s \
           --cpu-throttling \
-          --no-gen2 \
           --labels="env=preprod"
         
         echo "✅ Backend deployed"
