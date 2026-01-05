@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { useRecaptcha, addRecaptchaTokenToHeaders } from '../hooks/useRecaptcha';
 
 interface AdminAuthContextType {
   isAdminAuthenticated: boolean;
@@ -32,6 +33,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { executeRecaptcha, isConfigured } = useRecaptcha();
 
   // Check for existing session on mount
   useEffect(() => {
@@ -60,6 +62,9 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
     setError(null);
 
     try {
+      // Generate reCAPTCHA token for LOGIN action
+      const recaptchaToken = isConfigured() ? await executeRecaptcha('LOGIN') : null;
+
       // Create Basic Auth header
       const credentials = btoa(`${username}:${password}`);
       const authHeader = `Basic ${credentials}`;
@@ -68,14 +73,18 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
+      // Build headers with reCAPTCHA token if available
+      let headers: Record<string, string> = {
+        'Authorization': authHeader,
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0',
+      };
+      headers = addRecaptchaTokenToHeaders(headers, recaptchaToken);
+
       // Validate credentials against backend
       const response = await fetch(`${getApiBaseUrl()}/api/admin/contributions/routes/pending`, {
         method: 'GET',
-        headers: {
-          'Authorization': authHeader,
-          'Content-Type': 'application/json',
-          'User-Agent': 'Mozilla/5.0',
-        },
+        headers,
         signal: controller.signal,
         credentials: 'include', // Include cookies for CORS
       });
@@ -114,7 +123,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
       setIsLoading(false);
       return false;
     }
-  }, []);
+  }, [executeRecaptcha, isConfigured]);
 
   const logout = useCallback(() => {
     sessionStorage.removeItem(ADMIN_AUTH_KEY);

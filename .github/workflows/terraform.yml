@@ -101,12 +101,12 @@ jobs:
     
     - name: Create Terraform backend bucket if not exists
       run: |
-        BUCKET_NAME="perundhu-terraform-state-preprod"
-        SERVICE_ACCOUNT="perundhu@astute-strategy-406601.iam.gserviceaccount.com"
+        BUCKET_NAME="perundhu-prod-001-tf-state-1767644488"
+        SERVICE_ACCOUNT="cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com"
         echo "Checking if bucket $BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
           echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
-          gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
+          gcloud storage buckets create gs://$BUCKET_NAME --project=perundhu-prod-001 --location=asia-south1 --uniform-bucket-level-access
           echo "Enabling versioning on bucket..."
           gcloud storage buckets update gs://$BUCKET_NAME --versioning
           echo "Granting service account access to bucket..."
@@ -142,7 +142,7 @@ jobs:
       run: |
         terraform plan -no-color -out=tfplan \
           -lock-timeout=5m \
-          -var="project_id=astute-strategy-406601" \
+          -var="project_id=perundhu-prod-001" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
@@ -192,7 +192,7 @@ jobs:
     
     environment:
       name: preprod-infrastructure
-      url: https://console.cloud.google.com/run?project=astute-strategy-406601
+      url: https://console.cloud.google.com/run?project=perundhu-prod-001
     
     permissions:
       contents: read
@@ -341,12 +341,12 @@ jobs:
     
     - name: Create Terraform backend bucket if not exists
       run: |
-        BUCKET_NAME="perundhu-terraform-state-production"
-        SERVICE_ACCOUNT="perundhu@astute-strategy-406601.iam.gserviceaccount.com"
+        BUCKET_NAME="perundhu-prod-001-tf-state-1767644488"
+        SERVICE_ACCOUNT="cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com"
         echo "Checking if bucket $BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
           echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
-          gcloud storage buckets create gs://$BUCKET_NAME --project=astute-strategy-406601 --location=asia-south1 --uniform-bucket-level-access
+          gcloud storage buckets create gs://$BUCKET_NAME --project=perundhu-prod-001 --location=asia-south1 --uniform-bucket-level-access
           echo "Enabling versioning on bucket..."
           gcloud storage buckets update gs://$BUCKET_NAME --versioning
           echo "Granting service account access to bucket..."
@@ -370,7 +370,7 @@ jobs:
       run: |
         terraform plan -no-color -out=tfplan \
           -lock-timeout=5m \
-          -var="project_id=astute-strategy-406601" \
+          -var="project_id=perundhu-prod-001" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
@@ -392,7 +392,7 @@ jobs:
     
     environment:
       name: production-infrastructure
-      url: https://console.cloud.google.com/run?project=astute-strategy-406601
+      url: https://console.cloud.google.com/run?project=perundhu-prod-001
     
     permissions:
       contents: read
