@@ -27,10 +27,10 @@ public class RecaptchaValidationService {
   @Value("${recaptcha.enabled:false}")
   private boolean recaptchaEnabled;
 
-  @Value("${recaptcha.project-id}")
+  @Value("${recaptcha.project-id:}")
   private String projectId;
 
-  @Value("${recaptcha.site-key}")
+  @Value("${recaptcha.site-key:}")
   private String siteKey;
 
   @Value("${recaptcha.min-score:0.5}")
@@ -48,9 +48,9 @@ public class RecaptchaValidationService {
    * @return true if token is valid and meets risk score threshold
    */
   public boolean validateToken(String token, String expectedAction) {
-    // If reCAPTCHA is disabled, skip validation
-    if (!recaptchaEnabled) {
-      logger.debug("reCAPTCHA validation disabled in configuration");
+    // If reCAPTCHA is disabled or not configured, skip validation
+    if (!recaptchaEnabled || projectId == null || projectId.isEmpty()) {
+      logger.debug("reCAPTCHA validation disabled in configuration or not configured");
       return true;
     }
 

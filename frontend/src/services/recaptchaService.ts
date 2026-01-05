@@ -132,9 +132,22 @@ export const executeRecaptcha = async (action: string = 'submit'): Promise<strin
 
     return new Promise((resolve) => {
       try {
-        window.grecaptcha.ready(() => {
+        const grecaptchaObj = window.grecaptcha;
+        if (!grecaptchaObj?.ready) {
+          logger.warn('grecaptcha.ready not available');
+          resolve(null);
+          return;
+        }
+
+        grecaptchaObj.ready(() => {
           try {
-            window.grecaptcha
+            if (!grecaptchaObj?.execute) {
+              logger.warn('grecaptcha.execute not available');
+              resolve(null);
+              return;
+            }
+
+            grecaptchaObj
               .execute(SITE_KEY, { action })
               .then((token: string) => {
                 resolve(token);
@@ -185,12 +198,16 @@ export const isRecaptchaAvailable = (): boolean => {
   return isRecaptchaEnabled();
 };
 
-// Type declaration for grecaptcha
+// Type declaration for grecaptcha - supports both standard and enterprise modes
 declare global {
   interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    grecaptcha?: {
+      ready?: (callback: () => void) => void;
+      execute?: (siteKey: string, options: { action: string }) => Promise<string>;
+      enterprise?: {
+        ready: (callback: () => void) => void;
+        execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      };
     };
   }
 }

@@ -6,17 +6,6 @@ interface RecaptchaConfig {
   isEnabled: boolean;
 }
 
-declare global {
-  interface Window {
-    grecaptcha?: {
-      enterprise?: {
-        ready: (callback: () => void) => void;
-        execute: (siteKey: string, options: { action: string }) => Promise<string>;
-      };
-    };
-  }
-}
-
 /**
  * Custom hook for reCAPTCHA Enterprise token generation
  * Handles all reCAPTCHA operations with proper error handling
@@ -38,17 +27,19 @@ export const useRecaptcha = () => {
 
     if (!readyPromiseRef.current) {
       readyPromiseRef.current = new Promise((resolve) => {
-        if (window.grecaptcha?.enterprise) {
-          window.grecaptcha.enterprise.ready(() => {
+        const grecaptchaObj = window.grecaptcha as any;
+        if (grecaptchaObj?.enterprise) {
+          grecaptchaObj.enterprise.ready(() => {
             setIsReady(true);
             resolve();
           });
         } else {
           // Fallback if grecaptcha not loaded
           const checkInterval = setInterval(() => {
-            if (window.grecaptcha?.enterprise) {
+            const grecaptchaCheck = window.grecaptcha as any;
+            if (grecaptchaCheck?.enterprise) {
               clearInterval(checkInterval);
-              window.grecaptcha.enterprise.ready(() => {
+              grecaptchaCheck.enterprise.ready(() => {
                 setIsReady(true);
                 resolve();
               });
@@ -87,7 +78,8 @@ export const useRecaptcha = () => {
       }
 
       // Check if grecaptcha is available
-      if (!window.grecaptcha?.enterprise) {
+      const grecaptchaObj = window.grecaptcha as any;
+      if (!grecaptchaObj?.enterprise) {
         const errorMsg = 'reCAPTCHA Enterprise script not loaded';
         console.error(errorMsg);
         setError(errorMsg);
@@ -96,7 +88,7 @@ export const useRecaptcha = () => {
 
       try {
         setError(null);
-        const token = await window.grecaptcha.enterprise.execute(siteKey, {
+        const token = await grecaptchaObj.enterprise.execute(siteKey, {
           action: action.toUpperCase(),
         });
         return token;

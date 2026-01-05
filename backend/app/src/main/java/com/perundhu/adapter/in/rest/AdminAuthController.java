@@ -24,10 +24,10 @@ import java.util.Map;
 @RequestMapping("/api/admin/auth")
 public class AdminAuthController {
 
-  @Autowired
+  @Autowired(required = false)
   private AuthenticationManager authenticationManager;
 
-  @Autowired
+  @Autowired(required = false)
   private RecaptchaValidationService recaptchaValidationService;
 
   /**
@@ -46,7 +46,7 @@ public class AdminAuthController {
     log.info("Admin login attempt for user: {}", loginRequest.getUsername());
 
     // Validate reCAPTCHA token
-    if (!recaptchaValidationService.validateToken(recaptchaToken, "LOGIN")) {
+    if (recaptchaValidationService != null && !recaptchaValidationService.validateToken(recaptchaToken, "LOGIN")) {
       log.warn("Admin login failed: reCAPTCHA validation failed for user: {}", loginRequest.getUsername());
       return ResponseEntity
           .status(HttpStatus.FORBIDDEN)
@@ -55,6 +55,13 @@ public class AdminAuthController {
 
     try {
       // Authenticate user
+      if (authenticationManager == null) {
+        log.warn("Authentication manager not available");
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(errorResponse("Authentication error", "Authentication service not available"));
+      }
+
       Authentication authentication = authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(
               loginRequest.getUsername(),
