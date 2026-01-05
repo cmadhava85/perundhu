@@ -352,13 +352,13 @@
   max-width: 800px;
   margin: 0 auto;
   box-shadow: 0 15px 50px rgba(16, 185, 129, 0.15);
-  overflow: visible !important;
+  overflow: hidden !important;
   animation: slideInUp 0.8s ease-out 0.2s both;
-  position: sticky;
-  top: 0;
-  padding: 1.5rem;
+  position: relative;
   z-index: 100;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
 }
 
 @media (max-width: 640px) {
@@ -389,10 +389,12 @@
 .card-header {
   padding: 1.5rem 1.5rem 0.75rem;
   text-align: center;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  /* Ensure header stays at top when parent is sticky */
-  position: relative;
-  z-index: 101;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.95) 100%);
+  /* Header stays sticky at top of card */
+  position: sticky;
+  top: 0;
+  z-index: 102;
+  flex-shrink: 0;
 }
 
 .header-content {
@@ -462,6 +464,11 @@
 /* Enhanced Method Selector */
 .enhanced-method-selector {
   padding: 0.75rem 1.5rem 1rem;
+  position: sticky;
+  top: 8.5rem;
+  z-index: 101;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.95) 100%);
+  flex-shrink: 0;
 }
 
 .method-cards {
@@ -711,6 +718,7 @@
   overflow: visible !important;
   position: relative;
   z-index: 100;
+  flex-grow: 1;
 }
 
 /* Enhanced Form Styling */
