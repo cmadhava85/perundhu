@@ -50,9 +50,9 @@ USER appuser
 # Expose port
 EXPOSE 8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD ./health-check.sh || exit 1
+# Health check using HTTP endpoint (faster than TCP probe)
+HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
+    CMD curl -f http://localhost:8080/actuator/health/liveness || exit 1
 
 # Environment variables
 # -Dio.grpc.netty.shaded.io.netty.transport.noNative=true disables native transport
