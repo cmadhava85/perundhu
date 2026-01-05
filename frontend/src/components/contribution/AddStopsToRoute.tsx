@@ -139,6 +139,58 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     loadLocations();
   }, []);
 
+  // Lock body scroll when component is mounted (modal is open)
+  useEffect(() => {
+    // Save current scroll position
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    
+    // Set global flag to indicate modal is open (for Header to check)
+    (globalThis as any).isModalOpen = true;
+    
+    // Disable scroll on body
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${scrollTop}px`;
+    
+    // Also lock html element scroll
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.position = 'fixed';
+    document.documentElement.style.width = '100%';
+    
+    // Prevent scroll events entirely
+    const preventScroll = (e: Event) => {
+      if (e.target !== document.querySelector('.wizard-overlay') && 
+          !document.querySelector('.wizard-overlay')?.contains(e.target as Node)) {
+        e.preventDefault();
+      }
+    };
+    
+    document.addEventListener('wheel', preventScroll, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    
+    // Return scroll position and enable scroll on unmount
+    return () => {
+      // Clear global flag when modal closes
+      (globalThis as any).isModalOpen = false;
+      
+      // Re-enable scroll
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.position = '';
+      document.documentElement.style.width = '';
+      
+      // Remove scroll prevention
+      document.removeEventListener('wheel', preventScroll);
+      document.removeEventListener('touchmove', preventScroll);
+      
+      window.scrollTo(0, scrollTop);
+    };
+  }, []);
+
   // Load existing stops for selected bus
   const loadExistingStops = async (busId: number) => {
     setIsLoadingStops(true);

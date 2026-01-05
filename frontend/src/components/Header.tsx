@@ -31,8 +31,28 @@ const Header: React.FC<HeaderProps> = ({
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Only compress on mobile (<768px)
-      if (window.innerWidth < 768) {
+      // Check if any modal/dialog is open - comprehensive check
+      // Priority 1: Check if wizard modal (Add Route Information) is open
+      const hasWizardModal = !!document.querySelector('.wizard-overlay');
+      
+      // Priority 2: Check global flag set by AddStopsToRoute
+      const isModalOpenFlag = (globalThis as any).isModalOpen === true;
+      
+      // Priority 3: Check for other modal elements in DOM
+      const hasOtherModal = 
+        document.querySelector('[role="dialog"]') || 
+        document.querySelector('.modal') ||
+        document.querySelector('.modal-overlay') ||
+        document.querySelector('[data-modal-open="true"]') ||
+        // Check if body has overflow-hidden (indicates modal is open)
+        document.body.style.overflow === 'hidden' ||
+        document.body.style.position === 'fixed';
+      
+      // If ANY modal is open, don't compress header
+      const hasOpenModal = hasWizardModal || isModalOpenFlag || hasOtherModal;
+      
+      // Only compress on mobile (<768px) and no modals are open
+      if (window.innerWidth < 768 && !hasOpenModal) {
         // Add 'scrolled' class immediately when scrolling down
         setIsScrolled(currentScrollY > 10);
         
@@ -63,9 +83,22 @@ const Header: React.FC<HeaderProps> = ({
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     
+    // Also listen for DOM mutations to detect modal opening/closing
+    const observer = new MutationObserver(() => {
+      handleScroll();
+    });
+    
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'data-modal-open', 'style']
+    });
+    
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', handleScroll);
+      observer.disconnect();
     };
   }, []);
   

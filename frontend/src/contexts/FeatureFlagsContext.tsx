@@ -94,7 +94,7 @@ const defaultFlags: FeatureFlags = {
   enableRealTimeUpdates: false,
   
   // Bus Reviews Feature
-  enableBusReviews: true,
+  enableBusReviews: false,
   busReviewsRequireLogin: true,
   busReviewsAutoApprove: true,
 };

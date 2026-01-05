@@ -133,6 +133,26 @@ public class ReviewService {
     }
     
     /**
+     * Edit an existing review (only by owner)
+     */
+    public Review editReview(Long reviewId, String userId, Integer rating, String comment,
+                             List<String> tags, LocalDate travelDate) {
+        Review review = reviewRepository.findById(ReviewId.of(reviewId))
+                .orElseThrow(() -> new IllegalArgumentException("Review not found: " + reviewId));
+        
+        // Only allow editing by the review owner
+        if (review.getUserId() == null || !review.getUserId().equals(userId)) {
+            throw new IllegalStateException("You can only edit your own reviews");
+        }
+        
+        Review edited = review.edit(rating, comment, tags, travelDate);
+        Review saved = reviewRepository.save(edited);
+        
+        log.info("Review {} edited by user {}", reviewId, userId);
+        return saved;
+    }
+    
+    /**
      * Delete a review
      */
     public void deleteReview(Long reviewId, String userId) {

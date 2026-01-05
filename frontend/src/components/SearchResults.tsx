@@ -299,7 +299,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
                 </p>
                 <div className="empty-state-actions">
                   <Link 
-                    to="/contribution" 
+                    to="/contribute" 
                     className="btn-contribute"
                   >
                     <span className="btn-icon">📝</span>
