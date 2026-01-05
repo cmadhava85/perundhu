@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,18 +37,18 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ReviewController {
-    
+
     private final ReviewService reviewService;
-    
+
     @Value("${perundhu.features.reviews.enabled:false}")
     private boolean reviewsEnabled;
-    
+
     @Value("${perundhu.features.reviews.require-login:true}")
     private boolean requireLogin;
-    
+
     @Value("${perundhu.features.reviews.auto-approve:true}")
     private boolean autoApprove;
-    
+
     /**
      * Check if reviews feature is enabled
      */
@@ -56,10 +57,9 @@ public class ReviewController {
         return ResponseEntity.ok(new FeatureStatusResponse(
                 reviewsEnabled,
                 requireLogin,
-                autoApprove
-        ));
+                autoApprove));
     }
-    
+
     /**
      * Submit a new review for a bus
      */
@@ -67,17 +67,17 @@ public class ReviewController {
     public ResponseEntity<?> submitReview(
             @Valid @RequestBody SubmitReviewRequest request,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        
+
         if (!reviewsEnabled) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         if (requireLogin && (userId == null || userId.isBlank())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Please log in to submit a review"));
         }
-        
+
         try {
             Review review = reviewService.submitReview(
                     request.busId(),
@@ -86,9 +86,8 @@ public class ReviewController {
                     request.comment(),
                     request.tags(),
                     request.travelDate(),
-                    autoApprove
-            );
-            
+                    autoApprove);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(review));
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -98,7 +97,7 @@ public class ReviewController {
                     .body(new ErrorResponse(e.getMessage()));
         }
     }
-    
+
     /**
      * Get all approved reviews for a bus
      */
@@ -108,15 +107,15 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         List<Review> reviews = reviewService.getApprovedReviewsForBus(busId);
         List<ReviewResponse> responses = reviews.stream()
                 .map(this::toResponse)
                 .toList();
-        
+
         return ResponseEntity.ok(responses);
     }
-    
+
     /**
      * Get rating summary for a bus
      */
@@ -126,40 +125,39 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         RatingSummary summary = reviewService.getRatingSummary(busId);
         return ResponseEntity.ok(new RatingSummaryResponse(
                 summary.averageRating(),
                 summary.reviewCount(),
-                summary.getFormattedRating()
-        ));
+                summary.getFormattedRating()));
     }
-    
+
     /**
      * Get reviews by current user
      */
     @GetMapping("/my-reviews")
     public ResponseEntity<?> getMyReviews(
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        
+
         if (!reviewsEnabled) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         if (userId == null || userId.isBlank()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Please log in to view your reviews"));
         }
-        
+
         List<Review> reviews = reviewService.getReviewsByUser(userId);
         List<ReviewResponse> responses = reviews.stream()
                 .map(this::toResponse)
                 .toList();
-        
+
         return ResponseEntity.ok(responses);
     }
-    
+
     /**
      * Check if user has already reviewed a bus
      */
@@ -167,16 +165,16 @@ public class ReviewController {
     public ResponseEntity<?> hasReviewedBus(
             @PathVariable Long busId,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        
+
         if (!reviewsEnabled) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         boolean hasReviewed = reviewService.hasUserReviewedBus(busId, userId);
         return ResponseEntity.ok(new HasReviewedResponse(hasReviewed));
     }
-    
+
     /**
      * Delete user's own review
      */
@@ -184,17 +182,17 @@ public class ReviewController {
     public ResponseEntity<?> deleteReview(
             @PathVariable Long reviewId,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        
+
         if (!reviewsEnabled) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         if (userId == null || userId.isBlank()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Please log in to delete reviews"));
         }
-        
+
         try {
             reviewService.deleteReview(reviewId, userId);
             return ResponseEntity.noContent().build();
@@ -206,7 +204,7 @@ public class ReviewController {
                     .body(new ErrorResponse(e.getMessage()));
         }
     }
-    
+
     /**
      * Edit user's own review
      */
@@ -215,17 +213,17 @@ public class ReviewController {
             @PathVariable Long reviewId,
             @Valid @RequestBody EditReviewRequest request,
             @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        
+
         if (!reviewsEnabled) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(new ErrorResponse("Reviews feature is currently disabled"));
         }
-        
+
         if (userId == null || userId.isBlank()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Please log in to edit reviews"));
         }
-        
+
         try {
             Review review = reviewService.editReview(
                     reviewId,
@@ -233,9 +231,8 @@ public class ReviewController {
                     request.rating(),
                     request.comment(),
                     request.tags(),
-                    request.travelDate()
-            );
-            
+                    request.travelDate());
+
             return ResponseEntity.ok(toResponse(review));
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -245,26 +242,28 @@ public class ReviewController {
                     .body(new ErrorResponse(e.getMessage()));
         }
     }
-    
+
     // ============ Admin Endpoints ============
-    
+
     /**
      * Get all pending reviews (admin only)
      */
     @GetMapping("/admin/pending")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getPendingReviews() {
         List<Review> reviews = reviewService.getPendingReviews();
         List<ReviewResponse> responses = reviews.stream()
                 .map(this::toResponse)
                 .toList();
-        
+
         return ResponseEntity.ok(responses);
     }
-    
+
     /**
      * Approve a review (admin only)
      */
     @PutMapping("/admin/{reviewId}/approve")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> approveReview(@PathVariable Long reviewId) {
         try {
             Review review = reviewService.approveReview(reviewId);
@@ -274,11 +273,12 @@ public class ReviewController {
                     .body(new ErrorResponse(e.getMessage()));
         }
     }
-    
+
     /**
      * Reject a review (admin only)
      */
     @PutMapping("/admin/{reviewId}/reject")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> rejectReview(@PathVariable Long reviewId) {
         try {
             Review review = reviewService.rejectReview(reviewId);
@@ -288,38 +288,31 @@ public class ReviewController {
                     .body(new ErrorResponse(e.getMessage()));
         }
     }
-    
+
     // ============ DTOs ============
-    
+
     public record SubmitReviewRequest(
-            @NotNull(message = "Bus ID is required")
-            Long busId,
-            
-            @Min(value = 1, message = "Rating must be at least 1")
-            @Max(value = 5, message = "Rating must be at most 5")
-            int rating,
-            
-            @Size(max = 500, message = "Comment cannot exceed 500 characters")
-            String comment,
-            
+            @NotNull(message = "Bus ID is required") Long busId,
+
+            @Min(value = 1, message = "Rating must be at least 1") @Max(value = 5, message = "Rating must be at most 5") int rating,
+
+            @Size(max = 500, message = "Comment cannot exceed 500 characters") String comment,
+
             List<String> tags,
-            
-            LocalDate travelDate
-    ) {}
-    
+
+            LocalDate travelDate) {
+    }
+
     public record EditReviewRequest(
-            @Min(value = 1, message = "Rating must be at least 1")
-            @Max(value = 5, message = "Rating must be at most 5")
-            Integer rating,
-            
-            @Size(max = 500, message = "Comment cannot exceed 500 characters")
-            String comment,
-            
+            @Min(value = 1, message = "Rating must be at least 1") @Max(value = 5, message = "Rating must be at most 5") Integer rating,
+
+            @Size(max = 500, message = "Comment cannot exceed 500 characters") String comment,
+
             List<String> tags,
-            
-            LocalDate travelDate
-    ) {}
-    
+
+            LocalDate travelDate) {
+    }
+
     public record ReviewResponse(
             Long id,
             Long busId,
@@ -329,27 +322,29 @@ public class ReviewController {
             List<String> tags,
             LocalDate travelDate,
             String status,
-            String createdAt
-    ) {}
-    
+            String createdAt) {
+    }
+
     public record RatingSummaryResponse(
             double averageRating,
             long reviewCount,
-            String formattedRating
-    ) {}
-    
+            String formattedRating) {
+    }
+
     public record FeatureStatusResponse(
             boolean enabled,
             boolean requireLogin,
-            boolean autoApprove
-    ) {}
-    
-    public record HasReviewedResponse(boolean hasReviewed) {}
-    
-    public record ErrorResponse(String message) {}
-    
+            boolean autoApprove) {
+    }
+
+    public record HasReviewedResponse(boolean hasReviewed) {
+    }
+
+    public record ErrorResponse(String message) {
+    }
+
     // ============ Mapping ============
-    
+
     private ReviewResponse toResponse(Review review) {
         return new ReviewResponse(
                 review.getId() != null ? review.getId().getValue() : null,
@@ -360,7 +355,6 @@ public class ReviewController {
                 review.getTags(),
                 review.getTravelDate(),
                 review.getStatus().name(),
-                review.getCreatedAt() != null ? review.getCreatedAt().toString() : null
-        );
+                review.getCreatedAt() != null ? review.getCreatedAt().toString() : null);
     }
 }
