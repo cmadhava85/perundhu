@@ -27,10 +27,10 @@ FROM locations l
 INNER JOIN min_location_ids m ON LOWER(TRIM(l.name)) = m.norm_name
 WHERE l.id > m.min_id;
 
--- Step 4: Update bus_stops with a single batch UPDATE
-UPDATE bus_stops bs
-INNER JOIN location_id_mapping lm ON bs.location_id = lm.old_id
-SET bs.location_id = lm.new_id;
+-- Step 4: Update stops with a single batch UPDATE
+UPDATE stops s
+INNER JOIN location_id_mapping lm ON s.location_id = lm.old_id
+SET s.location_id = lm.new_id;
 
 -- Step 5: Delete duplicates - single DELETE statement
 DELETE FROM locations
