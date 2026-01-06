@@ -4,39 +4,91 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.perundhu.domain.model.Bus;
+import jakarta.validation.constraints.*;
+import org.springframework.lang.Nullable;
 
 /**
  * Data Transfer Object for Bus entities
  * Using Java 17 record for immutability and concise data container
  * Enhanced with location information for multilingual support
+ * Includes capacity and active status fields for complete bus information
  */
 public record BusDTO(
+                @NotNull(message = "Bus ID is required")
                 Long id,
+                
+                @NotBlank(message = "Bus number is required")
                 String number,
+                
+                @NotBlank(message = "Bus name is required")
                 String name,
+                
+                @Nullable
                 String operator,
+                
+                @NotBlank(message = "Bus type is required")
                 String type,
+                
+                @Nullable
                 String departureTime,
+                
+                @Nullable
                 String arrivalTime,
+                
+                @Min(value = 0, message = "Rating must be positive")
+                @Max(value = 5, message = "Rating must not exceed 5")
                 Double rating,
+                
+                @Nullable
                 Map<String, String> features,
+                
                 // Location information
+                @Nullable
                 Long fromLocationId,
+                
+                @Nullable
                 String fromLocationName,
+                
+                @Nullable
                 String fromLocationNameTranslated,
+                
+                @Nullable
                 Long toLocationId,
+                
+                @Nullable
                 String toLocationName,
-                String toLocationNameTranslated) {
-        // Records automatically provide constructor, getters, equals, hashCode, and
-        // toString
+                
+                @Nullable
+                String toLocationNameTranslated,
+                
+                @Min(value = 1, message = "Bus capacity must be at least 1")
+                @Max(value = 500, message = "Bus capacity must not exceed 500")
+                Integer capacity,
+                
+                @NotNull(message = "Bus active status is required")
+                Boolean active) {
+        /**
+         * Compact constructor for validation
+         */
+        public BusDTO {
+                if (capacity != null && capacity < 1) {
+                        throw new IllegalArgumentException("Bus capacity must be at least 1");
+                }
+                if (capacity != null && capacity > 500) {
+                        throw new IllegalArgumentException("Bus capacity must not exceed 500");
+                }
+                if (rating != null && (rating < 0 || rating > 5)) {
+                        throw new IllegalArgumentException("Rating must be between 0 and 5");
+                }
+        }
         
         /**
-         * Constructor for backward compatibility (without location info)
+         * Constructor for backward compatibility (without location info and new fields)
          */
         public BusDTO(Long id, String number, String name, String operator, String type,
                       String departureTime, String arrivalTime, Double rating, Map<String, String> features) {
                 this(id, number, name, operator, type, departureTime, arrivalTime, rating, features,
-                     null, null, null, null, null, null);
+                     null, null, null, null, null, null, 50, true);
         }
 
         /**
@@ -49,7 +101,7 @@ public record BusDTO(
                 }
 
                 // Convert List<String> features to Map<String, String>
-                Map<String, String> featuresMap = bus.getFeatures() != null ? bus.getFeatures().stream()
+                Map<String, String> featuresMap = bus.features() != null ? bus.features().stream()
                                 .collect(Collectors.toMap(
                                                 feature -> feature,
                                                 feature -> "enabled",
@@ -62,8 +114,8 @@ public record BusDTO(
                                 bus.name(),
                                 bus.operator(),
                                 bus.type(),
-                                bus.getDepartureTime() != null ? bus.getDepartureTime().toString() : null,
-                                bus.getArrivalTime() != null ? bus.getArrivalTime().toString() : null,
+                                bus.departureTime() != null ? bus.departureTime().toString() : null,
+                                bus.arrivalTime() != null ? bus.arrivalTime().toString() : null,
                                 4.0, // Default rating
                                 featuresMap,
                                 // Location information
@@ -72,7 +124,9 @@ public record BusDTO(
                                 null, // No translation by default
                                 bus.toLocation() != null ? bus.toLocation().id().value() : null,
                                 bus.toLocation() != null ? bus.toLocation().name() : null,
-                                null); // No translation by default
+                                null, // No translation by default
+                                bus.capacity(),
+                                bus.active());
         }
         
         /**
@@ -87,7 +141,7 @@ public record BusDTO(
                 }
 
                 // Convert List<String> features to Map<String, String>
-                Map<String, String> featuresMap = bus.getFeatures() != null ? bus.getFeatures().stream()
+                Map<String, String> featuresMap = bus.features() != null ? bus.features().stream()
                                 .collect(Collectors.toMap(
                                                 feature -> feature,
                                                 feature -> "enabled",
@@ -100,8 +154,8 @@ public record BusDTO(
                                 bus.name(),
                                 bus.operator(),
                                 bus.type(),
-                                bus.getDepartureTime() != null ? bus.getDepartureTime().toString() : null,
-                                bus.getArrivalTime() != null ? bus.getArrivalTime().toString() : null,
+                                bus.departureTime() != null ? bus.departureTime().toString() : null,
+                                bus.arrivalTime() != null ? bus.arrivalTime().toString() : null,
                                 4.0, // Default rating
                                 featuresMap,
                                 // Location information with translations
@@ -110,13 +164,16 @@ public record BusDTO(
                                 fromLocationTranslation,
                                 bus.toLocation() != null ? bus.toLocation().id().value() : null,
                                 bus.toLocation() != null ? bus.toLocation().name() : null,
-                                toLocationTranslation);
+                                toLocationTranslation,
+                                bus.capacity(),
+                                bus.active());
         }
 
         /**
          * Factory method for creating basic BusDTO instances for backward compatibility
          */
         public static BusDTO of(Long id, String number, String name, String operator, String type) {
-                return new BusDTO(id, number, name, operator, type, null, null, 4.0, Map.of());
+                return new BusDTO(id, number, name, operator, type, null, null, 4.0, Map.of(), 
+                        null, null, null, null, null, null, 50, true);
         }
 }
