@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, waitFor } from '../../test-utils';
+import { render, screen } from '../../test-utils';
 import userEvent from '@testing-library/user-event';
 import TransitBusList from '../TransitBusList';
 import type { Bus, Stop, Location } from '../../types';
@@ -36,11 +36,11 @@ vi.mock('../design-system/PullToRefresh', () => ({
 }));
 
 vi.mock('../design-system', () => ({
-  Button: vi.fn(({ children, onClick }) => (
+  Button: vi.fn(({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => (
     <button onClick={onClick}>{children}</button>
   )),
   BusCardSkeleton: vi.fn(() => <div data-testid="bus-skeleton">Skeleton</div>),
-  SkeletonGroup: vi.fn(({ count, children }) => (
+  SkeletonGroup: vi.fn(({ count, _children }: { count: number; _children?: React.ReactNode }) => (
     <div data-testid="skeleton-group">
       {Array(count).fill(0).map((_, i) => (
         <div key={i} data-testid="bus-skeleton">Skeleton</div>
@@ -59,7 +59,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    Link: ({ to, children }: any) => <a href={to}>{children}</a>
+    Link: ({ to, children }: { to: string; children: React.ReactNode }) => <a href={to}>{children}</a>
   };
 });
 
@@ -213,7 +213,7 @@ describe('TransitBusList Component', () => {
 
   describe('Bus Selection', () => {
     it('should call onSelectBus when bus card is selected', async () => {
-      const user = userEvent.setup();
+      const _user = userEvent.setup();
 
       render(
         <TransitBusList
@@ -239,7 +239,7 @@ describe('TransitBusList Component', () => {
     });
 
     it('should handle multiple bus selections', async () => {
-      const user = userEvent.setup();
+      const _user = userEvent.setup();
 
       render(
         <TransitBusList
@@ -548,7 +548,7 @@ describe('TransitBusList Component', () => {
       ];
 
       render(
-        <TransitBusList buses={busesWithoutOptionals as any} />
+        <TransitBusList buses={busesWithoutOptionals as unknown as typeof mockBuses} />
       );
 
       expect(screen.getByTestId('transit-bus-card-1')).toBeInTheDocument();

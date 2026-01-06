@@ -1,11 +1,5 @@
 import { useCallback, useRef, useEffect, useState } from 'react';
 
-interface RecaptchaConfig {
-  siteKey: string;
-  isEnterprise: boolean;
-  isEnabled: boolean;
-}
-
 /**
  * Custom hook for reCAPTCHA Enterprise token generation
  * Handles all reCAPTCHA operations with proper error handling
@@ -27,7 +21,7 @@ export const useRecaptcha = () => {
 
     if (!readyPromiseRef.current) {
       readyPromiseRef.current = new Promise((resolve) => {
-        const grecaptchaObj = window.grecaptcha as any;
+        const grecaptchaObj = window.grecaptcha as { enterprise?: { ready: (cb: () => void) => void } };
         if (grecaptchaObj?.enterprise) {
           grecaptchaObj.enterprise.ready(() => {
             setIsReady(true);
@@ -36,7 +30,7 @@ export const useRecaptcha = () => {
         } else {
           // Fallback if grecaptcha not loaded
           const checkInterval = setInterval(() => {
-            const grecaptchaCheck = window.grecaptcha as any;
+            const grecaptchaCheck = window.grecaptcha as { enterprise?: { ready: (cb: () => void) => void } };
             if (grecaptchaCheck?.enterprise) {
               clearInterval(checkInterval);
               grecaptchaCheck.enterprise.ready(() => {
@@ -78,7 +72,7 @@ export const useRecaptcha = () => {
       }
 
       // Check if grecaptcha is available
-      const grecaptchaObj = window.grecaptcha as any;
+      const grecaptchaObj = window.grecaptcha as { enterprise?: { execute: (key: string, opts: { action: string }) => Promise<string> } };
       if (!grecaptchaObj?.enterprise) {
         const errorMsg = 'reCAPTCHA Enterprise script not loaded';
         console.error(errorMsg);

@@ -1,5 +1,4 @@
 import { render, screen } from "../../../test-utils";
-import userEvent from "@testing-library/user-event";
 import { FormInput } from "../FormInput";
 
 describe('FormInput Component', () => {

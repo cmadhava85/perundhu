@@ -7,10 +7,10 @@ import { StarRatingDisplay } from './StarRatingDisplay';
 import { EditReviewForm } from './EditReviewForm';
 
 // Fallback auth context
-const defaultAuthState = { isAuthenticated: false, user: null, isLoading: false };
+const defaultAuthState = { isAuthenticated: false, user: null as unknown, isLoading: false };
 const FallbackAuthContext = React.createContext(defaultAuthState);
 
-let RealAuthContext: React.Context<any> | null = null;
+let RealAuthContext: React.Context<{ isAuthenticated: boolean; user: unknown; isLoading: boolean }> | null = null;
 try {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   RealAuthContext = require('../../hooks/useAuth').AuthContext;
@@ -20,7 +20,7 @@ try {
 
 const AuthContextToUse = RealAuthContext || FallbackAuthContext;
 
-const useSafeAuth = () => {
+const useSafeAuth = (): { isAuthenticated: boolean; user: unknown; isLoading: boolean } => {
   const authContext = useContext(AuthContextToUse);
   return authContext || defaultAuthState;
 };
@@ -115,8 +115,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
     onRefresh?.();
   };
 
-  const isOwnReview = (review: Review) => {
-    return isAuthenticated && user && review.userId === user.id;
+  const isOwnReview = (review: Review): boolean => {
+    return Boolean(isAuthenticated && user && typeof user === 'object' && 'id' in user && review.userId === (user as { id?: string }).id);
   };
 
   if (isLoading) {
@@ -146,7 +146,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
           <MessageSquare className="w-4 h-4" />
-          {t('review.reviews', 'Reviews')} ({reviews.length})
+          {String(t('review.reviews', 'Reviews'))} ({reviews.length})
         </h4>
         {showWriteButton && onWriteReview && (
           <button
@@ -154,7 +154,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
             className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 touch-manipulation"
           >
             <Star className="w-4 h-4" />
-            {t('review.writeReview', 'Write a review')}
+            {String(t('review.writeReview', 'Write a review'))}
           </button>
         )}
       </div>
@@ -163,14 +163,14 @@ export const ReviewList: React.FC<ReviewListProps> = ({
       {reviews.length === 0 ? (
         <div className="text-center py-10 sm:py-8 text-gray-500 dark:text-gray-400 bg-gray-50/50 dark:bg-gray-800/50 rounded-xl">
           <MessageSquare className="w-10 h-10 sm:w-8 sm:h-8 mx-auto mb-3 opacity-50" />
-          <p className="text-base sm:text-sm">{t('review.noReviews', 'No reviews yet')}</p>
+          <p className="text-base sm:text-sm">{String(t('review.noReviews', 'No reviews yet'))}</p>
           {showWriteButton && onWriteReview && (
             <button
               onClick={onWriteReview}
               className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium 
                          hover:bg-blue-700 transition-colors touch-manipulation"
             >
-              {t('review.beFirst', 'Be the first to review')}
+              {String(t('review.beFirst', 'Be the first to review'))}
             </button>
           )}
         </div>
@@ -189,14 +189,12 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                   <Calendar className="w-3 h-3" />
                   {formatDate(review.createdAt)}
                 </span>
-                
-                {/* Edit/Delete Buttons */}
                 {isOwnReview(review) && (
                   <div className="flex gap-1">
                     <button
                       onClick={() => setEditingReviewId(review.id)}
                       className="p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors touch-manipulation"
-                      title={t('review.edit', 'Edit')}
+                      title={String(t('review.edit', 'Edit'))}
                     >
                       <Edit2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     </button>
@@ -204,7 +202,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                       onClick={() => handleDeleteReview(review.id)}
                       disabled={deletingReviewId === review.id}
                       className="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900 transition-colors touch-manipulation disabled:opacity-50"
-                      title={t('review.delete', 'Delete')}
+                      title={String(t('review.delete', 'Delete'))}
                     >
                       <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400" />
                     </button>
@@ -228,7 +226,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                       className="px-2.5 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 
                                  text-blue-700 dark:text-blue-300 rounded-full"
                     >
-                      {t(`review.tag.${tag}`, REVIEW_TAG_LABELS[tag as ReviewTag] || tag)}
+                      {String(t(`review.tag.${tag}`, REVIEW_TAG_LABELS[tag as ReviewTag] || tag))}
                     </span>
                   ))}
                 </div>
@@ -244,7 +242,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({
                 )}
                 {review.travelDate && (
                   <span>
-                    {t('review.traveledOn', 'Traveled on')}: {formatDate(review.travelDate)}
+                    {String(t('review.traveledOn', 'Traveled on'))}: {formatDate(review.travelDate)}
                   </span>
                 )}
               </div>

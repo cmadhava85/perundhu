@@ -40,8 +40,8 @@ export class LocationAutocompleteService {
     query: string, 
     language: string = 'en'
   ): Promise<LocationSuggestion[]> {
-    // Return empty for very short queries (less than 2 characters)
-    if (query.length < 2) {
+    // Return empty for queries shorter than 3 characters
+    if (query.length < 3) {
       return [];
     }
 

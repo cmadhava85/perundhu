@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Upload, CheckCircle, Error } from '@mui/icons-material';
+import { Upload, CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
 import '../styles/static-pages.css';
 
 /**
@@ -125,8 +125,7 @@ export const ContactUs: React.FC = () => {
       });
 
       if (!response.ok) {
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        throw 'Failed to submit feedback';
+        throw new Error('Failed to submit feedback');
       }
 
       setSubmitted(true);
@@ -197,7 +196,7 @@ export const ContactUs: React.FC = () => {
               
               {error && (
                 <div className="feedback-error">
-                  <Error sx={{ fontSize: 24 }} />
+                  <ErrorIcon sx={{ fontSize: 24 }} />
                   <p>{error}</p>
                 </div>
               )}

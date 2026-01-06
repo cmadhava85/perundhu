@@ -12,7 +12,7 @@ import { RouteVerification } from './contribution/RouteVerification';
 import { AddStopsToRoute } from './contribution/AddStopsToRoute';
 import { ReportIssue } from './contribution/ReportIssue';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
-import { useRecaptcha, addRecaptchaTokenToHeaders } from '../hooks/useRecaptcha';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 import type { Bus } from '../types';
 import './RouteContribution.css';
 

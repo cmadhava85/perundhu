@@ -8,6 +8,15 @@ vi.mock('../../utils/haptic', () => ({
   triggerHaptic: vi.fn()
 }));
 
+// Mock feature flags context - enable map by default for tests
+vi.mock('../../contexts/FeatureFlagsContext', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useIsFeatureEnabled: (flag: string) => flag === 'enableMap'
+  };
+});
+
 describe('BottomNavigation Component', () => {
   const mockOnTabChange = vi.fn();
 

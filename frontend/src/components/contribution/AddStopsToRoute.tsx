@@ -145,7 +145,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     
     // Set global flag to indicate modal is open (for Header to check)
-    (globalThis as any).isModalOpen = true;
+    (globalThis as { isModalOpen?: boolean }).isModalOpen = true;
     
     // Disable scroll on body
     document.body.style.overflow = 'hidden';
@@ -172,7 +172,7 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     // Return scroll position and enable scroll on unmount
     return () => {
       // Clear global flag when modal closes
-      (globalThis as any).isModalOpen = false;
+      (globalThis as { isModalOpen?: boolean }).isModalOpen = false;
       
       // Re-enable scroll
       document.body.style.overflow = '';
@@ -1079,11 +1079,11 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
             ))}
           </div>
 
-          {/* Add Stop Button - Hidden, using wizard-based addition only */}
-          {/* <button className="add-stop-btn" onClick={handleAddStopViaWizard}>
+          {/* Add Stop Button */}
+          <button className="add-stop-btn" onClick={handleAddStopViaWizard}>
             <span className="plus-icon">+</span>
             {t('addStops.addStop', 'Add Stop')}
-          </button> */}
+          </button>
 
           {/* Action Buttons */}
           <div className="action-buttons">

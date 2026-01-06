@@ -314,7 +314,7 @@ export class GeocodingService {
       let allResults: OverpassResult[] = [];
 
       for (const searchQuery of searchQueries) {
-        const params = new URLSearchParams({
+        const _params = new URLSearchParams({
           q: searchQuery,
           format: 'json',
           countrycodes: 'in',

@@ -156,7 +156,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should not call onSearch when query is only whitespace', async () => {
-      const user = userEvent.setup();
+      const _user = userEvent.setup();
       render(
         <RouteSearch
           searchQuery="   "
@@ -231,7 +231,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should prevent default form submission', async () => {
-      const user = userEvent.setup();
+      const _user = userEvent.setup();
       render(
         <RouteSearch
           searchQuery="test"

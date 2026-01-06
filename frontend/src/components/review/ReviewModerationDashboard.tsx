@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CheckCircle, XCircle, Clock, MessageSquare, User, Calendar, Star } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, MessageSquare, User, Calendar } from 'lucide-react';
 import reviewService from '../../services/reviewService';
 import type { Review } from '../../types/review';
 import { StarRatingDisplay } from './StarRatingDisplay';

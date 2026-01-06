@@ -132,7 +132,7 @@ async function scrapeTNSTCBuses() {
             await btn.click();
             await page.waitForTimeout(500);
           }
-        } catch (e) {
+        } catch (_e) {
           // Continue to next selector
         }
       }
@@ -143,7 +143,7 @@ async function scrapeTNSTCBuses() {
           await page.keyboard.press('Escape');
           await page.waitForTimeout(200);
         }
-      } catch (e) {
+      } catch (_e) {
         console.log('  ⚠️  Escape key press failed, continuing...');
       }
       
@@ -155,7 +155,7 @@ async function scrapeTNSTCBuses() {
             '.popup, .modal, .overlay, .modal-backdrop, .fade, ' +
             '[id*="popup"], [id*="modal"], [id*="dialog"]'
           );
-          popups.forEach((p: any) => {
+          popups.forEach((p: Element) => {
             try {
               p.style.display = 'none !important';
               p.style.visibility = 'hidden';
@@ -165,18 +165,18 @@ async function scrapeTNSTCBuses() {
               if (p.parentElement) {
                 p.parentElement.style.display = 'none';
               }
-            } catch (e) {
+            } catch (_e) {
               // Ignore individual popup errors
             }
           });
         });
-      } catch (e) {
+      } catch (_e) {
         console.log('  ⚠️  JavaScript popup hiding failed, continuing...');
       }
       
       await page.waitForTimeout(1000);
       console.log('✓ Initial popup close attempts completed');
-    } catch (e) {
+    } catch (_e) {
       console.log('⚠️  Error during popup close:', e);
     }
 
@@ -193,7 +193,7 @@ async function scrapeTNSTCBuses() {
       console.log('⏳ Waiting for form fields to appear...');
       await testField.waitFor({ state: 'visible', timeout: 10000 });
       console.log('✓ Form fields found and visible');
-    } catch (e) {
+    } catch (_e) {
       console.log('❌ Form fields not found. Trying to diagnose...');
       // Try to see what elements are on the page
       const pageTitle = await page.title();
@@ -243,7 +243,7 @@ async function scrapeTNSTCBuses() {
             await page.waitForTimeout(500);
             break;
           }
-        } catch (e) {
+        } catch (_e) {
           // continue
         }
       }
@@ -251,7 +251,7 @@ async function scrapeTNSTCBuses() {
       if (!selected) {
         console.log(`⚠️  No matching option found`);
       }
-    } catch (e) {
+    } catch (_e) {
       console.log(`❌ Error filling source: ${e}`);
       return;
     }
@@ -306,7 +306,7 @@ async function scrapeTNSTCBuses() {
               await page.waitForTimeout(500);
               break;
             }
-          } catch (e) {
+          } catch (_e) {
             // continue
           }
         }
@@ -334,11 +334,11 @@ async function scrapeTNSTCBuses() {
                   break;
                 }
               }
-            } catch (e) {
+            } catch (_e) {
               // Continue
             }
           }
-        } catch (e) {
+        } catch (_e) {
           console.log(`  ⚠️  Could not select date: ${e}`);
         }
 
@@ -370,14 +370,14 @@ async function scrapeTNSTCBuses() {
               // Hide overlay/modal via JS
               await page.evaluate(() => {
                 const popups = document.querySelectorAll('[id*="popup"], [class*="modal"], [class*="overlay"], .popup-overlay, #popup-overlay, [role="dialog"]');
-                popups.forEach((p: any) => {
+                popups.forEach((p: Element) => {
                   p.style.display = 'none';
                   p.style.visibility = 'hidden';
                 });
               }).catch(() => {});
               
               await page.waitForTimeout(200);
-            } catch (e) {
+            } catch (_e) {
               // Ignore close errors
             }
           };
@@ -440,7 +440,7 @@ async function scrapeTNSTCBuses() {
                     try {
                       const detailPopup = page.locator('[role="dialog"], [class*="modal"], [class*="popup"], .modal-content, [class*="detail"]').first();
                       await detailPopup.waitFor({ state: 'visible', timeout: 3000 });
-                    } catch (e) {
+                    } catch (_e) {
                       // Popup might be visible immediately or via different selector
                     }
                     
@@ -473,7 +473,7 @@ async function scrapeTNSTCBuses() {
                 routeData.buses.push(busDetails);
                 const stopCount = stopsData.length || 0;
                 console.log(`    ✅ Bus ${busIndex + 1}/${busRowCount}: ${busDetails.serviceName.substring(0, 20).trim()} | ${stopCount} stops | ₹${busDetails.price}`);
-              } catch (e) {
+              } catch (_e) {
                 console.log(`    ❌ Error with bus ${busIndex + 1}: ${String(e).substring(0, 40)}`);
                 // Close popup before proceeding
                 await closePopup().catch(() => {});
@@ -487,11 +487,11 @@ async function scrapeTNSTCBuses() {
             console.log(`  ✅ Completed: ${fromLocation} → ${toLocation} (${routeData.buses.length}/${busRowCount} buses with details)\n`);
           }
 
-        } catch (e) {
+        } catch (_e) {
           console.log(`  ❌ Error during search: ${e}`);
         }
 
-      } catch (e) {
+      } catch (_e) {
         console.log(`  ❌ Error processing destination: ${e}`);
       }
 
@@ -524,7 +524,7 @@ async function scrapeTNSTCBuses() {
 scrapeTNSTCBuses().catch(console.error);
 
 // Helper function to get locations by a single prefix
-async function getLocationsByPrefix(page: any, fieldLabel: string, prefix: string): Promise<string[]> {
+async function _getLocationsByPrefix(page: { locator: (s: string) => unknown; waitForTimeout: (n: number) => Promise<void> }, fieldLabel: string, prefix: string): Promise<string[]> {
   const locations: Set<string> = new Set();
 
   try {
@@ -561,11 +561,11 @@ async function getLocationsByPrefix(page: any, fieldLabel: string, prefix: strin
             console.log(`    Added: ${locationName}`);
           }
         }
-      } catch (e) {
+      } catch (_e) {
         // Continue
       }
     }
-  } catch (e) {
+  } catch (_e) {
     console.log(`  ⚠️  Error getting locations for ${fieldLabel} with prefix ${prefix}:`, e);
   }
 
@@ -574,7 +574,7 @@ async function getLocationsByPrefix(page: any, fieldLabel: string, prefix: strin
   return result;
 }
 
-async function getAvailableLocations(page: any, fieldLabel: string): Promise<string[]> {
+async function _getAvailableLocations(page: { locator: (s: string) => unknown; waitForTimeout: (n: number) => Promise<void> }, fieldLabel: string): Promise<string[]> {
   const locations: Set<string> = new Set();
 
   try {
@@ -648,11 +648,11 @@ async function getAvailableLocations(page: any, fieldLabel: string): Promise<str
                 locations.add(locationName);
               }
             }
-          } catch (e) {
+          } catch (_e) {
             // Continue to next option
           }
         }
-      } catch (e) {
+      } catch (_e) {
         // Continue to next prefix
       }
 
@@ -665,7 +665,7 @@ async function getAvailableLocations(page: any, fieldLabel: string): Promise<str
     await field.click();
     await field.clear();
 
-  } catch (e) {
+  } catch (_e) {
     console.log(`  ⚠️  Error getting locations for ${fieldLabel}:`, e);
   }
 
@@ -689,7 +689,7 @@ function parseBusDetails(
   fromPlace: string,
   toPlace: string
 ): BusService {
-  const lines = text.split('\n').filter((l) => l.trim());
+  const _lines = text.split('\n').filter((l) => l.trim());
   
   // Extract service code (format: XXXXKYYNNN)
   const serviceMatch = text.match(/(\d{4}[A-Z]+\d+[A-Z]*)/);
@@ -730,7 +730,7 @@ function parseBusDetails(
   };
 }
 
-async function extractStops(page: any): Promise<BusStop[]> {
+async function extractStops(page: { locator: (s: string) => unknown }): Promise<BusStop[]> {
   const stops: BusStop[] = [];
 
   try {
@@ -752,11 +752,11 @@ async function extractStops(page: any): Promise<BusStop[]> {
             });
           }
         }
-      } catch (e) {
+      } catch (_e) {
         // Continue to next stop
       }
     }
-  } catch (e) {
+  } catch (_e) {
     console.log('Could not extract stops');
   }
 
