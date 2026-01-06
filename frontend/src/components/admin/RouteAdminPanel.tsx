@@ -59,7 +59,7 @@ const RouteAdminPanel: React.FC = () => {
         if (statusFilter === 'all') {
           filteredData = allData;
         } else if (statusFilter === 'pending') {
-          filteredData = allData.filter(c => c.status === ContributionStatus.PENDING_REVIEW);
+          filteredData = allData.filter(c => c.status === ContributionStatus.PENDING);
         } else {
           // Filter by status if not 'all' - convert filter to uppercase to match status values
           const filterStatusUpper = statusFilter.toUpperCase();
@@ -138,7 +138,7 @@ const RouteAdminPanel: React.FC = () => {
       if (statusFilter === 'all') {
         filteredData = allData;
       } else if (statusFilter === 'pending') {
-        filteredData = allData.filter(c => c.status === ContributionStatus.PENDING_REVIEW);
+        filteredData = allData.filter(c => c.status === ContributionStatus.PENDING);
       } else {
         // Filter by status if not 'all' - convert filter to uppercase to match status values
         const filterStatusUpper = statusFilter.toUpperCase();
@@ -623,7 +623,7 @@ ${result.sqlExample}`;
         <div className="action-stats-row">
           <div className="route-stats">
             <div className="stat-item">
-              <span className="stat-value">{allRoutes.filter(r => r.status === ContributionStatus.PENDING_REVIEW).length}</span>
+              <span className="stat-value">{allRoutes.filter(r => r.status === ContributionStatus.PENDING).length}</span>
               <span className="stat-label">{t('admin.routes.pendingCount')}</span>
             </div>
             <div className="stat-item">

@@ -18,8 +18,8 @@ const ImageContributionList: React.FC = () => {
   const { t } = useTranslation();
   const [contributions, setContributions] = useState<ImageContribution[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  // Default to PENDING_REVIEW to only show images that need approval
-  const [filter, setFilter] = useState<ContributionStatus | 'ALL'>('PENDING_REVIEW');
+  // Default to PENDING to only show images that need approval
+  const [filter, setFilter] = useState<ContributionStatus | 'ALL'>('PENDING');
   const [rejectModalOpen, setRejectModalOpen] = useState<boolean>(false);
   const [selectedContribution, setSelectedContribution] = useState<ImageContribution | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -41,7 +41,7 @@ const ImageContributionList: React.FC = () => {
       let response: PaginatedResponse;
       
       // Call API with pagination parameters
-      if (filter === 'PENDING_REVIEW') {
+      if (filter === 'PENDING') {
         const result = await AdminService.getPendingImageContributionsPaged?.(page, pageSize) ||
                        await AdminService.getPendingImageContributions();
         response = Array.isArray(result) 
@@ -171,7 +171,7 @@ const ImageContributionList: React.FC = () => {
 
   return (
     <div>
-      {filter === 'PENDING_REVIEW' && contributions.length > 0 && (
+      {filter === 'PENDING' && contributions.length > 0 && (
         <div className="info-banner">
           <span>⚠️ Showing {contributions.length} images pending approval</span>
         </div>
@@ -185,7 +185,7 @@ const ImageContributionList: React.FC = () => {
             value={filter} 
             onChange={(e) => setFilter(e.target.value as ContributionStatus | 'ALL')}
           >
-            <option value="PENDING_REVIEW">{t('admin.filter.pending', 'Pending (Needs Approval)')}</option>
+            <option value="PENDING">{t('admin.filter.pending', 'Pending (Needs Approval)')}</option>
             <option value="ALL">{t('admin.filter.all', 'All')}</option>
             <option value="APPROVED">{t('admin.filter.approved', 'Approved')}</option>
             <option value="REJECTED">{t('admin.filter.rejected', 'Rejected')}</option>
@@ -274,7 +274,7 @@ const ImageContributionList: React.FC = () => {
                       >
                         👁️
                       </button>
-                      {contribution.status === 'PENDING_REVIEW' && (
+                      {contribution.status === 'PENDING' && (
                         <>
                           <button 
                             className="btn btn-approve" 

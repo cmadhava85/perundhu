@@ -75,7 +75,7 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
   const getStatusClass = (status?: ContributionStatus) => {
     if (!status) return 'status-badge';
     switch (status) {
-      case ContributionStatus.PENDING_REVIEW:
+      case ContributionStatus.PENDING:
         return 'status-badge pending';
       case ContributionStatus.APPROVED:
         return 'status-badge approved';
@@ -311,7 +311,7 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
         {/* Modal Actions */}
         <div className="modal-actions">
           <div className="action-group">
-            {contribution.status === ContributionStatus.PENDING_REVIEW && (
+            {contribution.status === ContributionStatus.PENDING && (
               <>
                 {onApprove && contribution.id && (
                   <button 

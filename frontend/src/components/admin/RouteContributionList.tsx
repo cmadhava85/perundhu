@@ -33,7 +33,7 @@ const RouteContributionList: React.FC = () => {
         data = await AdminService.getRouteContributions();
       } else if (statusFilter === 'pending') {
         data = await AdminService.getRouteContributions();
-        data = data.filter((c: RouteContribution) => c.status === 'PENDING_REVIEW');
+        data = data.filter((c: RouteContribution) => c.status === 'PENDING');
       } else {
         data = await AdminService.getRouteContributions();
         // Filter by status if not 'all' - convert filter to uppercase
@@ -138,7 +138,7 @@ const RouteContributionList: React.FC = () => {
   const getStatusClass = (status?: string) => {
     if (!status) return 'status-badge';
     switch (status) {
-      case 'PENDING_REVIEW':
+      case 'PENDING':
         return 'status-badge pending';
       case 'APPROVED':
         return 'status-badge approved';
@@ -165,8 +165,8 @@ const RouteContributionList: React.FC = () => {
         return 'status-rejected';
       case 'integration_failed':
         return 'status-integration-failed';
-      case 'pending_review':
-        return 'status-pending-review';
+      case 'pending':
+        return 'status-pending';
       case 'integrated':
         return 'status-integrated';
       default:
@@ -189,7 +189,7 @@ const RouteContributionList: React.FC = () => {
             <option value="approved">{t('admin.contributions.statusApproved', 'Approved')}</option>
             <option value="rejected">{t('admin.contributions.statusRejected', 'Rejected')}</option>
             <option value="integration_failed">{t('admin.contributions.statusIntegrationFailed', 'Integration Failed')}</option>
-            <option value="pending_review">{t('admin.contributions.statusPendingReview', 'Pending Review')}</option>
+            <option value="pending">{t('admin.contributions.statusPending', 'Pending')}</option>
             <option value="integrated">{t('admin.contributions.statusIntegrated', 'Integrated')}</option>
           </select>
         </div>
@@ -256,7 +256,7 @@ const RouteContributionList: React.FC = () => {
                       </>
                     )}
                     {(contribution.status?.toLowerCase() === 'integration_failed' || 
-                      contribution.status?.toLowerCase() === 'pending_review' ||
+                      contribution.status?.toLowerCase() === 'pending' ||
                       contribution.status?.toLowerCase() === 'approved') && (
                       <button 
                         className="btn btn-retry"
