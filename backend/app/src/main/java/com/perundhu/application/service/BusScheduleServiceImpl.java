@@ -760,7 +760,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         // BusDTO record fields: id, number, name, operator, type, departureTime,
         // arrivalTime, rating, features,
         // fromLocationId, fromLocationName, fromLocationNameTranslated, toLocationId,
-        // toLocationName, toLocationNameTranslated
+        // toLocationName, toLocationNameTranslated, capacity, active
         return new BusDTO(
                 dto.id(),
                 dto.number(),
@@ -776,7 +776,9 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 dto.fromLocationNameTranslated(),
                 dto.toLocationId(),
                 toWithStand, // Use bus stand name instead of city name
-                dto.toLocationNameTranslated());
+                dto.toLocationNameTranslated(),
+                dto.capacity(),
+                dto.active());
     }
 
     /**
