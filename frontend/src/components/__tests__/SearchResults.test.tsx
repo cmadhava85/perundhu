@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '../../test-utils';
+import { render, screen, fireEvent } from '../../test-utils';
 import userEvent from '@testing-library/user-event';
 import SearchResults from '../SearchResults';
 import type { Bus, Location, Stop, ConnectingRoute } from '../../types';
@@ -52,7 +52,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    Link: ({ to, children, ...props }: any) => <a href={to} {...props}>{children}</a>
+    Link: ({ to, children, ...props }: { to: string; children: React.ReactNode; [key: string]: unknown }) => <a href={to} {...props}>{children}</a>
   };
 });
 
@@ -451,8 +451,8 @@ describe('SearchResults Component', () => {
 
     it('should render fallback map when Leaflet not available', () => {
       // Remove globalThis.L
-      const originalL = (globalThis as any).L;
-      delete (globalThis as any).L;
+      const originalL = (globalThis as { L?: unknown }).L;
+      delete (globalThis as { L?: unknown }).L;
 
       render(
         <SearchResults
@@ -466,7 +466,7 @@ describe('SearchResults Component', () => {
       expect(screen.getByTestId('fallback-map')).toBeInTheDocument();
 
       // Restore
-      if (originalL) (globalThis as any).L = originalL;
+      if (originalL) (globalThis as { L?: unknown }).L = originalL;
     });
   });
 

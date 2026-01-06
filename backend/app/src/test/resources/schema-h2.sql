@@ -3,6 +3,18 @@
 DROP TABLE IF EXISTS stops;
 DROP TABLE IF EXISTS buses;
 DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS system_settings;
+
+-- System Settings table
+CREATE TABLE system_settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(100) NOT NULL UNIQUE,
+    setting_value TEXT,
+    category VARCHAR(50),
+    description VARCHAR(255),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Locations table
 CREATE TABLE locations (

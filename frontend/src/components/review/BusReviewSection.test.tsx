@@ -26,11 +26,11 @@ vi.mock('react-i18next', () => ({
 
 // Mock child components to simplify testing
 vi.mock('./StarRatingDisplay', () => ({
-  StarRatingDisplay: ({ rating }: any) => <div data-testid="star-rating">{rating}</div>,
+  StarRatingDisplay: ({ rating }: { rating: number }) => <div data-testid="star-rating">{rating}</div>,
 }));
 
 vi.mock('./SubmitReviewForm', () => ({
-  SubmitReviewForm: ({ onSuccess }: any) => (
+  SubmitReviewForm: ({ onSuccess }: { onSuccess?: () => void }) => (
     <div data-testid="submit-form">
       <button onClick={() => onSuccess?.()}>Submit Review</button>
     </div>
@@ -38,7 +38,7 @@ vi.mock('./SubmitReviewForm', () => ({
 }));
 
 vi.mock('./ReviewList', () => ({
-  ReviewList: ({ busId, busName }: any) => (
+  ReviewList: ({ busId, busName: _busName }: { busId: number; busName: string }) => (
     <div data-testid="review-list">Reviews {busId}</div>
   ),
 }));
@@ -55,7 +55,7 @@ describe('BusReviewSection Component', () => {
       averageRating: 0,
       totalReviews: 0,
       ratingDistribution: {},
-    } as any);
+    } as unknown as { averageRating: number; totalReviews: number; ratingDistribution: Record<number, number> });
   });
 
   it('should render the component with basic props', () => {

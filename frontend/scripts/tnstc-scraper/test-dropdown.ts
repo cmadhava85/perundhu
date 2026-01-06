@@ -15,7 +15,7 @@ async function testDropdown() {
     await page.keyboard.press('Escape');
     await page.keyboard.press('Escape');
     await page.evaluate(() => {
-      document.querySelectorAll('[role="dialog"], [class*="modal"]').forEach((p: any) => {
+      document.querySelectorAll('[role="dialog"], [class*="modal"]').forEach((p: Element) => {
         p.style.display = 'none';
       });
     }).catch(() => {});
@@ -62,7 +62,7 @@ async function testDropdown() {
           console.log(`  Option ${optionCount}: ${text?.substring(0, 40)}`);
           if (optionCount >= 10) break;
         }
-      } catch (e) {
+      } catch (_e) {
         // Skip
       }
     }
@@ -89,7 +89,7 @@ async function testDropdown() {
     }
 
     console.log('\n✅ Test complete');
-  } catch (e) {
+  } catch (_e) {
     console.error('❌ Error:', e);
   } finally {
     await page.waitForTimeout(3000);

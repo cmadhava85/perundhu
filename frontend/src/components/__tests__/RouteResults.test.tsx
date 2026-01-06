@@ -115,7 +115,7 @@ describe('RouteResults Component', () => {
     it('should handle null results as empty', () => {
       render(
         <RouteResults
-          results={null as any}
+          results={null as unknown as typeof results}
           isSearching={false}
           selectedRoute={null}
           setSelectedRoute={mockSetSelectedRoute}
@@ -266,7 +266,7 @@ describe('RouteResults Component', () => {
     });
 
     it('should highlight selected route with blue background', () => {
-      const { container } = render(
+      const { _container } = render(
         <RouteResults
           results={mockRoutes}
           isSearching={false}
@@ -282,7 +282,7 @@ describe('RouteResults Component', () => {
     });
 
     it('should apply blue border to selected route', () => {
-      const { container } = render(
+      const { _container } = render(
         <RouteResults
           results={mockRoutes}
           isSearching={false}
@@ -298,7 +298,7 @@ describe('RouteResults Component', () => {
     });
 
     it('should not highlight non-selected routes', () => {
-      const { container } = render(
+      const { _container } = render(
         <RouteResults
           results={mockRoutes}
           isSearching={false}

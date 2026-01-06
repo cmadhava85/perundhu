@@ -18,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.perundhu.domain.model.Bus;
 import com.perundhu.domain.model.BusId;
+import com.perundhu.domain.model.Translation;
 import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.domain.port.StopRepository;
@@ -135,6 +136,110 @@ class BusScheduleServiceImplTest {
 
             // Assert
             assertThat(result).isEmpty();
+        }
+    }
+
+    @Nested
+    @DisplayName("Language Translation Tests")
+    class LanguageTranslationTests {
+
+        @Test
+        @DisplayName("Should return location translation for Tamil language")
+        void testGetLocationTranslationReturnsTamilName() {
+            // Arrange
+            Long locationId = 1L;
+            String tamilName = "சென்னை";
+
+            // Mock the translation repository to return a translation
+            Translation translation = new Translation(
+                    new Translation.TranslationId(1L),
+                    "location",
+                    locationId,
+                    "name",
+                    "ta",
+                    tamilName,
+                    null,
+                    null);
+            when(translationRepository.findTranslation("location", locationId, "ta", "name"))
+                    .thenReturn(Optional.of(translation));
+
+            // Act
+            String result = busScheduleService.getLocationTranslation(locationId, "ta");
+
+            // Assert
+            assertThat(result).isEqualTo(tamilName);
+        }
+
+        @Test
+        @DisplayName("Should return null for non-existent location translation")
+        void testGetLocationTranslationNonExistent() {
+            // Arrange
+            Long locationId = 99999L;
+
+            // Mock the translation repository to return empty
+            when(translationRepository.findTranslation("location", locationId, "ta", "name"))
+                    .thenReturn(Optional.empty());
+
+            // Act
+            String result = busScheduleService.getLocationTranslation(locationId, "ta");
+
+            // Assert
+            // Should return null or empty string for non-existent translation
+            assertThat(result).isNullOrEmpty();
+        }
+
+        @Test
+        @DisplayName("Should detect Tamil script in location search query")
+        void testSearchLocationsByNameDetectsTamilQuery() {
+            // Arrange
+            String tamilQuery = "சென்னை";
+
+            // Act
+            List<?> result = busScheduleService.searchLocationsByName(tamilQuery);
+
+            // Assert
+            assertThat(result).isNotNull();
+        }
+
+        @Test
+        @DisplayName("Should return Tamil translations for getAllLocations when language=ta")
+        void testGetAllLocationsReturnsTamilTranslations() {
+            // Arrange
+            when(locationRepository.findAll()).thenReturn(List.of());
+
+            // Act
+            List<?> result = busScheduleService.getAllLocations("ta");
+
+            // Assert
+            assertThat(result).isNotNull();
+            verify(locationRepository, atLeastOnce()).findAll();
+        }
+
+        @Test
+        @DisplayName("Should return English translations for getAllLocations when language=en")
+        void testGetAllLocationsReturnsEnglishByDefault() {
+            // Arrange
+            when(locationRepository.findAll()).thenReturn(List.of());
+
+            // Act
+            List<?> result = busScheduleService.getAllLocations("en");
+
+            // Assert
+            assertThat(result).isNotNull();
+            verify(locationRepository, atLeastOnce()).findAll();
+        }
+
+        @Test
+        @DisplayName("Should handle null language parameter gracefully")
+        void testGetAllLocationsWithNullLanguage() {
+            // Arrange
+            when(locationRepository.findAll()).thenReturn(List.of());
+
+            // Act
+            List<?> result = busScheduleService.getAllLocations(null);
+
+            // Assert
+            assertThat(result).isNotNull();
         }
     }
 

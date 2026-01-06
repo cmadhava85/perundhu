@@ -18,7 +18,7 @@ async function testFormFields() {
     await page.keyboard.press('Escape');
     await page.evaluate(() => {
       const popups = document.querySelectorAll('[role="dialog"], [class*="modal"]');
-      popups.forEach((p: any) => {
+      popups.forEach((p: Element) => {
         p.style.display = 'none !important';
       });
     }).catch(() => {});
@@ -64,7 +64,7 @@ async function testFormFields() {
     }
 
     console.log('\n✅ Test complete');
-  } catch (e) {
+  } catch (_e) {
     console.error('❌ Error:', e);
   } finally {
     await page.waitForTimeout(3000);

@@ -1,0 +1,375 @@
+
+> perundhu@0.0.0 lint
+> eslint .
+
+
+/Users/mchand69/Documents/perundhu/frontend/scripts/tnstc-scraper/inspect-tnstc-site.ts
+   25:3  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   26:3  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   54:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   59:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   64:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  135:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  138:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  155:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  165:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  177:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  181:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  191:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  196:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  199:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  200:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  201:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/scripts/tnstc-scraper/scrape-tnstc-buses.ts
+  110:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  131:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  135:18  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  146:16  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  147:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  158:30  error    Unexpected any. Specify a different type                                                 @typescript-eslint/no-explicit-any
+  168:22  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  173:16  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  174:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  178:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  180:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  188:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  193:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  195:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  196:14  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  197:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  200:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  202:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  204:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  206:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  211:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  214:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  216:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  223:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  226:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  232:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  239:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  241:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  246:18  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  252:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  255:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  260:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  267:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  271:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  275:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  277:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  279:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  286:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  289:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  295:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  302:15  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  304:15  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  309:20  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  315:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  320:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  332:19  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  337:22  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  342:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  347:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  373:36  error    Unexpected any. Specify a different type                                                 @typescript-eslint/no-explicit-any
+  380:22  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  390:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  402:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  413:19  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  434:21  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  443:30  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  452:21  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  455:21  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  459:21  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  462:19  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  475:17  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  477:17  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  487:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  491:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  495:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  512:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  513:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  514:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  527:16  error    'getLocationsByPrefix' is defined but never used. Allowed unused vars must match /^_/u   @typescript-eslint/no-unused-vars
+  527:43  error    Unexpected any. Specify a different type                                                 @typescript-eslint/no-explicit-any
+  545:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  552:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  561:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  564:16  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  569:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  573:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  577:16  error    'getAvailableLocations' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  577:44  error    Unexpected any. Specify a different type                                                 @typescript-eslint/no-explicit-any
+  624:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  651:20  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  655:16  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  669:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  676:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  678:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  680:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+  692:9   error    'lines' is assigned a value but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars
+  733:35  error    Unexpected any. Specify a different type                                                 @typescript-eslint/no-explicit-any
+  755:16  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  759:12  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u             @typescript-eslint/no-unused-vars
+  760:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error        no-console
+
+/Users/mchand69/Documents/perundhu/frontend/scripts/tnstc-scraper/test-dropdown.ts
+  10:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  14:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  18:82  error    Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  24:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  29:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  33:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  46:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  50:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  52:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  62:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  65:16  error    'e' is defined but never used. Allowed unused caught errors must match /^_/u       @typescript-eslint/no-unused-vars
+  71:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  72:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  74:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  77:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  80:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  83:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  88:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  91:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/scripts/tnstc-scraper/test-form.ts
+  10:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  14:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  21:26  error    Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  27:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  31:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  32:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  35:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  39:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  43:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  46:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  48:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  52:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  57:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  59:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  61:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  63:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  66:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/__mocks__/@react-google-maps/api.tsx
+  37:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/BusTracker.tsx
+  121:6  warning  React Hook useCallback has a missing dependency: 'reportLocation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  231:6  warning  React Hook useEffect has a missing dependency: 'reportLocation'. Either include it or remove the dependency array    react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/BusTracker/LiveBusTracker.tsx
+   70:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   74:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  132:7  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/Header.tsx
+  39:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/ImageContributionUpload.tsx
+    1:57  error  'useEffect' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   48:10  error  'bottomSuccessContributionId' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  423:13  error  'totalToUpload' is assigned a value but never used. Allowed unused vars must match /^_/u                @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/OpenStreetMapComponent.tsx
+  398:6  warning  React Hook useEffect has missing dependencies: 'buses', 'fromLocation.latitude', 'fromLocation.longitude', 'fromLocation.name', 'onBusClick', 'selectedStops', 'toLocation.latitude', 'toLocation.longitude', and 'toLocation.name'. Either include them or remove the dependency array. If 'onBusClick' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/RouteContribution.tsx
+  15:24  error  'addRecaptchaTokenToHeaders' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/SearchResults.tsx
+  83:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  84:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  85:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/ShareRoute.tsx
+  154:6  warning  React Hook useCallback has a missing dependency: 'getDisplayName'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  174:6  warning  React Hook useCallback has a missing dependency: 'getDisplayName'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/StaticPages.tsx
+  128:9  error  Definition for rule '@typescript-eslint/no-throw-literal' was not found  @typescript-eslint/no-throw-literal
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/TransitBusCard.tsx
+  270:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/TransitBusList.tsx
+  310:6  warning  React Hook useMemo has missing dependencies: 'sortByArrival', 'sortByDeparture', and 'sortByDuration'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/TransitSearchForm.tsx
+   50:9   warning  The 'searchOptions' object makes the dependencies of useCallback Hook (at line 435) change on every render. To fix this, wrap the initialization of 'searchOptions' in its own useMemo() Hook  react-hooks/exhaustive-deps
+  129:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                              no-console
+  237:6   warning  React Hook useEffect has a missing dependency: 'getLocationDisplayName'. Either include it or remove the dependency array                                                                      react-hooks/exhaustive-deps
+  248:6   warning  React Hook useCallback has a missing dependency: 'getLocationDisplayName'. Either include it or remove the dependency array                                                                    react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/__tests__/ConnectingRoutes.test.tsx
+  103:13  error  'container' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/__tests__/RouteResults.test.tsx
+  118:28  error  Unexpected any. Specify a different type                                              @typescript-eslint/no-explicit-any
+  269:15  error  'container' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  285:15  error  'container' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  301:15  error  'container' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/__tests__/RouteSearch.test.tsx
+  159:13  error  'user' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  234:13  error  'user' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/__tests__/SearchResults.test.tsx
+    2:37  error  'waitFor' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+   55:40  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+  454:40  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+  455:29  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+  469:37  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/__tests__/TransitBusList.test.tsx
+    2:26  error  'waitFor' is defined but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars
+   43:34  error  'children' is defined but never used. Allowed unused args must match /^_/u       @typescript-eslint/no-unused-vars
+   62:30  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  216:13  error  'user' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  242:13  error  'user' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  551:57  error  Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/admin/ImageContributionList.tsx
+  35:10  error  'loadedImageIds' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/admin/RouteContributionList.tsx
+  24:6  warning  React Hook useEffect has a missing dependency: 'loadContributions'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/admin/RouteDetailsModal.tsx
+  73:6  warning  React Hook useEffect has a missing dependency: 'getSourceBusId'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/contribution/AddStopsToRoute.tsx
+   41:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+   42:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+   43:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+   98:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  100:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  109:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  113:6   warning  React Hook useEffect has missing dependencies: 'preSelectedBus' and 'selectedBus'. Either include them or remove the dependency array. If 'setSelectedBus' needs the current value of 'preSelectedBus', you can also switch to useReducer instead of useState and read 'preSelectedBus' in the reducer  react-hooks/exhaustive-deps
+  118:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  123:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  127:6   warning  React Hook useEffect has missing dependencies: 'getDisplayName', 'selectedFrom', and 'selectedTo'. Either include them or remove the dependency array                                                                                                                                                   react-hooks/exhaustive-deps
+  148:20  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  175:22  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  254:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  257:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  264:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  272:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  557:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+  563:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                       no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/contribution/RouteVisualization.tsx
+  66:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  89:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  93:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/contribution/StopEntryWizard.tsx
+  52:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  55:7  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  61:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  67:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  68:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  98:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/design-system/Toast.tsx
+  21:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/forms/SimpleRouteForm.tsx
+  259:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/review/BusReviewSection.test.tsx
+  29:35  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+  33:37  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+  41:25  error  'busName' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  41:36  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+  58:10  error  Unexpected any. Specify a different type                                   @typescript-eslint/no-explicit-any
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/review/ReviewList.tsx
+  13:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/review/ReviewModerationDashboard.tsx
+   3:70  error    'Star' is defined but never used. Allowed unused vars must match /^_/u                                                  @typescript-eslint/no-unused-vars
+  35:6   warning  React Hook useEffect has a missing dependency: 'fetchPendingReviews'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/search/LocationDropdown.tsx
+  111:6   warning  React Hook useEffect has a missing dependency: 'filterExcludedLocations'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  114:27  warning  React Hook useCallback received a function whose dependencies are unknown. Pass an inline function instead                  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/search/LocationInput.tsx
+  58:6  warning  React Hook useEffect has a missing dependency: 'getLocationDisplayName'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/ui/__tests__/FormInput.test.tsx
+  2:8  error  'userEvent' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/components/user/UserContributionDashboard.tsx
+  42:6  warning  React Hook useEffect has a missing dependency: 'fetchUserContributions'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx
+  11:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/contexts/AdminAuthContext.tsx
+  159:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/contexts/FeatureFlagsContext.tsx
+  152:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                               no-console
+  190:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                               no-console
+  224:7   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                               no-console
+  333:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  345:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/hooks/useAuth.tsx
+  128:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  137:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  142:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  147:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  153:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  158:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  163:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  168:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  173:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  178:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/hooks/useBusSearchEnhanced.tsx
+  144:6  warning  React Hook React.useEffect has a missing dependency: 'fetchBusStops'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/hooks/useLocationData.ts
+  79:6  warning  React Hook useEffect has missing dependencies: 'isFetching' and 'lastFetchLanguage'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/src/hooks/useRecaptcha.ts
+   3:11  error    'RecaptchaConfig' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  30:52  error    Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  39:58  error    Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  70:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  76:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  81:50  error    Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+
+/Users/mchand69/Documents/perundhu/frontend/src/services/geocodingService.ts
+  317:15  error  'params' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+/Users/mchand69/Documents/perundhu/frontend/src/test-utils.tsx
+  54:7  warning  Fast refresh only works when a file only exports components. Move your component(s) to a separate file  react-refresh/only-export-components
+  85:1  warning  This rule can't verify that `export *` only exports components                                          react-refresh/only-export-components
+
+/Users/mchand69/Documents/perundhu/frontend/src/utils/withCommonBehaviors.tsx
+   93:6  warning  React Hook useEffect has a missing dependency: 'componentName'. Either include it or remove the dependency array                                                      react-hooks/exhaustive-deps
+  104:6  warning  React Hook useEffect was passed a dependency list that is not an array literal. This means we can't statically verify whether you've passed the correct dependencies  react-hooks/exhaustive-deps
+  104:6  warning  React Hook useEffect has missing dependencies: 'componentName' and 'dependencies.length'. Either include them or remove the dependency array                          react-hooks/exhaustive-deps
+
+/Users/mchand69/Documents/perundhu/frontend/tests/e2e/complete-user-journey.spec.ts
+  41:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/tests/e2e/global-teardown.ts
+  6:3  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/tests/e2e/smoke.spec.ts
+  20:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  35:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  46:5  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+/Users/mchand69/Documents/perundhu/frontend/tests/e2e/utils/test-utils.ts
+  202:9  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+✖ 266 problems (66 errors, 200 warnings)
+

@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({
       const hasWizardModal = !!document.querySelector('.wizard-overlay');
       
       // Priority 2: Check global flag set by AddStopsToRoute
-      const isModalOpenFlag = (globalThis as any).isModalOpen === true;
+      const isModalOpenFlag = (globalThis as { isModalOpen?: boolean }).isModalOpen === true;
       
       // Priority 3: Check for other modal elements in DOM
       const hasOtherModal = 

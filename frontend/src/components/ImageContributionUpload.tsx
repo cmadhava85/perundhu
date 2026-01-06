@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Upload, Camera, FileImage, AlertCircle, CheckCircle, RefreshCw, Copy, CheckCircle2 } from 'lucide-react';
 import { submitImageContribution, getImageProcessingStatus, retryImageProcessing, ApiError } from '../services/api';
 import { getRecaptchaToken } from '../services/recaptchaService';
@@ -420,7 +420,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     
     try {
       const pendingImages = uploadedImages.filter(img => !img.contributionId && !img.processing);
-      const totalToUpload = pendingImages.length;
+      const _totalToUpload = pendingImages.length;
       let successCount = 0;
 
       for (const image of pendingImages) {

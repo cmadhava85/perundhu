@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchIcon, BusIcon, MapIcon, LocationIcon, PlusIcon } from './icons';
 import { triggerHaptic } from '../utils/haptic';
+import { useIsFeatureEnabled } from '../contexts/FeatureFlagsContext';
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -15,6 +16,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
   hasResults 
 }) => {
   const { t } = useTranslation();
+  const mapEnabled = useIsFeatureEnabled('enableMap');
 
   const tabs = [
     {
@@ -30,20 +32,20 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       badge: null,
       disabled: !hasResults
     },
-    // {
-    //   id: 'map',
-    //   icon: <MapIcon size={22} />,
-    //   label: t('nav.map', 'Map'),
-    //   badge: null,
-    //   disabled: !hasResults
-    // },
-    // {
-    //   id: 'tracking',
-    //   icon: <LocationIcon size={22} />,
-    //   label: t('nav.tracking', 'Track'),
-    //   badge: null,
-    //   disabled: !hasResults
-    // },
+    ...(mapEnabled ? [{
+      id: 'map',
+      icon: <MapIcon size={22} />,
+      label: t('nav.map', 'Map'),
+      badge: null,
+      disabled: !hasResults
+    }] : []),
+    {
+      id: 'tracking',
+      icon: <LocationIcon size={22} />,
+      label: t('nav.tracking', 'Track'),
+      badge: null,
+      disabled: !hasResults
+    },
     {
       id: 'contribute',
       icon: <PlusIcon size={22} />,
