@@ -102,9 +102,9 @@ gcloud run deploy $SERVICE_NAME \
     --platform managed \
     --region $GCP_REGION \
     --allow-unauthenticated \
-    --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,DB_USERNAME=perundhu_user,MYSQL_USERNAME=perundhu_user,GEMINI_API_ENABLED=true,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
+    --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:asia-south1:perundhu-preprod-mysql,DB_USERNAME=perundhu_user,MYSQL_USERNAME=perundhu_user,GEMINI_API_ENABLED=true,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
     --set-secrets="DB_PASSWORD=preprod-db-password:latest,MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=JWT_SECRET_PREPROD:latest,DATA_ENCRYPTION_KEY=DATA_ENCRYPTION_KEY_PREPROD:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
-    --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
+    --add-cloudsql-instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql \
     --memory 1Gi \
     --cpu 1 \
     --min-instances 0 \

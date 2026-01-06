@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 PROJECT_ID=""
 ACTION="list"
 BUILD_ID=""
-REGION="us-central1"
+REGION="asia-south1"
 LIMIT=10
 WATCH=false
 
@@ -48,7 +48,7 @@ OPTIONS:
     -p, --project PROJECT_ID    GCP Project ID (required)
     -a, --action ACTION         Action to perform [default: list]
     -b, --build BUILD_ID        Build ID for specific operations
-    -r, --region REGION         GCP region [default: us-central1]
+    -r, --region REGION         GCP region [default: asia-south1]
     -l, --limit LIMIT           Number of builds to show [default: 10]
     -w, --watch                 Watch build progress in real-time
     -h, --help                  Show this help message

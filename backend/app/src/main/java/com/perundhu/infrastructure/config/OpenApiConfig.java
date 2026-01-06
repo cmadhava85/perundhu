@@ -67,7 +67,7 @@ public class OpenApiConfig {
                 .url("http://localhost:8080")
                 .description("Local Development Server"),
             new Server()
-                .url("https://perundhu-backend-640693778134.us-central1.run.app")
+                .url("https://perundhu-backend-640693778134.asia-south1.run.app")
                 .description("Production Server")))
         .tags(List.of(
             new Tag().name("Bus Schedules").description("Bus search and schedule operations"),

@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 # Default values
 ENVIRONMENT="preprod"
 PROJECT_ID=""
-REGION="us-central1"
+REGION="asia-south1"
 AUTO_APPROVE=false
 DESTROY=false
 
@@ -48,7 +48,7 @@ Deploy Perundhu infrastructure to Google Cloud Platform
 Options:
     -e, --environment ENV    Environment to deploy (default: preprod)
     -p, --project PROJECT    GCP Project ID (required)
-    -r, --region REGION      GCP Region (default: us-central1)
+    -r, --region REGION      GCP Region (default: asia-south1)
     -y, --auto-approve      Auto approve Terraform changes
     -d, --destroy           Destroy infrastructure instead of creating
     -h, --help              Show this help message

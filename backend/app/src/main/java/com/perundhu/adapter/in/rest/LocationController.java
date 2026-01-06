@@ -128,8 +128,8 @@ public class LocationController {
       }
 
       log.info("No locations in database for '{}', falling back to OpenStreetMap", query);
-      List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10);
-      log.info("Found {} locations from OpenStreetMap for query '{}'", osmResults.size(), query);
+      List<LocationDTO> osmResults = geocodingService.searchTamilNaduLocations(query.trim(), 10, language);
+      log.info("Found {} locations from OpenStreetMap for query '{}' in language '{}'", osmResults.size(), query, language);
       return ResponseEntity.ok(osmResults);
 
     } catch (Exception e) {
