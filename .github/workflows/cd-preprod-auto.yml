@@ -268,6 +268,7 @@ jobs:
       run: |
         wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
         chmod +x cloud_sql_proxy
+        apt-get update && apt-get install -y netcat-openbsd
     
     - name: Run Flyway Migrations
       working-directory: ./backend
@@ -276,9 +277,26 @@ jobs:
         FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
         FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
       run: |
-        # Start Cloud SQL Proxy
-        ../cloud_sql_proxy -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql=tcp:3306 &
-        sleep 10
+        # Start Cloud SQL Proxy in background
+        ../cloud_sql_proxy -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql=tcp:3306 > /tmp/sql_proxy.log 2>&1 &
+        PROXY_PID=$!
+        
+        # Wait for proxy to be ready
+        for i in {1..30}; do
+          if nc -z 127.0.0.1 3306 2>/dev/null; then
+            echo "✅ Cloud SQL Proxy is ready"
+            break
+          fi
+          echo "Waiting for Cloud SQL Proxy... ($i/30)"
+          sleep 2
+        done
+        
+        # Check if proxy is still running
+        if ! kill -0 $PROXY_PID 2>/dev/null; then
+          echo "❌ Cloud SQL Proxy failed to start"
+          cat /tmp/sql_proxy.log
+          exit 1
+        fi
         
         chmod +x gradlew
         
@@ -299,6 +317,9 @@ jobs:
           -Pflyway.locations="classpath:db/migration/mysql" \
           --no-configuration-cache \
           --info
+        
+        # Kill proxy
+        kill $PROXY_PID 2>/dev/null || true
         
         echo "✅ Database migrations completed"
 
