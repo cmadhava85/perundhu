@@ -5,7 +5,7 @@
 set -e
 
 PROJECT_ID="astute-strategy-406601"
-REGION="us-central1"
+REGION="asia-south1"
 ENVIRONMENT="preprod"
 INSTANCE_NAME="perundhu-${ENVIRONMENT}-mysql"
 DB_NAME="perundhu"

@@ -186,7 +186,7 @@ gcloud run jobs create perundhu-migrate-preprod \
   --cpu=2 \
   --set-env-vars="\
     SPRING_PROFILES_ACTIVE=preprod,\
-    GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql" \
+    GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:asia-south1:perundhu-preprod-mysql" \
   --set-secrets="\
     DB_PASSWORD=preprod-db-password:latest,\
     MYSQL_PASSWORD=preprod-db-password:latest" \

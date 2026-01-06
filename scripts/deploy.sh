@@ -17,7 +17,7 @@ PROJECT_ID=""
 ENVIRONMENT="preprod"
 BRANCH="master"
 TRIGGER_ID=""
-REGION="us-central1"
+REGION="asia-south1"
 ASYNC=false
 SUBSTITUTIONS=""
 
@@ -50,7 +50,7 @@ OPTIONS:
     -e, --environment ENV       Environment (preprod, staging, prod) [default: preprod]
     -b, --branch BRANCH         Git branch to build [default: master]
     -t, --trigger TRIGGER_ID    Use specific build trigger ID
-    -r, --region REGION         GCP region [default: us-central1]
+    -r, --region REGION         GCP region [default: asia-south1]
     -a, --async                 Run build asynchronously (don't wait)
     -s, --substitutions SUBS    Additional substitutions (key=value,key2=value2)
     -h, --help                  Show this help message

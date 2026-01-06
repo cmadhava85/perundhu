@@ -7,7 +7,7 @@ set -e
 
 PROJECT_ID="astute-strategy-406601"
 REGION="asia-south1"
-DB_REGION="us-central1"
+DB_REGION="asia-south1"
 ENVIRONMENT="preprod"
 
 echo "=========================================="

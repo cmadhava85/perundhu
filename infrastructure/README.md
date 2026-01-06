@@ -82,7 +82,7 @@ Edit `terraform.tfvars` with your values:
 
 ```hcl
 project_id = "your-gcp-project-id"
-region     = "us-central1"
+region     = "asia-south1"
 notification_email = "admin@yourcompany.com"
 ```
 
@@ -165,7 +165,7 @@ app.storage.bucket.images=${STORAGE_BUCKET_IMAGES}
 Options:
     -e, --environment ENV    Environment (default: preprod)
     -p, --project PROJECT    GCP Project ID (required)
-    -r, --region REGION      GCP Region (default: us-central1)
+    -r, --region REGION      GCP Region (default: asia-south1)
     -y, --auto-approve      Auto approve changes
     -d, --destroy           Destroy infrastructure
     -h, --help              Show help

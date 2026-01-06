@@ -5,7 +5,7 @@
 # Default values
 PROJECT_ID ?= 
 ENVIRONMENT ?= preprod
-REGION ?= us-central1
+REGION ?= asia-south1
 
 help: ## Show this help message
 	@echo "Perundhu Infrastructure Management"

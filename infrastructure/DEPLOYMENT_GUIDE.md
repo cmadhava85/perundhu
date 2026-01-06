@@ -59,7 +59,7 @@ make deploy-app
 Edit `terraform/environments/preprod/terraform.tfvars`:
 ```hcl
 project_id = "your-actual-project-id"
-region     = "us-central1"
+region     = "asia-south1"
 environment = "preprod"
 
 # Database configuration
@@ -141,7 +141,7 @@ curl https://your-backend-url/actuator/health
 gcloud run services update perundhu-backend \
   --min-instances=1 \
   --max-instances=10 \
-  --region=us-central1
+  --region=asia-south1
 ```
 
 ## Cost Optimization

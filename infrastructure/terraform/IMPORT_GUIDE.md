@@ -11,7 +11,7 @@ This guide helps you import your existing GCP resources into Terraform without r
 ## Current Infrastructure
 
 Based on your setup, you have:
-- **Cloud SQL**: `perundhu-preprod-mysql` (us-central1, MYSQL_8_0)
+- **Cloud SQL**: `perundhu-preprod-mysql` (asia-south1, MYSQL_8_0)
 - **Service Account**: `perundhu@astute-strategy-406601.iam.gserviceaccount.com`
 - **Secrets**: `preprod-db-password`, `preprod-jwt-secret`, `perundhu-preprod-db-password`
 - **Cloud Run**: `perundhu-backend-preprod`, `perundhu-frontend-preprod` (asia-south1)

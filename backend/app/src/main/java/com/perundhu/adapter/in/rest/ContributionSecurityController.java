@@ -15,7 +15,7 @@ import java.util.Map;
  * Contribution endpoints with reCAPTCHA protection.
  * Protects route and image contributions from bot abuse.
  * 
- * NOTE: This controller is kept for reference but routes/images endpoints 
+ * NOTE: This controller is kept for reference but routes/images endpoints
  * are handled by ContributionController.java which has the full implementation
  * including database persistence and OCR processing.
  */

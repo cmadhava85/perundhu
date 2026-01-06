@@ -3,7 +3,7 @@
 # Add these to: GitHub Repo → Settings → Secrets and variables → Actions
 
 PROJECT_ID="astute-strategy-406601"
-REGION="us-central1"
+REGION="asia-south1"
 ENVIRONMENT="preprod"
 
 DB_NAME="perundhu"
