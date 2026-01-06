@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -169,23 +170,18 @@ class BusTrackingControllerReporterIdTest {
     @Test
     @DisplayName("Should validate coordinates are within valid range")
     void shouldValidateCoordinates() {
-      BusLocationReportDTO invalidReport = new BusLocationReportDTO(
-          1L,
-          1L,
-          "device_123",
-          LocalDateTime.now().toString(),
-          999.0, // Invalid latitude
-          999.0, // Invalid longitude
-          15.5, 5.2, 90.0, "Android");
-
-      // The controller delegates validation to the service
-      // If service throws exception, controller handles it
-      when(busTrackingService.processLocationReport(any()))
-          .thenThrow(new IllegalArgumentException("Invalid coordinates"));
-
-      ResponseEntity<?> response = controller.reportBusLocation(invalidReport);
-
-      assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+      // DTO validates coordinates at construction time, so this should throw
+      assertThatThrownBy(() -> {
+        new BusLocationReportDTO(
+            1L,
+            1L,
+            "device_123",
+            LocalDateTime.now().toString(),
+            999.0, // Invalid latitude
+            999.0, // Invalid longitude
+            15.5, 5.2, 90.0, "Android");
+      }).isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Latitude must be between -90 and 90");
     }
   }
 
