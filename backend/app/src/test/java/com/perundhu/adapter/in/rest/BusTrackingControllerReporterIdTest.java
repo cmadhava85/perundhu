@@ -167,9 +167,15 @@ class BusTrackingControllerReporterIdTest {
       assertThat(response.getStatusCode()).isNotEqualTo(HttpStatus.OK);
     }
 
+  }
+
+  @Nested
+  @DisplayName("DTO Validation Tests")
+  class DtoValidationTests {
+
     @Test
-    @DisplayName("Should validate coordinates are within valid range")
-    void shouldValidateCoordinates() {
+    @DisplayName("Should validate coordinates are within valid range at DTO construction")
+    void shouldValidateCoordinatesAtConstruction() {
       // DTO validates coordinates at construction time, so this should throw
       assertThatThrownBy(() -> {
         new BusLocationReportDTO(
