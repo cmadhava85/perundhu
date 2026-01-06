@@ -96,6 +96,136 @@ public class OverpassGeocodingService {
   }
 
   /**
+   * Search for locations across multiple states (Tamil Nadu, Kerala, Karnataka, Andhra Pradesh)
+   * Used for inter-state bus routes
+   * 
+   * @param query Search query (location name)
+   * @param limit Maximum number of results
+   * @return List of LocationDTO including multi-state results
+   */
+  @CircuitBreaker(name = "overpass", fallbackMethod = "searchMultiStateLocationsFallback")
+  @Bulkhead(name = "overpass")
+  @Retry(name = "externalApi")
+  public List<LocationDTO> searchMultiStateLocations(String query, int limit) {
+    return searchMultiStateLocations(query, limit, "en");
+  }
+
+  /**
+   * Search for locations across multiple states with language support
+   * Searches: Tamil Nadu, Kerala, Karnataka, Andhra Pradesh
+   * 
+   * @param query    Search query (location name)
+   * @param limit    Maximum number of results
+   * @param language Language code (en or ta for Tamil)
+   * @return List of LocationDTO from multiple states
+   */
+  @CircuitBreaker(name = "overpass", fallbackMethod = "searchMultiStateLocationsFallback")
+  @Bulkhead(name = "overpass")
+  @Retry(name = "externalApi")
+  public List<LocationDTO> searchMultiStateLocations(String query, int limit, String language) {
+    if (query == null || query.trim().length() < 2) {
+      return new ArrayList<>();
+    }
+
+    List<LocationDTO> allResults = new ArrayList<>();
+    
+    try {
+      // Search across multiple state bounding boxes
+      // Priority: Tamil Nadu first, then neighboring states
+      allResults.addAll(fetchLocationsFromState(query, limit / 2, "tamil_nadu", 8.0, 76.0, 13.5, 80.5));
+      
+      if (allResults.size() < limit) {
+        // Kerala (southern)
+        allResults.addAll(fetchLocationsFromState(query, (limit - allResults.size()), "kerala", 8.0, 76.0, 12.5, 77.5));
+      }
+      
+      if (allResults.size() < limit) {
+        // Karnataka (western/northwestern)
+        allResults.addAll(fetchLocationsFromState(query, (limit - allResults.size()), "karnataka", 13.0, 74.0, 18.0, 78.5));
+      }
+      
+      if (allResults.size() < limit) {
+        // Andhra Pradesh (northern)
+        allResults.addAll(fetchLocationsFromState(query, (limit - allResults.size()), "andhra_pradesh", 13.5, 77.0, 19.5, 84.5));
+      }
+      
+      // Remove duplicates by name
+      allResults = removeDuplicatesByName(allResults, limit);
+      
+      log.info("Multi-state search for '{}' (lang: {}) returned {} results", query, language, allResults.size());
+      return allResults;
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      log.error("Multi-state search interrupted for query '{}': {}", query, e.getMessage());
+      return new ArrayList<>();
+    } catch (Exception e) {
+      log.error("Error in multi-state search for query '{}': {}", query, e.getMessage());
+      return new ArrayList<>();
+    }
+  }
+
+  /**
+   * Fetch locations from a specific state region
+   */
+  private List<LocationDTO> fetchLocationsFromState(String query, int limit, String stateName, 
+                                                    double south, double west, double north, double east) 
+      throws Exception {
+    String overpassQuery = String.format(
+        "[bbox:%.1f,%.1f,%.1f,%.1f];\n" +
+        "(\n" +
+        "  node[name~\"%s\",i][place~\"city|town|village|hamlet|neighbourhood|suburb\"];\n" +
+        "  way[name~\"%s\",i][place~\"city|town|village|hamlet|neighbourhood|suburb\"];\n" +
+        "  relation[name~\"%s\",i][place~\"city|town|village|hamlet|neighbourhood|suburb\"];\n" +
+        ");\n" +
+        "out geom(%.1f,%.1f,%.1f,%.1f) center %d;",
+        south, west, north, east, query, query, query, south, west, north, east, limit
+    );
+    
+    log.debug("Querying {} with: {}", stateName, overpassQuery);
+    
+    try {
+      HttpRequest request = HttpRequest.newBuilder()
+          .uri(URI.create(OVERPASS_API_URL))
+          .header("User-Agent", USER_AGENT)
+          .header("Content-Type", "application/x-www-form-urlencoded")
+          .timeout(Duration.ofSeconds(15))
+          .POST(HttpRequest.BodyPublishers.ofString("data=" + URLEncoder.encode(overpassQuery, StandardCharsets.UTF_8)))
+          .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+      
+      if (response.statusCode() == 200) {
+        return parseOverpassResults(response.body(), limit);
+      } else {
+        log.warn("Overpass API returned status {} for {}", response.statusCode(), stateName);
+        return new ArrayList<>();
+      }
+    } catch (Exception e) {
+      log.warn("Error querying {} from Overpass: {}", stateName, e.getMessage());
+      return new ArrayList<>();
+    }
+  }
+
+  /**
+   * Remove duplicate locations by name
+   */
+  private List<LocationDTO> removeDuplicatesByName(List<LocationDTO> locations, int limit) {
+    List<LocationDTO> unique = new ArrayList<>();
+    java.util.Set<String> seen = new java.util.HashSet<>();
+    
+    for (LocationDTO loc : locations) {
+      if (unique.size() >= limit) break;
+      String key = loc.getName().toLowerCase().trim();
+      if (!seen.contains(key)) {
+        unique.add(loc);
+        seen.add(key);
+      }
+    }
+    
+    return unique;
+  }
+
+  /**
    * Fetch locations from Overpass API using QL queries
    * Queries for named places, villages, towns, cities with coordinates
    */
@@ -350,6 +480,16 @@ public class OverpassGeocodingService {
     log.warn("Overpass circuit breaker triggered for location search. Query: '{}', Error: {}", query, t.getMessage());
     // Return empty list - the caller should fall back to database-only search
     return new ArrayList<>();
+  }
+
+  /**
+   * Fallback method when Overpass circuit breaker is open for multi-state location search.
+   */
+  @SuppressWarnings("unused")
+  private List<LocationDTO> searchMultiStateLocationsFallback(String query, int limit, Throwable t) {
+    log.warn("Overpass circuit breaker triggered for multi-state location search. Query: '{}', Error: {}", query, t.getMessage());
+    // Fall back to Tamil Nadu only search
+    return searchTamilNaduLocations(query, limit);
   }
 
   /**
