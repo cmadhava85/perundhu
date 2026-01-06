@@ -11,7 +11,7 @@ This guide helps you import your existing GCP resources into Terraform without r
 ## Current Infrastructure
 
 Based on your setup, you have:
-- **Cloud SQL**: `perundhu-preprod-mysql` (asia-south1, MYSQL_8_0)
+- **Cloud SQL**: `perundhu-preprod-mysql-asia` (asia-south1, MYSQL_8_0)
 - **Service Account**: `perundhu@astute-strategy-406601.iam.gserviceaccount.com`
 - **Secrets**: `preprod-db-password`, `preprod-jwt-secret`, `perundhu-preprod-db-password`
 - **Cloud Run**: `perundhu-backend-preprod`, `perundhu-frontend-preprod` (asia-south1)
@@ -32,7 +32,7 @@ Before importing, you need to ensure your Terraform configuration matches your e
 
 1. **Database tier** - Run this to see your current tier:
    ```bash
-   gcloud sql instances describe perundhu-preprod-mysql --format="value(settings.tier)"
+   gcloud sql instances describe perundhu-preprod-mysql-asia --format="value(settings.tier)"
    ```
 
 2. **Cloud Run settings** - Check memory, CPU, etc.:
@@ -66,15 +66,15 @@ cd infrastructure/terraform/environments/preprod
 
 # 1. Import Cloud SQL instance
 terraform import 'module.database.google_sql_database_instance.mysql_instance' \
-  'astute-strategy-406601/perundhu-preprod-mysql'
+  'astute-strategy-406601/perundhu-preprod-mysql-asia'
 
 # 2. Import database
 terraform import 'module.database.google_sql_database.database' \
-  'astute-strategy-406601/perundhu-preprod-mysql/perundhu'
+  'astute-strategy-406601/perundhu-preprod-mysql-asia/perundhu'
 
 # 3. Import database user
 terraform import 'module.database.google_sql_user.users' \
-  'astute-strategy-406601/perundhu-preprod-mysql/perundhu_user'
+  'astute-strategy-406601/perundhu-preprod-mysql-asia/perundhu_user'
 
 # 4. Import service account
 terraform import 'module.iam.google_service_account.backend' \

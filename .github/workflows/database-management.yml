@@ -52,7 +52,7 @@ jobs:
           echo "instance=perundhu-production-mysql" >> $GITHUB_OUTPUT
           echo "bucket=perundhu-db-backups-production" >> $GITHUB_OUTPUT
         else
-          echo "instance=perundhu-preprod-mysql" >> $GITHUB_OUTPUT
+          echo "instance=perundhu-preprod-mysql-asia" >> $GITHUB_OUTPUT
           echo "bucket=perundhu-db-backups-preprod" >> $GITHUB_OUTPUT
         fi
     
