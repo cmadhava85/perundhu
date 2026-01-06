@@ -1241,7 +1241,7 @@ public class ContributionProcessingService {
                 if (!validationResult.isValid()) {
                     skippedCount++;
                     skippedReasons.add(contribution.getId() + ": " + validationResult.message());
-                    contribution.setStatus("PENDING_REVIEW");
+                    contribution.setStatus("PENDING");
                     contribution.setValidationMessage("Cannot integrate: " + validationResult.message());
                     contribution.setProcessedDate(LocalDateTime.now());
                     routeContributionRepository.save(contribution);
@@ -1453,7 +1453,7 @@ public class ContributionProcessingService {
             if (!validationResult.isValid()) {
                 log.warn("Skipping integration for contribution ID {} - {}",
                         contribution.getId(), validationResult.message());
-                contribution.setStatus("PENDING_REVIEW");
+                contribution.setStatus("PENDING");
                 contribution.setValidationMessage("Cannot integrate: " + validationResult.message() +
                         ". Please complete the missing data before approval.");
                 contribution.setProcessedDate(LocalDateTime.now());

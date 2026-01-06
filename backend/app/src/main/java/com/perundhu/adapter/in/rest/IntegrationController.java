@@ -149,12 +149,12 @@ public class IntegrationController {
       List<RouteContribution> approvedContributions = routeContributionPort.findRouteContributionsByStatus("APPROVED");
       List<RouteContribution> integratedContributions = routeContributionPort
           .findRouteContributionsByStatus("INTEGRATED");
-      List<RouteContribution> pendingReviewContributions = routeContributionPort
-          .findRouteContributionsByStatus("PENDING_REVIEW");
+      List<RouteContribution> pendingContributions = routeContributionPort
+          .findRouteContributionsByStatus("PENDING");
 
       result.put("approvedCount", approvedContributions.size());
       result.put("integratedCount", integratedContributions.size());
-      result.put("pendingReviewCount", pendingReviewContributions.size());
+      result.put("pendingCount", pendingContributions.size());
       result.put("pendingIntegrationCount", approvedContributions.size());
       result.put("needsIntegration", approvedContributions.size() > 0);
 
@@ -190,10 +190,10 @@ public class IntegrationController {
     int failedCount = 0;
 
     try {
-      // Get all approved and pending_review contributions
+      // Get all approved contributions to check for missing arrival times
       List<RouteContribution> approvedContributions = routeContributionPort.findRouteContributionsByStatus("APPROVED");
       List<RouteContribution> pendingContributions = routeContributionPort
-          .findRouteContributionsByStatus("PENDING_REVIEW");
+          .findRouteContributionsByStatus("PENDING");
 
       // Combine both lists
       approvedContributions.addAll(pendingContributions);

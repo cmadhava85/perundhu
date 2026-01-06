@@ -492,7 +492,7 @@ public class AdminController {
 
             // Get contributions that need reprocessing
             List<String> statusesToReprocess = List.of(
-                    "FAILED", "INTEGRATION_FAILED", "PENDING_REVIEW", "APPROVED");
+                    "FAILED", "INTEGRATION_FAILED", "PENDING", "APPROVED");
 
             for (String status : statusesToReprocess) {
                 List<RouteContribution> contributions = contributionProcessingService
@@ -579,7 +579,7 @@ public class AdminController {
             Map<String, Object> stats = new HashMap<>();
 
             List<String> statuses = List.of(
-                    "PENDING", "PENDING_REVIEW", "APPROVED", "INTEGRATED",
+                    "PENDING", "APPROVED", "INTEGRATED",
                     "FAILED", "INTEGRATION_FAILED", "REJECTED", "DUPLICATE");
 
             for (String status : statuses) {

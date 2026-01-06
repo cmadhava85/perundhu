@@ -358,7 +358,7 @@ const ContributionAdminPanel: React.FC = () => {
                   </td>
                   <td>
                     <span className={`status-badge ${contribution.status?.toLowerCase()}`}>
-                      {contribution.status === 'PENDING_REVIEW' && <Clock size={14} />}
+                      {contribution.status === 'PENDING' && <Clock size={14} />}
                       {contribution.status === 'APPROVED' && <CheckCircle size={14} />}
                       {contribution.status === 'REJECTED' && <XCircle size={14} />}
                       {contribution.status}
@@ -527,7 +527,7 @@ const ContributionReviewModal: React.FC<ReviewModalProps> = ({
           
           {!showRejectForm ? (
             <div className="modal-actions">
-              {contribution.status === 'PENDING_REVIEW' && (
+              {contribution.status === 'PENDING' && (
                 <>
                   <button
                     onClick={() => onApprove(contribution.id!.toString(), contribution.type)}

@@ -2,7 +2,7 @@
  * Types for user contributions
  */
 
-export type ContributionStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'INTEGRATION_FAILED' | 'PENDING_REVIEW' | 'INTEGRATED';
+export type ContributionStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'INTEGRATION_FAILED' | 'INTEGRATED';
 
 export interface StopContribution {
   stopOrder: number;

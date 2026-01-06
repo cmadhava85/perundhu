@@ -899,7 +899,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             ImageContribution contribution,
             Map<String, Object> extractedData,
             boolean autoApprove) {
-        String status = autoApprove ? "APPROVED" : "PENDING_REVIEW";
+        String status = autoApprove ? "APPROVED" : "PENDING";
 
         logger.info("Creating route data from OCR for contribution: {}", contribution.getId());
 

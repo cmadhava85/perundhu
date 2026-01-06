@@ -71,7 +71,7 @@ public class ContributionSecurityController {
           "Route contribution submitted successfully",
           Map.of(
               "busName", contributionData.getBusName(),
-              "status", "pending_review")));
+              "status", "pending")));
 
     } catch (Exception e) {
       log.error("Error processing route contribution: {}", e.getMessage(), e);
@@ -131,7 +131,7 @@ public class ContributionSecurityController {
           "Image contribution submitted successfully",
           Map.of(
               "busName", busName,
-              "status", "pending_review")));
+              "status", "pending")));
 
     } catch (Exception e) {
       log.error("Error processing image contribution: {}", e.getMessage(), e);
