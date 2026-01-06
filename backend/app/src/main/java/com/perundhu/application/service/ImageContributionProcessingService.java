@@ -1,5 +1,6 @@
 package com.perundhu.application.service;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -1383,11 +1384,17 @@ public class ImageContributionProcessingService implements ImageContributionInpu
      */
     private FileUpload convertToFileUpload(MultipartFile multipartFile) {
         try {
+            // Read bytes from multipart file first to avoid stream consumption issues
+            byte[] fileBytes = multipartFile.getBytes();
+            
+            // Create a ByteArrayInputStream wrapper instead of using the original stream
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileBytes);
+            
             return new FileUpload(
                     multipartFile.getOriginalFilename(),
                     multipartFile.getContentType(),
                     multipartFile.getSize(),
-                    multipartFile.getInputStream());
+                    byteArrayInputStream);
         } catch (Exception e) {
             throw new RuntimeException("Failed to convert MultipartFile to FileUpload", e);
         }

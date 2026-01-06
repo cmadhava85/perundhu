@@ -68,9 +68,22 @@ public class BusScheduleControllerTest {
                 buses = Arrays.asList(
                                 new BusDTO(
                                                 1L, // id
+                                                "BUS001", // number
                                                 "Express", // name
-                                                "Express", // translatedName
-                                                "BUS001" // busNumber
+                                                "Operator", // operator
+                                                "AC", // type
+                                                "08:00", // departureTime
+                                                "14:00", // arrivalTime
+                                                4.5, // rating
+                                                Map.of(), // features
+                                                1L, // fromLocationId
+                                                "Chennai", // fromLocationName
+                                                null, // fromLocationNameTranslated
+                                                2L, // toLocationId
+                                                "Bangalore", // toLocationName
+                                                null, // toLocationNameTranslated
+                                                50, // capacity
+                                                true // active
                                 ));
 
                 schedules = Arrays.asList(

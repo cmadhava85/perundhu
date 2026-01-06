@@ -860,7 +860,10 @@ public class BusScheduleController {
                         route.departureTime(),
                         route.arrivalTime(),
                         route.rating(),
-                        Map.of() // features as empty map
+                        Map.of(), // features as empty map
+                        null, null, null, null, null, null, // location info
+                        route.capacity(),
+                        route.active()
                 ))
                 .toList();
     }
