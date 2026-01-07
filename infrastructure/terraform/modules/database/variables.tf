@@ -57,3 +57,9 @@ variable "create_test_database" {
   type        = bool
   default     = true
 }
+
+variable "db_instance_name_suffix" {
+  description = "Suffix for database instance name (e.g., '-asia' for perundhu-preprod-mysql-asia)"
+  type        = string
+  default     = ""
+}

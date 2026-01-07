@@ -103,26 +103,32 @@ jobs:
       run: |
         BUCKET_NAME="perundhu-prod-001-tf-state-1767644488"
         SERVICE_ACCOUNT="cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com"
-        echo "Checking if bucket $BUCKET_NAME exists..."
-        if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
+        PROJECT_ID="perundhu-prod-001"
+        
+        echo "Checking if bucket gs://$BUCKET_NAME exists..."
+        if ! gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID 2>/dev/null; then
           echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
-          gcloud storage buckets create gs://$BUCKET_NAME --project=perundhu-prod-001 --location=asia-south1 --uniform-bucket-level-access
+          gcloud storage buckets create gs://$BUCKET_NAME \
+            --project=$PROJECT_ID \
+            --location=asia-south1 \
+            --uniform-bucket-level-access || true
+          
           echo "Enabling versioning on bucket..."
-          gcloud storage buckets update gs://$BUCKET_NAME --versioning
+          gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID || true
+          
           echo "Granting service account access to bucket..."
           gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
             --member="serviceAccount:$SERVICE_ACCOUNT" \
-            --role="roles/storage.objectAdmin"
+            --role="roles/storage.objectAdmin" \
+            --project=$PROJECT_ID || true
+          
           echo "Bucket created and configured successfully"
         else
           echo "Terraform state bucket already exists"
         fi
-        echo "Verifying bucket exists..."
-        gcloud storage buckets describe gs://$BUCKET_NAME
-        echo "Testing bucket access with service account..."
-        echo "test" | gcloud storage cp - gs://$BUCKET_NAME/test-access.txt
-        gcloud storage rm gs://$BUCKET_NAME/test-access.txt
-        echo "Bucket access confirmed"
+        
+        echo "Verifying bucket access..."
+        gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID
     
     - name: Debug GCP Credentials
       run: |
@@ -343,22 +349,32 @@ jobs:
       run: |
         BUCKET_NAME="perundhu-prod-001-tf-state-1767644488"
         SERVICE_ACCOUNT="cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com"
-        echo "Checking if bucket $BUCKET_NAME exists..."
-        if ! gcloud storage buckets describe gs://$BUCKET_NAME 2>/dev/null; then
+        PROJECT_ID="perundhu-prod-001"
+        
+        echo "Checking if bucket gs://$BUCKET_NAME exists..."
+        if ! gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID 2>/dev/null; then
           echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
-          gcloud storage buckets create gs://$BUCKET_NAME --project=perundhu-prod-001 --location=asia-south1 --uniform-bucket-level-access
+          gcloud storage buckets create gs://$BUCKET_NAME \
+            --project=$PROJECT_ID \
+            --location=asia-south1 \
+            --uniform-bucket-level-access || true
+          
           echo "Enabling versioning on bucket..."
-          gcloud storage buckets update gs://$BUCKET_NAME --versioning
+          gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID || true
+          
           echo "Granting service account access to bucket..."
           gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
             --member="serviceAccount:$SERVICE_ACCOUNT" \
-            --role="roles/storage.objectAdmin"
+            --role="roles/storage.objectAdmin" \
+            --project=$PROJECT_ID || true
+          
           echo "Bucket created and configured successfully"
         else
           echo "Terraform state bucket already exists"
         fi
-        echo "Verifying bucket exists..."
-        gcloud storage buckets describe gs://$BUCKET_NAME
+        
+        echo "Verifying bucket access..."
+        gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}

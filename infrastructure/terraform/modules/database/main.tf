@@ -8,7 +8,7 @@ resource "random_password" "db_password" {
 
 # Cloud SQL instance
 resource "google_sql_database_instance" "mysql_instance" {
-  name             = "${var.app_name}-${var.environment}-mysql"
+  name             = "${var.app_name}-${var.environment}-mysql${var.db_instance_name_suffix}"
   database_version = var.db_version
   region           = var.region
 
