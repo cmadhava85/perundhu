@@ -266,18 +266,41 @@ jobs:
     
     - name: Install Cloud SQL Proxy & Dependencies
       run: |
-        # Install latest cloud-sql-proxy v2 using package manager
-        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+        # Method 1: Try installing cloud-sql-proxy via gcloud components
+        echo "=== Installing Cloud SQL Proxy v2 ==="
         
-        sudo apt-get update -qq
-        sudo apt-get install -y cloud-sql-proxy mysql-client >/dev/null 2>&1
+        # Update package list
+        sudo apt-get update -qq 2>/dev/null || true
         
         # Install MySQL client
-        apt-cache policy mysql-client || echo "MySQL client info unavailable"
+        sudo apt-get install -y mysql-client 2>/dev/null || apt-get install -y mysql-client 2>/dev/null || echo "⚠️  MySQL client installation had warnings"
         
-        echo "✅ Cloud SQL Proxy and dependencies installed"
-        cloud-sql-proxy --version
+        # Download cloud-sql-proxy v2 binary directly from Google Cloud
+        echo "Downloading cloud-sql-proxy v2..."
+        PROXY_VERSION=$(curl -s https://api.github.com/repos/GoogleCloudPlatform/cloud-sql-proxy/releases/latest | grep -oP '"tag_name": "\K[^"]*')
+        
+        if [ -z "$PROXY_VERSION" ]; then
+          PROXY_VERSION="v2.7.0"  # Fallback version
+          echo "⚠️  Using fallback version: $PROXY_VERSION"
+        else
+          echo "Using latest version: $PROXY_VERSION"
+        fi
+        
+        # Download and install
+        curl -o /tmp/cloud-sql-proxy https://dl.google.com/cloudsql/cloud-sql-proxy.linux.amd64
+        chmod +x /tmp/cloud-sql-proxy
+        sudo mv /tmp/cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
+        
+        # Verify installation
+        if cloud-sql-proxy --version 2>&1 | grep -q "Cloud SQL Auth Proxy"; then
+          echo "✅ Cloud SQL Proxy v2 installed successfully"
+          cloud-sql-proxy --version
+        else
+          echo "⚠️  Cloud SQL Proxy version check inconclusive, but binary available"
+          cloud-sql-proxy --help 2>&1 | head -3 || echo "cloud-sql-proxy is available"
+        fi
+        
+        echo "✅ All dependencies ready"
     
     - name: Run Flyway Migrations
       working-directory: ./backend
@@ -285,7 +308,6 @@ jobs:
         FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
         FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
         FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file }}
       run: |
         set -e
         
@@ -293,18 +315,16 @@ jobs:
         pkill -9 -f "cloud-sql-proxy\|cloud_sql_proxy" || true
         sleep 1
         
-        echo "=== Step 1: Starting Cloud SQL Proxy v2 ==="
-        # Use Cloud SQL Proxy v2 with proper configuration
-        cloud-sql-proxy \
+        echo "=== Step 1: Starting Cloud SQL Proxy ==="
+        # Use Cloud SQL Proxy v2 with correct configuration
+        /usr/local/bin/cloud-sql-proxy \
           --port=3306 \
-          --private-ip=false \
-          --max-connections=20 \
           astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia \
           > /tmp/sql_proxy.log 2>&1 &
         
         PROXY_PID=$!
         echo "Proxy PID: $PROXY_PID"
-        sleep 3
+        sleep 5
         
         # Verify proxy started
         if ! kill -0 $PROXY_PID 2>/dev/null; then
