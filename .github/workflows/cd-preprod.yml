@@ -187,8 +187,9 @@ jobs:
             exit 1
           fi
           
-          # Flyway configuration for Cloud SQL via proxy
-          FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+          # Flyway configuration for Cloud SQL via proxy - explicit port 3306
+          # Must use localhost (not 127.0.0.1) and include port in connection string
+          FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=10000"
           
           # Start Cloud SQL Proxy with explicit local binding
           echo "🔌 Starting Cloud SQL Proxy on port 3306..."
@@ -231,6 +232,7 @@ jobs:
             -Pflyway.url="${FLYWAY_URL}" \
             -Pflyway.user="${DB_USER}" \
             -Pflyway.password="${DB_PASSWORD}" \
+            -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
             --no-configuration-cache \
             -x test || echo "⚠️  flywayRepair completed with warnings"
           
@@ -239,6 +241,7 @@ jobs:
             -Pflyway.url="${FLYWAY_URL}" \
             -Pflyway.user="${DB_USER}" \
             -Pflyway.password="${DB_PASSWORD}" \
+            -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
             --no-configuration-cache \
             -x test
           
