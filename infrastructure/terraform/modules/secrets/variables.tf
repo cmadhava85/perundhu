@@ -13,12 +13,6 @@ variable "app_name" {
   type        = string
 }
 
-variable "db_url" {
-  description = "Full JDBC database URL"
-  type        = string
-  sensitive   = true
-}
-
 variable "db_username" {
   description = "Database username"
   type        = string
@@ -28,12 +22,5 @@ variable "db_username" {
 variable "db_password" {
   description = "Database password"
   type        = string
-  sensitive   = true
-}
-
-variable "redis_auth" {
-  description = "Redis auth string"
-  type        = string
-  default     = ""
   sensitive   = true
 }

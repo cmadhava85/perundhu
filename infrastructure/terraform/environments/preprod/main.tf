@@ -101,19 +101,17 @@ module "storage" {
 # NOTE: Redis removed - not needed for current app scale
 # Can be re-enabled later if caching is needed
 
-# Secret Manager for environment-specific configuration
+# Secret Manager for database credentials
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
-# are managed by the shared environment: terraform/environments/shared
+# are managed by the shared-secrets module
 module "secrets" {
   source = "../../modules/secrets"
 
   project_id  = var.project_id
   environment = var.environment
   app_name    = var.app_name
-  db_url      = module.database.database_url
   db_username = module.database.db_user
   db_password = module.database.db_password
-  redis_auth  = "" # Redis disabled
 
   depends_on = [module.database]
 }
