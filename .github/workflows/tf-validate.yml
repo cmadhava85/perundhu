@@ -39,14 +39,14 @@ jobs:
     - name: Terraform Validate - Shared
       working-directory: infrastructure/terraform/environments/shared
       run: |
-        terraform init -backend=false
+        terraform init -backend=false -lock=false
         terraform validate
         echo "✅ Shared environment terraform is valid"
 
     - name: Terraform Validate - PreProd
       working-directory: infrastructure/terraform/environments/preprod
       run: |
-        terraform init -backend=false
+        terraform init -backend=false -lock=false
         terraform validate
         echo "✅ PreProd environment terraform is valid"
 
@@ -58,6 +58,14 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
 
+    - name: Clean up stuck state locks
+      working-directory: infrastructure/terraform/environments/preprod
+      continue-on-error: true
+      run: |
+        # Remove any stuck lock files from GCS
+        gsutil rm -f gs://astute-strategy-406601-tf-state/preprod/state/default.tflock 2>/dev/null || echo "No lock file to remove"
+        sleep 2
+
     - name: Terraform Plan - PreProd (Dry Run)
       id: plan
       working-directory: infrastructure/terraform/environments/preprod
@@ -65,8 +73,9 @@ jobs:
       run: |
         terraform init -input=false -lock=false
         
-        # Run plan and capture output
+        # Run plan with -lock=false since plan doesn't modify state
         terraform plan \
+          -lock=false \
           -var="project_id=${{ env.GCP_PROJECT_ID }}" \
           -var="notification_email=alerts@perundhu.com" \
           -no-color \

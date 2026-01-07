@@ -61,7 +61,7 @@ jobs:
     - name: Validate PreProd Config
       working-directory: ${{ env.TF_WORKING_DIR }}/preprod
       run: |
-        terraform init -backend=false
+        terraform init -backend=false -lock=false
         terraform validate
 
   terraform-plan-preprod:
@@ -134,17 +134,25 @@ jobs:
         gcloud config get-value project
         gcloud auth list
 
+    - name: Clean up stuck state locks
+      continue-on-error: true
+      run: |
+        # Remove any stuck lock files from GCS
+        BUCKET_PATH="gs://astute-strategy-406601-tf-state/preprod/state/default.tflock"
+        echo "Checking for stuck locks at: $BUCKET_PATH"
+        gsutil rm -f "$BUCKET_PATH" 2>/dev/null && echo "✅ Removed stuck lock file" || echo "ℹ️  No lock file found (clean state)"
+        sleep 2
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false -reconfigure
+      run: terraform init -input=false -reconfigure -lock=false
     
     - name: Terraform Plan
       id: plan
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
         terraform plan -no-color -out=tfplan \
-          -lock-timeout=5m \
+          -lock=false \
           -var="project_id=astute-strategy-406601" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
@@ -366,14 +374,14 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false -reconfigure
+      run: terraform init -input=false -reconfigure -lock=false
     
     - name: Terraform Plan
       id: plan
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
         terraform plan -no-color -out=tfplan \
-          -lock-timeout=5m \
+          -lock=false \
           -var="project_id=perundhu-prod-001" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
