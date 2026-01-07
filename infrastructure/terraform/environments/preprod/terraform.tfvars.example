@@ -14,8 +14,11 @@ app_name    = "perundhu"
 db_version       = "MYSQL_8_0"
 db_instance_tier = "db-f1-micro"
 
-# Domain Configuration
+# Notifications Configuration
+notification_email = "alerts@perundhu.com"
+
+# Domain Configuration (optional - can override via -var if needed)
 domain_name = "preprod.perundhu.app"
 
-# Container Image (managed by CI/CD)
+# Container Image (optional - managed by CI/CD, can override via -var if needed)
 container_image = "asia-south1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:preprod-latest"
