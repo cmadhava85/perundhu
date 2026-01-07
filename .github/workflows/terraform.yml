@@ -111,24 +111,21 @@ jobs:
           gcloud storage buckets create gs://$BUCKET_NAME \
             --project=$PROJECT_ID \
             --location=asia-south1 \
-            --uniform-bucket-level-access || true
+            --uniform-bucket-level-access
           
           echo "Enabling versioning on bucket..."
-          gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID || true
+          gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID
           
           echo "Granting service account access to bucket..."
           gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
             --member="serviceAccount:$SERVICE_ACCOUNT" \
             --role="roles/storage.objectAdmin" \
-            --project=$PROJECT_ID || true
+            --project=$PROJECT_ID
           
-          echo "Bucket created and configured successfully"
+          echo "✅ Bucket created and configured successfully"
         else
-          echo "Terraform state bucket already exists"
+          echo "✅ Terraform state bucket already exists"
         fi
-        
-        echo "Verifying bucket access..."
-        gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID
     
     - name: Debug GCP Credentials
       run: |
@@ -353,28 +350,19 @@ jobs:
         
         echo "Checking if bucket gs://$BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID 2>/dev/null; then
-          echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
-          gcloud storage buckets create gs://$BUCKET_NAME \
-            --project=$PROJECT_ID \
-            --location=asia-south1 \
-            --uniform-bucket-level-access || true
-          
-          echo "Enabling versioning on bucket..."
-          gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID || true
-          
-          echo "Granting service account access to bucket..."
-          gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
-            --member="serviceAccount:$SERVICE_ACCOUNT" \
-            --role="roles/storage.objectAdmin" \
-            --project=$PROJECT_ID || true
-          
-          echo "Bucket created and configured successfully"
+          echo "⚠️ Bucket does not exist and cannot create without proper credentials"
+          echo "IMPORTANT: Production terraform state bucket must be created manually or with production credentials"
+          echo "Bucket that should exist: gs://$BUCKET_NAME in project $PROJECT_ID"
+          echo ""
+          echo "To create manually, run:"
+          echo "  gcloud storage buckets create gs://$BUCKET_NAME --project=$PROJECT_ID --location=asia-south1 --uniform-bucket-level-access"
+          echo "  gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID"
+          echo ""
+          echo "⚠️ Skipping bucket creation - verify it exists before running terraform apply"
+          exit 0
         else
-          echo "Terraform state bucket already exists"
+          echo "✅ Terraform state bucket already exists"
         fi
-        
-        echo "Verifying bucket access..."
-        gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
