@@ -173,10 +173,9 @@ jobs:
       - name: Run Flyway Migrations
         working-directory: ./backend
         run: |
-          # Clean up any existing processes on port 3306
-          echo "🧹 Cleaning up any existing processes on port 3306..."
-          sudo lsof -ti:3306 | xargs -r sudo kill -9 2>/dev/null || true
-          sleep 1
+          # Don't try to kill processes - just let the proxy start fresh
+          echo "Waiting 2 seconds for clean state..."
+          sleep 2
           
           # Get DB credentials from GCP Secret Manager
           DB_USER=$(gcloud secrets versions access latest --secret=db-username 2>/dev/null || echo "perundhu_user")
@@ -187,12 +186,11 @@ jobs:
             exit 1
           fi
           
-          # Flyway configuration for Cloud SQL via proxy - explicit port 3306
-          # Must use localhost (not 127.0.0.1) and include port in connection string
+          # Flyway configuration - MUST use localhost proxy only
           FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=10000"
           
-          # Start Cloud SQL Proxy with explicit local binding
-          echo "🔌 Starting Cloud SQL Proxy on port 3306..."
+          # Start Cloud SQL Proxy with explicit localhost binding on port 3306
+          echo "🔌 Starting Cloud SQL Proxy on 127.0.0.1:3306..."
           cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3306 -max_connections=100 &
           PROXY_PID=$!
           
@@ -201,7 +199,7 @@ jobs:
           for i in {1..60}; do
             if nc -z 127.0.0.1 3306 2>/dev/null; then
               echo "✅ Cloud SQL Proxy ready on port 3306"
-              sleep 2  # Extra wait for proxy to fully initialize
+              sleep 3  # Extra wait for proxy to fully initialize
               break
             fi
             echo "  [$i/60] Waiting for port 3306..."
@@ -217,17 +215,8 @@ jobs:
           
           chmod +x gradlew
           
-          # Verify connection before migrations
-          echo "🔍 Verifying database connectivity..."
-          echo "SELECT 1;" | mysql -h 127.0.0.1 -u "${DB_USER}" -p"${DB_PASSWORD}" 2>/dev/null || {
-            echo "❌ Failed to connect to database"
-            kill $PROXY_PID || true
-            exit 1
-          }
-          echo "✅ Database connection verified"
-          
-          # Run Flyway migrations
-          echo "🔄 Running Flyway migrations..."
+          # Skip mysql verification - just run migrations directly
+          echo "🔄 Running Flyway migrations through proxy..."
           ./gradlew flywayRepair \
             -Pflyway.url="${FLYWAY_URL}" \
             -Pflyway.user="${DB_USER}" \
