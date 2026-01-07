@@ -57,7 +57,7 @@ gcloud run deploy perundhu-backend-preprod \
   --region=${GCP_REGION} \
   --allow-unauthenticated \
   --project=${GCP_PROJECT_ID} \
-  --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,SPRING_DATASOURCE_URL=jdbc:mysql://10.189.0.5:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&connectTimeout=60000&socketTimeout=120000,DB_USERNAME=${DB_USERNAME},DB_PASSWORD=${DB_PASSWORD},GEMINI_API_KEY=${GEMINI_API_KEY},FLYWAY_ENABLED=false,SERVER_PORT=8080,LOG_LEVEL_ROOT=INFO,LOG_LEVEL_APP=INFO,DATA_ENCRYPTION_KEY_DISABLED=true" \
+  --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,SPRING_DATASOURCE_URL=jdbc:mysql:///perundhu?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=${CLOUD_SQL_INSTANCE}&connectTimeout=60000&socketTimeout=120000,DB_USERNAME=${DB_USERNAME},DB_PASSWORD=${DB_PASSWORD},GEMINI_API_KEY=${GEMINI_API_KEY},FLYWAY_ENABLED=false,SERVER_PORT=8080,LOG_LEVEL_ROOT=INFO,LOG_LEVEL_APP=INFO,DATA_ENCRYPTION_KEY_DISABLED=true" \
   --add-cloudsql-instances=${CLOUD_SQL_INSTANCE} \
   --cpu=2 \
   --memory=2Gi \
