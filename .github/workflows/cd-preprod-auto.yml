@@ -279,10 +279,33 @@ jobs:
         FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
       run: |
         # Start Cloud SQL Proxy - Preprod database (asia-south1 region)
+        echo "=== Starting Cloud SQL Proxy ==="
         cloud_sql_proxy \
           -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 \
-          --max-connections=5 &
-        sleep 15
+          --max-connections=5 \
+          --use-http-health-check \
+          > /tmp/sql_proxy.log 2>&1 &
+        
+        PROXY_PID=$!
+        echo "Cloud SQL Proxy started with PID: $PROXY_PID"
+        
+        # Wait for proxy to be ready (with retry logic)
+        echo "Waiting for Cloud SQL Proxy to be ready..."
+        for i in {1..30}; do
+          if nc -z 127.0.0.1 3306 2>/dev/null; then
+            echo "✅ Cloud SQL Proxy is ready on port 3306"
+            break
+          fi
+          if [ $i -eq 30 ]; then
+            echo "❌ Cloud SQL Proxy failed to start!"
+            echo "=== Proxy logs ==="
+            cat /tmp/sql_proxy.log
+            ps aux | grep cloud_sql_proxy
+            exit 1
+          fi
+          echo "Attempt $i: Waiting for proxy... (sleeping 2s)"
+          sleep 2
+        done
         
         chmod +x gradlew
         
