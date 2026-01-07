@@ -101,7 +101,7 @@ echo "📋 Step 7: Capturing infrastructure outputs..."
 terraform output -json > /tmp/preprod-terraform-outputs.json
 
 # Extract important values
-CLOUD_SQL_INSTANCE=$(terraform output -raw sql_instance_connection_name 2>/dev/null || echo "astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia")
+CLOUD_SQL_INSTANCE=$(terraform output -raw sql_instance_connection_name 2>/dev/null || echo "astute-strategy-406601:asia-south1:perundhu-preprod-mysql")
 CLOUD_SQL_IP=$(terraform output -raw sql_instance_private_ip 2>/dev/null || echo "N/A")
 
 echo "✅ Outputs captured"
@@ -109,7 +109,7 @@ echo ""
 
 # Step 9: Verify Cloud SQL instance
 echo "📋 Step 8: Verifying Cloud SQL instance..."
-gcloud sql instances describe perundhu-preprod-mysql-asia \
+gcloud sql instances describe perundhu-preprod-mysql \
   --project=${GCP_PROJECT_ID} \
   --format='value(name,databaseVersion,currentDiskSize,status)' 2>/dev/null || echo "⏳ Instance still initializing"
 echo ""

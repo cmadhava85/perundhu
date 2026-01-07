@@ -99,7 +99,7 @@ echo "${YELLOW}⚠️  This will deploy to preprod (astute-strategy-406601)${NC}
 echo "Services:"
 echo "  - perundhu-backend-preprod"
 echo "  - perundhu-frontend-preprod"
-echo "  - Cloud SQL: perundhu-preprod-mysql-asia"
+echo "  - Cloud SQL: perundhu-preprod-mysql"
 echo ""
 read -p "${YELLOW}Continue with deployment? (yes/no): ${NC}" -r CONFIRM
 if [[ ! $CONFIRM =~ ^[Yy][Ee][Ss]$ ]]; then
@@ -153,7 +153,7 @@ echo ""
 echo "Deployed Services:"
 echo "  Backend: perundhu-backend-preprod"
 echo "  Frontend: perundhu-frontend-preprod"
-echo "  Database: perundhu-preprod-mysql-asia"
+echo "  Database: perundhu-preprod-mysql"
 echo ""
 echo "Next Steps:"
 echo "1. Test the frontend URL in browser"

@@ -6,7 +6,7 @@
 # Creates database user and initializes schema in Cloud SQL
 # 
 # Prerequisites:
-# - Cloud SQL instance running (perundhu-preprod-mysql-asia)
+# - Cloud SQL instance running (perundhu-preprod-mysql)
 # - gcloud CLI authenticated
 # 
 # Usage: bash setup-preprod-database.sh
@@ -17,7 +17,7 @@ set -e
 # Configuration
 export GCP_PROJECT_ID="astute-strategy-406601"
 export GCP_REGION="asia-south1"
-export CLOUD_SQL_INSTANCE="perundhu-preprod-mysql-asia"
+export CLOUD_SQL_INSTANCE="perundhu-preprod-mysql"
 export DB_NAME="perundhu"
 export DB_USER="perundhu_user"
 

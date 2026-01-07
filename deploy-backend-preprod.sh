@@ -14,7 +14,7 @@ SERVICE_NAME="perundhu-backend-preprod"
 IMAGE_REPO="asia-south1-docker.pkg.dev"
 IMAGE_TAG="preprod-latest"
 IMAGE="${IMAGE_REPO}/${PROJECT_ID}/perundhu/backend:${IMAGE_TAG}"
-DB_INSTANCE="astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia"
+DB_INSTANCE="astute-strategy-406601:asia-south1:perundhu-preprod-mysql"
 DB_USER="perundhu_user"
 
 echo "╔════════════════════════════════════════════════════════════════════════╗"

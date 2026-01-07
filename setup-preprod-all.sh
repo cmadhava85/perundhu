@@ -160,7 +160,7 @@ echo "⏳ Waiting for Cloud SQL instance to be ready..."
 sleep 30
 
 echo "📍 Creating database user..."
-gcloud sql connect perundhu-preprod-mysql-asia \
+gcloud sql connect perundhu-preprod-mysql \
   --user=root \
   --region=${GCP_REGION} \
   --project=${GCP_PROJECT_ID} <<'SQLEOF'
@@ -264,7 +264,7 @@ gcloud run deploy perundhu-backend-preprod \
   --project=${GCP_PROJECT_ID} \
   --set-env-vars \
     SPRING_PROFILES_ACTIVE=preprod,\
-    GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia,\
+    GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:asia-south1:perundhu-preprod-mysql,\
     DB_USERNAME=${DB_USERNAME},\
     DB_PASSWORD=${DB_PASSWORD},\
     GEMINI_API_KEY=${GEMINI_API_KEY},\
@@ -272,7 +272,7 @@ gcloud run deploy perundhu-backend-preprod \
     SERVER_PORT=8080,\
     LOG_LEVEL_ROOT=INFO,\
     LOG_LEVEL_APP=INFO \
-  --add-cloudsql-instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia \
+  --add-cloudsql-instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql \
   --service-account=terraform@${GCP_PROJECT_ID}.iam.gserviceaccount.com \
   --cpu=2 \
   --memory=2Gi \
@@ -372,7 +372,7 @@ echo ""
 echo "📊 Configuration:"
 echo "  Project:  ${GCP_PROJECT_ID}"
 echo "  Region:   ${GCP_REGION}"
-echo "  Database: perundhu-preprod-mysql-asia"
+echo "  Database: perundhu-preprod-mysql"
 echo ""
 echo "📚 Next Steps:"
 echo "1. Open frontend in browser:"
@@ -382,7 +382,7 @@ echo "2. Monitor backend logs:"
 echo "   gcloud run logs read perundhu-backend-preprod --region=${GCP_REGION} --follow"
 echo ""
 echo "3. Check database migrations:"
-echo "   gcloud sql connect perundhu-preprod-mysql-asia --user=root"
+echo "   gcloud sql connect perundhu-preprod-mysql --user=root"
 echo "   SELECT * FROM flyway_schema_history LIMIT 5;"
 echo ""
 echo "════════════════════════════════════════════════════════════"

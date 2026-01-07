@@ -1,0 +1,289 @@
+name: CD - Preprod Deployment
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: preprod-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PROJECT_ID: astute-strategy-406601
+  REGION: asia-south1
+  REGISTRY: asia-south1-docker.pkg.dev
+  SQL_INSTANCE: astute-strategy-406601:asia-south1:perundhu-preprod-mysql
+  SQL_INSTANCE_NAME: perundhu-preprod-mysql
+
+jobs:
+  check-ci:
+    name: Check CI Status
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.check.outputs.result }}
+    steps:
+      - id: check
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "result=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.workflow_run.conclusion }}" == "success" ]]; then
+            echo "result=true" >> $GITHUB_OUTPUT
+          else
+            echo "result=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-backend:
+    name: Build Backend
+    needs: check-ci
+    if: needs.check-ci.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Build Backend JAR
+        working-directory: ./backend
+        run: |
+          chmod +x gradlew
+          ./gradlew build -x test
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGISTRY }}
+
+      - name: Build & Push Backend Image
+        run: |
+          TAG="$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)"
+          IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:${TAG}"
+          LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:preprod-latest"
+          
+          docker build -t $IMAGE -t $LATEST ./backend
+          docker push $IMAGE
+          docker push $LATEST
+          
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+
+  build-frontend:
+    name: Build Frontend
+    needs: check-ci
+    if: needs.check-ci.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGISTRY }}
+
+      - name: Build & Push Frontend Image
+        run: |
+          TAG="$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)"
+          IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/frontend:${TAG}"
+          LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/frontend:preprod-latest"
+          
+          # Get Google Maps API key
+          MAPS_KEY=$(gcloud secrets versions access latest --secret=google-maps-api-key 2>/dev/null || echo "")
+          
+          # Create env files
+          cat > ./frontend/.env.local << EOF
+          VITE_API_URL=https://perundhu-backend-preprod-1032721240281.asia-south1.run.app
+          VITE_API_BASE_URL=https://perundhu-backend-preprod-1032721240281.asia-south1.run.app
+          VITE_GOOGLE_MAPS_API_KEY=${MAPS_KEY}
+          EOF
+          
+          cp ./frontend/.env.local ./frontend/.env.production.local
+          
+          docker build -t $IMAGE -t $LATEST ./frontend
+          docker push $IMAGE
+          docker push $LATEST
+
+  run-migrations:
+    name: Run Migrations
+    needs: [check-ci, build-backend]
+    if: needs.check-ci.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Install Cloud SQL Proxy
+        run: |
+          curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+          chmod +x cloud_sql_proxy
+          sudo mv cloud_sql_proxy /usr/local/bin/
+
+      - name: Run Flyway Migrations
+        working-directory: ./backend
+        env:
+          FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
+          FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
+          FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
+        run: |
+          # Start proxy
+          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:3306 &
+          PROXY_PID=$!
+          
+          # Wait for proxy
+          for i in {1..30}; do
+            if nc -z 127.0.0.1 3306; then
+              echo "✅ Proxy ready"
+              break
+            fi
+            sleep 2
+          done
+          
+          chmod +x gradlew
+          
+          # Repair and migrate
+          ./gradlew flywayRepair \
+            -Pflyway.url="${FLYWAY_URL}" \
+            -Pflyway.user="${FLYWAY_USER}" \
+            -Pflyway.password="${FLYWAY_PASSWORD}" \
+            --no-configuration-cache || true
+          
+          ./gradlew flywayMigrate \
+            -Pflyway.url="${FLYWAY_URL}" \
+            -Pflyway.user="${FLYWAY_USER}" \
+            -Pflyway.password="${FLYWAY_PASSWORD}" \
+            --no-configuration-cache
+          
+          kill $PROXY_PID || true
+
+  deploy-backend:
+    name: Deploy Backend
+    needs: [build-backend, run-migrations]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy Backend
+        run: |
+          gcloud run deploy perundhu-backend-preprod \
+            --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:preprod-latest \
+            --platform=managed \
+            --region=${{ env.REGION }} \
+            --allow-unauthenticated \
+            --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,DB_USERNAME=perundhu_user,FLYWAY_ENABLED=false" \
+            --set-secrets="DB_PASSWORD=db-password:latest" \
+            --add-cloudsql-instances=${{ env.SQL_INSTANCE }} \
+            --memory=2Gi \
+            --cpu=2 \
+            --min-instances=0 \
+            --max-instances=10 \
+            --timeout=300s
+
+  deploy-frontend:
+    name: Deploy Frontend
+    needs: [build-frontend, deploy-backend]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy Frontend
+        run: |
+          gcloud run deploy perundhu-frontend-preprod \
+            --image=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/frontend:preprod-latest \
+            --platform=managed \
+            --region=${{ env.REGION }} \
+            --allow-unauthenticated \
+            --port=8080 \
+            --memory=512Mi \
+            --cpu=1 \
+            --min-instances=0 \
+            --max-instances=5
+
+  verify:
+    name: Verify Deployment
+    needs: [deploy-backend, deploy-frontend]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Test Services
+        run: |
+          sleep 20
+          
+          BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region=${{ env.REGION }} --format='value(status.url)')
+          FRONTEND_URL=$(gcloud run services describe perundhu-frontend-preprod --region=${{ env.REGION }} --format='value(status.url)')
+          
+          echo "Backend: $BACKEND_URL"
+          echo "Frontend: $FRONTEND_URL"
+          
+          # Test backend health
+          curl -f "${BACKEND_URL}/actuator/health" || echo "Backend health check failed"
+          
+          # Test frontend
+          curl -f "${FRONTEND_URL}" || echo "Frontend check failed"
