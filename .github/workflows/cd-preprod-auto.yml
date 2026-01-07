@@ -164,10 +164,10 @@ jobs:
         
         # Create env file for Docker build
         cat > ./frontend/.env.production.local << EOF
-        VITE_API_URL=${{ env.BACKEND_URL }}
-        VITE_API_BASE_URL=${{ env.BACKEND_URL }}
-        VITE_GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
-        EOF
+VITE_API_URL=${{ env.BACKEND_URL }}
+VITE_API_BASE_URL=${{ env.BACKEND_URL }}
+VITE_GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+EOF
         
         echo "🔨 Building and pushing Frontend image..."
         docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
@@ -264,9 +264,13 @@ jobs:
         sudo apt-get install -y mysql-client
         
         # Download and install cloud-sql-proxy v2
-        curl -o /tmp/cloud-sql-proxy https://dl.google.com/cloudsql/cloud-sql-proxy.linux.amd64
+        echo "Downloading Cloud SQL Proxy..."
+        curl -L -o /tmp/cloud-sql-proxy https://dl.google.com/cloudsql/cloud-sql-proxy.linux.amd64
         chmod +x /tmp/cloud-sql-proxy
         sudo mv /tmp/cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
+        
+        # Verify installation
+        /usr/local/bin/cloud-sql-proxy --version || echo "Warning: Could not verify Cloud SQL Proxy version"
         echo "✅ Dependencies installed"
     
     - name: Run Flyway Migrations
