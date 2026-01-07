@@ -42,6 +42,12 @@ variable "db_instance_tier" {
   default     = "db-f1-micro" # Smallest/cheapest tier for dev
 }
 
+variable "db_instance_name_suffix" {
+  description = "Suffix for database instance name"
+  type        = string
+  default     = ""
+}
+
 variable "domain_name" {
   description = "Domain name for the application"
   type        = string
