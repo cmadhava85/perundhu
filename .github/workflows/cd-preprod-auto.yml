@@ -1,4 +1,4 @@
-name: CD Auto Deploy to Pre-Production
+name: CD - Deploy to Pre-Production
 
 # Triggered after CI pipeline completes successfully
 on:
@@ -7,6 +7,8 @@ on:
     types:
       - completed
     branches: [main, master]
+  # Allow manual trigger for testing/emergency deployments
+  workflow_dispatch:
 
 # Queue deployments instead of cancelling - let each deployment complete
 concurrency:
