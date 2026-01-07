@@ -307,6 +307,12 @@ flyway {
     schemas = ['perundhu']
     configurations = ['flywayMigration']
     
+    // Connection pooling settings for CI/CD
+    // Reduces connection overhead during parallel migration attempts
+    connectRetries = 3
+    connectRetriesInterval = 1
+    lockRetryCount = 50
+    
     // Connection settings for robustness
     connectRetries = 5
     connectRetriesInterval = 1

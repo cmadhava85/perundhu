@@ -294,7 +294,7 @@ jobs:
         echo "=== Step 1: Starting Cloud SQL Proxy ==="
         cloud_sql_proxy \
           -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 \
-          -max_connections=5 \
+          -max_connections=20 \
           > /tmp/sql_proxy.log 2>&1 &
         
         PROXY_PID=$!
@@ -327,6 +327,8 @@ jobs:
         for i in {1..15}; do
           if timeout 5 mysql -h 127.0.0.1 -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT 1;" >/dev/null 2>&1; then
             echo "✅ Database connected on attempt $i"
+            # Close the test connection
+            mysql -h 127.0.0.1 -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT CONNECTION_ID();" >/dev/null 2>&1 || true
             break
           fi
           if [ $i -eq 15 ]; then
@@ -337,7 +339,7 @@ jobs:
             exit 1
           fi
           echo "Waiting... (attempt $i/15)"
-          sleep 1
+          sleep 2
         done
         
         echo "=== Step 4: Running Flyway migrations ==="
