@@ -154,6 +154,13 @@ jobs:
         terraform plan -no-color -out=tfplan \
           -lock=false \
           -var="project_id=astute-strategy-406601" \
+          -var="region=asia-south1" \
+          -var="zone=asia-south1-a" \
+          -var="environment=preprod" \
+          -var="app_name=perundhu" \
+          -var="db_version=MYSQL_8_0" \
+          -var="db_instance_tier=db-f1-micro" \
+          -var="db_instance_name_suffix=-asia" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
