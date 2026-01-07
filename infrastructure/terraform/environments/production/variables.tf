@@ -45,7 +45,7 @@ variable "db_instance_tier" {
 variable "domain_name" {
   description = "Custom domain name for the application"
   type        = string
-  default     = "perundhu.app"
+  default     = "perundhu.com"
 }
 
 variable "container_image" {
