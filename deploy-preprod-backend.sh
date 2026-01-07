@@ -21,7 +21,7 @@ export GCP_PROJECT_ID="astute-strategy-406601"
 export GCP_REGION="asia-south1"
 export ARTIFACT_REGISTRY="${GCP_REGION}-docker.pkg.dev"
 export BACKEND_IMAGE="${ARTIFACT_REGISTRY}/${GCP_PROJECT_ID}/perundhu/backend:preprod-latest"
-export CLOUD_SQL_INSTANCE="astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia"
+export CLOUD_SQL_INSTANCE="astute-strategy-406601:asia-south1:perundhu-preprod-mysql"
 export SERVICE_ACCOUNT="terraform@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
 
 echo ""
