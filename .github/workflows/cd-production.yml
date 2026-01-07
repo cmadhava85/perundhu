@@ -160,16 +160,6 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
-    - name: Deploy Database Migrations
-      working-directory: ./backend
-      run: |
-        # Run Flyway migrations
-        ./gradlew flywayMigrate \
-          -Pflyway.url="${{ secrets.PROD_DB_URL }}" \
-          -Pflyway.user="${{ secrets.PROD_DB_USER }}" \
-          -Pflyway.password="${{ secrets.PROD_DB_PASSWORD }}" \
-          --no-configuration-cache
-    
     - name: Get Backend URL
       id: backend-url
       run: |
@@ -180,11 +170,13 @@ jobs:
       run: |
         # DB credentials, JWT secret, and encryption key are read from Secret Manager
         # using sm:// prefix in application-production.properties.
+        # Flyway migrations run automatically on startup with Flyway enabled in production config
         gcloud run deploy perundhu-backend \
           --image ${{ needs.build-and-push-images.outputs.backend_image }} \
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
+          --service-account=cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com \
           --set-env-vars="SPRING_PROFILES_ACTIVE=production,CORS_ALLOWED_ORIGINS=https://perundhu.com,https://www.perundhu.com,GEMINI_API_ENABLED=true,GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }}" \
           --set-secrets="GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest,RECAPTCHA_SITE_KEY=recaptcha-site-key:latest,RECAPTCHA_SECRET_KEY=recaptcha-secret-key:latest" \
           --memory 1Gi \
@@ -192,14 +184,14 @@ jobs:
           --min-instances 0 \
           --max-instances 50 \
           --concurrency 80 \
-          --timeout 300s \
+          --timeout 600s \
           --cpu-throttling \
           --labels="version=${{ needs.build-and-push-images.outputs.version }},env=production"
     
     - name: Get Frontend Backend URL for env vars
       id: get-backend-url
       run: |
-        BACKEND_URL=$(gcloud run services describe perundhu-backend-production --region ${{ env.GCP_REGION }} --format 'value(status.url)')
+        BACKEND_URL=$(gcloud run services describe perundhu-backend --region ${{ env.GCP_REGION }} --format 'value(status.url)')
         echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
     
     - name: Deploy Frontend to Production
