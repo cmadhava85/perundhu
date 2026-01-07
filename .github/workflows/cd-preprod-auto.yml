@@ -295,7 +295,6 @@ jobs:
         cloud_sql_proxy \
           -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 \
           -max_connections=5 \
-          -log_level=debug \
           > /tmp/sql_proxy.log 2>&1 &
         
         PROXY_PID=$!
