@@ -60,6 +60,12 @@ variable "container_image" {
   default     = "gcr.io/PROJECT_ID/perundhu-backend:latest"
 }
 
+variable "notification_email" {
+  description = "Email address for alerts and notifications"
+  type        = string
+  default     = "alerts@perundhu.com"
+}
+
 # ============================================
 # NOTE: Shared secrets (gemini_api_key, recaptcha_*)
 # are managed in terraform/environments/shared

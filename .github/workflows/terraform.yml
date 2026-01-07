@@ -137,7 +137,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false
+      run: terraform init -input=false -reconfigure
     
     - name: Terraform Plan
       id: plan
@@ -366,7 +366,7 @@ jobs:
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false
+      run: terraform init -input=false -reconfigure
     
     - name: Terraform Plan
       id: plan

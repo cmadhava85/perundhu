@@ -53,6 +53,12 @@ variable "container_image" {
   type        = string
 }
 
+variable "notification_email" {
+  description = "Email address for alerts and notifications"
+  type        = string
+  default     = "alerts@perundhu.com"
+}
+
 # ============================================
 # NOTE: Shared secrets (gemini_api_key, recaptcha_*)
 # are managed in terraform/environments/shared
