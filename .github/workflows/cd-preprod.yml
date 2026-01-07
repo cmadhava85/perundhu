@@ -24,8 +24,8 @@ env:
   PROJECT_ID: astute-strategy-406601
   REGION: asia-south1
   REGISTRY: asia-south1-docker.pkg.dev
-  SQL_INSTANCE: astute-strategy-406601:asia-south1:perundhu-preprod-mysql
-  SQL_INSTANCE_NAME: perundhu-preprod-mysql
+  SQL_INSTANCE: astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia
+  SQL_INSTANCE_NAME: perundhu-preprod-mysql-asia
 
 jobs:
   check-ci:
