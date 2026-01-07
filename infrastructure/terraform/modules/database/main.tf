@@ -71,6 +71,16 @@ resource "google_sql_database_instance" "mysql_instance" {
       cost_center = "perundhu"
     }
   }
+
+  # Ignore differences from manually created instances to allow for graceful management
+  lifecycle {
+    ignore_changes = [
+      settings[0].backup_configuration,
+      settings[0].disk_type,
+      settings[0].disk_size,
+      deletion_protection
+    ]
+  }
 }
 
 # Database
