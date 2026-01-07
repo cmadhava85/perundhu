@@ -6,6 +6,15 @@ on:
     types: [completed]
     branches: [main, master]
   workflow_dispatch:
+    inputs:
+      deploy_backend:
+        description: 'Deploy Backend'
+        type: boolean
+        default: true
+      deploy_frontend:
+        description: 'Deploy Frontend'
+        type: boolean
+        default: true
 
 concurrency:
   group: preprod-${{ github.ref }}
@@ -28,10 +37,13 @@ jobs:
       - id: check
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Manual trigger - proceeding with deployment"
             echo "result=true" >> $GITHUB_OUTPUT
           elif [[ "${{ github.event.workflow_run.conclusion }}" == "success" ]]; then
+            echo "CI succeeded - proceeding with deployment"
             echo "result=true" >> $GITHUB_OUTPUT
           else
+            echo "CI did not succeed (status: ${{ github.event.workflow_run.conclusion }}) - skipping deployment"
             echo "result=false" >> $GITHUB_OUTPUT
           fi
 
