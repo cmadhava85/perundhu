@@ -77,8 +77,7 @@ resource "google_sql_database_instance" "mysql_instance" {
     ignore_changes = [
       settings[0].backup_configuration,
       settings[0].disk_type,
-      settings[0].disk_size,
-      deletion_protection
+      settings[0].disk_size
     ]
   }
 }
