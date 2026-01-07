@@ -1,14 +1,26 @@
-name: CD - Deploy to Pre-Production
+name: CD - Auto Deploy to Pre-Production
 
-# Triggered after CI pipeline completes successfully
+# Triggered after CI pipeline completes successfully or manually
 on:
   workflow_run:
-    workflows: ["CI Pipeline"]
+    workflows: ["CI"]
     types:
       - completed
     branches: [main, master]
-  # Allow manual trigger for testing/emergency deployments
   workflow_dispatch:
+    inputs:
+      deploy_frontend:
+        description: 'Deploy Frontend'
+        type: boolean
+        default: true
+      deploy_backend:
+        description: 'Deploy Backend'
+        type: boolean
+        default: true
+      deploy_all:
+        description: 'Deploy All Services (overrides individual selections)'
+        type: boolean
+        default: true
 
 # Queue deployments instead of cancelling - let each deployment complete
 concurrency:
@@ -19,10 +31,8 @@ env:
   GCP_PROJECT_ID: astute-strategy-406601
   GCP_REGION: asia-south1
   ARTIFACT_REGISTRY: asia-south1-docker.pkg.dev
-  BACKEND_URL: "https://perundhu-backend-preprod-1032721240281.asia-south1.run.app"
-  DB_INSTANCE: "astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia"
-  DB_NAME: "perundhu"
-  DB_PORT: "3306"
+  NODE_VERSION: '18'
+  JAVA_VERSION: '21'
 
 jobs:
   # Check if CI passed (skip this check for manual dispatch)
@@ -35,11 +45,14 @@ jobs:
     - name: Check CI workflow result
       id: check
       run: |
-        if [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
-          echo "✅ CI Pipeline (CI Pipeline) passed - proceeding with deployment"
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "Manual dispatch - proceeding with deployment"
+          echo "should_deploy=true" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
+          echo "CI passed - proceeding with deployment"
           echo "should_deploy=true" >> $GITHUB_OUTPUT
         else
-          echo "❌ CI Pipeline did not succeed (status: ${{ github.event.workflow_run.conclusion }}) - skipping deployment"
+          echo "CI did not succeed (status: ${{ github.event.workflow_run.conclusion }}) - skipping deployment"
           echo "should_deploy=false" >> $GITHUB_OUTPUT
         fi
 
@@ -61,7 +74,21 @@ jobs:
     - name: Detect changes
       id: changes
       run: |
-        # Detect changes from git diff (workflow_run triggered by CI completion)
+        # For manual dispatch, use input values
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "${{ inputs.deploy_all }}" == "true" ]; then
+            echo "frontend=true" >> $GITHUB_OUTPUT
+            echo "backend=true" >> $GITHUB_OUTPUT
+            echo "migrations=true" >> $GITHUB_OUTPUT
+          else
+            echo "frontend=${{ inputs.deploy_frontend }}" >> $GITHUB_OUTPUT
+            echo "backend=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
+            echo "migrations=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
+          fi
+          exit 0
+        fi
+        
+        # For push events, detect changes from git diff
         CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff --name-only HEAD)
         
         # Check frontend changes
@@ -91,9 +118,9 @@ jobs:
         echo "Changed files:"
         echo "$CHANGED_FILES"
 
-  # Build and push Frontend (Docker image push only, actual build done by CI)
+  # Build and push Frontend
   build-frontend:
-    name: Build & Push Frontend Image
+    name: Build Frontend
     runs-on: ubuntu-latest
     needs: [detect-changes]
     if: needs.detect-changes.outputs.frontend == 'true'
@@ -116,47 +143,47 @@ jobs:
     - name: Configure Docker
       run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
     
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
-    
-    - name: Build Frontend
-      working-directory: ./frontend
-      run: |
-        npm ci
-        npm run build
-    
-    - name: Build and Push Docker Image
+    - name: Build and push Frontend
       id: build
       run: |
         COMMIT_SHA=$(git rev-parse --short HEAD)
         TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
         IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:${TAG}"
         
+        # Use the correct static backend URL for preprod
+        BACKEND_URL="https://perundhu-backend-preprod-1032721240281.asia-south1.run.app"
+        echo "Using Backend URL: $BACKEND_URL"
+        
         # Get Google Maps API key from Secret Manager
         GOOGLE_MAPS_API_KEY=$(gcloud secrets versions access latest --secret=google-maps-api-key 2>/dev/null || echo "")
         
-        # Create env file for Docker build
-        cat > ./frontend/.env.production.local << EOF
-VITE_API_URL=${{ env.BACKEND_URL }}
-VITE_API_BASE_URL=${{ env.BACKEND_URL }}
-VITE_GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
-EOF
+        # Create .env.local with backend URL and API key (this file is copied into Docker build context)
+        echo "VITE_API_URL=${BACKEND_URL}" > ./frontend/.env.local
+        echo "VITE_API_BASE_URL=${BACKEND_URL}" >> ./frontend/.env.local
+        echo "VITE_GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}" >> ./frontend/.env.local
         
-        echo "🔨 Building and pushing Frontend image..."
-        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
+        # Also create .env.production.local for Vite production build
+        echo "VITE_API_URL=${BACKEND_URL}" > ./frontend/.env.production.local
+        echo "VITE_API_BASE_URL=${BACKEND_URL}" >> ./frontend/.env.production.local
+        echo "VITE_GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}" >> ./frontend/.env.production.local
+        
+        echo "Created .env.local and .env.production.local with VITE_API_URL=$BACKEND_URL"
+        cat ./frontend/.env.local
+        
+        # Clear Docker BuildKit cache to avoid corrupted layer issues
+        docker builder prune -f --filter "until=24h" || true
+        
+        # Build with --no-cache to avoid cache corruption issues
+        docker build --no-cache -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest ./frontend
         docker push $IMAGE
         docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/frontend:preprod-latest
         
         echo "image=$IMAGE" >> $GITHUB_OUTPUT
-        echo "✅ Frontend image pushed: $IMAGE"
+        echo "✅ Frontend image built: $IMAGE"
 
-  # Build and push Backend (Docker image push only, actual build done by CI)
+  # Build and push Backend
   build-backend:
-    name: Build & Push Backend Image
+    name: Build Backend
     runs-on: ubuntu-latest
     needs: [detect-changes]
     if: needs.detect-changes.outputs.backend == 'true'
@@ -171,7 +198,7 @@ EOF
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '21'
+        java-version: ${{ env.JAVA_VERSION }}
         distribution: 'temurin'
         cache: 'gradle'
     
@@ -192,27 +219,30 @@ EOF
     - name: Configure Docker
       run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }}
     
-    - name: Build and Push Docker Image
+    - name: Build and push Backend
       id: build
       run: |
         COMMIT_SHA=$(git rev-parse --short HEAD)
         TAG="$(date +%Y%m%d-%H%M%S)-${COMMIT_SHA}"
         IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:${TAG}"
         
-        echo "🔨 Building and pushing Backend image..."
-        docker build -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest ./backend
+        # Clear Docker BuildKit cache to avoid corrupted layer issues
+        docker builder prune -f --filter "until=24h" || true
+        
+        # Build with --no-cache to avoid cache corruption issues
+        docker build --no-cache -t $IMAGE -t ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest ./backend
         docker push $IMAGE
         docker push ${{ env.ARTIFACT_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/perundhu/backend:preprod-latest
         
         echo "image=$IMAGE" >> $GITHUB_OUTPUT
-        echo "✅ Backend image pushed: $IMAGE"
+        echo "✅ Backend image built: $IMAGE"
 
-  # Run database migrations
+  # Run database migrations (only if backend has changes)
   run-migrations:
     name: Run Database Migrations
     runs-on: ubuntu-latest
     needs: [detect-changes, build-backend]
-    if: needs.detect-changes.outputs.migrations == 'true' && needs.build-backend.result != 'failure'
+    if: always() && needs.detect-changes.outputs.migrations == 'true' && needs.build-backend.result != 'failure'
     permissions:
       contents: read
       id-token: write
@@ -222,7 +252,7 @@ EOF
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '21'
+        java-version: ${{ env.JAVA_VERSION }}
         distribution: 'temurin'
         cache: 'gradle'
     
@@ -234,103 +264,43 @@ EOF
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
-    - name: Install dependencies
+    - name: Install Cloud SQL Proxy
       run: |
-        echo "📦 Installing Cloud SQL Proxy and MySQL client..."
-        sudo apt-get update -qq
-        sudo apt-get install -y mysql-client
-        
-        # Download and install cloud-sql-proxy v2
-        echo "Downloading Cloud SQL Proxy..."
-        curl -L -o /tmp/cloud-sql-proxy https://dl.google.com/cloudsql/cloud-sql-proxy.linux.amd64
-        chmod +x /tmp/cloud-sql-proxy
-        sudo mv /tmp/cloud-sql-proxy /usr/local/bin/cloud-sql-proxy
-        
-        # Verify installation
-        /usr/local/bin/cloud-sql-proxy --version || echo "Warning: Could not verify Cloud SQL Proxy version"
-        echo "✅ Dependencies installed"
+        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+        chmod +x cloud_sql_proxy
     
     - name: Run Flyway Migrations
       working-directory: ./backend
       env:
-        FLYWAY_URL: "jdbc:mysql://127.0.0.1:${{ env.DB_PORT }}/${{ env.DB_NAME }}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+        FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
         FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
         FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
       run: |
-        set -e
+        # Start Cloud SQL Proxy
+        ../cloud_sql_proxy -instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql=tcp:3306 &
+        sleep 10
         
-        # Cleanup any stale proxy processes
-        pkill -9 -f "cloud-sql-proxy" || true
-        sleep 2
-        
-        echo "🚀 Starting Cloud SQL Proxy..."
-        /usr/local/bin/cloud-sql-proxy \
-          --port=${{ env.DB_PORT }} \
-          ${{ env.DB_INSTANCE }} \
-          > /tmp/sql_proxy.log 2>&1 &
-        
-        PROXY_PID=$!
-        echo "Proxy PID: $PROXY_PID"
-        
-        # Wait for proxy to be ready
-        echo "⏳ Waiting for proxy to start..."
-        sleep 3
-        
-        # Check proxy is running
-        if ! kill -0 $PROXY_PID 2>/dev/null; then
-          echo "❌ Proxy failed to start"
-          cat /tmp/sql_proxy.log
-          exit 1
-        fi
-        
-        # Wait for port to be available
-        echo "🔌 Waiting for database port..."
-        for i in {1..60}; do
-          if timeout 1 bash -c "echo > /dev/tcp/127.0.0.1/${{ env.DB_PORT }}" 2>/dev/null; then
-            echo "✅ Database port is ready"
-            break
-          fi
-          if [ $i -eq 60 ]; then
-            echo "❌ Database port timeout"
-            cat /tmp/sql_proxy.log
-            kill $PROXY_PID 2>/dev/null || true
-            exit 1
-          fi
-          echo "Waiting... ($i/60)"
-          sleep 1
-        done
-        
-        # Test database connectivity
-        echo "🧪 Testing database connection..."
-        for i in {1..10}; do
-          if mysql -h127.0.0.1 -P${{ env.DB_PORT }} -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT 1;" 2>/dev/null; then
-            echo "✅ Database connection successful"
-            break
-          fi
-          if [ $i -eq 10 ]; then
-            echo "❌ Database connection failed"
-            cat /tmp/sql_proxy.log
-            kill $PROXY_PID 2>/dev/null || true
-            exit 1
-          fi
-          echo "Retrying connection... ($i/10)"
-          sleep 2
-        done
-        
-        # Run migrations
-        echo "🔄 Running Flyway migrations..."
         chmod +x gradlew
         
-        trap "kill $PROXY_PID 2>/dev/null || true" EXIT
+        # First repair any failed migrations
+        ./gradlew flywayRepair \
+          -Pflyway.url="${FLYWAY_URL}" \
+          -Pflyway.user="${FLYWAY_USER}" \
+          -Pflyway.password="${FLYWAY_PASSWORD}" \
+          -Pflyway.locations="classpath:db/migration/mysql" \
+          --no-configuration-cache \
+          --info || true
         
-        if ./gradlew flywayMigrate --info 2>&1 | tee /tmp/migration.log; then
-          echo "✅ Migrations completed successfully"
-        else
-          echo "❌ Migrations failed"
-          echo "=== Migration Log ==="
-          cat /tmp/migration.log
-          exit 1
-        fi
+        # Then run migrations
+        ./gradlew flywayMigrate \
+          -Pflyway.url="${FLYWAY_URL}" \
+          -Pflyway.user="${FLYWAY_USER}" \
+          -Pflyway.password="${FLYWAY_PASSWORD}" \
+          -Pflyway.locations="classpath:db/migration/mysql" \
+          --no-configuration-cache \
+          --info
+        
+        echo "✅ Database migrations completed"
 
   # Deploy Frontend
   deploy-frontend:
@@ -352,13 +322,11 @@ EOF
     
     - name: Deploy Frontend to Cloud Run
       run: |
-        echo "🚀 Deploying Frontend..."
         gcloud run deploy perundhu-frontend-preprod \
           --image ${{ needs.build-frontend.outputs.image }} \
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="VITE_FEATURE_ADMIN=true" \
           --port 8080 \
           --memory 512Mi \
           --cpu 1 \
@@ -368,7 +336,8 @@ EOF
           --timeout 60s \
           --cpu-throttling \
           --labels="env=preprod"
-        echo "✅ Frontend deployed successfully"
+        
+        echo "✅ Frontend deployed"
 
   # Deploy Backend
   deploy-backend:
@@ -390,16 +359,14 @@ EOF
     
     - name: Deploy Backend to Cloud Run
       run: |
-        echo "🚀 Deploying Backend..."
         gcloud run deploy perundhu-backend-preprod \
           --image ${{ needs.build-backend.outputs.image }} \
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }},GCP_INSTANCE_CONNECTION_NAME=${{ env.DB_INSTANCE }},MYSQL_USERNAME=perundhu_user,GEMINI_API_ENABLED=true,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
-          --set-secrets="DB_PASSWORD=preprod-db-password:latest,MYSQL_PASSWORD=preprod-db-password:latest,DB_USERNAME=preprod-db-username:latest,JWT_SECRET=preprod-jwt-secret:latest,DATA_ENCRYPTION_KEY=preprod-data-encryption-key:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest,RECAPTCHA_SITE_KEY=preprod-recaptcha-site-key:latest,RECAPTCHA_SECRET_KEY=preprod-recaptcha-secret-key:latest" \
-          --add-cloudsql-instances=${{ env.DB_INSTANCE }} \
-          --service-account=cloud-run-sa@${{ env.GCP_PROJECT_ID }}.iam.gserviceaccount.com \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,GCP_INSTANCE_CONNECTION_NAME=astute-strategy-406601:us-central1:perundhu-preprod-mysql,DB_USERNAME=perundhu_user,MYSQL_USERNAME=perundhu_user,GEMINI_API_ENABLED=true,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app" \
+          --set-secrets="DB_PASSWORD=preprod-db-password:latest,MYSQL_PASSWORD=preprod-db-password:latest,JWT_SECRET=JWT_SECRET_PREPROD:latest,DATA_ENCRYPTION_KEY=DATA_ENCRYPTION_KEY_PREPROD:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
+          --add-cloudsql-instances=astute-strategy-406601:us-central1:perundhu-preprod-mysql \
           --memory 1Gi \
           --cpu 1 \
           --min-instances 0 \
@@ -407,8 +374,10 @@ EOF
           --concurrency 80 \
           --timeout 1200s \
           --cpu-throttling \
+          --no-gen2 \
           --labels="env=preprod"
-        echo "✅ Backend deployed successfully"
+        
+        echo "✅ Backend deployed"
 
   # Smoke Tests
   smoke-tests:
@@ -436,14 +405,13 @@ EOF
         # Test Backend if it was deployed
         if [ "${{ needs.deploy-backend.result }}" == "success" ]; then
           BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-          echo "🧪 Testing Backend: $BACKEND_URL"
+          echo "Testing Backend: $BACKEND_URL"
           for i in {1..5}; do
             HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $BACKEND_URL/actuator/health || echo "000")
             if [ "$HTTP_CODE" -eq "200" ]; then
               echo "✅ Backend is healthy"
               break
             fi
-            echo "Retry $i/5..."
             sleep 5
           done
         fi
@@ -451,7 +419,7 @@ EOF
         # Test Frontend if it was deployed
         if [ "${{ needs.deploy-frontend.result }}" == "success" ]; then
           FRONTEND_URL=$(gcloud run services describe perundhu-frontend-preprod --region ${{ env.GCP_REGION }} --format 'value(status.url)')
-          echo "🧪 Testing Frontend: $FRONTEND_URL"
+          echo "Testing Frontend: $FRONTEND_URL"
           HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $FRONTEND_URL)
           if [ "$HTTP_CODE" -eq "200" ]; then
             echo "✅ Frontend is accessible"
@@ -462,25 +430,17 @@ EOF
   summary:
     name: Deployment Summary
     runs-on: ubuntu-latest
-    needs: [detect-changes, build-frontend, build-backend, run-migrations, deploy-frontend, deploy-backend, smoke-tests]
+    needs: [detect-changes, build-frontend, build-backend, deploy-frontend, deploy-backend, smoke-tests]
     if: always()
     steps:
     - name: Generate Summary
       run: |
         echo "## 🚀 Pre-Production Deployment Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Pipeline Status" >> $GITHUB_STEP_SUMMARY
-        echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
-        echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
-        echo "| Frontend | ${{ needs.build-frontend.result || 'skipped' }} → ${{ needs.deploy-frontend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| Backend | ${{ needs.build-backend.result || 'skipped' }} → ${{ needs.deploy-backend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| Migrations | ${{ needs.run-migrations.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| Smoke Tests | ${{ needs.smoke-tests.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "### Services Changed" >> $GITHUB_STEP_SUMMARY
+        echo "| Service | Changed | Built | Deployed |" >> $GITHUB_STEP_SUMMARY
+        echo "|---------|---------|-------|----------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Frontend | ${{ needs.detect-changes.outputs.frontend }} | ${{ needs.build-frontend.result || 'skipped' }} | ${{ needs.deploy-frontend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Backend | ${{ needs.detect-changes.outputs.backend }} | ${{ needs.build-backend.result || 'skipped' }} | ${{ needs.deploy-backend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Key Changes" >> $GITHUB_STEP_SUMMARY
-        echo "✨ **Improvements in this pipeline:**" >> $GITHUB_STEP_SUMMARY
-        echo "- Removed duplicate builds from CI (builds use artifacts from CI pipeline)" >> $GITHUB_STEP_SUMMARY
-        echo "- Simplified Flyway migration process with better error handling" >> $GITHUB_STEP_SUMMARY
-        echo "- Only Docker image push in CD, not full rebuild" >> $GITHUB_STEP_SUMMARY
-        echo "- Improved logging and proxy management" >> $GITHUB_STEP_SUMMARY
-        echo "- Better environment variable management" >> $GITHUB_STEP_SUMMARY
+        echo "### Smoke Tests: ${{ needs.smoke-tests.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY
