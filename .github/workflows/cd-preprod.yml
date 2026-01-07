@@ -173,6 +173,11 @@ jobs:
       - name: Run Flyway Migrations
         working-directory: ./backend
         run: |
+          # Clean up any existing processes on port 3306
+          echo "🧹 Cleaning up any existing processes on port 3306..."
+          sudo lsof -ti:3306 | xargs -r sudo kill -9 2>/dev/null || true
+          sleep 1
+          
           # Get DB credentials from GCP Secret Manager
           DB_USER=$(gcloud secrets versions access latest --secret=db-username 2>/dev/null || echo "perundhu_user")
           DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password 2>/dev/null)
@@ -185,9 +190,9 @@ jobs:
           # Flyway configuration for Cloud SQL via proxy
           FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
           
-          # Start Cloud SQL Proxy
-          echo "🔌 Starting Cloud SQL Proxy..."
-          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:3306 -max_connections=100 &
+          # Start Cloud SQL Proxy with explicit local binding
+          echo "🔌 Starting Cloud SQL Proxy on port 3306..."
+          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3306 -max_connections=100 &
           PROXY_PID=$!
           
           # Wait for proxy to be ready
@@ -201,6 +206,13 @@ jobs:
             echo "  [$i/60] Waiting for port 3306..."
             sleep 1
           done
+          
+          # Verify port is actually open
+          if ! nc -z 127.0.0.1 3306; then
+            echo "❌ Cloud SQL Proxy failed to open port 3306"
+            kill $PROXY_PID 2>/dev/null || true
+            exit 1
+          fi
           
           chmod +x gradlew
           
