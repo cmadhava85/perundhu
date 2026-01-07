@@ -1,26 +1,12 @@
 name: CD Auto Deploy to Pre-Production
 
-# Triggered after CI pipeline completes successfully or manually
+# Triggered after CI pipeline completes successfully
 on:
   workflow_run:
     workflows: ["CI"]
     types:
       - completed
     branches: [main, master]
-  workflow_dispatch:
-    inputs:
-      deploy_frontend:
-        description: 'Deploy Frontend'
-        type: boolean
-        default: true
-      deploy_backend:
-        description: 'Deploy Backend'
-        type: boolean
-        default: true
-      run_migrations:
-        description: 'Run Database Migrations'
-        type: boolean
-        default: true
 
 # Queue deployments instead of cancelling - let each deployment complete
 concurrency:
