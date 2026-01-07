@@ -35,7 +35,7 @@ print_error() {
 GITHUB_TOKEN="${GITHUB_TOKEN:-}"
 REPO_OWNER="cmadhava85"
 REPO_NAME="perundhu"
-WORKFLOW_FILE="cd-preprod-auto.yml"
+WORKFLOW_FILE="cd-preprod.yml"
 BRANCH="master"
 
 print_header "GitHub Actions Deployment Trigger"
