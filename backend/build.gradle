@@ -278,9 +278,26 @@ dependencies {
 }
 
 flyway {
-    url = project.findProperty('flyway.url') ?: System.getenv('DB_URL') ?: 'jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true'
-    user = project.findProperty('flyway.user') ?: System.getenv('DB_USERNAME') ?: 'root'
-    password = project.findProperty('flyway.password') ?: System.getenv('DB_PASSWORD') ?: 'root'
+    // Try multiple sources for configuration in order of precedence:
+    // 1. -Dflyway.url property (for explicit Gradle properties)
+    // 2. FLYWAY_URL environment variable (from CI/CD pipelines)
+    // 3. DB_URL environment variable (legacy)
+    // 4. Default development URL
+    url = project.findProperty('flyway.url') ?: 
+          System.getenv('FLYWAY_URL') ?:
+          System.getenv('DB_URL') ?: 
+          'jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC'
+    
+    user = project.findProperty('flyway.user') ?: 
+           System.getenv('FLYWAY_USER') ?:
+           System.getenv('DB_USERNAME') ?: 
+           'root'
+    
+    password = project.findProperty('flyway.password') ?: 
+               System.getenv('FLYWAY_PASSWORD') ?:
+               System.getenv('DB_PASSWORD') ?: 
+               'root'
+    
     locations = ['classpath:db/migration', 'classpath:db/migration/mysql']
     baselineOnMigrate = true
     validateOnMigrate = false
@@ -289,6 +306,10 @@ flyway {
     createSchemas = true
     schemas = ['perundhu']
     configurations = ['flywayMigration']
+    
+    // Connection settings for robustness
+    connectRetries = 5
+    connectRetriesInterval = 1
 }
 
 // Fix configuration cache issues for Flyway tasks

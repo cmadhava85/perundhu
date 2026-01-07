@@ -264,96 +264,112 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
-    - name: Install Cloud SQL Proxy
+    - name: Install Cloud SQL Proxy & Dependencies
       run: |
-        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+        # Download and install Cloud SQL Proxy
+        curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
         chmod +x cloud_sql_proxy
-        sudo apt-get update && sudo apt-get install -y netcat-openbsd mysql-client
+        mv cloud_sql_proxy /usr/local/bin/
+        
+        # Install MySQL client and netcat
+        sudo apt-get update -qq
+        sudo apt-get install -y netcat-openbsd mysql-client >/dev/null 2>&1
+        
+        echo "✅ Cloud SQL Proxy and dependencies installed"
+        cloud_sql_proxy --version || echo "Note: version check not available"
     
     - name: Run Flyway Migrations
       working-directory: ./backend
       env:
-        DB_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
-        DB_USERNAME: ${{ secrets.PREPROD_DB_USER }}
-        DB_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
-        GOOGLE_CLOUD_PROJECT: astute-strategy-406601
+        FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+        FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
+        FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
       run: |
-        # Start Cloud SQL Proxy in background
-        ../cloud_sql_proxy -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 > /tmp/sql_proxy.log 2>&1 &
-        PROXY_PID=$!
-        echo "Started Cloud SQL Proxy with PID: $PROXY_PID"
+        set -e
         
-        # Wait for proxy to be ready (increased timeout to 45 seconds)
-        echo "Waiting for Cloud SQL Proxy to be ready..."
-        READY=0
-        for i in {1..45}; do
-          if nc -z 127.0.0.1 3306 2>/dev/null; then
-            echo "✅ Cloud SQL Proxy is ready after $i attempts"
-            READY=1
+        # Kill any stale proxy processes
+        pkill -9 -f cloud_sql_proxy || true
+        sleep 2
+        
+        echo "=== Step 1: Starting Cloud SQL Proxy ==="
+        cloud_sql_proxy \
+          -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 \
+          -max_connections=5 \
+          -log_level=debug \
+          > /tmp/sql_proxy.log 2>&1 &
+        
+        PROXY_PID=$!
+        echo "Proxy PID: $PROXY_PID"
+        sleep 2
+        
+        # Verify proxy started
+        if ! kill -0 $PROXY_PID 2>/dev/null; then
+          echo "❌ Proxy failed to start"
+          cat /tmp/sql_proxy.log
+          exit 1
+        fi
+        
+        echo "=== Step 2: Waiting for proxy to be ready ==="
+        for i in {1..60}; do
+          if timeout 2 bash -c "echo > /dev/tcp/127.0.0.1/3306" 2>/dev/null; then
+            echo "✅ Proxy is ready (attempt $i)"
             break
           fi
-          if [ $((i % 5)) -eq 0 ]; then
-            echo "Waiting for Cloud SQL Proxy... ($i/45 seconds)"
+          if [ $i -eq 60 ]; then
+            echo "❌ Proxy timeout after 60s"
+            cat /tmp/sql_proxy.log | tail -30
+            kill $PROXY_PID 2>/dev/null || true
+            exit 1
           fi
           sleep 1
         done
         
-        # Check if proxy is still running
-        if ! kill -0 $PROXY_PID 2>/dev/null; then
-          echo "❌ Cloud SQL Proxy process died"
-          echo "=== Cloud SQL Proxy Log ==="
-          cat /tmp/sql_proxy.log
-          exit 1
-        fi
-        
-        if [ $READY -ne 1 ]; then
-          echo "❌ Cloud SQL Proxy failed to become ready after 45 seconds"
-          echo "=== Cloud SQL Proxy Log ==="
-          cat /tmp/sql_proxy.log
-          kill $PROXY_PID 2>/dev/null || true
-          exit 1
-        fi
-        
-        chmod +x gradlew
-        
-        # Test connection before migrations
-        echo "Testing database connection..."
-        for i in {1..5}; do
-          if mysql -h 127.0.0.1 -u "$DB_USERNAME" -p"$DB_PASSWORD" -e "SELECT 1" 2>/dev/null; then
-            echo "✅ Database connection successful"
+        echo "=== Step 3: Testing database connectivity ==="
+        for i in {1..15}; do
+          if timeout 5 mysql -h 127.0.0.1 -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT 1;" >/dev/null 2>&1; then
+            echo "✅ Database connected on attempt $i"
             break
           fi
-          if [ $i -lt 5 ]; then
-            echo "Retrying connection... ($i/5)"
-            sleep 2
+          if [ $i -eq 15 ]; then
+            echo "❌ Failed to connect to database after 15 attempts"
+            echo "Proxy log:"
+            tail -20 /tmp/sql_proxy.log
+            kill $PROXY_PID 2>/dev/null || true
+            exit 1
           fi
+          echo "Waiting... (attempt $i/15)"
+          sleep 1
         done
         
-        # First repair any failed migrations (optional, won't fail if no issues)
-        echo "Checking for failed migrations..."
-        ./gradlew flywayRepair \
-          --no-configuration-cache \
-          --info 2>&1 | tail -20 || echo "No failed migrations to repair"
+        echo "=== Step 4: Running Flyway migrations ==="
+        chmod +x gradlew
         
-        # Then run migrations
-        echo "Running Flyway migrations..."
+        # Use environment variables instead of -D flags
+        export FLYWAY_URL
+        export FLYWAY_USER
+        export FLYWAY_PASSWORD
+        
         ./gradlew flywayMigrate \
-          --no-configuration-cache \
-          --info
+          --info \
+          --stacktrace \
+          --no-configuration-cache 2>&1 | tee /tmp/migration.log
         
-        MIGRATION_RESULT=$?
+        RESULT=$?
         
-        # Kill proxy
-        echo "Cleaning up Cloud SQL Proxy..."
+        echo ""
+        echo "=== Step 5: Cleanup ==="
         kill $PROXY_PID 2>/dev/null || true
         wait $PROXY_PID 2>/dev/null || true
         
-        if [ $MIGRATION_RESULT -ne 0 ]; then
-          echo "❌ Database migrations failed"
-          exit $MIGRATION_RESULT
+        if [ $RESULT -eq 0 ]; then
+          echo "✅ Migrations completed successfully"
+        else
+          echo "❌ Migrations failed with exit code $RESULT"
+          echo "=== Migration Log ==="
+          tail -50 /tmp/migration.log
         fi
         
-        echo "✅ Database migrations completed successfully"
+        exit $RESULT
 
   # Deploy Frontend
   deploy-frontend:
