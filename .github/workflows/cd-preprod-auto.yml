@@ -1,4 +1,4 @@
-name: CD - Auto Deploy to Pre-Production
+name: CD Auto Deploy to Pre-Production
 
 # Triggered after CI pipeline completes successfully or manually
 on:
