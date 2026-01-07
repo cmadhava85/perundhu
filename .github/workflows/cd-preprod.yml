@@ -172,40 +172,68 @@ jobs:
 
       - name: Run Flyway Migrations
         working-directory: ./backend
-        env:
-          FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
-          FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
-          FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
         run: |
-          # Start proxy
+          # Get DB credentials from GCP Secret Manager
+          DB_USER=$(gcloud secrets versions access latest --secret=db-username 2>/dev/null || echo "perundhu_user")
+          DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password 2>/dev/null)
+          
+          if [ -z "$DB_PASSWORD" ]; then
+            echo "❌ Failed to retrieve db-password from Secret Manager"
+            exit 1
+          fi
+          
+          # Flyway configuration for Cloud SQL via proxy
+          FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+          
+          # Start Cloud SQL Proxy
+          echo "🔌 Starting Cloud SQL Proxy..."
           cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:3306 &
           PROXY_PID=$!
           
-          # Wait for proxy
+          # Wait for proxy to be ready
+          echo "⏳ Waiting for proxy to be ready..."
           for i in {1..30}; do
-            if nc -z 127.0.0.1 3306; then
-              echo "✅ Proxy ready"
+            if nc -z 127.0.0.1 3306 2>/dev/null; then
+              echo "✅ Cloud SQL Proxy ready"
               break
             fi
-            sleep 2
+            echo "  [$i/30] Waiting for port 3306..."
+            sleep 1
           done
           
           chmod +x gradlew
           
-          # Repair and migrate
+          # Verify connection before migrations
+          echo "🔍 Verifying database connectivity..."
+          echo "SELECT 1;" | mysql -h 127.0.0.1 -u "${DB_USER}" -p"${DB_PASSWORD}" 2>/dev/null || {
+            echo "❌ Failed to connect to database"
+            kill $PROXY_PID || true
+            exit 1
+          }
+          echo "✅ Database connection verified"
+          
+          # Run Flyway migrations
+          echo "🔄 Running Flyway migrations..."
           ./gradlew flywayRepair \
             -Pflyway.url="${FLYWAY_URL}" \
-            -Pflyway.user="${FLYWAY_USER}" \
-            -Pflyway.password="${FLYWAY_PASSWORD}" \
-            --no-configuration-cache || true
+            -Pflyway.user="${DB_USER}" \
+            -Pflyway.password="${DB_PASSWORD}" \
+            --no-configuration-cache \
+            -x test || echo "⚠️  flywayRepair completed with warnings"
           
+          echo "📝 Running flywayMigrate..."
           ./gradlew flywayMigrate \
             -Pflyway.url="${FLYWAY_URL}" \
-            -Pflyway.user="${FLYWAY_USER}" \
-            -Pflyway.password="${FLYWAY_PASSWORD}" \
-            --no-configuration-cache
+            -Pflyway.user="${DB_USER}" \
+            -Pflyway.password="${DB_PASSWORD}" \
+            --no-configuration-cache \
+            -x test
           
-          kill $PROXY_PID || true
+          echo "✅ Flyway migrations completed"
+          
+          # Cleanup
+          kill $PROXY_PID 2>/dev/null || true
+          wait $PROXY_PID 2>/dev/null || true
 
   deploy-backend:
     name: Deploy Backend
