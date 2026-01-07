@@ -273,9 +273,10 @@ jobs:
     - name: Run Flyway Migrations
       working-directory: ./backend
       env:
-        FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
-        FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
-        FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
+        DB_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true"
+        DB_USERNAME: ${{ secrets.PREPROD_DB_USER }}
+        DB_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
+        GOOGLE_CLOUD_PROJECT: astute-strategy-406601
       run: |
         # Start Cloud SQL Proxy in background
         ../cloud_sql_proxy -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 > /tmp/sql_proxy.log 2>&1 &
@@ -318,7 +319,7 @@ jobs:
         # Test connection before migrations
         echo "Testing database connection..."
         for i in {1..5}; do
-          if mysql -h 127.0.0.1 -u "$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT 1" 2>/dev/null; then
+          if mysql -h 127.0.0.1 -u "$DB_USERNAME" -p"$DB_PASSWORD" -e "SELECT 1" 2>/dev/null; then
             echo "✅ Database connection successful"
             break
           fi
@@ -331,20 +332,12 @@ jobs:
         # First repair any failed migrations (optional, won't fail if no issues)
         echo "Checking for failed migrations..."
         ./gradlew flywayRepair \
-          -Pflyway.url="${FLYWAY_URL}" \
-          -Pflyway.user="${FLYWAY_USER}" \
-          -Pflyway.password="${FLYWAY_PASSWORD}" \
-          -Pflyway.locations="classpath:db/migration/mysql" \
           --no-configuration-cache \
           --info 2>&1 | tail -20 || echo "No failed migrations to repair"
         
         # Then run migrations
         echo "Running Flyway migrations..."
         ./gradlew flywayMigrate \
-          -Pflyway.url="${FLYWAY_URL}" \
-          -Pflyway.user="${FLYWAY_USER}" \
-          -Pflyway.password="${FLYWAY_PASSWORD}" \
-          -Pflyway.locations="classpath:db/migration/mysql" \
           --no-configuration-cache \
           --info
         
