@@ -1,32 +1,27 @@
 # Secret Manager for storing sensitive configuration
 # ============================================
-# NAMING CONVENTION: {environment}-{secret-name}
-# This matches the sm:// references in application-{profile}.properties
+# NAMING CONVENTION: Core names (db-password, db-username, etc)
+# These are shared across environments and managed centrally
 # ============================================
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
 # are managed by the shared-secrets module, not here.
 # ============================================
 
-# Database URL secret
-resource "google_secret_manager_secret" "db_url" {
-  secret_id = "${var.environment}-db-url"
+# Database username secret (shared, not environment-specific)
+resource "google_secret_manager_secret" "db_username" {
+  secret_id = "db-username"
 
   replication {
     auto {}
   }
-}
 
-resource "google_secret_manager_secret_version" "db_url" {
-  secret      = google_secret_manager_secret.db_url.id
-  secret_data = var.db_url
-}
+  labels = {
+    scope = "database"
+    app   = var.app_name
+  }
 
-# Database username secret
-resource "google_secret_manager_secret" "db_username" {
-  secret_id = "${var.environment}-db-username"
-
-  replication {
-    auto {}
+  lifecycle {
+    ignore_changes = [replication]
   }
 }
 
@@ -35,70 +30,25 @@ resource "google_secret_manager_secret_version" "db_username" {
   secret_data = var.db_username
 }
 
-# Database password secret
+# Database password secret (shared, not environment-specific)
 resource "google_secret_manager_secret" "db_password" {
-  secret_id = "${var.environment}-db-password"
+  secret_id = "db-password"
 
   replication {
     auto {}
+  }
+
+  labels = {
+    scope = "database"
+    app   = var.app_name
+  }
+
+  lifecycle {
+    ignore_changes = [replication]
   }
 }
 
 resource "google_secret_manager_secret_version" "db_password" {
   secret      = google_secret_manager_secret.db_password.id
   secret_data = var.db_password
-}
-
-# JWT secret for authentication
-resource "google_secret_manager_secret" "jwt_secret" {
-  secret_id = "${var.environment}-jwt-secret"
-
-  replication {
-    auto {}
-  }
-}
-
-resource "random_password" "jwt_secret" {
-  length  = 64
-  special = false # Avoid special chars that may cause issues in env vars
-}
-
-resource "google_secret_manager_secret_version" "jwt_secret" {
-  secret      = google_secret_manager_secret.jwt_secret.id
-  secret_data = random_password.jwt_secret.result
-}
-
-# Data encryption key (AES-256)
-resource "google_secret_manager_secret" "data_encryption_key" {
-  secret_id = "${var.environment}-data-encryption-key"
-
-  replication {
-    auto {}
-  }
-}
-
-resource "random_password" "data_encryption_key" {
-  length  = 32 # 256 bits for AES-256
-  special = false
-}
-
-resource "google_secret_manager_secret_version" "data_encryption_key" {
-  secret      = google_secret_manager_secret.data_encryption_key.id
-  secret_data = random_password.data_encryption_key.result
-}
-
-# Redis auth string secret (optional, for caching)
-resource "google_secret_manager_secret" "redis_auth" {
-  count     = var.redis_auth != "" ? 1 : 0
-  secret_id = "${var.environment}-redis-auth"
-
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "redis_auth" {
-  count       = var.redis_auth != "" ? 1 : 0
-  secret      = google_secret_manager_secret.redis_auth[0].id
-  secret_data = var.redis_auth
 }
