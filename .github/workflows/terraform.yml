@@ -101,9 +101,9 @@ jobs:
     
     - name: Create Terraform backend bucket if not exists
       run: |
-        BUCKET_NAME="perundhu-prod-001-tf-state-1767644488"
-        SERVICE_ACCOUNT="cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com"
-        PROJECT_ID="perundhu-prod-001"
+        BUCKET_NAME="astute-strategy-406601-tf-state"
+        SERVICE_ACCOUNT="perundhu-preprod-backend@astute-strategy-406601.iam.gserviceaccount.com"
+        PROJECT_ID="astute-strategy-406601"
         
         echo "Checking if bucket gs://$BUCKET_NAME exists..."
         if ! gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID 2>/dev/null; then
@@ -148,7 +148,7 @@ jobs:
       run: |
         terraform plan -no-color -out=tfplan \
           -lock-timeout=5m \
-          -var="project_id=perundhu-prod-001" \
+          -var="project_id=astute-strategy-406601" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
@@ -198,7 +198,7 @@ jobs:
     
     environment:
       name: preprod-infrastructure
-      url: https://console.cloud.google.com/run?project=perundhu-prod-001
+      url: https://console.cloud.google.com/run?project=astute-strategy-406601
     
     permissions:
       contents: read
