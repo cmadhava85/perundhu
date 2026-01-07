@@ -187,28 +187,30 @@ jobs:
           fi
           
           # Flyway configuration - MUST use localhost proxy only
-          FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=10000"
+          # Port 3307 is correct for GCP Cloud SQL private IP instances
+          FLYWAY_URL="jdbc:mysql://127.0.0.1:3307/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=10000"
           
-          # Start Cloud SQL Proxy with explicit localhost binding on port 3306
-          echo "🔌 Starting Cloud SQL Proxy on 127.0.0.1:3306..."
-          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3306 -max_connections=100 &
+          # Start Cloud SQL Proxy with explicit localhost binding on port 3307
+          # Note: Cloud SQL Proxy uses port 3307 internally for private IP connectivity
+          echo "🔌 Starting Cloud SQL Proxy on 127.0.0.1:3307..."
+          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3307 -max_connections=100 &
           PROXY_PID=$!
           
           # Wait for proxy to be ready
           echo "⏳ Waiting for proxy to be ready..."
           for i in {1..60}; do
-            if nc -z 127.0.0.1 3306 2>/dev/null; then
-              echo "✅ Cloud SQL Proxy ready on port 3306"
+            if nc -z 127.0.0.1 3307 2>/dev/null; then
+              echo "✅ Cloud SQL Proxy ready on port 3307"
               sleep 3  # Extra wait for proxy to fully initialize
               break
             fi
-            echo "  [$i/60] Waiting for port 3306..."
+            echo "  [$i/60] Waiting for port 3307..."
             sleep 1
           done
           
           # Verify port is actually open
-          if ! nc -z 127.0.0.1 3306; then
-            echo "❌ Cloud SQL Proxy failed to open port 3306"
+          if ! nc -z 127.0.0.1 3307; then
+            echo "❌ Cloud SQL Proxy failed to open port 3307"
             kill $PROXY_PID 2>/dev/null || true
             exit 1
           fi
