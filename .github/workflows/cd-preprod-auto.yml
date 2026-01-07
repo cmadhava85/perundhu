@@ -513,3 +513,5 @@ jobs:
         echo "| Backend | ${{ needs.detect-changes.outputs.backend }} | ${{ needs.build-backend.result || 'skipped' }} | ${{ needs.deploy-backend.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### Smoke Tests: ${{ needs.smoke-tests.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Note**: If infrastructure errors occur, see [IMPORT_GUIDE.md](infrastructure/terraform/IMPORT_GUIDE.md)" >> $GITHUB_STEP_SUMMARY
