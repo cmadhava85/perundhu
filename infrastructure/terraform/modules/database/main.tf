@@ -6,6 +6,34 @@ resource "random_password" "db_password" {
   special = true
 }
 
+# Store password in Secret Manager for use by pipelines and applications
+resource "google_secret_manager_secret" "db_password_secret" {
+  secret_id = "db-password"
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "db_password_secret" {
+  secret      = google_secret_manager_secret.db_password_secret.id
+  secret_data = random_password.db_password.result
+}
+
+# Store username in Secret Manager for use by pipelines and applications
+resource "google_secret_manager_secret" "db_username_secret" {
+  secret_id = "db-username"
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "db_username_secret" {
+  secret      = google_secret_manager_secret.db_username_secret.id
+  secret_data = var.database_user
+}
+
 # Cloud SQL instance
 resource "google_sql_database_instance" "mysql_instance" {
   name             = "${var.app_name}-${var.environment}-mysql${var.db_instance_name_suffix}"
