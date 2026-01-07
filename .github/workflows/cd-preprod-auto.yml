@@ -266,17 +266,18 @@ jobs:
     
     - name: Install Cloud SQL Proxy & Dependencies
       run: |
-        # Download and install Cloud SQL Proxy
-        curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
-        chmod +x cloud_sql_proxy
-        mv cloud_sql_proxy /usr/local/bin/
+        # Install latest cloud-sql-proxy v2 using package manager
+        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
         
-        # Install MySQL client and netcat
         sudo apt-get update -qq
-        sudo apt-get install -y netcat-openbsd mysql-client >/dev/null 2>&1
+        sudo apt-get install -y cloud-sql-proxy mysql-client >/dev/null 2>&1
+        
+        # Install MySQL client
+        apt-cache policy mysql-client || echo "MySQL client info unavailable"
         
         echo "✅ Cloud SQL Proxy and dependencies installed"
-        cloud_sql_proxy --version || echo "Note: version check not available"
+        cloud-sql-proxy --version
     
     - name: Run Flyway Migrations
       working-directory: ./backend
@@ -284,93 +285,132 @@ jobs:
         FLYWAY_URL: "jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
         FLYWAY_USER: ${{ secrets.PREPROD_DB_USER }}
         FLYWAY_PASSWORD: ${{ secrets.PREPROD_DB_PASSWORD }}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file }}
       run: |
         set -e
         
         # Kill any stale proxy processes
-        pkill -9 -f cloud_sql_proxy || true
-        sleep 2
+        pkill -9 -f "cloud-sql-proxy\|cloud_sql_proxy" || true
+        sleep 1
         
-        echo "=== Step 1: Starting Cloud SQL Proxy ==="
-        cloud_sql_proxy \
-          -instances=astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia=tcp:3306 \
-          -max_connections=20 \
+        echo "=== Step 1: Starting Cloud SQL Proxy v2 ==="
+        # Use Cloud SQL Proxy v2 with proper configuration
+        cloud-sql-proxy \
+          --port=3306 \
+          --private-ip=false \
+          --max-connections=20 \
+          astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia \
           > /tmp/sql_proxy.log 2>&1 &
         
         PROXY_PID=$!
         echo "Proxy PID: $PROXY_PID"
-        sleep 2
+        sleep 3
         
         # Verify proxy started
         if ! kill -0 $PROXY_PID 2>/dev/null; then
           echo "❌ Proxy failed to start"
+          echo "=== Proxy Log ==="
           cat /tmp/sql_proxy.log
           exit 1
         fi
         
-        echo "=== Step 2: Waiting for proxy to be ready ==="
-        for i in {1..60}; do
-          if timeout 2 bash -c "echo > /dev/tcp/127.0.0.1/3306" 2>/dev/null; then
-            echo "✅ Proxy is ready (attempt $i)"
+        echo "✅ Proxy started successfully"
+        
+        echo ""
+        echo "=== Step 2: Waiting for proxy socket to be ready ==="
+        MAX_ATTEMPTS=90
+        ATTEMPT=0
+        while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+          ATTEMPT=$((ATTEMPT + 1))
+          
+          # Check if proxy is still running
+          if ! kill -0 $PROXY_PID 2>/dev/null; then
+            echo "❌ Proxy died unexpectedly"
+            echo "=== Proxy Log ==="
+            tail -30 /tmp/sql_proxy.log
+            exit 1
+          fi
+          
+          # Try to connect via TCP
+          if timeout 1 bash -c "echo > /dev/tcp/127.0.0.1/3306" 2>/dev/null; then
+            echo "✅ TCP port 3306 is listening (attempt $ATTEMPT)"
+            sleep 1
             break
           fi
-          if [ $i -eq 60 ]; then
-            echo "❌ Proxy timeout after 60s"
-            cat /tmp/sql_proxy.log | tail -30
-            kill $PROXY_PID 2>/dev/null || true
-            exit 1
+          
+          if [ $((ATTEMPT % 10)) -eq 0 ]; then
+            echo "Waiting for proxy... (attempt $ATTEMPT/$MAX_ATTEMPTS)"
           fi
           sleep 1
         done
         
+        if [ $ATTEMPT -ge $MAX_ATTEMPTS ]; then
+          echo "❌ Proxy timeout after ${MAX_ATTEMPTS}s"
+          echo "=== Proxy Log ==="
+          tail -50 /tmp/sql_proxy.log
+          kill $PROXY_PID 2>/dev/null || true
+          exit 1
+        fi
+        
+        echo ""
         echo "=== Step 3: Testing database connectivity ==="
-        for i in {1..15}; do
-          if timeout 5 mysql -h 127.0.0.1 -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT 1;" >/dev/null 2>&1; then
-            echo "✅ Database connected on attempt $i"
-            # Close the test connection
-            mysql -h 127.0.0.1 -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT CONNECTION_ID();" >/dev/null 2>&1 || true
+        MAX_DB_ATTEMPTS=20
+        DB_ATTEMPT=0
+        while [ $DB_ATTEMPT -lt $MAX_DB_ATTEMPTS ]; do
+          DB_ATTEMPT=$((DB_ATTEMPT + 1))
+          
+          if timeout 5 mysql -h 127.0.0.1 -P 3306 -u"$FLYWAY_USER" -p"$FLYWAY_PASSWORD" -e "SELECT 1 as connection_test;" 2>/dev/null; then
+            echo "✅ Database connected successfully on attempt $DB_ATTEMPT"
             break
           fi
-          if [ $i -eq 15 ]; then
-            echo "❌ Failed to connect to database after 15 attempts"
-            echo "Proxy log:"
-            tail -20 /tmp/sql_proxy.log
-            kill $PROXY_PID 2>/dev/null || true
-            exit 1
+          
+          if [ $DB_ATTEMPT -lt $MAX_DB_ATTEMPTS ]; then
+            echo "Retrying database connection... (attempt $DB_ATTEMPT/$MAX_DB_ATTEMPTS)"
+            sleep 2
           fi
-          echo "Waiting... (attempt $i/15)"
-          sleep 2
         done
         
+        if [ $DB_ATTEMPT -ge $MAX_DB_ATTEMPTS ]; then
+          echo "❌ Failed to connect to database after $MAX_DB_ATTEMPTS attempts"
+          echo "=== Proxy Log ==="
+          tail -50 /tmp/sql_proxy.log
+          kill $PROXY_PID 2>/dev/null || true
+          exit 1
+        fi
+        
+        echo ""
         echo "=== Step 4: Running Flyway migrations ==="
         chmod +x gradlew
         
-        # Use environment variables instead of -D flags
+        # Export environment variables for Gradle
         export FLYWAY_URL
         export FLYWAY_USER
         export FLYWAY_PASSWORD
         
-        ./gradlew flywayMigrate \
+        # Run migrations with detailed output
+        if ./gradlew flywayMigrate \
           --info \
           --stacktrace \
-          --no-configuration-cache 2>&1 | tee /tmp/migration.log
-        
-        RESULT=$?
+          --no-configuration-cache 2>&1 | tee /tmp/migration.log; then
+          echo ""
+          echo "✅ Migrations completed successfully"
+          MIGRATION_RESULT=0
+        else
+          echo ""
+          echo "❌ Migrations failed"
+          echo "=== Last 50 lines of migration log ==="
+          tail -50 /tmp/migration.log
+          MIGRATION_RESULT=1
+        fi
         
         echo ""
         echo "=== Step 5: Cleanup ==="
+        # Kill proxy gracefully first, then forcefully
         kill $PROXY_PID 2>/dev/null || true
-        wait $PROXY_PID 2>/dev/null || true
+        sleep 1
+        pkill -9 -f "cloud-sql-proxy\|cloud_sql_proxy" || true
         
-        if [ $RESULT -eq 0 ]; then
-          echo "✅ Migrations completed successfully"
-        else
-          echo "❌ Migrations failed with exit code $RESULT"
-          echo "=== Migration Log ==="
-          tail -50 /tmp/migration.log
-        fi
-        
-        exit $RESULT
+        exit $MIGRATION_RESULT
 
   # Deploy Frontend
   deploy-frontend:
