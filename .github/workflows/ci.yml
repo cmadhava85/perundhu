@@ -208,26 +208,3 @@ jobs:
       continue-on-error: true
       with:
         sarif_file: 'trivy-results.sarif'
-
-  trigger-deployment:
-    name: Trigger CD Pipeline
-    runs-on: ubuntu-latest
-    needs: [frontend-build, backend-build, security-scan]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-    permissions:
-      actions: write
-      contents: read
-    
-    steps:
-    - name: Trigger CD Pipeline
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          await github.rest.actions.createWorkflowDispatch({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: 'cd-preprod-auto.yml',
-            ref: context.ref
-          });
-          console.log('✅ CD pipeline triggered successfully');
