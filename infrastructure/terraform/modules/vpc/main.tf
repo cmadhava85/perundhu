@@ -4,6 +4,10 @@ resource "google_compute_network" "vpc_network" {
   name                    = "${var.app_name}-${var.environment}-vpc"
   auto_create_subnetworks = false
   mtu                     = 1460
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_compute_subnetwork" "public_subnet" {
@@ -51,7 +55,7 @@ resource "google_compute_router_nat" "nat" {
 resource "google_vpc_access_connector" "connector" {
   provider = google-beta
 
-  name          = "perundhu-prod-vpc-conn"  # Max 24 chars for connector ID
+  name          = "${var.app_name}-${var.environment}-vpc-conn"
   region        = var.region
   ip_cidr_range = "10.8.0.0/28"
   network       = google_compute_network.vpc_network.name

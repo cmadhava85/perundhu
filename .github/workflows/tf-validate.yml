@@ -1,0 +1,127 @@
+name: Terraform Validation
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'infrastructure/terraform/**'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'infrastructure/terraform/**'
+  workflow_dispatch:
+
+env:
+  GCP_PROJECT_ID: astute-strategy-406601
+  GCP_REGION: asia-south1
+
+jobs:
+  validate:
+    name: Validate Terraform
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.5.7
+
+    - name: Terraform Format Check
+      run: |
+        cd infrastructure/terraform
+        terraform fmt -check -recursive
+        echo "✅ Terraform format is valid"
+
+    - name: Terraform Validate - Shared
+      working-directory: infrastructure/terraform/environments/shared
+      run: |
+        terraform init -backend=false
+        terraform validate
+        echo "✅ Shared environment terraform is valid"
+
+    - name: Terraform Validate - PreProd
+      working-directory: infrastructure/terraform/environments/preprod
+      run: |
+        terraform init -backend=false
+        terraform validate
+        echo "✅ PreProd environment terraform is valid"
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCPSECRET }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Terraform Plan - PreProd (Dry Run)
+      id: plan
+      working-directory: infrastructure/terraform/environments/preprod
+      continue-on-error: true
+      run: |
+        terraform init -input=false -lock=false
+        
+        # Run plan and capture output
+        terraform plan \
+          -var="project_id=${{ env.GCP_PROJECT_ID }}" \
+          -var="notification_email=alerts@perundhu.com" \
+          -no-color \
+          -out=tfplan > plan_output.txt 2>&1
+        
+        # Check for "already exists" errors (409 conflicts)
+        if grep -q "Error 409\|already exists\|alreadyExists" plan_output.txt; then
+          echo "❌ DETECTED: Resources already exist in GCP but not in Terraform state"
+          echo "This will cause deployment failures!"
+          grep -i "error\|already" plan_output.txt || true
+          echo ""
+          echo "SOLUTION: Import existing resources before deploying"
+          echo "See: infrastructure/terraform/IMPORT_GUIDE.md"
+          exit 1
+        fi
+        
+        # Check for other errors
+        if grep -q "Error:" plan_output.txt; then
+          echo "❌ Terraform plan failed"
+          cat plan_output.txt
+          exit 1
+        fi
+        
+        echo "✅ Terraform plan validation successful"
+        cat plan_output.txt | tail -20
+
+    - name: Check for State Lock Issues
+      if: failure() && steps.plan.outcome == 'failure'
+      working-directory: infrastructure/terraform/environments/preprod
+      run: |
+        echo "❌ Terraform operation failed. Checking for state lock issues..."
+        
+        # Try to get lock info
+        if terraform plan -var="project_id=${{ env.GCP_PROJECT_ID }}" -var="notification_email=alerts@perundhu.com" 2>&1 | grep -q "Error acquiring the state lock"; then
+          echo "Found state lock issue. This usually means:"
+          echo "1. Another deployment is in progress"
+          echo "2. A previous deployment crashed and left a lock"
+          echo ""
+          echo "⚠️  Contact DevOps to force-unlock if needed"
+          exit 1
+        fi
+
+    - name: Comment on PR
+      if: github.event_name == 'pull_request' && always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const plan_status = '${{ steps.plan.outcome }}';
+          const comment = plan_status === 'success' 
+            ? '✅ Terraform plan validation passed'
+            : '❌ Terraform plan validation failed - see logs for details';
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
