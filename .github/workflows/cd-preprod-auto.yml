@@ -3,7 +3,7 @@ name: CD Auto Deploy to Pre-Production
 # Triggered after CI pipeline completes successfully
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["CI Pipeline"]
     types:
       - completed
     branches: [main, master]
@@ -33,14 +33,11 @@ jobs:
     - name: Check CI workflow result
       id: check
       run: |
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          echo "✅ Manual dispatch - proceeding with deployment"
-          echo "should_deploy=true" >> $GITHUB_OUTPUT
-        elif [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
-          echo "✅ CI passed - proceeding with deployment"
+        if [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
+          echo "✅ CI Pipeline (CI Pipeline) passed - proceeding with deployment"
           echo "should_deploy=true" >> $GITHUB_OUTPUT
         else
-          echo "❌ CI did not succeed (status: ${{ github.event.workflow_run.conclusion }}) - skipping deployment"
+          echo "❌ CI Pipeline did not succeed (status: ${{ github.event.workflow_run.conclusion }}) - skipping deployment"
           echo "should_deploy=false" >> $GITHUB_OUTPUT
         fi
 
@@ -62,15 +59,7 @@ jobs:
     - name: Detect changes
       id: changes
       run: |
-        # For manual dispatch, use input values
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          echo "frontend=${{ inputs.deploy_frontend }}" >> $GITHUB_OUTPUT
-          echo "backend=${{ inputs.deploy_backend }}" >> $GITHUB_OUTPUT
-          echo "migrations=${{ inputs.run_migrations }}" >> $GITHUB_OUTPUT
-          exit 0
-        fi
-        
-        # For push events, detect changes from git diff
+        # Detect changes from git diff (workflow_run triggered by CI completion)
         CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff --name-only HEAD)
         
         # Check frontend changes
@@ -220,8 +209,8 @@ EOF
   run-migrations:
     name: Run Database Migrations
     runs-on: ubuntu-latest
-    needs: [detect-changes]
-    if: needs.detect-changes.outputs.migrations == 'true'
+    needs: [detect-changes, build-backend]
+    if: needs.detect-changes.outputs.migrations == 'true' && needs.build-backend.result != 'failure'
     permissions:
       contents: read
       id-token: write
