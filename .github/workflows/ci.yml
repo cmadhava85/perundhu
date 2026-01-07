@@ -227,7 +227,7 @@ jobs:
           await github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            workflow_id: 'cd-preprod-auto.yml',
+            workflow_id: 'cd-preprod.yml',
             ref: context.ref
           });
           console.log('✅ CD pipeline triggered successfully');
