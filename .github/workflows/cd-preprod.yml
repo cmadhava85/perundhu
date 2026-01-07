@@ -24,8 +24,8 @@ env:
   PROJECT_ID: astute-strategy-406601
   REGION: asia-south1
   REGISTRY: asia-south1-docker.pkg.dev
-  SQL_INSTANCE: astute-strategy-406601:asia-south1:perundhu-preprod-mysql-asia
-  SQL_INSTANCE_NAME: perundhu-preprod-mysql-asia
+  SQL_INSTANCE: astute-strategy-406601:asia-south1:perundhu-preprod-mysql
+  SQL_INSTANCE_NAME: perundhu-preprod-mysql
 
 jobs:
   check-ci:
@@ -187,17 +187,18 @@ jobs:
           
           # Start Cloud SQL Proxy
           echo "🔌 Starting Cloud SQL Proxy..."
-          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:3306 &
+          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:3306 -max_connections=100 &
           PROXY_PID=$!
           
           # Wait for proxy to be ready
           echo "⏳ Waiting for proxy to be ready..."
-          for i in {1..30}; do
+          for i in {1..60}; do
             if nc -z 127.0.0.1 3306 2>/dev/null; then
-              echo "✅ Cloud SQL Proxy ready"
+              echo "✅ Cloud SQL Proxy ready on port 3306"
+              sleep 2  # Extra wait for proxy to fully initialize
               break
             fi
-            echo "  [$i/30] Waiting for port 3306..."
+            echo "  [$i/60] Waiting for port 3306..."
             sleep 1
           done
           
