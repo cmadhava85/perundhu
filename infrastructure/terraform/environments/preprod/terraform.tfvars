@@ -26,18 +26,18 @@ database_name = "perundhu"
 database_user = "perundhu_user"
 
 # Database Storage (cost-optimized for development)
-db_disk_type             = "PD_HDD"  # HDD is cheaper, suitable for dev
-db_disk_size             = 10        # Minimum size to save costs
-db_disk_autoresize_limit = 20        # Auto-grow up to 20GB
+db_disk_type             = "PD_HDD" # HDD is cheaper, suitable for dev
+db_disk_size             = 10       # Minimum size to save costs
+db_disk_autoresize_limit = 20       # Auto-grow up to 20GB
 
 # Database Availability (cost-optimized)
-db_availability_type = "ZONAL"  # Cheaper than REGIONAL
+db_availability_type = "ZONAL" # Cheaper than REGIONAL
 
 # Database Backups (disabled in preprod to save costs)
-db_backup_enabled                   = false
-db_retained_backups_count           = 3
-db_transaction_log_retention_days   = 1
-db_binary_log_enabled               = false
+db_backup_enabled                 = false
+db_retained_backups_count         = 3
+db_transaction_log_retention_days = 1
+db_binary_log_enabled             = false
 
 # Database Logging (minimal in preprod)
 db_slow_query_log_enabled = false
@@ -47,10 +47,10 @@ db_deletion_protection    = false
 # ============================================
 # Cloud Run Configuration
 # ============================================
-cloud_run_min_instances = 0     # Scale to zero for cost savings
-cloud_run_max_instances = 2     # Low max for dev
-cloud_run_cpu_limit     = "1000m"   # 1 CPU
-cloud_run_memory_limit  = "512Mi"   # Minimal memory
+cloud_run_min_instances = 0       # Scale to zero for cost savings
+cloud_run_max_instances = 2       # Low max for dev
+cloud_run_cpu_limit     = "1000m" # 1 CPU
+cloud_run_memory_limit  = "512Mi" # Minimal memory
 
 # ============================================
 # VPC Configuration
@@ -96,7 +96,7 @@ firewall_rules = {
   allow-ssh = {
     direction     = "INGRESS"
     priority      = 1005
-    enable        = true  # Enable SSH for debugging in preprod
+    enable        = true # Enable SSH for debugging in preprod
     source_ranges = ["0.0.0.0/0"]
     target_tags   = ["ssh"]
     allow_rules = [

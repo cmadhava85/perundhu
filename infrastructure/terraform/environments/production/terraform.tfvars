@@ -27,32 +27,32 @@ database_name = "perundhu"
 database_user = "perundhu_user"
 
 # Database Storage (production-grade)
-db_disk_type             = "PD_HDD"     # HDD for balance of cost and performance
-db_disk_size             = 50           # Start with 50GB in production
-db_disk_autoresize_limit = 100          # Allow growth up to 100GB
+db_disk_type             = "PD_HDD" # HDD for balance of cost and performance
+db_disk_size             = 50       # Start with 50GB in production
+db_disk_autoresize_limit = 100      # Allow growth up to 100GB
 
 # Database Availability (production-grade)
-db_availability_type   = "ZONAL"        # ZONAL is cost-effective; upgrade to REGIONAL if HA needed
-db_deletion_protection = true           # Prevent accidental deletion in production
+db_availability_type   = "ZONAL" # ZONAL is cost-effective; upgrade to REGIONAL if HA needed
+db_deletion_protection = true    # Prevent accidental deletion in production
 
 # Database Backups (ENABLED in production)
-db_backup_enabled                   = true
-db_backup_start_time                = "02:00"  # 2 AM IST for off-peak backup
-db_retained_backups_count           = 7        # Keep 7 backups for recovery
-db_transaction_log_retention_days   = 7        # 7 days of transaction logs
-db_binary_log_enabled               = true     # Enable binary logging for backup consistency
+db_backup_enabled                 = true
+db_backup_start_time              = "02:00" # 2 AM IST for off-peak backup
+db_retained_backups_count         = 7       # Keep 7 backups for recovery
+db_transaction_log_retention_days = 7       # 7 days of transaction logs
+db_binary_log_enabled             = true    # Enable binary logging for backup consistency
 
 # Database Logging (production monitoring)
-db_slow_query_log_enabled = true       # Monitor slow queries for performance tuning
-db_general_log_enabled    = false      # Disabled to avoid performance impact (enable if needed for debugging)
+db_slow_query_log_enabled = true  # Monitor slow queries for performance tuning
+db_general_log_enabled    = false # Disabled to avoid performance impact (enable if needed for debugging)
 
 # ============================================
 # Cloud Run Configuration
 # ============================================
-cloud_run_min_instances = 1             # Always have 1 instance running
-cloud_run_max_instances = 10            # Scale up to 10 for load
-cloud_run_cpu_limit     = "2000m"       # 2 CPUs for production
-cloud_run_memory_limit  = "1Gi"         # 1GB memory for production
+cloud_run_min_instances = 1       # Always have 1 instance running
+cloud_run_max_instances = 10      # Scale up to 10 for load
+cloud_run_cpu_limit     = "2000m" # 2 CPUs for production
+cloud_run_memory_limit  = "1Gi"   # 1GB memory for production
 
 # ============================================
 # VPC Configuration
@@ -61,21 +61,21 @@ vpc_cidr                    = "10.0.0.0/16"
 public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
-vpc_connector_min_instances = 3         # Higher minimum for production
-vpc_connector_max_instances = 5         # Higher maximum for production
+vpc_connector_min_instances = 3 # Higher minimum for production
+vpc_connector_max_instances = 5 # Higher maximum for production
 
 # ============================================
 # Storage Configuration
 # ============================================
-images_bucket_versioning_enabled = false  # Disabled to reduce costs; enable if versioning needed
-images_bucket_force_destroy      = false  # Prevent accidental bucket deletion
+images_bucket_versioning_enabled = false # Disabled to reduce costs; enable if versioning needed
+images_bucket_force_destroy      = false # Prevent accidental bucket deletion
 
 images_bucket_cors_enabled = true
 
 # Lifecycle: Delete images after 2 years (longer retention for archives)
 images_bucket_lifecycle_rules = [
   {
-    age_days      = 730      # 2 years
+    age_days      = 730 # 2 years
     action        = "Delete"
     storage_class = null
   }
@@ -99,7 +99,7 @@ firewall_rules = {
   allow-ssh = {
     direction     = "INGRESS"
     priority      = 1005
-    enable        = false    # SSH DISABLED in production for security
+    enable        = false # SSH DISABLED in production for security
     source_ranges = ["0.0.0.0/0"]
     target_tags   = ["ssh"]
     allow_rules = [

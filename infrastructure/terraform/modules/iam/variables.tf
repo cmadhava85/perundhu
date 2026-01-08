@@ -26,11 +26,11 @@ variable "backend_roles" {
   description = "IAM roles to assign to backend service account"
   type        = list(string)
   default = [
-    "roles/cloudsql.client",                    # Cloud SQL access
-    "roles/storage.objectAdmin",                # Cloud Storage access
-    "roles/secretmanager.secretAccessor",       # Secret Manager access
-    "roles/monitoring.metricWriter",            # Cloud Monitoring
-    "roles/logging.logWriter",                  # Cloud Logging
+    "roles/cloudsql.client",              # Cloud SQL access
+    "roles/storage.objectAdmin",          # Cloud Storage access
+    "roles/secretmanager.secretAccessor", # Secret Manager access
+    "roles/monitoring.metricWriter",      # Cloud Monitoring
+    "roles/logging.logWriter",            # Cloud Logging
   ]
 }
 
@@ -43,15 +43,15 @@ variable "backend_optional_roles" {
   default = {
     pubsub_publisher = {
       role    = "roles/pubsub.publisher"
-      enabled = false  # Enable when async messaging is needed
+      enabled = false # Enable when async messaging is needed
     }
     pubsub_subscriber = {
       role    = "roles/pubsub.subscriber"
-      enabled = false  # Enable when async messaging is needed
+      enabled = false # Enable when async messaging is needed
     }
     redis_editor = {
       role    = "roles/redis.editor"
-      enabled = false  # Enable when caching is needed
+      enabled = false # Enable when caching is needed
     }
   }
 }
@@ -64,10 +64,10 @@ variable "cloudbuild_roles" {
   description = "IAM roles to assign to Cloud Build service account"
   type        = list(string)
   default = [
-    "roles/logging.logWriter",          # Cloud Logging
-    "roles/storage.admin",              # Cloud Storage (artifacts)
-    "roles/run.developer",              # Cloud Run deployment
-    "roles/iam.serviceAccountUser",     # Service account impersonation
+    "roles/logging.logWriter",      # Cloud Logging
+    "roles/storage.admin",          # Cloud Storage (artifacts)
+    "roles/run.developer",          # Cloud Run deployment
+    "roles/iam.serviceAccountUser", # Service account impersonation
   ]
 }
 

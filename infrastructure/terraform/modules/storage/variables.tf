@@ -45,9 +45,9 @@ variable "images_bucket_force_destroy" {
 variable "images_bucket_lifecycle_rules" {
   description = "Lifecycle rules for images bucket"
   type = list(object({
-    description = optional(string)
-    age_days    = number
-    action      = string  # "Delete", "SetStorageClass", etc
+    description   = optional(string)
+    age_days      = number
+    action        = string # "Delete", "SetStorageClass", etc
     storage_class = optional(string)
   }))
   default = [
