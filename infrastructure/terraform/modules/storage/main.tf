@@ -1,5 +1,6 @@
 # Cloud Storage bucket for Perundhu
-# Simplified: Only images bucket (the only one actually used)
+# ============================================
+# Stores uploaded images with configurable lifecycle policies
 
 # Random string for bucket name uniqueness
 resource "random_string" "bucket_suffix" {
@@ -10,33 +11,39 @@ resource "random_string" "bucket_suffix" {
 
 # Bucket for storing uploaded images (user contributions, bus photos, etc.)
 resource "google_storage_bucket" "images_bucket" {
-  name     = "${var.app_name}-${var.environment}-images-${random_string.bucket_suffix.result}"
-  location = var.region
-
-  # Prevent accidental deletion
-  force_destroy = false
+  name          = "${var.app_name}-${var.environment}-images-${random_string.bucket_suffix.result}"
+  location      = var.region
+  force_destroy = var.images_bucket_force_destroy
 
   uniform_bucket_level_access = true
 
   versioning {
-    enabled = false # No versioning needed for images
+    enabled = var.images_bucket_versioning_enabled
   }
 
-  # Delete old images after 1 year to save costs
-  lifecycle_rule {
-    condition {
-      age = 365
-    }
-    action {
-      type = "Delete"
+  # Lifecycle rules (configurable via variables)
+  dynamic "lifecycle_rule" {
+    for_each = var.images_bucket_lifecycle_rules
+    content {
+      condition {
+        age = lifecycle_rule.value.age_days
+      }
+      action {
+        type          = lifecycle_rule.value.action
+        storage_class = lifecycle_rule.value.storage_class
+      }
     }
   }
 
-  cors {
-    origin          = ["*"]
-    method          = ["GET", "HEAD", "PUT", "POST"]
-    response_header = ["Content-Type", "Content-Length"]
-    max_age_seconds = 3600
+  # CORS configuration (optional)
+  dynamic "cors" {
+    for_each = var.images_bucket_cors_enabled ? [1] : []
+    content {
+      origin          = var.images_bucket_cors_origins
+      method          = var.images_bucket_cors_methods
+      response_header = var.images_bucket_cors_headers
+      max_age_seconds = var.images_bucket_cors_max_age_seconds
+    }
   }
 }
 

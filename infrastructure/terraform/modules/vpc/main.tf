@@ -1,4 +1,6 @@
 # VPC Network Module for Perundhu
+# ============================================
+# Manages network infrastructure with configurable firewall rules
 
 resource "google_compute_network" "vpc_network" {
   name                    = "${var.app_name}-${var.environment}-vpc"
@@ -12,7 +14,7 @@ resource "google_compute_network" "vpc_network" {
 
 resource "google_compute_subnetwork" "public_subnet" {
   name          = "${var.app_name}-${var.environment}-public-subnet"
-  ip_cidr_range = "10.0.1.0/24"
+  ip_cidr_range = var.public_subnet_cidr
   region        = var.region
   network       = google_compute_network.vpc_network.id
 
@@ -22,7 +24,7 @@ resource "google_compute_subnetwork" "public_subnet" {
 
 resource "google_compute_subnetwork" "private_subnet" {
   name          = "${var.app_name}-${var.environment}-private-subnet"
-  ip_cidr_range = "10.0.2.0/24"
+  ip_cidr_range = var.private_subnet_cidr
   region        = var.region
   network       = google_compute_network.vpc_network.id
 
@@ -57,61 +59,40 @@ resource "google_vpc_access_connector" "connector" {
 
   name          = "${var.app_name}-${var.environment}-vpc-conn"
   region        = var.region
-  ip_cidr_range = "10.8.0.0/28"
+  ip_cidr_range = var.vpc_connector_cidr
   network       = google_compute_network.vpc_network.name
 
-  min_instances = 2
-  max_instances = 3
-
-  machine_type = "e2-micro"
+  min_instances = var.vpc_connector_min_instances
+  max_instances = var.vpc_connector_max_instances
+  machine_type  = var.vpc_connector_machine_type
 }
 
-# Firewall Rules
-resource "google_compute_firewall" "allow_internal" {
-  name    = "${var.app_name}-${var.environment}-allow-internal"
+# ============================================
+# Firewall Rules (Configurable via variables)
+# ============================================
+
+resource "google_compute_firewall" "rules" {
+  for_each = {
+    for name, rule in var.firewall_rules :
+    name => rule if rule.enable
+  }
+
+  name    = "${var.app_name}-${var.environment}-${each.key}"
   network = google_compute_network.vpc_network.name
 
-  allow {
-    protocol = "icmp"
+  direction = each.value.direction
+  priority  = each.value.priority
+
+  dynamic "allow" {
+    for_each = each.value.allow_rules
+    content {
+      protocol = allow.value.protocol
+      ports    = allow.value.ports
+    }
   }
 
-  allow {
-    protocol = "tcp"
-    ports    = ["0-65535"]
-  }
-
-  allow {
-    protocol = "udp"
-    ports    = ["0-65535"]
-  }
-
-  source_ranges = ["10.0.0.0/16"]
-}
-
-resource "google_compute_firewall" "allow_ssh" {
-  name    = "${var.app_name}-${var.environment}-allow-ssh"
-  network = google_compute_network.vpc_network.name
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["ssh"]
-}
-
-resource "google_compute_firewall" "allow_http_https" {
-  name    = "${var.app_name}-${var.environment}-allow-http-https"
-  network = google_compute_network.vpc_network.name
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443", "8080"]
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["http-server", "https-server"]
+  source_ranges = each.value.source_ranges
+  target_tags   = each.value.target_tags
 }
 
 # Private Service Connection for Cloud SQL

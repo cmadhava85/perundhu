@@ -19,25 +19,25 @@ resource "google_sql_database_instance" "mysql_instance" {
 
   settings {
     tier                  = var.db_instance_tier
-    disk_type             = "PD_HDD" # HDD is ~85% cheaper than SSD for low-traffic apps
-    disk_size             = 10       # Minimum size - saves ~$1.70/mo
-    disk_autoresize       = true     # Auto-grow only when needed
-    disk_autoresize_limit = 20       # Cap at 20GB to control costs
+    disk_type             = var.db_disk_type
+    disk_size             = var.db_disk_size
+    disk_autoresize       = true
+    disk_autoresize_limit = var.db_disk_autoresize_limit
 
-    availability_type = "ZONAL" # ZONAL is cheaper than REGIONAL
+    availability_type = var.db_availability_type
 
-    # COST OPTIMIZATION: Minimal backup configuration
+    # Backup configuration based on variables
     backup_configuration {
-      enabled    = var.environment == "prod" ? true : false # Disable backups in non-prod
-      start_time = "02:00"
+      enabled    = var.db_backup_enabled
+      start_time = var.db_backup_start_time
 
       backup_retention_settings {
-        retained_backups = 3 # Reduced from 7 to save storage costs
+        retained_backups = var.db_retained_backups_count
         retention_unit   = "COUNT"
       }
 
-      transaction_log_retention_days = 1     # Minimum retention
-      binary_log_enabled             = false # Disable binary logs to save ~$1/mo
+      transaction_log_retention_days = var.db_transaction_log_retention_days
+      binary_log_enabled             = var.db_binary_log_enabled
     }
 
     ip_configuration {
@@ -46,16 +46,15 @@ resource "google_sql_database_instance" "mysql_instance" {
       enable_private_path_for_google_cloud_services = true
     }
 
-    # COST OPTIMIZATION: Disable verbose logging to reduce disk I/O
+    # Logging configuration based on variables
     database_flags {
       name  = "slow_query_log"
-      value = var.environment == "prod" ? "on" : "off"
+      value = var.db_slow_query_log_enabled ? "on" : "off"
     }
 
-    # General log disabled - saves disk space and I/O
     database_flags {
       name  = "general_log"
-      value = "off"
+      value = var.db_general_log_enabled ? "on" : "off"
     }
 
     database_flags {
@@ -68,7 +67,6 @@ resource "google_sql_database_instance" "mysql_instance" {
       hour = 3
     }
 
-    # COST OPTIMIZATION: Enable automatic storage increase prevention
     user_labels = {
       environment = var.environment
       cost_center = "perundhu"

@@ -1,5 +1,9 @@
 # Perundhu Production Environment Infrastructure
-# This configuration sets up all required Google Cloud services
+# ============================================
+# Configuration is split for maintainability:
+# - Backend configuration: production/backend.tf
+# - Infrastructure modules: main.tf (below)
+# - Variables: variables.tf
 
 terraform {
   required_version = ">= 1.0"
@@ -12,12 +16,6 @@ terraform {
       source  = "hashicorp/google-beta"
       version = "~> 5.0"
     }
-  }
-
-  # Backend configuration for storing state
-  backend "gcs" {
-    bucket = "perundhu-prod-001-tf-state-1767644488"
-    prefix = "production/state"
   }
 }
 
@@ -91,9 +89,6 @@ module "database" {
   depends_on = [module.vpc]
 }
 
-# NOTE: Pub/Sub removed - app uses synchronous processing
-# Can be re-enabled later if async messaging is needed
-
 # Cloud Storage for file uploads (images only)
 module "storage" {
   source = "../../modules/storage"
@@ -105,9 +100,6 @@ module "storage" {
 
   depends_on = [google_project_service.required_apis]
 }
-
-# NOTE: Redis removed - not needed for current app scale
-# Can be re-enabled later if caching is needed
 
 # Secret Manager for database credentials
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
@@ -151,14 +143,20 @@ module "cloud_run" {
   storage_bucket_name   = module.storage.images_bucket_name
   
   # Redis and JWT disabled - not needed for current app scale
-  redis_host      = ""
-  redis_port      = 6379
-  jwt_secret_name = ""
-  # Backend uses default GCP Cloud Run URL
+  redis_host       = var.redis_host
+  redis_port       = var.redis_port
+  jwt_secret_name  = var.jwt_secret_name
+
+  # Cloud Run scaling and resource config from variables
+  min_instances = var.cloud_run_min_instances
+  max_instances = var.cloud_run_max_instances
+  cpu_limit     = var.cloud_run_cpu_limit
+  memory_limit  = var.cloud_run_memory_limit
 
   depends_on = [module.vpc, module.database, module.storage, module.iam]
 }
 
-# NOTE: Monitoring and Budget modules removed
-# Using default GCP monitoring and logging (free tier)
-# Can be re-enabled later if custom alerts/dashboards are needed
+# NOTE: Pub/Sub removed - app uses synchronous processing
+# NOTE: Redis removed - not needed for current app scale
+# NOTE: Monitoring, Budget, and Logging modules removed - using default GCP free tier
+
