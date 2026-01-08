@@ -34,6 +34,10 @@ CREATE TABLE IF NOT EXISTS locations (
     nearby_city VARCHAR(100),
     osm_id BIGINT,
     osm_type VARCHAR(20),
+    osm_node_id BIGINT,
+    osm_way_id BIGINT,
+    last_osm_update DATETIME,
+    osm_tags JSON,
     neighborhood VARCHAR(255),
     state VARCHAR(100),
     priority INT,
@@ -115,10 +119,10 @@ CREATE TABLE IF NOT EXISTS route_contributions (
     bus_name VARCHAR(255),
     from_location_name VARCHAR(255),
     to_location_name VARCHAR(255),
-    from_latitude VARCHAR(50),
-    from_longitude VARCHAR(50),
-    to_latitude VARCHAR(50),
-    to_longitude VARCHAR(50),
+    from_latitude DOUBLE,
+    from_longitude DOUBLE,
+    to_latitude DOUBLE,
+    to_longitude DOUBLE,
     departure_time VARCHAR(50),
     arrival_time VARCHAR(50),
     schedule_info TEXT,
@@ -322,8 +326,12 @@ CREATE TABLE IF NOT EXISTS bus_timing_records (
 -- SYSTEM SETTINGS TABLE
 -- =====================
 CREATE TABLE IF NOT EXISTS system_settings (
-    setting_key VARCHAR(100) PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(100) NOT NULL UNIQUE,
     setting_value TEXT,
+    category VARCHAR(50),
+    description VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
