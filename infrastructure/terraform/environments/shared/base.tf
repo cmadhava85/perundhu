@@ -5,37 +5,10 @@
 # used by all environments. Environment-specific
 # configurations override defaults via tfvars.
 
-# NOTE: This is NOT a module - it's imported directly
-# via Terraform to allow flexible overriding of variables.
-
-terraform {
-  required_version = ">= 1.0"
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "~> 5.0"
-    }
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = "~> 5.0"
-    }
-  }
-  # Note: Backend configuration is set in individual environment directories
-  # Do NOT define backend here as this is used as a module by preprod/production
-}
-
-# Configure the Google Cloud Provider
-provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
-}
-
-provider "google-beta" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
-}
+# NOTE: This is NOT a module - it's included directly via terraform_self_service.
+# terraform, required_providers, and provider blocks are defined in the root
+# environment files (preprod/main.tf and production/main.tf).
+# This file contains only resources and module instantiations.
 
 # Data sources
 data "google_project" "project" {
