@@ -116,15 +116,6 @@ firewall_rules = {
 }
 
 # ============================================
-# CORS Configuration
-# ============================================
-images_bucket_cors = {
-  origin      = ["http://localhost:3000", "http://localhost:5173"]
-  methods     = ["GET", "HEAD", "OPTIONS"]
-  max_age_sec = 3600
-}
-
-# ============================================
 # Storage Lifecycle Rules
 # ============================================
 # Already defined above with images_bucket_lifecycle_rules
