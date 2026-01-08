@@ -64,7 +64,30 @@ UPDATE locations SET state = 'kerala' WHERE state = 'Kerala';
 UPDATE locations SET state = 'karnataka' WHERE state = 'Karnataka';
 UPDATE locations SET state = 'andhra_pradesh' WHERE state = 'Andhra Pradesh';
 
--- Add indexes for multi-state queries if not present
-ALTER TABLE locations ADD INDEX idx_state (state);
-ALTER TABLE locations ADD INDEX idx_state_district (state, district);
-ALTER TABLE locations ADD INDEX idx_coordinates (latitude, longitude);
+-- Add indexes for multi-state queries if not present (check before adding)
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema='perundhu' AND table_name='locations' AND index_name='idx_state') = 0,
+    'ALTER TABLE locations ADD INDEX idx_state (state)',
+    'SELECT "Index idx_state already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema='perundhu' AND table_name='locations' AND index_name='idx_state_district') = 0,
+    'ALTER TABLE locations ADD INDEX idx_state_district (state, district)',
+    'SELECT "Index idx_state_district already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema='perundhu' AND table_name='locations' AND index_name='idx_coordinates_multistate') = 0,
+    'ALTER TABLE locations ADD INDEX idx_coordinates_multistate (latitude, longitude)',
+    'SELECT "Index idx_coordinates_multistate already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
