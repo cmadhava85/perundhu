@@ -219,27 +219,42 @@ jobs:
           
           # Skip mysql verification - just run migrations directly
           echo "🔄 Running Flyway migrations through proxy..."
-          ./gradlew flywayRepair \
-            -Pflyway.url="${FLYWAY_URL}" \
-            -Pflyway.user="${DB_USER}" \
-            -Pflyway.password="${DB_PASSWORD}" \
-            -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
-            --no-configuration-cache \
-            -x test || echo "⚠️  flywayRepair completed with warnings"
           
-          echo "📝 Running flywayMigrate..."
-          ./gradlew flywayMigrate \
+          # Try migration directly first (skip repair if successful)
+          if ./gradlew flywayMigrate \
             -Pflyway.url="${FLYWAY_URL}" \
             -Pflyway.user="${DB_USER}" \
             -Pflyway.password="${DB_PASSWORD}" \
             -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
             -Pflyway.baselineOnMigrate=true \
-            -Pflyway.baselineVersion=57 \
-            -Pflyway.baselineDescription="Baseline after manual V56-57" \
+            -Pflyway.baselineVersion=56 \
+            -Pflyway.baselineDescription="Baseline complete schema" \
             --no-configuration-cache \
-            -x test
-          
-          echo "✅ Flyway migrations completed"
+            -x test; then
+            echo "✅ Flyway migrations completed successfully"
+          else
+            echo "⚠️  Migration failed on first attempt, attempting repair..."
+            ./gradlew flywayRepair \
+              -Pflyway.url="${FLYWAY_URL}" \
+              -Pflyway.user="${DB_USER}" \
+              -Pflyway.password="${DB_PASSWORD}" \
+              -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
+              --no-configuration-cache \
+              -x test
+            
+            echo "📝 Running flywayMigrate after repair..."
+            ./gradlew flywayMigrate \
+              -Pflyway.url="${FLYWAY_URL}" \
+              -Pflyway.user="${DB_USER}" \
+              -Pflyway.password="${DB_PASSWORD}" \
+              -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
+              -Pflyway.baselineOnMigrate=true \
+              -Pflyway.baselineVersion=56 \
+              -Pflyway.baselineDescription="Baseline complete schema" \
+              --no-configuration-cache \
+              -x test
+            echo "✅ Flyway migrations completed after repair"
+          fi
           
           # Cleanup
           kill $PROXY_PID 2>/dev/null || true
