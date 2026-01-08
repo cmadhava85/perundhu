@@ -34,12 +34,12 @@ output "cloudbuild_service_account_name" {
 
 output "custom_role_id" {
   description = "ID of the custom application role"
-  value       = var.enable_custom_role ? google_project_iam_custom_role.app_role[0].role_id : null
+  value       = try(google_project_iam_custom_role.app_role[0].role_id, null)
 }
 
 output "custom_role_name" {
   description = "Name of the custom application role"
-  value       = var.enable_custom_role ? google_project_iam_custom_role.app_role[0].name : null
+  value       = try(google_project_iam_custom_role.app_role[0].name, null)
 }
 
 output "backend_roles_assigned" {
