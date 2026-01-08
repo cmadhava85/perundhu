@@ -89,9 +89,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [terraform-validate]
     if: |
-      ((github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) && matrix.run_on_push == true) ||
-      (github.event_name == 'pull_request') ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == matrix.environment)
+      github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') ||
+      github.event_name == 'pull_request' ||
+      github.event_name == 'workflow_dispatch'
     
     strategy:
       matrix:
@@ -202,6 +202,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [terraform-plan]
     
+    if: |
+      github.event_name == 'workflow_dispatch' && 
+      github.event.inputs.action == 'apply'
+    
     strategy:
       matrix:
         include:
@@ -214,12 +218,6 @@ jobs:
             project_id: perundhu-prod-001
             console_url: https://console.cloud.google.com/run?project=perundhu-prod-001
       max-parallel: 1
-    
-    # Only run for the selected environment
-    if: |
-      github.event_name == 'workflow_dispatch' && 
-      github.event.inputs.action == 'apply' &&
-      github.event.inputs.environment == matrix.environment
     
     environment:
       name: ${{ matrix.environment }}-infrastructure
@@ -234,6 +232,14 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Check Environment Match
+      if: |
+        github.event_name == 'workflow_dispatch' &&
+        github.event.inputs.environment != matrix.environment
+      run: |
+        echo "Skipping ${{ matrix.environment }} - target is ${{ github.event.inputs.environment }}"
+        exit 0
     
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
@@ -294,8 +300,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.event_name == 'workflow_dispatch' && 
-      github.event.inputs.action == 'destroy' &&
-      github.event.inputs.environment == matrix.environment
+      github.event.inputs.action == 'destroy'
     
     strategy:
       matrix:
@@ -320,6 +325,14 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Check Environment Match
+      if: |
+        github.event_name == 'workflow_dispatch' &&
+        github.event.inputs.environment != matrix.environment
+      run: |
+        echo "Skipping ${{ matrix.environment }} - target is ${{ github.event.inputs.environment }}"
+        exit 0
     
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
