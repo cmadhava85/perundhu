@@ -146,11 +146,11 @@ module "cloud_run" {
   db_name               = module.database.db_name
   db_user               = module.database.db_user
   storage_bucket_name   = module.storage.images_bucket_name
-  
+
   # Redis and JWT disabled - not needed for current app scale
-  redis_host       = var.redis_host
-  redis_port       = var.redis_port
-  jwt_secret_name  = var.jwt_secret_name
+  redis_host      = var.redis_host
+  redis_port      = var.redis_port
+  jwt_secret_name = var.jwt_secret_name
 
   # Cloud Run scaling and resource config from variables
   min_instances = var.cloud_run_min_instances

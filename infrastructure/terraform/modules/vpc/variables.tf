@@ -71,12 +71,12 @@ variable "vpc_connector_machine_type" {
 variable "firewall_rules" {
   description = "Firewall rules to create"
   type = map(object({
-    direction       = optional(string, "INGRESS")
-    priority        = optional(number, 1000)
-    allow_rules     = optional(list(object({ protocol = string, ports = optional(list(string)) })), [])
-    source_ranges   = optional(list(string), [])
-    target_tags     = optional(list(string), [])
-    enable          = optional(bool, true)
+    direction     = optional(string, "INGRESS")
+    priority      = optional(number, 1000)
+    allow_rules   = optional(list(object({ protocol = string, ports = optional(list(string)) })), [])
+    source_ranges = optional(list(string), [])
+    target_tags   = optional(list(string), [])
+    enable        = optional(bool, true)
   }))
   default = {
     allow_internal = {
@@ -94,7 +94,7 @@ variable "firewall_rules" {
       ]
       source_ranges = ["0.0.0.0/0"]
       target_tags   = ["ssh"]
-      enable        = false  # Disabled by default for security
+      enable        = false # Disabled by default for security
     }
     allow_http_https = {
       allow_rules = [

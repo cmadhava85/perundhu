@@ -90,7 +90,7 @@ variable "db_disk_autoresize_limit" {
 variable "db_backup_enabled" {
   description = "Enable automated backups"
   type        = bool
-  default     = false  # Disabled by default in preprod, enable in production
+  default     = false # Disabled by default in preprod, enable in production
 }
 
 variable "db_backup_start_time" {
@@ -124,7 +124,7 @@ variable "db_binary_log_enabled" {
 variable "db_availability_type" {
   description = "Availability type (ZONAL or REGIONAL)"
   type        = string
-  default     = "ZONAL"  # ZONAL is cheaper
+  default     = "ZONAL" # ZONAL is cheaper
 }
 
 variable "db_deletion_protection" {
@@ -140,7 +140,7 @@ variable "db_deletion_protection" {
 variable "db_slow_query_log_enabled" {
   description = "Enable slow query logging"
   type        = bool
-  default     = false  # Disabled by default, enable in production
+  default     = false # Disabled by default, enable in production
 }
 
 variable "db_general_log_enabled" {
