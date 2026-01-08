@@ -17,6 +17,11 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "perundhu-prod-001-tf-state"
+    prefix = "production/state"
+  }
 }
 
 # Configure the Google Cloud Provider

@@ -17,6 +17,11 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "astute-strategy-406601-tf-state"
+    prefix = "preprod/state"
+  }
 }
 
 # Configure the Google Cloud Provider
