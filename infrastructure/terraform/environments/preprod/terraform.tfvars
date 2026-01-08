@@ -79,11 +79,57 @@ images_bucket_lifecycle_rules = [
 ]
 
 # ============================================
-# Firewall Rules (managed separately in GCP Console)
+# Firewall Rules (imported from existing GCP resources)
 # ============================================
-# Firewall rules are pre-created in GCP and managed manually.
-# Not managed by Terraform due to IAM permission constraints.
-firewall_rules = {}
+firewall_rules = {
+  "allow-internal" = {
+    enable    = true
+    direction = "INGRESS"
+    priority  = 1000
+    allow_rules = [
+      {
+        protocol = "tcp"
+        ports    = ["0-65535"]
+      },
+      {
+        protocol = "udp"
+        ports    = ["0-65535"]
+      },
+      {
+        protocol = "icmp"
+        ports    = []
+      }
+    ]
+    source_ranges = ["10.0.0.0/16"]
+    target_tags   = []
+  }
+  "allow-ssh" = {
+    enable    = true
+    direction = "INGRESS"
+    priority  = 1000
+    allow_rules = [
+      {
+        protocol = "tcp"
+        ports    = ["22"]
+      }
+    ]
+    source_ranges = ["0.0.0.0/0"]
+    target_tags   = ["ssh"]
+  }
+  "allow-http-https" = {
+    enable    = true
+    direction = "INGRESS"
+    priority  = 1000
+    allow_rules = [
+      {
+        protocol = "tcp"
+        ports    = ["80", "443", "8080"]
+      }
+    ]
+    source_ranges = ["0.0.0.0/0"]
+    target_tags   = ["http-server", "https-server"]
+  }
+}
 
 # ============================================
 # Storage Lifecycle Rules
@@ -125,7 +171,7 @@ custom_role_permissions = [
   "compute.instances.list"
 ]
 
-enable_custom_role = false
+enable_custom_role = true
 
 # ============================================
 # Notifications Configuration
