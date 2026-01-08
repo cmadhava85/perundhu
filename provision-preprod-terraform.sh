@@ -73,7 +73,7 @@ terraform plan \
   -var="notification_email=${NOTIFICATION_EMAIL}" \
   -var="db_version=MYSQL_8_0" \
   -var="db_instance_tier=db-f1-micro" \
-  -var="db_instance_name_suffix=-asia" \
+  -var="db_instance_name_suffix=" \
   -out=tfplan
 
 echo ""

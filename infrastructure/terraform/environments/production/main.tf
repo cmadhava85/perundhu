@@ -76,14 +76,17 @@ module "vpc" {
 module "database" {
   source = "../../modules/database"
 
-  project_id       = var.project_id
-  region           = var.region
-  environment      = var.environment
-  app_name         = var.app_name
-  vpc_network      = module.vpc.private_vpc_connection
-  private_subnet   = module.vpc.private_subnet_name
-  db_version       = var.db_version
-  db_instance_tier = var.db_instance_tier
+  project_id              = var.project_id
+  region                  = var.region
+  environment             = var.environment
+  app_name                = var.app_name
+  vpc_network             = module.vpc.private_vpc_connection
+  private_subnet          = module.vpc.private_subnet_name
+  db_version              = var.db_version
+  db_instance_tier        = var.db_instance_tier
+  db_instance_name_suffix = var.db_instance_name_suffix
+  database_name           = var.database_name
+  database_user           = var.database_user
 
   depends_on = [module.vpc]
 }
@@ -147,8 +150,8 @@ module "cloud_run" {
   db_user               = module.database.db_user
   storage_bucket_name   = module.storage.images_bucket_name
   # Redis disabled - not needed for current app scale
-  redis_host            = ""
-  redis_port            = 6379
+  redis_host = ""
+  redis_port = 6379
   # Backend uses default GCP Cloud Run URL
 
   depends_on = [module.vpc, module.database, module.storage, module.iam]

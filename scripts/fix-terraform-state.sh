@@ -91,7 +91,7 @@ terraform plan -no-color \
   -var="app_name=perundhu" \
   -var="db_version=MYSQL_8_0" \
   -var="db_instance_tier=db-f1-micro" \
-  -var="db_instance_name_suffix=-asia" \
+  -var="db_instance_name_suffix=" \
   -var="notification_email=alerts@perundhu.com" \
   2>&1 | head -50
 echo ""

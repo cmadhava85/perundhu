@@ -160,7 +160,9 @@ jobs:
           -var="app_name=perundhu" \
           -var="db_version=MYSQL_8_0" \
           -var="db_instance_tier=db-f1-micro" \
-          -var="db_instance_name_suffix=-asia" \
+          -var="db_instance_name_suffix=" \
+          -var="database_name=perundhu" \
+          -var="database_user=perundhu_user" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
@@ -390,6 +392,8 @@ jobs:
         terraform plan -no-color -out=tfplan \
           -lock=false \
           -var="project_id=perundhu-prod-001" \
+          -var="database_name=perundhu" \
+          -var="database_user=perundhu_user" \
           -var="notification_email=alerts@perundhu.com"
         terraform show -no-color tfplan > tfplan.txt
     
