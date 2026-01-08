@@ -49,7 +49,7 @@ INSERT INTO locations (name, latitude, longitude, district, state, priority, typ
 ('Nellore', 14.4426, 79.9864, 'Nellore', 'andhra_pradesh', 2, 'city'),
 ('Chittoor', 13.1939, 79.1064, 'Chittoor', 'andhra_pradesh', 2, 'city'),
 ('Ongole', 14.6349, 79.6670, 'Prakasam', 'andhra_pradesh', 2, 'city'),
-('Renigunta', 13.1935, 79.8369, 'Chittoor', 'andhra_pradesh', 2, 'town'),
+('Renigunta', 13.1935, 79.8369, 'Chittoor', 'andhra_pradesh', 2, 'town')
 
 ON DUPLICATE KEY UPDATE
   latitude = VALUES(latitude),
