@@ -1,5 +1,8 @@
-# Perundhu PreProd Environment Variables
-# Simplified - removed unused variables for Redis, Budget, Monitoring
+# ============================================
+# Preprod Environment Variables (from shared)
+# ============================================
+# These variables are defined in shared/variables.tf
+# They are duplicated here for Terraform to recognize them in this module
 
 variable "project_id" {
   description = "The GCP project ID"
@@ -19,9 +22,8 @@ variable "zone" {
 }
 
 variable "environment" {
-  description = "Environment name"
+  description = "Environment name (preprod, production)"
   type        = string
-  default     = "preprod"
 }
 
 variable "app_name" {
@@ -39,31 +41,12 @@ variable "db_version" {
 variable "db_instance_tier" {
   description = "Database instance tier"
   type        = string
-  default     = "db-f1-micro" # Smallest/cheapest tier for dev
 }
 
 variable "db_instance_name_suffix" {
   description = "Suffix for database instance name"
   type        = string
   default     = ""
-}
-
-variable "domain_name" {
-  description = "Domain name for the application"
-  type        = string
-  default     = "preprod.perundhu.com"
-}
-
-variable "container_image" {
-  description = "Container image for the backend application"
-  type        = string
-  default     = "gcr.io/PROJECT_ID/perundhu-backend:latest"
-}
-
-variable "notification_email" {
-  description = "Email address for alerts and notifications"
-  type        = string
-  default     = "alerts@perundhu.com"
 }
 
 variable "database_name" {
@@ -78,7 +61,50 @@ variable "database_user" {
   default     = "perundhu_user"
 }
 
-# ============================================
-# NOTE: Shared secrets (gemini_api_key, recaptcha_*)
-# are managed in terraform/environments/shared
-# ============================================
+variable "cloud_run_min_instances" {
+  description = "Minimum number of Cloud Run instances"
+  type        = number
+  default     = 0
+}
+
+variable "cloud_run_max_instances" {
+  description = "Maximum number of Cloud Run instances"
+  type        = number
+  default     = 2
+}
+
+variable "cloud_run_cpu_limit" {
+  description = "CPU limit for Cloud Run containers"
+  type        = string
+  default     = "1000m"
+}
+
+variable "cloud_run_memory_limit" {
+  description = "Memory limit for Cloud Run containers"
+  type        = string
+  default     = "512Mi"
+}
+
+variable "redis_host" {
+  description = "Redis host (empty string to disable)"
+  type        = string
+  default     = ""
+}
+
+variable "redis_port" {
+  description = "Redis port"
+  type        = number
+  default     = 6379
+}
+
+variable "jwt_secret_name" {
+  description = "JWT secret name (empty string to disable)"
+  type        = string
+  default     = ""
+}
+
+variable "notification_email" {
+  description = "Email address for alerts and notifications"
+  type        = string
+  default     = "alerts@perundhu.com"
+}

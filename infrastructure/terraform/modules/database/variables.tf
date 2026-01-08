@@ -9,7 +9,7 @@ variable "region" {
 }
 
 variable "environment" {
-  description = "Environment name (e.g., preprod, prod)"
+  description = "Environment name (e.g., preprod, production)"
   type        = string
 }
 
@@ -28,6 +28,10 @@ variable "private_subnet" {
   type        = string
 }
 
+# ============================================
+# Database Configuration
+# ============================================
+
 variable "db_version" {
   description = "MySQL database version"
   type        = string
@@ -35,9 +39,8 @@ variable "db_version" {
 }
 
 variable "db_instance_tier" {
-  description = "Database instance tier"
+  description = "Database instance tier (e.g., db-f1-micro, db-n1-standard-1)"
   type        = string
-  default     = "db-f1-micro"
 }
 
 variable "database_name" {
@@ -52,14 +55,102 @@ variable "database_user" {
   default     = "perundhu_user"
 }
 
-variable "create_test_database" {
-  description = "Whether to create a test database"
-  type        = bool
-  default     = true
-}
-
 variable "db_instance_name_suffix" {
   description = "Suffix for database instance name (e.g., '-asia' for perundhu-preprod-mysql-asia)"
   type        = string
   default     = ""
+}
+
+# ============================================
+# Storage Configuration
+# ============================================
+
+variable "db_disk_type" {
+  description = "Database disk type (PD_HDD for cost optimization, PD_SSD for performance)"
+  type        = string
+  default     = "PD_HDD"
+}
+
+variable "db_disk_size" {
+  description = "Initial database disk size in GB"
+  type        = number
+  default     = 10
+}
+
+variable "db_disk_autoresize_limit" {
+  description = "Maximum disk size in GB for autoresize"
+  type        = number
+  default     = 20
+}
+
+# ============================================
+# Backup Configuration
+# ============================================
+
+variable "db_backup_enabled" {
+  description = "Enable automated backups"
+  type        = bool
+  default     = false  # Disabled by default in preprod, enable in production
+}
+
+variable "db_backup_start_time" {
+  description = "Start time for backup (HH:MM format)"
+  type        = string
+  default     = "02:00"
+}
+
+variable "db_retained_backups_count" {
+  description = "Number of backups to retain"
+  type        = number
+  default     = 3
+}
+
+variable "db_transaction_log_retention_days" {
+  description = "Number of days to retain transaction logs"
+  type        = number
+  default     = 1
+}
+
+variable "db_binary_log_enabled" {
+  description = "Enable binary logging"
+  type        = bool
+  default     = false
+}
+
+# ============================================
+# Availability Configuration
+# ============================================
+
+variable "db_availability_type" {
+  description = "Availability type (ZONAL or REGIONAL)"
+  type        = string
+  default     = "ZONAL"  # ZONAL is cheaper
+}
+
+variable "db_deletion_protection" {
+  description = "Enable deletion protection"
+  type        = bool
+  default     = false
+}
+
+# ============================================
+# Logging Configuration
+# ============================================
+
+variable "db_slow_query_log_enabled" {
+  description = "Enable slow query logging"
+  type        = bool
+  default     = false  # Disabled by default, enable in production
+}
+
+variable "db_general_log_enabled" {
+  description = "Enable general log"
+  type        = bool
+  default     = false
+}
+
+variable "create_test_database" {
+  description = "Whether to create a test database"
+  type        = bool
+  default     = true
 }

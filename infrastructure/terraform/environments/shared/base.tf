@@ -1,9 +1,12 @@
-# Perundhu PreProd Environment Infrastructure
 # ============================================
-# Configuration is split for maintainability:
-# - Backend configuration: preprod/backend.tf
-# - Infrastructure modules: main.tf (below)
-# - Variables: variables.tf
+# Perundhu Base Infrastructure (Shared by preprod & production)
+# ============================================
+# This file contains the common infrastructure code
+# used by all environments. Environment-specific
+# configurations override defaults via tfvars.
+
+# NOTE: This is NOT a module - it's imported directly
+# via Terraform to allow flexible overriding of variables.
 
 terraform {
   required_version = ">= 1.0"
@@ -17,6 +20,8 @@ terraform {
       version = "~> 5.0"
     }
   }
+  # Note: Backend configuration is set in individual environment directories
+  # Do NOT define backend here as this is used as a module by preprod/production
 }
 
 # Configure the Google Cloud Provider
@@ -31,10 +36,6 @@ provider "google-beta" {
   region  = var.region
   zone    = var.zone
 }
-
-# Include shared infrastructure components
-# This sources the actual infrastructure modules and resources
-# Values are passed from terraform.tfvars and ../shared/variables.tf
 
 # Data sources
 data "google_project" "project" {
@@ -161,6 +162,11 @@ module "cloud_run" {
 }
 
 # NOTE: Pub/Sub removed - app uses synchronous processing
-# NOTE: Redis removed - not needed for current app scale
-# NOTE: Monitoring, Budget, and Logging modules removed - using default GCP free tier
+# Can be re-enabled later if async messaging is needed
 
+# NOTE: Redis removed from deployment - not needed for current app scale
+# Can be re-enabled later if caching is needed
+
+# NOTE: Monitoring, Budget, and Logging modules removed
+# Using default GCP monitoring and logging (free tier)
+# Can be re-enabled later if custom alerts/dashboards are needed

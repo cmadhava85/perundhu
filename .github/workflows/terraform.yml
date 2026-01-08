@@ -39,6 +39,20 @@ concurrency:
 env:
   TF_VERSION: '1.9'
   TF_WORKING_DIR: 'infrastructure/terraform/environments'
+  # Environment configuration - values come from tfvars files
+  ENVIRONMENTS: |
+    {
+      "preprod": {
+        "project_id": "astute-strategy-406601",
+        "tf_state_bucket": "astute-strategy-406601-tf-state",
+        "tf_state_prefix": "preprod/state"
+      },
+      "production": {
+        "project_id": "perundhu-prod-001",
+        "tf_state_bucket": "perundhu-prod-001-tf-state-1767644488",
+        "tf_state_prefix": "production/state"
+      }
+    }
 
 jobs:
   terraform-validate:
@@ -64,14 +78,33 @@ jobs:
         terraform init -backend=false -lock=false
         terraform validate
 
-  terraform-plan-preprod:
-    name: Plan PreProd Infrastructure
+  terraform-plan:
+    name: Plan Terraform - ${{ matrix.environment }}
     runs-on: ubuntu-latest
     needs: [terraform-validate]
     if: |
       (github.event_name == 'pull_request') ||
       (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'preprod')
+      (github.event_name == 'workflow_dispatch')
+    
+    strategy:
+      matrix:
+        include:
+          - environment: preprod
+            tf_dir: infrastructure/terraform/environments/preprod
+            project_id: astute-strategy-406601
+            run_on_push: true
+          - environment: production
+            tf_dir: infrastructure/terraform/environments/production
+            project_id: perundhu-prod-001
+            run_on_push: false
+      max-parallel: 2
+    
+    # Skip production plan on push, only on explicit workflow_dispatch
+    if: |
+      (matrix.run_on_push == true && github.event_name != 'workflow_dispatch') ||
+      (github.event_name == 'workflow_dispatch' && (github.event.inputs.environment == matrix.environment || github.event.inputs.environment == '')) ||
+      (github.event_name == 'pull_request')
     
     permissions:
       contents: read
@@ -79,7 +112,7 @@ jobs:
       pull-requests: write
     
     env:
-      TF_ENV_DIR: 'infrastructure/terraform/environments/preprod'
+      TF_ENV_DIR: ${{ matrix.tf_dir }}
     
     steps:
     - uses: actions/checkout@v4
@@ -99,49 +132,12 @@ jobs:
       with:
         terraform_version: ${{ env.TF_VERSION }}
     
-    - name: Create Terraform backend bucket if not exists
+    - name: Debug Environment Info
       run: |
-        BUCKET_NAME="astute-strategy-406601-tf-state"
-        SERVICE_ACCOUNT="perundhu-preprod-backend@astute-strategy-406601.iam.gserviceaccount.com"
-        PROJECT_ID="astute-strategy-406601"
-        
-        echo "Checking if bucket gs://$BUCKET_NAME exists..."
-        if ! gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID 2>/dev/null; then
-          echo "Bucket does not exist. Creating Terraform state bucket: $BUCKET_NAME"
-          gcloud storage buckets create gs://$BUCKET_NAME \
-            --project=$PROJECT_ID \
-            --location=asia-south1 \
-            --uniform-bucket-level-access
-          
-          echo "Enabling versioning on bucket..."
-          gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID
-          
-          echo "Granting service account access to bucket..."
-          gcloud storage buckets add-iam-policy-binding gs://$BUCKET_NAME \
-            --member="serviceAccount:$SERVICE_ACCOUNT" \
-            --role="roles/storage.objectAdmin" \
-            --project=$PROJECT_ID
-          
-          echo "✅ Bucket created and configured successfully"
-        else
-          echo "✅ Terraform state bucket already exists"
-        fi
-    
-    - name: Debug GCP Credentials
-      run: |
-        echo "GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}"
-        echo "Credentials file exists: $(test -f "${GOOGLE_APPLICATION_CREDENTIALS}" && echo yes || echo no)"
-        gcloud config get-value project
-        gcloud auth list
-
-    - name: Clean up stuck state locks
-      continue-on-error: true
-      run: |
-        # Remove any stuck lock files from GCS
-        BUCKET_PATH="gs://astute-strategy-406601-tf-state/preprod/state/default.tflock"
-        echo "Checking for stuck locks at: $BUCKET_PATH"
-        gsutil rm -f "$BUCKET_PATH" 2>/dev/null && echo "✅ Removed stuck lock file" || echo "ℹ️  No lock file found (clean state)"
-        sleep 2
+        echo "Environment: ${{ matrix.environment }}"
+        echo "Working Directory: ${{ env.TF_ENV_DIR }}"
+        echo "Project ID: ${{ matrix.project_id }}"
+        echo "GitHub Event: ${{ github.event_name }}"
     
     - name: Terraform Init
       working-directory: ${{ env.TF_ENV_DIR }}
@@ -151,25 +147,15 @@ jobs:
       id: plan
       working-directory: ${{ env.TF_ENV_DIR }}
       run: |
-        terraform plan -no-color -out=tfplan \
-          -lock=false \
-          -var="project_id=astute-strategy-406601" \
-          -var="region=asia-south1" \
-          -var="zone=asia-south1-a" \
-          -var="environment=preprod" \
-          -var="app_name=perundhu" \
-          -var="db_version=MYSQL_8_0" \
-          -var="db_instance_tier=db-f1-micro" \
-          -var="db_instance_name_suffix=" \
-          -var="database_name=perundhu" \
-          -var="database_user=perundhu_user" \
-          -var="notification_email=alerts@perundhu.com"
+        # Use terraform.tfvars file from environment directory
+        # No need to pass -var flags - tfvars file has all variables
+        terraform plan -no-color -out=tfplan -lock=false
         terraform show -no-color tfplan > tfplan.txt
     
     - name: Upload Plan
       uses: actions/upload-artifact@v4
       with:
-        name: terraform-plan-preprod
+        name: terraform-plan-${{ matrix.environment }}
         path: ${{ env.TF_ENV_DIR }}/tfplan
         retention-days: 1
     
@@ -183,7 +169,7 @@ jobs:
           const plan = fs.readFileSync('${{ env.TF_ENV_DIR }}/tfplan.txt', 'utf8');
           const truncatedPlan = plan.length > 65000 ? plan.substring(0, 65000) + '\n\n... (truncated)' : plan;
           
-          const output = `#### Terraform Plan 📋 \`preprod\`
+          const output = `#### Terraform Plan 📋 \`${{ matrix.environment }}\`
           <details><summary>Show Plan</summary>
 
           \`\`\`terraform
@@ -201,25 +187,44 @@ jobs:
             body: output
           });
 
-  terraform-apply-preprod:
-    name: Apply PreProd Infrastructure
+
+  terraform-apply:
+    name: Apply Terraform - ${{ matrix.environment }}
     runs-on: ubuntu-latest
-    needs: [terraform-plan-preprod]
+    needs: [terraform-plan]
     if: |
-      (github.event_name == 'workflow_dispatch' && 
-       github.event.inputs.environment == 'preprod' && 
-       github.event.inputs.action == 'apply')
+      github.event_name == 'workflow_dispatch' && 
+      github.event.inputs.action == 'apply'
+    
+    strategy:
+      matrix:
+        include:
+          - environment: preprod
+            tf_dir: infrastructure/terraform/environments/preprod
+            project_id: astute-strategy-406601
+            console_url: https://console.cloud.google.com/run?project=astute-strategy-406601
+          - environment: production
+            tf_dir: infrastructure/terraform/environments/production
+            project_id: perundhu-prod-001
+            console_url: https://console.cloud.google.com/run?project=perundhu-prod-001
+      max-parallel: 1
+    
+    # Only run for the selected environment
+    if: |
+      github.event_name == 'workflow_dispatch' && 
+      github.event.inputs.action == 'apply' &&
+      github.event.inputs.environment == matrix.environment
     
     environment:
-      name: preprod-infrastructure
-      url: https://console.cloud.google.com/run?project=astute-strategy-406601
+      name: ${{ matrix.environment }}-infrastructure
+      url: ${{ matrix.console_url }}
     
     permissions:
       contents: read
       id-token: write
     
     env:
-      TF_ENV_DIR: 'infrastructure/terraform/environments/preprod'
+      TF_ENV_DIR: ${{ matrix.tf_dir }}
     
     steps:
     - uses: actions/checkout@v4
@@ -246,7 +251,7 @@ jobs:
     - name: Download Plan
       uses: actions/download-artifact@v4
       with:
-        name: terraform-plan-preprod
+        name: terraform-plan-${{ matrix.environment }}
         path: ${{ env.TF_ENV_DIR }}
     
     - name: Terraform Apply
@@ -263,34 +268,54 @@ jobs:
     - name: Upload Terraform Outputs
       uses: actions/upload-artifact@v4
       with:
-        name: terraform-outputs-preprod
+        name: terraform-outputs-${{ matrix.environment }}
         path: ${{ env.TF_ENV_DIR }}/outputs.json
         retention-days: 1
     
     - name: Create Summary
       run: |
-        echo "## ✅ PreProd Infrastructure Applied" >> $GITHUB_STEP_SUMMARY
+        echo "## ✅ ${{ matrix.environment }} Infrastructure Applied" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Environment**: PreProd" >> $GITHUB_STEP_SUMMARY
+        echo "- **Environment**: ${{ matrix.environment }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Project**: ${{ matrix.project_id }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Applied by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Check [Cloud Console](https://console.cloud.google.com/run?project=astute-strategy-406601) for resources" >> $GITHUB_STEP_SUMMARY
+        echo "Check [Cloud Console](${{ matrix.console_url }}) for resources" >> $GITHUB_STEP_SUMMARY
 
-  terraform-destroy-preprod:
-    name: Destroy PreProd Infrastructure
+  terraform-destroy:
+    name: Destroy Terraform - ${{ matrix.environment }}
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'preprod' && github.event.inputs.action == 'destroy'
+    if: |
+      github.event_name == 'workflow_dispatch' && 
+      github.event.inputs.action == 'destroy'
+    
+    strategy:
+      matrix:
+        include:
+          - environment: preprod
+            tf_dir: infrastructure/terraform/environments/preprod
+            project_id: astute-strategy-406601
+          - environment: production
+            tf_dir: infrastructure/terraform/environments/production
+            project_id: perundhu-prod-001
+      max-parallel: 1
+    
+    # Only run for the selected environment
+    if: |
+      github.event_name == 'workflow_dispatch' && 
+      github.event.inputs.action == 'destroy' &&
+      github.event.inputs.environment == matrix.environment
     
     environment:
-      name: preprod-infrastructure-destroy
+      name: ${{ matrix.environment }}-infrastructure-destroy
     
     permissions:
       contents: read
       id-token: write
     
     env:
-      TF_ENV_DIR: 'infrastructure/terraform/environments/preprod'
+      TF_ENV_DIR: ${{ matrix.tf_dir }}
     
     steps:
     - uses: actions/checkout@v4
@@ -320,212 +345,7 @@ jobs:
     
     - name: Create Summary
       run: |
-        echo "## ⚠️ PreProd Infrastructure Destroyed" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Environment**: PreProd" >> $GITHUB_STEP_SUMMARY
-        echo "- **Destroyed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "## ⚠️ ${{ matrix.environment }} Infrastructure Destroyed" >> $GITHUB_STEP_SUMMARY
 
-  terraform-plan-production:
-    name: Plan Production Infrastructure
-    runs-on: ubuntu-latest
-    needs: [terraform-validate]
-    if: |
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
-    
-    permissions:
-      contents: read
-      id-token: write
-      pull-requests: write
-    
-    env:
-      TF_ENV_DIR: 'infrastructure/terraform/environments/production'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCPSECRET }}
-        create_credentials_file: true
-        export_environment_variables: true
-    
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: ${{ env.TF_VERSION }}
-    
-    - name: Create Terraform backend bucket if not exists
-      run: |
-        BUCKET_NAME="perundhu-prod-001-tf-state-1767644488"
-        SERVICE_ACCOUNT="cloud-run-sa@perundhu-prod-001.iam.gserviceaccount.com"
-        PROJECT_ID="perundhu-prod-001"
-        
-        echo "Checking if bucket gs://$BUCKET_NAME exists..."
-        if ! gcloud storage buckets describe gs://$BUCKET_NAME --project=$PROJECT_ID 2>/dev/null; then
-          echo "⚠️ Bucket does not exist and cannot create without proper credentials"
-          echo "IMPORTANT: Production terraform state bucket must be created manually or with production credentials"
-          echo "Bucket that should exist: gs://$BUCKET_NAME in project $PROJECT_ID"
-          echo ""
-          echo "To create manually, run:"
-          echo "  gcloud storage buckets create gs://$BUCKET_NAME --project=$PROJECT_ID --location=asia-south1 --uniform-bucket-level-access"
-          echo "  gcloud storage buckets update gs://$BUCKET_NAME --versioning --project=$PROJECT_ID"
-          echo ""
-          echo "⚠️ Skipping bucket creation - verify it exists before running terraform apply"
-          exit 0
-        else
-          echo "✅ Terraform state bucket already exists"
-        fi
-    
-    - name: Terraform Init
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false -reconfigure -lock=false
-    
-    - name: Terraform Plan
-      id: plan
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: |
-        terraform plan -no-color -out=tfplan \
-          -lock=false \
-          -var="project_id=perundhu-prod-001" \
-          -var="database_name=perundhu" \
-          -var="database_user=perundhu_user" \
-          -var="notification_email=alerts@perundhu.com"
-        terraform show -no-color tfplan > tfplan.txt
-    
-    - name: Upload Plan
-      uses: actions/upload-artifact@v4
-      with:
-        name: terraform-plan-production
-        path: ${{ env.TF_ENV_DIR }}/tfplan
-        retention-days: 1
 
-  terraform-apply-production:
-    name: Apply Production Infrastructure
-    runs-on: ubuntu-latest
-    needs: [terraform-plan-production]
-    if: |
-      (github.event_name == 'workflow_dispatch' && 
-       github.event.inputs.environment == 'production' && 
-       github.event.inputs.action == 'apply')
-    
-    environment:
-      name: production-infrastructure
-      url: https://console.cloud.google.com/run?project=perundhu-prod-001
-    
-    permissions:
-      contents: read
-      id-token: write
-    
-    env:
-      TF_ENV_DIR: 'infrastructure/terraform/environments/production'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCPSECRET }}
-        create_credentials_file: true
-        export_environment_variables: true
-    
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: ${{ env.TF_VERSION }}
-    
-    - name: Terraform Init
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false
-    
-    - name: Download Plan
-      uses: actions/download-artifact@v4
-      with:
-        name: terraform-plan-production
-        path: ${{ env.TF_ENV_DIR }}
-    
-    - name: Terraform Apply
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform apply -auto-approve tfplan
-    
-    - name: Terraform Output
-      id: output
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: |
-        terraform output -json > outputs.json
-        echo "Outputs saved"
-    
-    - name: Upload Terraform Outputs
-      uses: actions/upload-artifact@v4
-      with:
-        name: terraform-outputs-production
-        path: ${{ env.TF_ENV_DIR }}/outputs.json
-        retention-days: 1
-    
-    - name: Create Summary
-      run: |
-        echo "## ✅ Production Infrastructure Applied" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Environment**: Production" >> $GITHUB_STEP_SUMMARY
-        echo "- **Applied by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Check [Cloud Console](https://console.cloud.google.com/run?project=astute-strategy-406601) for resources" >> $GITHUB_STEP_SUMMARY
-
-  terraform-destroy-production:
-    name: Destroy Production Infrastructure
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production' && github.event.inputs.action == 'destroy'
-    
-    environment:
-      name: production-infrastructure-destroy
-    
-    permissions:
-      contents: read
-      id-token: write
-    
-    env:
-      TF_ENV_DIR: 'infrastructure/terraform/environments/production'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCPSECRET }}
-        create_credentials_file: true
-        export_environment_variables: true
-    
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-    
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: ${{ env.TF_VERSION }}
-    
-    - name: Terraform Init
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform init -input=false
-    
-    - name: Terraform Destroy
-      working-directory: ${{ env.TF_ENV_DIR }}
-      run: terraform destroy -auto-approve
-    
-    - name: Create Summary
-      run: |
-        echo "## ⚠️ Production Infrastructure Destroyed" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- **Environment**: Production" >> $GITHUB_STEP_SUMMARY
-        echo "- **Destroyed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
 

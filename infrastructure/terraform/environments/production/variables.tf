@@ -1,5 +1,8 @@
-# Production Environment Variables
-# Simplified - removed unused variables for Redis, Budget, Monitoring
+# ============================================
+# Production Environment Variables (from shared)
+# ============================================
+# These variables are defined in shared/variables.tf
+# They are duplicated here for Terraform to recognize them in this module
 
 variable "project_id" {
   description = "The GCP project ID"
@@ -7,25 +10,24 @@ variable "project_id" {
 }
 
 variable "region" {
-  description = "The GCP region for resources"
+  description = "The GCP region"
   type        = string
   default     = "asia-south1"
 }
 
 variable "zone" {
-  description = "The GCP zone for resources"
+  description = "The GCP zone"
   type        = string
   default     = "asia-south1-a"
 }
 
 variable "environment" {
-  description = "The environment name"
+  description = "Environment name (preprod, production)"
   type        = string
-  default     = "production"
 }
 
 variable "app_name" {
-  description = "The application name"
+  description = "Application name"
   type        = string
   default     = "perundhu"
 }
@@ -37,26 +39,14 @@ variable "db_version" {
 }
 
 variable "db_instance_tier" {
-  description = "The machine tier for the database instance"
-  type        = string
-  default     = "db-n1-standard-1"
-}
-
-variable "domain_name" {
-  description = "Custom domain name for the application"
-  type        = string
-  default     = "perundhu.com"
-}
-
-variable "container_image" {
-  description = "Container image for Cloud Run deployment"
+  description = "Database instance tier"
   type        = string
 }
 
-variable "notification_email" {
-  description = "Email address for alerts and notifications"
+variable "db_instance_name_suffix" {
+  description = "Suffix for database instance name"
   type        = string
-  default     = "alerts@perundhu.com"
+  default     = ""
 }
 
 variable "database_name" {
@@ -71,13 +61,50 @@ variable "database_user" {
   default     = "perundhu_user"
 }
 
-variable "db_instance_name_suffix" {
-  description = "Suffix for database instance name"
+variable "cloud_run_min_instances" {
+  description = "Minimum number of Cloud Run instances"
+  type        = number
+  default     = 0
+}
+
+variable "cloud_run_max_instances" {
+  description = "Maximum number of Cloud Run instances"
+  type        = number
+  default     = 2
+}
+
+variable "cloud_run_cpu_limit" {
+  description = "CPU limit for Cloud Run containers"
+  type        = string
+  default     = "1000m"
+}
+
+variable "cloud_run_memory_limit" {
+  description = "Memory limit for Cloud Run containers"
+  type        = string
+  default     = "512Mi"
+}
+
+variable "redis_host" {
+  description = "Redis host (empty string to disable)"
   type        = string
   default     = ""
 }
 
-# ============================================
-# NOTE: Shared secrets (gemini_api_key, recaptcha_*)
-# are managed in terraform/environments/shared
-# ============================================
+variable "redis_port" {
+  description = "Redis port"
+  type        = number
+  default     = 6379
+}
+
+variable "jwt_secret_name" {
+  description = "JWT secret name (empty string to disable)"
+  type        = string
+  default     = ""
+}
+
+variable "notification_email" {
+  description = "Email address for alerts and notifications"
+  type        = string
+  default     = "alerts@perundhu.com"
+}
