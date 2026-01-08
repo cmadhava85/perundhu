@@ -82,7 +82,7 @@ images_bucket_lifecycle_rules = [
 # Firewall Rules (development-friendly)
 # ============================================
 firewall_rules = {
-  allow_internal = {
+  allow-internal = {
     direction     = "INGRESS"
     priority      = 1000
     enable        = true
@@ -93,7 +93,7 @@ firewall_rules = {
       { protocol = "udp", ports = ["0-65535"] }
     ]
   }
-  allow_ssh = {
+  allow-ssh = {
     direction     = "INGRESS"
     priority      = 1005
     enable        = true  # Enable SSH for debugging in preprod
@@ -103,7 +103,7 @@ firewall_rules = {
       { protocol = "tcp", ports = ["22"] }
     ]
   }
-  allow_http_https = {
+  allow-http-https = {
     direction     = "INGRESS"
     priority      = 1010
     enable        = true
@@ -114,6 +114,57 @@ firewall_rules = {
     ]
   }
 }
+
+# ============================================
+# CORS Configuration
+# ============================================
+images_bucket_cors = {
+  origin      = ["http://localhost:3000", "http://localhost:5173"]
+  methods     = ["GET", "HEAD", "OPTIONS"]
+  max_age_sec = 3600
+}
+
+# ============================================
+# Storage Lifecycle Rules
+# ============================================
+# Already defined above with images_bucket_lifecycle_rules
+
+# ============================================
+# IAM Configuration
+# ============================================
+backend_roles = [
+  "roles/cloudsql.client",
+  "roles/secretmanager.secretAccessor",
+  "roles/storage.objectViewer"
+]
+
+backend_optional_roles = {
+  pubsub_publisher = {
+    role    = "roles/pubsub.publisher"
+    enabled = false
+  }
+  pubsub_subscriber = {
+    role    = "roles/pubsub.subscriber"
+    enabled = false
+  }
+  redis_editor = {
+    role    = "roles/redis.editor"
+    enabled = false
+  }
+}
+
+cloudbuild_roles = [
+  "roles/cloudbuild.builds.editor",
+  "roles/container.developer",
+  "roles/artifactregistry.writer"
+]
+
+custom_role_permissions = [
+  "compute.instances.get",
+  "compute.instances.list"
+]
+
+enable_custom_role = false
 
 # ============================================
 # Notifications Configuration

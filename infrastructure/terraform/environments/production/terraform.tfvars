@@ -85,7 +85,7 @@ images_bucket_lifecycle_rules = [
 # Firewall Rules (production-restricted)
 # ============================================
 firewall_rules = {
-  allow_internal = {
+  allow-internal = {
     direction     = "INGRESS"
     priority      = 1000
     enable        = true
@@ -96,7 +96,7 @@ firewall_rules = {
       { protocol = "udp", ports = ["0-65535"] }
     ]
   }
-  allow_ssh = {
+  allow-ssh = {
     direction     = "INGRESS"
     priority      = 1005
     enable        = false    # SSH DISABLED in production for security
@@ -106,7 +106,7 @@ firewall_rules = {
       { protocol = "tcp", ports = ["22"] }
     ]
   }
-  allow_http_https = {
+  allow-http-https = {
     direction     = "INGRESS"
     priority      = 1010
     enable        = true
@@ -122,6 +122,43 @@ firewall_rules = {
 # Notifications Configuration
 # ============================================
 notification_email = "ops@perundhu.com"
+
+# ============================================
+# IAM Configuration
+# ============================================
+backend_roles = [
+  "roles/cloudsql.client",
+  "roles/secretmanager.secretAccessor",
+  "roles/storage.objectViewer"
+]
+
+backend_optional_roles = {
+  pubsub_publisher = {
+    role    = "roles/pubsub.publisher"
+    enabled = false
+  }
+  pubsub_subscriber = {
+    role    = "roles/pubsub.subscriber"
+    enabled = false
+  }
+  redis_editor = {
+    role    = "roles/redis.editor"
+    enabled = false
+  }
+}
+
+cloudbuild_roles = [
+  "roles/cloudbuild.builds.editor",
+  "roles/container.developer",
+  "roles/artifactregistry.writer"
+]
+
+custom_role_permissions = [
+  "compute.instances.get",
+  "compute.instances.list"
+]
+
+enable_custom_role = false
 
 # ============================================
 # Container Image (CI/CD managed)
