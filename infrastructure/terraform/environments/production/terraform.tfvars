@@ -61,8 +61,8 @@ vpc_cidr                    = "10.0.0.0/16"
 public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
-vpc_connector_min_instances = 3 # Higher minimum for production
-vpc_connector_max_instances = 5 # Higher maximum for production
+vpc_connector_min_instances = 2 # Match existing connector in GCP
+vpc_connector_max_instances = 3 # Match existing connector in GCP
 
 # ============================================
 # Storage Configuration
