@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -34,6 +35,10 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
   @Value("${spring.profiles.active:}")
   private String activeProfile;
+
+  // Trust calls coming from known frontend origins for read-only endpoints
+  @Value("${cors.allowed-origins:http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:4173}")
+  private String allowedOriginsConfig;
 
   // In-memory storage for IP tracking
   private final Set<String> blockedIps = ConcurrentHashMap.newKeySet();
@@ -65,6 +70,15 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     String clientIp = getClientIpAddress(request);
     String userAgent = request.getHeader("User-Agent");
     String requestUri = request.getRequestURI();
+    String origin = request.getHeader("Origin");
+    String method = request.getMethod();
+
+    // If this is a read-only API call from an allowed frontend origin,
+    // skip IP-based blocking to avoid false positives behind Cloud Run proxies.
+    if (isReadOnlyMethod(method) && isApiPath(requestUri) && isAllowedOrigin(origin)) {
+      filterChain.doFilter(request, response);
+      return;
+    }
 
     // Check if IP is blocked
     if (isIpBlocked(clientIp, userAgent, requestUri)) {
@@ -82,6 +96,39 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     trackRequest(clientIp, userAgent, requestUri);
 
     filterChain.doFilter(request, response);
+  }
+
+  private boolean isReadOnlyMethod(String method) {
+    return "GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method) || "OPTIONS".equalsIgnoreCase(method);
+  }
+
+  private boolean isApiPath(String uri) {
+    return uri != null && uri.startsWith("/api/");
+  }
+
+  private boolean isAllowedOrigin(String origin) {
+    if (origin == null || origin.isBlank()) {
+      return false;
+    }
+    List<String> allowedOrigins = Arrays.stream(allowedOriginsConfig.split(","))
+        .map(String::trim)
+        .filter(s -> !s.isEmpty())
+        .toList();
+
+    for (String allowed : allowedOrigins) {
+      if (origin.equals(allowed) || matchesPattern(origin, allowed)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean matchesPattern(String origin, String pattern) {
+    if (pattern.contains("*")) {
+      String regex = pattern.replace(".", "\\.").replace("*", ".*");
+      return origin.matches(regex);
+    }
+    return origin.equals(pattern);
   }
 
   private String getClientIpAddress(HttpServletRequest request) {
