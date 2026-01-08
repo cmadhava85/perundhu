@@ -77,6 +77,12 @@ jobs:
       run: |
         terraform init -backend=false -lock=false
         terraform validate
+    
+    - name: Validate Production Config
+      working-directory: ${{ env.TF_WORKING_DIR }}/production
+      run: |
+        terraform init -backend=false -lock=false
+        terraform validate
 
   terraform-plan:
     name: Plan Terraform - ${{ matrix.environment }}
@@ -160,8 +166,17 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const fs = require('fs');
-          const plan = fs.readFileSync('${{ env.TF_ENV_DIR }}/tfplan.txt', 'utf8');
-          const truncatedPlan = plan.length > 65000 ? plan.substring(0, 65000) + '\n\n... (truncated)' : plan;
+          const path = require('path');
+          const planFile = path.join('${{ env.TF_ENV_DIR }}', 'tfplan.txt');
+          
+          let planContent = 'Plan file not found';
+          try {
+            planContent = fs.readFileSync(planFile, 'utf8');
+          } catch (error) {
+            console.log('Error reading plan file:', error.message);
+          }
+          
+          const truncatedPlan = planContent.length > 65000 ? planContent.substring(0, 65000) + '\n\n... (truncated)' : planContent;
           
           const output = `#### Terraform Plan 📋 \`${{ matrix.environment }}\`
           <details><summary>Show Plan</summary>
