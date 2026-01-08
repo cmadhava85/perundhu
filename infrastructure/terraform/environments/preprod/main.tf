@@ -79,6 +79,8 @@ module "database" {
   db_version              = var.db_version
   db_instance_tier        = var.db_instance_tier
   db_instance_name_suffix = var.db_instance_name_suffix
+  database_name           = var.database_name
+  database_user           = var.database_user
 
   depends_on = [module.vpc]
 }

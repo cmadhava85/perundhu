@@ -66,6 +66,18 @@ variable "notification_email" {
   default     = "alerts@perundhu.com"
 }
 
+variable "database_name" {
+  description = "Database name"
+  type        = string
+  default     = "perundhu"
+}
+
+variable "database_user" {
+  description = "Database user name"
+  type        = string
+  default     = "perundhu_user"
+}
+
 # ============================================
 # NOTE: Shared secrets (gemini_api_key, recaptcha_*)
 # are managed in terraform/environments/shared
