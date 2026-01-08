@@ -35,7 +35,7 @@ Run migrations before deploying if you want to validate them first:
 
 ```bash
 # 1. Set environment variables
-export DB_URL="jdbc:mysql://google/perundhu?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=[GCP_INSTANCE_CONNECTION_NAME]"
+# See PREPROD_ENVIRONMENT_SETUP_COMPLETE.md and PREPROD_QUICK_FIX.md for latest comprehensive guides
 export DB_USERNAME="[DB_USER]"
 export DB_PASSWORD="[DB_PASSWORD]"
 
