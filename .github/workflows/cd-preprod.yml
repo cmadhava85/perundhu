@@ -88,7 +88,8 @@ jobs:
           IMAGE="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:${TAG}"
           LATEST="${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/perundhu/backend:preprod-latest"
           
-          docker build -t $IMAGE -t $LATEST ./backend
+          # Build for linux/amd64 platform (Cloud Run requirement)
+          docker build --platform=linux/amd64 -t $IMAGE -t $LATEST ./backend
           docker push $IMAGE
           docker push $LATEST
           
@@ -134,7 +135,8 @@ jobs:
           
           cp ./frontend/.env.local ./frontend/.env.production.local
           
-          docker build -t $IMAGE -t $LATEST ./frontend
+          # Build for linux/amd64 platform (Cloud Run requirement)
+          docker build --platform=linux/amd64 -t $IMAGE -t $LATEST ./frontend
           docker push $IMAGE
           docker push $LATEST
 
@@ -187,30 +189,28 @@ jobs:
           fi
           
           # Flyway configuration - MUST use localhost proxy only
-          # Port 3307 is correct for GCP Cloud SQL private IP instances
-          FLYWAY_URL="jdbc:mysql://127.0.0.1:3307/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=10000"
+          FLYWAY_URL="jdbc:mysql://127.0.0.1:3306/perundhu?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=10000"
           
-          # Start Cloud SQL Proxy with explicit localhost binding on port 3307
-          # Note: Cloud SQL Proxy uses port 3307 internally for private IP connectivity
-          echo "🔌 Starting Cloud SQL Proxy on 127.0.0.1:3307..."
-          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3307 -max_connections=100 &
+          # Start Cloud SQL Proxy with explicit localhost binding on port 3306
+          echo "🔌 Starting Cloud SQL Proxy on 127.0.0.1:3306..."
+          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3306 -max_connections=100 &
           PROXY_PID=$!
           
           # Wait for proxy to be ready
           echo "⏳ Waiting for proxy to be ready..."
           for i in {1..60}; do
-            if nc -z 127.0.0.1 3307 2>/dev/null; then
-              echo "✅ Cloud SQL Proxy ready on port 3307"
+            if nc -z 127.0.0.1 3306 2>/dev/null; then
+              echo "✅ Cloud SQL Proxy ready on port 3306"
               sleep 3  # Extra wait for proxy to fully initialize
               break
             fi
-            echo "  [$i/60] Waiting for port 3307..."
+            echo "  [$i/60] Waiting for port 3306..."
             sleep 1
           done
           
           # Verify port is actually open
-          if ! nc -z 127.0.0.1 3307; then
-            echo "❌ Cloud SQL Proxy failed to open port 3307"
+          if ! nc -z 127.0.0.1 3306; then
+            echo "❌ Cloud SQL Proxy failed to open port 3306"
             kill $PROXY_PID 2>/dev/null || true
             exit 1
           fi
@@ -233,6 +233,9 @@ jobs:
             -Pflyway.user="${DB_USER}" \
             -Pflyway.password="${DB_PASSWORD}" \
             -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
+            -Pflyway.baselineOnMigrate=true \
+            -Pflyway.baselineVersion=57 \
+            -Pflyway.baselineDescription="Baseline after manual V56-57" \
             --no-configuration-cache \
             -x test
           
@@ -265,8 +268,8 @@ jobs:
             --platform=managed \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
-            --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,DB_USERNAME=perundhu_user,FLYWAY_ENABLED=false" \
-            --set-secrets="DB_PASSWORD=db-password:latest" \
+            --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,DB_USERNAME=perundhu_user,SPRING_DATASOURCE_URL=jdbc:mysql://google/perundhu?cloudSqlInstance=${{ env.SQL_INSTANCE }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC,SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver,SPRING_DATASOURCE_USERNAME=perundhu_user,SPRING_FLYWAY_ENABLED=false" \
+            --update-secrets="DB_PASSWORD=db-password:latest,SPRING_DATASOURCE_PASSWORD=db-password:latest" \
             --add-cloudsql-instances=${{ env.SQL_INSTANCE }} \
             --memory=2Gi \
             --cpu=2 \

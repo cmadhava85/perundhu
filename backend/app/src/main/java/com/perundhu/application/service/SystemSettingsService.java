@@ -82,29 +82,40 @@ public class SystemSettingsService {
   }
 
   /**
-   * Initialize default settings on application startup
+   * Initialize default settings on application startup.
+   * Note: We do NOT use @Transactional here because @PostConstruct runs before
+   * the Spring transaction proxy is created. Instead, we rely on each settingPort
+   * method to handle its own transaction context if needed.
    */
   @PostConstruct
-  @Transactional
   public void initializeDefaultSettings() {
-    log.info("Initializing default system settings");
+    try {
+      log.info("Initializing default system settings");
 
-    DEFAULT_SETTINGS.forEach((key, defaultSetting) -> {
-      if (!settingPort.existsBySettingKey(key)) {
-        SystemSetting setting = new SystemSetting(
-            null,
-            key,
-            defaultSetting.value(),
-            defaultSetting.category(),
-            defaultSetting.description(),
-            null,
-            null);
-        settingPort.save(setting);
-        log.debug("Created default setting: {} = {}", key, defaultSetting.value());
-      }
-    });
+      DEFAULT_SETTINGS.forEach((key, defaultSetting) -> {
+        try {
+          if (!settingPort.existsBySettingKey(key)) {
+            SystemSetting setting = new SystemSetting(
+                null,
+                key,
+                defaultSetting.value(),
+                defaultSetting.category(),
+                defaultSetting.description(),
+                null,
+                null);
+            settingPort.save(setting);
+            log.debug("Created default setting: {} = {}", key, defaultSetting.value());
+          }
+        } catch (Exception e) {
+          log.warn("Failed to initialize setting: {}", key, e);
+        }
+      });
 
-    log.info("System settings initialization complete");
+      log.info("System settings initialization complete");
+    } catch (Exception e) {
+      log.error("Error during system settings initialization", e);
+      // Don't throw - allow application to continue even if settings initialization fails
+    }
   }
 
   /**

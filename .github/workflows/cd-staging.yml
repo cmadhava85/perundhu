@@ -157,7 +157,7 @@ jobs:
           --platform managed \
           --region ${{ env.GCP_REGION }} \
           --allow-unauthenticated \
-          --set-env-vars="SPRING_PROFILES_ACTIVE=staging" \
+          --set-env-vars="SPRING_PROFILES_ACTIVE=staging,SPRING_FLYWAY_BASELINE_ON_MIGRATE=true,SPRING_FLYWAY_BASELINE_VERSION=57" \
           --set-secrets="DB_PASSWORD=db-password:latest,JWT_SECRET=jwt-secret:latest" \
           --memory 1Gi \
           --cpu 1 \
