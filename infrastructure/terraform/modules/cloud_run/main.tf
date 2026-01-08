@@ -66,28 +66,38 @@ resource "google_cloud_run_service" "backend" {
           name = "MYSQL_PASSWORD"
           value_from {
             secret_key_ref {
-              name = "${var.app_name}-${var.environment}-db-password"
+              name = "db-password"
               key  = "latest"
             }
           }
         }
 
-        env {
-          name  = "REDIS_HOST"
-          value = var.redis_host
+        # Redis is optional - only set if redis_host is provided
+        dynamic "env" {
+          for_each = var.redis_host != "" ? [1] : []
+          content {
+            name  = "REDIS_HOST"
+            value = var.redis_host
+          }
         }
 
-        env {
-          name  = "REDIS_PORT"
-          value = tostring(var.redis_port)
+        dynamic "env" {
+          for_each = var.redis_host != "" ? [1] : []
+          content {
+            name  = "REDIS_PORT"
+            value = tostring(var.redis_port)
+          }
         }
 
-        env {
-          name = "REDIS_AUTH"
-          value_from {
-            secret_key_ref {
-              name = "${var.app_name}-${var.environment}-redis-auth"
-              key  = "latest"
+        dynamic "env" {
+          for_each = var.redis_host != "" ? [1] : []
+          content {
+            name = "REDIS_AUTH"
+            value_from {
+              secret_key_ref {
+                name = "${var.app_name}-${var.environment}-redis-auth"
+                key  = "latest"
+              }
             }
           }
         }
@@ -97,12 +107,16 @@ resource "google_cloud_run_service" "backend" {
           value = var.storage_bucket_name
         }
 
-        env {
-          name = "JWT_SECRET"
-          value_from {
-            secret_key_ref {
-              name = "${var.app_name}-${var.environment}-jwt-secret"
-              key  = "latest"
+        # JWT secret is optional - only set if jwt_secret_name is provided
+        dynamic "env" {
+          for_each = var.jwt_secret_name != "" ? [1] : []
+          content {
+            name = "JWT_SECRET"
+            value_from {
+              secret_key_ref {
+                name = var.jwt_secret_name
+                key  = "latest"
+              }
             }
           }
         }

@@ -79,13 +79,21 @@ variable "storage_bucket_name" {
 }
 
 variable "redis_host" {
-  description = "Redis host"
+  description = "Redis host (leave empty to disable Redis)"
   type        = string
+  default     = ""
 }
 
 variable "redis_port" {
   description = "Redis port"
   type        = number
+  default     = 6379
+}
+
+variable "jwt_secret_name" {
+  description = "Secret name for JWT (leave empty to disable JWT secret)"
+  type        = string
+  default     = ""
 }
 
 variable "cors_allowed_origins" {

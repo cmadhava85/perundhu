@@ -149,9 +149,11 @@ module "cloud_run" {
   db_name               = module.database.db_name
   db_user               = module.database.db_user
   storage_bucket_name   = module.storage.images_bucket_name
-  # Redis disabled - not needed for current app scale
-  redis_host = ""
-  redis_port = 6379
+  
+  # Redis and JWT disabled - not needed for current app scale
+  redis_host      = ""
+  redis_port      = 6379
+  jwt_secret_name = ""
   # Backend uses default GCP Cloud Run URL
 
   depends_on = [module.vpc, module.database, module.storage, module.iam]
