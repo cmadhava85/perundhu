@@ -168,9 +168,13 @@ jobs:
 
       - name: Install Cloud SQL Proxy
         run: |
-          curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+          # Download and install Cloud SQL Proxy v2.x (uses port 3306 by default)
+          curl -L -o cloud_sql_proxy https://github.com/GoogleCloudPlatform/cloud-sql-proxy/releases/download/v2.7.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud_sql_proxy
           sudo mv cloud_sql_proxy /usr/local/bin/
+          
+          # Verify installation
+          /usr/local/bin/cloud_sql_proxy --version
 
       - name: Run Flyway Migrations
         working-directory: ./backend
@@ -194,8 +198,13 @@ jobs:
           
           # Start Cloud SQL Proxy with explicit localhost binding on port 3306
           echo "🔌 Starting Cloud SQL Proxy on 127.0.0.1:3306..."
-          cloud_sql_proxy -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3306 -max_connections=100 &
+          echo "   Connecting to: ${{ env.SQL_INSTANCE }}"
+          /usr/local/bin/cloud_sql_proxy \
+            -instances=${{ env.SQL_INSTANCE }}=tcp:127.0.0.1:3306 \
+            -max_connections=100 \
+            -verbose &
           PROXY_PID=$!
+          echo "   Proxy PID: $PROXY_PID"
           
           # Wait for proxy to be ready
           echo "⏳ Waiting for proxy to be ready..."
@@ -212,13 +221,30 @@ jobs:
           # Verify port is actually open
           if ! nc -z 127.0.0.1 3306; then
             echo "❌ Cloud SQL Proxy failed to open port 3306"
+            echo "📋 Checking proxy logs..."
             kill $PROXY_PID 2>/dev/null || true
+            sleep 2
+            echo "🔍 Testing direct connection to database..."
+            gcloud sql connect perundhu-preprod-mysql \
+              --user=perundhu_user \
+              --project=astute-strategy-406601 \
+              --database=perundhu \
+              --quiet --no-user-output <<< "SELECT 1;" 2>&1 || echo "Direct connection also failed"
             exit 1
           fi
           
           chmod +x gradlew
           
-          # Skip mysql verification - just run migrations directly
+          # Test the connection through the proxy before running migrations
+          echo "🧪 Testing proxy connection with mysql client..."
+          for i in {1..5}; do
+            if mysql -h 127.0.0.1 -u "${DB_USER}" -p"${DB_PASSWORD}" -e "SELECT 1" perundhu &>/dev/null; then
+              echo "✅ Proxy connection verified"
+              break
+            fi
+            echo "  [$i/5] Retry..."
+            sleep 2
+          done
           echo "🔄 Running Flyway migrations through proxy..."
           
           # Try migration directly first (skip repair if successful)
