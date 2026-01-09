@@ -169,7 +169,10 @@ jobs:
       - name: Install Cloud SQL Proxy
         run: |
           # Download and install Cloud SQL Proxy v2.x (uses port 3306 by default)
-          curl -L -o cloud_sql_proxy https://github.com/GoogleCloudPlatform/cloud-sql-proxy/releases/download/v2.7.0/cloud-sql-proxy.linux.amd64
+          # Using Google's official stable download location
+          curl -fL -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.v2.linux.amd64 || \
+          curl -fL -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+          
           chmod +x cloud_sql_proxy
           sudo mv cloud_sql_proxy /usr/local/bin/
           
