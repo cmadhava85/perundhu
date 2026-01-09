@@ -298,7 +298,9 @@ flyway {
                System.getenv('DB_PASSWORD') ?: 
                'root'
     
-    locations = ['classpath:db/migration', 'classpath:db/migration/mysql']
+    // Multi-module project: app submodule contains the migrations
+    // Use relative path to app/src/main/resources/db/migration
+    locations = ["filesystem:${project(':app').projectDir.absolutePath}/src/main/resources/db/migration"]
     baselineOnMigrate = true
     validateOnMigrate = false
     outOfOrder = true
