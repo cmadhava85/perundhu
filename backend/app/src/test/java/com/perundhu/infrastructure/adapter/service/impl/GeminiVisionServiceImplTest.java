@@ -2,6 +2,7 @@ package com.perundhu.infrastructure.adapter.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -14,7 +15,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.perundhu.domain.port.PromptService;
 
 /**
  * Unit tests for GeminiVisionServiceImpl.
@@ -30,11 +34,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @DisplayName("Gemini Vision Service Tests")
 class GeminiVisionServiceImplTest {
 
+  @Mock
+  private PromptService promptService;
+
   private GeminiVisionServiceImpl geminiVisionService;
 
   @BeforeEach
   void setUp() {
-    geminiVisionService = new GeminiVisionServiceImpl();
+    // Mock the prompt service to return a simple prompt (lenient as not all tests use it)
+    lenient().when(promptService.getBusScheduleExtractionPrompt())
+        .thenReturn("Extract bus schedule information from the image.");
+    
+    geminiVisionService = new GeminiVisionServiceImpl(promptService);
   }
 
   @Nested
