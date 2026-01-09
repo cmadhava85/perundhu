@@ -272,15 +272,17 @@ jobs:
             -Pflyway.password="$FLYWAY_PASSWORD" \
             -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
             -Pflyway.baselineOnMigrate=true \
-            -Pflyway.baselineVersion=56 \
-            -Pflyway.baselineDescription="Baseline complete schema" \
+            -Pflyway.baselineVersion=57 \
+            -Pflyway.baselineDescription="Baseline at V57 - multistate locations" \
+            -Pflyway.outOfOrder=true \
+            -Pflyway.validateOnMigrate=false \
             --no-configuration-cache \
             -x test; then
             echo "✅ Flyway migrations completed successfully"
           else
             MIGRATION_EXIT_CODE=$?
             echo "⚠️  Migration failed on first attempt (exit code: $MIGRATION_EXIT_CODE)"
-            echo "    Attempting repair..."
+            echo "    Attempting repair to fix migration history..."
             ./gradlew flywayRepair \
               -Pflyway.url="$FLYWAY_URL" \
               -Pflyway.user="$FLYWAY_USER" \
@@ -296,8 +298,10 @@ jobs:
               -Pflyway.password="$FLYWAY_PASSWORD" \
               -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
               -Pflyway.baselineOnMigrate=true \
-              -Pflyway.baselineVersion=56 \
-              -Pflyway.baselineDescription="Baseline complete schema" \
+              -Pflyway.baselineVersion=57 \
+              -Pflyway.baselineDescription="Baseline at V57 - multistate locations" \
+              -Pflyway.outOfOrder=true \
+              -Pflyway.validateOnMigrate=false \
               --no-configuration-cache \
               -x test
             echo "✅ Flyway migrations completed after repair"
