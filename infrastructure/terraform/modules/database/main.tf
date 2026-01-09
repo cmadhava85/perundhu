@@ -92,11 +92,14 @@ resource "google_sql_database" "database" {
 }
 
 # Database user
+# IMPORTANT: Always specify host = "%" to prevent malformed user entries
+# Malformed entries (user without host) can occur from manual gcloud commands
+# and will cause authentication failures
 resource "google_sql_user" "users" {
   name     = var.database_user
   instance = google_sql_database_instance.mysql_instance.name
   password = random_password.db_password.result
-  host     = "%"
+  host     = "%"  # REQUIRED: Prevents creation of malformed user entries
   type     = "BUILT_IN"
 
   # Ignore changes to password since we manage it via Secret Manager and sync script
@@ -107,11 +110,12 @@ resource "google_sql_user" "users" {
 }
 
 # Additional database user for read-only access
+# IMPORTANT: Always specify host = "%" to prevent malformed entries
 resource "google_sql_user" "readonly_user" {
   name     = "${var.database_user}_readonly"
   instance = google_sql_database_instance.mysql_instance.name
   password = random_password.db_password.result
-  host     = "%"
+  host     = "%"  # REQUIRED: Prevents creation of malformed user entries
 }
 
 # Database for testing (optional)

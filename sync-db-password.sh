@@ -48,71 +48,105 @@ if [ "$MALFORMED_COUNT" -gt 0 ]; then
 fi
 echo ""
 
-# Step 3: Check if user exists, create if needed
-echo "3️⃣  Ensuring user exists..."
-USER_EXISTS=$(gcloud sql users list \
+# Step 3: Delete ALL user instances (both malformed and correct) to ensure clean recreation
+echo "3️⃣  Preparing for clean user recreation..."
+ALL_USER_COUNT=$(gcloud sql users list \
+  --instance="$INSTANCE" \
+  --project="$PROJECT_ID" \
+  --filter="name=$DB_USER" \
+  --format="value(name)" | wc -l)
+
+if [ "$ALL_USER_COUNT" -gt 0 ]; then
+  echo "   Found $ALL_USER_COUNT user instance(s). Deleting all for clean recreation..."
+  gcloud sql users delete "$DB_USER" \
+    --instance="$INSTANCE" \
+    --project="$PROJECT_ID" \
+    --quiet 2>&1 || true
+  sleep 3  # Give Cloud SQL time to process deletion
+  echo "   ✅ All user instances deleted"
+else
+  echo "   No existing user found. Creating fresh..."
+fi
+
+# Step 4: Recreate user with EXPLICIT host parameter (prevents malformed entries)
+echo "4️⃣  Recreating user with proper configuration..."
+echo "   Creating: $DB_USER@$DB_HOST"
+gcloud sql users create "$DB_USER" \
+  --instance="$INSTANCE" \
+  --host="$DB_HOST" \
+  --password="$DB_PASSWORD" \
+  --project="$PROJECT_ID" 2>&1 | grep -E "Created|Error" || true
+sleep 2
+echo "   ✅ User created with host=$DB_HOST"
+echo ""
+
+# Step 5: Verify EXACTLY ONE correct user exists (no malformed entries allowed)
+echo "5️⃣  Verifying user configuration..."
+echo "   Current $DB_USER entries:"
+gcloud sql users list \
+  --instance="$INSTANCE" \
+  --project="$PROJECT_ID" \
+  --filter="name=$DB_USER" \
+  --format="table(name,host,type)" | sed 's/^/     /'
+
+# Count correct entries
+CORRECT_COUNT=$(gcloud sql users list \
   --instance="$INSTANCE" \
   --project="$PROJECT_ID" \
   --filter="name=$DB_USER AND host=$DB_HOST" \
   --format="value(name)" | wc -l)
 
-if [ "$USER_EXISTS" -eq 0 ]; then
-  echo "   User does not exist. Creating..."
-  gcloud sql users create "$DB_USER" \
-    --instance="$INSTANCE" \
-    --password="$DB_PASSWORD" \
-    --project="$PROJECT_ID" 2>&1
-  echo "   ✅ User created"
-else
-  echo "   User exists. Updating password..."
-  # Delete and recreate to avoid malformed entries
-  # (gcloud sql users set-password can create entries without proper host)
-  gcloud sql users delete "$DB_USER" \
-    --instance="$INSTANCE" \
-    --project="$PROJECT_ID" \
-    --quiet 2>&1 || true
-  sleep 1
-  gcloud sql users create "$DB_USER" \
-    --instance="$INSTANCE" \
-    --password="$DB_PASSWORD" \
-    --project="$PROJECT_ID" 2>&1
-  echo "   ✅ Password updated"
-fi
-echo ""
-
-# Step 4: Verify only correct user exists
-echo "4️⃣  Verifying user configuration..."
-echo "   Current users:"
-gcloud sql users list \
-  --instance="$INSTANCE" \
-  --project="$PROJECT_ID" \
-  --filter="name=$DB_USER" \
-  --format="table(name,host)" | sed 's/^/     /'
-
-# Check for malformed entries
-FINAL_MALFORMED=$(gcloud sql users list \
+# Count malformed entries
+MALFORMED_COUNT=$(gcloud sql users list \
   --instance="$INSTANCE" \
   --project="$PROJECT_ID" \
   --filter="name=$DB_USER AND host=''" \
   --format="value(name)" | wc -l)
 
-if [ "$FINAL_MALFORMED" -gt 0 ]; then
-  echo "   ⚠️  Warning: Malformed entries still exist"
-  echo "   Attempting additional cleanup..."
+if [ "$MALFORMED_COUNT" -gt 0 ]; then
+  echo ""
+  echo "   ❌ ERROR: Malformed entries detected!"
+  echo "   Found $MALFORMED_COUNT entry(ies) without proper host."
+  echo "   This should not happen. Attempting final cleanup..."
+  
+  # Nuclear option: delete all and recreate
   gcloud sql users delete "$DB_USER" \
     --instance="$INSTANCE" \
     --project="$PROJECT_ID" \
     --quiet 2>&1 || true
-  sleep 2
+  sleep 3
   
-  # Recreate correctly
   gcloud sql users create "$DB_USER" \
     --instance="$INSTANCE" \
+    --host="$DB_HOST" \
     --password="$DB_PASSWORD" \
-    --project="$PROJECT_ID" 2>&1
-  echo "   ✅ User recreated with correct configuration"
+    --project="$PROJECT_ID" 2>&1 | grep -E "Created|Error" || true
+  sleep 2
+  
+  echo "   ✅ User recreated - malformed entries removed"
+  
+  # Final verification
+  FINAL_CORRECT=$(gcloud sql users list \
+    --instance="$INSTANCE" \
+    --project="$PROJECT_ID" \
+    --filter="name=$DB_USER AND host=$DB_HOST" \
+    --format="value(name)" | wc -l)
+  
+  FINAL_MALFORMED=$(gcloud sql users list \
+    --instance="$INSTANCE" \
+    --project="$PROJECT_ID" \
+    --filter="name=$DB_USER AND host=''" \
+    --format="value(name)" | wc -l)
+  
+  if [ "$FINAL_MALFORMED" -eq 0 ] && [ "$FINAL_CORRECT" -eq 1 ]; then
+    echo "   ✅ Verification passed - exactly 1 correct user exists"
+  else
+    echo "   ⚠️  WARNING: Verification still showing issues"
+  fi
+elif [ "$CORRECT_COUNT" -eq 1 ]; then
+  echo "   ✅ Configuration verified - exactly 1 correct user exists: $DB_USER@$DB_HOST"
 else
-  echo "   ✅ Configuration verified - only correct entry exists"
+  echo "   ⚠️  WARNING: Expected 1 correct user, found $CORRECT_COUNT"
 fi
 
 echo ""
