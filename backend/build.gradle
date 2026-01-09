@@ -306,15 +306,14 @@ flyway {
                          "filesystem:${projectDir.absolutePath}/app/src/main/resources/db/migration" :
                          "filesystem:${project(':app').projectDir.absolutePath}/src/main/resources/db/migration")
     locations = [migrationPath]
-    baselineOnMigrate = true
-    baselineVersion = '57'
-    baselineDescription = 'Baseline at V57 - multistate locations'
+    baselineOnMigrate = false
     validateOnMigrate = false
     outOfOrder = true
     driver = 'com.mysql.cj.jdbc.Driver'
     createSchemas = true
     schemas = ['perundhu']
     cleanDisabled = true
+    encoding = 'UTF-8'
     configurations = ['flywayMigration']
     
     // Connection settings for robustness
