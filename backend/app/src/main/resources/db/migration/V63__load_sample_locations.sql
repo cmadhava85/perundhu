@@ -97,15 +97,10 @@ INSERT IGNORE INTO locations (name, latitude, longitude, district, state, priori
 -- These will be ignored if they already exist due to INSERT IGNORE
 
 -- Create indexes for efficient location queries using conditional SQL
-SET @sql = (SELECT IF(
-    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
-     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_state') = 0,
-    'CREATE INDEX idx_locations_state ON locations(state)',
-    'SELECT "Index idx_locations_state already exists"'));
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+-- Note: V57 already creates idx_state, idx_state_district, idx_coordinates_multistate
+-- This migration only adds NEW indexes to avoid duplicates
 
+-- idx_locations_district is new (not created in V57)
 SET @sql = (SELECT IF(
     (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
      WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_district') = 0,
@@ -115,24 +110,7 @@ PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
-SET @sql = (SELECT IF(
-    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
-     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_state_district') = 0,
-    'CREATE INDEX idx_locations_state_district ON locations(state, district)',
-    'SELECT "Index idx_locations_state_district already exists"'));
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
-SET @sql = (SELECT IF(
-    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
-     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_coordinates') = 0,
-    'CREATE INDEX idx_locations_coordinates ON locations(latitude, longitude)',
-    'SELECT "Index idx_locations_coordinates already exists"'));
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
+-- idx_locations_priority is new (not created in V57)
 SET @sql = (SELECT IF(
     (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
      WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_priority') = 0,
@@ -142,6 +120,7 @@ PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
+-- idx_locations_type is new (not created in V57)
 SET @sql = (SELECT IF(
     (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
      WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_type') = 0,
@@ -150,3 +129,8 @@ SET @sql = (SELECT IF(
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
+-- SKIPPED (already created by V57):
+-- - idx_state on (state)
+-- - idx_state_district on (state, district)  
+-- - idx_coordinates_multistate on (latitude, longitude)
