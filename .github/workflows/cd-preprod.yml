@@ -357,7 +357,8 @@ jobs:
             --cpu=2 \
             --min-instances=0 \
             --max-instances=3 \
-            --timeout=300s
+            --timeout=300s \
+            --traffic=LATEST
 
   deploy-frontend:
     name: Deploy Frontend

@@ -64,7 +64,8 @@ gcloud run deploy perundhu-backend-preprod \
   --memory=2Gi \
   --timeout=3600s \
   --max-instances=10 \
-  --min-instances=0
+  --min-instances=0 \
+  --traffic=LATEST
 
 echo "✅ Deployment started"
 echo ""
