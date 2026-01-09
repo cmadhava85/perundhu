@@ -96,10 +96,57 @@ INSERT IGNORE INTO locations (name, latitude, longitude, district, state, priori
 -- Insert additional comprehensive location data if V57 migrations weren't fully applied
 -- These will be ignored if they already exist due to INSERT IGNORE
 
--- Create indexes for efficient location queries
-CREATE INDEX IF NOT EXISTS idx_locations_state ON locations(state);
-CREATE INDEX IF NOT EXISTS idx_locations_district ON locations(district);
-CREATE INDEX IF NOT EXISTS idx_locations_state_district ON locations(state, district);
-CREATE INDEX IF NOT EXISTS idx_locations_coordinates ON locations(latitude, longitude);
-CREATE INDEX IF NOT EXISTS idx_locations_priority ON locations(priority);
-CREATE INDEX IF NOT EXISTS idx_locations_type ON locations(type);
+-- Create indexes for efficient location queries using conditional SQL
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_state') = 0,
+    'CREATE INDEX idx_locations_state ON locations(state)',
+    'SELECT "Index idx_locations_state already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_district') = 0,
+    'CREATE INDEX idx_locations_district ON locations(district)',
+    'SELECT "Index idx_locations_district already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_state_district') = 0,
+    'CREATE INDEX idx_locations_state_district ON locations(state, district)',
+    'SELECT "Index idx_locations_state_district already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_coordinates') = 0,
+    'CREATE INDEX idx_locations_coordinates ON locations(latitude, longitude)',
+    'SELECT "Index idx_locations_coordinates already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_priority') = 0,
+    'CREATE INDEX idx_locations_priority ON locations(priority)',
+    'SELECT "Index idx_locations_priority already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(
+    (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS 
+     WHERE table_schema=DATABASE() AND table_name='locations' AND index_name='idx_locations_type') = 0,
+    'CREATE INDEX idx_locations_type ON locations(type)',
+    'SELECT "Index idx_locations_type already exists"'));
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
