@@ -57,7 +57,7 @@ gcloud run deploy perundhu-backend-preprod \
   --region=${GCP_REGION} \
   --allow-unauthenticated \
   --project=${GCP_PROJECT_ID} \
-  --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,SPRING_DATASOURCE_URL=jdbc:mysql:///perundhu?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=${CLOUD_SQL_INSTANCE}&connectTimeout=60000&socketTimeout=120000,DB_USERNAME=${DB_USERNAME},FLYWAY_ENABLED=false,SERVER_PORT=8080,LOG_LEVEL_ROOT=INFO,LOG_LEVEL_APP=INFO" \
+  --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,SPRING_DATASOURCE_URL=jdbc:mysql:///perundhu?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=${CLOUD_SQL_INSTANCE}&connectTimeout=60000&socketTimeout=120000&autocommit=false,DB_USERNAME=${DB_USERNAME},FLYWAY_ENABLED=false,SERVER_PORT=8080,LOG_LEVEL_ROOT=INFO,LOG_LEVEL_APP=INFO,HIKARI_MIN_IDLE=2" \
   --set-secrets="DB_PASSWORD=db-password:latest,GEMINI_API_KEY=gemini-api-key:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest,RECAPTCHA_SITE_KEY=recaptcha-site-key:latest,RECAPTCHA_SECRET_KEY=recaptcha-secret-key:latest" \
   --add-cloudsql-instances=${CLOUD_SQL_INSTANCE} \
   --cpu=2 \
