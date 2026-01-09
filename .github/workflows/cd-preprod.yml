@@ -188,12 +188,16 @@ jobs:
           
           # Get DB credentials from GCP Secret Manager
           DB_USER=$(gcloud secrets versions access latest --secret=db-username 2>/dev/null || echo "perundhu_user")
-          DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password 2>/dev/null)
+          DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password)
           
           if [ -z "$DB_PASSWORD" ]; then
             echo "❌ Failed to retrieve db-password from Secret Manager"
             exit 1
           fi
+          
+          echo "✅ Retrieved credentials from Secret Manager"
+          echo "   User: $DB_USER"
+          echo "   Password length: ${#DB_PASSWORD} characters"
           
           # Flyway configuration - MUST use localhost proxy only
           # Increased timeouts: connectTimeout for proxy initialization, socketTimeout for query execution
@@ -250,11 +254,22 @@ jobs:
           done
           echo "🔄 Running Flyway migrations through proxy..."
           
+          # Export password as environment variable for gradle (more secure and avoids shell escaping issues)
+          export FLYWAY_PASSWORD="${DB_PASSWORD}"
+          export FLYWAY_USER="${DB_USER}"
+          export FLYWAY_URL="${FLYWAY_URL}"
+          
+          # Debug: Verify variables are set
+          echo "📋 Migration Configuration:"
+          echo "   URL: $FLYWAY_URL"
+          echo "   User: $FLYWAY_USER"
+          echo "   Password length: ${#FLYWAY_PASSWORD} chars"
+          
           # Try migration directly first (skip repair if successful)
           if ./gradlew flywayMigrate \
-            -Pflyway.url="${FLYWAY_URL}" \
-            -Pflyway.user="${DB_USER}" \
-            -Pflyway.password="${DB_PASSWORD}" \
+            -Pflyway.url="$FLYWAY_URL" \
+            -Pflyway.user="$FLYWAY_USER" \
+            -Pflyway.password="$FLYWAY_PASSWORD" \
             -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
             -Pflyway.baselineOnMigrate=true \
             -Pflyway.baselineVersion=56 \
@@ -263,20 +278,22 @@ jobs:
             -x test; then
             echo "✅ Flyway migrations completed successfully"
           else
-            echo "⚠️  Migration failed on first attempt, attempting repair..."
+            MIGRATION_EXIT_CODE=$?
+            echo "⚠️  Migration failed on first attempt (exit code: $MIGRATION_EXIT_CODE)"
+            echo "    Attempting repair..."
             ./gradlew flywayRepair \
-              -Pflyway.url="${FLYWAY_URL}" \
-              -Pflyway.user="${DB_USER}" \
-              -Pflyway.password="${DB_PASSWORD}" \
+              -Pflyway.url="$FLYWAY_URL" \
+              -Pflyway.user="$FLYWAY_USER" \
+              -Pflyway.password="$FLYWAY_PASSWORD" \
               -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
               --no-configuration-cache \
               -x test
             
             echo "📝 Running flywayMigrate after repair..."
             ./gradlew flywayMigrate \
-              -Pflyway.url="${FLYWAY_URL}" \
-              -Pflyway.user="${DB_USER}" \
-              -Pflyway.password="${DB_PASSWORD}" \
+              -Pflyway.url="$FLYWAY_URL" \
+              -Pflyway.user="$FLYWAY_USER" \
+              -Pflyway.password="$FLYWAY_PASSWORD" \
               -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
               -Pflyway.baselineOnMigrate=true \
               -Pflyway.baselineVersion=56 \
