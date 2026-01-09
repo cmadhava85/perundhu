@@ -97,6 +97,13 @@ resource "google_sql_user" "users" {
   instance = google_sql_database_instance.mysql_instance.name
   password = random_password.db_password.result
   host     = "%"
+  type     = "BUILT_IN"
+
+  # Ignore changes to password since we manage it via Secret Manager and sync script
+  # This prevents Terraform from trying to recreate the user with each apply
+  lifecycle {
+    ignore_changes = [password]
+  }
 }
 
 # Additional database user for read-only access
