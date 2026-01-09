@@ -5,7 +5,14 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +20,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.perundhu.application.dto.LocationDTO;
@@ -22,8 +28,29 @@ import com.perundhu.application.dto.LocationDTO;
 @DisplayName("Overpass Geocoding Service Tests")
 class OverpassGeocodingServiceTest {
 
-  @InjectMocks
+  private HttpClient mockHttpClient;
   private OverpassGeocodingService overpassGeocodingService;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    // Create mock HttpClient
+    mockHttpClient = mock(HttpClient.class);
+    
+    // Create service instance
+    overpassGeocodingService = new OverpassGeocodingService();
+    
+    // Use reflection to inject the mock HttpClient
+    Field httpClientField = OverpassGeocodingService.class.getDeclaredField("httpClient");
+    httpClientField.setAccessible(true);
+    httpClientField.set(overpassGeocodingService, mockHttpClient);
+    
+    // Mock HTTP response with empty result set to avoid real API calls (lenient as not all tests trigger HTTP calls)
+    @SuppressWarnings("unchecked")
+    HttpResponse<String> mockResponse = (HttpResponse<String>) mock(HttpResponse.class);
+    lenient().when(mockResponse.statusCode()).thenReturn(200);
+    lenient().when(mockResponse.body()).thenReturn("{\"elements\": []}");
+    lenient().when(mockHttpClient.send(any(), any())).thenAnswer(invocation -> mockResponse);
+  }
 
   @Nested
   @DisplayName("Search Tamil Nadu Locations Tests")
