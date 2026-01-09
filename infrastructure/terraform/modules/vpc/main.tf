@@ -57,7 +57,7 @@ resource "google_compute_router_nat" "nat" {
 resource "google_vpc_access_connector" "connector" {
   provider = google-beta
 
-  name          = "${var.app_name}-${var.environment}-vpc-conn"
+  name          = var.environment == "production" ? "${var.app_name}-prod-vpc-conn" : "${var.app_name}-${var.environment}-vpc-conn"
   region        = var.region
   ip_cidr_range = var.vpc_connector_cidr
   network       = google_compute_network.vpc_network.name

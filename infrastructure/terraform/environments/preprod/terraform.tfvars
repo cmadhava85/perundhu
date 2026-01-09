@@ -48,7 +48,7 @@ db_deletion_protection    = false
 # Cloud Run Configuration
 # ============================================
 cloud_run_min_instances = 0       # Scale to zero for cost savings
-cloud_run_max_instances = 2       # Low max for dev
+cloud_run_max_instances = 3       # Conservative max for preprod (changed from 2 to align with typical testing load)
 cloud_run_cpu_limit     = "1000m" # 1 CPU
 cloud_run_memory_limit  = "512Mi" # Minimal memory
 
