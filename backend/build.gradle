@@ -300,24 +300,27 @@ flyway {
     
     // Multi-module project: app submodule contains the migrations
     // Use relative path to app/src/main/resources/db/migration
-    locations = ["filesystem:${project(':app').projectDir.absolutePath}/src/main/resources/db/migration"]
+    // Supports both absolute and relative path resolution
+    def migrationPath = project.findProperty('flyway.locations') ?:
+                        (file('app/src/main/resources/db/migration').exists() ?
+                         "filesystem:${projectDir.absolutePath}/app/src/main/resources/db/migration" :
+                         "filesystem:${project(':app').projectDir.absolutePath}/src/main/resources/db/migration")
+    locations = [migrationPath]
     baselineOnMigrate = true
+    baselineVersion = '57'
+    baselineDescription = 'Baseline at V57 - multistate locations'
     validateOnMigrate = false
     outOfOrder = true
     driver = 'com.mysql.cj.jdbc.Driver'
     createSchemas = true
     schemas = ['perundhu']
+    cleanDisabled = true
     configurations = ['flywayMigration']
-    
-    // Connection pooling settings for CI/CD
-    // Reduces connection overhead during parallel migration attempts
-    connectRetries = 3
-    connectRetriesInterval = 1
-    lockRetryCount = 50
     
     // Connection settings for robustness
     connectRetries = 5
     connectRetriesInterval = 1
+    lockRetryCount = 50
 }
 
 // Fix configuration cache issues for Flyway tasks

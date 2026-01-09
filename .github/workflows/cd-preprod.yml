@@ -276,7 +276,12 @@ jobs:
             -Pflyway.baselineDescription="Baseline at V57 - multistate locations" \
             -Pflyway.outOfOrder=true \
             -Pflyway.validateOnMigrate=false \
+            -Pflyway.cleanDisabled=true \
             -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
+            -Pflyway.schemas=perundhu \
+            -Pflyway.connectRetries=5 \
+            -Pflyway.connectRetriesInterval=1 \
+            -Pflyway.lockRetryCount=50 \
             --no-configuration-cache \
             -x test; then
             echo "✅ Flyway migrations completed successfully"
@@ -290,6 +295,10 @@ jobs:
               -Pflyway.password="$FLYWAY_PASSWORD" \
               -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
               -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
+              -Pflyway.schemas=perundhu \
+              -Pflyway.connectRetries=5 \
+              -Pflyway.connectRetriesInterval=1 \
+              -Pflyway.lockRetryCount=50 \
               --no-configuration-cache \
               -x test
             
@@ -303,8 +312,13 @@ jobs:
               -Pflyway.baselineVersion=57 \
               -Pflyway.baselineDescription="Baseline at V57 - multistate locations" \
               -Pflyway.outOfOrder=true \
-              -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
               -Pflyway.validateOnMigrate=false \
+              -Pflyway.cleanDisabled=true \
+              -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
+              -Pflyway.schemas=perundhu \
+              -Pflyway.connectRetries=5 \
+              -Pflyway.connectRetriesInterval=1 \
+              -Pflyway.lockRetryCount=50 \
               --no-configuration-cache \
               -x test
             echo "✅ Flyway migrations completed after repair"
