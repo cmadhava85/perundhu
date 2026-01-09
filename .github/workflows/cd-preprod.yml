@@ -276,6 +276,7 @@ jobs:
             -Pflyway.baselineDescription="Baseline at V57 - multistate locations" \
             -Pflyway.outOfOrder=true \
             -Pflyway.validateOnMigrate=false \
+            -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
             --no-configuration-cache \
             -x test; then
             echo "✅ Flyway migrations completed successfully"
@@ -288,6 +289,7 @@ jobs:
               -Pflyway.user="$FLYWAY_USER" \
               -Pflyway.password="$FLYWAY_PASSWORD" \
               -Pflyway.driver="com.mysql.cj.jdbc.Driver" \
+              -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
               --no-configuration-cache \
               -x test
             
@@ -301,6 +303,7 @@ jobs:
               -Pflyway.baselineVersion=57 \
               -Pflyway.baselineDescription="Baseline at V57 - multistate locations" \
               -Pflyway.outOfOrder=true \
+              -Pflyway.locations="filesystem:app/src/main/resources/db/migration" \
               -Pflyway.validateOnMigrate=false \
               --no-configuration-cache \
               -x test
