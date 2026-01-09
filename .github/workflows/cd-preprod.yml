@@ -343,6 +343,11 @@ jobs:
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Get Secrets
+        run: |
+          echo "RECAPTCHA_SITE_KEY=$(gcloud secrets versions access latest --secret=recaptcha-site-key 2>/dev/null)" >> $GITHUB_ENV
+          echo "RECAPTCHA_SECRET_KEY=$(gcloud secrets versions access latest --secret=recaptcha-secret-key 2>/dev/null)" >> $GITHUB_ENV
+
       - name: Deploy Backend
         run: |
           gcloud run deploy perundhu-backend-preprod \
@@ -351,7 +356,7 @@ jobs:
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
             --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,DB_USERNAME=perundhu_user,SPRING_DATASOURCE_URL=jdbc:mysql://google/perundhu?cloudSqlInstance=${{ env.SQL_INSTANCE }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autocommit=false,SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver,SPRING_DATASOURCE_USERNAME=perundhu_user,FLYWAY_ENABLED=false,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app,LOG_LEVEL_ROOT=INFO,LOG_LEVEL_APP=INFO,RATE_LIMIT_ENABLED=true,ORIGIN_VALIDATION_ENABLED=true,HONEYPOT_ENABLED=true,RECAPTCHA_ENABLED=false,GEMINI_API_ENABLED=true,RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY},RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY},HIKARI_MIN_IDLE=2" \
-            --update-secrets="DB_PASSWORD=db-password:latest,SPRING_DATASOURCE_PASSWORD=db-password:latest,GEMINI_API_KEY=gemini-api-key:latest,ADMIN_USERNAME=admin-username:latest,ADMIN_PASSWORD=admin-password:latest,JWT_SECRET=preprod-jwt-secret:latest" \
+            --update-secrets="DB_PASSWORD=db-password:latest,SPRING_DATASOURCE_PASSWORD=db-password:latest,GEMINI_API_KEY=gemini-api-key:latest,ADMIN_USERNAME=admin-username:latest,ADMIN_PASSWORD=admin-password:latest,JWT_SECRET=preprod-jwt-secret:latest,PUBLIC_API_KEY=PUBLIC_API_KEY:latest" \
             --add-cloudsql-instances=${{ env.SQL_INSTANCE }} \
             --memory=2Gi \
             --cpu=2 \
