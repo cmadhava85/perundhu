@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.perundhu.domain.port.GeminiVisionService;
+import com.perundhu.domain.port.PromptService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
@@ -59,346 +60,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
   private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent";
 
-  // The prompt template for extracting bus schedule information
-  // Using compact pipe-delimited format to minimize token usage
-  private static final String BUS_SCHEDULE_PROMPT = """
-      You are an expert OCR system specialized in extracting bus schedule information from Tamil Nadu bus timing boards.
-
-      TASK: Extract ALL bus routes and schedules from this image with maximum accuracy.
-      
-      🚨 CRITICAL PATTERN - TWO-COLUMN DEPARTURE TIMES ONLY (TSS/TNSTC Boards):
-      MANY TAMIL NADU BUS BOARDS SHOW THIS LAYOUT (Departure times ONLY, no arrival times):
-      
-      LEFT COLUMN: "STATION_A → STATION_B"      |  RIGHT COLUMN: "STATION_B → STATION_A"
-      Departure Times (6 times in 2 sub-columns)|  Departure Times (6 times in 2 sub-columns)
-      07:45    17:35                             |  05:30    10:15
-      14:30    20:35                             |  07:00    13:10
-      17:00    23:10                             |  08:40    21:35
-      
-      CRITICAL EXTRACTION: Each time = ONE DEPARTURE (no arrival times shown!)
-      - LEFT: Hosur→Chennai departing 07:45, 14:30, 17:00, 17:35, 20:35, 23:10 (6 routes)
-      - RIGHT: Chennai→Hosur departing 05:30, 07:00, 08:40, 10:15, 13:10, 21:35 (6 routes)
-      
-      RESULT: 12 SEPARATE ROUTES extracted (6 Hosur→Chennai + 6 Chennai→Hosur)
-      Each time represents ONE departure. Mark arrival time as "-" (not shown on board).
-      DO NOT assume or calculate arrival times - if not shown on board, use "-"
-
-      IMAGE ANALYSIS TIPS:
-      - Look carefully at ALL rows/columns in the image
-      - Bus boards often have faded or low-contrast text - extract everything visible
-      - Times may be displayed in various formats (digital, handwritten, printed)
-      - Route numbers often include suffixes like UD, D, E, A, B, C (e.g., 166UD, 42A)
-      - Board headers usually show the station name (origin)
-      - IMPORTANT: Look for a header or title that indicates the origin station
-      - IMPORTANT: If one station is listed at the top (origin) and multiple destinations follow, treat each destination as a separate route FROM that origin
-      - IMPORTANT: Look for BIDIRECTIONAL routes with arrows pointing both ways (← → or ↔)
-      - IMPORTANT: Look for DASH/HYPHEN format routes like "ORIGIN-DESTINATION" (e.g., "Mysuru-Udupi" means FROM Mysuru TO Udupi)
-      - IMPORTANT: When you see "STATION_A → STATION_B" with two sets of times, this is a BIDIRECTIONAL route:
-        * Times on LEFT = Departure from STATION_A going TO STATION_B
-        * Times on RIGHT = Departure from STATION_B going back TO STATION_A (NOT arrival times!)
-        * Extract as TWO separate routes
-      - IMPORTANT: When you see "STATION_A-STATION_B" (dash format), it means FROM STATION_A TO STATION_B
-
-      TABLE-STRUCTURED SCHEDULES (Important!):
-      If image shows a TABLE FORMAT with:
-      - Column headers = Stop names (e.g., "Sathyamangalam", "Parees A", "Kumbakonam", "Mayavaram")
-      - Each column = times for that specific stop
-      - Each row = a different departure time from origin
-      Then extract it as:
-      - The board header/title = Origin station
-      - Each COLUMN header = A via/intermediate stop
-      - Times in each column = Departure times FROM origin going TO that stop
-      - Each ROW = All the times shown for stops in that departure slot
-      Example: If you see columns [Sathyamangalam | Parees A | Kumbakonam | Mayavaram]
-      And row shows times [6:00 AM | 7:05 AM | 9:15 AM | 10:20 AM]
-      Then extract as MULTIPLE routes, each starting from same origin with same departure time:
-      - Route 1: origin → Sathyamangalam @ 06:00
-      - Route 2: origin → Parees A @ 07:05 (departure from origin is 06:00 + time difference)
-      - Route 3: origin → Kumbakonam @ 09:15
-      - Route 4: origin → Mayavaram @ 10:20
-
-      STANDARD LAYOUT (Non-table):
-      If you see a layout like:
-      [HEADER: ORIGIN STATION NAME]
-      [LIST OF DESTINATIONS WITH TIMES]
-
-      Then extract it as:
-      - Origin = the header station
-      - Each row = a separate route FROM that origin TO each listed destination
-
-      BIDIRECTIONAL ROUTE PATTERN - DEPARTURE TIMES ONLY:
-      (When no arrival times are shown on the board)
-      
-      If you see a layout like:
-      LEFT COLUMN:
-      [STATION_A → STATION_B]
-      [DEP1: 07:45]
-      [DEP2: 14:30]
-      [DEP3: 17:00]
-      
-      RIGHT COLUMN:
-      [STATION_B → STATION_A]
-      [DEP4: 05:30]
-      [DEP5: 07:00]
-      [DEP6: 08:40]
-      
-      Then IMPORTANT - Extract as follows:
-      - Each time in left column = ONE departure-only route: STATION_A → STATION_B
-        * Time (e.g., 07:45) = Departure FROM STATION_A
-        * NO arrival time shown = Use "-" for arrival time field
-        * If 3 times shown: this is 3 BUSES for this direction with different departure times
-      
-      - Each time in right column = ONE departure-only route: STATION_B → STATION_A
-        * Time (e.g., 05:30) = Departure FROM STATION_B
-        * NO arrival time shown = Use "-" for arrival time field
-        * If 3 times shown: this is 3 BUSES for this direction with different departure times
-      
-      CRITICAL - DO NOT assume or calculate arrival times.
-      If times are not shown on board = use "-"
-      Extract as 6 separate routes total (3 Hosur→Chennai + 3 Chennai→Hosur), each with departure time and "-" for arrival.
-
-      LANGUAGE HANDLING:
-      The text may be in Tamil (தமிழ்), English, or mixed. Always output in English.
-
-      Tamil City Name Translations (use these exact spellings):
-      | Tamil | English |
-      |-------|---------|
-      | சென்னை | Chennai |
-      | மதுரை | Madurai |
-      | கோயம்புத்தூர் / கோவை | Coimbatore |
-      | திருச்சி / திருச்சிராப்பள்ளி | Trichy |
-      | சேலம் | Salem |
-      | திருநெல்வேலி / நெல்லை | Tirunelveli |
-      | சிவகாசி | Sivakasi |
-      | அருப்புக்கோட்டை | Aruppukkottai |
-      | விருதுநகர் | Virudhunagar |
-      | ராமேஸ்வரம் | Rameswaram |
-      | இராமநாதபுரம் | Ramanathapuram |
-      | தேனி | Theni |
-      | திண்டுக்கல் | Dindigul |
-      | நாகர்கோவில் | Nagercoil |
-      | கன்னியாகுமரி | Kanyakumari |
-      | தூத்துக்குடி | Thoothukudi |
-      | தஞ்சாவூர் | Thanjavur |
-      | கும்பகோணம் | Kumbakonam |
-      | வேலூர் | Vellore |
-      | ஈரோடு | Erode |
-      | திருப்பூர் | Tiruppur |
-      | கரூர் | Karur |
-      | நாமக்கல் | Namakkal |
-      | ஓசூர் | Hosur |
-      | பெங்களூர் | Bengaluru |
-      | மைசூர் | Mysuru |
-      | திருப்பதி | Tirupati |
-      | புதுச்சேரி | Puducherry |
-      | திருவனந்தபுரம் | Thiruvananthapuram |
-      | கொச்சி | Kochi |
-      | பாலக்காடு | Palakkad |
-      | ஆலங்குடி | Aalangudi |
-      | அரியலூர் | Ariyalur |
-      | அரந்தாங்கி | Aranthangi |
-      | பெரம்பலூர் | Perambalur |
-      | நாகப்பட்டினம் | Nagapattinam |
-      | ஜயங்கொண்டம் | Jayamkondam |
-      | கராईக்குடி | Karaikudi |
-      | தோண்டி | Thondi |
-
-      Tamil Bus Terms:
-      | Tamil | English |
-      |-------|---------|
-      | பேருந்து நிலையம் | Bus Station |
-      | புறப்பாடு | Departure |
-      | வரவு | Arrival |
-      | வழி | Via |
-      | மணி | hour/time |
-      | காலை | Morning/AM |
-      | மாலை | Evening/PM |
-      | இரவு | Night |
-
-      OUTPUT FORMAT (strict - no markdown, no explanation):
-
-      ORIGIN:station_name
-      TYPE:departure_board|route_schedule|destination_table|arrival_board
-      ROUTES:
-      bus_num|from_location|to_location|dep_time|arr_time|bus_type|stops_data
-      END
-
-      STOP-LEVEL TIMING FORMAT (optional, included in stops_data field):
-      If image shows DETAILED STOP TIMINGS (arrival and departure at each stop), use this format in the last field:
-      STOPS:[stop1@arr1-dep1,stop2@arr2-dep2,stop3@arr3-dep3,...]
-      Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Vadalur@02:57-,Panruti Arch@03:40-]
-      Use - for missing times (e.g., 02:57- means arrival at 02:57, no separate departure shown)
-      If only name shown, use format like: stop_name@ (with no times)
-
-      FIELD RULES:
-      - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.) OR - if no number
-      - from_location: Origin station (use ORIGIN if same as board location, or - if not shown)
-      - to_location: Final destination in English (REQUIRED - never leave blank)
-      - dep_time: Departure time(s) from origin in HH:MM 24-hour format, comma-separated for multiple times
-      - arr_time: Arrival time(s) at destination in HH:MM format (use - if not shown)
-      - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.) or - if not shown
-      - stops_data: Either comma-separated stop names (old format), OR detailed STOPS:[...] format with per-stop timings
-
-      TIME EXTRACTION RULES:
-      - Convert 12-hour to 24-hour format (6:00 AM → 06:00, 6:00 PM → 18:00)
-      - If time shows seconds (19:41:00), output as HH:MM only (19:41)
-      - Tamil time indicators: காலை = AM, மாலை/இரவு = PM
-      - Extract ALL times shown for each route, comma-separated for MULTIPLE BUSES
-      - Handle both 12-hour format (3:25PM) and 24-hour format
-      
-      CRITICAL FOR DEPARTURE-ONLY TIMES:
-      - When a board shows ONLY departure times (no arrival times shown):
-        * Each time = ONE departure for ONE bus schedule
-        * Use "-" for arrival time field (means "not shown on board")
-        * DO NOT assume or calculate arrival times
-        * DO NOT use journey duration to estimate arrival
-      - Example from image (departure times only):
-        TIME 1: "07:45" = Route: Hosur→Chennai, dep_time=07:45, arr_time=- (not shown)
-        TIME 2: "14:30" = Route: Hosur→Chennai, dep_time=14:30, arr_time=- (not shown)
-        TIME 3: "17:00" = Route: Hosur→Chennai, dep_time=17:00, arr_time=- (not shown)
-      - Create 3 separate extraction entries (one for each departure time)
-      - Do NOT merge times: dep_time=07:45,14:30,17:00 with arr_time=-
-        Instead: Create 3 separate routes with individual departure times
-
-      - For stop-level timings: capture BOTH arrival and departure at each intermediate stop
-      - If only one time shown at a stop (common for through routes), use format: time- (arrival only) or -time (departure only)
-      - CRITICAL: Do NOT append stop names to comma-separated times!
-        Wrong: "06:00,07:05,09:15,10:20Sathyamangalam"
-        Correct: dep_time=06:00,07:05,09:15,10:20 and stops_data=Sathyamangalam (or STOPS:[...] format)
-
-      EXAMPLES:
-
-      Example 1 - Destination board (single origin, multiple destinations):
-      ORIGIN:TRICHY
-      TYPE:destination_table
-      ROUTES:
-      -|ORIGIN|AALANGUDI|-|15:25,21:05|-|-
-      -|ORIGIN|ARIYALUR|-|15:30|-|-
-      -|ORIGIN|ARANTHANGI|-|21:40|-|-
-      -|ORIGIN|PERAMBALUR|-|21:50|-|-
-      END
-
-      Example 2 - Bidirectional route (two-way service):
-      ORIGIN:SALEM
-      TYPE:route_schedule
-      ROUTES:
-      -|SALEM|KRISHNAGIRI|-|01:35,12:45|-|-
-      -|KRISHNAGIRI|SALEM|-|05:00,15:15|-|-
-      -|SALEM|DHARMAPURI|Dharmapuri|08:40,18:40|-|-
-      -|DHARMAPURI|SALEM|-|11:00,21:00|-|-
-      END
-
-      Example 3B - TWO-COLUMN BIDIRECTIONAL DEPARTURE-ONLY TIMES (Most Important for TSS boards!):
-      This is the EXACT layout from the image: left column (Hosur→Chennai) and right column (Chennai→Hosur)
-      Each column shows 6 DEPARTURE TIMES ONLY (no arrival times visible on board)
-      Times are displayed in 2 sub-columns (left and right side of each main column)
-      
-      ORIGIN:Hosur
-      TYPE:route_schedule
-      ROUTES:
-      -|Hosur|Chennai|-|07:45|-|-
-      -|Hosur|Chennai|-|14:30|-|-
-      -|Hosur|Chennai|-|17:00|-|-
-      -|Hosur|Chennai|-|17:35|-|-
-      -|Hosur|Chennai|-|20:35|-|-
-      -|Hosur|Chennai|-|23:10|-|-
-      -|Chennai|Hosur|-|05:30|-|-
-      -|Chennai|Hosur|-|07:00|-|-
-      -|Chennai|Hosur|-|08:40|-|-
-      -|Chennai|Hosur|-|10:15|-|-
-      -|Chennai|Hosur|-|13:10|-|-
-      -|Chennai|Hosur|-|21:35|-|-
-      END
-      
-      EXTRACTION EXPLANATION:
-      - Left column header: "Hosur → Chennai" (departure times only, no arrival times shown)
-        Times: 07:45, 14:30, 17:00, 17:35, 20:35, 23:10
-        Create 6 separate routes, each with one departure time and "-" for arrival
-      - Right column header: "Chennai → Hosur" (departure times only, no arrival times shown)
-        Times: 05:30, 07:00, 08:40, 10:15, 13:10, 21:35
-        Create 6 separate routes, each with one departure time and "-" for arrival
-      - Result: 12 SEPARATE routes total (6 Hosur→Chennai + 6 Chennai→Hosur)
-      - Each route has one departure time and "-" for arrival (since not shown on board)
-      - DO NOT assume or calculate arrival times
-      - Do NOT merge: Create individual entries for each departure
-
-      Example 3 - Dash format routes (FROM-TO notation):
-      ORIGIN:-
-      TYPE:route_schedule
-      ROUTES:
-      -|MYSURU|UDUPI|-|06:15,10:45|11:20,15:40|-
-      -|KRISHNAGIRI|UDUPI|-|06:15,10:45|11:40,15:45|-
-      -|SALEM|UDUPI|-|07:25,12:30|12:20,17:30|-
-      -|TIRUPATI|UDUPI|-|07:45|14:50|-
-      END
-
-      Example 4 - Departure board with route numbers:
-      ORIGIN:MADURAI
-      TYPE:route_schedule
-      ROUTES:
-      166UD|MADURAI|CHENNAI|06:00,14:30|12:00,20:30|EXPRESS|Dindigul,Trichy,Villupuram
-      42A|MADURAI|COIMBATORE|07:30,15:00|-|ORDINARY|Palani,Pollachi
-      END
-
-      Example 5 - Route with detailed STOP-LEVEL TIMINGS (arrival and departure at each intermediate stop):
-      ORIGIN:TIRUVALUR
-      TYPE:route_schedule
-      ROUTES:
-      245E|TIRUVALUR|CHENNAI|12:55|-|ORDINARY|STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Sethiyathope X Road@02:37-,Vadalur@02:57-,Panruti Arch@03:40-,Vikravandi tollgate@04:43-,Tindivanam@05:10-,Athur tollgate@05:33-,Melmaruvathur@05:45-,Chengalpattu bypass@06:25-]
-      END
-
-      Example 6 - TABLE-STRUCTURED SCHEDULE (column headers = stops, rows = different time slots):
-      ORIGIN:SATHYAMANGALAM
-      TYPE:departure_board
-      ROUTES:
-      -|ORIGIN|PAREES A|Parees A|06:00|-|-|-
-      -|ORIGIN|KUMBAKONAM|Kumbakonam|07:05|-|-|-
-      -|ORIGIN|MAYAVARAM|Mayavaram|09:15|-|-|-
-      -|ORIGIN|CHIDAMBARAM|Chidambaram|10:20|-|-|-
-      -|ORIGIN|TRICHY|Trichy|11:23|-|-|-
-      -|ORIGIN|ARIYALUR|Ariyalur|12:05|-|-|-
-      END
-      Note: In table format, each row represents a departure time FOR THAT COLUMN'S DESTINATION
-      The board header = origin station
-      Column headers (Parees A, Kumbakonam, etc.) = each destination gets its own route entry
-      Times shown under each column = departure time from origin to that destination
-
-      CRITICAL INSTRUCTIONS:
-      1. Count all visible routes and extract EVERY one - do not skip
-      2. If image shows DETAILED STOP TIMINGS (each intermediate stop has arrival and/or departure time):
-         - MUST use the STOPS:[...] format in the last field with per-stop timing
-         - Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02]
-         - This is MORE IMPORTANT than simple via lists
-      3. If you see a destination board pattern (header + multiple destination rows), use ORIGIN in from_location field
-      4. If you see a BIDIRECTIONAL route pattern (A ↔ B with two time columns), extract as TWO separate routes:
-         - First route: A → B with times from left column
-         - Second route: B → A with times from right column
-      5. If you see DASH FORMAT routes (A-B notation), parse the dash to extract FROM and TO locations:
-         - "ORIGIN-DESTINATION" means FROM ORIGIN TO DESTINATION
-         - Extract as a single route with the parsed origin and destination
-      6. Each destination row becomes a separate route
-      7. Always extract and list ALL departure times shown for each destination
-      8. If you cannot read a field clearly, use your best interpretation
-      9. Always use - for genuinely missing/unavailable information
-      10. Route numbers can be missing (use -) but destinations are usually always shown
-      11. Pay special attention to faded/low-contrast text, handwritten corrections, multiple time columns
-      12. For boards showing times without route numbers, still extract each row as a separate route using -
-      13. Double-check your count matches the visible rows in the image
-      14. VERY IMPORTANT: If you see a "Timelines" or "Timing" section with stops and their arrival/departure times:
-          - This is stop-level timing information that MUST be captured in STOPS:[...] format
-          - Do NOT lose this information by only listing stop names in the via field
-          - Format each stop as: stopName@arrivalTime-departureTime
-          - Use - for missing times (e.g., @02:57- means arrival at 02:57, no departure shown)
-      15. MULTIPLE SERVICES PER DAY: If same route appears with different times, extract as separate routes
-      16. SPECIAL STOPS (toll gates, fuel stops, breaks): Include with format: STOPS:[...,Toll Gate@time-,...] or Tea Break@04:20-04:35
-      17. ROUTE VARIANTS: If board shows "166-Exp" vs "166-Local", extract each variant as separate route
-      18. REVERSE DIRECTION: If board shows A→B and B→A, extract as TWO routes with swapped origin/destination
-      19. DURATION-BASED: If "Duration: 6h 30m" shown instead of arrival, leave arr_time as dash
-      20. MULTIPLE TABLES: Extract from all visible sections (Daily, Holiday, Weekend schedules)
-      21. POOR QUALITY: For faded/overlapping text, use best interpretation; prioritize handwritten over printed if clearer
-      22. FARE/CATEGORY INFO: Only extract if in separate time columns, not for fares alone
-      """;
-
+  private final PromptService promptService;
   @Value("${gemini.api.key:}")
   private String apiKey;
 
@@ -411,7 +73,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   private final HttpClient httpClient;
   private final ObjectMapper objectMapper;
 
-  public GeminiVisionServiceImpl() {
+  public GeminiVisionServiceImpl(PromptService promptService) {
+    this.promptService = promptService;
     this.httpClient = HttpClient.newBuilder()
         .connectTimeout(Duration.ofSeconds(30))
         .build();
@@ -524,7 +187,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     ArrayNode parts = objectMapper.createArrayNode();
 
     // Build enhanced prompt with user context
-    String enhancedPrompt = BUS_SCHEDULE_PROMPT;
+    String basePrompt = promptService.getBusScheduleExtractionPrompt();
+    String enhancedPrompt = basePrompt;
     if (userContext != null && !userContext.trim().isEmpty()) {
       enhancedPrompt = """
           USER PROVIDED CONTEXT (use this to fill in missing information):
@@ -536,7 +200,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
           - Any other hints about routes, timing, or bus type
 
           %s
-          """.formatted(userContext.trim(), BUS_SCHEDULE_PROMPT);
+          """.formatted(userContext.trim(), basePrompt);
     }
 
     // Add text prompt
@@ -558,7 +222,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
     // Add generation config for JSON output
     ObjectNode generationConfig = objectMapper.createObjectNode();
-    generationConfig.put("temperature", 0.1); // Low temperature for consistent output
+    generationConfig.put("temperature", 0); // Zero temperature for deterministic output
+    generationConfig.put("topP", 1); // No nucleus sampling
+    generationConfig.put("topK", 1); // Only consider top token for determinism
     generationConfig.put("maxOutputTokens", 8192); // Increased for extracting all routes
     root.set("generationConfig", generationConfig);
 
@@ -593,7 +259,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
     // Add text prompt
     ObjectNode textPart = objectMapper.createObjectNode();
-    textPart.put("text", BUS_SCHEDULE_PROMPT);
+    textPart.put("text", promptService.getBusScheduleExtractionPrompt());
     parts.add(textPart);
 
     // Add image data
@@ -610,7 +276,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
 
     // Add generation config for JSON output
     ObjectNode generationConfig = objectMapper.createObjectNode();
-    generationConfig.put("temperature", 0.1); // Low temperature for consistent output
+    generationConfig.put("temperature", 0); // Zero temperature for deterministic output
+    generationConfig.put("topP", 1); // No nucleus sampling
+    generationConfig.put("topK", 1); // Only consider top token for determinism
     generationConfig.put("maxOutputTokens", 8192); // Increased for extracting all routes
     root.set("generationConfig", generationConfig);
 

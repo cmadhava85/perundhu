@@ -295,16 +295,10 @@ public class SecurityMonitoringService implements SecurityMonitoringPort {
     IP_BLOCKED,
     DATA_BREACH_ATTEMPT,
     VALIDATION_FAILURE,
-    DATA_SUBMISSION,
-    PROCESSING_ERROR,
-    MALICIOUS_CONTENT
-  }
-
-  public enum SecurityEventSeverity {
-    LOW, MEDIUM, HIGH, CRITICAL, INFO
-  }
-
-  private static class ThreatProfile {
+        SECURITY_VALIDATION_FAILURE,
+        DATA_SUBMISSION,
+        IMAGE_SUBMISSION,
+        VOICE_CONTRIBUTION,
     private int violationCount = 0;
     private long lastActivity = System.currentTimeMillis();
     private long highSeverityEvents = 0;
