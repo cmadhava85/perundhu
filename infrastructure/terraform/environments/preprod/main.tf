@@ -141,7 +141,7 @@ module "storage" {
   depends_on = [google_project_service.required_apis]
 }
 
-# Secret Manager for database credentials
+# Secret Manager for database credentials and application secrets
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
 # are managed by the shared-secrets module
 module "secrets" {
@@ -191,7 +191,6 @@ module "cloud_run" {
   # Redis and JWT disabled - not needed for current app scale
   redis_host      = var.redis_host
   redis_port      = var.redis_port
-  jwt_secret_name = var.jwt_secret_name
 
   # Cloud Run scaling and resource config from variables
   min_instances = var.cloud_run_min_instances
