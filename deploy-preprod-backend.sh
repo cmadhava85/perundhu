@@ -69,12 +69,21 @@ gcloud run deploy perundhu-backend-preprod \
 echo "✅ Deployment started"
 echo ""
 
-# Step 3: Wait for deployment to be ready
+# Step 3: Route traffic to latest revision
+echo "📋 Step 3: Routing traffic to latest revision..."
+gcloud run services update-traffic perundhu-backend-preprod \
+  --to-latest \
+  --region=${GCP_REGION} \
+  --project=${GCP_PROJECT_ID}
+echo "✅ Traffic routed to latest"
+echo ""
+
+# Step 4: Wait for deployment to be ready
 echo "📋 Step 3: Waiting for deployment to be ready..."
 sleep 30
 
-# Step 4: Get service URL
-echo "📋 Step 4: Getting service URL..."
+# Step 5: Get service URL
+echo "📋 Step 5: Getting service URL..."
 BACKEND_URL=$(gcloud run services describe perundhu-backend-preprod \
   --region=${GCP_REGION} \
   --project=${GCP_PROJECT_ID} \
@@ -84,8 +93,8 @@ echo "✅ Service deployed"
 echo "   URL: ${BACKEND_URL}"
 echo ""
 
-# Step 5: Check health
-echo "📋 Step 5: Checking health endpoint..."
+# Step 6: Check health
+echo "📋 Step 6: Checking health endpoint..."
 sleep 10
 HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${BACKEND_URL}/actuator/health" 2>/dev/null || echo "000")
 
@@ -97,8 +106,8 @@ else
 fi
 echo ""
 
-# Step 6: Show logs
-echo "📋 Step 6: Recent deployment logs..."
+# Step 7: Show logs
+echo "📋 Step 7: Recent deployment logs..."
 gcloud run logs read perundhu-backend-preprod \
   --region=${GCP_REGION} \
   --project=${GCP_PROJECT_ID} \

@@ -359,6 +359,12 @@ jobs:
             --max-instances=3 \
             --timeout=300s
 
+      - name: Route Traffic to Latest
+        run: |
+          gcloud run services update-traffic perundhu-backend-preprod \
+            --to-latest \
+            --region=${{ env.REGION }}
+
   deploy-frontend:
     name: Deploy Frontend
     needs: [build-frontend, deploy-backend]
