@@ -336,11 +336,7 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
             {onDelete && contribution.id && (
               <button 
                 className="action-btn delete"
-                onClick={() => {
-                  if (window.confirm(t('admin.routes.deleteConfirm', 'Are you sure you want to delete this route?'))) {
-                    onDelete(contribution.id!);
-                  }
-                }}
+                onClick={() => onDelete(contribution.id!)}
               >
                 <span className="btn-icon">🗑️</span>
                 {t('admin.routes.delete', 'Delete')}
