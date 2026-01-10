@@ -73,6 +73,12 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     String origin = request.getHeader("Origin");
     String method = request.getMethod();
 
+    // Skip filtering for admin auth endpoints (they have their own security)
+    if (requestUri != null && requestUri.startsWith("/api/admin/auth/")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
     // If this is a read-only API call from an allowed frontend origin,
     // skip IP-based blocking to avoid false positives behind Cloud Run proxies.
     if (isReadOnlyMethod(method) && isApiPath(requestUri) && isAllowedOrigin(origin)) {

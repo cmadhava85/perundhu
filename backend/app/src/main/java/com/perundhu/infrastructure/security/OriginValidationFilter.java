@@ -37,10 +37,11 @@ public class OriginValidationFilter extends OncePerRequestFilter {
   @Value("${security.origin-validation.strict-mode:false}")
   private boolean strictMode;
 
-  // Paths that should always be accessible (health checks, etc.)
+  // Paths that should always be accessible (health checks, admin auth, etc.)
   private static final Set<String> ALWAYS_ALLOWED_PATHS = Set.of(
       "/actuator/health",
-      "/actuator/info");
+      "/actuator/info",
+      "/api/admin/auth/");
 
   // Paths that require strict origin validation (write operations)
   private static final Set<String> STRICT_VALIDATION_PATHS = Set.of(
