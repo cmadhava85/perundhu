@@ -143,7 +143,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
         // Check if password is configured
         if (adminPassword == null || adminPassword.isBlank()) {
             log.warn("Admin password not configured! Denying access to: {}", requestUri);
-            sendUnauthorizedResponse(response, "Admin authentication not configured");
+            sendUnauthorizedResponse(request, response, "Admin authentication not configured");
             return;
         }
 
@@ -152,7 +152,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
 
         if (authHeader == null) {
             log.debug("Missing Authorization header for admin endpoint: {}", requestUri);
-            sendUnauthorizedResponse(response, "Authentication required");
+            sendUnauthorizedResponse(request, response, "Authentication required");
             return;
         }
 
@@ -172,14 +172,14 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
                 return;
             } else {
                 log.warn("Invalid Bearer token for admin endpoint: {}", requestUri);
-                sendUnauthorizedResponse(response, "Invalid Bearer token");
+                sendUnauthorizedResponse(request, response, "Invalid Bearer token");
                 return;
             }
         }
 
         if (!authHeader.startsWith("Basic ")) {
             log.debug("Invalid Authorization header type for admin endpoint: {}", requestUri);
-            sendUnauthorizedResponse(response, "Basic or Bearer authentication required");
+            sendUnauthorizedResponse(request, response, "Basic or Bearer authentication required");
             return;
         }
 
@@ -192,7 +192,7 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
             int colonIndex = credentials.indexOf(':');
             if (colonIndex == -1) {
                 log.warn("Invalid credentials format for admin request: {}", requestUri);
-                sendUnauthorizedResponse(response, "Invalid credentials format");
+                sendUnauthorizedResponse(request, response, "Invalid credentials format");
                 return;
             }
 
@@ -214,11 +214,11 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             } else {
                 log.warn("Invalid admin credentials for user: {} accessing: {}", username, requestUri);
-                sendUnauthorizedResponse(response, "Invalid username or password");
+                sendUnauthorizedResponse(request, response, "Invalid username or password");
             }
         } catch (IllegalArgumentException e) {
             log.warn("Failed to decode Basic auth credentials: {}", e.getMessage());
-            sendUnauthorizedResponse(response, "Invalid credentials encoding");
+            sendUnauthorizedResponse(request, response, "Invalid credentials encoding");
         }
     }
 
@@ -281,9 +281,20 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     /**
      * Send 401 Unauthorized response with WWW-Authenticate header
      */
-    private void sendUnauthorizedResponse(HttpServletResponse response, String message) throws IOException {
+    private void sendUnauthorizedResponse(HttpServletRequest request, HttpServletResponse response, String message) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setHeader("WWW-Authenticate", "Basic realm=\"Perundhu Admin\"");
+
+        // Avoid triggering browser Basic Auth popup for XHR/Fetch/API calls
+        String requestedWith = request.getHeader("X-Requested-With");
+        String accept = request.getHeader("Accept");
+        boolean isAjax = requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest");
+        boolean expectsJson = accept != null && accept.toLowerCase().contains("application/json");
+
+        if (!(isAjax || expectsJson)) {
+            // For non-AJAX navigations (e.g., direct browser access), include header
+            response.setHeader("WWW-Authenticate", "Basic realm=\"Perundhu Admin\"");
+        }
+
         response.setContentType("application/json");
         response.getWriter().write(String.format(
                 "{\"error\":\"UNAUTHORIZED\",\"message\":\"%s\",\"status\":401}",

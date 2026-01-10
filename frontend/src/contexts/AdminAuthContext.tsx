@@ -65,9 +65,8 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
       // Generate reCAPTCHA token for LOGIN action
       const recaptchaToken = isConfigured() ? await executeRecaptcha('LOGIN') : null;
 
-      // Create Basic Auth header
+      // Create Basic Auth credentials to store on success
       const credentials = btoa(`${username}:${password}`);
-      const authHeader = `Basic ${credentials}`;
 
       // Create AbortController for timeout
       const controller = new AbortController();
@@ -75,16 +74,16 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
 
       // Build headers with reCAPTCHA token if available
       let headers: Record<string, string> = {
-        'Authorization': authHeader,
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0',
       };
       headers = addRecaptchaTokenToHeaders(headers, recaptchaToken);
 
-      // Validate credentials against backend
-      const response = await fetch(`${getApiBaseUrl()}/api/admin/contributions/routes/pending`, {
-        method: 'GET',
+      // Use dedicated admin login endpoint (fast, DB-independent)
+      const response = await fetch(`${getApiBaseUrl()}/api/admin/auth/login`, {
+        method: 'POST',
         headers,
+        body: JSON.stringify({ username, password }),
         signal: controller.signal,
         credentials: 'include', // Include cookies for CORS
       });
@@ -103,7 +102,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
         setIsLoading(false);
         return false;
       } else if (response.status === 403) {
-        setError('Access forbidden. Please check your credentials.');
+        setError('Security validation failed (reCAPTCHA). Please try again.');
         setIsLoading(false);
         return false;
       } else {
