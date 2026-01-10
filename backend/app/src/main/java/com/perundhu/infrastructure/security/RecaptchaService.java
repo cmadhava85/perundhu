@@ -35,7 +35,7 @@ public class RecaptchaService {
   @Value("${recaptcha.enabled:false}")
   private boolean recaptchaEnabled;
 
-  @Value("${recaptcha.score-threshold:0.5}")
+  @Value("${recaptcha.min-score:0.5}")
   private float scoreThreshold;
 
   @Value("${recaptcha.action:submit}")

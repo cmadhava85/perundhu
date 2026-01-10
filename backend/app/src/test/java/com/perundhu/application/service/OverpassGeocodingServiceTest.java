@@ -35,16 +35,17 @@ class OverpassGeocodingServiceTest {
   void setUp() throws Exception {
     // Create mock HttpClient
     mockHttpClient = mock(HttpClient.class);
-    
+
     // Create service instance
     overpassGeocodingService = new OverpassGeocodingService();
-    
+
     // Use reflection to inject the mock HttpClient
     Field httpClientField = OverpassGeocodingService.class.getDeclaredField("httpClient");
     httpClientField.setAccessible(true);
     httpClientField.set(overpassGeocodingService, mockHttpClient);
-    
-    // Mock HTTP response with empty result set to avoid real API calls (lenient as not all tests trigger HTTP calls)
+
+    // Mock HTTP response with empty result set to avoid real API calls (lenient as
+    // not all tests trigger HTTP calls)
     @SuppressWarnings("unchecked")
     HttpResponse<String> mockResponse = (HttpResponse<String>) mock(HttpResponse.class);
     lenient().when(mockResponse.statusCode()).thenReturn(200);

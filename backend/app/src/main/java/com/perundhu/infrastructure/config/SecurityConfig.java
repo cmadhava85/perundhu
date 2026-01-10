@@ -6,14 +6,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -88,6 +96,8 @@ public class SecurityConfig {
             .requestMatchers("/actuator/health").permitAll()
             // Protected endpoints - user management and admin
             .requestMatchers("/api/v1/contributions/manage/**").authenticated()
+            // Admin authentication endpoints (public for login)
+            .requestMatchers("/api/admin/auth/**").permitAll()
             // Admin endpoints require authentication (role check via @PreAuthorize)
             .requestMatchers("/api/v1/admin/**").authenticated()
             .requestMatchers("/api/admin/**").authenticated()
@@ -157,5 +167,34 @@ public class SecurityConfig {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/api/**", configuration);
     return source;
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
+
+  @Bean
+  public UserDetailsService userDetailsService(
+      @Value("${admin.auth.username:admin}") String adminUsername,
+      @Value("${admin.auth.password:admin123}") String adminPassword) {
+    return new InMemoryUserDetailsManager(
+        User.builder()
+            .username(adminUsername)
+            .password("{noop}" + adminPassword) // {noop} means no encoding
+            .roles("ADMIN", "USER")
+            .build()
+    );
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager(
+      UserDetailsService userDetailsService,
+      PasswordEncoder passwordEncoder) {
+    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    authenticationProvider.setUserDetailsService(userDetailsService);
+    authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+    return new ProviderManager(authenticationProvider);
   }
 }

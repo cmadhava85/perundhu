@@ -147,6 +147,11 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
      * Check if the request URI is an admin endpoint
      */
     private boolean isAdminEndpoint(String uri) {
+        // Exclude auth endpoints - they handle their own authentication
+        if (uri.startsWith("/api/admin/auth/")) {
+            return false;
+        }
+        
         return uri.startsWith("/api/admin/")
                 || uri.startsWith("/api/v1/admin/")
                 || uri.contains("/admin/"); // Catch all admin sub-paths like /api/v1/route-issues/admin/

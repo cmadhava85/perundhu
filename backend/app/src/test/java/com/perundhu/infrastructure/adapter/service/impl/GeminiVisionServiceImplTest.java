@@ -41,10 +41,11 @@ class GeminiVisionServiceImplTest {
 
   @BeforeEach
   void setUp() {
-    // Mock the prompt service to return a simple prompt (lenient as not all tests use it)
+    // Mock the prompt service to return a simple prompt (lenient as not all tests
+    // use it)
     lenient().when(promptService.getBusScheduleExtractionPrompt())
         .thenReturn("Extract bus schedule information from the image.");
-    
+
     geminiVisionService = new GeminiVisionServiceImpl(promptService);
   }
 

@@ -103,12 +103,11 @@ class FileBasedPromptServiceTest {
   @DisplayName("Should support variable substitution")
   void shouldSupportVariableSubstitution() {
     // Given - test with bus-schedule prompt and variable substitution
-    
+
     // When
     String prompt = promptService.getPromptWithVariables(
         "bus-schedule-extraction",
-        java.util.Map.of("example", "test")
-    );
+        java.util.Map.of("example", "test"));
 
     // Then
     assertThat(prompt).isNotNull();

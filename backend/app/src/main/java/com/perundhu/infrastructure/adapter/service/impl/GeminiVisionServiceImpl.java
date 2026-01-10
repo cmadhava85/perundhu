@@ -507,7 +507,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
             // Field 6: Stops data (can be old format or new STOPS:[...] format)
             if (parts.length > 6 && !parts[6].trim().equals("-") && !parts[6].trim().isEmpty()) {
               String stopsData = parts[6].trim();
-              
+
               // Check if it's the new STOPS:[...] format with per-stop timings
               if (stopsData.startsWith("STOPS:[") && stopsData.endsWith("]")) {
                 // Parse detailed stop-level timings
@@ -618,7 +618,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (!routes.isEmpty()) {
       // Post-process routes to handle special cases
       routes = enhanceRouteData(routes, result);
-      
+
       result.put("routes", routes);
       // Log details of each route for debugging
       for (int i = 0; i < routes.size(); i++) {
@@ -1914,42 +1914,45 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   /**
    * Parse stop-level timing information from the STOPS:[...] format.
    * Format: STOPS:[stop1@arr1-dep1,stop2@arr2-dep2,stop3@arr3-dep3,...]
-   * Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram BS@01:50-02:02,Vadalur@02:57-]
+   * Example: STOPS:[Sirkazhi NBS@01:10-01:15,Chidambaram
+   * BS@01:50-02:02,Vadalur@02:57-]
    * 
-   * @param route The route map to update with stops information
+   * @param route     The route map to update with stops information
    * @param stopsData The STOPS:[...] data string
    */
   private void parseStopLevelTimings(Map<String, Object> route, String stopsData) {
     try {
       // Extract content between STOPS:[ and ]
       String content = stopsData.substring(7, stopsData.length() - 1); // Remove "STOPS:[" and "]"
-      
+
       List<Map<String, Object>> stops = new ArrayList<>();
       List<String> stopNames = new ArrayList<>();
-      
+
       // Split by comma, but be careful with times that might have commas
       String[] stopEntries = content.split(",(?=\\w+@)"); // Split before stop names
-      
+
       for (String entry : stopEntries) {
         entry = entry.trim();
-        if (entry.isEmpty()) continue;
-        
-        // Format: stopName@arrivalTime-departureTime or stopName@time- or stopName@-time or stopName@
+        if (entry.isEmpty())
+          continue;
+
+        // Format: stopName@arrivalTime-departureTime or stopName@time- or
+        // stopName@-time or stopName@
         if (entry.contains("@")) {
           int atIndex = entry.lastIndexOf("@");
           String stopName = entry.substring(0, atIndex).trim();
           String timingPart = entry.substring(atIndex + 1).trim();
-          
+
           stopNames.add(normalizeLocationName(stopName));
-          
+
           Map<String, Object> stop = new HashMap<>();
           stop.put("name", normalizeLocationName(stopName));
-          
+
           if (!timingPart.isEmpty() && !timingPart.equals("-")) {
             // Parse timing: arrival-departure format
             if (timingPart.contains("-")) {
               String[] times = timingPart.split("-", 2);
-              
+
               // Arrival time (before dash)
               if (!times[0].trim().isEmpty() && looksLikeTime(times[0].trim())) {
                 String normalized = normalizeTime(times[0].trim());
@@ -1957,7 +1960,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
                   stop.put("arrivalTime", normalized);
                 }
               }
-              
+
               // Departure time (after dash)
               if (times.length > 1 && !times[1].trim().isEmpty() && looksLikeTime(times[1].trim())) {
                 String normalized = normalizeTime(times[1].trim());
@@ -1973,7 +1976,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
               }
             }
           }
-          
+
           stops.add(stop);
         } else {
           // Just a stop name without timing
@@ -1983,14 +1986,14 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
           stops.add(stop);
         }
       }
-      
+
       if (!stops.isEmpty()) {
         route.put("stops", stops);
         route.put("via", stopNames);
         route.put("intermediateStops", stopNames);
         log.info("Parsed {} stops with timing information", stops.size());
       }
-      
+
     } catch (Exception e) {
       log.warn("Error parsing stop-level timings: {}", e.getMessage());
       // Fall back to treating it as a simple via list
@@ -2062,22 +2065,23 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
    * - Bidirectional routes
    */
   @SuppressWarnings("unchecked")
-  private List<Map<String, Object>> enhanceRouteData(List<Map<String, Object>> routes, Map<String, Object> boardMetadata) {
+  private List<Map<String, Object>> enhanceRouteData(List<Map<String, Object>> routes,
+      Map<String, Object> boardMetadata) {
     List<Map<String, Object>> enhancedRoutes = new ArrayList<>();
     Map<String, List<Map<String, Object>>> routesByKey = new HashMap<>();
-    
+
     // Group routes by a composite key (route_num + from + to) to detect duplicates
     for (Map<String, Object> route : routes) {
       String routeNum = route.getOrDefault("routeNumber", "-").toString();
       String fromLoc = route.getOrDefault("fromLocation", "-").toString();
       String toLoc = route.getOrDefault("destination", "-").toString();
-      
+
       // Create composite key for grouping
       String compositeKey = routeNum + "|" + fromLoc + "|" + toLoc;
-      
+
       routesByKey.computeIfAbsent(compositeKey, k -> new ArrayList<>()).add(route);
     }
-    
+
     // Process each group
     for (List<Map<String, Object>> routeGroup : routesByKey.values()) {
       if (routeGroup.size() == 1) {
@@ -2086,19 +2090,20 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         enhanceIndividualRoute(route);
         enhancedRoutes.add(route);
       } else {
-        // Multiple routes with same number/from/to - handle as multiple services per day
+        // Multiple routes with same number/from/to - handle as multiple services per
+        // day
         for (Map<String, Object> route : routeGroup) {
           enhanceIndividualRoute(route);
           enhancedRoutes.add(route);
         }
-        log.info("Found {} services for route {} (same origin/destination)", routeGroup.size(), 
-                 routeGroup.get(0).get("routeNumber"));
+        log.info("Found {} services for route {} (same origin/destination)", routeGroup.size(),
+            routeGroup.get(0).get("routeNumber"));
       }
     }
-    
+
     return enhancedRoutes;
   }
-  
+
   /**
    * Enhance individual route data
    */
@@ -2110,7 +2115,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       route.put("variant", variant);
       log.debug("Detected route variant: {} for route {}", variant, routeNum);
     }
-    
+
     // Enhance stops data with special stop type detection
     if (route.containsKey("stops")) {
       List<Map<String, Object>> stops = (List<Map<String, Object>>) route.get("stops");
@@ -2123,13 +2128,13 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         }
       }
     }
-    
+
     // Mark routes with detailed timing information
     if (route.containsKey("stops")) {
       route.put("hasDetailedStopTimings", true);
     }
   }
-  
+
   /**
    * Detect route variant from route number
    * Examples: 166-Exp, 166-HD, 166-WD, 166-Local, 42A, etc.
@@ -2138,27 +2143,38 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (routeNumber == null || routeNumber.equals("-") || routeNumber.isEmpty()) {
       return "";
     }
-    
+
     String upper = routeNumber.toUpperCase();
-    
+
     // Check for explicit variant indicators
-    if (upper.contains("-EXP") || upper.contains("EXP")) return "EXPRESS";
-    if (upper.contains("-LOCAL") || upper.contains("LOCAL")) return "LOCAL";
-    if (upper.contains("-HD") || upper.contains("HD")) return "HOLIDAY";
-    if (upper.contains("-WD") || upper.contains("WD")) return "WEEKDAY";
-    if (upper.contains("-SUN") || upper.contains("SUN")) return "SUNDAY";
-    if (upper.contains("-SAT") || upper.contains("SAT")) return "SATURDAY";
-    if (upper.contains("-FRI") || upper.contains("FRI")) return "FRIDAY";
-    
+    if (upper.contains("-EXP") || upper.contains("EXP"))
+      return "EXPRESS";
+    if (upper.contains("-LOCAL") || upper.contains("LOCAL"))
+      return "LOCAL";
+    if (upper.contains("-HD") || upper.contains("HD"))
+      return "HOLIDAY";
+    if (upper.contains("-WD") || upper.contains("WD"))
+      return "WEEKDAY";
+    if (upper.contains("-SUN") || upper.contains("SUN"))
+      return "SUNDAY";
+    if (upper.contains("-SAT") || upper.contains("SAT"))
+      return "SATURDAY";
+    if (upper.contains("-FRI") || upper.contains("FRI"))
+      return "FRIDAY";
+
     // Check for suffixes that indicate type
-    if (upper.endsWith("D")) return "DELUXE";
-    if (upper.endsWith("A")) return "AC";
-    if (upper.endsWith("E")) return "EXPRESS";
-    if (upper.endsWith("U")) return "ULTRA";
-    
+    if (upper.endsWith("D"))
+      return "DELUXE";
+    if (upper.endsWith("A"))
+      return "AC";
+    if (upper.endsWith("E"))
+      return "EXPRESS";
+    if (upper.endsWith("U"))
+      return "ULTRA";
+
     return "";
   }
-  
+
   /**
    * Detect special stop type from stop name
    * Examples: "Tea Break", "Toll Gate", "Fuel Stop", etc.
@@ -2167,9 +2183,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (stopName == null || stopName.isEmpty()) {
       return "passenger";
     }
-    
+
     String upper = stopName.toUpperCase().trim();
-    
+
     // Check for special stop indicators
     if (upper.contains("TEA BREAK") || upper.contains("TEA") || upper.contains("BREAK")) {
       return "break";
@@ -2189,9 +2205,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     if (upper.contains("WAIT") || upper.contains("WAIT TIME")) {
       return "wait";
     }
-    
+
     // Default to passenger stop
     return "passenger";
   }
 }
-
