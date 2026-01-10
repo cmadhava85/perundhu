@@ -1,0 +1,222 @@
+name: GCP Cost Optimization - Stop/Start Services
+
+on:
+  schedule:
+    # Stop services at 10 PM IST (4:30 PM UTC)
+    - cron: '30 16 * * *'
+    # Start services at 8 AM IST (2:30 AM UTC)
+    - cron: '30 02 * * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'status'
+        type: choice
+        options:
+          - stop
+          - start
+          - status
+
+env:
+  GCP_PROJECT_ID: astute-strategy-406601
+  REGION: asia-south1
+  BACKEND_SERVICE: perundhu-backend-preprod
+  FRONTEND_SERVICE: perundhu-frontend-preprod
+  CLOUD_SQL_INSTANCE: perundhu-preprod-mysql
+
+jobs:
+  manage-services:
+    name: Manage GCP Services
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          use_auth_token: true
+      
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+      
+      - name: Determine action based on schedule
+        id: action
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "action=${{ github.event.inputs.action }}" >> $GITHUB_OUTPUT
+          else
+            HOUR=$(date -u +%H)
+            if [ "$HOUR" == "16" ]; then
+              echo "action=stop" >> $GITHUB_OUTPUT
+              echo "Scheduled stop (10 PM IST)" >> $GITHUB_STEP_SUMMARY
+            elif [ "$HOUR" == "02" ]; then
+              echo "action=start" >> $GITHUB_STEP_SUMMARY
+              echo "action=start" >> $GITHUB_OUTPUT
+              echo "Scheduled start (8 AM IST)" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "action=status" >> $GITHUB_OUTPUT
+            fi
+          fi
+      
+      - name: Stop Cloud Run services
+        if: steps.action.outputs.action == 'stop'
+        run: |
+          echo "🛑 Stopping Cloud Run services..."
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "## Service Stop Report" >> $GITHUB_STEP_SUMMARY
+          
+          # Stop backend service
+          echo "Stopping ${{ env.BACKEND_SERVICE }}..."
+          gcloud run services update ${{ env.BACKEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --no-traffic \
+            --quiet 2>&1
+          echo "✅ Backend service traffic stopped" >> $GITHUB_STEP_SUMMARY
+          
+          # Stop frontend service
+          echo "Stopping ${{ env.FRONTEND_SERVICE }}..."
+          gcloud run services update ${{ env.FRONTEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --no-traffic \
+            --quiet 2>&1
+          echo "✅ Frontend service traffic stopped" >> $GITHUB_STEP_SUMMARY
+          
+          # Stop Cloud SQL instance
+          echo "Stopping ${{ env.CLOUD_SQL_INSTANCE }}..."
+          gcloud sql instances patch ${{ env.CLOUD_SQL_INSTANCE }} \
+            --activation-policy=NEVER \
+            --quiet 2>&1
+          echo "✅ Cloud SQL instance stopped" >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Stopped at:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Start Cloud Run services
+        if: steps.action.outputs.action == 'start'
+        run: |
+          echo "▶️ Starting Cloud Run services..."
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "## Service Start Report" >> $GITHUB_STEP_SUMMARY
+          
+          # Start Cloud SQL instance first (takes time)
+          echo "Starting ${{ env.CLOUD_SQL_INSTANCE }}..."
+          gcloud sql instances patch ${{ env.CLOUD_SQL_INSTANCE }} \
+            --activation-policy=ALWAYS \
+            --quiet 2>&1
+          echo "✅ Cloud SQL instance started (warming up...)" >> $GITHUB_STEP_SUMMARY
+          
+          # Wait for SQL instance to be ready
+          echo "Waiting for Cloud SQL to be ready..."
+          for i in {1..30}; do
+            STATUS=$(gcloud sql instances describe ${{ env.CLOUD_SQL_INSTANCE }} \
+              --format="value(state)")
+            if [ "$STATUS" == "RUNNABLE" ]; then
+              echo "✅ Cloud SQL is ready"
+              break
+            fi
+            echo "Waiting... ($i/30) Status: $STATUS"
+            sleep 10
+          done
+          
+          # Start backend service
+          echo "Starting ${{ env.BACKEND_SERVICE }}..."
+          gcloud run services update ${{ env.BACKEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --traffic=100 \
+            --quiet 2>&1
+          echo "✅ Backend service traffic enabled" >> $GITHUB_STEP_SUMMARY
+          
+          # Start frontend service
+          echo "Starting ${{ env.FRONTEND_SERVICE }}..."
+          gcloud run services update ${{ env.FRONTEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --traffic=100 \
+            --quiet 2>&1
+          echo "✅ Frontend service traffic enabled" >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Started at:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Get services status
+        id: status
+        if: always()
+        run: |
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "## Current Services Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Cloud Run Services" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "**Backend Service:**" >> $GITHUB_STEP_SUMMARY
+          BACKEND_STATUS=$(gcloud run services describe ${{ env.BACKEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --format="value(status.conditions[0].message)")
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          gcloud run services describe ${{ env.BACKEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --format="table(status.conditions[0].message, metadata.generation)" >> $GITHUB_STEP_SUMMARY || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "**Frontend Service:**" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          gcloud run services describe ${{ env.FRONTEND_SERVICE }} \
+            --region=${{ env.REGION }} \
+            --format="table(status.conditions[0].message, metadata.generation)" >> $GITHUB_STEP_SUMMARY || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Cloud SQL Instance" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Instance:** \`${{ env.CLOUD_SQL_INSTANCE }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          gcloud sql instances describe ${{ env.CLOUD_SQL_INSTANCE }} \
+            --format="table(state, databaseVersion, settings.activationPolicy)" >> $GITHUB_STEP_SUMMARY || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Notify status
+        if: failure()
+        run: |
+          echo "⚠️ Service management action failed. Check logs above." >> $GITHUB_STEP_SUMMARY
+          exit 1
+
+  cost-tracking:
+    name: Estimate Cost Savings
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Calculate estimated savings
+        run: |
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "## 💰 Cost Savings Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Services Managed:" >> $GITHUB_STEP_SUMMARY
+          echo "- Cloud Run Backend" >> $GITHUB_STEP_SUMMARY
+          echo "- Cloud Run Frontend" >> $GITHUB_STEP_SUMMARY
+          echo "- Cloud SQL MySQL 8.0" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Schedule:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stop:** 10:00 PM IST daily" >> $GITHUB_STEP_SUMMARY
+          echo "- **Start:** 8:00 AM IST daily" >> $GITHUB_STEP_SUMMARY
+          echo "- **Downtime:** 10 hours per day (approximately 42% of the day)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Estimated Monthly Savings:" >> $GITHUB_STEP_SUMMARY
+          echo "| Service | Estimated Monthly Cost | Savings (42%) |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|----------------------|----------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Cloud Run (2x services) | ~$30 | ~$13 |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cloud SQL | ~$80 | ~$34 |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Total** | **~$110** | **~$47/month** |" >> $GITHUB_STEP_SUMMARY
