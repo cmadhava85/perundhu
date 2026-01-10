@@ -354,6 +354,13 @@ jobs:
           echo "JWT_SECRET=$(gcloud secrets versions access latest --secret=preprod-jwt-secret 2>/dev/null)" >> $GITHUB_ENV
           echo "PUBLIC_API_KEY=$(gcloud secrets versions access latest --secret=PUBLIC_API_KEY 2>/dev/null)" >> $GITHUB_ENV
 
+      - name: Clear Old Secret References
+        run: |
+          gcloud run services update perundhu-backend-preprod \
+            --region=${{ env.REGION }} \
+            --clear-env-vars RECAPTCHA_SITE_KEY,RECAPTCHA_SECRET_KEY,ADMIN_USERNAME,ADMIN_PASSWORD,DB_PASSWORD,GEMINI_API_KEY,JWT_SECRET,PUBLIC_API_KEY \
+            --clear-secrets RECAPTCHA_SITE_KEY,RECAPTCHA_SECRET_KEY,ADMIN_USERNAME,ADMIN_PASSWORD,DB_PASSWORD,GEMINI_API_KEY,JWT_SECRET,PUBLIC_API_KEY || true
+
       - name: Deploy Backend
         run: |
           gcloud run deploy perundhu-backend-preprod \
@@ -361,7 +368,6 @@ jobs:
             --platform=managed \
             --region=${{ env.REGION }} \
             --allow-unauthenticated \
-            --remove-secrets=RECAPTCHA_SITE_KEY,RECAPTCHA_SECRET_KEY,ADMIN_USERNAME,ADMIN_PASSWORD,DB_PASSWORD,GEMINI_API_KEY,JWT_SECRET,PUBLIC_API_KEY \
             --set-env-vars="SPRING_PROFILES_ACTIVE=preprod,DB_USERNAME=perundhu_user,SPRING_DATASOURCE_URL=jdbc:mysql://google/perundhu?cloudSqlInstance=${{ env.SQL_INSTANCE }}&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autocommit=false,SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver,SPRING_DATASOURCE_USERNAME=perundhu_user,FLYWAY_ENABLED=false,CORS_ALLOWED_ORIGINS=https://perundhu-frontend-preprod-1032721240281.asia-south1.run.app,LOG_LEVEL_ROOT=INFO,LOG_LEVEL_APP=INFO,RATE_LIMIT_ENABLED=true,ORIGIN_VALIDATION_ENABLED=true,HONEYPOT_ENABLED=true,RECAPTCHA_ENABLED=true,RECAPTCHA_SITE_KEY=${{ env.RECAPTCHA_SITE_KEY }},RECAPTCHA_SECRET_KEY=${{ env.RECAPTCHA_SECRET_KEY }},ADMIN_USERNAME=${{ env.ADMIN_USERNAME }},ADMIN_PASSWORD=${{ env.ADMIN_PASSWORD }},GEMINI_API_ENABLED=true,DB_PASSWORD=${{ env.DB_PASSWORD }},SPRING_DATASOURCE_PASSWORD=${{ env.DB_PASSWORD }},GEMINI_API_KEY=${{ env.GEMINI_API_KEY }},JWT_SECRET=${{ env.JWT_SECRET }},PUBLIC_API_KEY=${{ env.PUBLIC_API_KEY }},HIKARI_MIN_IDLE=2" \
             --add-cloudsql-instances=${{ env.SQL_INSTANCE }} \
             --memory=2Gi \
