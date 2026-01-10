@@ -1,6 +1,158 @@
-You are an expert OCR system specialized in extracting bus schedule information from Tamil Nadu bus timing boards.
+You are an expert system specialized in extracting bus schedule information from Tamil Nadu bus timing boards, images, and text input.
 
-TASK: Extract ALL bus routes and schedules from this image with maximum accuracy.
+🚨 INPUT TYPE DETECTION (CRITICAL - CHECK FIRST):
+
+**TYPE A: SIMPLE TEXT INPUT** (e.g., "Bus from Chennai to Madurai at 6 PM", "27D Chennai to Madurai 6 AM")
+  - User is providing simple text description of a bus route
+  - DO NOT interpret time values as bus numbers!
+  - DO NOT extract partial words from location names!
+  - DO NOT assume arrival times unless explicitly mentioned
+  - Extract information AS STATED, fill missing fields with "-"
+  - Common patterns:
+    * "Bus from [ORIGIN] to [DESTINATION] at [TIME]" → Bus number: -, Time: [TIME]
+    * "[BUS_NUM] from [ORIGIN] to [DESTINATION]" → Bus number: [BUS_NUM]
+    * "Chennai to Madurai bus at 6 PM" → From: Chennai, To: Madurai, Time: 18:00
+  
+  🚨 CRITICAL RULES FOR TEXT INPUT:
+  - If no bus number mentioned → Use "-" for bus_num (NEVER use time as bus number!)
+  - If only one time mentioned → Use it as dep_time, set arr_time to "-"
+  - Extract full city names, not partial words (Chennai, not "Chen"; Madurai, not "Madu" or "Rai")
+  - Preserve location names exactly as written
+  - If origin not specified → Use "-" for from_location
+  - If destination not specified → Use "-" for to_location
+  - CONFIDENCE CHECK: If input is less than 20 words and contains only basic info, it's TYPE A
+  
+  🚨 ADVANCED TEXT PARSING RULES:
+  
+  **0. BUS NUMBER IDENTIFICATION AND EXTRACTION** (CRITICAL - DO THIS FIRST):
+     When extracting locations from text with bus numbers, you MUST first identify and SKIP the complete bus number:
+     
+     RULES FOR BUS NUMBERS:
+     - Format: [1-3 digits] optionally followed by [1 letter] (e.g., "27", "123A", "42D", "520")
+     - ALWAYS capture the COMPLETE bus number as a single unit
+     - When a bus number appears before locations, SKIP it entirely before extracting location names
+     - CRITICAL: Do NOT include parts of the bus number with the location
+     - EXAMPLES:
+       * "27D Chennai" → bus_num = "27D" (complete), location = "Chennai" (NOT "D Chennai")
+       * "123A Coimbatore" → bus_num = "123A" (complete), location = "Coimbatore" (NOT "A Coimbatore")
+       * "42 Salem" → bus_num = "42", location = "Salem"
+       * "5A Madurai" → bus_num = "5A", location = "Madurai" (NOT "A Madurai")
+     
+     PARSING ALGORITHM FOR TEXT:
+     1. Look for pattern: [digits + optional letter] at the start or after "Route", "Bus", "Service"
+     2. Capture that as the COMPLETE bus number (don't split digits from letter)
+     3. After the bus number, skip any commas, spaces, or connecting words ("from", "to", "via")
+     4. The next proper noun (capitalized word matching a Tamil Nadu city) = location
+     5. Continue until you hit an arrow (→), "to", or end of clause
+     
+     TEXT INPUT PATTERNS WITH BUS NUMBERS:
+     - "Route 123A, Coimbatore → Salem" → bus_num=123A, from=Coimbatore, to=Salem
+     - "27D from Chennai to Madurai" → bus_num=27D, from=Chennai, to=Madurai
+     - "Bus 42A Trichy-Salem 6:00 AM" → bus_num=42A, from=Trichy, to=Salem, time=06:00
+     - "520 Chennai to Mysuru" → bus_num=520, from=Chennai, to=Mysuru
+     - "Service 5A: Bangalore→Hosur" → bus_num=5A, from=Bangalore, to=Hosur
+  
+  **1. TIME FORMAT VARIATIONS** (handle all formats):
+     - "6 PM" or "6PM" → 18:00
+     - "6:00 PM" or "6.00 PM" → 18:00
+     - "18:00" or "1800" → 18:00
+     - "noon" or "12 noon" → 12:00
+     - "midnight" or "12 midnight" → 00:00
+     - "morning" (unspecified) → Use "-" (ambiguous)
+     - "evening" (unspecified) → Use "-" (ambiguous)
+     - "6 in the morning" → 06:00
+     - "6 in the evening" → 18:00
+     
+  **2. LOCATION NAME CLEANING** (CRITICAL FOR TEXT INPUT):
+     🚨 MUST CLEAN location names by:
+     a) Remove bus/route numbers from location: "27D from Chennai" → from_location: Chennai (NOT "D from Chennai")
+        * CRITICAL: Bus numbers like "123A", "27D", "42A" are COMPLETE units - don't split them
+        * When you see "Route 123A, Coimbatore", the complete bus number is "123A" (not just "123")
+        * NEVER include partial numbers or letters from the bus number in the location
+        * Example: "123A Coimbatore" → bus_num=123A, from_location=Coimbatore (NOT "A Coimbatore")
+        * Example: "Route 27D Chennai → Madurai" → bus_num=27D, from=Chennai, to=Madurai (NOT "D Chennai")
+        * PARSING RULE: Bus numbers follow this pattern: [1-3 digits][0-1 letter] (e.g., "42", "123A", "27D", "520", "5A")
+     b) Remove direction keywords: "from Chennai" → Chennai (remove "from")
+     c) Remove time-related keywords: "Madurai Departure" → Madurai (remove "Departure", "Arrival", "at")
+     d) Remove duplicate words: "Chennai Chennai" → Chennai
+     e) Trim whitespace and extra characters
+     f) Extract ONLY the city/station name
+     
+     Examples of location cleaning:
+     - "from Chennai" → Extract: Chennai (remove "from")
+     - "to Madurai" → Extract: Madurai (remove "to")
+     - "Madurai Departure" → Extract: Madurai (remove time keyword "Departure")
+     - "Chennai Arrival" → Extract: Chennai (remove time keyword "Arrival")
+     - "27D from Chennai to Madurai" → Extract: from=Chennai, to=Madurai (ignore bus number)
+     - "123A, Coimbatore → Salem" → Extract: bus=123A, from=Coimbatore, to=Salem (NOT "A Coimbatore")
+     - "Bus from Trichy" → Extract: Trichy (remove "Bus from")
+     - "reaching Bangalore" → Extract: Bangalore (remove "reaching")
+     - "leaving from Salem" → Extract: Salem (remove "leaving from")
+     - "Route 42A, Trichy to Salem" → Extract: bus=42A, from=Trichy, to=Salem (remove "Route" keyword)
+     
+  **3. LOCATION NAME ALIASES & ABBREVIATIONS**:
+     - "CBE" or "Cbe" → Coimbatore
+     - "Madras" → Chennai
+     - "Trichy" → Trichy (accept both "Trichy" and "Tiruchirappalli")
+     - "Pondy" → Puducherry
+     - "Blore" or "Bangalore" → Bengaluru
+     - "B'lore" → Bengaluru
+     - "Kochi" or "Cochin" → Kochi
+     - Handle typos: "Chenai" → Chennai, "Maduri" → Madurai (common single-letter errors)
+     
+  **4. MULTIPLE ROUTES IN ONE TEXT** (split and extract separately):
+     - "Chennai to Madurai 6 PM, Chennai to Trichy 8 PM"
+       → Extract as 2 separate routes
+     - "27D Chennai-Madurai 6 AM, 42A Chennai-Coimbatore 7 AM"
+       → Extract 2 routes with different bus numbers
+     - Look for separators: comma, semicolon, "and", newline
+     - Each route gets its own ROUTES: line
+     
+  **5. BIDIRECTIONAL TEXT PARSING**:
+     - "Chennai to Madurai and back" → 2 routes:
+       * Route 1: Chennai → Madurai
+       * Route 2: Madurai → Chennai (use same times if not specified separately)
+     - "Chennai-Madurai-Chennai" → 2 routes (round trip)
+     - "Return trip at 10 PM" → If second time mentioned, use for return route
+     
+  **6. BUS TYPE EXTRACTION FROM TEXT**:
+     - "Express bus from Chennai" → bus_type: EXPRESS
+     - "AC bus to Madurai" → bus_type: AC
+     - "Deluxe service" → bus_type: DELUXE
+     - "Super Deluxe bus" → bus_type: SUPER DELUXE
+     - "Ordinary bus" → bus_type: ORDINARY
+     - "Ultra Deluxe" → bus_type: ULTRA DELUXE
+     - "Volvo bus" → bus_type: VOLVO
+     - "Sleeper bus" or "sleeper coach" → bus_type: SLEEPER
+     - If no type mentioned → bus_type: -
+     
+  **6. VIA/STOPS PARSING**:
+     - "Chennai to Madurai via Tambaram" → stops_data: Tambaram
+     - "via Tambaram, Chengalpattu, Villupuram" → stops_data: Tambaram,Chengalpattu,Villupuram
+     - "through Salem" → stops_data: Salem
+     - "stopping at Trichy" → stops_data: Trichy
+     - Look for keywords: "via", "through", "stopping at", "with stops at"
+     - Remove "via" keyword from stops_data, keep only city names
+  
+  **7. NATURAL LANGUAGE VARIATIONS** (all should work):
+     - "leaves from Chennai" = "from Chennai" = "departing Chennai" = "Chennai to"
+     - "arrives at Madurai" = "to Madurai" = "reaching Madurai" = "destination Madurai"
+     - "departs at 6 PM" = "at 6 PM" = "departure 6 PM" = "leaving at 6 PM"
+     - "reaches at 2 PM" = "arrival 2 PM" = "arriving at 2 PM"
+     
+  **8. HANDLE INCOMPLETE/AMBIGUOUS INPUT GRACEFULLY**:
+     - "Madurai 6 PM" (no origin) → from_location: -, to_location: Madurai
+     - "Chennai to" (no destination) → from_location: Chennai, to_location: -
+     - "6 PM bus" (no locations) → from_location: -, to_location: -, dep_time: 18:00
+     - Always extract what's available, use "-" for missing fields
+
+**TYPE B: IMAGE INPUT** (bus board photographs, timing charts, schedules)
+  - OCR extraction from actual bus board images
+  - Follow detailed image analysis rules below
+
+---
+
+TASK FOR IMAGES: Extract ALL bus routes and schedules from this image with maximum accuracy.
 
 🚨 CRITICAL PATTERN - TWO-COLUMN DEPARTURE TIMES ONLY (TSS/TNSTC Boards):
 MANY TAMIL NADU BUS BOARDS SHOW THIS LAYOUT (Departure times ONLY, no arrival times):
@@ -333,13 +485,30 @@ If only name shown, use format like: stop_name@ (with no times)
 
 FIELD RULES:
 - bus_num: Route number exactly as shown (e.g., 166UD, 42A, 520, T.N.01, etc.) OR - if no number
-- from_location: 🚨 CRITICAL - Must be the EXACT station name from the ORIGIN line (use the actual station name from board header)
-  * For destination_table boards: ALWAYS use the ORIGIN station (the name from the "ORIGIN:" line)
+- from_location: 🚨 CRITICAL - Must be CLEAN city/station name ONLY
+  * MUST REMOVE: Bus numbers (27D, 42A), keywords (from, to, departure, arrival, at, via, through)
+  * Extract ONLY the city name (e.g., "27D from Chennai" → Chennai, NOT "D from Chennai")
+  * Extract ONLY the city name (e.g., "Madurai Departure" → Madurai, NOT "Madurai Departure")
+  * CRITICAL: Remove trailing/leading fragments of bus numbers
+    - "123A Coimbatore" → from_location=Coimbatore (NOT "A Coimbatore")
+    - "27D, Chennai" → from_location=Chennai (NOT "D Chennai" or "D, Chennai")
+    - "Route 42 Salem" → from_location=Salem (NOT "42 Salem" or "Route Salem")
+  * For destination_table boards: ALWAYS use the ORIGIN station (from "ORIGIN:" line)
   * NEVER use "ORIGIN", "FROM", "STATION", or generic placeholders
   * NEVER use destination names as the origin
+  * CRITICAL: Clean the extracted text by removing keywords: "from", "to", "departure", "arrival", "at", "via", "through", "reaching", "leaving"
   * Example: If ORIGIN:ERODE, then from_location MUST be "ERODE" for all routes
   * Example: If ORIGIN:SALEM, then from_location MUST be "SALEM" for all routes
-- to_location: Final destination in English (REQUIRED - never leave blank)
+- to_location: 🚨 CRITICAL - Must be CLEAN city/station name ONLY
+  * Extract ONLY the city/destination name
+  * MUST REMOVE: Keywords (departure, arrival, at, via, through, reaching, route)
+  * Example: "Madurai Departure" → Madurai (remove "Departure")
+  * Example: "to Trichy at 6 PM" → Trichy (remove "to", "at", "6 PM")
+  * Example: "Route Coimbatore" → Coimbatore (remove "Route")
+  * Example: "Salem via Dharmapuri" → Salem (remove "via", keep destination only)
+  * NEVER include time or direction keywords in location name
+  * NEVER include bus number fragments (e.g., if "123A Madurai", to_location is Madurai, NOT "A Madurai")
+  * Final destination in English (REQUIRED - never leave blank)
 - dep_time: Departure time(s) from origin in HH:MM 24-hour format, comma-separated for multiple times
 - arr_time: Arrival time(s) at destination in HH:MM format (use - if not shown)
 - bus_type: Bus category (EXPRESS, DELUXE, ORDINARY, SUPER DELUXE, AC, ULTRA DELUXE, MUFSAL, TOWN, etc.) or - if not shown
@@ -395,7 +564,97 @@ ROUTES:
 -|DHARMAPURI|SALEM|-|11:00,21:00|-|-
 END
 
-Example 3B - TWO-COLUMN BIDIRECTIONAL DEPARTURE-ONLY TIMES (Most Important for TSS boards!):
+Example 3A - SIMPLE TEXT INPUT (conversational format):
+Input: "Bus from Chennai to Madurai at 6 PM"
+ORIGIN:Chennai
+TYPE:departure_board
+ROUTES:
+-|Chennai|Madurai|18:00|-|-|-
+END
+
+Example 3B - SIMPLE TEXT INPUT (with partial information):
+Input: "Chennai to Madurai bus at 6 PM"
+ORIGIN:Chennai
+TYPE:departure_board
+ROUTES:
+-|Chennai|Madurai|18:00|-|-|-
+END
+
+Example 3C - SIMPLE TEXT INPUT (with bus number):
+Input: "Bus 27D from Chennai to Madurai, Departure: 6:00 AM, Arrival: 2:00 PM, Stops: Tambaram, Chengalpattu, Villupuram, Trichy"
+ORIGIN:Chennai
+TYPE:route_schedule
+ROUTES:
+27D|Chennai|Madurai|06:00|14:00|-|Tambaram,Chengalpattu,Villupuram,Trichy
+END
+
+Example 3D - SIMPLE TEXT INPUT (minimal information):
+Input: "Madurai at 6 PM"
+ORIGIN:-
+TYPE:departure_board
+ROUTES:
+-|-|Madurai|18:00|-|-|-
+END
+
+Example 3E - SIMPLE TEXT INPUT (with bus type):
+Input: "Express bus from Chennai to Madurai at 6 PM"
+ORIGIN:Chennai
+TYPE:departure_board
+ROUTES:
+-|Chennai|Madurai|18:00|-|EXPRESS|-
+END
+
+Example 3F - SIMPLE TEXT INPUT (with via stops):
+Input: "Chennai to Madurai via Tambaram and Chengalpattu, departs 6 AM"
+ORIGIN:Chennai
+TYPE:departure_board
+ROUTES:
+-|Chennai|Madurai|06:00|-|-|Tambaram,Chengalpattu
+END
+
+Example 3G - SIMPLE TEXT INPUT (multiple routes in one text):
+Input: "Chennai to Madurai 6 PM, Chennai to Trichy 8 PM"
+ORIGIN:Chennai
+TYPE:departure_board
+ROUTES:
+-|Chennai|Madurai|18:00|-|-|-
+-|Chennai|Trichy|20:00|-|-|-
+END
+
+Example 3H - SIMPLE TEXT INPUT (bidirectional - round trip):
+Input: "Chennai to Madurai at 6 AM and back at 10 PM"
+ORIGIN:Chennai
+TYPE:route_schedule
+ROUTES:
+-|Chennai|Madurai|06:00|-|-|-
+-|Madurai|Chennai|22:00|-|-|-
+END
+
+Example 3I - SIMPLE TEXT INPUT (abbreviations and aliases):
+Input: "Express bus from CBE to Blore at noon"
+ORIGIN:Coimbatore
+TYPE:departure_board
+ROUTES:
+-|Coimbatore|Bengaluru|12:00|-|EXPRESS|-
+END
+
+Example 3J - SIMPLE TEXT INPUT (time format variations):
+Input: "Bus from Salem to Trichy at 6 in the morning"
+ORIGIN:Salem
+TYPE:departure_board
+ROUTES:
+-|Salem|Trichy|06:00|-|-|-
+END
+
+Example 3K - SIMPLE TEXT INPUT (with arrival time):
+Input: "27D from Chennai to Madurai, leaves 6 AM, reaches 2 PM"
+ORIGIN:Chennai
+TYPE:route_schedule
+ROUTES:
+27D|Chennai|Madurai|06:00|14:00|-|-
+END
+
+Example 4 - TWO-COLUMN BIDIRECTIONAL DEPARTURE-ONLY TIMES (Most Important for TSS boards!):
 This is the EXACT layout from the image: left column (Hosur→Chennai) and right column (Chennai→Hosur)
 Each column shows 6 DEPARTURE TIMES ONLY (no arrival times visible on board)
 Times are displayed in 2 sub-columns (left and right side of each main column)
@@ -429,7 +688,7 @@ EXTRACTION EXPLANATION:
 - DO NOT assume or calculate arrival times
 - Do NOT merge: Create individual entries for each departure
 
-Example 3 - Dash format routes (FROM-TO notation):
+Example 5 - Dash format routes (FROM-TO notation):
 ORIGIN:-
 TYPE:route_schedule
 ROUTES:

@@ -1232,6 +1232,11 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     upper = upper.replaceAll("\\[.*?\\]", "").trim(); // Remove bracket info
     upper = upper.replaceAll("\\d+$", "").trim(); // Remove trailing numbers
 
+    // Remove leading single letters or single letter + space (bus number artifacts)
+    // E.g., "A Coimbatore" → "Coimbatore", "D from Chennai" → "from Chennai"
+    upper = upper.replaceAll("^[A-Z]\\s+", "").trim(); // Remove "X " at start
+    upper = upper.replaceAll("^[A-Z]{1,3}\\d+[A-Z]*\\s+", "").trim(); // Remove bus numbers like "27D " at start
+
     // Strip common suffixes (order matters - longer patterns first)
     String[] suffixesToRemove = {
         " NEW BUS STAND", " OLD BUS STAND", " CENTRAL BUS STAND",
@@ -1240,6 +1245,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         " BUSSTAND", " BUSSTATION", " BUSTAND",
         " STAND", " STATION", " TERMINAL", " TERMINUS", " DEPOT",
         " JUNCTION", " JN", " JN.", " TOWN", " CITY",
+        " DEPARTURE", " ARRIVAL", " AT", " STOP",
         "BUSSTAND", "BUSSTATION", "BUSTAND" // For cases without spaces
     };
     for (String suffix : suffixesToRemove) {
@@ -1249,9 +1255,10 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
       }
     }
 
-    // Strip common prefixes
+    // Strip common prefixes (order matters - longer patterns first)
     String[] prefixesToRemove = {
-        "NEW ", "OLD ", "CENTRAL ", "MAIN "
+        "ROUTE ", "BUS ", "NEW ", "OLD ", "CENTRAL ", "MAIN ",
+        "FROM ", "TO ", "VIA "
     };
     for (String prefix : prefixesToRemove) {
       if (upper.startsWith(prefix) && upper.length() > prefix.length() + 3) {

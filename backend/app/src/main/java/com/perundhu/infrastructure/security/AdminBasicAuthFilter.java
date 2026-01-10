@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,6 +42,84 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
 
     @Value("${admin.auth.enabled:true}")
     private boolean authEnabled;
+
+    @Value("${spring.profiles.active:default}")
+    private String activeProfile;
+
+    /**
+     * Validate admin credentials on startup to catch configuration issues early.
+     */
+    @PostConstruct
+    public void validateCredentialsOnStartup() {
+        log.info("=============================================================");
+        log.info("ADMIN AUTHENTICATION CONFIGURATION VALIDATION");
+        log.info("=============================================================");
+        log.info("Active Profile: {}", activeProfile);
+        log.info("Admin Auth Enabled: {}", authEnabled);
+        log.info("Admin Username: {}", adminUsername != null ? maskValue(adminUsername) : "NOT SET");
+        log.info("Admin Password: {}", adminPassword != null ? maskValue(adminPassword) : "NOT SET");
+        
+        if (!authEnabled) {
+            log.warn("⚠️  ADMIN AUTHENTICATION IS DISABLED - All admin endpoints are unprotected!");
+            log.info("=============================================================");
+            return;
+        }
+
+        // Validate credentials are properly configured
+        boolean hasIssues = false;
+
+        if (adminUsername == null || adminUsername.isBlank()) {
+            log.error("❌ ADMIN USERNAME IS NOT SET - Admin authentication will fail!");
+            hasIssues = true;
+        } else if (adminUsername.contains(":latest")) {
+            log.error("❌ ADMIN USERNAME CONTAINS ':latest' - Secret not loaded from GCP Secret Manager!");
+            log.error("   Current value: {}", maskValue(adminUsername));
+            log.error("   Expected: Actual username value from secret");
+            log.error("   Fix: Move ADMIN_USERNAME from --set-env-vars to --update-secrets in CD pipeline");
+            hasIssues = true;
+        } else if (adminUsername.length() < 3) {
+            log.warn("⚠️  ADMIN USERNAME IS TOO SHORT (length: {}) - Recommended minimum: 3 characters", adminUsername.length());
+        }
+
+        if (adminPassword == null || adminPassword.isBlank()) {
+            log.error("❌ ADMIN PASSWORD IS NOT SET - Admin authentication will fail!");
+            hasIssues = true;
+        } else if (adminPassword.contains(":latest")) {
+            log.error("❌ ADMIN PASSWORD CONTAINS ':latest' - Secret not loaded from GCP Secret Manager!");
+            log.error("   Current value: {}", maskValue(adminPassword));
+            log.error("   Expected: Actual password value from secret");
+            log.error("   Fix: Move ADMIN_PASSWORD from --set-env-vars to --update-secrets in CD pipeline");
+            hasIssues = true;
+        } else if (adminPassword.length() < 8) {
+            log.warn("⚠️  ADMIN PASSWORD IS WEAK (length: {}) - Recommended minimum: 8 characters", adminPassword.length());
+        }
+
+        if (hasIssues) {
+            log.error("=============================================================");
+            log.error("❌ CRITICAL: ADMIN CREDENTIALS NOT PROPERLY CONFIGURED");
+            log.error("=============================================================");
+            if (activeProfile.contains("prod") || activeProfile.contains("preprod")) {
+                throw new IllegalStateException(
+                    "Admin credentials are not properly configured for " + activeProfile + " environment. " +
+                    "Check the CD pipeline configuration and ensure secrets are loaded from GCP Secret Manager."
+                );
+            }
+        } else {
+            log.info("✅ Admin credentials validated successfully");
+        }
+        
+        log.info("=============================================================");
+    }
+
+    /**
+     * Mask sensitive values for logging - show first/last 2 chars only
+     */
+    private String maskValue(String value) {
+        if (value == null || value.length() <= 4) {
+            return "***";
+        }
+        return value.substring(0, 2) + "***" + value.substring(value.length() - 2);
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

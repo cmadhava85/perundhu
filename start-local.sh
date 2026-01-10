@@ -110,6 +110,53 @@ if [ -f "$PROJECT_ROOT/.env" ]; then
 fi
 
 # =============================================================================
+# Fetch Gemini API Key from Secret Manager
+# =============================================================================
+
+fetch_gemini_key_from_secret_manager() {
+    # Check if gcloud is installed
+    if ! command -v gcloud &> /dev/null; then
+        log_warning "gcloud CLI not found. Skipping Secret Manager fetch."
+        log_warning "Install gcloud: https://cloud.google.com/sdk/docs/install"
+        return 1
+    fi
+    
+    # Check if user is authenticated
+    if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null | grep -q .; then
+        log_warning "Not authenticated with gcloud. Run: gcloud auth login"
+        return 1
+    fi
+    
+    # Set project if GOOGLE_CLOUD_PROJECT is set
+    if [ -n "$GOOGLE_CLOUD_PROJECT" ]; then
+        log_info "Using GCP project: $GOOGLE_CLOUD_PROJECT"
+        gcloud config set project "$GOOGLE_CLOUD_PROJECT" 2>/dev/null
+    else
+        log_warning "GOOGLE_CLOUD_PROJECT not set. Using default gcloud project."
+    fi
+    
+    # Fetch the secret
+    log_info "Fetching GEMINI_API_KEY from Secret Manager..."
+    local secret_value=$(gcloud secrets versions access latest --secret="gemini-api-key" 2>/dev/null)
+    
+    if [ $? -eq 0 ] && [ -n "$secret_value" ]; then
+        export GEMINI_API_KEY="$secret_value"
+        log_success "Successfully fetched GEMINI_API_KEY from Secret Manager ✓"
+        return 0
+    else
+        log_warning "Failed to fetch gemini-api-key from Secret Manager"
+        log_warning "Make sure the secret 'gemini-api-key' exists in your GCP project"
+        return 1
+    fi
+}
+
+# Try to fetch from Secret Manager if GEMINI_API_KEY is not set
+if [ -z "$GEMINI_API_KEY" ]; then
+    log_info "GEMINI_API_KEY not found in .env, attempting to fetch from Secret Manager..."
+    fetch_gemini_key_from_secret_manager
+fi
+
+# =============================================================================
 # Service Management Functions
 # =============================================================================
 
@@ -142,12 +189,22 @@ start_backend() {
         export DB_USERNAME=${DB_USERNAME:-root}
         export DB_PASSWORD=${DB_PASSWORD:-root}
         
+        # CRITICAL: Pass GEMINI_API_KEY if set in environment or .env file
+        GEMINI_PARAM=""
+        if [ -n "$GEMINI_API_KEY" ]; then
+            GEMINI_PARAM="-DGEMINI_API_KEY=$GEMINI_API_KEY"
+            log_info "Gemini API Key configured ✓"
+        else
+            log_warning "GEMINI_API_KEY not set - AI extraction will not be available"
+        fi
+        
         # Start backend with nohup - completely detached
-        # Pass database credentials as system properties to ensure they reach Gradle/Spring
+        # Pass database credentials and Gemini API key as system properties to ensure they reach Gradle/Spring
         nohup ./gradlew bootRun \
             -Dspring.datasource.password="$DB_PASSWORD" \
             -Dspring.datasource.username="$DB_USERNAME" \
             -Dspring.datasource.url="$DB_URL" \
+            $GEMINI_PARAM \
             > "$LOGS_DIR/backend.log" 2>&1 &
         echo $! > "$PID_DIR/backend.pid"
     )

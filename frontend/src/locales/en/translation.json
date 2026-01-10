@@ -413,6 +413,8 @@
       "busNumber": "Bus Number",
       "from": "From",
       "to": "To",
+      "departureTime": "Departure Time",
+      "arrivalTime": "Arrival Time",
       "timings": "Timings",
       "stops": "Stops",
       "none": "None"

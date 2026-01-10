@@ -16,6 +16,8 @@ interface ReturnRouteData {
   timings: string[];
   stops: string[];
   stopsWithTimings?: StopWithTiming[];
+  departureTime?: string;
+  arrivalTime?: string;
 }
 
 interface AdditionalRouteData {
@@ -25,6 +27,8 @@ interface AdditionalRouteData {
   timings: string[];
   stops: string[];
   busType: string | null;
+  departureTime?: string;
+  arrivalTime?: string;
 }
 
 interface ExtractedData {
@@ -38,6 +42,8 @@ interface ExtractedData {
   returnRoute?: ReturnRouteData;
   hasMultipleRoutes?: boolean;
   additionalRoutes?: AdditionalRouteData[];
+  departureTime?: string;
+  arrivalTime?: string;
 }
 
 interface ValidationResponse {
@@ -415,11 +421,15 @@ Via: Chengalpattu, Villupuram, Trichy`,
                     </td>
                   </tr>
                   <tr>
-                    <td>{t('paste.fields.timings', 'Timings')}:</td>
-                    <td className={validation.extracted.timings.length > 0 ? 'found' : 'not-found'}>
-                      {validation.extracted.timings.length > 0 
-                        ? validation.extracted.timings.join(', ') 
-                        : t('paste.fields.none', 'None')}
+                    <td>{t('paste.fields.departureTime', 'Departure Time')}:</td>
+                    <td className={validation.extracted.departureTime ? 'found' : 'not-found'}>
+                      {validation.extracted.departureTime || (validation.extracted.timings.length > 0 ? validation.extracted.timings[0] : '❌ Not found')}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>{t('paste.fields.arrivalTime', 'Arrival Time')}:</td>
+                    <td className={validation.extracted.arrivalTime ? 'found' : 'not-found'}>
+                      {validation.extracted.arrivalTime || (validation.extracted.timings.length > 1 ? validation.extracted.timings[1] : '❌ Not found')}
                     </td>
                   </tr>
                   <tr>
@@ -454,10 +464,18 @@ Via: Chengalpattu, Villupuram, Trichy`,
                         </td>
                       </tr>
                       <tr>
-                        <td>{t('paste.fields.timings', 'Timings')}:</td>
+                        <td>{t('paste.fields.departureTime', 'Departure Time')}:</td>
                         <td className={(validation.extracted.returnRoute.timings?.length ?? 0) > 0 ? 'found' : 'not-found'}>
                           {(validation.extracted.returnRoute.timings?.length ?? 0) > 0 
-                            ? validation.extracted.returnRoute.timings?.join(', ') 
+                            ? validation.extracted.returnRoute.timings?.[0] 
+                            : t('paste.fields.none', 'None')}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{t('paste.fields.arrivalTime', 'Arrival Time')}:</td>
+                        <td className={(validation.extracted.returnRoute.timings?.length ?? 0) > 1 ? 'found' : 'not-found'}>
+                          {(validation.extracted.returnRoute.timings?.length ?? 0) > 1 
+                            ? validation.extracted.returnRoute.timings?.[1]
                             : t('paste.fields.none', 'None')}
                         </td>
                       </tr>
@@ -504,10 +522,18 @@ Via: Chengalpattu, Villupuram, Trichy`,
                             </td>
                           </tr>
                           <tr>
-                            <td>{t('paste.fields.timings', 'Timings')}:</td>
+                            <td>{t('paste.fields.departureTime', 'Departure Time')}:</td>
                             <td className={(route.timings?.length ?? 0) > 0 ? 'found' : 'not-found'}>
                               {(route.timings?.length ?? 0) > 0 
-                                ? route.timings?.join(', ') 
+                                ? route.timings?.[0]
+                                : t('paste.fields.none', 'None')}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{t('paste.fields.arrivalTime', 'Arrival Time')}:</td>
+                            <td className={(route.timings?.length ?? 0) > 1 ? 'found' : 'not-found'}>
+                              {(route.timings?.length ?? 0) > 1 
+                                ? route.timings?.[1]
                                 : t('paste.fields.none', 'None')}
                             </td>
                           </tr>

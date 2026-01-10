@@ -337,12 +337,16 @@ public class RouteTextParser {
 
     String cleaned = location.trim()
         .replaceAll("\\s+", " ")
+        // CRITICAL: Remove bus number patterns first (before other cleaning)
+        // Patterns: "27D from", "123A ", "42 ", "5A " - remove leading bus numbers
+        .replaceAll("^[A-Z]?\\d{1,4}[A-Z]?\\s+", "") // Remove bus number at start: "27D Chennai" -> "Chennai"
+        .replaceAll("\\b[A-Z]?\\d{1,4}[A-Z]?\\s+(?=[A-Z])", "") // Remove bus number before capitalized word
         // Remove common prefixes
         .replaceAll("(?i)^(from|to|at|in|near|புறப்பாடு|வரவு|via)\\s+", "")
         // Remove common suffixes
         .replaceAll("(?i)\\s+(route|express|bus|service|station|junction|jn|stand|terminal)$", "")
-        // Remove timing words that might be captured
-        .replaceAll("(?i)\\s*(morning|evening|afternoon|night|daily|am|pm)$", "")
+        // Remove time-related keywords
+        .replaceAll("(?i)\\s*(departure|arrival|morning|evening|afternoon|night|daily|am|pm)$", "")
         // Remove any trailing punctuation
         .replaceAll("[.,;:!?]+$", "")
         // Remove any leading punctuation
