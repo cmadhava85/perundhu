@@ -102,9 +102,7 @@ class FileBasedPromptServiceTest {
   @Test
   @DisplayName("Should support variable substitution")
   void shouldSupportVariableSubstitution() {
-    // Given
-    String templatePrompt = "Hello ${name}, your age is ${age}";
-    // First, we'd need to add this to the resources, but for now we test with bus-schedule prompt
+    // Given - test with bus-schedule prompt and variable substitution
     
     // When
     String prompt = promptService.getPromptWithVariables(
