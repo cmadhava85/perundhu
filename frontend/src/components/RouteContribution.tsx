@@ -287,6 +287,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'paste' && (
             <div>
               <TextPasteContribution
+                key={formKey}
                 onSubmit={(_contributionId: string) => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
@@ -302,6 +303,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'image' && (
             <div>
               <ImageContributionUpload 
+                key={formKey}
                 onSuccess={(_contributionId: string) => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.successMessage', 'Thank you for your contribution!'));
@@ -317,6 +319,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'verify' && (
             <div>
               <RouteVerification
+                key={formKey}
                 onVerificationSubmit={() => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('contribution.verificationSuccess', 'Thank you for verifying this route!'));
@@ -332,6 +335,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'addStops' && (
             <div>
               <AddStopsToRoute
+                key={formKey}
                 preSelectedBus={preSelectedBus}
                 fromLocation={preSelectedFromLocation}
                 toLocation={preSelectedToLocation}
@@ -350,6 +354,7 @@ export const RouteContribution: React.FC = () => {
           {contributionMethod === 'reportIssue' && (
             <div>
               <ReportIssue
+                key={formKey}
                 onSubmit={() => {
                   setSubmissionStatus('success');
                   setStatusMessage(t('reportIssue.successMessage', 'Your report has been submitted. We\'ll review and update the information.'));
