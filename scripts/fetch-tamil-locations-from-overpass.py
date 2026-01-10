@@ -8,10 +8,11 @@ import requests
 import json
 import time
 import sys
+import os
 from typing import List, Dict, Tuple
 
 # Overpass API endpoint
-OVERPASS_API = "https://overpass-api.de/api/interpreter"
+OVERPASS_API = "https://overpass.kumi.systems/api/interpreter"
 
 # Tamil Nadu bounding box: [south, west, north, east]
 TAMIL_NADU_BBOX = (8.0, 76.0, 13.5, 80.5)
@@ -22,11 +23,11 @@ TIMEOUT = 30
 def build_overpass_query(bbox: Tuple[float, float, float, float]) -> str:
     """Build Overpass QL query to fetch all Tamil Nadu locations with Tamil names"""
     south, west, north, east = bbox
-    return f"""[bbox:{south},{west},{north},{east}];
+    return f"""[out:json][timeout:120];
 (
-  node[name:ta][place~"city|town|village|hamlet|suburb|neighbourhood|locality"];
-  way[name:ta][place~"city|town|village|hamlet|suburb|neighbourhood|locality"];
-  relation[name:ta][place~"city|town|village|hamlet|suburb|neighbourhood|locality"];
+  node["name:ta"]["place"~"city|town|village|hamlet|suburb|neighbourhood|locality"]({south},{west},{north},{east});
+  way["name:ta"]["place"~"city|town|village|hamlet|suburb|neighbourhood|locality"]({south},{west},{north},{east});
+  relation["name:ta"]["place"~"city|town|village|hamlet|suburb|neighbourhood|locality"]({south},{west},{north},{east});
 );
 out geom center;
 """
@@ -41,7 +42,12 @@ def query_overpass(query: str) -> Dict:
             timeout=TIMEOUT,
             headers={"User-Agent": "PerundhuTamilLocationFetcher/1.0"}
         )
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as http_err:
+            print(f"[ERROR] Overpass API request failed: {http_err}")
+            print(f"[ERROR] Response body: {response.text[:2000]}")
+            return None
         return response.json()
     except requests.exceptions.Timeout:
         print("[ERROR] Overpass API request timed out")
@@ -90,38 +96,45 @@ def extract_tamil_locations(overpass_data: Dict) -> List[Dict]:
     return locations
 
 def find_location_ids_in_db(english_names: List[str]) -> Dict[str, int]:
-    """
-    Find location IDs in database for English names
-    This would be done via MySQL query
-    """
-    import subprocess
-    
-    location_map = {}
-    
-    # Build SQL query with all names
-    names_list = "', '".join([name.replace("'", "''") for name in english_names])
-    sql = f"SELECT id, name FROM locations WHERE name IN ('{names_list}');"
-    
+    """Find location IDs in database for English names via mysql.connector."""
+    import mysql.connector
+
+    location_map: Dict[str, int] = {}
+    if not english_names:
+        return location_map
+
+    db_user = os.getenv("DB_USER", "root")
+    db_password = os.getenv("DB_PASSWORD", "root")
+    db_host = os.getenv("DB_HOST", "127.0.0.1")
+    db_port = int(os.getenv("DB_PORT", "3306"))
+    db_name = os.getenv("DB_NAME", "perundhu")
+
+    def chunks(lst, size):
+        for i in range(0, len(lst), size):
+            yield lst[i:i + size]
+
     try:
-        result = subprocess.run(
-            ["mysql", "-u", "root", "-proot", "perundhu", "-e", sql],
-            capture_output=True,
-            text=True
+        conn = mysql.connector.connect(
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_name,
         )
-        
-        if result.returncode == 0:
-            lines = result.stdout.strip().split('\n')[1:]  # Skip header
-            for line in lines:
-                if line:
-                    parts = line.split('\t')
-                    if len(parts) >= 2:
-                        loc_id, name = int(parts[0]), parts[1]
-                        location_map[name] = loc_id
-        else:
-            print(f"[ERROR] MySQL query failed: {result.stderr}")
+        cursor = conn.cursor()
+
+        for chunk in chunks(english_names, 500):
+            placeholders = ",".join(["%s"] * len(chunk))
+            sql = f"SELECT id, name FROM locations WHERE name IN ({placeholders})"
+            cursor.execute(sql, chunk)
+            for loc_id, name in cursor.fetchall():
+                location_map[name] = loc_id
+
+        cursor.close()
+        conn.close()
     except Exception as e:
-        print(f"[ERROR] Failed to query database: {e}")
-    
+        print(f"[ERROR] Failed to query database via mysql.connector: {e}")
+
     return location_map
 
 def generate_sql_inserts(tamil_locations: List[Dict], location_ids: Dict[str, int]) -> str:
