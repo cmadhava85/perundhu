@@ -108,12 +108,19 @@ jobs:
             --quiet 2>&1
           echo "✅ Frontend service traffic stopped" >> $GITHUB_STEP_SUMMARY
           
-          # Stop Cloud SQL instance
-          echo "Stopping ${{ env.CLOUD_SQL_INSTANCE }}..."
-          gcloud sql instances patch ${{ env.CLOUD_SQL_INSTANCE }} \
-            --activation-policy=NEVER \
-            --quiet 2>&1
-          echo "✅ Cloud SQL instance stopped" >> $GITHUB_STEP_SUMMARY
+          # Stop Cloud SQL instance - check current state first
+          echo "Checking ${{ env.CLOUD_SQL_INSTANCE }} status..."
+          SQL_STATE=$(gcloud sql instances describe ${{ env.CLOUD_SQL_INSTANCE }} --format="value(state)")
+          if [ "$SQL_STATE" == "RUNNABLE" ]; then
+            echo "Stopping ${{ env.CLOUD_SQL_INSTANCE }}..."
+            gcloud sql instances patch ${{ env.CLOUD_SQL_INSTANCE }} \
+              --activation-policy=NEVER \
+              --quiet 2>&1
+            echo "✅ Cloud SQL instance stopped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Cloud SQL instance already stopped (state: $SQL_STATE)"
+            echo "ℹ️ Cloud SQL instance already stopped" >> $GITHUB_STEP_SUMMARY
+          fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Stopped at:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
