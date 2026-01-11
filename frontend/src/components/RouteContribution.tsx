@@ -108,6 +108,13 @@ export const RouteContribution: React.FC = () => {
     flags.enableReportIssue
   ]);
 
+  // Clear submission status and messages when switching tabs/methods
+  useEffect(() => {
+    setSubmissionStatus('idle');
+    setStatusMessage('');
+    setErrorType('general');
+  }, [contributionMethod]);
+
   interface ContributionData {
     busName?: string;
     busNumber?: string;
@@ -311,6 +318,11 @@ export const RouteContribution: React.FC = () => {
                 onError={(error: string) => {
                   setSubmissionStatus('error');
                   setStatusMessage(error);
+                }}
+                onClearStatus={() => {
+                  setSubmissionStatus('idle');
+                  setStatusMessage('');
+                  setErrorType('general');
                 }}
               />
             </div>

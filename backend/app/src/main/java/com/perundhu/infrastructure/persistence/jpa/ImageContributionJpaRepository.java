@@ -21,4 +21,7 @@ public interface ImageContributionJpaRepository extends JpaRepository<ImageContr
     long countByStatus(String status);
 
     Optional<ImageContributionJpaEntity> findByImageUrl(String imageUrl);
+
+    // Fallback: match records saved with different base URLs by URL suffix
+    Optional<ImageContributionJpaEntity> findByImageUrlEndingWith(String suffix);
 }

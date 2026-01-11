@@ -92,6 +92,22 @@ public class ImageController {
             .body(resource);
       }
 
+      // Fallback: try with URL suffix (records saved with different base URLs)
+      if (contribution.isEmpty()) {
+        Optional<ImageContribution> fallback = imageContributionOutputPort.findByImageUrl(imageUrl);
+        if (fallback.isPresent() && fallback.get().getImageData() != null) {
+          byte[] imageData = fallback.get().getImageData();
+          String contentType = Optional.ofNullable(fallback.get().getImageContentType()).orElse("image/jpeg");
+          log.debug("Serving image from database via suffix fallback: {} bytes", imageData.length);
+          ByteArrayResource resource = new ByteArrayResource(imageData);
+          return ResponseEntity.ok()
+              .contentType(MediaType.parseMediaType(contentType))
+              .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
+              .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(imageData.length))
+              .body(resource);
+        }
+      }
+
       log.warn("Image not found in filesystem or database: {}", imageUrl);
       return ResponseEntity.notFound().build();
 

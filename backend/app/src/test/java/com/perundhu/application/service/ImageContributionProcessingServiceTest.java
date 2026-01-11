@@ -193,7 +193,7 @@ class ImageContributionProcessingServiceTest {
     }
 
     @Test
-    @DisplayName("Should create routes with auto-approval when specified")
+    @DisplayName("Should create routes with PENDING status (auto-approval disabled)")
     void shouldCreateRoutesWithAutoApproval() {
       // Given
       ImageContribution contribution = createTestContribution();
@@ -214,7 +214,8 @@ class ImageContributionProcessingServiceTest {
       when(routeContributionOutputPort.save(any(RouteContribution.class)))
           .thenAnswer(invocation -> {
             RouteContribution saved = invocation.getArgument(0);
-            assertThat(saved.getStatus()).isEqualTo("APPROVED");
+            // Changed: All routes now require admin approval, status is PENDING
+            assertThat(saved.getStatus()).isEqualTo("PENDING");
             return saved;
           });
 

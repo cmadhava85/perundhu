@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -71,6 +70,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     String userAgent = request.getHeader("User-Agent");
     String requestUri = request.getRequestURI();
     String origin = request.getHeader("Origin");
+    String referer = request.getHeader("Referer");
     String method = request.getMethod();
 
     // Skip filtering for admin auth endpoints (they have their own security)
@@ -81,7 +81,9 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
     // If this is a read-only API call from an allowed frontend origin,
     // skip IP-based blocking to avoid false positives behind Cloud Run proxies.
-    if (isReadOnlyMethod(method) && isApiPath(requestUri) && isAllowedOrigin(origin)) {
+    // Many browsers omit Origin header for simple GET image requests, but include Referer.
+    // Accept either Origin or Referer for allowed frontend domains to avoid false 403 blocks.
+    if (isReadOnlyMethod(method) && isApiPath(requestUri) && (isAllowedOrigin(origin) || isAllowedReferer(referer))) {
       filterChain.doFilter(request, response);
       return;
     }
@@ -123,6 +125,24 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
     for (String allowed : allowedOrigins) {
       if (origin.equals(allowed) || matchesPattern(origin, allowed)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean isAllowedReferer(String referer) {
+    if (referer == null || referer.isBlank()) {
+      return false;
+    }
+    List<String> allowedOrigins = Arrays.stream(allowedOriginsConfig.split(","))
+        .map(String::trim)
+        .filter(s -> !s.isEmpty())
+        .toList();
+
+    for (String allowed : allowedOrigins) {
+      // Referer will include path; ensure it starts with allowed origin
+      if (referer.startsWith(allowed) || matchesPattern(referer, allowed)) {
         return true;
       }
     }

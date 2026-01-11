@@ -8,6 +8,7 @@ import './ImageContributionUpload.css';
 interface ImageContributionUploadProps {
   onSuccess?: (contributionId: string) => void;
   onError?: (error: string) => void;
+  onClearStatus?: () => void;
 }
 
 // Type alias for upload error types
@@ -35,7 +36,7 @@ interface FilterOptions {
 type SortOption = 'name' | 'size' | 'date' | 'status';
 type _ViewMode = 'grid' | 'list' | 'compact';
 
-const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuccess, onError }) => {
+const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuccess, onError, onClearStatus }) => {
   const { t } = useTranslation();
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [description, setDescription] = useState('');
@@ -45,7 +46,9 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
   const [isDragActive, setIsDragActive] = useState(false);
   const [honeypot, setHoneypot] = useState(''); // Bot detection field
   const [showBottomSuccess, setShowBottomSuccess] = useState(false);
-  const [bottomSuccessContributionId, setBottomSuccessContributionId] = useState('');
+  const [_bottomSuccessContributionId, setBottomSuccessContributionId] = useState('');
+  const [bottomSuccessMessage, setBottomSuccessMessage] = useState<string>('');
+  const [_isBatchUploading, setIsBatchUploading] = useState(false);
   
   // Use stable counter for image IDs to prevent re-renders
   const imageIdCounterRef = useRef(1);
@@ -215,9 +218,11 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
       }
       return prev.filter(img => img.id !== id);
     });
+    // Clear parent status/error when removing problematic image
+    onClearStatus?.();
   };
 
-  const submitImage = async (imageId: string) => {
+  const submitImage = async (imageId: string, suppressSuccess?: boolean) => {
     const image = uploadedImages.find(img => img.id === imageId);
     if (!image?.file) return;
 
@@ -261,11 +266,13 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
               : img
           )
         );
-
-        // Show bottom success message
-        setBottomSuccessContributionId(response.contributionId);
-        setShowBottomSuccess(true);
-        setTimeout(() => setShowBottomSuccess(false), 6000);
+        // Show bottom success message for single uploads unless suppressed (batch mode)
+        if (!suppressSuccess) {
+          setBottomSuccessContributionId(response.contributionId);
+          setBottomSuccessMessage(t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!'));
+          setShowBottomSuccess(true);
+          setTimeout(() => setShowBottomSuccess(false), 6000);
+        }
 
         // Start polling for processing status - onSuccess will be called when processing completes
         pollProcessingStatus(response.contributionId, imageId, onSuccess);
@@ -417,24 +424,30 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
 
   const submitAllImages = async () => {
     setIsSubmitting(true);
+    setIsBatchUploading(true);
     
     try {
       const pendingImages = uploadedImages.filter(img => !img.contributionId && !img.processing);
-      const _totalToUpload = pendingImages.length;
+      const totalToUpload = pendingImages.length;
       let successCount = 0;
 
       for (const image of pendingImages) {
-        await submitImage(image.id);
+        await submitImage(image.id, true); // suppress per-image success messages
         successCount++;
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 300));
       }
 
-      // Show single batch completion message
+      // Show a single consolidated success message
       if (successCount > 0) {
-        // The message will show automatically when the last image's submitImage completes
-        // The bottom success message is already displayed by the last submitImage call
+        setBottomSuccessContributionId('');
+        setBottomSuccessMessage(
+          t('contribution.imageUpload.batchUploadSuccess', 'Images uploaded successfully!') + ` (${successCount}/${totalToUpload})`
+        );
+        setShowBottomSuccess(true);
+        setTimeout(() => setShowBottomSuccess(false), 6000);
       }
     } finally {
+      setIsBatchUploading(false);
       setIsSubmitting(false);
     }
   };
@@ -484,6 +497,8 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         return t('contribution.imageUpload.statusProcessed', '✓ Successfully processed');
       case 'PROCESSING':
         return t('contribution.imageUpload.statusProcessing', '✓ Uploaded - Processing...');
+      case 'PENDING':
+        return t('contribution.imageUpload.statusQueued', 'Queued for processing');
       case 'MANUAL_REVIEW_NEEDED':
         return t('contribution.imageUpload.statusReview', 'Under review');
       case 'LOW_CONFIDENCE_OCR':
@@ -945,7 +960,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           <CheckCircle2 style={{ width: '2rem', height: '2rem', flexShrink: 0 }} />
           <div>
             <div style={{ fontWeight: '700', fontSize: '1rem', marginBottom: '0.25rem' }}>
-              ✓ {t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
+              ✓ {bottomSuccessMessage || t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
             </div>
             <div style={{ fontSize: '0.875rem', opacity: 0.95 }}>
               {t('contribution.imageUpload.processingMessage', 'Your image is being processed')}

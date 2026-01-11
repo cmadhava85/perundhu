@@ -79,8 +79,22 @@ public class ImageContributionPersistenceAdapter implements ImageContributionOut
 
     @Override
     public Optional<ImageContribution> findByImageUrl(String imageUrl) {
-        return repository.findByImageUrl(imageUrl)
+        // Try exact match first
+        Optional<ImageContribution> exact = repository.findByImageUrl(imageUrl)
                 .map(mapper::toDomain);
+        if (exact.isPresent()) {
+            return exact;
+        }
+
+        // Fallback: search by URL suffix to handle base URL changes (dev/preprod/prod)
+        int idx = imageUrl.indexOf("/api/images/");
+        if (idx != -1) {
+            String suffix = imageUrl.substring(idx);
+            return repository.findByImageUrlEndingWith(suffix)
+                    .map(mapper::toDomain);
+        }
+
+        return Optional.empty();
     }
 
     @Override

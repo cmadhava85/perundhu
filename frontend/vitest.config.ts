@@ -11,16 +11,16 @@ export default defineConfig({
     include: ['**/__tests__/**/*.{test,spec}.{ts,tsx}', '**/*.{test,spec}.{ts,tsx}'],
     exclude: ['node_modules', 'build', 'dist', '**/e2e/**', 'tests/e2e/**'],
     // Performance optimizations
-    isolate: true,
+    isolate: false,
     // Reduce test timeout for faster feedback
     testTimeout: 10000,
     hookTimeout: 10000,
-    // Pool options for better performance - use forks for faster execution
-    pool: 'forks',
+    // Pool options for better performance - use threads with single thread to save memory
+    pool: 'threads',
     poolOptions: {
-      forks: {
-        singleFork: false,
-        isolate: true
+      threads: {
+        singleThread: true,
+        isolate: false
       }
     },
     // Silent unhandled worker pool errors that don't affect test results

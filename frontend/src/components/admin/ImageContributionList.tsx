@@ -32,7 +32,7 @@ const ImageContributionList: React.FC = () => {
   const [loadingTime, setLoadingTime] = useState<number>(0);
   
   // Lazy loading state for images
-  const [loadedImageIds, setLoadedImageIds] = useState<Set<string>>(new Set());
+  const [_loadedImageIds, setLoadedImageIds] = useState<Set<string>>(new Set());
 
   const fetchContributions = useCallback(async (page: number = 0) => {
     setLoading(true);

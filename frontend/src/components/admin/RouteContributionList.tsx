@@ -165,8 +165,6 @@ const RouteContributionList: React.FC = () => {
         return 'status-rejected';
       case 'integration_failed':
         return 'status-integration-failed';
-      case 'pending':
-        return 'status-pending';
       case 'integrated':
         return 'status-integrated';
       default:

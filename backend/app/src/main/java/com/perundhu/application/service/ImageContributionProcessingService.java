@@ -227,7 +227,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         try {
             List<RouteContribution> routes = createRouteContributionsFromGeminiData(contribution, extractedData);
 
-            if (!routes.isEmpty()) {
+                if (!routes.isEmpty()) {
                 List<RouteContribution> savedRoutes = new ArrayList<>();
                 List<String> createdRouteIds = new ArrayList<>();
                 for (RouteContribution route : routes) {
@@ -235,31 +235,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     savedRoutes.add(savedRoute);
                     createdRouteIds.add(savedRoute.getId());
                 }
-
-                // Immediately integrate approved routes into the bus database
-                // This avoids waiting for the hourly scheduled job
-                try {
-                    var integrationResult = contributionProcessingService
-                            .integrateApprovedContributionsBatch(savedRoutes);
-                    logger.info("Immediate integration completed: {} integrated, {} skipped, {} failed",
-                            integrationResult.integratedCount(), integrationResult.skippedCount(),
-                            integrationResult.failedCount());
-
-                    contribution.setStatus("INTEGRATED");
-                    contribution.setValidationMessage(
-                            String.format(
-                                    "[Gemini AI] Extracted and integrated %d route(s). %d skipped (duplicates/invalid). Route IDs: %s",
-                                    integrationResult.integratedCount(), integrationResult.skippedCount(),
-                                    String.join(", ", createdRouteIds)));
-                } catch (Exception integrationError) {
-                    logger.warn("Immediate integration failed, routes will be integrated by scheduled job: {}",
-                            integrationError.getMessage());
-                    contribution.setStatus("PROCESSED");
-                    contribution.setValidationMessage(
-                            String.format(
-                                    "[Gemini AI] Successfully extracted %d route(s). Pending integration. Route IDs: %s",
-                                    routes.size(), String.join(", ", createdRouteIds)));
-                }
+                // Do NOT auto-integrate. Require admin approval.
+                contribution.setStatus("MANUAL_REVIEW_NEEDED");
+                contribution.setValidationMessage(
+                    String.format(
+                        "[Gemini AI] Extracted %d route(s). Awaiting admin approval. Route IDs: %s",
+                        savedRoutes.size(), String.join(", ", createdRouteIds)));
 
                 contribution.setProcessedDate(LocalDateTime.now());
 
@@ -505,7 +486,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
                     String viaInfo = !viaStops.isEmpty() ? "Via: " + String.join(", ", viaStops) : null;
                     
-                    RouteContribution route = RouteContribution.builder()
+                        RouteContribution route = RouteContribution.builder()
                             .id(UUID.randomUUID().toString())
                             .userId(contribution.getUserId())
                             .busNumber(routeNumber != null ? routeNumber : "UNKNOWN")
@@ -515,13 +496,13 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             .arrivalTime(estimatedArrival)
                             .scheduleInfo(viaInfo)
                             .submissionDate(LocalDateTime.now())
-                            .status("APPROVED")
+                            .status("PENDING")
                             .sourceImageId(contribution.getId())
                             .routeGroupId(routeGroupId)
                             .stops(!stops.isEmpty() ? stops : null)
-                            .additionalNotes(
-                                    String.format("[Gemini AI] Auto-approved schedule %d of %d from image: %s",
-                                            scheduleIndex, totalSchedules, contribution.getId()))
+                                .additionalNotes(
+                                    String.format("[Gemini AI] Extracted schedule %d of %d from image: %s. Pending admin approval",
+                                        scheduleIndex, totalSchedules, contribution.getId()))
                             .build();
 
                     routes.add(route);
@@ -590,7 +571,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
             String viaInfo = !viaStops.isEmpty() ? "Via: " + String.join(", ", viaStops) : null;
 
-            return RouteContribution.builder()
+                return RouteContribution.builder()
                     .id(UUID.randomUUID().toString())
                     .userId(contribution.getUserId())
                     .busNumber(routeNumber != null ? routeNumber : "UNKNOWN")
@@ -599,11 +580,11 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     .departureTime(primaryDepartureTime)
                     .scheduleInfo(viaInfo)
                     .submissionDate(LocalDateTime.now())
-                    .status("APPROVED")
+                    .status("PENDING")
                     .sourceImageId(contribution.getId())
                     .routeGroupId(routeGroupId)
-                    .additionalNotes(
-                            "[Gemini AI] Auto-approved from high-confidence image extraction: " + contribution.getId())
+                        .additionalNotes(
+                            "[Gemini AI] Extracted from high-confidence image processing: " + contribution.getId() + ". Pending admin approval")
                     .build();
 
         } catch (Exception e) {
@@ -1231,11 +1212,11 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .departureTime(departureTime) // Set the specific departure time
                 .arrivalTime(estimatedArrival) // Set the estimated arrival time
                 .submissionDate(LocalDateTime.now())
-                .status(status)
+            .status("PENDING")
                 .sourceImageId(imageContribution.getId()) // Track source image
                 .routeGroupId(routeGroupId) // Group related schedules
                 .additionalNotes(
-                        "Auto-created from image contribution: " + imageContribution.getId() + " (arrival estimated)");
+                    "Auto-created from image contribution: " + imageContribution.getId() + " (arrival estimated). Pending admin approval");
 
         // Add via information
         if (via != null && !via.isBlank()) {
@@ -1314,8 +1295,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .fromLocationName(fromLocation)
                 .toLocationName(toLocation)
                 .submissionDate(LocalDateTime.now())
-                .status(status)
-                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId());
+            .status("PENDING")
+                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId() + ". Pending admin approval");
 
         // Add operator information if available
         if (operatorName != null && !operatorName.isBlank()) {
