@@ -29,6 +29,9 @@ jobs:
   manage-services:
     name: Manage GCP Services
     runs-on: ubuntu-latest
+    concurrency:
+      group: gcp-cost-optimization
+      cancel-in-progress: false
     
     permissions:
       contents: read
@@ -37,18 +40,31 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: ${{ env.GCP_PROJECT_ID }}
-          use_auth_token: true
-      
+
+      - name: Preflight checks
+        run: |
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "## Preflight Checks" >> $GITHUB_STEP_SUMMARY
+          MISSING=0
+          if [ -z "${{ secrets.GCPSECRET }}" ]; then
+            echo "❌ Missing required secret: GCPSECRET" >> $GITHUB_STEP_SUMMARY
+            MISSING=1
+          fi
+          if [ "$MISSING" -eq 1 ]; then
+            echo "Required secrets missing. Failing early."
+            exit 1
+          fi
+          echo "✅ Required secrets present" >> $GITHUB_STEP_SUMMARY
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          credentials_json: ${{ secrets.GCPSECRET }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
       
       - name: Determine action based on schedule
         id: action
