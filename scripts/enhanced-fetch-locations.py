@@ -29,7 +29,7 @@ class EnhancedOverpassFetcher:
     
     # Known city-specific bus stand variations
     CITY_BUS_STANDS = {
-        'Madurai': ['Periyar', 'Mattuthavani', 'Central'],
+        'Madurai': ['Periyar', 'Mattuthavani', 'Central', 'Arappalayam'],
         'Chennai': ['Central', 'Fort', 'Broadway'],
         'Coimbatore': ['Central', 'Gandhipuram'],
         'Tiruppur': ['Central', 'Main'],
@@ -200,23 +200,66 @@ class EnhancedOverpassFetcher:
                 print(f"   ... and {len(removed)-10} more")
     
     def _format_location_name(self, loc: Dict) -> str:
-        """Format location name appropriately"""
-        name = loc['name'].strip()
-        loc_type = loc.get('type', '').lower()
-        
-        # Already properly formatted
-        if ' - ' in name or 'Bus Stand' in name or 'Bus Stop' in name or 'Terminus' in name:
+        """Format location name to "City - Stand" for bus stands/stations.
+
+        Handles common OSM patterns like:
+        - "Periyar Bus Stand , Madurai" -> "Madurai - Periyar"
+        - "M.G.R Mattuthavani Bus Stand , Madurai" -> "Madurai - Mattuthavani"
+        - "Chennai Koyambedu Bus Stand" -> "Chennai - Koyambedu"
+        - "Madurai New Bus Stand" -> "Madurai - New Bus Stand"
+        """
+        name = (loc.get('name') or '').strip()
+        loc_type = (loc.get('type') or '').lower()
+
+        if not name:
             return name
-        
-        # Bus infrastructure: already has keywords
-        if any(keyword in name.lower() for keyword in self.BUS_STAND_KEYWORDS):
+
+        lower = name.lower()
+
+        # If already in desired format, keep
+        if ' - ' in name:
             return name
-        
-        # Bus stop/station without keywords
-        if loc_type in ['bus_stop', 'bus_station']:
-            if 'Bus' not in name:
-                return f"{name} Bus Stop"
-        
+
+        # Helper: remove trailing bus stand/station suffix
+        def clean_stand(part: str) -> str:
+            part = part.strip()
+            # Remove common prefixes like M.G.R
+            part = re.sub(r"^(m\.g\.r\s+|cmbt\s+)", "", part, flags=re.IGNORECASE)
+            # Remove Bus Stand/Station suffix
+            part = re.sub(r"\s*bus\s+(stand|station)$", "", part, flags=re.IGNORECASE)
+            # Title-case but preserve all caps abbreviations
+            return part.strip()
+
+        # Pattern 1: "{Stand} , {City}" possibly with "Bus Stand/Station"
+        m = re.match(r"^(.+?)\s*,\s*(.+)$", name)
+        if m:
+            stand = clean_stand(m.group(1))
+            city = m.group(2).strip()
+            if stand and city:
+                # If stand is generic words like 'bus stand', keep original
+                if re.search(r"(?i)bus\s+(stand|station)", m.group(1)) or loc_type in ['bus_stop','bus_station']:
+                    return f"{city} - {stand}"
+                # Otherwise keep "City - Area" pattern
+                return f"{city} - {stand}"
+
+        # Pattern 2: "{City} {Old|New|Central|Main} Bus Stand"
+        m2 = re.match(r"^(.+?)\s+(Old|New|Central|Main)\s+Bus\s+(Stand|Station)$", name, flags=re.IGNORECASE)
+        if m2:
+            city = m2.group(1).strip()
+            modifier = m2.group(2).strip()
+            return f"{city} - {modifier} Bus Stand"
+
+        # Pattern 3: "{City} {Area} Bus Stand"
+        m3 = re.match(r"^(.+?)\s+(.+?)\s+Bus\s+(Stand|Station)$", name, flags=re.IGNORECASE)
+        if m3:
+            city = m3.group(1).strip()
+            area = clean_stand(m3.group(2))
+            return f"{city} - {area}"
+
+        # If it's a bus stop/station without keywords, add Bus Stop suffix
+        if loc_type in ['bus_stop', 'bus_station'] and not any(k in lower for k in self.BUS_STAND_KEYWORDS):
+            return f"{name} Bus Stop"
+
         return name
     
     def fetch_all(self):
@@ -312,6 +355,43 @@ out center;
             if loc:
                 self.locations.append(loc)
                 self.by_type['neighborhood'].append(loc)
+        
+        # Query 6: Suburbs and Suburban Areas
+        print("\n📍 Fetching Suburbs & Suburban Areas...\n")
+        suburbs_query = f"""[out:json];
+(
+  node["place"="suburb"]({bbox});
+  node["place"="suburban"]({bbox});
+  way["place"="suburb"]({bbox});
+  way["place"="suburban"]({bbox});
+);
+out center;
+"""
+        suburb_elements = self._fetch_query("Suburbs", suburbs_query)
+        for elem in suburb_elements or []:
+            loc = self._parse_element(elem, 'suburb')
+            if loc:
+                loc['name'] = self._format_location_name(loc)
+                self.locations.append(loc)
+                self.by_type['suburb'].append(loc)
+        
+        # Query 7: Hamlets and Residential Areas
+        print("\n📍 Fetching Hamlets & Residential Areas...\n")
+        hamlets_query = f"""[out:json];
+(
+  node["place"="hamlet"]({bbox});
+  node["place"="residential"]({bbox});
+  way["place"="hamlet"]({bbox});
+  way["place"="residential"]({bbox});
+);
+out center;
+"""
+        hamlet_elements = self._fetch_query("Hamlets", hamlets_query)
+        for elem in hamlet_elements or []:
+            loc = self._parse_element(elem, 'hamlet')
+            if loc:
+                self.locations.append(loc)
+                self.by_type['hamlet'].append(loc)
         
         # Deduplicate
         self._deduplicate_locations()
@@ -418,8 +498,10 @@ ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitud
 -- - No duplicate locations
 -- - Proper name formatting for bus stands
 -- - All cities, towns, villages in Tamil Nadu
--- - All bus stops and bus stations
--- - All neighborhoods and localities
+-- - All suburbs, suburban areas, and residential zones
+-- - All hamlets and localities
+-- - All bus stops and bus stations (including nearby city areas)
+-- - All neighborhoods
 -- - Exact coordinates verified from OSM
 -- - Legal to store (ODbL license)
 --

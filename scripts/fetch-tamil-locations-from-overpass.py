@@ -20,14 +20,68 @@ TAMIL_NADU_BBOX = (8.0, 76.0, 13.5, 80.5)
 # Timeout for API calls
 TIMEOUT = 30
 
+def format_location_name(name: str) -> str:
+    """Format OSM names to "City - Stand" for bus stands/stations.
+
+    Examples:
+    - "Periyar Bus Stand , Madurai" -> "Madurai - Periyar"
+    - "M.G.R Mattuthavani Bus Stand , Madurai" -> "Madurai - Mattuthavani"
+    - "Chennai Koyambedu Bus Stand" -> "Chennai - Koyambedu"
+    - "Madurai New Bus Stand" -> "Madurai - New Bus Stand"
+    """
+    if not name:
+        return name
+
+    name = name.strip()
+
+    import re
+
+    # Already formatted
+    if ' - ' in name:
+        return name
+
+    def clean_stand(part: str) -> str:
+        part = part.strip()
+        part = re.sub(r"^(m\.g\.r\s+|cmbt\s+)", "", part, flags=re.IGNORECASE)
+        part = re.sub(r"\s*bus\s+(stand|station)$", "", part, flags=re.IGNORECASE)
+        return part.strip()
+
+    # Pattern: "{Stand} , {City}" possibly with Bus Stand/Station
+    m = re.match(r"^(.+?)\s*,\s*(.+)$", name)
+    if m:
+        stand = clean_stand(m.group(1))
+        city = m.group(2).strip()
+        if stand and city:
+            return f"{city} - {stand}"
+
+    # Pattern: "{City} {Old|New|Central|Main} Bus Stand"
+    m2 = re.match(r"^(.+?)\s+(Old|New|Central|Main)\s+Bus\s+(Stand|Station)$", name, flags=re.IGNORECASE)
+    if m2:
+        city = m2.group(1).strip()
+        modifier = m2.group(2).strip()
+        return f"{city} - {modifier} Bus Stand"
+
+    # Pattern: "{City} {Area} Bus Stand"
+    m3 = re.match(r"^(.+?)\s+(.+?)\s+Bus\s+(Stand|Station)$", name, flags=re.IGNORECASE)
+    if m3:
+        city = m3.group(1).strip()
+        area = clean_stand(m3.group(2))
+        return f"{city} - {area}"
+
+    return name
+
 def build_overpass_query(bbox: Tuple[float, float, float, float]) -> str:
-    """Build Overpass QL query to fetch all Tamil Nadu locations with Tamil names"""
+    """Build Overpass QL query to fetch all Tamil Nadu locations with Tamil names.
+    
+    Includes: cities, towns, villages, hamlets, suburbs, suburban areas, residential,
+    neighbourhoods, and localities to capture all populated areas.
+    """
     south, west, north, east = bbox
     return f"""[out:json][timeout:120];
 (
-  node["name:ta"]["place"~"city|town|village|hamlet|suburb|neighbourhood|locality"]({south},{west},{north},{east});
-  way["name:ta"]["place"~"city|town|village|hamlet|suburb|neighbourhood|locality"]({south},{west},{north},{east});
-  relation["name:ta"]["place"~"city|town|village|hamlet|suburb|neighbourhood|locality"]({south},{west},{north},{east});
+  node["name:ta"]["place"~"city|town|village|hamlet|suburb|suburban|residential|neighbourhood|locality"]({south},{west},{north},{east});
+  way["name:ta"]["place"~"city|town|village|hamlet|suburb|suburban|residential|neighbourhood|locality"]({south},{west},{north},{east});
+  relation["name:ta"]["place"~"city|town|village|hamlet|suburb|suburban|residential|neighbourhood|locality"]({south},{west},{north},{east});
 );
 out geom center;
 """
@@ -85,8 +139,9 @@ def extract_tamil_locations(overpass_data: Dict) -> List[Dict]:
                 lat = element["center"].get("lat")
                 lon = element["center"].get("lon")
         
+        formatted_english = format_location_name(english_name or tamil_name)
         locations.append({
-            "english_name": english_name or tamil_name,
+            "english_name": formatted_english,
             "tamil_name": tamil_name,
             "latitude": lat,
             "longitude": lon,
