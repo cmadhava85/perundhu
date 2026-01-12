@@ -295,7 +295,7 @@ export const RouteContribution: React.FC = () => {
         <ContributionMethodSelector 
           selectedMethod={contributionMethod}
           onMethodChange={setContributionMethod}
-          disabledMethods={disabledMethods as any}
+          disabledMethods={Array.from(disabledMethods)}
         />
         
         <div className="form-container">

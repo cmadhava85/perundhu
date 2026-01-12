@@ -314,7 +314,7 @@ test.describe('User Contributions', () => {
         // Expected: User-friendly error message
         // Validate: App doesn't crash, clear next steps shown
         const errorMessage = page.locator('text=/permission.*denied|microphone.*blocked|allow.*microphone/i');
-        const hasError = await errorMessage.isVisible({ timeout: 3000 }).catch(() => false);
+        await errorMessage.isVisible({ timeout: 3000 }).catch(() => false);
         
         // App should still be functional
         expect(page.url() !== 'about:blank').toBeTruthy();

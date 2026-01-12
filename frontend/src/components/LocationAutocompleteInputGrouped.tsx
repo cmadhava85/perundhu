@@ -39,7 +39,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
   const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Get flat list of all items for keyboard navigation
-  const getAllItems = useCallback((): (LocationSuggestion & { groupIndex: number; type: 'city' | 'bus_stand' | 'neighborhood' })[] => {
+  const _getAllItems = useCallback((): (LocationSuggestion & { groupIndex: number; type: 'city' | 'bus_stand' | 'neighborhood' })[] => {
     const items: (LocationSuggestion & { groupIndex: number; type: 'city' | 'bus_stand' | 'neighborhood' })[] = [];
     
     suggestionGroups.forEach((group, groupIndex) => {
