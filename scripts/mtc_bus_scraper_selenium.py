@@ -82,7 +82,8 @@ class MTCBusScraperSelenium:
         chrome_options.add_experimental_option('useAutomationExtension', False)
         
         self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.set_page_load_timeout(30)
+        self.driver.set_page_load_timeout(120)  # 2 minutes for very slow MTC site
+        self.driver.implicitly_wait(10)  # Wait up to 10s for elements to appear
         logger.info("WebDriver ready")
     
     def _close_driver(self):
@@ -119,10 +120,10 @@ class MTCBusScraperSelenium:
         
         try:
             self.driver.get(self.URL)
-            time.sleep(2)  # Let page load
+            time.sleep(3)  # Let page load completely
             
-            # Find route select element
-            route_select = Select(self._wait_for_element(By.ID, 'selroute'))
+            # Wait longer for route select element
+            route_select = Select(self._wait_for_element(By.ID, 'selroute', timeout=30))
             
             routes = []
             for option in route_select.options:
