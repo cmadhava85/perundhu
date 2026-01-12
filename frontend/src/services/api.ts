@@ -412,6 +412,11 @@ export const searchBuses = async (
   languageCode: string = 'en'
 ): Promise<Bus[]> => {
   try {
+    console.log('🔍 API searchBuses called with:');
+    console.log('  From:', fromLocation.name, '(ID:', fromLocation.id, ')');
+    console.log('  To:', toLocation.name, '(ID:', toLocation.id, ')');
+    console.log('  Include Continuing:', includeContinuing);
+    
     // Check if locations are from OpenStreetMap (negative IDs)
     const isFromOSM = fromLocation.id < 0;
     const isToOSM = toLocation.id < 0;

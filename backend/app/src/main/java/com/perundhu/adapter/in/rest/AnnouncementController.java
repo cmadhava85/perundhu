@@ -45,9 +45,9 @@ public class AnnouncementController {
             @PathVariable String audience) {
         log.info("Fetching announcements for audience: {}", audience);
         try {
-            AnnouncementJpaEntity.TargetAudience targetAudience = AnnouncementJpaEntity.TargetAudience
-                    .valueOf(audience.toUpperCase());
-            List<AnnouncementJpaEntity> entities = announcementService.getAnnouncementsByAudience(targetAudience);
+            // Parse audience string and delegate to service
+            // Service will handle the JPA entity enum conversion
+            List<AnnouncementJpaEntity> entities = announcementService.getAnnouncementsByAudienceString(audience);
             return ResponseEntity.ok(announcementMapper.toDTOList(entities));
         } catch (IllegalArgumentException e) {
             log.error("Invalid audience: {}", audience);

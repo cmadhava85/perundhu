@@ -1,0 +1,362 @@
+package com.perundhu.infrastructure.adapter.routing;
+
+import com.graphhopper.GraphHopper;
+import com.graphhopper.ResponsePath;
+import com.graphhopper.util.shapes.GHPoint;
+import com.perundhu.domain.port.RoutingValidationPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+/**
+ * GraphHopper-based implementation of RoutingValidationPort.
+ * Uses GraphHopper routing engine to validate route feasibility against:
+ * - Realistic travel times for given vehicle type
+ * - Geographic sequencing of stops
+ * - Achievable speed profiles
+ *
+ * Configuration note: Requires GraphHopper graph data (OSM) loaded at startup.
+ * For Tamil Nadu: ~250 MB graph file
+ */
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class GraphHopperRoutingAdapter implements RoutingValidationPort {
+    
+    private final GraphHopper graphHopper;
+    
+    // Speed profiles for different vehicle types (km/h)
+    private static final int BUS_MAX_SPEED = 100;
+    private static final int VAN_MAX_SPEED = 120;
+    private static final int DEFAULT_MAX_SPEED = 100;
+    
+    // Confidence thresholds
+    private static final int HIGH_CONFIDENCE = 85;
+    private static final int MEDIUM_CONFIDENCE = 65;
+    
+    // Duration validation tolerances
+    private static final double DURATION_TOLERANCE = 1.25; // 25% over expected
+    
+    @Override
+    public RouteValidationResult validateJourneyDuration(
+            double fromLat,
+            double fromLng,
+            double toLat,
+            double toLng,
+            LocalDateTime departureTime,
+            LocalDateTime arrivalTime,
+            String vehicleType
+    ) {
+        try {
+            // Get expected duration from routing engine
+            ResponsePath path = getRoutingPath(fromLat, fromLng, toLat, toLng, vehicleType);
+            
+            if (path == null) {
+                return new RouteValidationResult(
+                        false,
+                        0,
+                        ValidationType.JOURNEY_DURATION,
+                        "Unable to calculate route distance/time",
+                        "Route calculation failed",
+                        "N/A"
+                );
+            }
+            
+            // Calculate expected time
+            long expectedSeconds = path.getTime() / 1000; // GraphHopper returns milliseconds
+            long actualSeconds = ChronoUnit.SECONDS.between(departureTime, arrivalTime);
+            
+            // Allow 25% variance for traffic, stops, rest breaks
+            double tolerance = expectedSeconds * DURATION_TOLERANCE;
+            boolean isValid = actualSeconds <= tolerance;
+            
+            // Calculate confidence based on deviation
+            double deviation = (double) actualSeconds / expectedSeconds;
+            int confidence = calculateConfidence(deviation);
+            
+            String expectedRange = formatDuration(expectedSeconds);
+            String actualRange = formatDuration(actualSeconds);
+            String issue = isValid ? null : 
+                    String.format("Journey time %.1f%% longer than realistic for this route (expected %s, claimed %s)",
+                            (deviation - 1) * 100, expectedRange, actualRange);
+            
+            log.info("Journey duration validation: {} -> {} | Expected: {} | Actual: {} | Valid: {}",
+                    new GHPoint(fromLat, fromLng), new GHPoint(toLat, toLng),
+                    expectedRange, actualRange, isValid);
+            
+            return new RouteValidationResult(
+                    isValid,
+                    confidence,
+                    ValidationType.JOURNEY_DURATION,
+                    issue,
+                    expectedRange,
+                    actualRange
+            );
+            
+        } catch (Exception e) {
+            log.error("Error validating journey duration", e);
+            return new RouteValidationResult(
+                    false,
+                    0,
+                    ValidationType.JOURNEY_DURATION,
+                    "Routing engine error: " + e.getMessage(),
+                    "Unknown",
+                    "Unknown"
+            );
+        }
+    }
+    
+    @Override
+    public RouteValidationResult validateStopSequence(
+            double startLat,
+            double startLng,
+            List<Stop> stops,
+            double endLat,
+            double endLng
+    ) {
+        try {
+            if (stops == null || stops.isEmpty()) {
+                return new RouteValidationResult(
+                        true,
+                        100,
+                        ValidationType.STOP_SEQUENCE,
+                        null,
+                        "No intermediate stops",
+                        "No intermediate stops"
+                );
+            }
+            
+            // Validate each stop is reasonably close to the main route
+            double cumulativeDeviation = 0;
+            int deviatingStops = 0;
+            
+            for (int i = 0; i < stops.size(); i++) {
+                Stop current = stops.get(i);
+                Stop next = i < stops.size() - 1 ? stops.get(i + 1) : null;
+                
+                double prevLat = i == 0 ? startLat : stops.get(i - 1).latitude();
+                double prevLng = i == 0 ? startLng : stops.get(i - 1).longitude();
+                
+                double nextLat = next != null ? next.latitude() : endLat;
+                double nextLng = next != null ? next.longitude() : endLng;
+                
+                // Check if stop is reasonably on the path between prev and next
+                double directDistance = haversineDistance(prevLat, prevLng, nextLat, nextLng);
+                double viaStopDistance = haversineDistance(prevLat, prevLng, current.latitude(), current.longitude()) +
+                        haversineDistance(current.latitude(), current.longitude(), nextLat, nextLng);
+                
+                // If via-stop distance is > 30% longer than direct, it's significantly off route
+                double deviation = (viaStopDistance - directDistance) / directDistance;
+                if (deviation > 0.30) {
+                    deviatingStops++;
+                    cumulativeDeviation += deviation;
+                }
+            }
+            
+            boolean isValid = deviatingStops == 0;
+            int confidence = isValid ? 95 : Math.max(10, 100 - (deviatingStops * 20));
+            
+            String issue = deviatingStops == 0 ? null :
+                    String.format("%d out of %d stops appear significantly off-route",
+                            deviatingStops, stops.size());
+            
+            log.info("Stop sequence validation: {} stops, {} deviating | Valid: {}",
+                    stops.size(), deviatingStops, isValid);
+            
+            return new RouteValidationResult(
+                    isValid,
+                    confidence,
+                    ValidationType.STOP_SEQUENCE,
+                    issue,
+                    "Stops on main route path",
+                    deviatingStops + " off-route"
+            );
+            
+        } catch (Exception e) {
+            log.error("Error validating stop sequence", e);
+            return new RouteValidationResult(
+                    false,
+                    0,
+                    ValidationType.STOP_SEQUENCE,
+                    "Sequence validation error: " + e.getMessage(),
+                    "Unknown",
+                    "Unknown"
+            );
+        }
+    }
+    
+    @Override
+    public RouteValidationResult validateSegmentSpeeds(
+            List<RouteSegment> segments,
+            String vehicleType
+    ) {
+        try {
+            if (segments == null || segments.isEmpty()) {
+                return new RouteValidationResult(
+                        true,
+                        100,
+                        ValidationType.SEGMENT_SPEED,
+                        null,
+                        "No segments to validate",
+                        "No segments to validate"
+                );
+            }
+            
+            int maxSpeed = getMaxSpeed(vehicleType);
+            int excessiveSegments = 0;
+            double maxCalculatedSpeed = 0;
+            
+            for (RouteSegment segment : segments) {
+                if (segment.durationSeconds() <= 0) {
+                    excessiveSegments++;
+                    continue;
+                }
+                
+                // Calculate speed in km/h
+                double speedKmh = (segment.distanceMeters() / 1000.0) /
+                        (segment.durationSeconds() / 3600.0);
+                
+                if (speedKmh > maxSpeed) {
+                    excessiveSegments++;
+                    maxCalculatedSpeed = Math.max(maxCalculatedSpeed, speedKmh);
+                }
+            }
+            
+            boolean isValid = excessiveSegments == 0;
+            int confidence = isValid ? 90 : Math.max(20, 100 - (excessiveSegments * 15));
+            
+            String issue = excessiveSegments == 0 ? null :
+                    String.format("%d segments exceed realistic %s speeds (max calculated: %.0f km/h)",
+                            excessiveSegments, vehicleType, maxCalculatedSpeed);
+            
+            log.info("Segment speed validation: {} segments | {} excessive | Valid: {}",
+                    segments.size(), excessiveSegments, isValid);
+            
+            return new RouteValidationResult(
+                    isValid,
+                    confidence,
+                    ValidationType.SEGMENT_SPEED,
+                    issue,
+                    "≤ " + maxSpeed + " km/h",
+                    String.format("%.0f km/h max", maxCalculatedSpeed)
+            );
+            
+        } catch (Exception e) {
+            log.error("Error validating segment speeds", e);
+            return new RouteValidationResult(
+                    false,
+                    0,
+                    ValidationType.SEGMENT_SPEED,
+                    "Speed validation error: " + e.getMessage(),
+                    "Unknown",
+                    "Unknown"
+            );
+        }
+    }
+    
+    /**
+     * Retrieves routing path between two points for the given vehicle type.
+     */
+    private ResponsePath getRoutingPath(
+            double fromLat,
+            double fromLng,
+            double toLat,
+            double toLng,
+            String vehicleType
+    ) {
+        String profile = mapVehicleTypeToProfile(vehicleType);
+        
+        // Create request with vehicle profile
+        var request = new com.graphhopper.GHRequest(
+                new GHPoint(fromLat, fromLng),
+                new GHPoint(toLat, toLng)
+        ).setProfile(profile);
+        
+        var response = graphHopper.route(request);
+        
+        if (response.hasErrors()) {
+            log.warn("GraphHopper routing error: {}", response.getErrors());
+            return null;
+        }
+        
+        return response.getBest();
+    }
+    
+    /**
+     * Maps vehicle type to GraphHopper profile.
+     * GraphHopper profiles: car, bike, foot, motorcycle, bus, etc.
+     */
+    private String mapVehicleTypeToProfile(String vehicleType) {
+        if (vehicleType == null) return "car";
+        
+        return switch (vehicleType.toLowerCase()) {
+            case "bus" -> "bus";
+            case "van" -> "car"; // No specific van profile, use car
+            case "motorcycle" -> "motorcycle";
+            case "bike" -> "bike";
+            case "foot" -> "foot";
+            default -> "car";
+        };
+    }
+    
+    /**
+     * Gets maximum realistic speed for vehicle type (km/h).
+     */
+    private int getMaxSpeed(String vehicleType) {
+        if (vehicleType == null) return DEFAULT_MAX_SPEED;
+        
+        return switch (vehicleType.toLowerCase()) {
+            case "bus" -> BUS_MAX_SPEED;
+            case "van" -> VAN_MAX_SPEED;
+            default -> DEFAULT_MAX_SPEED;
+        };
+    }
+    
+    /**
+     * Calculates confidence score based on duration deviation.
+     * 100% = exactly as expected, decreases as deviation increases.
+     */
+    private int calculateConfidence(double deviation) {
+        if (deviation <= 1.0) return 95; // Faster than expected (stops/detours considered)
+        if (deviation <= 1.1) return HIGH_CONFIDENCE; // Up to 10% longer
+        if (deviation <= 1.25) return MEDIUM_CONFIDENCE; // Up to 25% longer
+        if (deviation <= 1.5) return 50; // 50% longer
+        if (deviation <= 2.0) return 30; // 100% longer (very suspicious)
+        return 10; // More than 2x longer
+    }
+    
+    /**
+     * Calculates haversine distance between two coordinates in kilometers.
+     */
+    private double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+        final int EARTH_RADIUS_KM = 6371;
+        
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS_KM * c;
+    }
+    
+    /**
+     * Formats duration in seconds to readable string (e.g., "6h 45m").
+     */
+    private String formatDuration(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        
+        if (hours > 0) {
+            return String.format("%dh %dm", hours, minutes);
+        } else {
+            return String.format("%dm", minutes);
+        }
+    }
+}

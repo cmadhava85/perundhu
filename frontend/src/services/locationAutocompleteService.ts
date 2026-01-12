@@ -1,6 +1,7 @@
 import { api } from './api';
 import { GeocodingService } from './geocodingService';
 import { logger } from '../utils/logger';
+import type { LocationGroupDTO } from '../types/LocationGroupTypes';
 
 export interface LocationSuggestion {
   id: number;
@@ -646,6 +647,93 @@ export class LocationAutocompleteService {
       clearTimeout(this.debounceTimeout);
       this.debounceTimeout = null;
     }
+  }
+
+  /**
+   * Get grouped location suggestions with variants (cities, bus stands, neighborhoods)
+   * Better UX for locations with multiple variants like "Salem", "Salem - New Bus Stand", etc.
+   * @param query The search query
+   * @param language The language code
+   * @returns Promise with grouped location suggestions
+   */
+  async getGroupedLocationSuggestions(
+    query: string,
+    language: string = 'en'
+  ): Promise<LocationGroupDTO[]> {
+    if (query.length < 3) {
+      return [];
+    }
+
+    try {
+      logger.debug(`🚀 Grouped autocomplete: Searching for "${query}" (${query.length} chars) in ${language}`);
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      
+      const response = await api.get(
+        `/api/v1/locations/autocomplete-grouped?q=${encodeURIComponent(query.trim())}&language=${language}`,
+        { signal: controller.signal }
+      );
+      
+      clearTimeout(timeoutId);
+      const groups = response.data || [];
+      
+      logger.debug(`🎯 Grouped search found ${groups.length} groups for "${query}"`);
+      return groups;
+      
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        logger.warn('Grouped location search timed out');
+      } else {
+        logger.error('Grouped location search error:', error);
+      }
+      return [];
+    }
+  }
+
+  /**
+   * Get debounced grouped suggestions
+   * @param query The search query
+   * @param callback Callback function to handle results
+   * @param language The language code
+   */
+  getDebouncedGroupedSuggestions(
+    query: string,
+    callback: (suggestions: LocationGroupDTO[]) => void,
+    language: string = 'en'
+  ): void {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+
+    if (query.trim().length < 3) {
+      logger.debug(`⏭️ Query too short (${query.length} chars) - skipping grouped search`);
+      callback([]);
+      return;
+    }
+
+    logger.debug(`🔄 Debounced grouped search queued for "${query}" (${query.length} chars)`);
+
+    const delay = query.length <= 3 ? 
+      LocationAutocompleteService.INSTANT_DEBOUNCE : 
+      LocationAutocompleteService.DEBOUNCE_DELAY;
+
+    this.debounceTimeout = setTimeout(async () => {
+      try {
+        logger.debug(`📡 Executing debounced grouped search for "${query}" after ${delay}ms delay`);
+        const suggestions = await this.getGroupedLocationSuggestions(query, language);
+        logger.debug(`✅ Debounced grouped search returned ${suggestions.length} groups`);
+        
+        if (typeof requestIdleCallback !== 'undefined') {
+          requestIdleCallback(() => callback(suggestions));
+        } else {
+          callback(suggestions);
+        }
+      } catch (error) {
+        logger.error(`❌ Error in debounced grouped search for "${query}":`, error);
+        callback([]);
+      }
+    }, delay);
   }
 }
 

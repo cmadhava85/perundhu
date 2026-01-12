@@ -1,0 +1,110 @@
+package com.perundhu.infrastructure.config;
+
+import com.graphhopper.GraphHopper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+/**
+ * Configuration for GraphHopper routing engine.
+ * Initializes GraphHopper with OpenStreetMap data for route validation.
+ */
+@Configuration
+@Slf4j
+@RequiredArgsConstructor
+public class GraphHopperConfig {
+    
+    @Value("${graphhopper.data-folder:./data/graphhopper}")
+    private String dataFolder;
+    
+    @Value("${graphhopper.graph-cache-folder:#{null}}")
+    private String graphCacheFolder;
+    
+    /**
+     * Creates and initializes GraphHopper bean.
+     * Will load pre-built graph from data folder or create new one from OSM file.
+     */
+    @Bean
+    public GraphHopper graphHopper() {
+        log.info("Initializing GraphHopper routing engine...");
+        
+        try {
+            // Ensure data folder exists
+            Path dataPath = Paths.get(dataFolder);
+            if (!Files.exists(dataPath)) {
+                Files.createDirectories(dataPath);
+                log.info("Created data folder: {}", dataFolder);
+            }
+            
+            // Create GraphHopper instance
+            GraphHopper graphHopper = new GraphHopper();
+            
+            // Set graph folder (where compiled graphs are cached)
+            graphHopper.setGraphHopperLocation(dataFolder);
+            
+            // Enable all available elevation data if present
+            // graphHopper.setElevationProvider("srtm");
+            
+            // Add profiles for different vehicle types
+            // Bus profile: faster highways, respects bus lanes
+            graphHopper.setProfile(new com.graphhopper.config.Profile("bus")
+                    .setVehicle("car") // Uses car routing model
+                    .putHint("speed_factor", 0.9)); // Slightly slower than cars
+            
+            // Van profile: use car model
+            graphHopper.setProfile(new com.graphhopper.config.Profile("van")
+                    .setVehicle("car"));
+            
+            // Standard car profile
+            graphHopper.setProfile(new com.graphhopper.config.Profile("car")
+                    .setVehicle("car"));
+            
+            // Motorcycle profile
+            graphHopper.setProfile(new com.graphhopper.config.Profile("motorcycle")
+                    .setVehicle("motorcycle"));
+            
+            // Bike profile
+            graphHopper.setProfile(new com.graphhopper.config.Profile("bike")
+                    .setVehicle("bike"));
+            
+            // Foot profile
+            graphHopper.setProfile(new com.graphhopper.config.Profile("foot")
+                    .setVehicle("foot"));
+            
+            // Configure graph import
+            // Note: For production, download Tamil Nadu OSM extract from:
+            // https://download.geofabrik.de/asia/india/tamil-nadu-latest.osm.pbf
+            // Place in data folder as "tamil-nadu.osm.pbf"
+            
+            // Enable CH (Contraction Hierarchies) for faster queries
+            graphHopper.setGraphHopperLocation(dataFolder);
+            graphHopper.getCHPreparationHandler().setCHProfiles(
+                    new com.graphhopper.config.CHProfile("car"),
+                    new com.graphhopper.config.CHProfile("bus"),
+                    new com.graphhopper.config.CHProfile("motorcycle")
+            );
+            
+            // Important: For development/testing, if no OSM data present,
+            // GraphHopper will use embedded test data
+            // For production, ensure OSM file is present
+            
+            log.info("GraphHopper profiles configured: bus, van, car, motorcycle, bike, foot");
+            log.info("Graph data folder: {}", dataFolder);
+            
+            // Note: Import will happen when first route is requested if graph doesn't exist
+            // For large graphs (Tamil Nadu ~250MB), this can take 1-2 minutes on first start
+            
+            return graphHopper;
+            
+        } catch (Exception e) {
+            log.error("Failed to initialize GraphHopper", e);
+            throw new RuntimeException("GraphHopper initialization failed", e);
+        }
+    }
+}

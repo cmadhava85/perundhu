@@ -107,14 +107,16 @@ public class HexagonalArchitectureTest {
    * 
    * NOTE: This rule is temporarily disabled because mappers are necessary in
    * the adapter layer to convert between JPA entities and DTOs.
-   * A proper fix would require DTOs to be returned from services instead of entities.
+   * A proper fix would require DTOs to be returned from services instead of
+   * entities.
    */
   @Test
-  @Disabled("Temporarily disabled - adapter mappers need infrastructure entities for conversion")
   void controllersShouldNotDependOnInfrastructureLayer() {
     ArchRule rule = noClasses()
         .that().resideInAPackage("..adapter.in.rest..")
-        .should().dependOnClassesThat().resideInAPackage("..infrastructure.persistence..")
+         .and().haveSimpleNameNotEndingWith("Mapper")
+        .should().dependOnClassesThat()
+        .resideInAnyPackage("..infrastructure.persistence.repository..", "..infrastructure.persistence.entity..")
         .because("Controllers should use application services, not JPA repositories/entities directly. " +
             "This violates layered architecture and bypasses business logic.");
 
@@ -156,21 +158,34 @@ public class HexagonalArchitectureTest {
   }
 
   @Test
-  @Disabled("Temporarily disabled - entity annotation rule needs refinement")
   void entitiesShouldOnlyBeInInfrastructureLayer() {
-    // Rule needs to account for different persistence strategies
+    ArchRule rule = classes()
+        .that().areAnnotatedWith("jakarta.persistence.Entity")
+        .should().resideInAnyPackage("..infrastructure.persistence.entity..");
+
+    rule.check(importedClasses);
   }
 
   @Test
-  @Disabled("Temporarily disabled - input port rule needs refinement")
   void inputPortsShouldBeInterfaces() {
-    // Rule needs to account for different use case patterns
+    ArchRule rule = classes()
+        .that().haveSimpleNameEndingWith("InputPort")
+        .and().resideInAPackage("..domain.port..")
+        .should().beInterfaces()
+        .allowEmptyShould(true);
+
+    rule.check(importedClasses);
   }
 
   @Test
-  @Disabled("Temporarily disabled - controller business logic rule needs refinement")
   void controllersShouldNotContainBusinessLogic() {
-    // Rule pattern matching needs improvement
+    // Heuristic: Controllers should not be annotated with @Service or @Repository
+    ArchRule rule = noClasses()
+        .that().resideInAPackage("..adapter.in.rest..")
+        .should().beAnnotatedWith("org.springframework.stereotype.Service")
+        .orShould().beAnnotatedWith("org.springframework.stereotype.Repository");
+
+    rule.check(importedClasses);
   }
 
   @Test

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import com.perundhu.adapter.out.persistence.entity.SocialMediaPostJpaEntity;
+import com.perundhu.infrastructure.persistence.entity.SocialMediaPostJpaEntity;
 import com.perundhu.adapter.out.persistence.repository.SocialMediaPostJpaRepository;
 import com.perundhu.domain.model.SocialMediaPost;
 import com.perundhu.domain.port.output.SocialMediaPostOutputPort;

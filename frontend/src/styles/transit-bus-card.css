@@ -1,6 +1,17 @@
 @import './design-system.css';
 
 /* Modern Transit Bus Card - Inspired by Transit & Moovit */
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.text-headline {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  line-height: 1.35;
+}
+
 
 .transit-bus-card {
   background: rgba(255, 255, 255, 0.8);

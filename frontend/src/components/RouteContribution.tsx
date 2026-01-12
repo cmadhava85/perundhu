@@ -62,6 +62,10 @@ export const RouteContribution: React.FC = () => {
   const preSelectedFromLocation = navigationState?.fromLocation || undefined;
   const preSelectedToLocation = navigationState?.toLocation || undefined;
 
+  // If user came from bus results with Add Stops, disable switching to image/text/paste
+  const isAddStopsFromSearch = navigationState?.method === 'add-stops' && navigationState?.fromSearch === true;
+  const disabledMethods = isAddStopsFromSearch ? (['image', 'manual', 'paste'] as const) : ([] as const);
+
   // When navigating from search results with a method, update the contribution method
   useEffect(() => {
     // Bypass feature flag when coming from search results
@@ -114,6 +118,34 @@ export const RouteContribution: React.FC = () => {
     setStatusMessage('');
     setErrorType('general');
   }, [contributionMethod]);
+
+  // Handle mouse wheel scrolling on the card
+  useEffect(() => {
+    const cardElement = document.querySelector('.premium-contribution-card');
+    
+    const handleWheel = (e: WheelEvent) => {
+      if (!cardElement) return;
+      
+      const isAtTop = cardElement.scrollTop === 0;
+      const isAtBottom = cardElement.scrollTop + cardElement.clientHeight >= cardElement.scrollHeight;
+      
+      // Only prevent page scroll if card can still scroll
+      if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+        // At edge, allow page scroll
+        return;
+      }
+      
+      // Card can scroll, prevent page scroll
+      e.preventDefault();
+      cardElement.scrollTop += e.deltaY;
+    };
+    
+    const cardEl = document.querySelector('.premium-contribution-card') as HTMLElement;
+    if (cardEl) {
+      cardEl.addEventListener('wheel', handleWheel, { passive: false });
+      return () => cardEl.removeEventListener('wheel', handleWheel);
+    }
+  }, []);
 
   interface ContributionData {
     busName?: string;
@@ -263,6 +295,7 @@ export const RouteContribution: React.FC = () => {
         <ContributionMethodSelector 
           selectedMethod={contributionMethod}
           onMethodChange={setContributionMethod}
+          disabledMethods={disabledMethods as any}
         />
         
         <div className="form-container">

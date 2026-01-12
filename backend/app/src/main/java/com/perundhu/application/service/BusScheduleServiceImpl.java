@@ -17,6 +17,7 @@ import com.perundhu.application.dto.BusRouteDTO;
 import com.perundhu.application.dto.BusScheduleDTO;
 import com.perundhu.application.dto.BusStandDTO;
 import com.perundhu.application.dto.LocationDTO;
+import com.perundhu.application.dto.LocationGroupDTO;
 import com.perundhu.application.dto.MultiStandSearchResponse;
 import com.perundhu.application.dto.OSMBusStopDTO;
 import com.perundhu.application.dto.RouteDTO;
@@ -540,6 +541,137 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
         log.debug("Location search for '{}' returned {} results (including bus stands)", trimmedQuery, results.size());
         return results;
+    }
+
+    @Override
+    public List<LocationGroupDTO> searchLocationsGrouped(String query, String languageCode) {
+        log.info("Grouped location search for '{}' (language: {})", query, languageCode);
+        
+        if (query == null || query.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        // Get all matching locations using existing search
+        List<Location> allLocations = searchLocationsByName(query.trim());
+        
+        // Group locations by base name (city name)
+        Map<String, LocationGroupDTO> groupedMap = new java.util.LinkedHashMap<>();
+        
+        for (Location location : allLocations) {
+            String baseName = extractBaseLocationName(location.name());
+            
+            // Create or get existing group
+            LocationGroupDTO group = groupedMap.computeIfAbsent(
+                baseName, 
+                key -> LocationGroupDTO.of(key, null)
+            );
+            
+            // Convert location to DTO with translation
+            LocationDTO locationDTO = locationToDTO(location, languageCode);
+            
+            // Categorize location
+            if (isGenericCityLocation(location.name())) {
+                // This is a generic city option (no " - " in name)
+                groupedMap.put(baseName, new LocationGroupDTO(
+                    baseName,
+                    locationDTO,
+                    group.busStands(),
+                    group.neighborhoods()
+                ));
+            } else if (isBusStandLocation(location.name())) {
+                // This is a specific bus stand
+                group.addBusStand(locationDTO);
+            } else {
+                // This is a neighborhood or area
+                group.addNeighborhood(locationDTO);
+            }
+        }
+        
+        // Convert to list and sort
+        List<LocationGroupDTO> result = groupedMap.values().stream()
+            .filter(group -> !group.isEmpty())
+            .sorted(Comparator.comparing(LocationGroupDTO::cityName))
+            .toList();
+        
+        log.debug("Grouped search for '{}' resulted in {} groups", query, result.size());
+        return result;
+    }
+
+    /**
+     * Extract the base location name (city) from a full location name
+     * Examples:
+     * - "Salem - New Bus Stand" -> "Salem"
+     * - "Salem" -> "Salem"
+     * - "Madurai - Periyar" -> "Madurai"
+     */
+    private String extractBaseLocationName(String fullName) {
+        if (fullName == null || fullName.isEmpty()) {
+            return fullName;
+        }
+        
+        // If contains " - " pattern, take the first part
+        if (fullName.contains(" - ")) {
+            return fullName.split(" - ")[0].trim();
+        }
+        
+        // For "Chennai Bus Stop" style, extract the city name
+        String lower = fullName.toLowerCase();
+        if (lower.contains(" bus stop") || lower.contains(" bus stand") || 
+            lower.contains(" bus station") || lower.contains(" bus terminus")) {
+            return fullName.substring(0, fullName.lastIndexOf(" Bus") 
+                    + (lower.contains(" bus stop") ? 9 : 
+                       lower.contains(" bus stand") ? 10 : 
+                       lower.contains(" bus station") ? 12 : 13)).trim();
+        }
+        
+        return fullName;
+    }
+
+    /**
+     * Check if a location name is a generic city (no bus stand indicators)
+     */
+    private boolean isGenericCityLocation(String name) {
+        String lower = name.toLowerCase();
+        return !(lower.contains(" - ") || 
+                 lower.contains("bus stop") || 
+                 lower.contains("bus stand") || 
+                 lower.contains("bus station") || 
+                 lower.contains("bus terminus"));
+    }
+
+    /**
+     * Check if a location name represents a specific bus stand
+     */
+    private boolean isBusStandLocation(String name) {
+        String lower = name.toLowerCase();
+        return lower.contains(" - ") || 
+               lower.contains("bus station") || 
+               lower.contains("bus stand") || 
+               lower.contains("bus stop");
+    }
+
+    /**
+     * Convert Location model to LocationDTO with translation
+     */
+    private LocationDTO locationToDTO(Location location, String languageCode) {
+        String englishName = location.name();
+        String translatedName = englishName;
+        
+        // Try to get translation for the requested language
+        if (languageCode != null && !"en".equals(languageCode)) {
+            String translated = getLocationTranslation(location.id().value(), languageCode);
+            if (translated != null && !translated.isEmpty()) {
+                translatedName = translated;
+            }
+        }
+        
+        return LocationDTO.withTranslation(
+            location.id().value(),
+            englishName,
+            translatedName,
+            location.latitude(),
+            location.longitude()
+        );
     }
 
     @Override

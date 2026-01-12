@@ -97,6 +97,20 @@ public class AnnouncementService {
     }
 
     /**
+     * Get active announcements for target audience by string (controller-friendly)
+     * Handles parsing of audience string to enum in service layer to avoid controller-infrastructure coupling
+     */
+    public List<AnnouncementJpaEntity> getAnnouncementsByAudienceString(String audienceStr) {
+        try {
+            AnnouncementJpaEntity.TargetAudience targetAudience = AnnouncementJpaEntity.TargetAudience
+                    .valueOf(audienceStr.toUpperCase());
+            return getAnnouncementsByAudience(targetAudience);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid audience: " + audienceStr, e);
+        }
+    }
+
+    /**
      * Get all announcements (admin view)
      */
     public List<AnnouncementJpaEntity> getAllAnnouncements() {

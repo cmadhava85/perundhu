@@ -1,0 +1,57 @@
+package com.perundhu.adapter.out.persistence.contribution;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * Repository for route validation alerts.
+ */
+@Repository
+public interface RouteValidationAlertRepository extends JpaRepository<RouteValidationAlertJpaEntity, UUID> {
+
+  List<RouteValidationAlertJpaEntity> findByContributionId(UUID contributionId);
+
+  List<RouteValidationAlertJpaEntity> findByStatus(RouteValidationAlertJpaEntity.AlertStatus status);
+
+  List<RouteValidationAlertJpaEntity> findByStatusOrderByConfidenceScoreDescCreatedAtDesc(
+      RouteValidationAlertJpaEntity.AlertStatus status);
+
+  @Query("SELECT a FROM RouteValidationAlertJpaEntity a WHERE a.status = 'PENDING' ORDER BY a.confidenceScore DESC, a.createdAt DESC")
+  List<RouteValidationAlertJpaEntity> findAllPendingAlerts();
+
+  @Query("SELECT a FROM RouteValidationAlertJpaEntity a WHERE a.confidenceScore > 75 AND a.status IN ('PENDING', 'ESCALATED') ORDER BY a.confidenceScore DESC, a.createdAt DESC")
+  List<RouteValidationAlertJpaEntity> findHighConfidenceAlerts();
+
+  List<RouteValidationAlertJpaEntity> findByValidationTypeOrderByConfidenceScoreDesc(
+      RouteValidationAlertJpaEntity.ValidationType validationType);
+
+  @Query("SELECT a FROM RouteValidationAlertJpaEntity a WHERE a.createdAt BETWEEN :startTime AND :endTime ORDER BY a.createdAt DESC")
+  List<RouteValidationAlertJpaEntity> findAlertsCreatedBetween(
+      @Param("startTime") LocalDateTime startTime,
+      @Param("endTime") LocalDateTime endTime);
+
+  @Query("SELECT a FROM RouteValidationAlertJpaEntity a WHERE a.status = 'DISMISSED' AND a.validationType = :type")
+  List<RouteValidationAlertJpaEntity> findFalsePositivesByType(
+      @Param("type") RouteValidationAlertJpaEntity.ValidationType type);
+
+  Long countByStatus(RouteValidationAlertJpaEntity.AlertStatus status);
+
+  Long countByValidationType(RouteValidationAlertJpaEntity.ValidationType validationType);
+
+  boolean existsByContributionIdAndStatus(UUID contributionId, RouteValidationAlertJpaEntity.AlertStatus status);
+
+  Optional<RouteValidationAlertJpaEntity> findFirstByContributionIdOrderByCreatedAtDesc(UUID contributionId);
+
+  @Query("SELECT COALESCE(AVG(a.confidenceScore), 0) FROM RouteValidationAlertJpaEntity a WHERE a.validationType = :type")
+  Double getAverageConfidenceByType(@Param("type") RouteValidationAlertJpaEntity.ValidationType type);
+
+  @Query("SELECT COUNT(DISTINCT a.contributionId) FROM RouteValidationAlertJpaEntity a WHERE a.status = 'PENDING'")
+  Long countDistinctContributionsWithPendingAlerts();
+}

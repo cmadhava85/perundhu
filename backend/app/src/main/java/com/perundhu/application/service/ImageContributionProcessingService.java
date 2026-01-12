@@ -484,7 +484,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     // Estimate arrival time based on departure and route
                     String estimatedArrival = estimateArrivalTime(departureTime, validatedFrom, validatedTo);
 
-                    String viaInfo = !viaStops.isEmpty() ? "Via: " + String.join(", ", viaStops) : null;
+                    List<String> cleanedStops = cleanViaStops(viaStops);
+                    String viaInfo = !cleanedStops.isEmpty() ? "Via: " + String.join(", ", cleanedStops) : null;
                     
                         RouteContribution route = RouteContribution.builder()
                             .id(UUID.randomUUID().toString())
@@ -569,7 +570,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             // Generate route group ID for grouping related schedules
             String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, viaStops);
 
-            String viaInfo = !viaStops.isEmpty() ? "Via: " + String.join(", ", viaStops) : null;
+            List<String> cleanedStops = cleanViaStops(viaStops);
+            String viaInfo = !cleanedStops.isEmpty() ? "Via: " + String.join(", ", cleanedStops) : null;
 
                 return RouteContribution.builder()
                     .id(UUID.randomUUID().toString())
@@ -926,8 +928,15 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> routesArray = (List<Map<String, Object>>) extractedData.get("routes");
 
+            // Check if bidirectional flag is set
+            Boolean isBidirectional = (Boolean) extractedData.get("bidirectional");
+            if (isBidirectional == null) {
+                isBidirectional = false;
+            }
+
             if (routesArray != null && !routesArray.isEmpty()) {
-                logger.info("Processing {} routes from Gemini data for expansion", routesArray.size());
+                logger.info("Processing {} routes from Gemini data for expansion (bidirectional: {})", 
+                    routesArray.size(), isBidirectional);
 
                 for (Map<String, Object> routeData : routesArray) {
                     String routeFrom = (String) routeData.get("fromLocation");
@@ -977,6 +986,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                         busNumber = "TNSTC"; // Default bus operator for Tamil Nadu routes
                     }
 
+                    // Create forward direction routes
                     for (String departureTime : departureTimes) {
                         RouteContribution route = createRouteContributionWithDepartureTime(
                                 contribution,
@@ -997,6 +1007,48 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
                     logger.info("Created {} route entries for {} -> {}",
                             departureTimes.size(), validatedFrom, validatedTo);
+
+                    // If bidirectional, create reverse direction routes
+                    if (isBidirectional) {
+                        logger.info("Creating reverse direction routes for bidirectional service: {} -> {}",
+                                validatedTo, validatedFrom);
+
+                        // Reverse the via stops if present
+                        String reverseVia = via;
+                        if (via != null && !via.isEmpty()) {
+                            String[] viaStops = via.split(",");
+                            StringBuilder reversedVia = new StringBuilder();
+                            for (int i = viaStops.length - 1; i >= 0; i--) {
+                                if (reversedVia.length() > 0) {
+                                    reversedVia.append(",");
+                                }
+                                reversedVia.append(viaStops[i].trim());
+                            }
+                            reverseVia = reversedVia.toString();
+                        }
+
+                        // Create reverse routes with same times
+                        for (String departureTime : departureTimes) {
+                            RouteContribution reverseRoute = createRouteContributionWithDepartureTime(
+                                    contribution,
+                                    busNumber,
+                                    validatedTo,  // Swap: destination becomes origin
+                                    validatedFrom, // Swap: origin becomes destination
+                                    reverseVia,
+                                    null, // operatorName
+                                    null, // fare
+                                    departureTime,
+                                    List.of(departureTime), // single timing
+                                    null, // stops
+                                    status);
+
+                            RouteContribution savedReverseRoute = routeContributionOutputPort.save(reverseRoute);
+                            createdRoutes.add(savedReverseRoute);
+                        }
+
+                        logger.info("Created {} reverse route entries for {} -> {}",
+                                departureTimes.size(), validatedTo, validatedFrom);
+                    }
                 }
             }
 
@@ -1535,5 +1587,26 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         logger.debug("Could not parse time: {}", timeStr);
         return null;
+    }
+
+    /**
+     * Clean and validate a list of stop names from OCR extraction.
+     * Removes leading/trailing whitespace and punctuation.
+     * Filters out placeholder values and duplicates.
+     */
+    private List<String> cleanViaStops(List<String> rawStops) {
+        if (rawStops == null || rawStops.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        return rawStops.stream()
+            .filter(java.util.Objects::nonNull)
+            .map(String::trim)
+            .map(s -> s.replaceAll("^[,;:]*\\s*", ""))        // Remove leading punctuation
+            .map(s -> s.replaceAll("[,;:]*\\s*$", ""))        // Remove trailing punctuation
+            .filter(s -> !s.isEmpty())
+            .filter(s -> !s.matches("^[-N/A?]*$"))            // Filter out placeholders
+            .distinct()
+            .collect(java.util.stream.Collectors.toList());
     }
 }

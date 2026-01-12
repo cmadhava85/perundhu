@@ -55,6 +55,8 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
   const [buses, setBuses] = useState<Bus[]>([]);
   const [selectedBus, setSelectedBus] = useState<Bus | null>(preSelectedBus || null);
   const [existingStops, setExistingStops] = useState<Stop[]>([]);
+  const [editingExistingStops, setEditingExistingStops] = useState(false);
+  const [updatedExistingStops, setUpdatedExistingStops] = useState<Stop[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingStops, setIsLoadingStops] = useState(false);
   
@@ -353,14 +355,22 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     setIsSearching(true);
     setBuses([]);
     setSelectedBus(null);
+    setExistingStops([]);
+    setNewStops([]);
+    
+    console.log('🔍 Searching buses from:', selectedFrom.name, 'to:', selectedTo.name);
+    console.log('From ID:', selectedFrom.id, 'To ID:', selectedTo.id);
     
     try {
       const results = await searchBuses(selectedFrom, selectedTo, true);
+      console.log('✅ Search results:', results.length, 'buses found');
+      console.log('First bus:', results[0]?.busNumber, results[0]?.from, '→', results[0]?.to);
       setBuses(results);
       if (results.length === 0) {
         onError?.(t('addStops.noBusesFound', 'No buses found for this route'));
       }
-    } catch {
+    } catch (error) {
+      console.error('❌ Bus search error:', error);
       onError?.(t('addStops.searchFailed', 'Failed to search buses'));
     } finally {
       setIsSearching(false);
@@ -526,6 +536,93 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
     }
 
     return true;
+  };
+
+  // Toggle editing mode for existing stops
+  const handleToggleEditExistingStops = () => {
+    if (!editingExistingStops) {
+      // Enter editing mode - copy existing stops to updatedExistingStops
+      setUpdatedExistingStops(existingStops.map(stop => ({ ...stop })));
+    } else {
+      // Exit editing mode - discard changes
+      setUpdatedExistingStops([]);
+    }
+    setEditingExistingStops(!editingExistingStops);
+  };
+
+  // Update time for an existing stop
+  const handleUpdateExistingStopTime = (index: number, field: 'arrivalTime' | 'departureTime', value: string) => {
+    const updated = [...updatedExistingStops];
+    updated[index] = { ...updated[index], [field]: value };
+    setUpdatedExistingStops(updated);
+  };
+
+  // Save updated existing stops
+  const handleSaveExistingStopTimes = async () => {
+    if (!selectedBus) return;
+
+    setIsSubmitting(true);
+    
+    try {
+      // Filter only stops that have been modified (have timing added/updated)
+      const modifiedStops = updatedExistingStops.filter((stop, index) => {
+        const original = existingStops[index];
+        return stop.arrivalTime !== original.arrivalTime || stop.departureTime !== original.departureTime;
+      });
+
+      if (modifiedStops.length === 0) {
+        onError?.(t('addStops.noChanges', 'No timing changes detected'));
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Prepare submission data for existing stops timing updates
+      const submissionData = {
+        busId: selectedBus.id,
+        busNumber: selectedBus.busNumber,
+        busName: selectedBus.busName,
+        fromLocationName: selectedBus.from,
+        toLocationName: selectedBus.to,
+        departureTime: selectedBus.departureTime,
+        arrivalTime: selectedBus.arrivalTime,
+        stops: modifiedStops.map((stop, idx) => ({
+          id: stop.id,
+          locationName: stop.name,
+          locationId: stop.locationId,
+          arrivalTime: stop.arrivalTime,
+          departureTime: stop.departureTime,
+          order: stop.stopOrder || idx + 1
+        })),
+        additionalNotes: `User updated timing for ${modifiedStops.length} existing stop(s)`
+      };
+
+      console.log('Submitting existing stops timing updates:', submissionData);
+      
+      const response = await submitStopsContribution(submissionData);
+      
+      if (response.success) {
+        console.log('Existing stops timing updated successfully:', response);
+        setSubmitSuccess(true);
+        setEditingExistingStops(false);
+        
+        // Update the existing stops with new values
+        setExistingStops(updatedExistingStops);
+        setUpdatedExistingStops([]);
+        
+        setTimeout(() => {
+          setSubmitSuccess(false);
+        }, 3000);
+      } else {
+        const errorMessage = response.message || t('addStops.updateFailed', 'Failed to update stop timing');
+        console.error('Stop timing update failed:', response);
+        onError?.(errorMessage);
+      }
+    } catch (error) {
+      console.error('Error updating existing stop timing:', error);
+      onError?.(t('addStops.updateError', 'An error occurred while updating stop timing'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Submit stops
@@ -870,28 +967,66 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
             {existingStops.length === 0 && (
               <span className="missing-badge">⚠️ {t('addStops.noStops', 'No stops recorded')}</span>
             )}
+            {existingStops.length > 0 && (
+              <button
+                type="button"
+                className={`edit-existing-btn ${editingExistingStops ? 'active' : ''}`}
+                onClick={handleToggleEditExistingStops}
+              >
+                {editingExistingStops ? '✕ Cancel' : '✏️ Edit Times'}
+              </button>
+            )}
           </div>
 
           {existingStops.length > 0 ? (
             <div className="existing-stops-list">
-              {existingStops.map((stop, index) => {
+              {(editingExistingStops ? updatedExistingStops : existingStops).map((stop, index) => {
                 const formatTimeWithoutSecs = (time?: string) => {
                   if (!time) return '';
                   const parts = time.split(':');
                   return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
                 };
+                
+                const hasMissingTime = !stop.arrivalTime || !stop.departureTime;
+                
                 return (
-                <div key={stop.id} className={`existing-stop-item ${index === 0 ? 'first' : ''} ${index === existingStops.length - 1 ? 'last' : ''}`}>
+                <div key={stop.id} className={`existing-stop-item ${index === 0 ? 'first' : ''} ${index === existingStops.length - 1 ? 'last' : ''} ${editingExistingStops ? 'editing' : ''}`}>
                   <div className="stop-marker">
                     {getStopMarker(index, existingStops.length)}
                   </div>
                   <div className="stop-details">
                     <span className="stop-name">{i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name}</span>
-                    <span className="stop-time">
-                      {stop.arrivalTime && `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}`}
-                      {stop.arrivalTime && stop.departureTime && ' | '}
-                      {stop.departureTime && `Dep: ${formatTimeWithoutSecs(stop.departureTime)}`}
-                    </span>
+                    {editingExistingStops ? (
+                      <div className="stop-time-inputs">
+                        <div className="time-input-wrapper">
+                          <label>Arr:</label>
+                          <input
+                            type="time"
+                            value={stop.arrivalTime || ''}
+                            onChange={(e) => handleUpdateExistingStopTime(index, 'arrivalTime', e.target.value)}
+                            className="time-input-small"
+                            placeholder="HH:MM"
+                          />
+                        </div>
+                        <div className="time-input-wrapper">
+                          <label>Dep:</label>
+                          <input
+                            type="time"
+                            value={stop.departureTime || ''}
+                            onChange={(e) => handleUpdateExistingStopTime(index, 'departureTime', e.target.value)}
+                            className="time-input-small"
+                            placeholder="HH:MM"
+                          />
+                        </div>
+                        {hasMissingTime && <span className="missing-time-badge">⚠️ Add timing</span>}
+                      </div>
+                    ) : (
+                      <span className="stop-time">
+                        {stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : <span className="no-time">No arrival</span>}
+                        {stop.arrivalTime && stop.departureTime && ' | '}
+                        {stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : <span className="no-time">No departure</span>}
+                      </span>
+                    )}
                   </div>
                 </div>
               );
@@ -901,6 +1036,23 @@ export const AddStopsToRoute: React.FC<AddStopsToRouteProps> = ({
             <div className="no-stops-message">
               <span className="empty-icon">📭</span>
               <p>{t('addStops.noStopsMessage', 'This route has no stops recorded yet. Be the first to add them!')}</p>
+            </div>
+          )}
+          
+          {/* Save button for existing stops timing updates */}
+          {editingExistingStops && existingStops.length > 0 && (
+            <div className="existing-stops-actions">
+              <button
+                type="button"
+                className="save-existing-times-btn"
+                onClick={handleSaveExistingStopTimes}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? '⏳ Saving...' : '💾 Save Updated Times'}
+              </button>
+              <p className="help-text">
+                💡 {t('addStops.editTimesHelp', 'Add or update arrival and departure times for existing stops')}
+              </p>
             </div>
           )}
         </div>

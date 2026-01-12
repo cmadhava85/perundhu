@@ -1,0 +1,276 @@
+package com.perundhu.application.service;
+
+import com.perundhu.adapter.out.persistence.contribution.RouteValidationAlertJpaEntity;
+import com.perundhu.adapter.out.persistence.contribution.RouteValidationAlertRepository;
+import com.perundhu.domain.port.RoutingValidationPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * Application service for managing route validation alerts.
+ * Handles:
+ * - Creating alerts when validation fails
+ * - Querying alerts for admin dashboard
+ * - Updating alert status when reviewed
+ * - Collecting validation metrics for analysis
+ */
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class RouteValidationAlertService {
+    
+    private final RouteValidationAlertRepository alertRepository;
+    
+    /**
+     * Creates a validation alert if validation result indicates an issue.
+     * Returns the created alert, or empty if validation passed.
+     */
+    @Transactional
+    public Optional<RouteValidationAlertJpaEntity> createAlertFromValidation(
+            UUID contributionId,
+            RoutingValidationPort.RouteValidationResult validationResult
+    ) {
+        // Only create alert if validation failed (isValid = false)
+        if (validationResult.isValid()) {
+            return Optional.empty();
+        }
+        
+        RouteValidationAlertJpaEntity alert = RouteValidationAlertJpaEntity.builder()
+                .contributionId(contributionId)
+                .validationType(validationResult.validationType())
+                .confidenceScore(validationResult.confidenceScore())
+                .expectedRange(validationResult.expectedRange())
+                .actualValue(validationResult.actualValue())
+                .issueDescription(validationResult.issue())
+                .status(RouteValidationAlertJpaEntity.AlertStatus.PENDING)
+                .build();
+        
+        RouteValidationAlertJpaEntity saved = alertRepository.save(alert);
+        
+        log.info("Created validation alert {} for contribution {} | Type: {} | Confidence: {}",
+                saved.getId(), contributionId, validationResult.validationType(),
+                validationResult.confidenceScore());
+        
+        return Optional.of(saved);
+    }
+    
+    /**
+     * Gets all pending alerts ordered by confidence score.
+     */
+    @Transactional(readOnly = true)
+    public List<RouteValidationAlertJpaEntity> getPendingAlerts() {
+        return alertRepository.findAllPendingAlerts();
+    }
+    
+    /**
+     * Gets pending alerts with pagination for dashboard.
+     */
+    @Transactional(readOnly = true)
+    public Page<RouteValidationAlertJpaEntity> getPendingAlerts(Pageable pageable) {
+        return alertRepository.findByStatusOrderByConfidenceScoreDescCreatedAtDesc(
+                RouteValidationAlertJpaEntity.AlertStatus.PENDING,
+                pageable
+        );
+    }
+    
+    /**
+     * Gets high-confidence alerts (> 75) that likely indicate real issues.
+     */
+    @Transactional(readOnly = true)
+    public List<RouteValidationAlertJpaEntity> getHighConfidenceAlerts() {
+        return alertRepository.findHighConfidenceAlerts();
+    }
+    
+    /**
+     * Gets all alerts for a specific contribution.
+     */
+    @Transactional(readOnly = true)
+    public List<RouteValidationAlertJpaEntity> getAlertsByContribution(UUID contributionId) {
+        return alertRepository.findByContributionId(contributionId);
+    }
+    
+    /**
+     * Gets alerts of a specific type.
+     */
+    @Transactional(readOnly = true)
+    public List<RouteValidationAlertJpaEntity> getAlertsByType(
+            RoutingValidationPort.ValidationType validationType
+    ) {
+        return alertRepository.findByValidationTypeOrderByConfidenceScoreDesc(validationType);
+    }
+    
+    /**
+     * Gets alerts created within a time window (for trend analysis).
+     */
+    @Transactional(readOnly = true)
+    public List<RouteValidationAlertJpaEntity> getAlertsSince(int hoursAgo) {
+        Instant endTime = Instant.now();
+        Instant startTime = endTime.minus(hoursAgo, ChronoUnit.HOURS);
+        return alertRepository.findAlertsCreatedBetween(startTime, endTime);
+    }
+    
+    /**
+     * Marks an alert as approved (contribution accepted despite flag).
+     */
+    @Transactional
+    public RouteValidationAlertJpaEntity approveAlert(UUID alertId, String adminId, String notes) {
+        RouteValidationAlertJpaEntity alert = alertRepository.findById(alertId)
+                .orElseThrow(() -> new IllegalArgumentException("Alert not found: " + alertId));
+        
+        alert.setStatus(RouteValidationAlertJpaEntity.AlertStatus.APPROVED);
+        alert.setReviewedBy(adminId);
+        alert.setReviewedAt(Instant.now());
+        alert.setAdminNotes(notes);
+        
+        RouteValidationAlertJpaEntity saved = alertRepository.save(alert);
+        
+        log.info("Approved alert {} for contribution {} | Notes: {}",
+                alertId, alert.getContributionId(), notes);
+        
+        return saved;
+    }
+    
+    /**
+     * Marks an alert as dismissed (false positive).
+     */
+    @Transactional
+    public RouteValidationAlertJpaEntity dismissAlert(UUID alertId, String adminId, String reason) {
+        RouteValidationAlertJpaEntity alert = alertRepository.findById(alertId)
+                .orElseThrow(() -> new IllegalArgumentException("Alert not found: " + alertId));
+        
+        alert.setStatus(RouteValidationAlertJpaEntity.AlertStatus.DISMISSED);
+        alert.setReviewedBy(adminId);
+        alert.setReviewedAt(Instant.now());
+        alert.setAdminNotes(reason);
+        
+        RouteValidationAlertJpaEntity saved = alertRepository.save(alert);
+        
+        log.info("Dismissed alert {} for contribution {} | Reason: {}",
+                alertId, alert.getContributionId(), reason);
+        
+        return saved;
+    }
+    
+    /**
+     * Marks an alert as rejected (contribution should not be approved).
+     */
+    @Transactional
+    public RouteValidationAlertJpaEntity rejectAlert(UUID alertId, String adminId, String reason) {
+        RouteValidationAlertJpaEntity alert = alertRepository.findById(alertId)
+                .orElseThrow(() -> new IllegalArgumentException("Alert not found: " + alertId));
+        
+        alert.setStatus(RouteValidationAlertJpaEntity.AlertStatus.REJECTED);
+        alert.setReviewedBy(adminId);
+        alert.setReviewedAt(Instant.now());
+        alert.setAdminNotes(reason);
+        
+        RouteValidationAlertJpaEntity saved = alertRepository.save(alert);
+        
+        log.info("Rejected alert {} for contribution {} | Reason: {}",
+                alertId, alert.getContributionId(), reason);
+        
+        return saved;
+    }
+    
+    /**
+     * Marks an alert as escalated for further investigation.
+     */
+    @Transactional
+    public RouteValidationAlertJpaEntity escalateAlert(UUID alertId, String adminId, String reason) {
+        RouteValidationAlertJpaEntity alert = alertRepository.findById(alertId)
+                .orElseThrow(() -> new IllegalArgumentException("Alert not found: " + alertId));
+        
+        alert.setStatus(RouteValidationAlertJpaEntity.AlertStatus.ESCALATED);
+        alert.setReviewedBy(adminId);
+        alert.setReviewedAt(Instant.now());
+        alert.setAdminNotes(reason);
+        
+        RouteValidationAlertJpaEntity saved = alertRepository.save(alert);
+        
+        log.info("Escalated alert {} for contribution {} | Reason: {}",
+                alertId, alert.getContributionId(), reason);
+        
+        return saved;
+    }
+    
+    /**
+     * Gets dashboard summary statistics.
+     */
+    @Transactional(readOnly = true)
+    public Map<String, Object> getDashboardStats() {
+        long pendingCount = alertRepository.countByStatus(RouteValidationAlertJpaEntity.AlertStatus.PENDING);
+        long approvedCount = alertRepository.countByStatus(RouteValidationAlertJpaEntity.AlertStatus.APPROVED);
+        long dismissedCount = alertRepository.countByStatus(RouteValidationAlertJpaEntity.AlertStatus.DISMISSED);
+        long rejectedCount = alertRepository.countByStatus(RouteValidationAlertJpaEntity.AlertStatus.REJECTED);
+        
+        long recentAlertsLast24h = alertRepository.findAlertsCreatedBetween(
+                Instant.now().minus(24, ChronoUnit.HOURS),
+                Instant.now()
+        ).size();
+        
+        List<RouteValidationAlertJpaEntity> highConfidence = alertRepository.findHighConfidenceAlerts();
+        
+        return Map.of(
+                "pendingCount", pendingCount,
+                "approvedCount", approvedCount,
+                "dismissedCount", dismissedCount,
+                "rejectedCount", rejectedCount,
+                "alertsLast24h", recentAlertsLast24h,
+                "highConfidenceCount", highConfidence.size(),
+                "falsePositiveRate", calculateFalsePositiveRate()
+        );
+    }
+    
+    /**
+     * Calculates overall false positive rate across all validation types.
+     */
+    @Transactional(readOnly = true)
+    public double calculateFalsePositiveRate() {
+        long totalAlerts = alertRepository.findAllPendingAlerts().size();
+        if (totalAlerts == 0) return 0.0;
+        
+        long dismissedAlerts = alertRepository.countByStatus(
+                RouteValidationAlertJpaEntity.AlertStatus.DISMISSED
+        );
+        
+        return (double) dismissedAlerts / (dismissedAlerts + totalAlerts) * 100;
+    }
+    
+    /**
+     * Gets statistics by validation type (for tuning validation thresholds).
+     */
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> getValidationTypeStats() {
+        return alertRepository.getStatisticsByValidationType();
+    }
+    
+    /**
+     * Check if a contribution has any pending alerts.
+     */
+    @Transactional(readOnly = true)
+    public boolean hasPendingAlerts(UUID contributionId) {
+        return alertRepository.existsByContributionIdAndStatus(
+                contributionId,
+                RouteValidationAlertJpaEntity.AlertStatus.PENDING
+        );
+    }
+    
+    /**
+     * Gets the most recent alert for a contribution.
+     */
+    @Transactional(readOnly = true)
+    public Optional<RouteValidationAlertJpaEntity> getLatestAlert(UUID contributionId) {
+        return alertRepository.findFirstByContributionIdOrderByCreatedAtDesc(contributionId);
+    }
+}

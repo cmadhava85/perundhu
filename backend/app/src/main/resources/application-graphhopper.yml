@@ -1,0 +1,62 @@
+# GraphHopper Configuration
+# Controls routing validation engine behavior and data loading
+
+graphhopper:
+  # Folder containing GraphHopper graph files (compiled from OSM data)
+  # On startup, GraphHopper will:
+  # 1. Check this folder for pre-compiled graph files
+  # 2. If not found, attempt to build from OSM file (if present)
+  # 3. Cache compiled graphs for future runs
+  # For Tamil Nadu, expect ~250 MB compiled graph
+  data-folder: ./data/graphhopper
+  
+  # Optional: Folder for caching prepared CH (Contraction Hierarchies)
+  # These are pre-computed data structures that speed up queries 10-100x
+  # graph-cache-folder: ./data/graphhopper/cache
+
+# Spring Boot Configuration (add to existing application.yml)
+spring:
+  application:
+    name: perundhu-backend
+  
+  # JPA/Hibernate Configuration
+  jpa:
+    hibernate:
+      # Validation alerts table will be created via Flyway migrations
+      # Set to 'validate' in production, 'update' in development
+      ddl-auto: validate
+    
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  
+  # Database Configuration
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # Flyway Configuration for database migrations
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    # Include new validation alerts migration
+    locations: classpath:db/migration
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.perundhu: DEBUG
+    com.graphhopper: INFO  # GraphHopper routing logs
+    org.springframework.web: WARN
+    org.hibernate.SQL: DEBUG
+
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /api

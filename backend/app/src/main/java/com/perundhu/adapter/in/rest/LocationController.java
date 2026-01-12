@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perundhu.application.dto.LocationDTO;
+import com.perundhu.application.dto.LocationGroupDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.OpenStreetMapGeocodingService;
 import com.perundhu.domain.model.Location;
@@ -178,6 +179,47 @@ public class LocationController {
       return ResponseEntity.internalServerError().build();
     }
   }
+
+  /**
+   * Grouped location autocomplete - returns results grouped by city with variants
+   * Perfect for handling multiple location variants like "Salem", "Salem - New Bus Stand", "Salem - Old Bus Stand"
+   */
+  @Operation(summary = "Grouped location autocomplete", description = """
+      Search for locations with results grouped by city/base name.
+      Groups city options, bus stands, and neighborhoods together.
+      Provides better UX when there are multiple variants of the same city.
+      Example: "Salem" returns {cityOption: Salem, busStands: [Salem New Bus Stand, Salem Old Bus Stand]}
+      """)
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Grouped locations found", content = @Content(schema = @Schema(implementation = LocationGroupDTO.class))),
+      @ApiResponse(responseCode = "400", description = "Query too short (minimum 2 characters)"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/autocomplete-grouped")
+  public ResponseEntity<List<LocationGroupDTO>> getLocationAutocompleteGrouped(
+      @Parameter(description = "Search query (minimum 2 characters)", required = true) @RequestParam("q") String query,
+      @Parameter(description = "Language code (en, ta)") @RequestParam(defaultValue = "en") String language) {
+    log.info("Grouped location autocomplete search: '{}' with language: {}", query, language);
+
+    if (query == null || query.trim().length() < 2) {
+      log.warn("Query too short for grouped autocomplete: '{}'", query);
+      return ResponseEntity.badRequest().build();
+    }
+
+    try {
+      List<LocationGroupDTO> groupedResults = busScheduleService.searchLocationsGrouped(query.trim(), language);
+      log.info("Grouped location search for '{}' returned {} groups (language: {})", 
+               query, groupedResults.size(), language);
+      return ResponseEntity.ok(groupedResults);
+    } catch (Exception e) {
+      log.error("Error in grouped location autocomplete search for query: '{}'", query, e);
+      return ResponseEntity.internalServerError().build();
+    }
+  }
+
+  /**
+   * Get locations with disambiguation info for duplicate names
+   */
 
   /**
    * Search for neighborhoods and localities (e.g., Adyar, Besant Nagar, T. Nagar)

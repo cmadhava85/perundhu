@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './RouteContributionList.css';
 import RejectModal from './RejectModal';
-import type { RouteContribution } from '../../types/contributionTypes';
+import type { RouteContribution, ContributionStatus } from '../../types/contributionTypes';
 import AdminService from '../../services/adminService';
 
 /**
@@ -13,7 +13,7 @@ const RouteContributionList: React.FC = () => {
   const [contributions, setContributions] = useState<RouteContribution[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<string>('pending');
+  const [statusFilter, setStatusFilter] = useState<ContributionStatus | 'ALL'>('PENDING');
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [selectedContribution, setSelectedContribution] = useState<RouteContribution | null>(null);
   const [retryingId, setRetryingId] = useState<number | null>(null);
@@ -29,16 +29,12 @@ const RouteContributionList: React.FC = () => {
       setLoading(true);
       let data;
       
-      if (statusFilter === 'all') {
+      if (statusFilter === 'ALL') {
         data = await AdminService.getRouteContributions();
-      } else if (statusFilter === 'pending') {
-        data = await AdminService.getRouteContributions();
-        data = data.filter((c: RouteContribution) => c.status === 'PENDING');
       } else {
         data = await AdminService.getRouteContributions();
-        // Filter by status if not 'all' - convert filter to uppercase
-        const statusUpper = statusFilter.toUpperCase();
-        data = data.filter((c: RouteContribution) => c.status === statusUpper);
+        // Filter by status if not 'ALL'
+        data = data.filter((c: RouteContribution) => c.status === statusFilter);
       }
       
       setContributions(data);
@@ -154,18 +150,18 @@ const RouteContributionList: React.FC = () => {
   };
 
   // Get row class for styling
-  const getRowClass = (status?: string) => {
+  const getRowClass = (status?: ContributionStatus) => {
     if (!status) return '';
-    switch (status.toLowerCase()) {
-      case 'pending':
+    switch (status) {
+      case 'PENDING':
         return 'status-pending';
-      case 'approved':
+      case 'APPROVED':
         return 'status-approved';
-      case 'rejected':
+      case 'REJECTED':
         return 'status-rejected';
-      case 'integration_failed':
+      case 'INTEGRATION_FAILED':
         return 'status-integration-failed';
-      case 'integrated':
+      case 'INTEGRATED':
         return 'status-integrated';
       default:
         return '';
@@ -180,15 +176,14 @@ const RouteContributionList: React.FC = () => {
           <select 
             className="filter-select"
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) => setStatusFilter(e.target.value as ContributionStatus | 'ALL')}
           >
-            <option value="all">{t('admin.contributions.statusAll', 'All')}</option>
-            <option value="pending">{t('admin.contributions.statusPending', 'Pending')}</option>
-            <option value="approved">{t('admin.contributions.statusApproved', 'Approved')}</option>
-            <option value="rejected">{t('admin.contributions.statusRejected', 'Rejected')}</option>
-            <option value="integration_failed">{t('admin.contributions.statusIntegrationFailed', 'Integration Failed')}</option>
-            <option value="pending">{t('admin.contributions.statusPending', 'Pending')}</option>
-            <option value="integrated">{t('admin.contributions.statusIntegrated', 'Integrated')}</option>
+            <option value="ALL">{t('admin.contributions.statusAll', 'All')}</option>
+            <option value="PENDING">{t('admin.contributions.statusPending', 'Pending')}</option>
+            <option value="APPROVED">{t('admin.contributions.statusApproved', 'Approved')}</option>
+            <option value="REJECTED">{t('admin.contributions.statusRejected', 'Rejected')}</option>
+            <option value="INTEGRATION_FAILED">{t('admin.contributions.statusIntegrationFailed', 'Integration Failed')}</option>
+            <option value="INTEGRATED">{t('admin.contributions.statusIntegrated', 'Integrated')}</option>
           </select>
         </div>
       </div>
@@ -237,7 +232,7 @@ const RouteContributionList: React.FC = () => {
                 </td>
                 <td>
                   <div className="action-buttons">
-                    {contribution.status?.toLowerCase() === 'pending' && (
+                    {contribution.status === 'PENDING' && (
                       <>
                         <button 
                           className="btn btn-approve"
@@ -253,9 +248,9 @@ const RouteContributionList: React.FC = () => {
                         </button>
                       </>
                     )}
-                    {(contribution.status?.toLowerCase() === 'integration_failed' || 
-                      contribution.status?.toLowerCase() === 'pending' ||
-                      contribution.status?.toLowerCase() === 'approved') && (
+                    {(contribution.status === 'INTEGRATION_FAILED' || 
+                      contribution.status === 'PENDING' ||
+                      contribution.status === 'APPROVED') && (
                       <button 
                         className="btn btn-retry"
                         onClick={() => contribution.id && handleRetry(contribution.id)}

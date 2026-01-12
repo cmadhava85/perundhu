@@ -8,11 +8,14 @@ type ContributionMethod = 'manual' | 'image' | 'voice' | 'paste' | 'verify' | 'a
 interface ContributionMethodSelectorProps {
   selectedMethod: ContributionMethod;
   onMethodChange: (method: ContributionMethod) => void;
+  // Optional: disable specific methods (e.g., when coming from Add Stops flow)
+  disabledMethods?: ContributionMethod[];
 }
 
 export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProps> = ({
   selectedMethod,
-  onMethodChange
+  onMethodChange,
+  disabledMethods = []
 }) => {
   const { t } = useTranslation();
   const { flags } = useFeatureFlags();
@@ -20,19 +23,26 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
   const handleKeyDown = (method: ContributionMethod) => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      onMethodChange(method);
+      // Ignore if disabled
+      if (!disabledMethods.includes(method)) {
+        onMethodChange(method);
+      }
     }
   };
+
+  const isDisabled = (method: ContributionMethod): boolean => disabledMethods.includes(method);
 
   return (
     <div className="compact-method-selector">
       <div className="method-chips" aria-label={t('method.selectMethod', 'Select contribution method')}>
         {flags.enableImageContribution && (
           <button 
-            className={`method-chip ${selectedMethod === 'image' ? 'active' : ''}`}
-            onClick={() => onMethodChange('image')}
+            className={`method-chip ${selectedMethod === 'image' ? 'active' : ''} ${isDisabled('image') ? 'disabled' : ''}`}
+            onClick={() => !isDisabled('image') && onMethodChange('image')}
             onKeyDown={handleKeyDown('image')}
             aria-pressed={selectedMethod === 'image'}
+            aria-disabled={isDisabled('image')}
+            disabled={isDisabled('image')}
             type="button"
             title={t('method.image.title', 'Upload an image of the bus schedule')}
           >
@@ -57,10 +67,12 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
 
         {flags.enableManualContribution && (
           <button 
-            className={`method-chip ${selectedMethod === 'manual' ? 'active' : ''}`}
-            onClick={() => onMethodChange('manual')}
+            className={`method-chip ${selectedMethod === 'manual' ? 'active' : ''} ${isDisabled('manual') ? 'disabled' : ''}`}
+            onClick={() => !isDisabled('manual') && onMethodChange('manual')}
             onKeyDown={handleKeyDown('manual')}
             aria-pressed={selectedMethod === 'manual'}
+            aria-disabled={isDisabled('manual')}
+            disabled={isDisabled('manual')}
             type="button"
             title={t('method.manual.title', 'Manually enter route information')}
           >
@@ -71,10 +83,12 @@ export const ContributionMethodSelector: React.FC<ContributionMethodSelectorProp
 
         {flags.enablePasteContribution && (
           <button 
-            className={`method-chip ${selectedMethod === 'paste' ? 'active' : ''}`}
-            onClick={() => onMethodChange('paste')}
+            className={`method-chip ${selectedMethod === 'paste' ? 'active' : ''} ${isDisabled('paste') ? 'disabled' : ''}`}
+            onClick={() => !isDisabled('paste') && onMethodChange('paste')}
             onKeyDown={handleKeyDown('paste')}
             aria-pressed={selectedMethod === 'paste'}
+            aria-disabled={isDisabled('paste')}
+            disabled={isDisabled('paste')}
             type="button"
             title={t('method.paste.title', 'Paste route information')}
           >

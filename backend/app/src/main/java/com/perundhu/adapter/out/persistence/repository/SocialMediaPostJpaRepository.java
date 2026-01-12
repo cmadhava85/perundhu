@@ -1,6 +1,6 @@
 package com.perundhu.adapter.out.persistence.repository;
 
-import com.perundhu.adapter.out.persistence.entity.SocialMediaPostJpaEntity;
+import com.perundhu.infrastructure.persistence.entity.SocialMediaPostJpaEntity;
 import com.perundhu.domain.model.SocialMediaPlatform;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

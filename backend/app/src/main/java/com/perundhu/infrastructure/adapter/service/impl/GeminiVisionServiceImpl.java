@@ -404,6 +404,9 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
         }
       } else if (line.startsWith("TYPE:")) {
         result.put("boardType", line.substring(5).trim());
+      } else if (line.startsWith("BIDIRECTIONAL:")) {
+        String bidirectional = line.substring(14).trim();
+        result.put("bidirectional", bidirectional.equalsIgnoreCase("true"));
       } else if (line.startsWith("TIMES:")) {
         String timesStr = line.substring(6).trim();
         if (!timesStr.isEmpty() && !timesStr.equals("-")) {

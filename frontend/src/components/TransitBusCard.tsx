@@ -9,7 +9,6 @@ import { BusReviewSection } from './review';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import SwipeableCard from './design-system/SwipeableCard';
 import { useToast } from './design-system/Toast';
-import '../styles/transit-design-system.css';
 import '../styles/transit-bus-card.css';
 
 interface TransitBusCardProps {

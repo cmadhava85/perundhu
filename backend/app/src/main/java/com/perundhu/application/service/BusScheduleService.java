@@ -142,6 +142,17 @@ public interface BusScheduleService {
     List<Location> searchLocationsByName(String namePattern);
 
     /**
+     * Search locations grouped by city/base name for better UX
+     * Groups city, bus stands, and neighborhoods together
+     * Example: "Salem" returns {city: Salem, busStands: [Salem New, Salem Old]}
+     * 
+     * @param query The search query
+     * @param languageCode Language code for translations (e.g., "ta" for Tamil)
+     * @return Grouped location search response
+     */
+    java.util.List<com.perundhu.application.dto.LocationGroupDTO> searchLocationsGrouped(String query, String languageCode);
+
+    /**
      * Discover intermediate bus stops between two locations using OSM data
      * 
      * @param fromLocationId Starting location ID

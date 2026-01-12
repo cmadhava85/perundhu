@@ -1,0 +1,96 @@
+package com.perundhu.adapter.out.persistence.contribution;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+/**
+ * JPA entity for route validation alerts.
+ * Stores validation results that need admin review.
+ */
+@Entity
+@Table(name = "route_validation_alerts", indexes = {
+    @Index(name = "idx_contribution_id", columnList = "contribution_id"),
+    @Index(name = "idx_status_created", columnList = "status, created_at DESC"),
+    @Index(name = "idx_validation_type", columnList = "validation_type"),
+    @Index(name = "idx_confidence_score", columnList = "confidence_score"),
+    @Index(name = "idx_reviewed_by", columnList = "reviewed_by")
+})
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class RouteValidationAlertJpaEntity {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
+
+  @Column(nullable = false)
+  private UUID contributionId;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private ValidationType validationType;
+
+  @Column(nullable = false)
+  private Integer confidenceScore; // 0-100
+
+  @Column(length = 500)
+  private String expectedRange;
+
+  @Column(length = 500)
+  private String actualValue;
+
+  @Column(columnDefinition = "TEXT")
+  private String issueDescription;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private AlertStatus status;
+
+  @Column(columnDefinition = "TEXT")
+  private String adminNotes;
+
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime createdAt;
+
+  @Column(nullable = false)
+  private LocalDateTime updatedAt;
+
+  @Column
+  private LocalDateTime reviewedAt;
+
+  @Column(length = 100)
+  private String reviewedBy;
+
+  @PrePersist
+  protected void onCreate() {
+    createdAt = LocalDateTime.now();
+    updatedAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  protected void onUpdate() {
+    updatedAt = LocalDateTime.now();
+  }
+
+  public enum AlertStatus {
+    PENDING,
+    APPROVED,
+    DISMISSED,
+    REJECTED,
+    ESCALATED
+  }
+
+  public enum ValidationType {
+    JOURNEY_DURATION,
+    STOP_SEQUENCE,
+    SEGMENT_SPEED
+  }
+}
