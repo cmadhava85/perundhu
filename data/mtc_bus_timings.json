@@ -1,0 +1,1182 @@
+[
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "ANNA NAGAR EAST",
+    "origin_name": "ANNA NAGAR EAST",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:23:44.496313"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "ANNA NAGAR EAST",
+    "origin_name": "ANNA NAGAR EAST",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:23:44.496313"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "ANNA NAGAR EAST",
+    "origin_name": "ANNA NAGAR EAST",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:23:44.496313"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "ANNA NAGAR EAST",
+    "origin_name": "ANNA NAGAR EAST",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "09",
+    "scraped_at": "2026-01-12T13:23:44.496313"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "ANNA NAGAR EAST",
+    "origin_name": "ANNA NAGAR EAST",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:23:44.496313"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "09",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "11",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "12",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "15",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "17",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:23:56.573691"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ANNA NAGAR EAST",
+    "destination_name": "ANNA NAGAR EAST",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:24:08.285222"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ANNA NAGAR EAST",
+    "destination_name": "ANNA NAGAR EAST",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:08.285222"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ANNA NAGAR EAST",
+    "destination_name": "ANNA NAGAR EAST",
+    "timing": "20",
+    "scraped_at": "2026-01-12T13:24:08.285222"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ANNA NAGAR EAST",
+    "destination_name": "ANNA NAGAR EAST",
+    "timing": "21",
+    "scraped_at": "2026-01-12T13:24:08.285222"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:24:12.359067"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:24:12.359067"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "06",
+    "scraped_at": "2026-01-12T13:24:12.359067"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:24:12.359067"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "09",
+    "scraped_at": "2026-01-12T13:24:12.359067"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "06",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "12",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "15",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "16",
+    "scraped_at": "2026-01-12T13:24:16.450597"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18",
+    "scraped_at": "2026-01-12T13:24:27.873851"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:31.940739"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "20",
+    "scraped_at": "2026-01-12T13:24:31.940739"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "21",
+    "scraped_at": "2026-01-12T13:24:31.940739"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "00",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "01",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "02",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "06",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "07",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "09",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "10",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "11",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "12",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "15",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "16",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "17",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "18",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "20",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "21",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "22",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "23",
+    "scraped_at": "2026-01-12T13:24:35.994799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "03",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "17",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "18",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "20",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "21",
+    "scraped_at": "2026-01-12T13:24:40.052799"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "03",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "18",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "20",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "21",
+    "scraped_at": "2026-01-12T13:24:51.818627"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "00",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "01",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "02",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "06",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "07",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "09",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "11",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "12",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "15",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "17",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "18",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "20",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "21",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "22",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "23",
+    "scraped_at": "2026-01-12T13:24:55.873053"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "THIRUVOTRIYUR",
+    "origin_name": "THIRUVOTRIYUR",
+    "destination_value": "TOLLGATE",
+    "destination_name": "TOLLGATE",
+    "timing": "19",
+    "scraped_at": "2026-01-12T13:24:59.929472"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "04",
+    "scraped_at": "2026-01-12T13:25:10.740543"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "03",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "05",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "06",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "07",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "08",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "12",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "13",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  },
+  {
+    "route_number": "101",
+    "route_name": "101",
+    "origin_value": "TOLLGATE",
+    "origin_name": "TOLLGATE",
+    "destination_value": "THIRUVOTRIYUR",
+    "destination_name": "THIRUVOTRIYUR",
+    "timing": "14",
+    "scraped_at": "2026-01-12T13:25:14.798856"
+  }
+]

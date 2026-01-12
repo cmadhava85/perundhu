@@ -31,6 +31,7 @@ import com.perundhu.domain.port.FileStorageService;
 import com.perundhu.domain.port.GeminiVisionService;
 import com.perundhu.domain.port.ImageContributionOutputPort;
 import com.perundhu.domain.port.RouteContributionOutputPort;
+import com.perundhu.application.service.ImageProcessor;
 
 /**
  * Unit tests for ImageContributionProcessingService.
@@ -62,6 +63,9 @@ class ImageContributionProcessingServiceTest {
   private GeminiVisionService geminiVisionService;
 
   @Mock
+  private ImageProcessor imageProcessor;
+
+  @Mock
   private ContributionProcessingService contributionProcessingService;
 
   private ImageContributionProcessingService imageContributionProcessingService;
@@ -74,6 +78,7 @@ class ImageContributionProcessingServiceTest {
         routeContributionOutputPort,
         locationResolutionService,
         geminiVisionService,
+        imageProcessor,
         contributionProcessingService);
   }
 
