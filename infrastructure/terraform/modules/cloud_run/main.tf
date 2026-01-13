@@ -136,6 +136,8 @@ resource "google_cloud_run_service" "backend" {
           value = "INFO"
         }
 
+        # COST OPTIMIZATION: Reduced pool size for preprod
+        # Virtual threads + small pool = efficient resource usage
         env {
           name  = "HIKARI_MAX_POOL_SIZE"
           value = "5"
@@ -143,7 +145,7 @@ resource "google_cloud_run_service" "backend" {
 
         env {
           name  = "HIKARI_MIN_IDLE"
-          value = "2"
+          value = "1"
         }
 
         # Health check

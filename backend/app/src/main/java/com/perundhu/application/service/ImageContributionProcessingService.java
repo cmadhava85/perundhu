@@ -59,24 +59,25 @@ public class ImageContributionProcessingService implements ImageContributionInpu
     /**
      * Process an uploaded bus schedule image
      * This is the main entry point for image contribution processing
-     * PHASE 1 OPTIMIZATION: Generate and store thumbnails to reduce image transfer by 90%
+     * PHASE 1 OPTIMIZATION: Generate and store thumbnails to reduce image transfer
+     * by 90%
      */
     public ImageContribution processImageContribution(
             MultipartFile imageFile,
             Map<String, String> metadata,
             String userId) {
 
-        logger.info("Starting image contribution processing for user: {} (original size: {} bytes)", 
-            userId, imageFile.getSize());
+        logger.info("Starting image contribution processing for user: {} (original size: {} bytes)",
+                userId, imageFile.getSize());
 
         try {
             // 1. Generate thumbnail from original image bytes (PHASE 1 optimization)
             byte[] originalBytes = imageFile.getBytes();
             byte[] thumbnail = imageProcessor.generateStandardThumbnail(originalBytes);
             logger.info("Thumbnail generated: {} bytes → {} bytes (reduction: {}%)",
-                originalBytes.length, thumbnail.length,
-                (100 * (originalBytes.length - thumbnail.length) / originalBytes.length));
-            
+                    originalBytes.length, thumbnail.length,
+                    (100 * (originalBytes.length - thumbnail.length) / originalBytes.length));
+
             // 2. Validate and store the image file
             FileUpload fileUpload = convertToFileUpload(imageFile);
             String imageUrl = fileStorageService.storeImageFile(fileUpload, userId);
@@ -237,7 +238,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         try {
             List<RouteContribution> routes = createRouteContributionsFromGeminiData(contribution, extractedData);
 
-                if (!routes.isEmpty()) {
+            if (!routes.isEmpty()) {
                 List<RouteContribution> savedRoutes = new ArrayList<>();
                 List<String> createdRouteIds = new ArrayList<>();
                 for (RouteContribution route : routes) {
@@ -248,9 +249,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 // Do NOT auto-integrate. Require admin approval.
                 contribution.setStatus("MANUAL_REVIEW_NEEDED");
                 contribution.setValidationMessage(
-                    String.format(
-                        "[Gemini AI] Extracted %d route(s). Awaiting admin approval. Route IDs: %s",
-                        savedRoutes.size(), String.join(", ", createdRouteIds)));
+                        String.format(
+                                "[Gemini AI] Extracted %d route(s). Awaiting admin approval. Route IDs: %s",
+                                savedRoutes.size(), String.join(", ", createdRouteIds)));
 
                 contribution.setProcessedDate(LocalDateTime.now());
 
@@ -391,7 +392,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
         try {
             String routeNumber = (String) routeData.get("routeNumber");
-            
+
             // Extract via/stops - can be either a String or List<String>
             List<String> viaStops = new ArrayList<>();
             Object viaObj = routeData.get("via");
@@ -404,7 +405,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             } else if (viaObj instanceof String viaStr && !viaStr.isBlank()) {
                 viaStops.add(viaStr);
             }
-            
+
             // Also check for "intermediateStops" field
             Object intermediateStopsObj = routeData.get("intermediateStops");
             if (intermediateStopsObj instanceof List<?> stopsList && viaStops.isEmpty()) {
@@ -439,13 +440,14 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             // Generate route group ID for grouping related schedules
             String routeGroupId = generateRouteGroupId(validatedFrom, validatedTo, viaStops);
 
-            // Create StopContribution objects from stops data (with per-stop timing if available)
+            // Create StopContribution objects from stops data (with per-stop timing if
+            // available)
             List<StopContribution> stops = new ArrayList<>();
-            
+
             // First, check for the new "stops" field with detailed timing info
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> stopsWithTiming = (List<Map<String, Object>>) routeData.get("stops");
-            
+
             if (stopsWithTiming != null && !stopsWithTiming.isEmpty()) {
                 // Use detailed stop information with per-stop arrival/departure times
                 int stopOrder = 1;
@@ -453,7 +455,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     String stopName = (String) stopData.get("name");
                     String arrivalTime = (String) stopData.get("arrivalTime");
                     String departureTime = (String) stopData.get("departureTime");
-                    
+
                     if (stopName != null && !stopName.isBlank()) {
                         String validatedStopName = validateAndResolveLocation(stopName);
                         if (validatedStopName != null) {
@@ -496,8 +498,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
 
                     List<String> cleanedStops = cleanViaStops(viaStops);
                     String viaInfo = !cleanedStops.isEmpty() ? "Via: " + String.join(", ", cleanedStops) : null;
-                    
-                        RouteContribution route = RouteContribution.builder()
+
+                    RouteContribution route = RouteContribution.builder()
                             .id(UUID.randomUUID().toString())
                             .userId(contribution.getUserId())
                             .busNumber(routeNumber != null ? routeNumber : "UNKNOWN")
@@ -511,9 +513,10 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             .sourceImageId(contribution.getId())
                             .routeGroupId(routeGroupId)
                             .stops(!stops.isEmpty() ? stops : null)
-                                .additionalNotes(
-                                    String.format("[Gemini AI] Extracted schedule %d of %d from image: %s. Pending admin approval",
-                                        scheduleIndex, totalSchedules, contribution.getId()))
+                            .additionalNotes(
+                                    String.format(
+                                            "[Gemini AI] Extracted schedule %d of %d from image: %s. Pending admin approval",
+                                            scheduleIndex, totalSchedules, contribution.getId()))
                             .build();
 
                     routes.add(route);
@@ -583,7 +586,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             List<String> cleanedStops = cleanViaStops(viaStops);
             String viaInfo = !cleanedStops.isEmpty() ? "Via: " + String.join(", ", cleanedStops) : null;
 
-                return RouteContribution.builder()
+            return RouteContribution.builder()
                     .id(UUID.randomUUID().toString())
                     .userId(contribution.getUserId())
                     .busNumber(routeNumber != null ? routeNumber : "UNKNOWN")
@@ -595,8 +598,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                     .status("PENDING")
                     .sourceImageId(contribution.getId())
                     .routeGroupId(routeGroupId)
-                        .additionalNotes(
-                            "[Gemini AI] Extracted from high-confidence image processing: " + contribution.getId() + ". Pending admin approval")
+                    .additionalNotes(
+                            "[Gemini AI] Extracted from high-confidence image processing: " + contribution.getId()
+                                    + ". Pending admin approval")
                     .build();
 
         } catch (Exception e) {
@@ -945,8 +949,8 @@ public class ImageContributionProcessingService implements ImageContributionInpu
             }
 
             if (routesArray != null && !routesArray.isEmpty()) {
-                logger.info("Processing {} routes from Gemini data for expansion (bidirectional: {})", 
-                    routesArray.size(), isBidirectional);
+                logger.info("Processing {} routes from Gemini data for expansion (bidirectional: {})",
+                        routesArray.size(), isBidirectional);
 
                 for (Map<String, Object> routeData : routesArray) {
                     String routeFrom = (String) routeData.get("fromLocation");
@@ -1042,7 +1046,7 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                             RouteContribution reverseRoute = createRouteContributionWithDepartureTime(
                                     contribution,
                                     busNumber,
-                                    validatedTo,  // Swap: destination becomes origin
+                                    validatedTo, // Swap: destination becomes origin
                                     validatedFrom, // Swap: origin becomes destination
                                     reverseVia,
                                     null, // operatorName
@@ -1274,11 +1278,12 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .departureTime(departureTime) // Set the specific departure time
                 .arrivalTime(estimatedArrival) // Set the estimated arrival time
                 .submissionDate(LocalDateTime.now())
-            .status("PENDING")
+                .status("PENDING")
                 .sourceImageId(imageContribution.getId()) // Track source image
                 .routeGroupId(routeGroupId) // Group related schedules
                 .additionalNotes(
-                    "Auto-created from image contribution: " + imageContribution.getId() + " (arrival estimated). Pending admin approval");
+                        "Auto-created from image contribution: " + imageContribution.getId()
+                                + " (arrival estimated). Pending admin approval");
 
         // Add via information
         if (via != null && !via.isBlank()) {
@@ -1357,8 +1362,9 @@ public class ImageContributionProcessingService implements ImageContributionInpu
                 .fromLocationName(fromLocation)
                 .toLocationName(toLocation)
                 .submissionDate(LocalDateTime.now())
-            .status("PENDING")
-                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId() + ". Pending admin approval");
+                .status("PENDING")
+                .additionalNotes("Auto-created from image contribution: " + imageContribution.getId()
+                        + ". Pending admin approval");
 
         // Add operator information if available
         if (operatorName != null && !operatorName.isBlank()) {
@@ -1429,10 +1435,10 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         try {
             // Read bytes from multipart file first to avoid stream consumption issues
             byte[] fileBytes = multipartFile.getBytes();
-            
+
             // Create a ByteArrayInputStream wrapper instead of using the original stream
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileBytes);
-            
+
             return new FileUpload(
                     multipartFile.getOriginalFilename(),
                     multipartFile.getContentType(),
@@ -1608,15 +1614,15 @@ public class ImageContributionProcessingService implements ImageContributionInpu
         if (rawStops == null || rawStops.isEmpty()) {
             return new ArrayList<>();
         }
-        
+
         return rawStops.stream()
-            .filter(java.util.Objects::nonNull)
-            .map(String::trim)
-            .map(s -> s.replaceAll("^[,;:]*\\s*", ""))        // Remove leading punctuation
-            .map(s -> s.replaceAll("[,;:]*\\s*$", ""))        // Remove trailing punctuation
-            .filter(s -> !s.isEmpty())
-            .filter(s -> !s.matches("^[-N/A?]*$"))            // Filter out placeholders
-            .distinct()
-            .collect(java.util.stream.Collectors.toList());
+                .filter(java.util.Objects::nonNull)
+                .map(String::trim)
+                .map(s -> s.replaceAll("^[,;:]*\\s*", "")) // Remove leading punctuation
+                .map(s -> s.replaceAll("[,;:]*\\s*$", "")) // Remove trailing punctuation
+                .filter(s -> !s.isEmpty())
+                .filter(s -> !s.matches("^[-N/A?]*$")) // Filter out placeholders
+                .distinct()
+                .collect(java.util.stream.Collectors.toList());
     }
 }

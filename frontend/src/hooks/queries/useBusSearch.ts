@@ -183,9 +183,10 @@ export function useBusSearch({
     // Only enable when we have valid positive location IDs (negative IDs indicate user-typed text)
     enabled: enabled && !!fromLocationId && !!toLocationId && fromLocationId > 0 && toLocationId > 0,
     
-    // Custom options for bus search
-    staleTime: 2 * 60 * 1000, // 2 minutes - bus schedules don't change frequently
+    // PHASE 2 OPTIMIZATION: Enhanced caching for better performance
+    staleTime: 5 * 60 * 1000, // 5 minutes - bus schedules don't change frequently
     gcTime: 10 * 60 * 1000, // 10 minutes cache
+    refetchOnWindowFocus: false, // Avoid unnecessary refetches
     
     // Error handling - reduced retries to prevent excessive API calls
     retry: (failureCount, error) => {

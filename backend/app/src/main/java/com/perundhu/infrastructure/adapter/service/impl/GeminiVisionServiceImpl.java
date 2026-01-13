@@ -36,6 +36,10 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.retry.annotation.Retry;
 
+import org.springframework.cache.annotation.Cacheable;
+
+import static com.perundhu.infrastructure.config.GeminiCacheConfig.GEMINI_OCR_CACHE;
+
 /**
  * Implementation of GeminiVisionService using Google's Gemini API.
  * 
@@ -125,6 +129,7 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
   @CircuitBreaker(name = "gemini", fallbackMethod = "extractBusScheduleBase64Fallback")
   @Bulkhead(name = "gemini")
   @Retry(name = "externalApi")
+  @Cacheable(value = GEMINI_OCR_CACHE, key = "#base64ImageData.hashCode() + '-' + #mimeType", unless = "#result == null || #result.containsKey('error')")
   public Map<String, Object> extractBusScheduleFromBase64(String base64ImageData, String mimeType) {
     if (!isAvailable()) {
       log.warn("Gemini Vision service is not available");
@@ -132,6 +137,8 @@ public class GeminiVisionServiceImpl implements GeminiVisionService {
     }
 
     try {
+      log.info("Calling Gemini API (cache miss) - image hash: {}", base64ImageData.hashCode());
+
       // Build the Gemini API request
       String requestBody = buildGeminiRequest(base64ImageData, mimeType);
 

@@ -28,6 +28,9 @@ export default defineConfig({
           'ui-vendor': ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
           // i18n chunk
           'i18n-vendor': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+          // PHASE 2 OPTIMIZATION: Separate charts and query vendors
+          'charts-vendor': ['recharts'],
+          'query-vendor': ['@tanstack/react-query'],
         },
         // Optimize asset file names
         assetFileNames: (assetInfo) => {

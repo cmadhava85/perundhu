@@ -443,6 +443,11 @@ class ImageContributionProcessingServiceTest {
       metadata.put("description", "Bus timing board");
       metadata.put("location", "Sivakasi Bus Stand");
 
+      // Mock thumbnail generation
+      byte[] thumbnailBytes = "thumbnail".getBytes();
+      when(imageProcessor.generateStandardThumbnail(any(byte[].class)))
+          .thenReturn(thumbnailBytes);
+
       when(fileStorageService.storeImageFile(any(), anyString()))
           .thenReturn("https://storage.example.com/images/bus-schedule.jpg");
       when(imageContributionOutputPort.save(any(ImageContribution.class)))
@@ -472,6 +477,11 @@ class ImageContributionProcessingServiceTest {
           "fake image content".getBytes());
 
       Map<String, String> metadata = new HashMap<>();
+
+      // Mock thumbnail generation (succeeds before storage fails)
+      byte[] thumbnailBytes = "thumbnail".getBytes();
+      when(imageProcessor.generateStandardThumbnail(any(byte[].class)))
+          .thenReturn(thumbnailBytes);
 
       when(fileStorageService.storeImageFile(any(), anyString()))
           .thenThrow(new RuntimeException("Storage unavailable"));
