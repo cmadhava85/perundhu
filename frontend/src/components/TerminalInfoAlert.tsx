@@ -1,5 +1,4 @@
 import React from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { MapPin, Info } from 'lucide-react';
 
 interface TerminalInfoAlertProps {
@@ -19,25 +18,29 @@ export const TerminalInfoAlert: React.FC<TerminalInfoAlertProps> = ({ terminal }
   };
 
   return (
-    <Alert className="mb-4 bg-blue-50 border-blue-200">
-      <Info className="h-4 w-4 text-blue-600" />
-      <AlertTitle className="text-blue-900 font-semibold">
-        Bus Terminal Information
-      </AlertTitle>
-      <AlertDescription className="text-blue-800">
-        <p className="mb-2">{terminal.message}</p>
-        <div className="mt-2 space-y-1">
-          <p className="font-medium">{terminal.displayName}</p>
-          <p className="text-sm">{terminal.address}</p>
-          <button
-            onClick={handleOpenMap}
-            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm mt-2"
-          >
-            <MapPin className="h-3 w-3" />
-            View on Map
-          </button>
+    <div className="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="flex gap-3">
+        <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+        <div className="flex-1">
+          <h3 className="text-blue-900 font-semibold mb-2">
+            Bus Terminal Information
+          </h3>
+          <div className="text-blue-800">
+            <p className="mb-2">{terminal.message}</p>
+            <div className="mt-2 space-y-1">
+              <p className="font-medium">{terminal.displayName}</p>
+              <p className="text-sm">{terminal.address}</p>
+              <button
+                onClick={handleOpenMap}
+                className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm mt-2"
+              >
+                <MapPin className="h-3 w-3" />
+                View on Map
+              </button>
+            </div>
+          </div>
         </div>
-      </AlertDescription>
-    </Alert>
+      </div>
+    </div>
   );
 };
