@@ -81,8 +81,10 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
     // If this is a read-only API call from an allowed frontend origin,
     // skip IP-based blocking to avoid false positives behind Cloud Run proxies.
-    // Many browsers omit Origin header for simple GET image requests, but include Referer.
-    // Accept either Origin or Referer for allowed frontend domains to avoid false 403 blocks.
+    // Many browsers omit Origin header for simple GET image requests, but include
+    // Referer.
+    // Accept either Origin or Referer for allowed frontend domains to avoid false
+    // 403 blocks.
     if (isReadOnlyMethod(method) && isApiPath(requestUri) && (isAllowedOrigin(origin) || isAllowedReferer(referer))) {
       filterChain.doFilter(request, response);
       return;
@@ -188,6 +190,11 @@ public class IpFilteringFilter extends OncePerRequestFilter {
   }
 
   private boolean isIpBlocked(String clientIp, String userAgent, String requestUri) {
+    // Allow localhost and local development IPs
+    if (isLocalhost(clientIp) || "dev".equals(activeProfile)) {
+      return false;
+    }
+
     // Check blocked IP patterns
     for (Pattern pattern : BLOCKED_IP_PATTERNS) {
       if (pattern.matcher(clientIp).matches()) {
@@ -215,6 +222,19 @@ public class IpFilteringFilter extends OncePerRequestFilter {
 
     // Check request frequency
     return isHighFrequencyRequest(clientIp);
+  }
+
+  private boolean isLocalhost(String ip) {
+    if (ip == null) {
+      return false;
+    }
+    // Check for various localhost formats
+    return ip.equals("127.0.0.1") ||
+        ip.equals("::1") ||
+        ip.equals("0:0:0:0:0:0:0:1") ||
+        ip.equals("localhost") ||
+        ip.startsWith("127.") ||
+        ip.equals("0.0.0.0");
   }
 
   private boolean isSuspiciousUserAgent(String userAgent) {

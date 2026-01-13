@@ -276,6 +276,15 @@ dependencies {
     implementation 'io.github.resilience4j:resilience4j-bulkhead:2.2.0'
     implementation 'io.github.resilience4j:resilience4j-timelimiter:2.2.0'
     
+    // ============================================
+    // JAVA 21 VIRTUAL THREADS SUPPORT
+    // ============================================
+    // Virtual thread support is built-in to Java 21
+    // These dependencies add monitoring and metrics capabilities
+    
+    // Micrometer for metrics and monitoring
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.12.0'
+    
 }
 
 flyway {
@@ -380,6 +389,25 @@ tasks.withType(JavaCompile) {
     // Add source/target compatibility to ensure consistent compilation
     options.release = 21
     // Java 21 LTS - enables virtual threads, record patterns, pattern matching for switch
+    // Enable preview features for StructuredTaskScope
+    options.compilerArgs << '--enable-preview'
+}
+
+// Java 21 Virtual Thread Configuration
+tasks.withType(JavaExec) {
+    // Enable Java 21 features for app execution
+    jvmArgs = [
+        '--enable-preview',
+        '-Dspring.threads.virtual.enabled=true',
+        '-Djdk.jfr.enabled=true',
+        '-XX:+UnlockDiagnosticVMOptions',
+        '-XX:+DebugNonSafepoints'
+    ]
+}
+
+tasks.withType(Test) {
+    // Enable preview features for tests as well
+    jvmArgs += ['--enable-preview']
 }
 
 tasks.withType(Test) {
