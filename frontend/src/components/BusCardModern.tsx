@@ -253,8 +253,8 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
                 };
                 
                 // Determine if this is origin or destination by name comparison
-                const isOriginStop = stop.name.toLowerCase().includes(bus.origin?.toLowerCase() || '');
-                const isDestStop = stop.name.toLowerCase().includes(bus.destination?.toLowerCase() || '');
+                const isOriginStop = stop.name.toLowerCase().includes(bus.from?.toLowerCase() || '');
+                const isDestStop = stop.name.toLowerCase().includes(bus.to?.toLowerCase() || '');
                 
                 let stopColor = '#6B7280'; // default gray
                 if (isOriginStop) stopColor = '#10B981'; // green for origin

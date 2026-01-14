@@ -343,6 +343,41 @@ jobs:
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Wait for Cloud SQL Instance to Start
+        run: |
+          echo "⏳ Waiting for Cloud SQL instance to be RUNNABLE..."
+          max_attempts=60
+          attempt=0
+          
+          while [ $attempt -lt $max_attempts ]; do
+            status=$(gcloud sql instances describe ${{ env.SQL_INSTANCE_NAME }} \
+              --project=${{ env.PROJECT_ID }} \
+              --format='value(state)' 2>/dev/null || echo "UNKNOWN")
+            
+            echo "  [$((attempt+1))/$max_attempts] SQL Instance State: $status"
+            
+            if [ "$status" = "RUNNABLE" ]; then
+              echo "✅ Cloud SQL instance is RUNNABLE"
+              break
+            fi
+            
+            if [ "$status" = "FAILED" ] || [ "$status" = "UNKNOWN" ]; then
+              echo "❌ Cloud SQL instance failed or unreachable"
+              exit 1
+            fi
+            
+            attempt=$((attempt+1))
+            sleep 2
+          done
+          
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ Timeout waiting for Cloud SQL instance to be ready"
+            exit 1
+          fi
+          
+          echo "✅ Cloud SQL instance is ready for deployment"
+          sleep 5  # Extra buffer to ensure instance is fully initialized
+
       - name: Deploy Backend
         run: |
           gcloud run deploy perundhu-backend-preprod \
