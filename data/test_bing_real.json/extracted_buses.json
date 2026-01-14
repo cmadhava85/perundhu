@@ -1,0 +1,236 @@
+[
+  {
+    "service_code": "IMGTRICHE0630",
+    "route_number": "",
+    "corporation": "UNKNOWN",
+    "origin": "TRICHY",
+    "destination": "CHENNAI",
+    "departure_time": "06:30",
+    "arrival_time": "09:45",
+    "duration": "UNKNOWN",
+    "available_seats": "UNKNOWN",
+    "bus_type": "STANDARD",
+    "fare": "UNKNOWN",
+    "journey_date": "14/01/2026",
+    "stops": [
+      {
+        "city": "0RD1NARY 3X2 5EATER PAIS",
+        "landmark": "0RD1NARY 3X2 5EATER PAIS",
+        "time": "06:30"
+      }
+    ],
+    "extracted_at": "2026-01-14T07:39:33.985945",
+    "source": "Google Images",
+    "image_source": "https://c1.staticflickr.com/1/334/18871722824_061f8a85f9_b.jpg",
+    "confidence_score": 0.7,
+    "bidirectional": false
+  },
+  {
+    "service_code": "IMGTRIMAD1400",
+    "route_number": "",
+    "corporation": "UNKNOWN",
+    "origin": "TRICHY",
+    "destination": "MADURAI",
+    "departure_time": "14:00",
+    "arrival_time": "16:00",
+    "duration": "UNKNOWN",
+    "available_seats": "UNKNOWN",
+    "bus_type": "STANDARD",
+    "fare": "UNKNOWN",
+    "journey_date": "14/01/2026",
+    "stops": [
+      {
+        "city": "791 UD 1 CHENNA 1 PAIAXKAD, C0",
+        "landmark": "791 UD 1 CHENNA 1 PAIAXKAD, C0IMBAT0RE, 5A1EM",
+        "time": "14:00"
+      },
+      {
+        "city": "790 UCL 1 P0NDICNERRY 1 1 PARA",
+        "landmark": "790 UCL 1 P0NDICNERRY 1 1 PARAXKAD, C0IMNAT0RE, NE",
+        "time": "16:00"
+      },
+      {
+        "city": "770 UC 1 VEMANXANNI 1 1 PA1AXK",
+        "landmark": "770 UC 1 VEMANXANNI 1 1 PA1AXKAD, C0IM0AT0RE, TRIC",
+        "time": "18:00"
+      },
+      {
+        "city": "729 UD 1 5A1EM 1 THRISSUR, PAI",
+        "landmark": "729 UD 1 5A1EM 1 THRISSUR, PAIAXKAD, C0IMBAT0RE",
+        "time": "19:00"
+      },
+      {
+        "city": "729 UD 1 5A1EM 1 THRISSUR, PA‘",
+        "landmark": "729 UD 1 5A1EM 1 THRISSUR, PA‘AXKAD, C0IMPAT0RE",
+        "time": "19:45"
+      },
+      {
+        "city": "736 S0 TUTIC0RIN 1 AIAPPUZNA, ",
+        "landmark": "736 S0 TUTIC0RIN 1 AIAPPUZNA, K011AM, THENKAS:",
+        "time": "20:00"
+      },
+      {
+        "city": "730 50 1 MADURAI 1 PAIAXKAD, P",
+        "landmark": "730 50 1 MADURAI 1 PAIAXKAD, PA'AN’, DINDUGA1",
+        "time": "20:15"
+      },
+      {
+        "city": "723 U0 1 5A1EM 1 THRISSUR, PAI",
+        "landmark": "723 U0 1 5A1EM 1 THRISSUR, PAIAXKAD, C0IM0AT0RE",
+        "time": "20:30"
+      },
+      {
+        "city": "726 S0 MADURAI 1 K0TTAYAM, KUM",
+        "landmark": "726 S0 MADURAI 1 K0TTAYAM, KUMI1Y, THEN!",
+        "time": "20:30"
+      },
+      {
+        "city": "730 50 1 5HENG0TTA: 1 1 PA1AKK",
+        "landmark": "730 50 1 5HENG0TTA: 1 1 PA1AKKAD. A1AN, DINDUGA1, ",
+        "time": "20:45"
+      },
+      {
+        "city": "736 50 1 TRUNEVED 1 1 AIAPPUZN",
+        "landmark": "736 50 1 TRUNEVED 1 1 AIAPPUZNA, K011AM, THENKAS)",
+        "time": "21:00"
+      }
+    ],
+    "extracted_at": "2026-01-14T07:39:41.813602",
+    "source": "Google Images",
+    "image_source": "http://1.bp.blogspot.com/-QIGMfAzWPlg/UW-CbzQFbAI/AAAAAAAABDY/YdPx2x5jnLk/s1600/setc-ernakulam-timings.gif",
+    "confidence_score": 0.8,
+    "bidirectional": false
+  },
+  {
+    "service_code": "IMGTRIMAD1400",
+    "route_number": "",
+    "corporation": "UNKNOWN",
+    "origin": "TRICHY",
+    "destination": "MADURAI",
+    "departure_time": "14:00",
+    "arrival_time": "16:00",
+    "duration": "UNKNOWN",
+    "available_seats": "UNKNOWN",
+    "bus_type": "STANDARD",
+    "fare": "UNKNOWN",
+    "journey_date": "14/01/2026",
+    "stops": [
+      {
+        "city": "791 UD 1 CHENNA: 1 PAIAXKAD, C",
+        "landmark": "791 UD 1 CHENNA: 1 PAIAXKAD, C0IMBAT0RE, 5AIEM",
+        "time": "14:00"
+      },
+      {
+        "city": "790 UC 1 P0NDICNERRY 1 1 PARAX",
+        "landmark": "790 UC 1 P0NDICNERRY 1 1 PARAXKAD, C0IMNAT0RE, NEY",
+        "time": "16:00"
+      },
+      {
+        "city": "770 UC 1 VEMANXANNI 1 1 PA1AXK",
+        "landmark": "770 UC 1 VEMANXANNI 1 1 PA1AXKAD, C0IM0AT0RE, TRIC",
+        "time": "18:00"
+      },
+      {
+        "city": "729 UD 1 5AIEM 1 THRISSUR, PAI",
+        "landmark": "729 UD 1 5AIEM 1 THRISSUR, PAIAXKAD, C0IMBAT0RE",
+        "time": "19:00"
+      },
+      {
+        "city": "729 U0 1 5A1EM 1 THRISSUR, PA‘",
+        "landmark": "729 U0 1 5A1EM 1 THRISSUR, PA‘AXKAD, C0IMPAT0RE",
+        "time": "19:45"
+      },
+      {
+        "city": "736 50 TUTIC0RIN 1 ARAPPUZNA, ",
+        "landmark": "736 50 TUTIC0RIN 1 ARAPPUZNA, K011AM, TNENKASI",
+        "time": "20:00"
+      }
+    ],
+    "extracted_at": "2026-01-14T07:41:10.328617",
+    "source": "Google Images",
+    "image_source": "http://1.bp.blogspot.com/-QIGMfAzWPlg/UW-CbzQFbAI/AAAAAAAABDY/YdPx2x5jnLk/w1200-h630-p-k-no-nu/setc-ernakulam-timings.gif",
+    "confidence_score": 0.8,
+    "bidirectional": false
+  },
+  {
+    "service_code": "IMGKANCHE0400",
+    "route_number": "",
+    "corporation": "UNKNOWN",
+    "origin": "KANCHIPURAM",
+    "destination": "CHENNAI",
+    "departure_time": "04:00",
+    "arrival_time": "14:05",
+    "duration": "UNKNOWN",
+    "available_seats": "UNKNOWN",
+    "bus_type": "STANDARD",
+    "fare": "UNKNOWN",
+    "journey_date": "14/01/2026",
+    "stops": [
+      {
+        "city": "UNKNOWN",
+        "landmark": "UNKNOWN",
+        "time": "04:00"
+      },
+      {
+        "city": "UNKNOWN",
+        "landmark": "UNKNOWN",
+        "time": "20:30"
+      },
+      {
+        "city": "NAVIES 2X2 QENGE, CHENNAI 2X2 ",
+        "landmark": "NAVIES 2X2 QENGE, CHENNAI 2X2 U1TRA DE1UXE 1",
+        "time": "06:00"
+      },
+      {
+        "city": "GASAYRI VE110RE",
+        "landmark": "GASAYRI VE110RE",
+        "time": "04:30"
+      },
+      {
+        "city": "(ANG AFCPISIYSS =) (VIA VI11UP",
+        "landmark": "(ANG AFCPISIYSS =) (VIA VI11UPURAM )",
+        "time": "05:30"
+      },
+      {
+        "city": "156005 19 CAF P0NDICHERRY",
+        "landmark": "156005 19 CAF P0NDICHERRY",
+        "time": "04:00"
+      },
+      {
+        "city": "UNKNOWN",
+        "landmark": "UNKNOWN",
+        "time": "05:00"
+      },
+      {
+        "city": "UNKNOWN",
+        "landmark": "UNKNOWN",
+        "time": "16:45"
+      },
+      {
+        "city": "UNKNOWN",
+        "landmark": "UNKNOWN",
+        "time": "07:20"
+      },
+      {
+        "city": "UNKNOWN",
+        "landmark": "UNKNOWN",
+        "time": "18:00"
+      },
+      {
+        "city": "&0T_(HI0SRARSSGA WARS) KATTUMA",
+        "landmark": "&0T_(HI0SRARSSGA WARS) KATTUMANNARK0VI1 1",
+        "time": "07:00"
+      },
+      {
+        "city": "1011910 ~~ CHIDAMBARAM",
+        "landmark": "1011910 ~~ CHIDAMBARAM",
+        "time": "04:20"
+      }
+    ],
+    "extracted_at": "2026-01-14T07:42:06.388753",
+    "source": "Google Images",
+    "image_source": "https://farm1.staticflickr.com/626/20934578616_eeb33f3d7a_b.jpg",
+    "confidence_score": 0.8,
+    "bidirectional": false
+  }
+]

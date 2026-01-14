@@ -1,0 +1,622 @@
+[
+  {
+    "service_code": "0635MADVILVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 264",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0635MADVILVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "360A"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "264"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "06:35"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "13:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "0635MADVILVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 264",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0635MADVILVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "360A"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "264"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "06:35"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "13:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "1257MADVILMM01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 244",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1257MADVILMM01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "239A1"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "MADURAI"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "244"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "12:57"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "19:57"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "1257MADVILMM01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 244",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1257MADVILMM01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "239A1"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "MADURAI"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "244"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "12:57"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "19:57"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "1640MADVILMM01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 244",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1640MADVILMM01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "239B1"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "MADURAI"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "244"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "16:40"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "23:40"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "1640MADVILMM01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 244",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1640MADVILMM01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "239B1"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "MADURAI"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "244"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "16:40"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "23:40"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "2100MADVILVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 264",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2100MADVILVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "360B"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "264"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "21:00"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "04:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "2100MADVILVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 264",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2100MADVILVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "360B"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "264"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "21:00"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "04:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "2140MADVILVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "44 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 264",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2140MADVILVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "360C"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "264"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "21:40"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "04:40"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  },
+  {
+    "service_code": "2140MADVILVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "MADURAI",
+    "destination": "VILLUPURAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "44 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 264",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2140MADVILVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "360C"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "293.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "264"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "21:40"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "04:40"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:04:23.079322"
+  }
+]

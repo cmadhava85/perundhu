@@ -82,7 +82,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   
   // Listen for system theme changes
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted) return () => {};
     
     try {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -102,6 +102,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       };
     } catch (error) {
       console.error('Error setting up media query listener:', error);
+      return () => {}; // Return empty cleanup on error
     }
   }, [mounted]);
   

@@ -1,0 +1,642 @@
+[
+  {
+    "service_code": "0930VELKUMKK05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 224",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0930VELKUMKK05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "231A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "224"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "09:30"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "16:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "0930VELKUMKK05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 224",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0930VELKUMKK05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "231A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "224"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "09:30"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "16:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "1110VELKUMVV02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 254",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1110VELKUMVV02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "222A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "254"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "11:10"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "18:10"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "1110VELKUMVV02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 254",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1110VELKUMVV02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "222A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "254"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "11:10"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "18:10"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "1748VELKUMVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 234",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1748VELKUMVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "318A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "234"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "17:48"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "00:48"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "1748VELKUMVV05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 234",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1748VELKUMVV05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "318A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "234"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "17:48"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "00:48"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "2200VELKUMVV02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "39 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 254",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200VELKUMVV02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "222A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "254"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "22:00"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "2200VELKUMVV02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "39 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 254",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200VELKUMVV02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "222A"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "254"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "22:00"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "1945TIPTHA",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "15 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 300",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1945TIPTHA",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "851UD"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "300"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TIRUPATHI",
+        "landmark": "TIRUPATHI",
+        "time": "19:45"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "22:45"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "05:15"
+      },
+      {
+        "city": "THANJAVUR",
+        "landmark": "THANJAVUR",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  },
+  {
+    "service_code": "1945TIPTHA",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "15 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 300",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1945TIPTHA",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "851UD"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "272.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "300"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TIRUPATHI",
+        "landmark": "TIRUPATHI",
+        "time": "19:45"
+      },
+      {
+        "city": "VELLORE",
+        "landmark": "VELLORE",
+        "time": "22:45"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "05:15"
+      },
+      {
+        "city": "THANJAVUR",
+        "landmark": "THANJAVUR",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:09.941427"
+  }
+]

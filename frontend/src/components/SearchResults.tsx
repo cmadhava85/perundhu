@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
 import ReportIssue from './contribution/ReportIssue';
 import ConnectingRoutes from './ConnectingRoutes';
 import BusCardModern from './BusCardModern';
+import { TerminalInfoAlert } from './TerminalInfoAlert';
+import { useTerminalResolution } from '../hooks/queries/useTerminalResolution';
 import type { Bus, Stop, Location as AppLocation, ConnectingRoute } from '../types';
 import { ApiError } from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,7 +28,8 @@ interface SearchResultsProps {
   loading?: boolean;  // Add loading prop
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({
+// PHASE 2 OPTIMIZATION: Memoize SearchResults to prevent unnecessary re-renders
+const SearchResults: React.FC<SearchResultsProps> = memo(({
   buses,
   fromLocation,
   toLocation,
@@ -40,6 +44,26 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
   const [reportIssueBus, setReportIssueBus] = useState<Bus | null>(null);
+  
+  // Show error toast
+  useEffect(() => {
+    if (error) {
+      const errorMsg = error instanceof ApiError 
+        ? error.userMessage || error.message 
+        : error.message;
+      toast.error(errorMsg, {
+        duration: 5000,
+        icon: '❌',
+      });
+    }
+  }, [error]);
+  
+  // Resolve terminal information for the selected route
+  const { data: terminalInfo } = useTerminalResolution(
+    fromLocation.name, 
+    toLocation.name,
+    buses.length > 0 // Only enable query when we have results
+  );
   
   // Helper function to get display name for location
   const getLocationDisplayName = (location: AppLocation) => {
@@ -74,12 +98,13 @@ const SearchResults: React.FC<SearchResultsProps> = ({
     }
   }, [selectedBusId, stopsMap, stops]);
   
-  const handleSelectBus = (bus: Bus) => {
+  // PHASE 2 OPTIMIZATION: Memoize callbacks to prevent child re-renders
+  const handleSelectBus = useCallback((bus: Bus) => {
     setSelectedBusId(bus.id);
-  };
+  }, []);
 
   // Handle Add Stops - navigate to contribute page with bus pre-selected
-  const handleAddStops = (bus: Bus) => {
+  const handleAddStops = useCallback((bus: Bus) => {
     console.log('SearchResults - handleAddStops called with bus:', bus);
     console.log('SearchResults - fromLocation:', fromLocation);
     console.log('SearchResults - toLocation:', toLocation);
@@ -93,24 +118,24 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         toLocation: toLocation
       }
     });
-  };
+  }, [fromLocation, toLocation, navigate]);
 
   // Handle Report Issue - open modal with bus pre-selected
-  const handleReportIssue = (bus: Bus) => {
+  const handleReportIssue = useCallback((bus: Bus) => {
     setReportIssueBus(bus);
-  };
+  }, []);
 
   // Handle report issue submission success
-  const handleReportSubmit = () => {
+  const handleReportSubmit = useCallback(() => {
     setReportIssueBus(null);
     // Could add a toast notification here
-  };
+  }, []);
 
   // Handle report issue error
-  const handleReportError = (error: string) => {
+  const handleReportError = useCallback((error: string) => {
     console.error('Report issue error:', error);
     // Could add error toast notification here
-  };
+  }, []);
 
   // Show loading skeleton while searching
   if (loading) {
@@ -281,6 +306,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           </div>
         </div>
 
+        {/* Terminal Information Alert */}
+        {terminalInfo?.needsTerminalInfo && terminalInfo.terminal && (
+          <TerminalInfoAlert terminal={terminalInfo.terminal} />
+        )}
+
         {/* Show Connecting Routes FIRST when no direct buses */}
         {buses.length === 0 && connectingRoutes && connectingRoutes.length > 0 && (
           <div className="connecting-routes-section" style={{ marginBottom: '16px' }}>
@@ -409,6 +439,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({
       </div>
     </div>
   );
-};
+});
+
+// PHASE 2 OPTIMIZATION: Add display name for better debugging
+SearchResults.displayName = 'SearchResults';
+
 
 export default React.memo(SearchResults);

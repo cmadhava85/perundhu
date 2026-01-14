@@ -1,0 +1,126 @@
+[
+  {
+    "service_code": "2200COIPEAKK05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "PERAMBALUR",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "44 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 214",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200COIPEAKK05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "536A"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "PERAMBALUR"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "240.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "214"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "22:00"
+      },
+      {
+        "city": "PERAMBALUR",
+        "landmark": "PERAMBALUR",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:26:30.793664"
+  },
+  {
+    "service_code": "2200COIPEAKK05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "PERAMBALUR",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "44 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 214",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200COIPEAKK05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "536A"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "PERAMBALUR"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "240.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "214"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "22:00"
+      },
+      {
+        "city": "PERAMBALUR",
+        "landmark": "PERAMBALUR",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:26:30.793664"
+  }
+]

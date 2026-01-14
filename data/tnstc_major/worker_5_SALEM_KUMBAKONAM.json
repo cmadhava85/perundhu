@@ -1,0 +1,126 @@
+[
+  {
+    "service_code": "1457SALKUMKK01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "SALEM",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 170",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1457SALKUMKK01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "556J"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "248.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "170"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "SALEM",
+        "time": "14:57"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "21:57"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:22:05.516387"
+  },
+  {
+    "service_code": "1457SALKUMKK01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "SALEM",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 170",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1457SALKUMKK01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "556J"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "248.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "170"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "SALEM",
+        "time": "14:57"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "21:57"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:22:05.516387"
+  }
+]

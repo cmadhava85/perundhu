@@ -9,9 +9,16 @@ import './i18n.ts' // Import i18n configuration
 import { queryClient } from './lib/queryClient'
 import { initializeSecurity } from './utils/reactSecurity'
 import { ToastProvider } from './components/design-system/Toast'
+import { registerServiceWorker, setupInstallPrompt } from './utils/pwaUtils'
 
 // Initialize security measures (disabled in development for debugging)
 initializeSecurity();
+
+// Register service worker for PWA support
+registerServiceWorker();
+
+// Setup install prompt for app installation
+setupInstallPrompt();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

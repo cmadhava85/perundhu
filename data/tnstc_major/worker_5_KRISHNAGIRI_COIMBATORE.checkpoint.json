@@ -1,0 +1,383 @@
+{
+  "processed": [
+    [
+      "KRISHNAGIRI",
+      "COIMBATORE"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "0420KRICOIDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.03Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 217",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0420KRICOIDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "457C"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:03"
+        },
+        {
+          "city": "281.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "217"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "04:20"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "12:23"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:54:43.023503"
+    },
+    {
+      "service_code": "0420KRICOIDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.03Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 217",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0420KRICOIDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "457C"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:03"
+        },
+        {
+          "city": "281.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "217"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "04:20"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "12:23"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:54:43.023503"
+    },
+    {
+      "service_code": "0822KRICOIDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.03Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 217",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0822KRICOIDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "457I"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:03"
+        },
+        {
+          "city": "281.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "217"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "08:22"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "16:25"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:54:43.023503"
+    },
+    {
+      "service_code": "0822KRICOIDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.03Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 217",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0822KRICOIDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "457I"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:03"
+        },
+        {
+          "city": "281.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "217"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "08:22"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "16:25"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:54:43.023503"
+    },
+    {
+      "service_code": "2225KRICOIDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 222",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2225KRICOIDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "457J"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "296.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "222"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "22:25"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "06:28"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:54:43.023503"
+    },
+    {
+      "service_code": "2225KRICOIDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 222",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2225KRICOIDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "457J"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "296.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "222"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "22:25"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "06:28"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:54:43.023503"
+    }
+  ],
+  "saved_at": "2026-01-13T18:55:01.161488"
+}

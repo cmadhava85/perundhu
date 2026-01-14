@@ -1,0 +1,126 @@
+[
+  {
+    "service_code": "1723COIKRIDD01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "KRISHNAGIRI",
+    "departure_time": "",
+    "duration": "7.12Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 217",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1723COIKRIDD01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "457I"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KRISHNAGIRI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:12"
+      },
+      {
+        "city": "260.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SALEM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "217"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM CBS",
+        "time": "17:23"
+      },
+      {
+        "city": "KRISHNAGIRI",
+        "landmark": "KRISHNAGIRI",
+        "time": "00:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:24:46.012958"
+  },
+  {
+    "service_code": "1723COIKRIDD01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "KRISHNAGIRI",
+    "departure_time": "",
+    "duration": "7.12Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 217",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1723COIKRIDD01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "457I"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KRISHNAGIRI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:12"
+      },
+      {
+        "city": "260.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SALEM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "217"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM CBS",
+        "time": "17:23"
+      },
+      {
+        "city": "KRISHNAGIRI",
+        "landmark": "KRISHNAGIRI",
+        "time": "00:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:24:46.012958"
+  }
+]

@@ -1,0 +1,259 @@
+{
+  "processed": [
+    [
+      "TRICHY",
+      "SALEM"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "1053TRISALKK01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "TRICHY",
+      "destination": "SALEM",
+      "departure_time": "",
+      "duration": "4.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 117",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1053TRISALKK01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "552T"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "4:00"
+        },
+        {
+          "city": "144.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "117"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "10:53"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "14:53"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:09:34.158463"
+    },
+    {
+      "service_code": "1053TRISALKK01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "TRICHY",
+      "destination": "SALEM",
+      "departure_time": "",
+      "duration": "4.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 117",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1053TRISALKK01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "552T"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "4:00"
+        },
+        {
+          "city": "144.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "117"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "10:53"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "14:53"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:09:34.158463"
+    },
+    {
+      "service_code": "1224TRISALKK01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "TRICHY",
+      "destination": "SALEM",
+      "departure_time": "",
+      "duration": "4.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 117",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1224TRISALKK01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "552T"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "4:00"
+        },
+        {
+          "city": "144.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "117"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "12:24"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "16:24"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:09:34.158463"
+    },
+    {
+      "service_code": "1224TRISALKK01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "TRICHY",
+      "destination": "SALEM",
+      "departure_time": "",
+      "duration": "4.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 117",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1224TRISALKK01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "552T"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "4:00"
+        },
+        {
+          "city": "144.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "117"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "12:24"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "16:24"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:09:34.158463"
+    }
+  ],
+  "saved_at": "2026-01-13T18:09:51.414191"
+}

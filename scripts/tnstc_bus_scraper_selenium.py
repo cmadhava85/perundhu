@@ -18,9 +18,11 @@ import argparse
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional, Tuple, Set
 from dataclasses import dataclass, asdict, field
 import re
+from pathlib import Path
+import requests
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -63,7 +65,9 @@ class TNSTCBusScraperSelenium:
     
     URL = "https://www.tnstc.in/OTRSOnline/"
     
-    def __init__(self, delay: float = 2.0, headless: bool = True, rate_limit: float = 1.0):
+    def __init__(self, delay: float = 2.0, headless: bool = True, rate_limit: float = 1.0, 
+                 checkpoint_path: Optional[Path] = None, processed_pairs: Optional[Set[Tuple[str, str]]] = None,
+                 existing_routes: Optional[List[BusRoute]] = None):
         """
         Initialize the Selenium scraper
         
@@ -71,13 +75,19 @@ class TNSTCBusScraperSelenium:
             delay: Delay between operations in seconds
             headless: Run browser in headless mode
             rate_limit: Minimum delay between requests (seconds) to avoid hammering the server
+            checkpoint_path: Path to checkpoint file for resuming
+            processed_pairs: Set of already processed (source, dest) pairs
+            existing_routes: List of routes already scraped
         """
         self.delay = delay
         self.headless = headless
         self.rate_limit = rate_limit
         self.driver = None
-        self.all_routes: List[BusRoute] = []
+        self.all_routes: List[BusRoute] = existing_routes or []
         self.last_request_time = 0
+        self.checkpoint_path = checkpoint_path
+        self.processed_pairs: Set[Tuple[str, str]] = processed_pairs or set()
+        self.requests_session: Optional[requests.Session] = None
         
     def _rate_limit(self):
         """Apply rate limiting"""
@@ -148,9 +158,79 @@ class TNSTCBusScraperSelenium:
                 close_btn.click()
                 logger.info(f"Closed popup using selector: {selector}")
                 time.sleep(1)
-                break
-            except Exception:
-                continue
+            except:
+                pass
+    
+    def _save_checkpoint(self):
+        """Save progress checkpoint"""
+        if not self.checkpoint_path:
+            return
+        try:
+            data = {
+                "processed": sorted(list(self.processed_pairs)),
+                "routes": [asdict(r) for r in self.all_routes],
+                "saved_at": datetime.now().isoformat(),
+            }
+            self.checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.checkpoint_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            logger.info(f"Checkpoint saved: {len(self.processed_pairs)} pairs, {len(self.all_routes)} routes")
+        except Exception as e:
+            logger.warning(f"Unable to save checkpoint: {e}")
+
+    def _ensure_requests_session(self) -> requests.Session:
+        """Create a requests session seeded with the current Selenium cookies."""
+        if self.requests_session:
+            return self.requests_session
+
+        session = requests.Session()
+        for cookie in self.driver.get_cookies():
+            # Preserve session stickiness by reusing browser cookies.
+            session.cookies.set(cookie["name"], cookie["value"], domain=cookie.get("domain"))
+
+        session.headers.update({
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Origin": "https://www.tnstc.in",
+            "Referer": "https://www.tnstc.in/OTRSOnline/jqreq.do?hiddenAction=SearchService",
+            "X-Requested-With": "XMLHttpRequest",
+        })
+
+        self.requests_session = session
+        return session
+
+    @staticmethod
+    def _parse_stops_from_html(html_text: str) -> List[Dict[str, str]]:
+        """Parse stop rows from the detail HTML returned by advanceNewBooking.do."""
+        rows = []
+        # Very lightweight HTML parsing using regex to avoid extra dependencies.
+        # The stop table typically has rows with four <td>s: SlNo, City, Landmark, Time.
+        for match in re.finditer(r"<tr[^>]*>\s*(.*?)\s*</tr>", html_text, re.IGNORECASE | re.DOTALL):
+            cells = re.findall(r"<td[^>]*>\s*(.*?)\s*</td>", match.group(1), re.IGNORECASE | re.DOTALL)
+            if len(cells) >= 4:
+                city = re.sub(r"<[^>]+>", "", cells[1]).strip()
+                landmark = re.sub(r"<[^>]+>", "", cells[2]).strip()
+                time_text = re.sub(r"<[^>]+>", "", cells[3]).strip()
+                if city and time_text:
+                    rows.append({"city": city, "landmark": landmark, "time": time_text})
+        return rows
+
+    def fetch_route_details_via_api(self, payload: Dict[str, str]) -> List[Dict[str, str]]:
+        """Use the backend detail endpoint instead of clicking the modal."""
+        session = self._ensure_requests_session()
+        try:
+            resp = session.post(
+                "https://www.tnstc.in/OTRSOnline/advanceNewBooking.do",
+                data=payload,
+                timeout=30,
+            )
+            resp.raise_for_status()
+            stops = self._parse_stops_from_html(resp.text)
+            if not stops:
+                logger.debug("Detail fetch succeeded but no stops parsed; response length %d", len(resp.text))
+            return stops
+        except Exception as e:
+            logger.debug(f"Detail API fetch failed: {e}")
+            return []
     
     def open_page(self):
         """Open the TNSTC booking page"""
@@ -518,9 +598,26 @@ class TNSTCBusScraperSelenium:
                     except:
                         route_data['fare'] = ""
                     
-                    # Click to get stop details
+                    # Prefer API-based detail fetch (faster, no modal handling)
                     stops = []
-                    if 'service_code' in route_data:
+                    try:
+                        onclick_val = service_elem.get_attribute("onclick") or ""
+                        args = re.findall(r"'([^']*)'", onclick_val)
+                        if len(args) >= 6:
+                            payload = {
+                                "ServiceID": args[0],
+                                "TripCode": args[1],
+                                "StartPlaceID": args[2],
+                                "EndPlaceID": args[3],
+                                "JourneyDate": args[4],
+                                "ClassID": args[5],
+                            }
+                            stops = self.fetch_route_details_via_api(payload)
+                    except Exception as e:
+                        logger.debug(f"Could not parse onclick for API fetch: {e}")
+
+                    # Fallback to modal click if API did not return stops
+                    if not stops and 'service_code' in route_data:
                         stop_info = self.click_route_link(route_data['service_code'])
                         stops = stop_info.get('stops', [])
                     
@@ -615,11 +712,28 @@ class TNSTCBusScraperSelenium:
             if limit:
                 route_pairs = route_pairs[:limit]
             
-            for idx, (source, destination) in enumerate(route_pairs, 1):
+            # Find last processed pair to resume from there
+            last_processed_idx = None
+            if self.processed_pairs:
+                last_pair = max(self.processed_pairs, key=lambda p: route_pairs.index(p) if p in route_pairs else -1)
+                last_processed_idx = next((i for i, p in enumerate(route_pairs) if p == last_pair), None)
+                if last_processed_idx is not None:
+                    logger.info(f"Resuming from pair {last_processed_idx + 1}/{len(route_pairs)}: {last_pair[0]} -> {last_pair[1]}")
+                    route_pairs = route_pairs[last_processed_idx:]
+            
+            for idx, (source, destination) in enumerate(route_pairs, 1 if last_processed_idx is None else 0):
+                pair = (source, destination)
+                
+                if pair in self.processed_pairs:
+                    logger.info(f"[{idx}] Skipping {source} -> {destination} (already processed)")
+                    continue
+                
                 logger.info(f"\n[{idx}/{len(route_pairs)}] Processing: {source} -> {destination}")
                 
                 try:
                     self.scrape_route_pair(source, destination)
+                    self.processed_pairs.add(pair)
+                    self._save_checkpoint()
                 except Exception as e:
                     logger.error(f"Error scraping {source} -> {destination}: {e}")
                     continue
@@ -811,11 +925,30 @@ Examples:
     # Handle headless mode
     headless = args.headless and not args.show_browser
     
+    # Load checkpoint
+    checkpoint_path = Path(f"{args.output}.checkpoint.json")
+    processed_pairs: Set[Tuple[str, str]] = set()
+    existing_routes: List[BusRoute] = []
+    
+    if checkpoint_path.exists():
+        try:
+            with open(checkpoint_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            processed_pairs = {tuple(p) for p in data.get('processed', [])}
+            for item in data.get('routes', []):
+                existing_routes.append(BusRoute(**item))
+            logger.info(f"Loaded checkpoint: {len(processed_pairs)} pairs, {len(existing_routes)} routes")
+        except Exception as e:
+            logger.warning(f"Could not load checkpoint: {e}")
+    
     # Create scraper and run
     scraper = TNSTCBusScraperSelenium(
         delay=args.delay,
         headless=headless,
-        rate_limit=args.rate_limit
+        rate_limit=args.rate_limit,
+        checkpoint_path=checkpoint_path,
+        processed_pairs=processed_pairs,
+        existing_routes=existing_routes
     )
     
     try:
@@ -830,6 +963,7 @@ Examples:
         
     except KeyboardInterrupt:
         logger.info("\nScraping interrupted by user")
+        scraper._save_checkpoint()
         sys.exit(1)
     except Exception as e:
         logger.error(f"Fatal error: {e}", exc_info=True)

@@ -290,7 +290,7 @@ const BusTracker: React.FC<BusTrackerProps> = ({ buses, stops }) => {
               <span className="stat-icon">⏱️</span>
               <div className="stat-content">
                 <label>{t('busTracker.trackedTime', 'Time tracked')}</label>
-                <span className="stat-value">{calculateDuration(boardingTime, currentTime)}</span>
+                <span className="stat-value">{calculateDuration(boardingTime, currentTime, t)}</span>
               </div>
             </div>
           )}
@@ -460,15 +460,19 @@ const formatTime = (date: Date): string => {
 };
 
 // Helper function to calculate duration between two dates
-const calculateDuration = (startTime: Date, endTime: Date): string => {
+const calculateDuration = (startTime: Date, endTime: Date, t: any): string => {
   const diffMs = endTime.getTime() - startTime.getTime();
-  const minutes = Math.floor(diffMs / 60000);
+  const hours = Math.floor(diffMs / 3600000);
+  const minutes = Math.floor((diffMs % 3600000) / 60000);
   const seconds = Math.floor((diffMs % 60000) / 1000);
   
-  if (minutes === 0) {
-    return `${seconds}s`;
+  if (hours > 0) {
+    return `${hours}${t('busTracker.hours', 'h')} ${minutes}${t('busTracker.minutes', 'm')} ${seconds}${t('busTracker.seconds', 's')}`;
   }
-  return `${minutes}m ${seconds}s`;
+  if (minutes === 0) {
+    return `${seconds}${t('busTracker.seconds', 's')}`;
+  }
+  return `${minutes}${t('busTracker.minutes', 'm')} ${seconds}${t('busTracker.seconds', 's')}`;
 };
 
 export default BusTracker;

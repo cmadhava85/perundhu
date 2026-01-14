@@ -1,0 +1,175 @@
+{
+  "processed": [
+    [
+      "VELLORE",
+      "PUDUKKOTTAI"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "2100TIPKDI",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "VELLORE",
+      "destination": "PUDUKKOTTAI",
+      "departure_time": "",
+      "duration": "6.20Hrs",
+      "arrival_time": "",
+      "available_seats": "16 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 363",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2100TIPKDI",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "969UD"
+        },
+        {
+          "city": "VELLORE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "PUDUKKOTTAI"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "6:20"
+        },
+        {
+          "city": "354.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "363"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUPATHI",
+          "landmark": "TIRUPATHI",
+          "time": "21:00"
+        },
+        {
+          "city": "VELLORE",
+          "landmark": "VELLORE",
+          "time": "23:55"
+        },
+        {
+          "city": "THIRUVANNAMALAI",
+          "landmark": "THIRUVANNAMALAI",
+          "time": "01:30"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "04:45"
+        },
+        {
+          "city": "PUDUKKOTTAI",
+          "landmark": "PUDUKKOTTAI",
+          "time": "06:15"
+        },
+        {
+          "city": "KARAIKUDI",
+          "landmark": "KARAIKUDI",
+          "time": "08:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:46:15.044949"
+    },
+    {
+      "service_code": "2100TIPKDI",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "VELLORE",
+      "destination": "PUDUKKOTTAI",
+      "departure_time": "",
+      "duration": "6.20Hrs",
+      "arrival_time": "",
+      "available_seats": "16 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 363",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2100TIPKDI",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "969UD"
+        },
+        {
+          "city": "VELLORE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "PUDUKKOTTAI"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "6:20"
+        },
+        {
+          "city": "354.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "363"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUPATHI",
+          "landmark": "TIRUPATHI",
+          "time": "21:00"
+        },
+        {
+          "city": "VELLORE",
+          "landmark": "VELLORE",
+          "time": "23:55"
+        },
+        {
+          "city": "THIRUVANNAMALAI",
+          "landmark": "THIRUVANNAMALAI",
+          "time": "01:30"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "04:45"
+        },
+        {
+          "city": "PUDUKKOTTAI",
+          "landmark": "PUDUKKOTTAI",
+          "time": "06:15"
+        },
+        {
+          "city": "KARAIKUDI",
+          "landmark": "KARAIKUDI",
+          "time": "08:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:46:15.044949"
+    }
+  ],
+  "saved_at": "2026-01-13T18:46:31.641148"
+}

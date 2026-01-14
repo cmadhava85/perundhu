@@ -1,0 +1,2779 @@
+{
+  "processed": [
+    [
+      "MADURAI",
+      "HOSUR"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "0155MADHOSDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 365",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0155MADHOSDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "480E"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "365"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "01:55"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "11:38"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0155MADHOSDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 365",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0155MADHOSDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "480E"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "365"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "01:55"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "11:38"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0305MADHOSDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "41 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 365",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0305MADHOSDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "111P"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "365"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "03:05"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "12:48"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0305MADHOSDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "41 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 365",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0305MADHOSDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "111P"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "365"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "03:05"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "12:48"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0700MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "33 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0700MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "07:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "07:20"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "07:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "08:00"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "09:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "15:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "16:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0700MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "33 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0700MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "07:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "07:20"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "07:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "08:00"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "09:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "15:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "16:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0800MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "33 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0800MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "08:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "08:15"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "08:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "SAMAYANALLUR BS",
+          "time": "08:40"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "09:10"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "09:45"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "16:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "17:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0800MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "33 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0800MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "08:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "08:15"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "08:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "SAMAYANALLUR BS",
+          "time": "08:40"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "09:10"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "09:45"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "16:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "17:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0840MADHOSDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 365",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0840MADHOSDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "480A"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "365"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "08:40"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "18:23"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0840MADHOSDD01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 365",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0840MADHOSDD01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "480A"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SALEM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "365"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "08:40"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "18:23"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0900MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "32 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0900MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "09:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "09:20"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "11:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "17:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "18:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "0900MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "32 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0900MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "09:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "09:20"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "11:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "17:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "18:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1000MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "31 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1000MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "10:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "10:20"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "12:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "18:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "19:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1000MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "31 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1000MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "10:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "10:20"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "12:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "18:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "19:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1030MADBANLB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "32 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1030MADBANLB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846LB"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "10:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "10:50"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "12:30"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "19:00"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "20:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1030MADBANLB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "32 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1030MADBANLB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846LB"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "10:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "10:50"
+        },
+        {
+          "city": "DINDIGUL",
+          "landmark": "DINDIGUL",
+          "time": "12:30"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "19:00"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "20:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1800MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "32 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1800MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "18:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "18:20"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "03:00"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "04:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1800MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "32 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1800MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "18:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "18:20"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "03:00"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "04:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1900MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "34 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1900MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "19:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "19:15"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "19:20"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "SAMAYANALLUR BS",
+          "time": "19:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "19:45"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "03:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "04:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1900MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "34 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1900MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "19:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "19:15"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "19:20"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "SAMAYANALLUR BS",
+          "time": "19:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "19:45"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "03:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "04:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1600TIUBANAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "",
+      "bus_type": "Standard",
+      "fare": "Rs 532",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1600TIUBANAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "874AB"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "532"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "16:00"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "VANNARPETTAI",
+          "time": "16:05"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "THACHANALLUR BYPASS",
+          "time": "16:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "SANKAR NAGER",
+          "time": "16:20"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "KAYATHAR TOLL PLAZA",
+          "time": "16:30"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI",
+          "time": "17:15"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "19:40"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "04:00"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "05:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1600TIUBANAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "",
+      "bus_type": "Standard",
+      "fare": "Rs 532",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1600TIUBANAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "874AB"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "532"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "16:00"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "VANNARPETTAI",
+          "time": "16:05"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "THACHANALLUR BYPASS",
+          "time": "16:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "SANKAR NAGER",
+          "time": "16:20"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "KAYATHAR TOLL PLAZA",
+          "time": "16:30"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI",
+          "time": "17:15"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "19:40"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "04:00"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "05:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2000MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "31 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2000MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "20:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "04:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "05:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2000MADBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "31 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2000MADBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "20:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "04:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "05:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2100MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "15 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2100MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "21:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "21:20"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "21:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "22:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "05:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "06:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2100MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "15 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2100MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "21:00"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "21:20"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "21:30"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "22:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "05:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "06:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1630NAGBANAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "19 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 546/836",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1630NAGBANAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "887AB"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "546"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VADACHERRY",
+          "time": "16:30"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "17:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "18:00"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI NEW BS",
+          "time": "19:10"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "21:40"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "01:30"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "04:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "05:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1630NAGBANAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "19 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 546/836",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1630NAGBANAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "887AB"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "546"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VADACHERRY",
+          "time": "16:30"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "17:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "18:00"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI NEW BS",
+          "time": "19:10"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "21:40"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "01:30"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "04:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "05:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2201MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "13 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2201MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "22:01"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "22:21"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "22:31"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "23:01"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "06:31"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "07:31"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2201MADBANNS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "13 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417/650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2201MADBANNS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "846NS"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "22:01"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "22:21"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "FATHIMA COLLEGE",
+          "time": "22:31"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "KODAI ROAD TOLL",
+          "time": "23:01"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "06:31"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "07:31"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1830TIUBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "0.00Hrs",
+      "arrival_time": "",
+      "available_seats": "22 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1830TIUBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "874UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "0:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "18:30"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "VANNARPETTAI",
+          "time": "18:35"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "THACHANALLUR BYPASS",
+          "time": "18:40"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "SANKAR NAGER",
+          "time": "18:50"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "KAYATHAR TOLL PLAZA",
+          "time": "19:10"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI BYPASS BS",
+          "time": "19:45"
+        },
+        {
+          "city": "SATHUR",
+          "landmark": "SATHUR BYPASS BS",
+          "time": "20:15"
+        },
+        {
+          "city": "VIRUDHUNAGAR",
+          "landmark": "COLLECTOR OFFICE BUS STAND",
+          "time": "20:45"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "22:15"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "03:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "06:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "07:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "1830TIUBAN",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "0.00Hrs",
+      "arrival_time": "",
+      "available_seats": "22 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 417",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1830TIUBAN",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "874UD"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "0:00"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "417"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "18:30"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "VANNARPETTAI",
+          "time": "18:35"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "THACHANALLUR BYPASS",
+          "time": "18:40"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "SANKAR NAGER",
+          "time": "18:50"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "KAYATHAR TOLL PLAZA",
+          "time": "19:10"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI BYPASS BS",
+          "time": "19:45"
+        },
+        {
+          "city": "SATHUR",
+          "landmark": "SATHUR BYPASS BS",
+          "time": "20:15"
+        },
+        {
+          "city": "VIRUDHUNAGAR",
+          "landmark": "COLLECTOR OFFICE BUS STAND",
+          "time": "20:45"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "ARAPALAYAM BS",
+          "time": "22:15"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "03:00"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "06:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "07:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2030TIUBANAL",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.20Hrs",
+      "arrival_time": "",
+      "available_seats": "26 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 546/836",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2030TIUBANAL",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "874AL"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:20"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "546"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "20:30"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "VANNARPETTAI",
+          "time": "20:35"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "THACHANALLUR BYPASS",
+          "time": "20:40"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "SANKAR NAGER",
+          "time": "20:50"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "KAYATHAR TOLL PLAZA",
+          "time": "21:00"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI",
+          "time": "21:45"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "23:55"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "08:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "09:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    },
+    {
+      "service_code": "2030TIUBANAL",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "MADURAI",
+      "destination": "HOSUR",
+      "departure_time": "",
+      "duration": "8.20Hrs",
+      "arrival_time": "",
+      "available_seats": "26 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 546/836",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2030TIUBANAL",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "874AL"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "HOSUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:20"
+        },
+        {
+          "city": "419.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "546"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "20:30"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "VANNARPETTAI",
+          "time": "20:35"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "THACHANALLUR BYPASS",
+          "time": "20:40"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "SANKAR NAGER",
+          "time": "20:50"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "KAYATHAR TOLL PLAZA",
+          "time": "21:00"
+        },
+        {
+          "city": "KOVILPATTI",
+          "landmark": "KOVILPATTI",
+          "time": "21:45"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "23:55"
+        },
+        {
+          "city": "HOSUR",
+          "landmark": "HOSUR",
+          "time": "08:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "09:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:08:29.797090"
+    }
+  ],
+  "saved_at": "2026-01-13T18:08:58.045872"
+}

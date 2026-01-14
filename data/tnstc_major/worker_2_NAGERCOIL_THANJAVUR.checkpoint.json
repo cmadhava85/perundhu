@@ -1,0 +1,1075 @@
+{
+  "processed": [
+    [
+      "NAGERCOIL",
+      "THANJAVUR"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "0845NAGTHATT03L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "11.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 308",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0845NAGTHATT03L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "505TANA"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "11:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "TIRUNELVEL"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "308"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "08:45"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "19:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "0845NAGTHATT03L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "11.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 308",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0845NAGTHATT03L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "505TANA"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "11:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "TIRUNELVEL"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "308"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "08:45"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "19:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "1700MARPUU",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "19 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 407",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1700MARPUU",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "531MUD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "407"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "MARTHANDAM",
+          "time": "17:00"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "18:00"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "19:45"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "23:50"
+        },
+        {
+          "city": "PUDUKKOTTAI",
+          "landmark": "PUDUKKOTTAI",
+          "time": "02:00"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "03:00"
+        },
+        {
+          "city": "KUMBAKONAM",
+          "landmark": "KUMBAKONAM",
+          "time": "04:00"
+        },
+        {
+          "city": "MAYILADUTHURAI",
+          "landmark": "MYLADUTHURAI",
+          "time": "05:15"
+        },
+        {
+          "city": "CHIDAMBARAM",
+          "landmark": "CHIDAMBARAM",
+          "time": "06:15"
+        },
+        {
+          "city": "CUDDALORE",
+          "landmark": "CUDDALORE",
+          "time": "07:45"
+        },
+        {
+          "city": "PUDUCHERRY",
+          "landmark": "PUDUCHERRY",
+          "time": "08:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "1700MARPUU",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "19 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 407",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1700MARPUU",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "531MUD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "407"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "MARTHANDAM",
+          "time": "17:00"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "18:00"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "19:45"
+        },
+        {
+          "city": "MADURAI",
+          "landmark": "MATTUTHAVANI BS",
+          "time": "23:50"
+        },
+        {
+          "city": "PUDUKKOTTAI",
+          "landmark": "PUDUKKOTTAI",
+          "time": "02:00"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "03:00"
+        },
+        {
+          "city": "KUMBAKONAM",
+          "landmark": "KUMBAKONAM",
+          "time": "04:00"
+        },
+        {
+          "city": "MAYILADUTHURAI",
+          "landmark": "MYLADUTHURAI",
+          "time": "05:15"
+        },
+        {
+          "city": "CHIDAMBARAM",
+          "landmark": "CHIDAMBARAM",
+          "time": "06:15"
+        },
+        {
+          "city": "CUDDALORE",
+          "landmark": "CUDDALORE",
+          "time": "07:45"
+        },
+        {
+          "city": "PUDUCHERRY",
+          "landmark": "PUDUCHERRY",
+          "time": "08:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "1705MARVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "8.30Hrs",
+      "arrival_time": "",
+      "available_seats": "7 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 407",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1705MARVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "560CUD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "407"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "MARTHANDAM",
+          "time": "17:05"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "KARUNGAL",
+          "time": "17:20"
+        },
+        {
+          "city": "COLACHAL",
+          "landmark": "COLACHAL",
+          "time": "17:25"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "18:35"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "19:15"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "20:35"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "02:35"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "03:45"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "04:00"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "04:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "1705MARVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "8.30Hrs",
+      "arrival_time": "",
+      "available_seats": "7 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 407",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1705MARVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "560CUD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "407"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "MARTHANDAM",
+          "time": "17:05"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "KARUNGAL",
+          "time": "17:20"
+        },
+        {
+          "city": "COLACHAL",
+          "landmark": "COLACHAL",
+          "time": "17:25"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "18:35"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "19:15"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "20:35"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "02:35"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "03:45"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "04:00"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "04:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "1930KAKVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "8.30Hrs",
+      "arrival_time": "",
+      "available_seats": "5 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 409",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1930KAKVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "561UD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "409"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KANYAKUMARI",
+          "time": "19:30"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KOTTARAM",
+          "time": "19:40"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "SUSINDRUM",
+          "time": "19:50"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "20:30"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "21:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "22:30"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "04:30"
+        },
+        {
+          "city": "NEEDAMANGALAM",
+          "landmark": "NEEDAMANGALAM",
+          "time": "05:00"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "05:30"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "05:45"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "06:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "1930KAKVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "8.30Hrs",
+      "arrival_time": "",
+      "available_seats": "5 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 409",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1930KAKVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "561UD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "409"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KANYAKUMARI",
+          "time": "19:30"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KOTTARAM",
+          "time": "19:40"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "SUSINDRUM",
+          "time": "19:50"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "20:30"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "21:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "22:30"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "04:30"
+        },
+        {
+          "city": "NEEDAMANGALAM",
+          "landmark": "NEEDAMANGALAM",
+          "time": "05:00"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "05:30"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "05:45"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "06:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "2030NAGTHATT03L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "11.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 308",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2030NAGTHATT03L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "505TANB"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "11:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "TIRUNELVEL"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "308"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "20:30"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "07:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "2030NAGTHATT03L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "11.30Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 308",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2030NAGTHATT03L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "505TANB"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "11:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "TIRUNELVEL"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "308"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "20:30"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "07:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "2130NAGVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "6.30Hrs",
+      "arrival_time": "",
+      "available_seats": "19 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 407",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2130NAGVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "531VUD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "6:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "407"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "21:30"
+        },
+        {
+          "city": "VALLIYOOR",
+          "landmark": "VALLIYOOR",
+          "time": "22:15"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "23:30"
+        },
+        {
+          "city": "PUDUKKOTTAI",
+          "landmark": "PUDUKKOTTAI",
+          "time": "03:45"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR NEW BS",
+          "time": "05:15"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "06:15"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "06:30"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "07:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    },
+    {
+      "service_code": "2130NAGVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "NAGERCOIL",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "6.30Hrs",
+      "arrival_time": "",
+      "available_seats": "19 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 407",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2130NAGVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "531VUD"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "6:30"
+        },
+        {
+          "city": "409.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "407"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "21:30"
+        },
+        {
+          "city": "VALLIYOOR",
+          "landmark": "VALLIYOOR",
+          "time": "22:15"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "23:30"
+        },
+        {
+          "city": "PUDUKKOTTAI",
+          "landmark": "PUDUKKOTTAI",
+          "time": "03:45"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR NEW BS",
+          "time": "05:15"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "06:15"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "06:30"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "07:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:28:27.527099"
+    }
+  ],
+  "saved_at": "2026-01-13T19:28:47.883054"
+}

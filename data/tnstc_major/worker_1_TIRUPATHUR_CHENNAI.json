@@ -1,0 +1,300 @@
+[
+  {
+    "service_code": "1930TITKCB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUPATHUR",
+    "destination": "CHENNAI",
+    "departure_time": "",
+    "duration": "8.00Hrs",
+    "arrival_time": "",
+    "available_seats": "10 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 402",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930TITKCB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "138UD"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "CHENNAI-KILAMBAKKAM-KCBT"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:00"
+      },
+      {
+        "city": "404.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "402"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "TIRUPATHURRMD",
+        "time": "19:30"
+      },
+      {
+        "city": "TIRUMAYAM",
+        "landmark": "TIRUMAYAM",
+        "time": "20:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "03:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T20:03:29.170255"
+  },
+  {
+    "service_code": "1930TITKCB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUPATHUR",
+    "destination": "CHENNAI",
+    "departure_time": "",
+    "duration": "8.00Hrs",
+    "arrival_time": "",
+    "available_seats": "10 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 402",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930TITKCB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "138UD"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "CHENNAI-KILAMBAKKAM-KCBT"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:00"
+      },
+      {
+        "city": "404.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "402"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "TIRUPATHURRMD",
+        "time": "19:30"
+      },
+      {
+        "city": "TIRUMAYAM",
+        "landmark": "TIRUMAYAM",
+        "time": "20:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "03:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T20:03:29.170255"
+  },
+  {
+    "service_code": "1915VEEKCB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUPATHUR",
+    "destination": "CHENNAI",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "5 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 402",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1915VEEKCB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "162VUD"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "CHENNAI-KILAMBAKKAM-KCBT"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "404.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "402"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VEERACHOLAN",
+        "landmark": "VEERACHOLAN",
+        "time": "19:15"
+      },
+      {
+        "city": "PARTHIBANUR",
+        "landmark": "PARTHIBANUR",
+        "time": "19:35"
+      },
+      {
+        "city": "MANAMADURAI",
+        "landmark": "MANAMADURAI",
+        "time": "19:55"
+      },
+      {
+        "city": "SIVAGANGA",
+        "landmark": "SIVAGANGA",
+        "time": "20:35"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "TIRUPATHURRMD",
+        "time": "21:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T20:03:29.170255"
+  },
+  {
+    "service_code": "1915VEEKCB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUPATHUR",
+    "destination": "CHENNAI",
+    "departure_time": "",
+    "duration": "7.00Hrs",
+    "arrival_time": "",
+    "available_seats": "5 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 402",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1915VEEKCB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "162VUD"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "CHENNAI-KILAMBAKKAM-KCBT"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:00"
+      },
+      {
+        "city": "404.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "402"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "VEERACHOLAN",
+        "landmark": "VEERACHOLAN",
+        "time": "19:15"
+      },
+      {
+        "city": "PARTHIBANUR",
+        "landmark": "PARTHIBANUR",
+        "time": "19:35"
+      },
+      {
+        "city": "MANAMADURAI",
+        "landmark": "MANAMADURAI",
+        "time": "19:55"
+      },
+      {
+        "city": "SIVAGANGA",
+        "landmark": "SIVAGANGA",
+        "time": "20:35"
+      },
+      {
+        "city": "TIRUPATHUR (RMD)",
+        "landmark": "TIRUPATHURRMD",
+        "time": "21:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T20:03:29.170255"
+  }
+]

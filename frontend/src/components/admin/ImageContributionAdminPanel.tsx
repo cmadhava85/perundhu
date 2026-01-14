@@ -85,6 +85,22 @@ interface EditableRoute {
   isEditing?: boolean;
 }
 
+// Terminal validation state
+interface TerminalValidationState {
+  showDialog: boolean;
+  originalLocation: string;
+  resolvedTerminal: {
+    displayName: string;
+    address: string;
+    latitude: number;
+    longitude: number;
+    message?: string;
+  } | null;
+  isValidated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}
+
 export const ImageContributionAdminPanel: React.FC = () => {
   const [contributions, setContributions] = useState<ImageContribution[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,6 +128,17 @@ export const ImageContributionAdminPanel: React.FC = () => {
     missingArrival: boolean;
   }[]>([]);
   const [pendingApprovalContributionId, setPendingApprovalContributionId] = useState<string | null>(null);
+
+  // Terminal validation state
+  const [terminalValidation, setTerminalValidation] = useState<TerminalValidationState>({
+    showDialog: false,
+    originalLocation: '',
+    resolvedTerminal: null,
+    isValidated: false,
+    isLoading: false,
+    error: null
+  });
+  const [pendingApprovalWithValidation, setPendingApprovalWithValidation] = useState<string | null>(null);
 
   useEffect(() => {
     // Monitor modal state for debugging
@@ -381,8 +408,77 @@ export const ImageContributionAdminPanel: React.FC = () => {
     return routesWithIssues;
   };
 
+  // Validate terminal before approval
+  const validateTerminalBeforeApproval = async (fromLocation: string, toLocation: string, contributionId: string) => {
+    try {
+      setTerminalValidation(prev => ({ ...prev, isLoading: true, error: null }));
+      
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/terminals/resolve?source=${encodeURIComponent(fromLocation)}&destination=${encodeURIComponent(toLocation)}`
+      );
+      
+      if (!response.ok) {
+        throw new Error('Failed to resolve terminal');
+      }
+      
+      const terminalInfo = await response.json();
+      
+      setTerminalValidation({
+        showDialog: true,
+        originalLocation: fromLocation,
+        resolvedTerminal: terminalInfo.needsTerminalInfo ? terminalInfo.terminal : null,
+        isValidated: false,
+        isLoading: false,
+        error: null
+      });
+      
+      setPendingApprovalWithValidation(contributionId);
+    } catch (error) {
+      setTerminalValidation(prev => ({
+        ...prev,
+        isLoading: false,
+        error: error instanceof Error ? error.message : 'Failed to validate terminal'
+      }));
+    }
+  };
+
+  // Proceed with approval after terminal validation
+  const proceedWithApprovalAfterValidation = async () => {
+    if (!pendingApprovalWithValidation) return;
+    
+    const routesWithIssues = checkRoutesForMissingTimes();
+    
+    if (routesWithIssues.length > 0) {
+      // Show the time edit popup first
+      setRoutesWithMissingTimes(routesWithIssues);
+      setPendingApprovalContributionId(pendingApprovalWithValidation);
+      setShowTimeEditPopup(true);
+      setTerminalValidation(prev => ({ ...prev, showDialog: false }));
+      setPendingApprovalWithValidation(null);
+    } else {
+      // All validations passed, approve directly
+      setTerminalValidation(prev => ({ ...prev, showDialog: false }));
+      await approveContribution(pendingApprovalWithValidation, true);
+      setPendingApprovalWithValidation(null);
+    }
+  };
+
+  // Handle approval with terminal validation
+  const handleApproveWithTerminalValidation = (contributionId: string) => {
+    const fromLocation = ocrData?.origin || editedRoutes[0]?.fromLocation || '';
+    const toLocation = ocrData?.destination || editedRoutes[0]?.toLocation || '';
+    
+    if (!fromLocation || !toLocation) {
+      alert('From and To locations are required for terminal validation');
+      return;
+    }
+    
+    validateTerminalBeforeApproval(fromLocation, toLocation, contributionId);
+  };
+
   // Handle approval with validation
-  const handleApproveWithRoutes = (contributionId: string) => {
+  const _handleApproveWithRoutes = (contributionId: string) => {
     // Check for routes with missing times
     const routesWithIssues = checkRoutesForMissingTimes();
     
@@ -1380,27 +1476,239 @@ export const ImageContributionAdminPanel: React.FC = () => {
                 <button
                   onClick={() => {
                     if (selectedContribution) {
-                      handleApproveWithRoutes(selectedContribution.id);
+                      handleApproveWithTerminalValidation(selectedContribution.id);
                     }
                   }}
                   className="ocr-btn ocr-btn-approve-routes"
                   disabled={processingId !== null || isEditMode}
+                  title="Approve with terminal validation"
                 >
-                  {processingId ? (
+                  {terminalValidation.isLoading ? (
                     <>
                       <Loader2 style={{ width: '16px', height: '16px' }} className="animate-spin" />
-                      <span className="btn-text">Processing...</span>
+                      <span className="btn-text">Validating...</span>
                     </>
                   ) : (
                     <>
                       <CheckCircle style={{ width: '16px', height: '16px' }} />
-                      <span className="btn-text">Approve & Create Routes</span>
+                      <span className="btn-text">Approve & Validate Terminal</span>
                     </>
                   )}
                 </button>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Terminal Validation Dialog */}
+      {terminalValidation.showDialog && (
+        <div 
+          className="terminal-validation-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="terminal-validation-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setTerminalValidation(prev => ({ ...prev, showDialog: false }));
+              setPendingApprovalWithValidation(null);
+            }
+          }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            padding: '16px'
+          }}
+        >
+          <div
+            className="terminal-validation-content"
+            style={{
+              background: 'white',
+              borderRadius: '12px',
+              maxWidth: '500px',
+              width: '100%',
+              padding: '24px',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+              maxHeight: '90vh',
+              overflow: 'auto'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 id="terminal-validation-title" style={{ marginTop: 0, marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#1f2937' }}>
+              Terminal Validation
+            </h2>
+
+            {terminalValidation.isLoading ? (
+              <div style={{ textAlign: 'center', padding: '24px' }}>
+                <Loader2 style={{ width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto', marginBottom: '12px' }} />
+                <p style={{ color: '#6b7280' }}>Resolving terminal information...</p>
+              </div>
+            ) : terminalValidation.error ? (
+              <div style={{
+                background: '#fee2e2',
+                border: '1px solid #fecaca',
+                borderRadius: '8px',
+                padding: '16px',
+                marginBottom: '16px'
+              }}>
+                <p style={{ color: '#991b1b', margin: 0, fontWeight: '500' }}>Error validating terminal:</p>
+                <p style={{ color: '#b91c1c', margin: '8px 0 0 0', fontSize: '14px' }}>{terminalValidation.error}</p>
+              </div>
+            ) : terminalValidation.resolvedTerminal ? (
+              <div>
+                <div style={{
+                  background: '#dbeafe',
+                  border: '1px solid #93c5fd',
+                  borderRadius: '8px',
+                  padding: '16px',
+                  marginBottom: '16px'
+                }}>
+                  <p style={{ color: '#1e40af', margin: '0 0 8px 0', fontWeight: '600', fontSize: '14px' }}>Boarding Terminal:</p>
+                  <p style={{ color: '#1e40af', margin: '0 0 8px 0', fontSize: '16px', fontWeight: '600' }}>
+                    📍 {terminalValidation.resolvedTerminal.displayName}
+                  </p>
+                  <p style={{ color: '#1e40af', margin: '0 0 12px 0', fontSize: '13px' }}>
+                    {terminalValidation.resolvedTerminal.address}
+                  </p>
+                  <button
+                    onClick={() => window.open(
+                      `https://www.google.com/maps?q=${terminalValidation.resolvedTerminal?.latitude},${terminalValidation.resolvedTerminal?.longitude}`,
+                      '_blank'
+                    )}
+                    style={{
+                      background: '#3b82f6',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '6px',
+                      padding: '8px 12px',
+                      fontSize: '13px',
+                      fontWeight: '500',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    <span>🗺️</span>
+                    View on Map
+                  </button>
+                </div>
+
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '12px',
+                  padding: '12px',
+                  background: '#f9fafb',
+                  borderRadius: '8px',
+                  marginBottom: '16px',
+                  cursor: 'pointer'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={terminalValidation.isValidated}
+                    onChange={(e) => setTerminalValidation(prev => ({
+                      ...prev,
+                      isValidated: e.target.checked
+                    }))}
+                    style={{
+                      marginTop: '2px',
+                      cursor: 'pointer',
+                      width: '18px',
+                      height: '18px'
+                    }}
+                  />
+                  <span style={{ color: '#374151', fontSize: '14px', fontWeight: '500' }}>
+                    I have verified this terminal information is correct for this route
+                  </span>
+                </label>
+
+                <div style={{
+                  display: 'flex',
+                  gap: '12px',
+                  marginTop: '20px'
+                }}>
+                  <button
+                    onClick={() => {
+                      setTerminalValidation(prev => ({ ...prev, showDialog: false }));
+                      setPendingApprovalWithValidation(null);
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: '10px 16px',
+                      background: 'white',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#6b7280',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={proceedWithApprovalAfterValidation}
+                    disabled={!terminalValidation.isValidated}
+                    style={{
+                      flex: 1,
+                      padding: '10px 16px',
+                      background: terminalValidation.isValidated ? '#10b981' : '#d1d5db',
+                      border: 'none',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: 'white',
+                      cursor: terminalValidation.isValidated ? 'pointer' : 'not-allowed',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    Proceed with Approval
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div style={{
+                background: '#f0fdf4',
+                border: '1px solid #bbf7d0',
+                borderRadius: '8px',
+                padding: '16px',
+                marginBottom: '16px'
+              }}>
+                <p style={{ color: '#166534', margin: 0, fontWeight: '500' }}>
+                  ✓ No specific terminal information needed for this route
+                </p>
+                <p style={{ color: '#166534', margin: '8px 0 0 0', fontSize: '13px' }}>
+                  The route locations are specific enough for users to understand where to board.
+                </p>
+                <button
+                  onClick={proceedWithApprovalAfterValidation}
+                  style={{
+                    marginTop: '12px',
+                    padding: '8px 16px',
+                    background: '#10b981',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Proceed with Approval
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

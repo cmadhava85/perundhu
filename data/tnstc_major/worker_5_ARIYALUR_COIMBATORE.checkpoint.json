@@ -1,0 +1,135 @@
+{
+  "processed": [
+    [
+      "ARIYALUR",
+      "COIMBATORE"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "0618ARICOIKK05L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "ARIYALUR",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 223",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0618ARICOIKK05L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "537A"
+        },
+        {
+          "city": "ARIYALUR",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "290.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "223"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "ARIYALUR",
+          "landmark": "ARIYALUR",
+          "time": "06:18"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "14:18"
+        }
+      ],
+      "scraped_at": "2026-01-13T20:23:12.156565"
+    },
+    {
+      "service_code": "0618ARICOIKK05L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "ARIYALUR",
+      "destination": "COIMBATORE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 223",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0618ARICOIKK05L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "537A"
+        },
+        {
+          "city": "ARIYALUR",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "290.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "223"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "ARIYALUR",
+          "landmark": "ARIYALUR",
+          "time": "06:18"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "COIMBATORE",
+          "time": "14:18"
+        }
+      ],
+      "scraped_at": "2026-01-13T20:23:12.156565"
+    }
+  ],
+  "saved_at": "2026-01-13T20:23:28.797590"
+}

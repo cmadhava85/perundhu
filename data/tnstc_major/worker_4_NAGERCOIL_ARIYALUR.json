@@ -1,0 +1,246 @@
+[
+  {
+    "service_code": "1900KAKNEV",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "NAGERCOIL",
+    "destination": "ARIYALUR",
+    "departure_time": "",
+    "duration": "11.30Hrs",
+    "arrival_time": "",
+    "available_seats": "14 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1900KAKNEV",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "125KUD"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "ARIYALUR"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "11:30"
+      },
+      {
+        "city": "455.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "19:00"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "20:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "22:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "KOVILPATTI",
+        "time": "23:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "SATHUR BYPASS BS",
+        "time": "23:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "VIRUDHNAGAR BYPASS BS",
+        "time": "23:59"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "03:30"
+      },
+      {
+        "city": "ALATHUR",
+        "landmark": "ALATHUR",
+        "time": "05:15"
+      },
+      {
+        "city": "KOLAKKANATHAM",
+        "landmark": "KOLAKKANATHAM",
+        "time": "05:30"
+      },
+      {
+        "city": "ARIYALUR",
+        "landmark": "ARIYALUR",
+        "time": "06:00"
+      },
+      {
+        "city": "JAYANKONDAM",
+        "landmark": "JAYANKONDAM",
+        "time": "06:40"
+      },
+      {
+        "city": "ANDIMADAM",
+        "landmark": "ANDIMADAM",
+        "time": "07:00"
+      },
+      {
+        "city": "VIRUDHACHALAM",
+        "landmark": "VIRUDHACHALAM",
+        "time": "07:30"
+      },
+      {
+        "city": "NEYVELI",
+        "landmark": "NEYVELI",
+        "time": "08:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:28:12.111405"
+  },
+  {
+    "service_code": "1900KAKNEV",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "NAGERCOIL",
+    "destination": "ARIYALUR",
+    "departure_time": "",
+    "duration": "11.30Hrs",
+    "arrival_time": "",
+    "available_seats": "14 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1900KAKNEV",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "125KUD"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "ARIYALUR"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "11:30"
+      },
+      {
+        "city": "455.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "19:00"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "20:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "22:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "KOVILPATTI",
+        "time": "23:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "SATHUR BYPASS BS",
+        "time": "23:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "VIRUDHNAGAR BYPASS BS",
+        "time": "23:59"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "03:30"
+      },
+      {
+        "city": "ALATHUR",
+        "landmark": "ALATHUR",
+        "time": "05:15"
+      },
+      {
+        "city": "KOLAKKANATHAM",
+        "landmark": "KOLAKKANATHAM",
+        "time": "05:30"
+      },
+      {
+        "city": "ARIYALUR",
+        "landmark": "ARIYALUR",
+        "time": "06:00"
+      },
+      {
+        "city": "JAYANKONDAM",
+        "landmark": "JAYANKONDAM",
+        "time": "06:40"
+      },
+      {
+        "city": "ANDIMADAM",
+        "landmark": "ANDIMADAM",
+        "time": "07:00"
+      },
+      {
+        "city": "VIRUDHACHALAM",
+        "landmark": "VIRUDHACHALAM",
+        "time": "07:30"
+      },
+      {
+        "city": "NEYVELI",
+        "landmark": "NEYVELI",
+        "time": "08:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:28:12.111405"
+  }
+]

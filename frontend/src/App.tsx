@@ -3,7 +3,7 @@ import './styles/transit-design-system.css';
 import './styles/transit-bus-card.css';
 import './styles/transit-realtime.css';
 import './styles/micro-interactions.css';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, useNavigate, useLocation } from 'react-router-dom';
 import type { Location as BusLocation } from './types';
@@ -13,10 +13,14 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import MainTabNavigation from './components/MainTabNavigation';
 import BottomNavigation from './components/BottomNavigation';
-import AppRoutes from './components/AppRoutes';
 import ErrorBoundary from './components/ErrorBoundary';
 import Loading from './components/Loading';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
+import NetworkStatusIndicator from './components/NetworkStatusIndicator';
+import ToastProvider from './components/ToastProvider';
+
+// PHASE 2 OPTIMIZATION: Lazy load AppRoutes for code splitting
+const AppRoutes = lazy(() => import('./components/AppRoutes'));
 
 // Custom hooks
 import { useLocationData } from './hooks/useLocationData';
@@ -39,9 +43,11 @@ function App() {
       <ThemeProvider>
         <FeatureFlagsProvider>
           <AdminAuthProvider>
-            <Router>
-              <AppContent />
-            </Router>
+            <ToastProvider>
+              <Router>
+                <AppContent />
+              </Router>
+            </ToastProvider>
           </AdminAuthProvider>
         </FeatureFlagsProvider>
       </ThemeProvider>
@@ -338,6 +344,9 @@ function AppContent() {
 
   return (
     <div className="transit-app app-container min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
+      {/* Network status indicator */}
+      <NetworkStatusIndicator />
+      
       <Header />
       
       <MainTabNavigation 

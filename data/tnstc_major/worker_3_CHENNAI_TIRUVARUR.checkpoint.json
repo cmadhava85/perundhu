@@ -1,0 +1,279 @@
+{
+  "processed": [
+    [
+      "CHENNAI",
+      "TIRUVARUR"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "0700KCBTVRKK05L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "TIRUVARUR",
+      "departure_time": "",
+      "duration": "7.00Hrs",
+      "arrival_time": "",
+      "available_seats": "44 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 279",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0700KCBTVRKK05L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "245J"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "TIRUVARUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:00"
+        },
+        {
+          "city": "294.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "279"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "07:00"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "14:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:59:32.063650"
+    },
+    {
+      "service_code": "0700KCBTVRKK05L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "TIRUVARUR",
+      "departure_time": "",
+      "duration": "7.00Hrs",
+      "arrival_time": "",
+      "available_seats": "44 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 279",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0700KCBTVRKK05L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "245J"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "TIRUVARUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:00"
+        },
+        {
+          "city": "294.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "279"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "07:00"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "14:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:59:32.063650"
+    },
+    {
+      "service_code": "2215KCBTPOAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "TIRUVARUR",
+      "departure_time": "",
+      "duration": "7.15Hrs",
+      "arrival_time": "",
+      "available_seats": "34 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 382/589",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2215KCBTPOAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "340KAB"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "TIRUVARUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:15"
+        },
+        {
+          "city": "295.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "382"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "22:15"
+        },
+        {
+          "city": "MAYILADUTHURAI",
+          "landmark": "MYLADUTHURAI",
+          "time": "04:45"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "05:30"
+        },
+        {
+          "city": "TIRUTHURAIPOONDI",
+          "landmark": "TIRUTHURAIPOONDI",
+          "time": "06:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:59:32.063650"
+    },
+    {
+      "service_code": "2215KCBTPOAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "TIRUVARUR",
+      "departure_time": "",
+      "duration": "7.15Hrs",
+      "arrival_time": "",
+      "available_seats": "34 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 382/589",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2215KCBTPOAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "340KAB"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "TIRUVARUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:15"
+        },
+        {
+          "city": "295.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "382"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "22:15"
+        },
+        {
+          "city": "MAYILADUTHURAI",
+          "landmark": "MYLADUTHURAI",
+          "time": "04:45"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "05:30"
+        },
+        {
+          "city": "TIRUTHURAIPOONDI",
+          "landmark": "TIRUTHURAIPOONDI",
+          "time": "06:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:59:32.063650"
+    }
+  ],
+  "saved_at": "2026-01-13T17:59:49.401700"
+}

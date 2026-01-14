@@ -27,14 +27,16 @@ export const SimpleImageForm: React.FC<SimpleImageFormProps> = ({ onSubmit }) =>
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
+      // Clean up previous preview URL
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+      
       setFile(selectedFile);
       
       // Create preview URL
       const url = URL.createObjectURL(selectedFile);
       setPreviewUrl(url);
-      
-      // Clean up previous preview URL
-      return () => URL.revokeObjectURL(url);
     }
   };
 

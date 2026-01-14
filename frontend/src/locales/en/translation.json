@@ -680,7 +680,10 @@
     "whyReliable": "Make public transport more reliable for everyone",
     "whyPrivacy": "Simple and secure - your privacy is protected",
     "unknown": "Unknown",
-    "enableTracking": "Enable bus tracking"
+    "enableTracking": "Enable bus tracking",
+    "seconds": "s",
+    "minutes": "m",
+    "hours": "h"
   },
   "liveTracker": {
     "title": "Live Bus Tracking",

@@ -1,0 +1,259 @@
+{
+  "processed": [
+    [
+      "COIMBATORE",
+      "SIVAGANGA"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "1228COISIVCC01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "COIMBATORE",
+      "destination": "SIVAGANGA",
+      "departure_time": "",
+      "duration": "8.45Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 206",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1228COISIVCC01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "852A"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SIVAGANGA"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:45"
+        },
+        {
+          "city": "356.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "206"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "SINGANALLUR BS",
+          "time": "12:28"
+        },
+        {
+          "city": "SIVAGANGA",
+          "landmark": "SIVAGANGA",
+          "time": "20:13"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:28:08.177712"
+    },
+    {
+      "service_code": "1228COISIVCC01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "COIMBATORE",
+      "destination": "SIVAGANGA",
+      "departure_time": "",
+      "duration": "8.45Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 206",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1228COISIVCC01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "852A"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SIVAGANGA"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:45"
+        },
+        {
+          "city": "356.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "206"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "SINGANALLUR BS",
+          "time": "12:28"
+        },
+        {
+          "city": "SIVAGANGA",
+          "landmark": "SIVAGANGA",
+          "time": "20:13"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:28:08.177712"
+    },
+    {
+      "service_code": "2224COISIVKK05L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "COIMBATORE",
+      "destination": "SIVAGANGA",
+      "departure_time": "",
+      "duration": "8.45Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 195",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2224COISIVKK05L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "346"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SIVAGANGA"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:45"
+        },
+        {
+          "city": "356.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "195"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "SINGANALLUR BS",
+          "time": "22:24"
+        },
+        {
+          "city": "SIVAGANGA",
+          "landmark": "SIVAGANGA",
+          "time": "06:09"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:28:08.177712"
+    },
+    {
+      "service_code": "2224COISIVKK05L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "COIMBATORE",
+      "destination": "SIVAGANGA",
+      "departure_time": "",
+      "duration": "8.45Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 195",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2224COISIVKK05L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "346"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "SIVAGANGA"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:45"
+        },
+        {
+          "city": "356.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "195"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "SINGANALLUR BS",
+          "time": "22:24"
+        },
+        {
+          "city": "SIVAGANGA",
+          "landmark": "SIVAGANGA",
+          "time": "06:09"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:28:08.177712"
+    }
+  ],
+  "saved_at": "2026-01-13T18:28:25.532694"
+}

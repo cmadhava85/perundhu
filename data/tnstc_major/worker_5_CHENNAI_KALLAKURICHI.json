@@ -1,0 +1,5582 @@
+[
+  {
+    "service_code": "0015KCBKAAVV04L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0015KCBKAAVV04L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AH"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "00:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0015KCBKAAVV04L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0015KCBKAAVV04L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AH"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "00:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0115KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0115KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AJ"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "01:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0115KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0115KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AJ"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "01:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0130KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0130KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177B"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "01:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0130KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0130KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177B"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "01:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0200KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0200KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "308A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "02:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "06:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0200KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0200KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "308A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "02:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "06:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0220KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0220KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177G"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "02:20"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "07:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0220KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0220KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177G"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "02:20"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "07:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0245KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0245KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AI"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "02:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "07:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0245KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0245KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AI"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "02:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "07:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0345KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0345KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AG"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "03:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "08:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0345KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0345KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AG"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "03:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "08:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0400KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0400KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AE"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "08:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0400KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0400KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AE"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "08:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0445KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0445KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177H"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "09:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0445KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0445KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177H"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "09:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0500KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0500KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177J"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "05:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "09:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0500KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0500KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177J"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "05:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "09:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0615KCBKAAVV04L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0615KCBKAAVV04L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AD"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "06:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "11:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0615KCBKAAVV04L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0615KCBKAAVV04L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AD"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "06:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "11:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0800KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0800KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281X"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "08:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "12:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0800KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0800KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281X"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "08:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "12:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0830KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0830KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177O"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "08:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "13:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0830KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0830KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177O"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "08:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "13:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0900KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0900KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177N"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "13:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0900KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0900KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177N"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "13:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0930KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0930KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "168A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "14:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0930KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0930KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "168A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "14:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0945KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0945KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "321A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "14:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "0945KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0945KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "321A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "14:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1005KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1005KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AF"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "10:05"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:20"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1005KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1005KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AF"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "10:05"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:20"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1040KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1040KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AC"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "10:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1040KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1040KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AC"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "10:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1045KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1045KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281Y"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "10:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1045KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1045KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281Y"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "10:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1100KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1100KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281Z"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "11:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1100KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1100KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281Z"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "11:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1110KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1110KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "273A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "11:10"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:55"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1110KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1110KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "273A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "11:10"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "15:55"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1130KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1130KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177W"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "11:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "16:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1130KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1130KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177W"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "11:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "16:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1200KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1200KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177K"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "12:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "16:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1200KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1200KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177K"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "12:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "16:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1400KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1400KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "273B"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "14:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "18:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1400KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1400KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "273B"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "14:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "18:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1415KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1415KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "14:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "19:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1415KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1415KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "14:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "19:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1450KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1450KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177S"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "14:50"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "19:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1450KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1450KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177S"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "14:50"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "19:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1500KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1500KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AA"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "19:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1500KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1500KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AA"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "19:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1520KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1520KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177V"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:20"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "20:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1520KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1520KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177V"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:20"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "20:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1540KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1540KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AD"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "20:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1540KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1540KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AD"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "20:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1545KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1545KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "122D"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "20:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1545KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1545KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "122D"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "15:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "20:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1645KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1645KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177R"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "21:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1645KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1645KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177R"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "21:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1650KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1650KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "205A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:50"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "21:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1650KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1650KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "205A"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:50"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "21:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1700KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1700KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177X"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "17:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "22:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1700KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1700KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177X"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "17:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "22:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1715KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1715KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AE"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "17:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "22:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1715KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1715KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AE"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "17:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "22:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1745KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1745KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281P"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "17:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1745KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1745KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281P"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "17:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1815KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1815KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "122E"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1815KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1815KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "122E"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1825KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1825KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AF"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:25"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:10"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1825KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1825KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177AF"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:25"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:10"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1840KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1840KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177C"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1840KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1840KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177C"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "23:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1945KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1945KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AH"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "00:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "1945KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1945KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AH"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:45"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "00:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2200KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "171B"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "03:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2200KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "171B"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "03:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2230KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2230KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177E"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "03:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2230KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2230KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177E"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "03:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2240KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2240KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177Z"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "03:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2240KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2240KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177Z"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:40"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "03:25"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2300KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2300KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2300KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "5.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2300KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "5:15"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:00"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2315KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2315KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177F"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "04:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2315KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2315KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "177F"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:15"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "04:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2330KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2330KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AG"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  },
+  {
+    "service_code": "2330KCBKAAVV01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "KALLAKURICHI",
+    "departure_time": "",
+    "duration": "4.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 180",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2330KCBKAAVV01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "281AG"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KALLAKURICHI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "4:45"
+      },
+      {
+        "city": "211.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "VILLUPURAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "180"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:30"
+      },
+      {
+        "city": "KALLAKURICHI",
+        "landmark": "KALLAKURICHI",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:59:07.424879"
+  }
+]

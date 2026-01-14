@@ -1,0 +1,2054 @@
+[
+  {
+    "service_code": "0620COITIUTT02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 303",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0620COITIUTT02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "601B"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "TIRUNELVEL"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "303"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "06:20"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "15:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "0620COITIUTT02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 303",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0620COITIUTT02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "601B"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "TIRUNELVEL"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "303"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "06:20"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "15:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1050COITIUCC01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 299",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1050COITIUCC01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "874A"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "299"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "10:50"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "19:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1050COITIUCC01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 299",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1050COITIUCC01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "874A"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "299"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "10:50"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "19:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1445OOTTRV",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 388",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1445OOTTRV",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "783UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "388"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "14:45"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "15:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "18:15"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "POLLACHI",
+        "time": "19:05"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "UDUMALPET",
+        "time": "19:40"
+      },
+      {
+        "city": "PALANI",
+        "landmark": "PALANI",
+        "time": "20:15"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "02:15"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "03:45"
+      },
+      {
+        "city": "MARTHANDAM",
+        "landmark": "MARTHANDAM",
+        "time": "04:30"
+      },
+      {
+        "city": "TRIVANDRUM",
+        "landmark": "TRIVANDRUM",
+        "time": "05:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1445OOTTRV",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 388",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1445OOTTRV",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "783UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "388"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "14:45"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "15:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "18:15"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "POLLACHI",
+        "time": "19:05"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "UDUMALPET",
+        "time": "19:40"
+      },
+      {
+        "city": "PALANI",
+        "landmark": "PALANI",
+        "time": "20:15"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "02:15"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "03:45"
+      },
+      {
+        "city": "MARTHANDAM",
+        "landmark": "MARTHANDAM",
+        "time": "04:30"
+      },
+      {
+        "city": "TRIVANDRUM",
+        "landmark": "TRIVANDRUM",
+        "time": "05:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1300GULKAK",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 391",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1300GULKAK",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664EUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "391"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "GUDALORE (OOTY)",
+        "landmark": "GUDALORE (OOTY)",
+        "time": "13:00"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "15:00"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "15:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "18:30"
+      },
+      {
+        "city": "KOVILPATTI",
+        "landmark": "KOVILPATTI BYPASS BS",
+        "time": "02:15"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:15"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "04:45"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "05:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1300GULKAK",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 391",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1300GULKAK",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664EUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "391"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "GUDALORE (OOTY)",
+        "landmark": "GUDALORE (OOTY)",
+        "time": "13:00"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "15:00"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "15:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "18:30"
+      },
+      {
+        "city": "KOVILPATTI",
+        "landmark": "KOVILPATTI BYPASS BS",
+        "time": "02:15"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:15"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "04:45"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "05:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1515OOTMAR",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1515OOTMAR",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664MUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "15:15"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "16:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "19:00"
+      },
+      {
+        "city": "KOVILPATTI",
+        "landmark": "KOVILPATTI BYPASS BS",
+        "time": "02:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:00"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "04:30"
+      },
+      {
+        "city": "MARTHANDAM",
+        "landmark": "MARTHANDAM",
+        "time": "05:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1515OOTMAR",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1515OOTMAR",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664MUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "15:15"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "16:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "19:00"
+      },
+      {
+        "city": "KOVILPATTI",
+        "landmark": "KOVILPATTI BYPASS BS",
+        "time": "02:00"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:00"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "04:30"
+      },
+      {
+        "city": "MARTHANDAM",
+        "landmark": "MARTHANDAM",
+        "time": "05:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1930COITIUTT02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "43 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 303",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930COITIUTT02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "601A"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "TIRUNELVEL"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "303"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "19:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1930COITIUTT02L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "43 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 303",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930COITIUTT02L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "601A"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "TIRUNELVEL"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "303"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "19:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1545OOTKTM",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.15Hrs",
+    "arrival_time": "",
+    "available_seats": "22 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 388",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1545OOTKTM",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "662UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:15"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "388"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "15:45"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "16:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "19:40"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "UKKADAM BS",
+        "time": "19:55"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "POLLACHI",
+        "time": "20:25"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "UDUMALPET",
+        "time": "22:15"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:55"
+      },
+      {
+        "city": "NANGUNERI",
+        "landmark": "NANGUNERI",
+        "time": "04:40"
+      },
+      {
+        "city": "THYSAYANVILAI",
+        "landmark": "THYSAYANVILAI",
+        "time": "05:10"
+      },
+      {
+        "city": "KUTTAM",
+        "landmark": "KUTTAM",
+        "time": "05:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1545OOTKTM",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.15Hrs",
+    "arrival_time": "",
+    "available_seats": "22 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 388",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1545OOTKTM",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "662UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:15"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "388"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "15:45"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "16:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "19:40"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "UKKADAM BS",
+        "time": "19:55"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "POLLACHI",
+        "time": "20:25"
+      },
+      {
+        "city": "POLLACHI",
+        "landmark": "UDUMALPET",
+        "time": "22:15"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:55"
+      },
+      {
+        "city": "NANGUNERI",
+        "landmark": "NANGUNERI",
+        "time": "04:40"
+      },
+      {
+        "city": "THYSAYANVILAI",
+        "landmark": "THYSAYANVILAI",
+        "time": "05:10"
+      },
+      {
+        "city": "KUTTAM",
+        "landmark": "KUTTAM",
+        "time": "05:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1605OOTNAG",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 391",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1605OOTNAG",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "391"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "16:05"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "16:50"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:30"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1605OOTNAG",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 391",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1605OOTNAG",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "391"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "16:05"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "16:50"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "03:30"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1645OOTKAK",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1645OOTKAK",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664kUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "16:45"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "17:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:00"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "06:00"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "06:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1645OOTKAK",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1645OOTKAK",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664kUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "16:45"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "COONOOR",
+        "time": "17:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:00"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "06:00"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "06:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1735OOTKAK",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1735OOTKAK",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "663AUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "17:35"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "05:05"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "06:35"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "07:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1735OOTKAK",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1735OOTKAK",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "663AUD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "17:35"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "05:05"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "06:35"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "07:35"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "2115COINAG",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "27 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2115COINAG",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "21:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "21:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "PALLADAM BS",
+        "time": "22:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:15"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "2115COINAG",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "27 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2115COINAG",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "664UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "21:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "21:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "PALLADAM BS",
+        "time": "22:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:15"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "2120COITIUCC01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 299",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2120COITIUCC01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "874B"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "299"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "21:20"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "06:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "2120COITIUCC01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "9.45Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 299",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2120COITIUCC01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "874B"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:45"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "299"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "SINGANALLUR BS",
+        "time": "21:20"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "06:05"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1830OOTPNM",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "29 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1830OOTPNM",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "666UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "18:15"
+      },
+      {
+        "city": "COONOOR",
+        "landmark": "COONOOR",
+        "time": "19:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "21:30"
+      },
+      {
+        "city": "KOVILPATTI",
+        "landmark": "KOVILPATTI",
+        "time": "02:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:15"
+      },
+      {
+        "city": "PAPANASAM-TNV",
+        "landmark": "PAPANASAM-TNV",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  },
+  {
+    "service_code": "1830OOTPNM",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "COIMBATORE",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "8.30Hrs",
+    "arrival_time": "",
+    "available_seats": "29 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 393",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1830OOTPNM",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "666UD"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:30"
+      },
+      {
+        "city": "391.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "393"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "OOTY",
+        "landmark": "OOTY",
+        "time": "18:15"
+      },
+      {
+        "city": "COONOOR",
+        "landmark": "COONOOR",
+        "time": "19:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "21:30"
+      },
+      {
+        "city": "KOVILPATTI",
+        "landmark": "KOVILPATTI",
+        "time": "02:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "04:15"
+      },
+      {
+        "city": "PAPANASAM-TNV",
+        "landmark": "PAPANASAM-TNV",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:25:38.610341"
+  }
+]

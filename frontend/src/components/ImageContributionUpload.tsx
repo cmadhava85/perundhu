@@ -947,7 +947,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           display: 'flex',
           alignItems: 'center',
           gap: '1rem',
-          padding: '1.25rem 2rem',
+          padding: window.innerWidth < 640 ? '0.875rem 1rem' : '1.25rem 2rem',
           backgroundColor: '#10b981',
           color: 'white',
           borderRadius: '0.75rem',
@@ -957,12 +957,12 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
           backdropFilter: 'blur(10px)',
           border: '1px solid rgba(255, 255, 255, 0.2)'
         }}>
-          <CheckCircle2 style={{ width: '2rem', height: '2rem', flexShrink: 0 }} />
+          <CheckCircle2 style={{ width: window.innerWidth < 640 ? '1.25rem' : '2rem', height: window.innerWidth < 640 ? '1.25rem' : '2rem', flexShrink: 0 }} />
           <div>
-            <div style={{ fontWeight: '700', fontSize: '1rem', marginBottom: '0.25rem' }}>
+            <div style={{ fontWeight: '700', fontSize: window.innerWidth < 640 ? '0.75rem' : '1rem', marginBottom: '0.25rem' }}>
               ✓ {bottomSuccessMessage || t('contribution.imageUpload.uploadSuccess', 'Image uploaded successfully!')}
             </div>
-            <div style={{ fontSize: '0.875rem', opacity: 0.95 }}>
+            <div style={{ fontSize: window.innerWidth < 640 ? '0.75rem' : '0.875rem', opacity: 0.95 }}>
               {t('contribution.imageUpload.processingMessage', 'Your image is being processed')}
             </div>
           </div>

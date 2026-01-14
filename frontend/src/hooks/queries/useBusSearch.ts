@@ -187,6 +187,8 @@ export function useBusSearch({
     staleTime: 5 * 60 * 1000, // 5 minutes - bus schedules don't change frequently
     gcTime: 10 * 60 * 1000, // 10 minutes cache
     refetchOnWindowFocus: false, // Avoid unnecessary refetches
+    refetchOnMount: false, // Use cached data if available
+    refetchOnReconnect: true, // Refetch when reconnecting after offline
     
     // Error handling - reduced retries to prevent excessive API calls
     retry: (failureCount, error) => {
@@ -234,6 +236,9 @@ export function useBusStops(
     
     enabled: enabled && !!busId && !!fromLocationId && !!toLocationId,
     staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 15 * 60 * 1000, // 15 minutes - stops rarely change
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 }
 
@@ -267,5 +272,8 @@ export function useConnectingRoutes(
     
     enabled: enabled && !!fromLocationId && !!toLocationId,
     staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 15 * 60 * 1000, // 15 minutes - connecting routes are stable
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 }

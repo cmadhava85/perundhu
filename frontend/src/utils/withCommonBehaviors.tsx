@@ -47,6 +47,7 @@ export function withCommonBehaviors<P extends object>(
           performanceMonitor.endMark(markName, 'component_render');
         };
       }
+      return () => {}; // Return empty cleanup when not tracking
     }, []);
     
     // Mark component as rendered after first render

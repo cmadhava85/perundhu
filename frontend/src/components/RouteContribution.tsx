@@ -145,6 +145,7 @@ export const RouteContribution: React.FC = () => {
       cardEl.addEventListener('wheel', handleWheel, { passive: false });
       return () => cardEl.removeEventListener('wheel', handleWheel);
     }
+    return () => {}; // Return empty cleanup if no cardEl
   }, []);
 
   interface ContributionData {

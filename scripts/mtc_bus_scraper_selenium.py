@@ -16,7 +16,7 @@ import argparse
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Set, Tuple
 from dataclasses import dataclass, asdict
 
 from selenium import webdriver
@@ -53,7 +53,14 @@ class MTCBusScraperSelenium:
     
     URL = "https://mtcbus.tn.gov.in/Home/bustimingsearch"
     
-    def __init__(self, delay: float = 2.0, headless: bool = True):
+    def __init__(
+        self,
+        delay: float = 2.0,
+        headless: bool = True,
+        checkpoint_path: Optional[Path] = None,
+        processed_pairs: Optional[Set[Tuple[str, str, str]]] = None,
+        existing_timings: Optional[List[BusTiming]] = None,
+    ):
         """
         Initialize the Selenium scraper
         
@@ -64,7 +71,9 @@ class MTCBusScraperSelenium:
         self.delay = delay
         self.headless = headless
         self.driver = None
-        self.all_timings: List[BusTiming] = []
+        self.all_timings: List[BusTiming] = existing_timings or []
+        self.checkpoint_path = checkpoint_path
+        self.processed_pairs: Set[Tuple[str, str, str]] = processed_pairs or set()
         
     def _setup_driver(self):
         """Setup Chrome WebDriver"""
@@ -305,6 +314,23 @@ class MTCBusScraperSelenium:
         except Exception as e:
             logger.error(f"Error getting timings: {e}")
             return []
+
+    def _save_checkpoint(self):
+        """Persist progress so scraper can resume after interruption"""
+        if not self.checkpoint_path:
+            return
+        try:
+            data = {
+                "processed": [list(p) for p in sorted(self.processed_pairs)],
+                "timings": [asdict(t) for t in self.all_timings],
+                "saved_at": datetime.now().isoformat(),
+            }
+            self.checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.checkpoint_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            logger.info(f"Checkpoint saved to {self.checkpoint_path} (processed {len(self.processed_pairs)} pairs)")
+        except Exception as e:
+            logger.warning(f"Unable to save checkpoint: {e}")
     
     def scrape_all(self, limit_routes: Optional[int] = None):
         """
@@ -329,15 +355,33 @@ class MTCBusScraperSelenium:
                 routes = routes[:limit_routes]
                 logger.info(f"Limited to first {limit_routes} routes")
             
+            # Find last processed route to resume from there
+            last_processed_route = None
+            if self.processed_pairs:
+                # Get all unique processed routes and find the highest one
+                processed_routes = sorted(set(p[0] for p in self.processed_pairs))
+                last_processed_route = processed_routes[-1]
+                
+                # Find if the last route is fully processed (all pairs done)
+                # Count how many pairs exist for this route
+                pairs_for_last_route = [p for p in self.processed_pairs if p[0] == last_processed_route]
+                
+                resume_idx = next((i for i, r in enumerate(routes) if r['value'] == last_processed_route), None)
+                if resume_idx is not None:
+                    # Check if we should resume from this route or skip to next
+                    # For now, resume from this route (individual pairs will be skipped if already processed)
+                    logger.info(f"Resuming from route {routes[resume_idx]['text']} ({len(pairs_for_last_route)} pairs already processed)")
+                    logger.info(f"Already completed routes: {', '.join(processed_routes[:-1]) if len(processed_routes) > 1 else 'None'}")
+                    routes = routes[resume_idx:]
+            
             # Process each route
-            for route_idx, route in enumerate(routes, 1):
+            for route_idx, route in enumerate(routes, 1 if last_processed_route is None else 0):
                 logger.info(f"\n[{route_idx}/{len(routes)}] Processing route: {route['text']}")
-                
-                # Reload page for each route to reset state
-                if route_idx > 1:
-                    self.driver.get(self.URL)
-                    time.sleep(2)
-                
+
+                # Load fresh page once per route
+                self.driver.get(self.URL)
+                time.sleep(2)
+
                 # Get origins for this route
                 origins = self.get_origins_for_route(route['value'])
                 if not origins:
@@ -347,10 +391,8 @@ class MTCBusScraperSelenium:
                 # Process each origin
                 for origin_idx, origin in enumerate(origins, 1):
                     logger.info(f"  [{origin_idx}/{len(origins)}] Origin: {origin['text']}")
-                    
-                    # Reload page and reselect route for each origin
-                    self.driver.get(self.URL)
-                    time.sleep(2)
+
+                    # Reselect route without reloading the page
                     route_select = Select(self.driver.find_element(By.ID, 'selroute'))
                     route_select.select_by_value(route['value'])
                     time.sleep(self.delay)
@@ -364,10 +406,16 @@ class MTCBusScraperSelenium:
                     # Process each destination
                     for dest_idx, dest in enumerate(destinations, 1):
                         logger.info(f"    [{dest_idx}/{len(destinations)}] Destination: {dest['text']}")
+                        key = (route['value'], origin['value'], dest['value'])
+                        if key in self.processed_pairs:
+                            logger.info("    Skipping (already processed in checkpoint)")
+                            continue
                         
                         # Get timings
                         timings = self.get_timings(route, origin, dest)
                         self.all_timings.extend(timings)
+                        self.processed_pairs.add(key)
+                        self._save_checkpoint()
             
             logger.info(f"\n=== Scraping complete! Total timings collected: {len(self.all_timings)} ===")
             
@@ -454,15 +502,40 @@ def main():
     # Handle headless mode
     headless = args.headless and not args.show_browser
     
+    def load_checkpoint(path: Path):
+        processed: Set[Tuple[str, str, str]] = set()
+        timings: List[BusTiming] = []
+        if path.exists():
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                processed = {tuple(p) for p in data.get('processed', []) if len(p) == 3}
+                for item in data.get('timings', []):
+                    timings.append(BusTiming(**item))
+                logger.info(f"Loaded checkpoint from {path}: {len(processed)} pairs, {len(timings)} timings")
+            except Exception as e:
+                logger.warning(f"Could not load checkpoint {path}: {e}")
+        return processed, timings
+
+    checkpoint_path = Path(f"{args.output}.checkpoint.json")
+    processed_pairs, existing_timings = load_checkpoint(checkpoint_path)
+
     # Create scraper and run
-    scraper = MTCBusScraperSelenium(delay=args.delay, headless=headless)
+    scraper = MTCBusScraperSelenium(
+        delay=args.delay,
+        headless=headless,
+        checkpoint_path=checkpoint_path,
+        processed_pairs=processed_pairs,
+        existing_timings=existing_timings,
+    )
     
     try:
         scraper.scrape_all(limit_routes=args.limit_routes)
         
-        # Save to files
+        # Final save (also acts as final checkpoint)
         scraper.save_to_json(f"{args.output}.json")
         scraper.save_to_csv(f"{args.output}.csv")
+        scraper._save_checkpoint()
         
     except KeyboardInterrupt:
         logger.info("\nScraping interrupted by user")

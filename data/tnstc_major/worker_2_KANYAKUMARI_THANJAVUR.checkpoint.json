@@ -1,0 +1,225 @@
+{
+  "processed": [
+    [
+      "KANYAKUMARI",
+      "THANJAVUR"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "1930KAKVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KANYAKUMARI",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "8.30Hrs",
+      "arrival_time": "",
+      "available_seats": "5 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 429",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1930KAKVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "561UD"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "429"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KANYAKUMARI",
+          "time": "19:30"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KOTTARAM",
+          "time": "19:40"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "SUSINDRUM",
+          "time": "19:50"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "20:30"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "21:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "22:30"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "04:30"
+        },
+        {
+          "city": "NEEDAMANGALAM",
+          "landmark": "NEEDAMANGALAM",
+          "time": "05:00"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "05:30"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "05:45"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "06:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:21:45.028990"
+    },
+    {
+      "service_code": "1930KAKVEA",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KANYAKUMARI",
+      "destination": "THANJAVUR",
+      "departure_time": "",
+      "duration": "8.30Hrs",
+      "arrival_time": "",
+      "available_seats": "5 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 429",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1930KAKVEA",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "561UD"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "THANJAVUR"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:30"
+        },
+        {
+          "city": "429.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "429"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KANYAKUMARI",
+          "time": "19:30"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "KOTTARAM",
+          "time": "19:40"
+        },
+        {
+          "city": "KANYAKUMARI",
+          "landmark": "SUSINDRUM",
+          "time": "19:50"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "20:30"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "VALLIYOOR",
+          "time": "21:10"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "22:30"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "04:30"
+        },
+        {
+          "city": "NEEDAMANGALAM",
+          "landmark": "NEEDAMANGALAM",
+          "time": "05:00"
+        },
+        {
+          "city": "TIRUVARUR",
+          "landmark": "TIRUVARUR",
+          "time": "05:30"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "05:45"
+        },
+        {
+          "city": "VELANKANNI",
+          "landmark": "VELANKANNI",
+          "time": "06:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T19:21:45.028990"
+    }
+  ],
+  "saved_at": "2026-01-13T19:22:01.676551"
+}

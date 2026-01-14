@@ -1,0 +1,3424 @@
+[
+  {
+    "service_code": "0900KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0900KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "09:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "09:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "09:25"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "09:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "09:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "09:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "10:25"
+      },
+      {
+        "city": "TINDIVANAM",
+        "landmark": "TINDIVANAM",
+        "time": "10:45"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "11:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "0900KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0900KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "09:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "09:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "09:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "09:25"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "09:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "09:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "09:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "10:25"
+      },
+      {
+        "city": "TINDIVANAM",
+        "landmark": "TINDIVANAM",
+        "time": "10:45"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "11:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "20:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1600KCBEKMAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 630/970",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1600KCBEKMAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "791AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "630"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "16:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "16:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "16:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "16:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "16:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "16:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "17:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "17:45"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "18:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "02:30"
+      },
+      {
+        "city": "PALGHAT",
+        "landmark": "PALGHAT KSRTC B.S",
+        "time": "04:00"
+      },
+      {
+        "city": "TRISSUR",
+        "landmark": "TRISSUR KSRTC B.S",
+        "time": "06:00"
+      },
+      {
+        "city": "ERNAKULAM",
+        "landmark": "ERNAKULAM SOUTH KSRTC B.S",
+        "time": "07:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1600KCBEKMAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 630/970",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1600KCBEKMAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "791AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "630"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "16:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "16:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "16:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "16:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "16:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "16:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "17:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "17:45"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "18:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "02:30"
+      },
+      {
+        "city": "PALGHAT",
+        "landmark": "PALGHAT KSRTC B.S",
+        "time": "04:00"
+      },
+      {
+        "city": "TRISSUR",
+        "landmark": "TRISSUR KSRTC B.S",
+        "time": "06:00"
+      },
+      {
+        "city": "ERNAKULAM",
+        "landmark": "ERNAKULAM SOUTH KSRTC B.S",
+        "time": "07:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1645KCBGURLB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "12.15Hrs",
+    "arrival_time": "",
+    "available_seats": "30 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1645KCBGURLB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "785LB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "12:15"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "18:00"
+      },
+      {
+        "city": "TINDIVANAM",
+        "landmark": "TINDIVANAM",
+        "time": "18:20"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "20:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "05:00"
+      },
+      {
+        "city": "PALGHAT",
+        "landmark": "PALGHAT KSRTC B.S",
+        "time": "06:30"
+      },
+      {
+        "city": "TRISSUR",
+        "landmark": "TRISSUR KSRTC B.S",
+        "time": "07:30"
+      },
+      {
+        "city": "GURUVAYUR",
+        "landmark": "GURUVAYUR",
+        "time": "08:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1645KCBGURLB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "12.15Hrs",
+    "arrival_time": "",
+    "available_seats": "30 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1645KCBGURLB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "785LB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "12:15"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "16:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "18:00"
+      },
+      {
+        "city": "TINDIVANAM",
+        "landmark": "TINDIVANAM",
+        "time": "18:20"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "20:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "05:00"
+      },
+      {
+        "city": "PALGHAT",
+        "landmark": "PALGHAT KSRTC B.S",
+        "time": "06:30"
+      },
+      {
+        "city": "TRISSUR",
+        "landmark": "TRISSUR KSRTC B.S",
+        "time": "07:30"
+      },
+      {
+        "city": "GURUVAYUR",
+        "landmark": "GURUVAYUR",
+        "time": "08:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1800KCBCOIAC",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "28 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 630",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1800KCBCOIAC",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AC"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "630"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:00"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "ERODE",
+        "time": "00:50"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "03:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1800KCBCOIAC",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "28 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 630",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1800KCBCOIAC",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AC"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "630"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "18:00"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "ERODE",
+        "time": "00:50"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "03:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1900KCBCOI",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "10.00Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1900KCBCOI",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460UD"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "19:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "19:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "19:25"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "19:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "19:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "19:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "20:25"
+      },
+      {
+        "city": "TINDIVANAM",
+        "landmark": "TINDIVANAM",
+        "time": "21:10"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "22:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1900KCBCOI",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "10.00Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1900KCBCOI",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460UD"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "19:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "19:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "19:25"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "19:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "19:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "19:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "20:25"
+      },
+      {
+        "city": "TINDIVANAM",
+        "landmark": "TINDIVANAM",
+        "time": "21:10"
+      },
+      {
+        "city": "VILLUPURAM",
+        "landmark": "VILLUPURAM",
+        "time": "22:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1915KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1915KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "19:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "19:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "19:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "19:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "20:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "20:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "20:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "21:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1915KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1915KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "19:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "19:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "19:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "19:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "20:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "20:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "20:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "21:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1945KCBCOIAC",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "29 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 630",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1945KCBCOIAC",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AC"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "630"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "04:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1945KCBCOIAC",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "29 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 630",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1945KCBCOIAC",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AC"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "630"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "19:45"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "04:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2000KCBCOIMS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "41 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 826",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2000KCBCOIMS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460MS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "492.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "826"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2000KCBCOIMS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "41 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 826",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2000KCBCOIMS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460MS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "492.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "826"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "05:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2015KCBCOIAS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2015KCBCOIAS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "969"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "20:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "20:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "20:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "21:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "21:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "21:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "22:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "07:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2015KCBCOIAS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2015KCBCOIAS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "969"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "20:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "20:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "20:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "21:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "21:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "21:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "22:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "07:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1830TIVCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.40Hrs",
+    "arrival_time": "",
+    "available_seats": "37 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1830TIVCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460TAB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:40"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "CHENNAI TIRUVANMIYUR",
+        "time": "18:30"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "SRP TOOLS",
+        "time": "18:45"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "VELACHERY",
+        "time": "18:55"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "CHROMEPET MTC BS",
+        "time": "19:10"
+      },
+      {
+        "city": "CHENNAI TAMBARAM",
+        "landmark": "CHENNAI TAMBARAM",
+        "time": "19:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "1830TIVCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.40Hrs",
+    "arrival_time": "",
+    "available_seats": "37 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1830TIVCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460TAB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:40"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "CHENNAI TIRUVANMIYUR",
+        "time": "18:30"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "SRP TOOLS",
+        "time": "18:45"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "VELACHERY",
+        "time": "18:55"
+      },
+      {
+        "city": "CHENNAI TIRUVANMIYUR",
+        "landmark": "CHROMEPET MTC BS",
+        "time": "19:10"
+      },
+      {
+        "city": "CHENNAI TAMBARAM",
+        "landmark": "CHENNAI TAMBARAM",
+        "time": "19:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "COIMBATORE",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2030KCBCOINS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "19 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2030KCBCOINS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460NS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "20:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "20:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "21:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "21:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "21:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "22:20"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2030KCBCOINS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "19 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2030KCBCOINS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460NS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "20:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "20:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "21:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "21:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "21:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "22:20"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2045KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2045KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "21:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "21:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "22:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "07:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2045KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2045KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "21:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "21:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "22:30"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "07:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2115KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "30 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2115KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "21:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "21:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "08:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2115KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "30 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2115KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "21:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "21:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:00"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "08:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2130KCBCOIAS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2130KCBCOIAS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "969"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "21:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "21:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:25"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "08:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2130KCBCOIAS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2130KCBCOIAS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "969"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "21:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "21:35"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:25"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:55"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:15"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "08:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2200KCBCOINS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200KCBCOINS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460NS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "22:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "22:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "23:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:50"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "07:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2200KCBCOINS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2200KCBCOINS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460NS"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "22:05"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "22:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "23:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:50"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "07:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2215KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2215KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "22:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "22:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "22:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "23:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "23:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "23:40"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "09:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2215KCBCOIAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "9.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2215KCBCOIAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "9:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "22:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "22:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "22:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "23:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "23:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "23:40"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "09:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2245KCBCOILB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "10.00Hrs",
+    "arrival_time": "",
+    "available_seats": "34 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2245KCBCOILB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460LB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "23:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "23:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "23:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "23:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "23:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "00:10"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "08:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2245KCBCOILB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "10.00Hrs",
+    "arrival_time": "",
+    "available_seats": "34 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 487/755",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2245KCBCOILB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460LB"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "487"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "22:45"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "23:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "23:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "23:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "23:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "23:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "00:10"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "08:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2315KCBCOIAL",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "10.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2315KCBCOIAL",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AL"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "23:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "23:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "23:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "23:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "00:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "00:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "00:40"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "09:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  },
+  {
+    "service_code": "2315KCBCOIAL",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "COIMBATORE",
+    "departure_time": "",
+    "duration": "10.00Hrs",
+    "arrival_time": "",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 631/969",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2315KCBCOIAL",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "460AL"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:00"
+      },
+      {
+        "city": "486.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "631"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "23:15"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "GUDUVANCHERY",
+        "time": "23:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "23:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "23:40"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "23:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "00:00"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "00:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "00:40"
+      },
+      {
+        "city": "COIMBATORE",
+        "landmark": "GANDHIPURAM SETC BS",
+        "time": "09:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:54:35.770030"
+  }
+]

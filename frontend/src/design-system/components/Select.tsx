@@ -101,6 +101,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
       }
+      return () => {}; // Return empty cleanup when not open
     }, [isOpen]);
 
     // Filter options based on search

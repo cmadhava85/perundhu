@@ -1,0 +1,1354 @@
+[
+  {
+    "service_code": "0830TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457/600",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0830TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "08:30"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "16:00"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "17:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "0830TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "32 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457/600",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0830TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "08:30"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "16:00"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "17:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "0930TRIBAN",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "35 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0930TRIBAN",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827UD"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "09:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "09:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "09:45"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "09:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "10:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BYEPASS",
+        "time": "10:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "10:45"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "18:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "0930TRIBAN",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "35 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0930TRIBAN",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827UD"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "09:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "09:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "09:45"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "09:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "10:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BYEPASS",
+        "time": "10:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "10:45"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "18:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "1030TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457/600",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1030TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "10:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "10:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "10:45"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "10:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "11:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BYEPASS",
+        "time": "11:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "11:45"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "18:00"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "19:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "1030TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "25 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457/600",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1030TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "10:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "10:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "10:45"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "10:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "11:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BYEPASS",
+        "time": "11:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "11:45"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "18:00"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "19:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "1330TRIBANAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "31 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 545/740",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1330TRIBANAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827AB"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "545"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "13:30"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "20:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "1330TRIBANAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "31 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 545/740",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1330TRIBANAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827AB"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "545"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "13:30"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "20:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2045TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "3 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457/600",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2045TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "20:45"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "20:55"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "21:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "21:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "21:25"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI",
+        "time": "22:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "22:25"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "04:15"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "05:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2045TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "3 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 457/600",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2045TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "20:45"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "20:55"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "21:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "21:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "21:25"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI",
+        "time": "22:05"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "22:25"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "04:15"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "05:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2130TRIBANAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "21 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 545/740",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2130TRIBANAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827AB"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "545"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "21:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY CHATHIRAM BS KARUR STOP",
+        "time": "21:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PETTAVAITHALAI",
+        "time": "22:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "KULITHALAI",
+        "time": "22:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BRIDGE",
+        "time": "22:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "23:00"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2130TRIBANAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "21 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 545/740",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2130TRIBANAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827AB"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "545"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "21:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY CHATHIRAM BS KARUR STOP",
+        "time": "21:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PETTAVAITHALAI",
+        "time": "22:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "KULITHALAI",
+        "time": "22:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BRIDGE",
+        "time": "22:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "THOTTIYAM",
+        "time": "23:00"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "06:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2230TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "",
+    "bus_type": "Standard",
+    "fare": "Rs 457",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2230TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "22:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY CHATHIRAM BS KARUR STOP",
+        "time": "22:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PETTAVAITHALAI",
+        "time": "23:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "KULITHALAI",
+        "time": "23:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BRIDGE",
+        "time": "23:40"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "07:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2230TRIBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "",
+    "bus_type": "Standard",
+    "fare": "Rs 457",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2230TRIBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827NS"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "457"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "22:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY CHATHIRAM BS KARUR STOP",
+        "time": "22:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PETTAVAITHALAI",
+        "time": "23:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "KULITHALAI",
+        "time": "23:30"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI BRIDGE",
+        "time": "23:40"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "07:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2300TRIBANAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "13 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 545/740",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2300TRIBANAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827AB"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "545"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "23:00"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "23:10"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "23:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "23:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "23:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI",
+        "time": "00:20"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "HOSUR",
+        "time": "06:45"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "07:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  },
+  {
+    "service_code": "2300TRIBANAB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TRICHY",
+    "destination": "BENGALURU",
+    "departure_time": "",
+    "duration": "8.45Hrs",
+    "arrival_time": "",
+    "available_seats": "13 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 545/740",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2300TRIBANAB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "827AB"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "BENGALURU"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:45"
+      },
+      {
+        "city": "352.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "545"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TRICHY KKBT",
+        "time": "23:00"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "TVS TOLL GATE",
+        "time": "23:10"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "PALPANNAI",
+        "time": "23:15"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "NO 1 TOLL GATE",
+        "time": "23:40"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "GUNASEELAM",
+        "time": "23:50"
+      },
+      {
+        "city": "TRICHY",
+        "landmark": "MUSIRI",
+        "time": "00:20"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "HOSUR",
+        "time": "06:45"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "07:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:15:30.878812"
+  }
+]

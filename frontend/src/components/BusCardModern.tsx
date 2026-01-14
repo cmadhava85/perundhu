@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location as AppLocation } from '../types';
 import '../styles/premium-design-system.css';
@@ -18,13 +18,14 @@ interface BusCardModernProps {
   stops?: Stop[];
 }
 
-const BusCardModern: React.FC<BusCardModernProps> = ({
+// PHASE 2 OPTIMIZATION: Memoize component to prevent unnecessary re-renders
+const BusCardModern: React.FC<BusCardModernProps> = memo(({
   bus,
   index,
   isSelected,
-  onSelect,
-  onAddStops,
-  onReportIssue,
+  onSelect: _onSelect,
+  onAddStops: _onAddStops,
+  onReportIssue: _onReportIssue,
   onMapClick: _onMapClick,
   fromLocation,
   toLocation,
@@ -82,6 +83,13 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
     return location.name;
   };
 
+  // PHASE 2 OPTIMIZATION: Memoize callbacks to prevent child re-renders
+  const handleCardClick = useCallback(() => {
+    if (stops.length > 0) {
+      setIsExpanded(prev => !prev);
+    }
+  }, [stops.length]);
+
   const getDuration = () => {
     if (!bus.departureTime || !bus.arrivalTime) return '';
     
@@ -137,11 +145,6 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
     if (category.includes('deluxe')) return '✨ Deluxe';
     if (category.includes('ac')) return '❄️ AC';
     return '🚌 Regular';
-  };
-
-  const handleCardClick = () => {
-    setIsExpanded(!isExpanded);
-    onSelect(bus);
   };
 
   const _status = getStatus();
@@ -221,6 +224,8 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
           onClick={handleCardClick}
           role="button"
           tabIndex={0}
+          aria-label={isExpanded ? `Hide all stops for ${bus.busName || 'bus'} (${stops.length} stops)` : `Show all stops for ${bus.busName || 'bus'} (${stops.length} stops)`}
+          aria-expanded={isExpanded}
         >
           <div className="view-stops-content">
             <span className="stops-count-badge">{stops.length} stops</span>
@@ -247,11 +252,13 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
                   return time.substring(0, 5); // Get first 5 chars (HH:MM)
                 };
                 
-                const isFirstStop = idx === 0;
-                const isLastStop = idx === stops.length - 1;
+                // Determine if this is origin or destination by name comparison
+                const isOriginStop = stop.name.toLowerCase().includes(bus.origin?.toLowerCase() || '');
+                const isDestStop = stop.name.toLowerCase().includes(bus.destination?.toLowerCase() || '');
+                
                 let stopColor = '#6B7280'; // default gray
-                if (isFirstStop) stopColor = '#10B981'; // green for departure
-                if (isLastStop) stopColor = '#EF4444'; // red for destination
+                if (isOriginStop) stopColor = '#10B981'; // green for origin
+                else if (isDestStop) stopColor = '#EF4444'; // red for destination
                 
                 return (
                   <div key={stop.id || idx} className="stop-item">
@@ -288,9 +295,10 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
           className="btn btn-add"
           onClick={(e) => {
             e.stopPropagation();
-            onAddStops?.(bus);
+            _onAddStops?.(bus);
           }}
           title="Add stops"
+          aria-label={`Add stops to ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
         >
           ➕ Add Stops
         </button>
@@ -298,14 +306,16 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
           className="btn btn-report"
           onClick={(e) => {
             e.stopPropagation();
-            onReportIssue?.(bus);
+            _onReportIssue?.(bus);
           }}
           title="Report issue"
+          aria-label={`Report issue with ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
         >
           ⚠️ Report
         </button>
         <button
           className="btn btn-share"
+          aria-label={`Share ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''} details`}
           onClick={(e) => {
             e.stopPropagation();
             
@@ -371,6 +381,9 @@ const BusCardModern: React.FC<BusCardModernProps> = ({
       )}
     </div>
   );
-};
+});
+
+// PHASE 2 OPTIMIZATION: Add display name for better debugging
+BusCardModern.displayName = 'BusCardModern';
 
 export default BusCardModern;

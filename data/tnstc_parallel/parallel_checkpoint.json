@@ -1,0 +1,27 @@
+{
+  "completed_pairs": [
+    [
+      "A AGARAM",
+      "ADIRAMAPATTINAM"
+    ],
+    [
+      "A AGARAM",
+      "ADUTHURAI"
+    ],
+    [
+      "A AGARAM",
+      "ALANGAYAM"
+    ],
+    [
+      "A AGARAM",
+      "ADOOR"
+    ],
+    [
+      "A AGARAM",
+      "ALANKUDI"
+    ]
+  ],
+  "failed_pairs": [],
+  "total_routes_scraped": 5,
+  "last_updated": "2026-01-13 17:23:38"
+}

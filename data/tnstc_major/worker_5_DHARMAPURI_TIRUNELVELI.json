@@ -1,0 +1,216 @@
+[
+  {
+    "service_code": "1815BANKAKNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "DHARMAPURI",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "10.45Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 482/750",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1815BANKAKNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "888NS"
+      },
+      {
+        "city": "DHARMAPURI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:45"
+      },
+      {
+        "city": "480.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "482"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "18:15"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "ST. JOHN HOSPITAL B.S",
+        "time": "18:30"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "ELECTRONIC CITY BMTC DEPOT",
+        "time": "18:45"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "ATTIBELE TOLL PLAZA",
+        "time": "19:05"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "19:30"
+      },
+      {
+        "city": "DHARMAPURI",
+        "landmark": "DHARMAPURI",
+        "time": "20:45"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "SALEM",
+        "time": "23:15"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "03:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "06:30"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "07:15"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "08:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:02:41.050432"
+  },
+  {
+    "service_code": "1815BANKAKNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "DHARMAPURI",
+    "destination": "TIRUNELVELI",
+    "departure_time": "",
+    "duration": "10.45Hrs",
+    "arrival_time": "",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 482/750",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1815BANKAKNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "888NS"
+      },
+      {
+        "city": "DHARMAPURI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "TIRUNELVELI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:45"
+      },
+      {
+        "city": "480.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "482"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "18:15"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "ST. JOHN HOSPITAL B.S",
+        "time": "18:30"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "ELECTRONIC CITY BMTC DEPOT",
+        "time": "18:45"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "ATTIBELE TOLL PLAZA",
+        "time": "19:05"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "19:30"
+      },
+      {
+        "city": "DHARMAPURI",
+        "landmark": "DHARMAPURI",
+        "time": "20:45"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "SALEM",
+        "time": "23:15"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "03:30"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "06:30"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "NAGERCOIL",
+        "time": "07:15"
+      },
+      {
+        "city": "KANYAKUMARI",
+        "landmark": "KANYAKUMARI",
+        "time": "08:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:02:41.050432"
+  }
+]

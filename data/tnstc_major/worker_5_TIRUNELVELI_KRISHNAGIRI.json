@@ -1,0 +1,340 @@
+[
+  {
+    "service_code": "1930NAGBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUNELVELI",
+    "destination": "KRISHNAGIRI",
+    "departure_time": "",
+    "duration": "8.00Hrs",
+    "arrival_time": "",
+    "available_seats": "2 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 530/820",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930NAGBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "887NS"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KRISHNAGIRI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:00"
+      },
+      {
+        "city": "528.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "530"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "VADACHERRY",
+        "time": "19:30"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "ARALVAIMOZHI",
+        "time": "19:45"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "VALLIYOOR",
+        "time": "20:10"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "21:00"
+      },
+      {
+        "city": "KRISHNAGIRI",
+        "landmark": "KRISHNAGIRI TOLL PLAZA",
+        "time": "04:30"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "06:30"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "07:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:32:40.141029"
+  },
+  {
+    "service_code": "1930NAGBANNS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUNELVELI",
+    "destination": "KRISHNAGIRI",
+    "departure_time": "",
+    "duration": "8.00Hrs",
+    "arrival_time": "",
+    "available_seats": "2 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 530/820",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930NAGBANNS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "887NS"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KRISHNAGIRI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:00"
+      },
+      {
+        "city": "528.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "530"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "VADACHERRY",
+        "time": "19:30"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "ARALVAIMOZHI",
+        "time": "19:45"
+      },
+      {
+        "city": "NAGERCOIL VADACHERRY",
+        "landmark": "VALLIYOOR",
+        "time": "20:10"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "21:00"
+      },
+      {
+        "city": "KRISHNAGIRI",
+        "landmark": "KRISHNAGIRI TOLL PLAZA",
+        "time": "04:30"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "06:30"
+      },
+      {
+        "city": "BENGALURU",
+        "landmark": "SHANTHI NAGAR BS",
+        "time": "07:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:32:40.141029"
+  },
+  {
+    "service_code": "2115TIUHOS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUNELVELI",
+    "destination": "KRISHNAGIRI",
+    "departure_time": "",
+    "duration": "10.30Hrs",
+    "arrival_time": "",
+    "available_seats": "",
+    "bus_type": "Standard",
+    "fare": "Rs 530",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2115TIUHOS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "874HUD"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KRISHNAGIRI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:30"
+      },
+      {
+        "city": "528.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "530"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "21:15"
+      },
+      {
+        "city": "VIRUDHUNAGAR",
+        "landmark": "COLLECTOR OFFICE BUS STAND",
+        "time": "23:30"
+      },
+      {
+        "city": "ARAPALAYAM",
+        "landmark": "ARAPALAYAM",
+        "time": "01:00"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "SALEM",
+        "time": "05:15"
+      },
+      {
+        "city": "KRISHNAGIRI",
+        "landmark": "KRISHNAGIRI",
+        "time": "08:00"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "09:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:32:40.141029"
+  },
+  {
+    "service_code": "2115TIUHOS",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "TIRUNELVELI",
+    "destination": "KRISHNAGIRI",
+    "departure_time": "",
+    "duration": "10.30Hrs",
+    "arrival_time": "",
+    "available_seats": "",
+    "bus_type": "Standard",
+    "fare": "Rs 530",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2115TIUHOS",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "874HUD"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KRISHNAGIRI"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "10:30"
+      },
+      {
+        "city": "528.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "530"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "21:15"
+      },
+      {
+        "city": "VIRUDHUNAGAR",
+        "landmark": "COLLECTOR OFFICE BUS STAND",
+        "time": "23:30"
+      },
+      {
+        "city": "ARAPALAYAM",
+        "landmark": "ARAPALAYAM",
+        "time": "01:00"
+      },
+      {
+        "city": "SALEM",
+        "landmark": "SALEM",
+        "time": "05:15"
+      },
+      {
+        "city": "KRISHNAGIRI",
+        "landmark": "KRISHNAGIRI",
+        "time": "08:00"
+      },
+      {
+        "city": "HOSUR",
+        "landmark": "HOSUR",
+        "time": "09:15"
+      }
+    ],
+    "scraped_at": "2026-01-13T19:32:40.141029"
+  }
+]

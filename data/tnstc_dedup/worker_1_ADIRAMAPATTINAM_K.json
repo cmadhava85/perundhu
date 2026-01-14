@@ -1,0 +1,146 @@
+[
+  {
+    "service_code": "2030ADIKCB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ADIRAMAPATTINAM",
+    "destination": "K",
+    "departure_time": "",
+    "duration": "8.00Hrs",
+    "arrival_time": "",
+    "available_seats": "13 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 358",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2030ADIKCB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "333UD"
+      },
+      {
+        "city": "ADIRAMAPATTINAM",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "CHENNAI-KILAMBAKKAM-KCBT"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:00"
+      },
+      {
+        "city": "353.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "358"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ADIRAMAPATTINAM",
+        "landmark": "ADIRAMAPATTINAM",
+        "time": "20:30"
+      },
+      {
+        "city": "MANNARKUDI",
+        "landmark": "MANNARKUDI",
+        "time": "21:30"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "22:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:48:35.979251"
+  },
+  {
+    "service_code": "2030ADIKCB",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ADIRAMAPATTINAM",
+    "destination": "K",
+    "departure_time": "",
+    "duration": "8.00Hrs",
+    "arrival_time": "",
+    "available_seats": "13 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 358",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2030ADIKCB",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "333UD"
+      },
+      {
+        "city": "ADIRAMAPATTINAM",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "CHENNAI-KILAMBAKKAM-KCBT"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "8:00"
+      },
+      {
+        "city": "353.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "SETC"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "358"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ADIRAMAPATTINAM",
+        "landmark": "ADIRAMAPATTINAM",
+        "time": "20:30"
+      },
+      {
+        "city": "MANNARKUDI",
+        "landmark": "MANNARKUDI",
+        "time": "21:30"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "22:30"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "04:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:48:35.979251"
+  }
+]

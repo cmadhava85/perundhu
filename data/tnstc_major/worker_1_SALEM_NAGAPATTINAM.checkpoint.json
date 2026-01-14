@@ -1,0 +1,135 @@
+{
+  "processed": [
+    [
+      "SALEM",
+      "NAGAPATTINAM"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "0647SALNAPKK01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "SALEM",
+      "destination": "NAGAPATTINAM",
+      "departure_time": "",
+      "duration": "9.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 239",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0647SALNAPKK01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "147"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "NAGAPATTINAM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:00"
+        },
+        {
+          "city": "291.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "239"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "06:47"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "15:47"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:20:22.652095"
+    },
+    {
+      "service_code": "0647SALNAPKK01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "SALEM",
+      "destination": "NAGAPATTINAM",
+      "departure_time": "",
+      "duration": "9.00Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 239",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "0647SALNAPKK01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "147"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "NAGAPATTINAM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:00"
+        },
+        {
+          "city": "291.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "239"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "06:47"
+        },
+        {
+          "city": "NAGAPATTINAM",
+          "landmark": "NAGAPATTINAM",
+          "time": "15:47"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:20:22.652095"
+    }
+  ],
+  "saved_at": "2026-01-13T18:20:39.345465"
+}

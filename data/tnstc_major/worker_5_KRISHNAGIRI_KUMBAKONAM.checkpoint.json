@@ -1,0 +1,215 @@
+{
+  "processed": [
+    [
+      "KRISHNAGIRI",
+      "KUMBAKONAM"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "2015BANKUMAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "KUMBAKONAM",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "21 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 468/720",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2015BANKUMAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "844TAB"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "342.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "468"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "20:15"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "ST. JOHN HOSPITAL B.S",
+          "time": "20:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "ELECTRONIC CITY BMTC DEPOT",
+          "time": "20:45"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "ATTIBELE TOLL PLAZA",
+          "time": "21:05"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "HOSUR",
+          "time": "21:30"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "22:45"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "01:30"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "04:45"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "06:15"
+        },
+        {
+          "city": "KUMBAKONAM",
+          "landmark": "KUMBAKONAM",
+          "time": "07:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:59:59.625080"
+    },
+    {
+      "service_code": "2015BANKUMAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "KRISHNAGIRI",
+      "destination": "KUMBAKONAM",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "21 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 468/720",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2015BANKUMAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "844TAB"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "KUMBAKONAM"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "342.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "468"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "SHANTHI NAGAR BS",
+          "time": "20:15"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "ST. JOHN HOSPITAL B.S",
+          "time": "20:30"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "ELECTRONIC CITY BMTC DEPOT",
+          "time": "20:45"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "ATTIBELE TOLL PLAZA",
+          "time": "21:05"
+        },
+        {
+          "city": "BENGALURU",
+          "landmark": "HOSUR",
+          "time": "21:30"
+        },
+        {
+          "city": "KRISHNAGIRI",
+          "landmark": "KRISHNAGIRI",
+          "time": "22:45"
+        },
+        {
+          "city": "SALEM",
+          "landmark": "SALEM",
+          "time": "01:30"
+        },
+        {
+          "city": "TRICHY",
+          "landmark": "TRICHY KKBT",
+          "time": "04:45"
+        },
+        {
+          "city": "THANJAVUR",
+          "landmark": "THANJAVUR",
+          "time": "06:15"
+        },
+        {
+          "city": "KUMBAKONAM",
+          "landmark": "KUMBAKONAM",
+          "time": "07:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:59:59.625080"
+    }
+  ],
+  "saved_at": "2026-01-13T19:00:16.878884"
+}

@@ -1,0 +1,195 @@
+{
+  "processed": [
+    [
+      "ERODE",
+      "TIRUNELVELI"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "1930EROMAR",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "ERODE",
+      "destination": "TIRUNELVELI",
+      "departure_time": "",
+      "duration": "7.30Hrs",
+      "arrival_time": "",
+      "available_seats": "24 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 378",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1930EROMAR",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "668UD"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "TIRUNELVELI"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:30"
+        },
+        {
+          "city": "380.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "378"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "19:30"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "KODUMUDI",
+          "time": "20:20"
+        },
+        {
+          "city": "KARUR",
+          "landmark": "KARUR",
+          "time": "21:00"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "03:30"
+        },
+        {
+          "city": "VALLIYOOR",
+          "landmark": "VALLIYOOR",
+          "time": "04:00"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "04:30"
+        },
+        {
+          "city": "THUCKKALAY",
+          "landmark": "THUCKKALAY",
+          "time": "04:45"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "MARTHANDAM",
+          "time": "05:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:38:48.944207"
+    },
+    {
+      "service_code": "1930EROMAR",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "ERODE",
+      "destination": "TIRUNELVELI",
+      "departure_time": "",
+      "duration": "7.30Hrs",
+      "arrival_time": "",
+      "available_seats": "24 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 378",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1930EROMAR",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "668UD"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "TIRUNELVELI"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:30"
+        },
+        {
+          "city": "380.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "378"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "19:30"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "KODUMUDI",
+          "time": "20:20"
+        },
+        {
+          "city": "KARUR",
+          "landmark": "KARUR",
+          "time": "21:00"
+        },
+        {
+          "city": "TIRUNELVELI",
+          "landmark": "TIRUNELVELI",
+          "time": "03:30"
+        },
+        {
+          "city": "VALLIYOOR",
+          "landmark": "VALLIYOOR",
+          "time": "04:00"
+        },
+        {
+          "city": "NAGERCOIL VADACHERRY",
+          "landmark": "NAGERCOIL",
+          "time": "04:30"
+        },
+        {
+          "city": "THUCKKALAY",
+          "landmark": "THUCKKALAY",
+          "time": "04:45"
+        },
+        {
+          "city": "MARTHANDAM",
+          "landmark": "MARTHANDAM",
+          "time": "05:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T18:38:48.944207"
+    }
+  ],
+  "saved_at": "2026-01-13T18:39:05.594085"
+}

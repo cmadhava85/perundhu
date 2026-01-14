@@ -2,7 +2,7 @@ name: GCP Cost Optimization - Stop/Start Services
 
 on:
   schedule:
-    # Stop services at 10 PM EST (3:00 AM UTC)
+    # Stop services at 10 PM EST (3:00 AM UTC next day)
     - cron: '0 3 * * *'
     # Start services at 8 AM EST (1:00 PM UTC)
     - cron: '0 13 * * *'
@@ -77,11 +77,11 @@ jobs:
           case "${{ github.event.schedule }}" in
             "0 3 * * *")
               echo "action=stop" >> $GITHUB_OUTPUT
-              echo "Scheduled stop (10 PM EST)" >> $GITHUB_STEP_SUMMARY
+              echo "Scheduled stop (10:00 PM EST)" >> $GITHUB_STEP_SUMMARY
               ;;
             "0 13 * * *")
               echo "action=start" >> $GITHUB_OUTPUT
-              echo "Scheduled start (8 AM EST)" >> $GITHUB_STEP_SUMMARY
+              echo "Scheduled start (8:00 AM EST)" >> $GITHUB_STEP_SUMMARY
               ;;
             *)
               echo "action=status" >> $GITHUB_OUTPUT
@@ -230,8 +230,8 @@ jobs:
           echo "- Cloud SQL MySQL 8.0" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Schedule:" >> $GITHUB_STEP_SUMMARY
-          echo "- **Stop:** 10:00 PM IST daily" >> $GITHUB_STEP_SUMMARY
-          echo "- **Start:** 8:00 AM IST daily" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stop:** 10:00 PM EST (3:00 AM UTC) daily" >> $GITHUB_STEP_SUMMARY
+          echo "- **Start:** 8:00 AM EST (1:00 PM UTC) daily" >> $GITHUB_STEP_SUMMARY
           echo "- **Downtime:** 10 hours per day (approximately 42% of the day)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Estimated Monthly Savings:" >> $GITHUB_STEP_SUMMARY

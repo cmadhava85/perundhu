@@ -1,0 +1,384 @@
+[
+  {
+    "service_code": "0737EROKUMKK05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ERODE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 200",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0737EROKUMKK05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "143"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:15"
+      },
+      {
+        "city": "264.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "200"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "ERODE",
+        "time": "07:37"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "14:52"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:42:23.410062"
+  },
+  {
+    "service_code": "0737EROKUMKK05L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ERODE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 200",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "0737EROKUMKK05L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "143"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:15"
+      },
+      {
+        "city": "264.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "200"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "ERODE",
+        "time": "07:37"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "14:52"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:42:23.410062"
+  },
+  {
+    "service_code": "1930ANTKUMCC01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ERODE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "6.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 193",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930ANTKUMCC01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "SPL"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "6:15"
+      },
+      {
+        "city": "253.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "193"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ANTHIYUR",
+        "landmark": "ANTHIYUR",
+        "time": "19:30"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "SOLAR NEW BUS STAND",
+        "time": "21:30"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "03:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:42:23.410062"
+  },
+  {
+    "service_code": "1930ANTKUMCC01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ERODE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "6.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 193",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "1930ANTKUMCC01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "SPL"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "6:15"
+      },
+      {
+        "city": "253.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "COIMBATORE"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "193"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ANTHIYUR",
+        "landmark": "ANTHIYUR",
+        "time": "19:30"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "SOLAR NEW BUS STAND",
+        "time": "21:30"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "03:45"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:42:23.410062"
+  },
+  {
+    "service_code": "2235EROKUMKK01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ERODE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 195",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2235EROKUMKK01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "995A"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:15"
+      },
+      {
+        "city": "264.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "195"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "SOLAR NEW BUS STAND",
+        "time": "22:35"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "05:50"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:42:23.410062"
+  },
+  {
+    "service_code": "2235EROKUMKK01L",
+    "route_number": "",
+    "corporation": "SETC",
+    "origin": "ERODE",
+    "destination": "KUMBAKONAM",
+    "departure_time": "",
+    "duration": "7.15Hrs",
+    "arrival_time": "",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 195",
+    "journey_date": "16/01/2026",
+    "stops": [
+      {
+        "city": "&nbsp;",
+        "landmark": "",
+        "time": "Service&nbsp;Details"
+      },
+      {
+        "city": "2235EROKUMKK01L",
+        "landmark": "Route&nbsp;No.&nbsp;:",
+        "time": "995A"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "To&nbsp;Place&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "16/01/2026",
+        "landmark": "Journey&nbsp;Hours&nbsp;*:",
+        "time": "7:15"
+      },
+      {
+        "city": "264.00",
+        "landmark": "Corporation&nbsp;:",
+        "time": "KUMBAKONAM"
+      },
+      {
+        "city": "&nbsp;",
+        "landmark": "Adult&nbsp;Fare&nbsp;**",
+        "time": "195"
+      },
+      {
+        "city": "City",
+        "landmark": "Land&nbsp;Mark&nbsp;",
+        "time": "Dep.&nbsp;Time&nbsp;"
+      },
+      {
+        "city": "ERODE",
+        "landmark": "SOLAR NEW BUS STAND",
+        "time": "22:35"
+      },
+      {
+        "city": "KUMBAKONAM",
+        "landmark": "KUMBAKONAM",
+        "time": "05:50"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:42:23.410062"
+  }
+]

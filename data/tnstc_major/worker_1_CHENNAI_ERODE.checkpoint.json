@@ -1,0 +1,1309 @@
+{
+  "processed": [
+    [
+      "CHENNAI",
+      "ERODE"
+    ]
+  ],
+  "routes": [
+    {
+      "service_code": "1800KCBCOIAC",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.15Hrs",
+      "arrival_time": "",
+      "available_seats": "28 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 500",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1800KCBCOIAC",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "460AC"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:15"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "500"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "18:00"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "00:50"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "GANDHIPURAM SETC BS",
+          "time": "03:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "1800KCBCOIAC",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.15Hrs",
+      "arrival_time": "",
+      "available_seats": "28 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 500",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "1800KCBCOIAC",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "460AC"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:15"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "500"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "18:00"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "00:50"
+        },
+        {
+          "city": "COIMBATORE",
+          "landmark": "GANDHIPURAM SETC BS",
+          "time": "03:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2000KCBSTM",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "27 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 383",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2000KCBSTM",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "432MUD"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "383"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "20:00"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "20:05"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "20:10"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "20:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "20:30"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "20:40"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "20:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "21:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "21:45"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:30"
+        },
+        {
+          "city": "GOBI",
+          "landmark": "GOBI",
+          "time": "05:15"
+        },
+        {
+          "city": "SATHIYAMANGALAM",
+          "landmark": "SATHIYAMANGALAM",
+          "time": "05:45"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2000KCBSTM",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "9.30Hrs",
+      "arrival_time": "",
+      "available_seats": "27 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 383",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2000KCBSTM",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "432MUD"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "9:30"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "383"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "20:00"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "20:05"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "20:10"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "20:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "20:30"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "20:40"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "20:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "21:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "21:45"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:30"
+        },
+        {
+          "city": "GOBI",
+          "landmark": "GOBI",
+          "time": "05:15"
+        },
+        {
+          "city": "SATHIYAMANGALAM",
+          "landmark": "SATHIYAMANGALAM",
+          "time": "05:45"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2030KCBANTCC01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.15Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 329",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2030KCBANTCC01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "40723"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:15"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "329"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "20:30"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:45"
+        },
+        {
+          "city": "ANTHIYUR",
+          "landmark": "ANTHIYUR",
+          "time": "05:45"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2030KCBANTCC01L",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.15Hrs",
+      "arrival_time": "",
+      "available_seats": "45 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 329",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2030KCBANTCC01L",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "40723"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:15"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "COIMBATORE"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "329"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "20:30"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:45"
+        },
+        {
+          "city": "ANTHIYUR",
+          "landmark": "ANTHIYUR",
+          "time": "05:45"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2100KCBPOLAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.15Hrs",
+      "arrival_time": "",
+      "available_seats": "31 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 494/764",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2100KCBPOLAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "T470AB"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:15"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "494"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "21:00"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "21:05"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "21:10"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "21:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "21:30"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "21:40"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "21:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "22:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "22:45"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:00"
+        },
+        {
+          "city": "TIRUPPUR",
+          "landmark": "TIRUPPUR OLD BUSSTAND",
+          "time": "05:30"
+        },
+        {
+          "city": "PALLADAM",
+          "landmark": "PALLADAM",
+          "time": "06:00"
+        },
+        {
+          "city": "POLLACHI",
+          "landmark": "POLLACHI",
+          "time": "07:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2100KCBPOLAB",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.15Hrs",
+      "arrival_time": "",
+      "available_seats": "31 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 494/764",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2100KCBPOLAB",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "T470AB"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:15"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "494"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "21:00"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "21:05"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "21:10"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "21:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "21:30"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "21:40"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "21:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "22:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "22:45"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:00"
+        },
+        {
+          "city": "TIRUPPUR",
+          "landmark": "TIRUPPUR OLD BUSSTAND",
+          "time": "05:30"
+        },
+        {
+          "city": "PALLADAM",
+          "landmark": "PALLADAM",
+          "time": "06:00"
+        },
+        {
+          "city": "POLLACHI",
+          "landmark": "POLLACHI",
+          "time": "07:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2115KCBEROAC",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "29 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 565",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2115KCBEROAC",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "430TAC"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "565"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "21:15"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "21:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "21:25"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "21:35"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "21:45"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "21:55"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "22:05"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "22:35"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "23:00"
+        },
+        {
+          "city": "RASIPURAM",
+          "landmark": "RASIPURAM",
+          "time": "03:35"
+        },
+        {
+          "city": "TIRUCHENGODE",
+          "landmark": "TIRUCHENGODE",
+          "time": "04:25"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "05:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2115KCBEROAC",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "29 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 565",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2115KCBEROAC",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "430TAC"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "565"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "21:15"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "21:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "21:25"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "21:35"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "21:45"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "21:55"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "22:05"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "22:35"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "23:00"
+        },
+        {
+          "city": "RASIPURAM",
+          "landmark": "RASIPURAM",
+          "time": "03:35"
+        },
+        {
+          "city": "TIRUCHENGODE",
+          "landmark": "TIRUCHENGODE",
+          "time": "04:25"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "05:15"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2130KCBTPPMS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "7.00Hrs",
+      "arrival_time": "",
+      "available_seats": "43 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2130KCBTPPMS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "470MS"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:00"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "650"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "21:30"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "21:35"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "21:40"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "21:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "22:00"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "22:10"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "22:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "22:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "23:15"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:30"
+        },
+        {
+          "city": "TIRUPPUR",
+          "landmark": "TIRUPPUR OLD BUS STAND",
+          "time": "05:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2130KCBTPPMS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "7.00Hrs",
+      "arrival_time": "",
+      "available_seats": "43 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 650",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2130KCBTPPMS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "470MS"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "7:00"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "650"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "21:30"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "GUDUVANCHERY",
+          "time": "21:35"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "SRM UNIVERSITY",
+          "time": "21:40"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MARAIMALAI NAGAR BUSSTOP",
+          "time": "21:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MAHINDRA CITY",
+          "time": "22:00"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU TOLL",
+          "time": "22:10"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENGALPATTU BYPASS",
+          "time": "22:20"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "MELMARUVATHUR BUS STOP",
+          "time": "22:50"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "TINDIVANAM",
+          "time": "23:15"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "04:30"
+        },
+        {
+          "city": "TIRUPPUR",
+          "landmark": "TIRUPPUR OLD BUS STAND",
+          "time": "05:30"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2200KCBERONS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "29 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 397/615",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2200KCBERONS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "430NS"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "397"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "22:00"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "LAKSHMI NAGER",
+          "time": "05:45"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "06:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    },
+    {
+      "service_code": "2200KCBERONS",
+      "route_number": "",
+      "corporation": "SETC",
+      "origin": "CHENNAI",
+      "destination": "ERODE",
+      "departure_time": "",
+      "duration": "8.00Hrs",
+      "arrival_time": "",
+      "available_seats": "29 Seats Available",
+      "bus_type": "Standard",
+      "fare": "Rs 397/615",
+      "journey_date": "16/01/2026",
+      "stops": [
+        {
+          "city": "&nbsp;",
+          "landmark": "",
+          "time": "Service&nbsp;Details"
+        },
+        {
+          "city": "2200KCBERONS",
+          "landmark": "Route&nbsp;No.&nbsp;:",
+          "time": "430NS"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "To&nbsp;Place&nbsp;:",
+          "time": "ERODE"
+        },
+        {
+          "city": "16/01/2026",
+          "landmark": "Journey&nbsp;Hours&nbsp;*:",
+          "time": "8:00"
+        },
+        {
+          "city": "383.00",
+          "landmark": "Corporation&nbsp;:",
+          "time": "SETC"
+        },
+        {
+          "city": "&nbsp;",
+          "landmark": "Adult&nbsp;Fare&nbsp;**",
+          "time": "397"
+        },
+        {
+          "city": "City",
+          "landmark": "Land&nbsp;Mark&nbsp;",
+          "time": "Dep.&nbsp;Time&nbsp;"
+        },
+        {
+          "city": "CHENNAI-KILAMBAKKAM-KCBT",
+          "landmark": "CHENNAI KALAIGNAR CBT",
+          "time": "22:00"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "LAKSHMI NAGER",
+          "time": "05:45"
+        },
+        {
+          "city": "ERODE",
+          "landmark": "ERODE",
+          "time": "06:00"
+        }
+      ],
+      "scraped_at": "2026-01-13T17:55:33.395690"
+    }
+  ],
+  "saved_at": "2026-01-13T17:55:54.627946"
+}
