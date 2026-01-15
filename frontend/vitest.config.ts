@@ -15,11 +15,13 @@ export default defineConfig({
     // Reduce test timeout for faster feedback
     testTimeout: 10000,
     hookTimeout: 10000,
-    // Pool options for better performance - use threads with single thread to save memory
+    // Use threads pool for better memory efficiency than forks
+    // Single thread reduces jsdom memory overhead from multiple instances
     pool: 'threads',
     poolOptions: {
       threads: {
         singleThread: true,
+        // Increase isolation timeout if needed
         isolate: false
       }
     },
