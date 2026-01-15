@@ -29,6 +29,12 @@ output "db_private_ip" {
   sensitive   = true
 }
 
+output "db_public_ip" {
+  description = "Database public IP address (if enabled)"
+  value       = module.database.db_public_ip
+  sensitive   = true
+}
+
 output "db_name" {
   description = "Database name"
   value       = module.database.db_name
@@ -94,4 +100,25 @@ output "application_config" {
     GEMINI_API_ENABLED           = true
   }
   sensitive = true
+}
+
+# SQL Auto-Stop Outputs
+output "sql_autostop_function_uri" {
+  description = "URI of the Cloud Function for SQL auto-stop"
+  value       = module.sql_autostop.function_uri
+}
+
+output "sql_autostop_service_account_email" {
+  description = "Service account email for SQL auto-stop function"
+  value       = module.sql_autostop.service_account_email
+}
+
+output "sql_autostop_scheduler_job_name" {
+  description = "Name of the Cloud Scheduler job for SQL auto-stop"
+  value       = module.sql_autostop.scheduler_job_name
+}
+
+output "sql_autostop_scheduler_state" {
+  description = "State of the Cloud Scheduler job (ENABLED/DISABLED)"
+  value       = module.sql_autostop.scheduler_job_state
 }

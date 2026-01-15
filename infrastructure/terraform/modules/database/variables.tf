@@ -28,6 +28,12 @@ variable "private_subnet" {
   type        = string
 }
 
+variable "use_public_ip" {
+  description = "Use public IP instead of private IP for Cloud SQL (enables cost savings by eliminating Cloud SQL Proxy)"
+  type        = bool
+  default     = false
+}
+
 # ============================================
 # Database Configuration
 # ============================================

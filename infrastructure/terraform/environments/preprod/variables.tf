@@ -255,6 +255,12 @@ variable "db_general_log_enabled" {
   default     = false
 }
 
+variable "use_public_ip" {
+  description = "Use public IP for Cloud SQL instead of private IP (saves cost by eliminating Cloud SQL Proxy overhead)"
+  type        = bool
+  default     = false
+}
+
 # ============================================
 # Storage Configuration
 # ============================================
@@ -377,4 +383,43 @@ variable "enable_custom_role" {
   description = "Enable creation of custom IAM role"
   type        = bool
   default     = true
+}
+# ============================================
+# SQL Auto-Stop Configuration
+# ============================================
+
+variable "sql_autostop_idle_minutes" {
+  description = "Minutes of inactivity before auto-stopping SQL instance"
+  type        = number
+  default     = 30
+}
+
+variable "sql_autostop_dry_run_mode" {
+  description = "If true, Cloud Function logs what it would do without stopping the instance"
+  type        = bool
+  default     = false
+}
+
+variable "sql_autostop_cron_schedule" {
+  description = "Cron schedule for SQL auto-stop Cloud Function (crontab format)"
+  type        = string
+  default     = "*/30 * * * *"
+}
+
+variable "sql_autostop_schedule_interval_minutes" {
+  description = "Scheduler interval in minutes (for documentation)"
+  type        = number
+  default     = 30
+}
+
+variable "sql_autostop_time_zone" {
+  description = "Time zone for Cloud Scheduler (IANA format)"
+  type        = string
+  default     = "Asia/Kolkata"
+}
+
+variable "sql_autostop_function_source_path" {
+  description = "Path to zipped Cloud Function source code"
+  type        = string
+  default     = ""
 }

@@ -44,6 +44,10 @@ db_slow_query_log_enabled = false
 db_general_log_enabled    = false
 db_deletion_protection    = false
 
+# Use public IP for Cloud SQL (cost optimization by eliminating Cloud SQL Proxy)
+# Saves $5-10/month per Cloud SQL Proxy instance
+use_public_ip = true
+
 # ============================================
 # Cloud Run Configuration
 # ============================================
@@ -172,6 +176,19 @@ custom_role_permissions = [
 ]
 
 enable_custom_role = true
+
+# ============================================
+# SQL Auto-Stop Configuration (Cloud Function + Cloud Scheduler)
+# ============================================
+# Cloud Function automatically stops idle Cloud SQL instances to reduce costs
+# Saves ~$28/month when SQL is idle
+
+sql_autostop_idle_minutes                = 30                        # Stop after 30 min of inactivity
+sql_autostop_dry_run_mode                = false                     # Set to true to test without stopping
+sql_autostop_cron_schedule               = "*/30 * * * *"            # Run every 30 minutes
+sql_autostop_schedule_interval_minutes   = 30                        # For documentation
+sql_autostop_time_zone                   = "Asia/Kolkata"            # IST timezone
+sql_autostop_function_source_path        = "/tmp/sql-autostop.zip"   # Update with actual path before apply
 
 # ============================================
 # Notifications Configuration

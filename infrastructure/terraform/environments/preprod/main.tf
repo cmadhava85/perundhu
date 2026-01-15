@@ -116,6 +116,7 @@ module "database" {
   db_binary_log_enabled             = var.db_binary_log_enabled
   db_slow_query_log_enabled         = var.db_slow_query_log_enabled
   db_general_log_enabled            = var.db_general_log_enabled
+  use_public_ip                     = var.use_public_ip
 
   depends_on = [module.vpc]
 }
@@ -141,7 +142,7 @@ module "storage" {
   depends_on = [google_project_service.required_apis]
 }
 
-# Secret Manager for database credentials and application secrets
+# Secret Manager for database credentials
 # NOTE: Shared secrets (gemini-api-key, PUBLIC_API_KEY, recaptcha-*)
 # are managed by the shared-secrets module
 module "secrets" {
@@ -191,6 +192,7 @@ module "cloud_run" {
   # Redis and JWT disabled - not needed for current app scale
   redis_host      = var.redis_host
   redis_port      = var.redis_port
+  jwt_secret_name = var.jwt_secret_name
 
   # Cloud Run scaling and resource config from variables
   min_instances = var.cloud_run_min_instances
@@ -199,6 +201,24 @@ module "cloud_run" {
   memory_limit  = var.cloud_run_memory_limit
 
   depends_on = [module.vpc, module.database, module.storage, module.iam]
+}
+
+# SQL Auto-Stop Cloud Function and Scheduler
+# Automatically stops idle Cloud SQL instances to reduce costs
+module "sql_autostop" {
+  source = "../../modules/sql-autostop"
+
+  project_id                 = var.project_id
+  region                     = var.region
+  sql_instance_name          = module.database.db_instance_name
+  idle_minutes_threshold     = var.sql_autostop_idle_minutes
+  dry_run_mode               = var.sql_autostop_dry_run_mode
+  cron_schedule              = var.sql_autostop_cron_schedule
+  schedule_interval_minutes  = var.sql_autostop_schedule_interval_minutes
+  time_zone                  = var.sql_autostop_time_zone
+  function_source_path       = var.sql_autostop_function_source_path
+
+  depends_on = [module.database]
 }
 
 # NOTE: Pub/Sub removed - app uses synchronous processing

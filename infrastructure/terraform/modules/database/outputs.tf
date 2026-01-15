@@ -13,6 +13,11 @@ output "db_private_ip" {
   value       = google_sql_database_instance.mysql_instance.private_ip_address
 }
 
+output "db_public_ip" {
+  description = "The public IP address of the database instance (if enabled)"
+  value       = try(google_sql_database_instance.mysql_instance.public_ip_address, null)
+}
+
 output "db_name" {
   description = "The name of the database"
   value       = google_sql_database.database.name

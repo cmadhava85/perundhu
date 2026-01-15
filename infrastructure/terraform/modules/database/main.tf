@@ -42,8 +42,9 @@ resource "google_sql_database_instance" "mysql_instance" {
 
     ip_configuration {
       ipv4_enabled                                  = true
-      private_network                               = var.vpc_network
-      enable_private_path_for_google_cloud_services = true
+      private_network                               = var.use_public_ip ? null : var.vpc_network
+      require_ssl                                   = true
+      enable_private_path_for_google_cloud_services = !var.use_public_ip
     }
 
     # Logging configuration based on variables
