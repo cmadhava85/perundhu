@@ -1,0 +1,33 @@
+[
+  {
+    "service_code": "IMGCHEERO2230",
+    "route_number": "",
+    "corporation": "UNKNOWN",
+    "origin": "CHENNAI",
+    "destination": "ERODE",
+    "departure_time": "22:30",
+    "arrival_time": "23:00",
+    "duration": "UNKNOWN",
+    "available_seats": "UNKNOWN",
+    "bus_type": "STANDARD",
+    "fare": "UNKNOWN",
+    "journey_date": "14/01/2026",
+    "stops": [
+      {
+        "city": "[NAGAPATTINAM 1 324 [CHENNAI 1",
+        "landmark": "[NAGAPATTINAM 1 324 [CHENNAI 1 VE1ANKANNI 1 33:0,2",
+        "time": "22:30"
+      },
+      {
+        "city": "[SA1EM 1 422 [CHENNAI [SA1EM 1",
+        "landmark": "[SA1EM 1 422 [CHENNAI [SA1EM 1 _33:0,2800 1 13;00,",
+        "time": "23:00"
+      }
+    ],
+    "extracted_at": "2026-01-14T19:09:40.736655",
+    "source": "Google Images",
+    "image_source": "/Users/mchand69/Downloads/tnstc bus time table - Google Search/imgi_121_setc-ac-timings.jpg",
+    "confidence_score": 0.8,
+    "bidirectional": false
+  }
+]

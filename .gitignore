@@ -28,6 +28,7 @@ dist-ssr
 
 # Ignore Gradle build output directory
 build
+bin
 # Ignore nohup output files
 nohup.out
 **/nohup.out

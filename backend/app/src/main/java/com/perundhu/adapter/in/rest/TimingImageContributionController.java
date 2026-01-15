@@ -49,21 +49,41 @@ public class TimingImageContributionController {
     try {
       log.info("Received timing image upload request for origin: {}", originLocation);
 
-      // Validate file
+      // Validate file is not empty
       if (image.isEmpty()) {
+        log.warn("Empty file upload attempt");
         return ResponseEntity.badRequest().build();
       }
 
-      // Validate file type
+      // Validate file type - only accept specific image formats
       String contentType = image.getContentType();
-      if (contentType == null || !contentType.startsWith("image/")) {
-        log.warn("Invalid file type: {}", contentType);
+      List<String> allowedTypes = List.of("image/jpeg", "image/jpg", "image/png", "image/webp", "image/heic",
+          "image/heif");
+      if (contentType == null || !allowedTypes.contains(contentType.toLowerCase())) {
+        log.warn("Invalid file type: {}. Allowed types: {}", contentType, allowedTypes);
         return ResponseEntity.badRequest().build();
       }
 
-      // Validate file size (max 10MB)
-      if (image.getSize() > 10 * 1024 * 1024) {
-        log.warn("File too large: {} bytes", image.getSize());
+      // Validate file size (max 10MB, min 1KB)
+      long fileSize = image.getSize();
+      long minSize = 1024L; // 1KB
+      long maxSize = 10L * 1024L * 1024L; // 10MB
+
+      if (fileSize < minSize) {
+        log.warn("File too small: {} bytes (min {})", fileSize, minSize);
+        return ResponseEntity.badRequest().build();
+      }
+
+      if (fileSize > maxSize) {
+        log.warn("File too large: {} bytes (max {})", fileSize, maxSize);
+        return ResponseEntity.badRequest().build();
+      }
+
+      // Validate filename to prevent path traversal and junk files
+      String originalFilename = image.getOriginalFilename();
+      if (originalFilename == null || originalFilename.contains("..") ||
+          originalFilename.contains("/") || originalFilename.contains("\\")) {
+        log.warn("Invalid filename: {}", originalFilename);
         return ResponseEntity.badRequest().build();
       }
 
@@ -82,7 +102,7 @@ public class TimingImageContributionController {
       String imageUrl = fileStorageService.storeImageFile(fileUpload, userId);
       String thumbnailUrl = imageUrl; // Use same image as thumbnail for now
 
-      log.info("Image uploaded: {} (thumbnail: {})", imageUrl, thumbnailUrl);
+      log.info("Image uploaded successfully: {} (thumbnail: {})", imageUrl, thumbnailUrl);
 
       // Create contribution entity
       TimingImageContribution contribution = TimingImageContribution.builder()

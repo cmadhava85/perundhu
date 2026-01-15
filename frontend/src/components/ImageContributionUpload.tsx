@@ -63,24 +63,87 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     searchQuery: ''
   });
 
-  const handleFileSelect = useCallback((files: FileList | null) => {
+  // Validate image dimensions and content
+  const validateImageFile = async (file: File): Promise<{ valid: boolean; reason?: string }> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+      
+      img.onload = () => {
+        URL.revokeObjectURL(objectUrl);
+        
+        const width = img.width;
+        const height = img.height;
+        
+        // Check minimum dimensions (reject very small images)
+        if (width < 100 || height < 100) {
+          resolve({ valid: false, reason: `Image too small (${width}x${height}px). Minimum size is 100x100px.` });
+          return;
+        }
+        
+        // Check maximum dimensions (reject suspiciously large images)
+        if (width > 10000 || height > 10000) {
+          resolve({ valid: false, reason: `Image too large (${width}x${height}px). Maximum size is 10000x10000px.` });
+          return;
+        }
+        
+        // Check aspect ratio (reject images with unusual aspect ratios)
+        const aspectRatio = width / height;
+        if (aspectRatio < 0.1 || aspectRatio > 10) {
+          resolve({ valid: false, reason: 'Image has unusual aspect ratio. Please upload a proper bus schedule photo.' });
+          return;
+        }
+        
+        resolve({ valid: true });
+      };
+      
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve({ valid: false, reason: 'Unable to load image. File may be corrupted.' });
+      };
+      
+      img.src = objectUrl;
+    });
+  };
+
+  const handleFileSelect = useCallback(async (files: FileList | null) => {
     if (!files) return;
 
     const acceptedFiles: File[] = [];
     const rejectedFiles: {file: File, reason: string}[] = [];
 
-    Array.from(files).forEach(file => {
-      const isImage = file.type.startsWith('image/');
-      const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
-      
-      if (!isImage) {
-        rejectedFiles.push({file, reason: 'File must be an image (JPG, PNG, GIF, etc.)'});
-      } else if (!isValidSize) {
-        rejectedFiles.push({file, reason: `File "${file.name}" is too large (${formatFileSize(file.size)}). Maximum size is 10MB.`});
-      } else {
-        acceptedFiles.push(file);
+    // Allowed image formats
+    const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const MIN_FILE_SIZE = 1024; // 1KB - reject very small files
+
+    for (const file of Array.from(files)) {
+      // Check file type
+      if (!ALLOWED_TYPES.includes(file.type.toLowerCase())) {
+        rejectedFiles.push({file, reason: `"${file.name}" has unsupported format. Only JPG, PNG, WebP, and HEIC images are allowed.`});
+        continue;
       }
-    });
+      
+      // Check file size
+      if (file.size < MIN_FILE_SIZE) {
+        rejectedFiles.push({file, reason: `"${file.name}" is too small (${formatFileSize(file.size)}). File may be corrupted or empty.`});
+        continue;
+      }
+      
+      if (file.size > MAX_FILE_SIZE) {
+        rejectedFiles.push({file, reason: `"${file.name}" is too large (${formatFileSize(file.size)}). Maximum size is 10MB.`});
+        continue;
+      }
+      
+      // Validate image content and dimensions
+      const validation = await validateImageFile(file);
+      if (!validation.valid) {
+        rejectedFiles.push({file, reason: `"${file.name}": ${validation.reason}`});
+        continue;
+      }
+      
+      acceptedFiles.push(file);
+    }
 
     // Show error message for rejected files
     if (rejectedFiles.length > 0) {
@@ -665,6 +728,41 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         />
       </div>
 
+      {/* Upload Guidelines */}
+      <div style={{ 
+        padding: '1rem', 
+        backgroundColor: '#eff6ff', 
+        borderRadius: '0.5rem',
+        marginBottom: '1rem',
+        border: '1px solid #bfdbfe'
+      }}>
+        <h4 style={{ 
+          margin: '0 0 0.5rem 0', 
+          color: '#1e40af', 
+          fontSize: '0.875rem', 
+          fontWeight: '600',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          📸 {t('contribution.imageUpload.guidelinesTitle', 'Upload Guidelines')}
+        </h4>
+        <ul style={{ 
+          margin: 0, 
+          paddingLeft: '1.5rem', 
+          fontSize: '0.8125rem', 
+          color: '#1e3a8a',
+          lineHeight: '1.6'
+        }}>
+          <li>{t('contribution.imageUpload.guideline1', 'Take clear photos of bus timing boards or route displays')}</li>
+          <li>{t('contribution.imageUpload.guideline2', 'Ensure text is readable and not blurry')}</li>
+          <li>{t('contribution.imageUpload.guideline3', 'Include the full schedule with route numbers and times')}</li>
+          <li style={{ color: '#dc2626', fontWeight: '600', marginTop: '0.25rem' }}>
+            ❌ {t('contribution.imageUpload.guideline4', 'Do not upload selfies, personal photos, or unrelated images')}
+          </li>
+        </ul>
+      </div>
+
       {/* Compact Upload Area */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div
@@ -694,7 +792,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
             id="file-input"
             type="file"
             multiple
-            accept="image/*"
+            accept="image/jpeg,image/jpg,image/png,image/webp,image/heic,image/heif"
             onChange={handleInputChange}
             style={{ display: 'none' }}
           />
@@ -715,7 +813,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
                     {t('contribution.imageUpload.dragDropTitle', 'Drag & drop bus schedule images here')}
                   </p>
                   <p style={{ color: '#9ca3af', margin: 0, fontSize: '0.75rem' }}>
-                    {t('contribution.imageUpload.dragDropHint', 'or click to select • JPEG, PNG, WebP up to 10MB')}
+                    {t('contribution.imageUpload.dragDropHint', 'or click to select • JPG, PNG, WebP, HEIC • Min 100x100px • Max 10MB')}
                   </p>
                 </>
               )}

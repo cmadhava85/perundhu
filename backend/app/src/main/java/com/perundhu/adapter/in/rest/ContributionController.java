@@ -1,11 +1,15 @@
 package com.perundhu.adapter.in.rest;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +41,9 @@ import com.perundhu.domain.port.SecurityMonitoringPort;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 
 /**
  * Inbound adapter for contribution REST API.
@@ -453,10 +460,12 @@ public class ContributionController {
 
       // Validate image file with enhanced security checks
       if (!isValidImageFile(imageFile)) {
-        log.warn("Invalid image file submitted by user: {}", userId);
+        log.warn("Invalid image file submitted by user: {} - filename: {}, size: {}, type: {}",
+            userId, imageFile.getOriginalFilename(), imageFile.getSize(), imageFile.getContentType());
         return ResponseEntity.badRequest()
             .body(
-                createErrorResponse("Invalid image file. Please upload a valid JPEG, PNG, or WebP image under 10MB."));
+                createErrorResponse(
+                    "Invalid image file. Please upload a valid JPG, PNG, WebP, or HEIC image between 1KB and 10MB."));
       }
 
       // Image duplicate detection using file hash
@@ -498,6 +507,37 @@ public class ContributionController {
             .body(createErrorResponse(
                 "Image content validation failed. Please ensure the image is a valid bus schedule."));
       }
+
+      // NEW: Tesseract validation to detect junk images (selfies, personal photos,
+      // etc.)
+      log.info("Validating image content with Tesseract OCR (userId: {})", userId);
+      TesseractValidationResult tesseractResult = validateImageWithTesseract(imageFile);
+
+      if (!tesseractResult.isValid) {
+        log.warn("Image failed Tesseract validation - likely not a bus schedule (userId: {}, indicators: {})",
+            userId, tesseractResult.indicatorsFound);
+
+        securityMonitoringPort.recordSecurityEvent(new SecurityMonitoringPort.SecurityEventData(
+            clientId,
+            "JUNK_IMAGE_REJECTED",
+            "INFO",
+            "Image rejected by Tesseract validation (indicators: " + tesseractResult.indicatorsFound + ")",
+            "/api/v1/contributions/images",
+            request.getHeader("User-Agent"),
+            LocalDateTime.now()));
+
+        return ResponseEntity.badRequest()
+            .body(createErrorResponse(
+                "This image does not appear to contain bus schedule information. " +
+                    "Please upload a clear photo of:\n" +
+                    "• Bus timing boards or displays\n" +
+                    "• Route information boards\n" +
+                    "• Bus stop timetables\n\n" +
+                    "Selfies, personal photos, and unrelated images are not accepted."));
+      }
+
+      log.info("Image passed Tesseract validation (userId: {}, indicators: {})",
+          userId, tesseractResult.indicatorsFound);
 
       // Process image contribution with enhanced AI/OCR processing
       ImageContribution contribution = imageProcessingService.processImageContribution(
@@ -891,7 +931,7 @@ public class ContributionController {
                 .map(t -> (String) t)
                 .toList();
           }
-          
+
           // Extract arrival times
           List<String> arrivalTimes = new ArrayList<>();
           Object arrTimes = geminiExtraction.get("arrivalTimes");
@@ -901,11 +941,11 @@ public class ContributionController {
                 .map(t -> (String) t)
                 .toList();
           }
-          
+
           // Store raw times for database (first time from each list)
           rawDepartureTime = !departureTimes.isEmpty() ? departureTimes.getFirst() : null;
           rawArrivalTime = !arrivalTimes.isEmpty() ? arrivalTimes.getFirst() : null;
-          
+
           // Combine both into timings with clear labels for display
           List<String> combinedTimings = new ArrayList<>();
           if (!departureTimes.isEmpty()) {
@@ -935,28 +975,28 @@ public class ContributionController {
           if (bidirectionalObj instanceof Boolean) {
             isBidirectional = (Boolean) bidirectionalObj;
           }
-          
+
           if (isBidirectional) {
             Object returnRouteObj = geminiExtraction.get("returnRoute");
             if (returnRouteObj instanceof Map<?, ?> returnRoute) {
               returnRouteData = new HashMap<>();
               returnRouteData.put("fromLocation", returnRoute.get("fromLocation"));
               returnRouteData.put("toLocation", returnRoute.get("toLocation"));
-              
+
               // Extract return route departure times
               Object retDepTimes = returnRoute.get("departureTimes");
               if (retDepTimes instanceof List<?> depList && !depList.isEmpty()) {
                 String firstDep = depList.getFirst() instanceof String ? (String) depList.getFirst() : null;
                 returnRouteData.put("departureTime", firstDep);
               }
-              
+
               // Extract return route arrival times
               Object retArrTimes = returnRoute.get("arrivalTimes");
               if (retArrTimes instanceof List<?> arrList && !arrList.isEmpty()) {
                 String firstArr = arrList.getFirst() instanceof String ? (String) arrList.getFirst() : null;
                 returnRouteData.put("arrivalTime", firstArr);
               }
-              
+
               // Extract return route stops
               Object retStops = returnRoute.get("stops");
               if (retStops instanceof List<?> stopList) {
@@ -973,8 +1013,8 @@ public class ContributionController {
                 }
                 returnRouteData.put("stops", returnStops);
               }
-              
-              log.info("Bidirectional route detected. Return route: {} -> {}", 
+
+              log.info("Bidirectional route detected. Return route: {} -> {}",
                   returnRouteData.get("fromLocation"), returnRouteData.get("toLocation"));
             }
           }
@@ -982,7 +1022,7 @@ public class ContributionController {
           // Extract additional routes if multiple routes detected
           Object hasMultipleRoutesObj = geminiExtraction.get("hasMultipleRoutes");
           hasMultipleRoutes = hasMultipleRoutesObj instanceof Boolean && (Boolean) hasMultipleRoutesObj;
-          
+
           if (hasMultipleRoutes) {
             Object additionalRoutesObj = geminiExtraction.get("additionalRoutes");
             if (additionalRoutesObj instanceof List<?> routesList) {
@@ -992,20 +1032,20 @@ public class ContributionController {
                   routeData.put("busNumber", route.get("busNumber"));
                   routeData.put("fromLocation", route.get("fromLocation"));
                   routeData.put("toLocation", route.get("toLocation"));
-                  
+
                   // Extract times for this route
                   Object depTimesObj = route.get("departureTimes");
                   if (depTimesObj instanceof List<?> depList && !depList.isEmpty()) {
                     String firstDep = depList.getFirst() instanceof String ? (String) depList.getFirst() : null;
                     routeData.put("departureTime", firstDep);
                   }
-                  
+
                   Object arrTimesObj = route.get("arrivalTimes");
                   if (arrTimesObj instanceof List<?> arrList && !arrList.isEmpty()) {
                     String firstArr = arrList.getFirst() instanceof String ? (String) arrList.getFirst() : null;
                     routeData.put("arrivalTime", firstArr);
                   }
-                  
+
                   // Extract stops
                   Object routeStopsObj = route.get("stops");
                   if (routeStopsObj instanceof List<?>) {
@@ -1014,7 +1054,7 @@ public class ContributionController {
                         .map(s -> (String) s)
                         .toList());
                   }
-                  
+
                   additionalRoutes.add(routeData);
                 }
               }
@@ -1022,8 +1062,10 @@ public class ContributionController {
             }
           }
 
-          log.info("Gemini extracted: bus={}, from={}, to={}, depTime={}, arrTime={}, confidence={}, bidirectional={}, multipleRoutes={}",
-              busNumber, fromLocation, toLocation, rawDepartureTime, rawArrivalTime, adjustedConfidence, isBidirectional, hasMultipleRoutes);
+          log.info(
+              "Gemini extracted: bus={}, from={}, to={}, depTime={}, arrTime={}, confidence={}, bidirectional={}, multipleRoutes={}",
+              busNumber, fromLocation, toLocation, rawDepartureTime, rawArrivalTime, adjustedConfidence,
+              isBidirectional, hasMultipleRoutes);
         }
       }
 
@@ -1101,7 +1143,8 @@ public class ContributionController {
       }
       contributionData.put("additionalNotes", notes.toString());
 
-      // Add stops if extracted - convert from List<String> to List<Map<String, Object>>
+      // Add stops if extracted - convert from List<String> to List<Map<String,
+      // Object>>
       if (!stops.isEmpty()) {
         List<Map<String, Object>> stopsData = new ArrayList<>();
         int stopOrder = 1;
@@ -1152,7 +1195,7 @@ public class ContributionController {
           returnContributionData.put("submittedBy", userId);
           returnContributionData.put("source", "PASTE");
           returnContributionData.put("confidenceScore", adjustedConfidence);
-          
+
           // Build notes for return route
           StringBuilder returnNotes = new StringBuilder("Paste contribution [RETURN ROUTE]");
           if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
@@ -1164,7 +1207,7 @@ public class ContributionController {
           returnNotes.append("\nLinked to onward route contribution ID: ").append(savedContribution.getId());
           returnNotes.append("\n\nOriginal text:\n").append(pastedText);
           returnContributionData.put("additionalNotes", returnNotes.toString());
-          
+
           // Add stops if extracted for return route
           @SuppressWarnings("unchecked")
           List<String> returnStops = (List<String>) returnRouteData.get("stops");
@@ -1179,16 +1222,16 @@ public class ContributionController {
             }
             returnContributionData.put("stops", returnStopsData);
           }
-          
+
           // Validate return contribution data
           InputValidationPort.ContributionValidationResult returnValidationResult = inputValidationPort
               .validateContributionData(returnContributionData);
-          
+
           if (returnValidationResult.valid()) {
             returnContribution = contributionInputPort
                 .submitRouteContribution(returnValidationResult.sanitizedValues(), userId);
-            log.info("Return route contribution submitted: {} -> {}, id={}", 
-                returnRouteData.get("fromLocation"), returnRouteData.get("toLocation"), 
+            log.info("Return route contribution submitted: {} -> {}, id={}",
+                returnRouteData.get("fromLocation"), returnRouteData.get("toLocation"),
                 returnContribution.getId());
           } else {
             log.warn("Return route validation failed: {}", returnValidationResult.errors());
@@ -1205,7 +1248,7 @@ public class ContributionController {
         for (Map<String, Object> additionalRoute : additionalRoutes) {
           try {
             Map<String, Object> additionalContributionData = new HashMap<>();
-            
+
             // Use bus number from additional route or fall back to primary
             Object addBusNum = additionalRoute.get("busNumber");
             if (addBusNum != null && !addBusNum.toString().trim().isEmpty()) {
@@ -1213,7 +1256,7 @@ public class ContributionController {
             } else if (busNumber != null && !busNumber.trim().isEmpty()) {
               additionalContributionData.put("busNumber", busNumber);
             }
-            
+
             additionalContributionData.put("fromLocationName", additionalRoute.get("fromLocation"));
             additionalContributionData.put("toLocationName", additionalRoute.get("toLocation"));
             additionalContributionData.put("departureTime", additionalRoute.get("departureTime"));
@@ -1221,7 +1264,7 @@ public class ContributionController {
             additionalContributionData.put("submittedBy", userId);
             additionalContributionData.put("source", "PASTE");
             additionalContributionData.put("confidenceScore", adjustedConfidence);
-            
+
             // Build notes for additional route
             StringBuilder addNotes = new StringBuilder("Paste contribution [ADDITIONAL ROUTE]");
             if (geminiExtraction != null && !geminiExtraction.containsKey("error")) {
@@ -1233,7 +1276,7 @@ public class ContributionController {
             addNotes.append("\nPart of batch submission with primary route ID: ").append(savedContribution.getId());
             addNotes.append("\n\nOriginal text:\n").append(pastedText);
             additionalContributionData.put("additionalNotes", addNotes.toString());
-            
+
             // Add stops if extracted for this route
             @SuppressWarnings("unchecked")
             List<String> addStops = (List<String>) additionalRoute.get("stops");
@@ -1248,20 +1291,20 @@ public class ContributionController {
               }
               additionalContributionData.put("stops", addStopsData);
             }
-            
+
             // Validate additional contribution data
             InputValidationPort.ContributionValidationResult addValidationResult = inputValidationPort
                 .validateContributionData(additionalContributionData);
-            
+
             if (addValidationResult.valid()) {
               RouteContribution addContribution = contributionInputPort
                   .submitRouteContribution(addValidationResult.sanitizedValues(), userId);
               additionalContributionIds.add(addContribution.getId());
-              log.info("Additional route contribution submitted: {} -> {}, id={}", 
-                  additionalRoute.get("fromLocation"), additionalRoute.get("toLocation"), 
+              log.info("Additional route contribution submitted: {} -> {}, id={}",
+                  additionalRoute.get("fromLocation"), additionalRoute.get("toLocation"),
                   addContribution.getId());
             } else {
-              log.warn("Additional route validation failed for {} -> {}: {}", 
+              log.warn("Additional route validation failed for {} -> {}: {}",
                   additionalRoute.get("fromLocation"), additionalRoute.get("toLocation"),
                   addValidationResult.errors());
             }
@@ -1283,16 +1326,17 @@ public class ContributionController {
       // Prepare response
       Map<String, Object> response = new HashMap<>();
       response.put("success", true);
-      
+
       if (allContributionIds.size() > 1) {
-        response.put("message", String.format("%d route contributions submitted for review", allContributionIds.size()));
+        response.put("message",
+            String.format("%d route contributions submitted for review", allContributionIds.size()));
         response.put("contributionIds", allContributionIds);
         response.put("primaryContributionId", savedContribution.getId());
       } else {
         response.put("message", "Paste contribution submitted for review");
         response.put("contributionId", savedContribution.getId());
       }
-      
+
       response.put("isBidirectional", returnContribution != null);
       response.put("hasMultipleRoutes", !additionalContributionIds.isEmpty());
       response.put("totalContributions", allContributionIds.size());
@@ -1309,8 +1353,9 @@ public class ContributionController {
       response.put("extractedBy",
           geminiExtraction != null && !geminiExtraction.containsKey("error") ? "gemini-ai" : "regex-parser");
 
-      log.info("Paste contribution submitted by user {}, confidence: {}, total contributions: {}, bidirectional: {}, additionalRoutes: {}", 
-          userId, adjustedConfidence, allContributionIds.size(), 
+      log.info(
+          "Paste contribution submitted by user {}, confidence: {}, total contributions: {}, bidirectional: {}, additionalRoutes: {}",
+          userId, adjustedConfidence, allContributionIds.size(),
           returnContribution != null, additionalContributionIds.size());
 
       return ResponseEntity.ok(response);
@@ -1400,7 +1445,7 @@ public class ContributionController {
                 .map(t -> (String) t)
                 .toList();
           }
-          
+
           // Extract arrival times
           List<String> arrivalTimes = new ArrayList<>();
           Object arrTimes = geminiExtraction.get("arrivalTimes");
@@ -1410,7 +1455,7 @@ public class ContributionController {
                 .map(t -> (String) t)
                 .toList();
           }
-          
+
           // Combine both into timings with clear labels for display
           List<String> combinedTimings = new ArrayList<>();
           if (!departureTimes.isEmpty()) {
@@ -1455,11 +1500,11 @@ public class ContributionController {
           }
 
           extractedBy = "gemini-ai";
-          
+
           // Check for bidirectional route
           Object isBidirectionalObj = geminiExtraction.get("isBidirectional");
           isBidirectional = isBidirectionalObj instanceof Boolean && (Boolean) isBidirectionalObj;
-          
+
           if (isBidirectional) {
             Object returnRouteObj = geminiExtraction.get("returnRoute");
             if (returnRouteObj instanceof Map<?, ?> returnRoute) {
@@ -1467,7 +1512,7 @@ public class ContributionController {
               returnRouteData = new HashMap<>();
               returnRouteData.put("fromLocation", returnRoute.get("fromLocation"));
               returnRouteData.put("toLocation", returnRoute.get("toLocation"));
-              
+
               // Extract return departure times
               List<String> returnDepTimes = new ArrayList<>();
               Object retDepTimes = returnRoute.get("departureTimes");
@@ -1477,7 +1522,7 @@ public class ContributionController {
                     .map(t -> (String) t)
                     .toList();
               }
-              
+
               // Extract return arrival times
               List<String> returnArrTimes = new ArrayList<>();
               Object retArrTimes = returnRoute.get("arrivalTimes");
@@ -1487,7 +1532,7 @@ public class ContributionController {
                     .map(t -> (String) t)
                     .toList();
               }
-              
+
               // Build return timings
               List<String> returnTimings = new ArrayList<>();
               if (!returnDepTimes.isEmpty()) {
@@ -1497,7 +1542,7 @@ public class ContributionController {
                 returnTimings.add("Arr: " + String.join(", ", returnArrTimes));
               }
               returnRouteData.put("timings", returnTimings);
-              
+
               // Extract return stops - can be strings or objects with name and time
               List<Map<String, Object>> returnStopsWithTimings = new ArrayList<>();
               Object retStops = returnRoute.get("stops");
@@ -1524,16 +1569,16 @@ public class ContributionController {
                 returnRouteData.put("stops", retStopNames);
                 returnRouteData.put("stopsWithTimings", returnStopsWithTimings);
               }
-              
+
               // Store for response
               geminiExtraction.put("returnRouteData", returnRouteData);
             }
           }
-          
+
           // Check for multiple distinct routes
           Object hasMultipleRoutesObj = geminiExtraction.get("hasMultipleRoutes");
           hasMultipleRoutes = hasMultipleRoutesObj instanceof Boolean && (Boolean) hasMultipleRoutesObj;
-          
+
           if (hasMultipleRoutes) {
             Object additionalRoutesObj = geminiExtraction.get("additionalRoutes");
             if (additionalRoutesObj instanceof List<?> routesList) {
@@ -1543,7 +1588,7 @@ public class ContributionController {
                   routeData.put("busNumber", route.get("busNumber"));
                   routeData.put("fromLocation", route.get("fromLocation"));
                   routeData.put("toLocation", route.get("toLocation"));
-                  
+
                   // Extract times for this route
                   List<String> routeDepTimes = new ArrayList<>();
                   Object depTimesObj = route.get("departureTimes");
@@ -1553,7 +1598,7 @@ public class ContributionController {
                         .map(t -> (String) t)
                         .toList();
                   }
-                  
+
                   List<String> routeArrTimes = new ArrayList<>();
                   Object arrTimesObj = route.get("arrivalTimes");
                   if (arrTimesObj instanceof List<?>) {
@@ -1562,7 +1607,7 @@ public class ContributionController {
                         .map(t -> (String) t)
                         .toList();
                   }
-                  
+
                   List<String> routeTimings = new ArrayList<>();
                   if (!routeDepTimes.isEmpty()) {
                     routeTimings.add("Dep: " + String.join(", ", routeDepTimes));
@@ -1571,7 +1616,7 @@ public class ContributionController {
                     routeTimings.add("Arr: " + String.join(", ", routeArrTimes));
                   }
                   routeData.put("timings", routeTimings);
-                  
+
                   // Extract stops
                   Object routeStopsObj = route.get("stops");
                   if (routeStopsObj instanceof List<?>) {
@@ -1582,7 +1627,7 @@ public class ContributionController {
                   } else {
                     routeData.put("stops", List.of());
                   }
-                  
+
                   routeData.put("busType", route.get("busType"));
                   additionalRoutes.add(routeData);
                 }
@@ -1630,19 +1675,19 @@ public class ContributionController {
       extracted.put("timings", timings);
       extracted.put("stops", stops);
       extracted.put("stopsWithTimings", stopsWithTimings);
-      
+
       // Include bidirectional route info if present
       extracted.put("isBidirectional", isBidirectional);
       if (isBidirectional && returnRouteData != null) {
         extracted.put("returnRoute", returnRouteData);
       }
-      
+
       // Include multiple routes info if present
       extracted.put("hasMultipleRoutes", hasMultipleRoutes);
       if (hasMultipleRoutes && !additionalRoutes.isEmpty()) {
         extracted.put("additionalRoutes", additionalRoutes);
       }
-      
+
       response.put("extracted", extracted);
 
       return ResponseEntity.ok(response);
@@ -1664,7 +1709,7 @@ public class ContributionController {
 
     String clientId = getClientId(request);
     String userId = authenticationService.getCurrentUserId();
-    
+
     // For anonymous users, generate the same identifier used when submitting
     if (userId == null || userId.equals("anonymous")) {
       userId = "anonymous_" + clientId;
@@ -2008,16 +2053,45 @@ public class ContributionController {
       return false;
     }
 
-    // Check file size (max 10MB)
-    if (file.getSize() > 10 * 1024 * 1024) {
+    // Check minimum file size (1KB) - reject empty or near-empty files
+    long minSize = 1024; // 1KB
+    if (file.getSize() < minSize) {
+      log.warn("Image file too small: {} bytes (minimum: {})", file.getSize(), minSize);
       return false;
     }
 
-    // Check content type
+    // Check maximum file size (10MB)
+    long maxSize = 10 * 1024 * 1024;
+    if (file.getSize() > maxSize) {
+      log.warn("Image file too large: {} bytes (maximum: {})", file.getSize(), maxSize);
+      return false;
+    }
+
+    // Validate filename to prevent path traversal and junk files
+    String originalFilename = file.getOriginalFilename();
+    if (originalFilename == null || originalFilename.isEmpty() ||
+        originalFilename.contains("..") || originalFilename.contains("/") ||
+        originalFilename.contains("\\")) {
+      log.warn("Invalid or suspicious filename: {}", originalFilename);
+      return false;
+    }
+
+    // Check content type - only accept specific image formats
     String contentType = file.getContentType();
-    return contentType != null && (contentType.equals("image/jpeg") ||
-        contentType.equals("image/png") ||
-        contentType.equals("image/webp"));
+    List<String> allowedTypes = List.of(
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+        "image/heic",
+        "image/heif");
+
+    if (contentType == null || !allowedTypes.contains(contentType.toLowerCase())) {
+      log.warn("Invalid content type: {}. Allowed types: {}", contentType, allowedTypes);
+      return false;
+    }
+
+    return true;
   }
 
   private boolean isValidAudioFile(MultipartFile file) {
@@ -2265,5 +2339,138 @@ public class ContributionController {
 
     // Fall back to body token
     return bodyToken;
+  }
+
+  /**
+   * Validate image using Tesseract OCR.
+   * Checks if image contains bus schedule content patterns.
+   * This is a free, local validation (no API cost).
+   * 
+   * Requires 2+ indicators to pass:
+   * 1. Time pattern (HH:MM format)
+   * 2. Location keywords (Central, Adyar, Madurai, etc.)
+   * 3. Route number pattern (166UD, 520, 27M, etc.)
+   * 4. Sufficient text length (>50 chars)
+   * 5. Tamil script detection
+   */
+  private TesseractValidationResult validateImageWithTesseract(MultipartFile file) {
+    try {
+      // Read image from file
+      BufferedImage image = ImageIO.read(file.getInputStream());
+      if (image == null) {
+        log.warn("Could not read image file for Tesseract validation");
+        return new TesseractValidationResult(false, 0);
+      }
+
+      // Extract text using Tesseract (local OCR, no API cost)
+      ITesseract tesseract = new Tesseract();
+      String extractedText = tesseract.doOCR(image);
+
+      if (extractedText == null || extractedText.trim().isEmpty()) {
+        log.debug("Tesseract extracted no text from image");
+        return new TesseractValidationResult(false, 0);
+      }
+
+      log.debug("Tesseract extracted {} characters", extractedText.length());
+
+      // Validate content contains bus schedule indicators
+      TesseractValidationResult result = checkBusScheduleContent(extractedText);
+      log.info("Tesseract validation result: valid={}, indicators={}", result.isValid, result.indicatorsFound);
+
+      return result;
+
+    } catch (TesseractException e) {
+      log.error("Tesseract OCR error: {}", e.getMessage());
+      // On Tesseract error, allow upload (don't block user due to OCR failure)
+      return new TesseractValidationResult(true, 1);
+    } catch (IOException e) {
+      log.error("Error reading image file for Tesseract: {}", e.getMessage());
+      return new TesseractValidationResult(false, 0);
+    } catch (Exception e) {
+      log.error("Unexpected error during Tesseract validation: {}", e.getMessage(), e);
+      // Allow upload on unexpected errors
+      return new TesseractValidationResult(true, 1);
+    }
+  }
+
+  /**
+   * Check if extracted text contains bus schedule content patterns.
+   * Looking for: time patterns, location keywords, route numbers, text length,
+   * Tamil script.
+   */
+  private TesseractValidationResult checkBusScheduleContent(String text) {
+    if (text == null || text.trim().isEmpty()) {
+      return new TesseractValidationResult(false, 0);
+    }
+
+    String lowerText = text.toLowerCase();
+    int busIndicators = 0;
+
+    // Indicator 1: Time pattern (HH:MM format)
+    // Matches patterns like "06:00", "14:30", "23:59"
+    if (lowerText.matches(".*\\d{1,2}:\\d{2}.*")) {
+      busIndicators++;
+      log.debug("Bus schedule indicator 1 found: Time pattern");
+    }
+
+    // Indicator 2: Common location keywords
+    String[] locationKeywords = {
+        "central", "anna", "adyar", "madurai", "bangalore",
+        "salem", "cuddalore", "nellore", "tirupati", "kanchipuram",
+        "sriperumbudur", "mylapore", "triplicane", "stall", "stop",
+        "station", "depot", "terminus", "bus", "route", "avadi", "velachery"
+    };
+
+    for (String keyword : locationKeywords) {
+      if (lowerText.contains(keyword)) {
+        busIndicators++;
+        log.debug("Bus schedule indicator 2 found: Location keyword '{}'", keyword);
+        break; // Count only once
+      }
+    }
+
+    // Indicator 3: Route number pattern
+    // Examples: "166UD", "520", "27M", "42C"
+    if (lowerText.matches(".*\\d+[a-z]*\\b.*")) {
+      busIndicators++;
+      log.debug("Bus schedule indicator 3 found: Route number pattern");
+    }
+
+    // Indicator 4: Sufficient text length
+    // Bus schedules typically have substantial text (>50 chars)
+    // Selfies or random photos usually have < 20 characters of detectable text
+    if (text.length() > 50) {
+      busIndicators++;
+      log.debug("Bus schedule indicator 4 found: Text length {} chars", text.length());
+    }
+
+    // Indicator 5: Tamil script detection
+    // Common in Chennai bus schedules
+    if (text.contains("ு") || text.contains("ை") ||
+        text.contains("ஆ") || text.contains("இ") ||
+        text.contains("உ") || text.contains("எ") ||
+        text.contains("ஒ") || text.contains("ஐ")) {
+      busIndicators++;
+      log.debug("Bus schedule indicator 5 found: Tamil script detected");
+    }
+
+    // Require at least 2 indicators to pass validation
+    boolean isValid = busIndicators >= 2;
+    log.info("Bus schedule content validation: valid={}, indicators found={}/5", isValid, busIndicators);
+
+    return new TesseractValidationResult(isValid, busIndicators);
+  }
+
+  /**
+   * Helper class to store Tesseract validation results.
+   */
+  private static class TesseractValidationResult {
+    final boolean isValid;
+    final int indicatorsFound;
+
+    TesseractValidationResult(boolean isValid, int indicatorsFound) {
+      this.isValid = isValid;
+      this.indicatorsFound = indicatorsFound;
+    }
   }
 }

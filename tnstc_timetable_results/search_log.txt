@@ -1,0 +1,99 @@
+TNSTC Bus Timetable Search Log
+Started: 2026-01-14T11:09:03.472450
+Deduplication enabled: True
+================================================================================
+
+
+[1/18] tnstc_basic
+Query: tnstc bus time table
+------------------------------------------------------------
+Status: Extracted 5 routes
+
+[2/18] tnstc_timing
+Query: tnstc bus timing schedule
+------------------------------------------------------------
+Status: Extracted 1 routes
+
+[3/18] tnstc_routes
+Query: tnstc bus routes time
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[4/18] chennai_madurai
+Query: Chennai to Madurai TNSTC bus timetable
+------------------------------------------------------------
+Status: Extracted 1 routes
+
+[5/18] salem_bangalore
+Query: Salem to Bangalore TNSTC bus schedule
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[6/18] trichy_salem
+Query: Trichy to Salem TNSTC bus timing
+------------------------------------------------------------
+Status: Extracted 1 routes
+
+[7/18] coimbatore_bangalore
+Query: Coimbatore to Bangalore TNSTC timetable
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[8/18] erode_salem
+Query: Erode to Salem TNSTC bus timing
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[9/18] tnstc_schedule
+Query: TNSTC bus schedule table
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[10/18] tnstc_departure
+Query: TNSTC bus departure arrival times
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[11/18] tnstc_frequency
+Query: TNSTC bus frequency daily schedule
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[12/18] tamil_bus_timing
+Query: Tamil Nadu bus timetable schedule
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[13/18] tamil_bus_routes
+Query: Tamil Nadu TNSTC routes timing
+------------------------------------------------------------
+Status: Extracted 1 routes
+
+[14/18] tiruppur_salem
+Query: Tiruppur to Salem bus timetable
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[15/18] vellore_chennai
+Query: Vellore to Chennai TNSTC bus timing
+------------------------------------------------------------
+Status: Extracted 1 routes
+
+[16/18] dindigul_madurai
+Query: Dindigul to Madurai bus schedule
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+[17/18] bus_schedule_format
+Query: bus time table schedule format Tamil Nadu
+------------------------------------------------------------
+Status: Extracted 1 routes
+
+[18/18] bus_timing_table
+Query: bus schedule timing table image
+------------------------------------------------------------
+Status: Extracted 0 routes
+
+================================================================================
+Completed: 2026-01-14T11:44:12.735449
+Total routes extracted: 11
