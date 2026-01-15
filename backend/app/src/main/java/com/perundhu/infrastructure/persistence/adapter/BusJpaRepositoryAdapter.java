@@ -11,6 +11,7 @@ import com.perundhu.domain.port.BusRepository;
 import com.perundhu.infrastructure.persistence.entity.BusJpaEntity;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.BusJpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 // Remove @Repository annotation - managed by HexagonalConfig
 public class BusJpaRepositoryAdapter implements BusRepository {
@@ -22,18 +23,21 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Bus> findById(com.perundhu.domain.model.BusId id) {
         return jpaRepository.findById(id.value())
                 .map(BusJpaEntity::toDomainModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Bus> findById(Long busId) {
         return jpaRepository.findById(busId)
                 .map(BusJpaEntity::toDomainModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findByFromAndToLocation(Location fromLocation, Location toLocation) {
         // Create location entities for the test method
         LocationJpaEntity fromLocationEntity = LocationJpaEntity.fromDomainModel(fromLocation);
@@ -47,6 +51,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findByFromLocation(Location fromLocation) {
         return jpaRepository.findByFromLocationId(fromLocation.id().getValue())
                 .stream()
@@ -55,12 +60,14 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existsByBusNumberAndFromAndToLocations(String busNumber, String fromLocationName,
             String toLocationName) {
         return jpaRepository.existsByBusNumberAndFromAndToLocations(busNumber, fromLocationName, toLocationName);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existsByBusNumberAndFromAndToLocationsAndTiming(String busNumber, String fromLocationName,
             String toLocationName, LocalTime departureTime, LocalTime arrivalTime) {
         return jpaRepository.existsByBusNumberAndFromAndToLocationsAndTiming(
@@ -68,6 +75,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findAllBuses() {
         return findAll(); // Delegate to the existing findAll method
     }
@@ -84,6 +92,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findAll() {
         // Use findAllWithLocations to eagerly fetch locations and prevent
         // LazyInitializationException when called from @Async methods
@@ -92,6 +101,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<Bus> findByFromLocationIdOrToLocationId(Long locationId) {
         return jpaRepository.findByFromLocationIdOrToLocationId(locationId, locationId)
                 .stream()
@@ -100,6 +110,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findBusesBetweenLocations(Long fromLocationId, Long toLocationId) {
         return jpaRepository.findByFromLocationIdAndToLocationId(fromLocationId, toLocationId)
                 .stream()
@@ -114,6 +125,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
      * route
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findBusesPassingThroughLocations(Long fromLocationId, Long toLocationId) {
         return jpaRepository.findBusesPassingThroughLocations(fromLocationId, toLocationId)
                 .stream()
@@ -122,6 +134,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findBusesContinuingBeyondDestination(Long fromLocationId, Long toLocationId) {
         return jpaRepository.findBusesContinuingBeyondDestination(fromLocationId, toLocationId)
                 .stream()
@@ -130,6 +143,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findByBusNumber(String busNumber) {
         return jpaRepository.findByBusNumber(busNumber)
                 .stream()
@@ -138,6 +152,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findByCategory(String category) {
         return jpaRepository.findByCategory(category)
                 .stream()
@@ -145,6 +160,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<Bus> findByBusNumberAndRoute(String busNumber, LocationId fromLocationId,
             LocationId toLocationId) {
         return jpaRepository.findByBusNumberAndFromLocationIdAndToLocationId(
@@ -155,6 +171,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findInService() {
         return jpaRepository.findByActiveTrue()
                 .stream()
@@ -163,11 +180,13 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long countByCategory(String category) {
         return jpaRepository.countByCategory(category);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bus> findBusesPassingThroughAnyLocations(List<Long> fromLocationIds, List<Long> toLocationIds) {
         if (fromLocationIds == null || fromLocationIds.isEmpty() ||
                 toLocationIds == null || toLocationIds.isEmpty()) {
@@ -180,6 +199,7 @@ public class BusJpaRepositoryAdapter implements BusRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long count() {
         return jpaRepository.count();
     }

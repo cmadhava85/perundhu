@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1040TPPCUDCC01L",
-    "route_number": "",
+    "route_number": "33101",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "10:40",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 257",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1040TPPCUDCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "33101"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "334.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "257"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR OLD BUSSTAND",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1040TPPCUDCC01L",
-    "route_number": "",
+    "route_number": "33101",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "10:40",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 257",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1040TPPCUDCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "33101"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "334.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "257"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR OLD BUSSTAND",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "2130TPPCUDCC01L",
-    "route_number": "",
+    "route_number": "33102",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 257",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130TPPCUDCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "33102"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "334.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "257"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR OLD BUSSTAND",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "2130TPPCUDCC01L",
-    "route_number": "",
+    "route_number": "33102",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 257",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130TPPCUDCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "33102"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "334.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "257"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR OLD BUSSTAND",

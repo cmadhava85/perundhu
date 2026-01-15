@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0030SALBANDD02A",
-    "route_number": "",
+    "route_number": "100J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0030SALBANDD02A",
-    "route_number": "",
+    "route_number": "100J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0100SALBANDD01L",
-    "route_number": "",
+    "route_number": "100A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "01:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0100SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0100SALBANDD01L",
-    "route_number": "",
+    "route_number": "100A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "01:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0100SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0300SALBANDD01L",
-    "route_number": "",
+    "route_number": "100L",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "03:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0300SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100L"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0300SALBANDD01L",
-    "route_number": "",
+    "route_number": "100L",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "03:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0300SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100L"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0430SALBANDD01L",
-    "route_number": "",
+    "route_number": "100F",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "04:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0430SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100F"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0430SALBANDD01L",
-    "route_number": "",
+    "route_number": "100F",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "04:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0430SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100F"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0515SALBANDD01L",
-    "route_number": "",
+    "route_number": "100N",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "05:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:15",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0515SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100N"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0515SALBANDD01L",
-    "route_number": "",
+    "route_number": "100N",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "05:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:15",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0515SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100N"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0600SALBANDD01L",
-    "route_number": "",
+    "route_number": "100X",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100X"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "0600SALBANDD01L",
-    "route_number": "",
+    "route_number": "100X",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100X"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "0630SALBANDD02A",
-    "route_number": "",
+    "route_number": "100O",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:30",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0630SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100O"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "0630SALBANDD02A",
-    "route_number": "",
+    "route_number": "100O",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:30",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0630SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100O"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "0700SALBANDD01L",
-    "route_number": "",
+    "route_number": "100S",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100S"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "0700SALBANDD01L",
-    "route_number": "",
+    "route_number": "100S",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100S"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "0730SALBANDD02A",
-    "route_number": "",
+    "route_number": "100G",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0730SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100G"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "0730SALBANDD02A",
-    "route_number": "",
+    "route_number": "100G",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0730SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100G"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "0800SALBANDD02A",
-    "route_number": "",
+    "route_number": "100I",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100I"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "0800SALBANDD02A",
-    "route_number": "",
+    "route_number": "100I",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100I"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "0840SALBANDD01L",
-    "route_number": "",
+    "route_number": "300JV",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:40",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0840SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "300JV"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "0840SALBANDD01L",
-    "route_number": "",
+    "route_number": "300JV",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:40",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0840SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "300JV"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "0900SALBANDD01L",
-    "route_number": "",
+    "route_number": "708A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "708A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1427,53 +622,18 @@
   },
   {
     "service_code": "0900SALBANDD01L",
-    "route_number": "",
+    "route_number": "708A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "708A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1489,53 +649,18 @@
   },
   {
     "service_code": "0930SALBANDD02A",
-    "route_number": "",
+    "route_number": "100P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1551,53 +676,18 @@
   },
   {
     "service_code": "0930SALBANDD02A",
-    "route_number": "",
+    "route_number": "100P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1613,53 +703,18 @@
   },
   {
     "service_code": "1000SALBANDD02A",
-    "route_number": "",
+    "route_number": "100J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1675,53 +730,18 @@
   },
   {
     "service_code": "1000SALBANDD02A",
-    "route_number": "",
+    "route_number": "100J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1737,53 +757,18 @@
   },
   {
     "service_code": "1030SALBANDD02A",
-    "route_number": "",
+    "route_number": "100Q",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100Q"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1799,53 +784,18 @@
   },
   {
     "service_code": "1030SALBANDD02A",
-    "route_number": "",
+    "route_number": "100Q",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100Q"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1861,53 +811,18 @@
   },
   {
     "service_code": "1100SALBANDD01A",
-    "route_number": "",
+    "route_number": "100R",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100R"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1923,53 +838,18 @@
   },
   {
     "service_code": "1100SALBANDD01A",
-    "route_number": "",
+    "route_number": "100R",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100R"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1985,53 +865,18 @@
   },
   {
     "service_code": "1135SALBANDD01L",
-    "route_number": "",
+    "route_number": "100JK",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:35",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:35",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1135SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100JK"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2047,53 +892,18 @@
   },
   {
     "service_code": "1135SALBANDD01L",
-    "route_number": "",
+    "route_number": "100JK",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:35",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:35",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1135SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100JK"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2109,53 +919,18 @@
   },
   {
     "service_code": "1200SALBANDD02A",
-    "route_number": "",
+    "route_number": "100K",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100K"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2171,53 +946,18 @@
   },
   {
     "service_code": "1200SALBANDD02A",
-    "route_number": "",
+    "route_number": "100K",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100K"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2233,53 +973,18 @@
   },
   {
     "service_code": "1300SALBANDD01L",
-    "route_number": "",
+    "route_number": "100L",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100L"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2295,53 +1000,18 @@
   },
   {
     "service_code": "1300SALBANDD01L",
-    "route_number": "",
+    "route_number": "100L",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100L"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2357,53 +1027,18 @@
   },
   {
     "service_code": "1300SALBANAB",
-    "route_number": "",
+    "route_number": "840AB",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 354/443",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300SALBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840AB"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "354"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2419,53 +1054,18 @@
   },
   {
     "service_code": "1300SALBANAB",
-    "route_number": "",
+    "route_number": "840AB",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 354/443",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300SALBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840AB"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "354"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2481,53 +1081,18 @@
   },
   {
     "service_code": "1330SALBANDD01A",
-    "route_number": "",
+    "route_number": "100LM",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100LM"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2543,53 +1108,18 @@
   },
   {
     "service_code": "1330SALBANDD01A",
-    "route_number": "",
+    "route_number": "100LM",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100LM"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2605,53 +1135,18 @@
   },
   {
     "service_code": "1330SALBANNS",
-    "route_number": "",
+    "route_number": "840NS",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308/368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330SALBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840NS"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2667,53 +1162,18 @@
   },
   {
     "service_code": "1330SALBANNS",
-    "route_number": "",
+    "route_number": "840NS",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308/368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330SALBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840NS"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2729,53 +1189,18 @@
   },
   {
     "service_code": "1400SALBANDD01L",
-    "route_number": "",
+    "route_number": "100MN",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100MN"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2791,53 +1216,18 @@
   },
   {
     "service_code": "1400SALBANDD01L",
-    "route_number": "",
+    "route_number": "100MN",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100MN"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2853,53 +1243,18 @@
   },
   {
     "service_code": "1400SALBANNS",
-    "route_number": "",
+    "route_number": "840NS",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308/368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400SALBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840NS"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2915,53 +1270,18 @@
   },
   {
     "service_code": "1400SALBANNS",
-    "route_number": "",
+    "route_number": "840NS",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308/368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400SALBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840NS"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2977,53 +1297,18 @@
   },
   {
     "service_code": "1430SALBANDD02A",
-    "route_number": "",
+    "route_number": "100M",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100M"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3039,53 +1324,18 @@
   },
   {
     "service_code": "1430SALBANDD02A",
-    "route_number": "",
+    "route_number": "100M",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100M"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3101,53 +1351,18 @@
   },
   {
     "service_code": "1430SALBANNS",
-    "route_number": "",
+    "route_number": "840NS",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308/368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430SALBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840NS"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3163,53 +1378,18 @@
   },
   {
     "service_code": "1430SALBANNS",
-    "route_number": "",
+    "route_number": "840NS",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308/368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430SALBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "840NS"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3225,53 +1405,18 @@
   },
   {
     "service_code": "1500SALBANDD01L",
-    "route_number": "",
+    "route_number": "100KL",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100KL"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3287,53 +1432,18 @@
   },
   {
     "service_code": "1500SALBANDD01L",
-    "route_number": "",
+    "route_number": "100KL",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100KL"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3349,53 +1459,18 @@
   },
   {
     "service_code": "1530SALBANDD02A",
-    "route_number": "",
+    "route_number": "100P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3411,53 +1486,18 @@
   },
   {
     "service_code": "1530SALBANDD02A",
-    "route_number": "",
+    "route_number": "100P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3473,53 +1513,18 @@
   },
   {
     "service_code": "1600SALBANDD01A",
-    "route_number": "",
+    "route_number": "100TU",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100TU"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3535,53 +1540,18 @@
   },
   {
     "service_code": "1600SALBANDD01A",
-    "route_number": "",
+    "route_number": "100TU",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100TU"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3597,53 +1567,18 @@
   },
   {
     "service_code": "1620SALBANDD01L",
-    "route_number": "",
+    "route_number": "100R",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:20",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1620SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100R"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3659,53 +1594,18 @@
   },
   {
     "service_code": "1620SALBANDD01L",
-    "route_number": "",
+    "route_number": "100R",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:20",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1620SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100R"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3721,53 +1621,18 @@
   },
   {
     "service_code": "1700SALBANDD01L",
-    "route_number": "",
+    "route_number": "100OT",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100OT"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3783,53 +1648,18 @@
   },
   {
     "service_code": "1700SALBANDD01L",
-    "route_number": "",
+    "route_number": "100OT",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100OT"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3845,53 +1675,18 @@
   },
   {
     "service_code": "1750SALBANDD01L",
-    "route_number": "",
+    "route_number": "100OY",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:50",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:50",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1750SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100OY"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3907,53 +1702,18 @@
   },
   {
     "service_code": "1750SALBANDD01L",
-    "route_number": "",
+    "route_number": "100OY",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:50",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:50",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1750SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100OY"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -3969,53 +1729,18 @@
   },
   {
     "service_code": "1815SALBANDD01L",
-    "route_number": "",
+    "route_number": "100OP",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100OP"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4031,53 +1756,18 @@
   },
   {
     "service_code": "1815SALBANDD01L",
-    "route_number": "",
+    "route_number": "100OP",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100OP"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4093,53 +1783,18 @@
   },
   {
     "service_code": "1930SALBANDD02A",
-    "route_number": "",
+    "route_number": "100V",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100V"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4155,53 +1810,18 @@
   },
   {
     "service_code": "1930SALBANDD02A",
-    "route_number": "",
+    "route_number": "100V",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100V"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4217,53 +1837,18 @@
   },
   {
     "service_code": "2000SALBANDD02A",
-    "route_number": "",
+    "route_number": "100T",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100T"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4279,53 +1864,18 @@
   },
   {
     "service_code": "2000SALBANDD02A",
-    "route_number": "",
+    "route_number": "100T",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100T"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4341,53 +1891,18 @@
   },
   {
     "service_code": "2030SALBANDD02A",
-    "route_number": "",
+    "route_number": "100U",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100U"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4403,53 +1918,18 @@
   },
   {
     "service_code": "2030SALBANDD02A",
-    "route_number": "",
+    "route_number": "100U",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100U"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4465,53 +1945,18 @@
   },
   {
     "service_code": "2115SALBANDD01A",
-    "route_number": "",
+    "route_number": "100PQ",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100PQ"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4527,53 +1972,18 @@
   },
   {
     "service_code": "2115SALBANDD01A",
-    "route_number": "",
+    "route_number": "100PQ",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115SALBANDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100PQ"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4589,53 +1999,18 @@
   },
   {
     "service_code": "2240SALBANDD01L",
-    "route_number": "",
+    "route_number": "100QR",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100QR"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4651,53 +2026,18 @@
   },
   {
     "service_code": "2240SALBANDD01L",
-    "route_number": "",
+    "route_number": "100QR",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100QR"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4713,53 +2053,18 @@
   },
   {
     "service_code": "2245SALBANDD02A",
-    "route_number": "",
+    "route_number": "100ST",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100ST"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4775,53 +2080,18 @@
   },
   {
     "service_code": "2245SALBANDD02A",
-    "route_number": "",
+    "route_number": "100ST",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100ST"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4837,53 +2107,18 @@
   },
   {
     "service_code": "2330SALBANDD02A",
-    "route_number": "",
+    "route_number": "100W",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100W"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4899,53 +2134,45 @@
   },
   {
     "service_code": "2330SALBANDD02A",
-    "route_number": "",
+    "route_number": "100W",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
       {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330SALBANDD02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100W"
-      },
-      {
         "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
+        "landmark": "SALEM",
+        "time": "23:30"
       },
       {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
+        "city": "BENGALURU",
+        "landmark": "SATELLITE BS",
+        "time": "04:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:22:40.849427"
+  },
+  {
+    "service_code": "2330SALBANDD01L",
+    "route_number": "204B",
+    "corporation": "SETC",
+    "origin": "SALEM",
+    "destination": "BENGALURU",
+    "departure_time": "23:30",
+    "duration": "5.00Hrs",
+    "arrival_time": "04:30",
+    "available_seats": "44 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 229",
+    "journey_date": "16/01/2026",
+    "stops": [
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -4961,115 +2188,18 @@
   },
   {
     "service_code": "2330SALBANDD01L",
-    "route_number": "",
+    "route_number": "204B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "204B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "SALEM",
-        "time": "23:30"
-      },
-      {
-        "city": "BENGALURU",
-        "landmark": "SATELLITE BS",
-        "time": "04:30"
-      }
-    ],
-    "scraped_at": "2026-01-13T18:22:40.849427"
-  },
-  {
-    "service_code": "2330SALBANDD01L",
-    "route_number": "",
-    "corporation": "SETC",
-    "origin": "SALEM",
-    "destination": "BENGALURU",
-    "departure_time": "",
-    "duration": "5.00Hrs",
-    "arrival_time": "",
-    "available_seats": "44 Seats Available",
-    "bus_type": "Standard",
-    "fare": "Rs 229",
-    "journey_date": "16/01/2026",
-    "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330SALBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "204B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "208.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1600KCBTHEAC",
-    "route_number": "",
+    "route_number": "160AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 627",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600KCBTHEAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "627"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -113,53 +78,18 @@
   },
   {
     "service_code": "1600KCBTHEAC",
-    "route_number": "",
+    "route_number": "160AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 627",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600KCBTHEAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "627"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -225,53 +155,18 @@
   },
   {
     "service_code": "1700KCBTHE",
-    "route_number": "",
+    "route_number": "160UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBTHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -337,53 +232,18 @@
   },
   {
     "service_code": "1700KCBTHE",
-    "route_number": "",
+    "route_number": "160UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBTHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -449,53 +309,18 @@
   },
   {
     "service_code": "1715KCBMNNLB",
-    "route_number": "",
+    "route_number": "757LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482/750",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715KCBMNNLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "757LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -561,53 +386,18 @@
   },
   {
     "service_code": "1715KCBMNNLB",
-    "route_number": "",
+    "route_number": "757LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482/750",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715KCBMNNLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "757LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -673,53 +463,18 @@
   },
   {
     "service_code": "1830KCBKUI",
-    "route_number": "",
+    "route_number": "172UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "11.35Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBKUI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "172UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:35"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -795,53 +550,18 @@
   },
   {
     "service_code": "1830KCBKUI",
-    "route_number": "",
+    "route_number": "172UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "11.35Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBKUI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "172UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:35"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -917,53 +637,18 @@
   },
   {
     "service_code": "1900KCBCBA",
-    "route_number": "",
+    "route_number": "164UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KCBCBA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "164UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1039,53 +724,18 @@
   },
   {
     "service_code": "1900KCBCBA",
-    "route_number": "",
+    "route_number": "164UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KCBCBA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "164UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1161,53 +811,18 @@
   },
   {
     "service_code": "1931KCBBOD",
-    "route_number": "",
+    "route_number": "163UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "19:31",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:01",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1931KCBBOD",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "163UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1228,53 +843,18 @@
   },
   {
     "service_code": "1931KCBBOD",
-    "route_number": "",
+    "route_number": "163UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "19:31",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:01",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1931KCBBOD",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "163UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1295,53 +875,18 @@
   },
   {
     "service_code": "2000KCBVAR",
-    "route_number": "",
+    "route_number": "163EUD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KCBVAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "163EUD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1412,53 +957,18 @@
   },
   {
     "service_code": "2000KCBVAR",
-    "route_number": "",
+    "route_number": "163EUD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KCBVAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "163EUD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1529,53 +1039,18 @@
   },
   {
     "service_code": "2020KCBTHE",
-    "route_number": "",
+    "route_number": "160UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "20:20",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:20",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2020KCBTHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1596,53 +1071,18 @@
   },
   {
     "service_code": "2020KCBTHE",
-    "route_number": "",
+    "route_number": "160UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "20:20",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:20",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2020KCBTHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1663,53 +1103,18 @@
   },
   {
     "service_code": "2045KCBTHEAB",
-    "route_number": "",
+    "route_number": "160AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:45",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 641/988",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045KCBTHEAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "641"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1735,53 +1140,18 @@
   },
   {
     "service_code": "2045KCBTHEAB",
-    "route_number": "",
+    "route_number": "160AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:45",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 641/988",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045KCBTHEAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "641"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1807,53 +1177,18 @@
   },
   {
     "service_code": "2100KCBBODNS",
-    "route_number": "",
+    "route_number": "163NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482/750",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBBODNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "163NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1874,53 +1209,18 @@
   },
   {
     "service_code": "2100KCBBODNS",
-    "route_number": "",
+    "route_number": "163NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482/750",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBBODNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "163NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1941,53 +1241,18 @@
   },
   {
     "service_code": "2200KCBTHE",
-    "route_number": "",
+    "route_number": "160UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBTHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2008,53 +1273,18 @@
   },
   {
     "service_code": "2200KCBTHE",
-    "route_number": "",
+    "route_number": "160UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 482",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBTHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "160UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "482"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2075,53 +1305,18 @@
   },
   {
     "service_code": "2215KCBCBALB",
-    "route_number": "",
+    "route_number": "164LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:15",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492/765",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBCBALB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "164LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2197,53 +1392,18 @@
   },
   {
     "service_code": "2215KCBCBALB",
-    "route_number": "",
+    "route_number": "164LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THENI",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:15",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492/765",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBCBALB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "164LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THENI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "484.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

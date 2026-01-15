@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1415NAGKCB",
-    "route_number": "",
+    "route_number": "198UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:15",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1415NAGKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "1415NAGKCB",
-    "route_number": "",
+    "route_number": "198UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:15",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1415NAGKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -175,53 +105,18 @@
   },
   {
     "service_code": "1330KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -262,53 +157,18 @@
   },
   {
     "service_code": "1330KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -349,53 +209,18 @@
   },
   {
     "service_code": "1545NAGKCBAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 874/1349",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1545NAGKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "874"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -441,53 +266,18 @@
   },
   {
     "service_code": "1545NAGKCBAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 874/1349",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1545NAGKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "874"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -533,53 +323,18 @@
   },
   {
     "service_code": "1500MARKCB",
-    "route_number": "",
+    "route_number": "284KUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 695",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500MARKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284KUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "695"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -630,53 +385,18 @@
   },
   {
     "service_code": "1500MARKCB",
-    "route_number": "",
+    "route_number": "284KUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 695",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500MARKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284KUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "695"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -727,53 +447,18 @@
   },
   {
     "service_code": "1500KUSKCB",
-    "route_number": "",
+    "route_number": "287UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KUSKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "287UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KULASEKARAM",
         "landmark": "KULASEKARAM",
@@ -809,53 +494,18 @@
   },
   {
     "service_code": "1500KUSKCB",
-    "route_number": "",
+    "route_number": "287UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KUSKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "287UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KULASEKARAM",
         "landmark": "KULASEKARAM",
@@ -891,53 +541,18 @@
   },
   {
     "service_code": "1630NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:30",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -973,53 +588,18 @@
   },
   {
     "service_code": "1630NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:30",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1055,53 +635,18 @@
   },
   {
     "service_code": "1600MARKCB",
-    "route_number": "",
+    "route_number": "284UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600MARKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1142,53 +687,18 @@
   },
   {
     "service_code": "1600MARKCB",
-    "route_number": "",
+    "route_number": "284UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600MARKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1229,53 +739,18 @@
   },
   {
     "service_code": "1700NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1311,53 +786,18 @@
   },
   {
     "service_code": "1700NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1393,53 +833,18 @@
   },
   {
     "service_code": "1550MARKCBAB",
-    "route_number": "",
+    "route_number": "284AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:50",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 874/1349",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1550MARKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "874"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1500,53 +905,18 @@
   },
   {
     "service_code": "1550MARKCBAB",
-    "route_number": "",
+    "route_number": "284AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "15:50",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 874/1349",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1550MARKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "874"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1607,53 +977,18 @@
   },
   {
     "service_code": "1630MARKCBNS",
-    "route_number": "",
+    "route_number": "284NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630MARKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1699,53 +1034,18 @@
   },
   {
     "service_code": "1630MARKCBNS",
-    "route_number": "",
+    "route_number": "284NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630MARKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1791,53 +1091,18 @@
   },
   {
     "service_code": "1745NAGKCB",
-    "route_number": "",
+    "route_number": "198UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:45",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745NAGKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1873,53 +1138,18 @@
   },
   {
     "service_code": "1745NAGKCB",
-    "route_number": "",
+    "route_number": "198UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:45",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745NAGKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1955,53 +1185,18 @@
   },
   {
     "service_code": "1800NAGKCBAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 874/1349",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800NAGKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "874"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2047,54 +1242,19 @@
   },
   {
     "service_code": "1800NAGKCBAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 874/1349",
     "journey_date": "16/01/2026",
     "stops": [
       {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800NAGKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "874"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
-      {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
         "time": "18:00"
@@ -2139,53 +1299,18 @@
   },
   {
     "service_code": "1700KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -2231,53 +1356,18 @@
   },
   {
     "service_code": "1700KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -2323,53 +1413,18 @@
   },
   {
     "service_code": "1800NAGKCBMS",
-    "route_number": "",
+    "route_number": "198MS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1144",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800NAGKCBMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198MS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1144"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2415,53 +1470,18 @@
   },
   {
     "service_code": "1800NAGKCBMS",
-    "route_number": "",
+    "route_number": "198MS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1144",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800NAGKCBMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198MS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1144"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2507,53 +1527,18 @@
   },
   {
     "service_code": "1815NAGKCBLB",
-    "route_number": "",
+    "route_number": "198LB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815NAGKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198LB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2589,53 +1574,18 @@
   },
   {
     "service_code": "1815NAGKCBLB",
-    "route_number": "",
+    "route_number": "198LB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815NAGKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198LB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2671,53 +1621,18 @@
   },
   {
     "service_code": "1700TRVKCB",
-    "route_number": "",
+    "route_number": "794UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 680",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700TRVKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "794UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "680"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -2773,53 +1688,18 @@
   },
   {
     "service_code": "1700TRVKCB",
-    "route_number": "",
+    "route_number": "794UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 680",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700TRVKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "794UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "680"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -2875,53 +1755,18 @@
   },
   {
     "service_code": "1915NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2957,53 +1802,18 @@
   },
   {
     "service_code": "1915NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -3039,53 +1849,18 @@
   },
   {
     "service_code": "1830MARKCB",
-    "route_number": "",
+    "route_number": "284UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830MARKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -3131,53 +1906,18 @@
   },
   {
     "service_code": "1830MARKCB",
-    "route_number": "",
+    "route_number": "284UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830MARKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -3223,53 +1963,18 @@
   },
   {
     "service_code": "2015NAGKCB",
-    "route_number": "",
+    "route_number": "198UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015NAGKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -3310,53 +2015,18 @@
   },
   {
     "service_code": "2015NAGKCB",
-    "route_number": "",
+    "route_number": "198UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015NAGKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -3397,53 +2067,18 @@
   },
   {
     "service_code": "2115NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -3479,53 +2114,18 @@
   },
   {
     "service_code": "2115NAGKCBNS",
-    "route_number": "",
+    "route_number": "198NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675/1045",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115NAGKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "675.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

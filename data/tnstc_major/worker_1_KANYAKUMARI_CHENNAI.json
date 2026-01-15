@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1330KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "15.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 695",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "15:00"
-      },
-      {
-        "city": "695.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "695"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "1330KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "15.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 695",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "15:00"
-      },
-      {
-        "city": "695.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "695"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -175,53 +105,18 @@
   },
   {
     "service_code": "1700KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "15.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 695",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "15:00"
-      },
-      {
-        "city": "695.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "695"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -267,53 +162,18 @@
   },
   {
     "service_code": "1700KAKKCB",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "15.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 695",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KAKKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "15:00"
-      },
-      {
-        "city": "695.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "695"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",

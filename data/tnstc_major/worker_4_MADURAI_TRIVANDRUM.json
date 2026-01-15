@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1600VELTRVNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TRIVANDRUM",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 338/510",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600VELTRVNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRIVANDRUM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "309.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "338"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "1600VELTRVNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TRIVANDRUM",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 338/510",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600VELTRVNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRIVANDRUM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "309.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "338"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0830ERONAPKK05L",
-    "route_number": "",
+    "route_number": "139C",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830ERONAPKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "139C"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "312.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0830ERONAPKK05L",
-    "route_number": "",
+    "route_number": "139C",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830ERONAPKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "139C"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "312.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "2115ERONAPKK05L",
-    "route_number": "",
+    "route_number": "139D",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115ERONAPKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "139D"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "312.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "2115ERONAPKK05L",
-    "route_number": "",
+    "route_number": "139D",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115ERONAPKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "139D"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "312.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "2145ERONAPKK05L",
-    "route_number": "",
+    "route_number": "139B",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "21:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2145ERONAPKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "139B"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "312.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "2145ERONAPKK05L",
-    "route_number": "",
+    "route_number": "139B",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "21:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2145ERONAPKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "139B"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "312.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1930EROMAR",
-    "route_number": "",
+    "route_number": "668UD",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 378",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930EROMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "668UD"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "380.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "378"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -93,53 +58,18 @@
   },
   {
     "service_code": "1930EROMAR",
-    "route_number": "",
+    "route_number": "668UD",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 378",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930EROMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "668UD"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "380.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "378"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",

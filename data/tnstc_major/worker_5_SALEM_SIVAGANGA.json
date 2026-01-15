@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0416SALSIVKK01L",
-    "route_number": "",
+    "route_number": "308",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "SIVAGANGA",
-    "departure_time": "",
+    "departure_time": "04:16",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:16",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 226",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0416SALSIVKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "308"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SIVAGANGA"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "301.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "226"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0416SALSIVKK01L",
-    "route_number": "",
+    "route_number": "308",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "SIVAGANGA",
-    "departure_time": "",
+    "departure_time": "04:16",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:16",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 226",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0416SALSIVKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "308"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SIVAGANGA"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "301.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "226"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",

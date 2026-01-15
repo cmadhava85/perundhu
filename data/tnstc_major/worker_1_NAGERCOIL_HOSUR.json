@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1400MARBANNS",
-    "route_number": "",
+    "route_number": "892NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "12.35Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660/1020",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400MARBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "892NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:35"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -103,53 +68,18 @@
   },
   {
     "service_code": "1400MARBANNS",
-    "route_number": "",
+    "route_number": "892NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "12.35Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660/1020",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400MARBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "892NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:35"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -205,53 +135,18 @@
   },
   {
     "service_code": "1630NAGBANAB",
-    "route_number": "",
+    "route_number": "887AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 861/1316",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630NAGBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "861"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -297,53 +192,18 @@
   },
   {
     "service_code": "1630NAGBANAB",
-    "route_number": "",
+    "route_number": "887AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 861/1316",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630NAGBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "861"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -389,53 +249,18 @@
   },
   {
     "service_code": "1430TRVBAN",
-    "route_number": "",
+    "route_number": "687UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430TRVBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "687UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -491,53 +316,18 @@
   },
   {
     "service_code": "1430TRVBAN",
-    "route_number": "",
+    "route_number": "687UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430TRVBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "687UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -593,53 +383,18 @@
   },
   {
     "service_code": "1730KAKBANNS",
-    "route_number": "",
+    "route_number": "888NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660/1020",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KAKBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "888NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -680,53 +435,18 @@
   },
   {
     "service_code": "1730KAKBANNS",
-    "route_number": "",
+    "route_number": "888NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660/1020",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KAKBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "888NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -767,53 +487,18 @@
   },
   {
     "service_code": "1930NAGBANNS",
-    "route_number": "",
+    "route_number": "887NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660/1010",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930NAGBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -854,53 +539,18 @@
   },
   {
     "service_code": "1930NAGBANNS",
-    "route_number": "",
+    "route_number": "887NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660/1010",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930NAGBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -941,53 +591,18 @@
   },
   {
     "service_code": "2000NAGBAN",
-    "route_number": "",
+    "route_number": "887UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:00",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 658",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000NAGBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "658"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1028,53 +643,18 @@
   },
   {
     "service_code": "2000NAGBAN",
-    "route_number": "",
+    "route_number": "887UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:00",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 658",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000NAGBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "658"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1115,53 +695,18 @@
   },
   {
     "service_code": "1900MARBAN",
-    "route_number": "",
+    "route_number": "892UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:50",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900MARBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "892UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1202,53 +747,18 @@
   },
   {
     "service_code": "1900MARBAN",
-    "route_number": "",
+    "route_number": "892UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "HOSUR",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:50",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900MARBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "892UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "HOSUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "658.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "660"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",

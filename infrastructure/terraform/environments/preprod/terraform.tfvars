@@ -49,6 +49,14 @@ db_deletion_protection    = false
 use_public_ip = true
 
 # ============================================
+# Read Replica Configuration (Optional - for testing 100k scale)
+# ============================================
+# Disabled by default - enable for testing read/write splitting
+create_read_replica = false
+read_replica_tier   = "db-f1-micro"
+read_replica_zone   = "asia-south1-b"
+
+# ============================================
 # Cloud Run Configuration
 # ============================================
 cloud_run_min_instances = 0       # Scale to zero for cost savings

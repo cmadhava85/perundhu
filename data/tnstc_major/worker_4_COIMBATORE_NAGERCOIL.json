@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1210COINAGTT01L",
-    "route_number": "",
+    "route_number": "505CBEEF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "12:10",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 355",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1210COINAGTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505CBEEF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "355"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1210COINAGTT01L",
-    "route_number": "",
+    "route_number": "505CBEEF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "12:10",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 355",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1210COINAGTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505CBEEF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "355"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1445OOTTRV",
-    "route_number": "",
+    "route_number": "783UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "14:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1445OOTTRV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "783UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -227,53 +122,18 @@
   },
   {
     "service_code": "1445OOTTRV",
-    "route_number": "",
+    "route_number": "783UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "14:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1445OOTTRV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "783UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -329,53 +189,18 @@
   },
   {
     "service_code": "1300GULKAK",
-    "route_number": "",
+    "route_number": "664EUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300GULKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664EUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GUDALORE (OOTY)",
         "landmark": "GUDALORE (OOTY)",
@@ -421,53 +246,18 @@
   },
   {
     "service_code": "1300GULKAK",
-    "route_number": "",
+    "route_number": "664EUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300GULKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664EUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GUDALORE (OOTY)",
         "landmark": "GUDALORE (OOTY)",
@@ -513,53 +303,18 @@
   },
   {
     "service_code": "1515OOTMAR",
-    "route_number": "",
+    "route_number": "664MUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515OOTMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664MUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -600,53 +355,18 @@
   },
   {
     "service_code": "1515OOTMAR",
-    "route_number": "",
+    "route_number": "664MUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515OOTMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664MUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -687,53 +407,18 @@
   },
   {
     "service_code": "1930COINAGTT01L",
-    "route_number": "",
+    "route_number": "505CBEB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 355",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COINAGTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505CBEB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "355"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -749,53 +434,18 @@
   },
   {
     "service_code": "1930COINAGTT01L",
-    "route_number": "",
+    "route_number": "505CBEB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 355",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COINAGTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505CBEB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "355"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -811,53 +461,18 @@
   },
   {
     "service_code": "1605OOTNAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "16:05",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1605OOTNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -888,53 +503,18 @@
   },
   {
     "service_code": "1605OOTNAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "16:05",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1605OOTNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -965,53 +545,18 @@
   },
   {
     "service_code": "1645OOTKAK",
-    "route_number": "",
+    "route_number": "664kUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "16:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1645OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664kUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1047,53 +592,18 @@
   },
   {
     "service_code": "1645OOTKAK",
-    "route_number": "",
+    "route_number": "664kUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "16:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1645OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664kUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1129,53 +639,18 @@
   },
   {
     "service_code": "1735OOTKAK",
-    "route_number": "",
+    "route_number": "663AUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "17:35",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:35",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1735OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "663AUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1206,53 +681,18 @@
   },
   {
     "service_code": "1735OOTKAK",
-    "route_number": "",
+    "route_number": "663AUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "17:35",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:35",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1735OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "663AUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1283,53 +723,18 @@
   },
   {
     "service_code": "2115COINAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115COINAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -1360,53 +765,18 @@
   },
   {
     "service_code": "2115COINAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 467",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115COINAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "467"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -1437,53 +807,18 @@
   },
   {
     "service_code": "2220COINAGTT01L",
-    "route_number": "",
+    "route_number": "505CBEB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "22:20",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 362",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2220COINAGTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505CBEB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "362"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1499,53 +834,18 @@
   },
   {
     "service_code": "2220COINAGTT01L",
-    "route_number": "",
+    "route_number": "505CBEB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "22:20",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 362",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2220COINAGTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505CBEB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "467.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "362"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",

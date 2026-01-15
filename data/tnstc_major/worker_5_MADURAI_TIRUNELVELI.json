@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1745VEANAG",
-    "route_number": "",
+    "route_number": "531VUD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "3.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745VEANAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531VUD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:00"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELANKANNI",
         "landmark": "VELANKANNI",
@@ -98,53 +63,18 @@
   },
   {
     "service_code": "1745VEANAG",
-    "route_number": "",
+    "route_number": "531VUD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "3.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745VEANAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531VUD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:00"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELANKANNI",
         "landmark": "VELANKANNI",
@@ -195,53 +125,18 @@
   },
   {
     "service_code": "1600VELTRVNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 180/254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600VELTRVNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "180"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -282,53 +177,18 @@
   },
   {
     "service_code": "1600VELTRVNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 180/254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600VELTRVNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "180"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -369,53 +229,18 @@
   },
   {
     "service_code": "1430TIPNAG",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430TIPNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -466,53 +291,18 @@
   },
   {
     "service_code": "1430TIPNAG",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430TIPNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -563,53 +353,18 @@
   },
   {
     "service_code": "1700PUUNAG",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700PUUNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -655,53 +410,18 @@
   },
   {
     "service_code": "1700PUUNAG",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700PUUNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -747,53 +467,18 @@
   },
   {
     "service_code": "1800PUUMAR",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:15",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800PUUMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -849,53 +534,18 @@
   },
   {
     "service_code": "1800PUUMAR",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:15",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800PUUMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -951,53 +601,18 @@
   },
   {
     "service_code": "1615TIPTIU",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615TIPTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -1038,53 +653,18 @@
   },
   {
     "service_code": "1615TIPTIU",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615TIPTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -1125,53 +705,18 @@
   },
   {
     "service_code": "1730TIPTIU",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 180",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730TIPTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "180"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -1202,53 +747,18 @@
   },
   {
     "service_code": "1730TIPTIU",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 180",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730TIPTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "180"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -1279,53 +789,18 @@
   },
   {
     "service_code": "0840KOKKAK",
-    "route_number": "",
+    "route_number": "638UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "08:40",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:40",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 163",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0840KOKKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "638UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "163"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KODAIKANAL",
         "landmark": "KODAIKANAL",
@@ -1356,53 +831,18 @@
   },
   {
     "service_code": "0840KOKKAK",
-    "route_number": "",
+    "route_number": "638UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "08:40",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:40",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 163",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0840KOKKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "638UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "163"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KODAIKANAL",
         "landmark": "KODAIKANAL",

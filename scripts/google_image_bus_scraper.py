@@ -704,7 +704,17 @@ class OriginDestinationDetector:
         'BENGALURU', 'BANGALORE', 'TIRUPPUR', 'VELLORE', 'KANCHIPURAM',
         'VILLUPURAM', 'TIRUNELVELI', 'NAGERCOIL', 'TENKASI', 'THENI',
         'DINDIGUL', 'KRISHNAGIRI', 'DHARMAAPURI', 'KALLAKURICHI', 'HOSUR',
-        'ULHASNAGAR', 'PUNE', 'HYDERABAD', 'ANDHRA PRADESH'
+        'ULHASNAGAR', 'PUNE', 'HYDERABAD', 'ANDHRA PRADESH', 'RAMESHWARAM',
+        'KANYAKUMARI', 'CUDDALORE', 'CHENGALPATTU', 'RANIPET', 'KARUR',
+        'TIRUPATHUR', 'PERAMBALUR', 'ARIYALUR', 'PUDUCHERRY', 'PONDICHERRY'
+    }
+    
+    # Location names to city mappings (e.g., "Perundhu Nilayam" -> "RAMESHWARAM")
+    LOCATION_TO_CITY = {
+        'PERUNDHU NILAYAM': 'RAMESHWARAM',
+        'CENTRAL BUS STAND': 'UNKNOWN',
+        'BUSSTAND': 'UNKNOWN',
+        'CENTRAL': 'UNKNOWN',
     }
     
     @staticmethod
@@ -922,8 +932,14 @@ class OriginDestinationDetector:
     
     @staticmethod
     def detect(text: str) -> Tuple[Optional[str], Optional[str]]:
-        """Complete detection pipeline."""
-        # Try explicit labels first (highest priority)
+        """Complete detection pipeline with Via format support."""
+        # Try Via format first (highest priority)
+        origin, destination, stops = OriginDestinationDetector.detect_via_format(text)
+        if origin and destination:
+            origin, destination = OriginDestinationDetector.validate_cities(origin, destination)
+            return origin, destination
+        
+        # Try explicit labels next (high priority)
         origin, destination = OriginDestinationDetector.detect_from_explicit_labels(text)
         origin, destination = OriginDestinationDetector.validate_cities(origin, destination)
         if origin and destination:
@@ -940,6 +956,64 @@ class OriginDestinationDetector:
         
         origin, destination = OriginDestinationDetector.validate_cities(origin, destination)
         return origin, destination
+    
+    @staticmethod
+    def detect_via_format(text: str) -> Tuple[Optional[str], Optional[str], List[str]]:
+        """
+        Detect route in 'Origin Via Stop1 Via Stop2 To Destination' format.
+        
+        Common in Tamil Nadu bus timetables where:
+        - Origin is stated at top (sometimes with location name)
+        - Intermediate stops prefixed with "Via"
+        - Final destination may be preceded by "To"
+        
+        Returns:
+            Tuple of (origin, destination, [intermediate_stops])
+        """
+        text_upper = text.upper()
+        stops = []
+        
+        # First check if location name exists (e.g., "Perundhu Nilayam")
+        origin = None
+        for loc_name, city_name in OriginDestinationDetector.LOCATION_TO_CITY.items():
+            if loc_name in text_upper:
+                origin = city_name
+                break
+        
+        # Parse "Via" pattern: "Origin Via Stop1 Via Stop2 To Destination"
+        # Pattern: "(ORIGIN|CITY) (VIA CITY)+ (TO CITY)?"
+        
+        # Look for lines with "Via" keyword
+        via_pattern = r'([A-Z][A-Z\s]{2,}?)\s+VIA\s+([A-Z][A-Z\s]{2,}?)'
+        via_matches = re.findall(via_pattern, text_upper)
+        
+        destination = None
+        
+        # If we found via matches, first group is origin, rest are stops
+        if via_matches:
+            if not origin:
+                origin = via_matches[0][0].strip()
+            
+            # All matches are stops
+            for match in via_matches:
+                stop = match[1].strip()
+                if stop not in stops:
+                    stops.append(stop)
+        
+        # Look for "To Destination" pattern (destination after "To")
+        to_pattern = r'\s+TO\s+([A-Z][A-Z\s]{2,}?)(?:\s+VIA|\s*$)'
+        to_match = re.search(to_pattern, text_upper)
+        if to_match:
+            destination = to_match.group(1).strip()
+        
+        # If no "To", look for pattern: "ORIGIN VIA ... CITY" where last city might be destination
+        if not destination and via_matches:
+            # Check if last stop could be destination
+            potential_dest = via_matches[-1][1].strip() if via_matches else None
+            if potential_dest and potential_dest != origin:
+                destination = potential_dest
+        
+        return origin, destination, stops
 
 
 class DataExtractor:
@@ -1012,12 +1086,37 @@ class DataExtractor:
         """
         Extract route information from text.
         
+        Handles formats:
+        1. Table format: City names with times on separate lines
+        2. Via format: "Origin Via City1 Via City2 To Destination"
+        
         IMPORTANT: In bus schedule tables, each row with a time is often a SEPARATE 
         BUS RUN (not a stop). This returns the row data for further processing.
         Caller should treat these as individual runs when multiple times exist.
         """
         stops = []
         
+        # Try Via format first
+        text_upper = text.upper()
+        
+        # Pattern: Extract "Via CITY TIME" or "VIA CITY @ TIME"
+        via_stop_pattern = r'VIA\s+([A-Z][A-Z\s]{2,}?)\s+(\d{1,2}:\d{2})'
+        via_stops = re.findall(via_stop_pattern, text_upper)
+        
+        if via_stops:
+            for city, time in via_stops:
+                stop = BusStop(
+                    city=city.strip(),
+                    landmark=city.strip(),
+                    time=time,
+                    departure_time=time
+                )
+                stops.append(stop)
+            
+            if stops:
+                return stops
+        
+        # Fallback to table format extraction
         # Split by common stop delimiters
         lines = text.split('\n')
         

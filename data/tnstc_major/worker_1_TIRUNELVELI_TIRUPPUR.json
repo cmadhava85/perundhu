@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0620TIUTPPTT02L",
-    "route_number": "",
+    "route_number": "620B",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "06:20",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0620TIUTPPTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "620B"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "382.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0620TIUTPPTT02L",
-    "route_number": "",
+    "route_number": "620B",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "06:20",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0620TIUTPPTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "620B"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "382.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1410TIUTPPTT02L",
-    "route_number": "",
+    "route_number": "620A",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:55",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410TIUTPPTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "620A"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "382.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1410TIUTPPTT02L",
-    "route_number": "",
+    "route_number": "620A",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:55",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410TIUTPPTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "620A"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "382.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "2030TIUTPPTT02L",
-    "route_number": "",
+    "route_number": "620C",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "38 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TIUTPPTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "620C"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "382.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "2030TIUTPPTT02L",
-    "route_number": "",
+    "route_number": "620C",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "38 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TIUTPPTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "620C"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "382.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "1800MAROOT",
-    "route_number": "",
+    "route_number": "669UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 343",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800MAROOT",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "669UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "343"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -470,53 +225,18 @@
   },
   {
     "service_code": "1800MAROOT",
-    "route_number": "",
+    "route_number": "669UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 343",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800MAROOT",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "669UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "343"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -567,53 +287,18 @@
   },
   {
     "service_code": "1945NAGOOT",
-    "route_number": "",
+    "route_number": "664AVUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "19:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 343",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1945NAGOOT",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664AVUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "343"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -659,53 +344,18 @@
   },
   {
     "service_code": "1945NAGOOT",
-    "route_number": "",
+    "route_number": "664AVUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "19:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 343",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1945NAGOOT",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664AVUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "343"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1615MARVEA",
-    "route_number": "",
+    "route_number": "560EUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:45",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615MARVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "560EUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -103,53 +68,18 @@
   },
   {
     "service_code": "1615MARVEA",
-    "route_number": "",
+    "route_number": "560EUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:45",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615MARVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "560EUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -205,53 +135,18 @@
   },
   {
     "service_code": "1600TRVNAP",
-    "route_number": "",
+    "route_number": "771EUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TRVNAP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "771EUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -302,53 +197,18 @@
   },
   {
     "service_code": "1600TRVNAP",
-    "route_number": "",
+    "route_number": "771EUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TRVNAP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "771EUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -399,53 +259,18 @@
   },
   {
     "service_code": "1705MARVEA",
-    "route_number": "",
+    "route_number": "560CUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "17:05",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "7 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 495",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1705MARVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "560CUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "495"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -501,53 +326,18 @@
   },
   {
     "service_code": "1705MARVEA",
-    "route_number": "",
+    "route_number": "560CUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "17:05",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "7 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 495",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1705MARVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "560CUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "495"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -603,53 +393,18 @@
   },
   {
     "service_code": "1915NAGNAP",
-    "route_number": "",
+    "route_number": "564E",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915NAGNAP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "564E"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -690,53 +445,18 @@
   },
   {
     "service_code": "1915NAGNAP",
-    "route_number": "",
+    "route_number": "564E",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915NAGNAP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "564E"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -777,53 +497,18 @@
   },
   {
     "service_code": "1945NAGNGR",
-    "route_number": "",
+    "route_number": "564EUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "19:45",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "7 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1945NAGNGR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "564EUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -869,53 +554,18 @@
   },
   {
     "service_code": "1945NAGNGR",
-    "route_number": "",
+    "route_number": "564EUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "19:45",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "7 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 492",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1945NAGNGR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "564EUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "492"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -961,53 +611,18 @@
   },
   {
     "service_code": "1930KAKVEA",
-    "route_number": "",
+    "route_number": "561UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 495",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930KAKVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "561UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "495"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1068,53 +683,18 @@
   },
   {
     "service_code": "1930KAKVEA",
-    "route_number": "",
+    "route_number": "561UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 495",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930KAKVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "561UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "495"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1175,53 +755,18 @@
   },
   {
     "service_code": "2130NAGVEA",
-    "route_number": "",
+    "route_number": "531VUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 495",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130NAGVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531VUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "495"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1267,53 +812,18 @@
   },
   {
     "service_code": "2130NAGVEA",
-    "route_number": "",
+    "route_number": "531VUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "NAGAPATTINAM",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 495",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130NAGVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531VUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGAPATTINAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "496.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "495"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

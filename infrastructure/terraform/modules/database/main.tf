@@ -127,3 +127,48 @@ resource "google_sql_database" "test_database" {
   charset   = "utf8mb4"
   collation = "utf8mb4_unicode_ci"
 }
+
+# ============================================
+# READ REPLICA for 100k users scale optimization
+# ============================================
+# Cost-effective scaling: Routes read queries to replica
+# Primary handles writes, replica handles 80-90% read traffic
+# Estimated cost savings: $40-180/month vs scaling primary instance
+
+resource "google_sql_database_instance" "read_replica" {
+  count                = var.create_read_replica ? 1 : 0
+  name                 = "${var.app_name}-${var.environment}-mysql${var.db_instance_name_suffix}-replica"
+  database_version     = var.db_version
+  region               = var.region
+  master_instance_name = google_sql_database_instance.mysql_instance.name
+
+  deletion_protection = false # Set to true for production
+
+  replica_configuration {
+    failover_target = false # Set to true if you want automatic failover
+  }
+
+  settings {
+    tier              = var.read_replica_tier
+    availability_type = "ZONAL" # Replicas are always zonal
+    disk_autoresize   = true
+
+    # Replicas inherit most settings from primary
+    # Only specify settings that should be different
+    
+    ip_configuration {
+      ipv4_enabled                                  = true
+      private_network                               = var.use_public_ip ? null : var.vpc_network
+      require_ssl                                   = true
+      enable_private_path_for_google_cloud_services = !var.use_public_ip
+    }
+
+    user_labels = {
+      environment = var.environment
+      cost_center = "perundhu"
+      type        = "read-replica"
+    }
+  }
+
+  depends_on = [google_sql_database_instance.mysql_instance]
+}

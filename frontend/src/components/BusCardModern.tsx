@@ -161,14 +161,8 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
   return (
     <div 
       className="bus-card-premium"
-      onClick={handleCardClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          handleCardClick();
-        }
-      }}
+      role="article"
+      aria-label={`Bus ${bus.busNumber || 'N/A'} from ${bus.from} to ${bus.to}`}
     >
       {/* Top Badges Section */}
       <div className="bus-card-badges">
@@ -221,9 +215,18 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
       {stops.length > 0 && (
         <div 
           className="bus-card-view-stops"
-          onClick={handleCardClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCardClick();
+          }}
           role="button"
           tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardClick();
+            }
+          }}
           aria-label={isExpanded ? `Hide all stops for ${bus.busName || 'bus'} (${stops.length} stops)` : `Show all stops for ${bus.busName || 'bus'} (${stops.length} stops)`}
           aria-expanded={isExpanded}
         >
@@ -252,6 +255,15 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
                   return time.substring(0, 5); // Get first 5 chars (HH:MM)
                 };
                 
+                // Get stop name with translation support
+                const getStopName = () => {
+                  if (i18n.language === 'ta') {
+                    // Try Tamil translations in order of preference
+                    return stop.taName || stop.translatedName || stop.translatedNames?.ta || stop.name;
+                  }
+                  return stop.name;
+                };
+                
                 // Determine if this is origin or destination by name comparison
                 const isOriginStop = stop.name.toLowerCase().includes(bus.from?.toLowerCase() || '');
                 const isDestStop = stop.name.toLowerCase().includes(bus.to?.toLowerCase() || '');
@@ -266,7 +278,7 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
                       {idx + 1}
                     </div>
                     <div className="stop-content">
-                      <div className="stop-name-full">{stop.name}</div>
+                      <div className="stop-name-full">{getStopName()}</div>
                       <div className="stop-timing-info">
                         {stop.arrivalTime && <span>Arr: {formatTime(stop.arrivalTime)}</span>}
                         {stop.departureTime && <span>Dep: {formatTime(stop.departureTime)}</span>}

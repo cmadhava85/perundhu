@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0015SALVELVV05L",
-    "route_number": "",
+    "route_number": "322H",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "00:15",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0015SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322H"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0015SALVELVV05L",
-    "route_number": "",
+    "route_number": "322H",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "00:15",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0015SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322H"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0200SALVELVV05L",
-    "route_number": "",
+    "route_number": "322N",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "02:00",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0200SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322N"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0200SALVELVV05L",
-    "route_number": "",
+    "route_number": "322N",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "02:00",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0200SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322N"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0220SALVELVV05L",
-    "route_number": "",
+    "route_number": "322O",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "02:20",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0220SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322O"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0220SALVELVV05L",
-    "route_number": "",
+    "route_number": "322O",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "02:20",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0220SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322O"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0430SALVELVV05L",
-    "route_number": "",
+    "route_number": "322P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "04:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0430SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0430SALVELVV05L",
-    "route_number": "",
+    "route_number": "322P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "04:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0430SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0645SALVELVV05L",
-    "route_number": "",
+    "route_number": "322Q",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "06:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0645SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322Q"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0645SALVELVV05L",
-    "route_number": "",
+    "route_number": "322Q",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "06:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0645SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322Q"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "1000SALVELVV01L",
-    "route_number": "",
+    "route_number": "322A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000SALVELVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "1000SALVELVV01L",
-    "route_number": "",
+    "route_number": "322A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000SALVELVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "1032SALVELVV05L",
-    "route_number": "",
+    "route_number": "322C",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "10:32",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:36",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1032SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322C"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "1032SALVELVV05L",
-    "route_number": "",
+    "route_number": "322C",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "10:32",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:36",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1032SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322C"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "1115SALVELVV05L",
-    "route_number": "",
+    "route_number": "322D",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:31",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322D"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "1115SALVELVV05L",
-    "route_number": "",
+    "route_number": "322D",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:31",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322D"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "1145SALVELVV01L",
-    "route_number": "",
+    "route_number": "322B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1145SALVELVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "1145SALVELVV01L",
-    "route_number": "",
+    "route_number": "322B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1145SALVELVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "1345SALVELVV01L",
-    "route_number": "",
+    "route_number": "322I",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345SALVELVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322I"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "1345SALVELVV01L",
-    "route_number": "",
+    "route_number": "322I",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345SALVELVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322I"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "1345SALVELVV05L",
-    "route_number": "",
+    "route_number": "322M",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322M"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "1345SALVELVV05L",
-    "route_number": "",
+    "route_number": "322M",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322M"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "1451SALVELVV05L",
-    "route_number": "",
+    "route_number": "322E",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:51",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:04",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1451SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322E"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1427,53 +622,18 @@
   },
   {
     "service_code": "1451SALVELVV05L",
-    "route_number": "",
+    "route_number": "322E",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:51",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:04",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1451SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322E"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1489,53 +649,18 @@
   },
   {
     "service_code": "1910SALVELVV05L",
-    "route_number": "",
+    "route_number": "322G",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:10",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1910SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322G"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1551,53 +676,18 @@
   },
   {
     "service_code": "1910SALVELVV05L",
-    "route_number": "",
+    "route_number": "322G",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:10",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1910SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322G"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1613,53 +703,18 @@
   },
   {
     "service_code": "1935SALVELVV05L",
-    "route_number": "",
+    "route_number": "322F",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:35",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1935SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322F"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1675,53 +730,18 @@
   },
   {
     "service_code": "1935SALVELVV05L",
-    "route_number": "",
+    "route_number": "322F",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:35",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1935SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322F"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1737,53 +757,18 @@
   },
   {
     "service_code": "2025SALVELVV05L",
-    "route_number": "",
+    "route_number": "322L",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:25",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2025SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322L"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1799,53 +784,18 @@
   },
   {
     "service_code": "2025SALVELVV05L",
-    "route_number": "",
+    "route_number": "322L",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:25",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2025SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322L"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1861,53 +811,18 @@
   },
   {
     "service_code": "2245SALVELVV05L",
-    "route_number": "",
+    "route_number": "322R",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322R"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1923,53 +838,18 @@
   },
   {
     "service_code": "2245SALVELVV05L",
-    "route_number": "",
+    "route_number": "322R",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322R"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1985,53 +865,18 @@
   },
   {
     "service_code": "2305SALVELVV05L",
-    "route_number": "",
+    "route_number": "322K",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:05",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2305SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322K"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2047,53 +892,18 @@
   },
   {
     "service_code": "2305SALVELVV05L",
-    "route_number": "",
+    "route_number": "322K",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:05",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2305SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322K"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2109,53 +919,18 @@
   },
   {
     "service_code": "2345SALVELVV05L",
-    "route_number": "",
+    "route_number": "322J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:45",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2345SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2171,53 +946,18 @@
   },
   {
     "service_code": "2345SALVELVV05L",
-    "route_number": "",
+    "route_number": "322J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:45",
     "duration": "17.03Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 186",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2345SALVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "322J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "17:03"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "186"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",

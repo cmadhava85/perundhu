@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0610COISALDD01A",
-    "route_number": "",
+    "route_number": "157X",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "06:10",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:40",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 159",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0610COISALDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "157X"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "159"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0610COISALDD01A",
-    "route_number": "",
+    "route_number": "157X",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "06:10",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:40",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 159",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0610COISALDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "157X"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "159"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0715COISALDD01L",
-    "route_number": "",
+    "route_number": "114B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:45",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 145",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715COISALDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "114B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "145"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0715COISALDD01L",
-    "route_number": "",
+    "route_number": "114B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:45",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 145",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715COISALDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "114B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "145"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1705COISALDD01A",
-    "route_number": "",
+    "route_number": "157L",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "17:05",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:35",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 159",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1705COISALDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "157L"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "159"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1705COISALDD01A",
-    "route_number": "",
+    "route_number": "157L",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "17:05",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:35",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 159",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1705COISALDD01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "157L"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "159"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "1850COISALDD01L",
-    "route_number": "",
+    "route_number": "157H",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "18:50",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:20",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 145",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1850COISALDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "157H"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "145"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "1850COISALDD01L",
-    "route_number": "",
+    "route_number": "157H",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "SALEM",
-    "departure_time": "",
+    "departure_time": "18:50",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:20",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 145",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1850COISALDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "157H"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "169.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "145"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM CBS",

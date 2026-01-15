@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0350VELBANVV05L",
-    "route_number": "",
+    "route_number": "555C",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "03:50",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0350VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555C"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0350VELBANVV05L",
-    "route_number": "",
+    "route_number": "555C",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "03:50",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0350VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555C"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0420VELBANVV05A",
-    "route_number": "",
+    "route_number": "444G",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "04:20",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:50",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0420VELBANVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444G"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0420VELBANVV05A",
-    "route_number": "",
+    "route_number": "444G",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "04:20",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:50",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0420VELBANVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444G"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0430VELBANVV05L",
-    "route_number": "",
+    "route_number": "444O",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "04:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0430VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444O"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0430VELBANVV05L",
-    "route_number": "",
+    "route_number": "444O",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "04:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0430VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444O"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0500VELBANVV05A",
-    "route_number": "",
+    "route_number": "444K",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0500VELBANVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444K"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0500VELBANVV05A",
-    "route_number": "",
+    "route_number": "444K",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0500VELBANVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444K"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0540VELBANVV05L",
-    "route_number": "",
+    "route_number": "555B",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "05:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0540VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555B"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0540VELBANVV05L",
-    "route_number": "",
+    "route_number": "555B",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "05:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0540VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555B"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0605VELBANVV05L",
-    "route_number": "",
+    "route_number": "444J",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0605VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444J"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "0605VELBANVV05L",
-    "route_number": "",
+    "route_number": "444J",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0605VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444J"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "0635VELBANVV05L",
-    "route_number": "",
+    "route_number": "444A",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:35",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0635VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444A"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "0635VELBANVV05L",
-    "route_number": "",
+    "route_number": "444A",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:35",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0635VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444A"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "0705VELBANVV05L",
-    "route_number": "",
+    "route_number": "444M",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0705VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444M"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "0705VELBANVV05L",
-    "route_number": "",
+    "route_number": "444M",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0705VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444M"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "0720VELBANVV05L",
-    "route_number": "",
+    "route_number": "444HI",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:20",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0720VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444HI"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "0720VELBANVV05L",
-    "route_number": "",
+    "route_number": "444HI",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:20",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0720VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444HI"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "0750VELBANVV05L",
-    "route_number": "",
+    "route_number": "555A",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:50",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0750VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555A"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "0750VELBANVV05L",
-    "route_number": "",
+    "route_number": "555A",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:50",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0750VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555A"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "0805VELBANVV05L",
-    "route_number": "",
+    "route_number": "444B",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0805VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444B"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "0805VELBANVV05L",
-    "route_number": "",
+    "route_number": "444B",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0805VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444B"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "0845VELBANVV05L",
-    "route_number": "",
+    "route_number": "444D",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0845VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444D"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1427,53 +622,18 @@
   },
   {
     "service_code": "0845VELBANVV05L",
-    "route_number": "",
+    "route_number": "444D",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0845VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444D"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1489,53 +649,18 @@
   },
   {
     "service_code": "0600CHEBAN",
-    "route_number": "",
+    "route_number": "831UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 313",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600CHEBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "313"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -1581,53 +706,18 @@
   },
   {
     "service_code": "0600CHEBAN",
-    "route_number": "",
+    "route_number": "831UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 313",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600CHEBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "313"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -1673,53 +763,18 @@
   },
   {
     "service_code": "0930VELBANVV02L",
-    "route_number": "",
+    "route_number": "444P",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444P"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1735,53 +790,18 @@
   },
   {
     "service_code": "0930VELBANVV02L",
-    "route_number": "",
+    "route_number": "444P",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444P"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1797,53 +817,18 @@
   },
   {
     "service_code": "1010VELBANVV05L",
-    "route_number": "",
+    "route_number": "444N",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:10",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1010VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444N"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1859,53 +844,18 @@
   },
   {
     "service_code": "1010VELBANVV05L",
-    "route_number": "",
+    "route_number": "444N",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:10",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1010VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444N"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -1921,53 +871,18 @@
   },
   {
     "service_code": "0800CHEBAN",
-    "route_number": "",
+    "route_number": "831UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 313",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800CHEBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "313"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -2013,53 +928,18 @@
   },
   {
     "service_code": "0800CHEBAN",
-    "route_number": "",
+    "route_number": "831UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 313",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800CHEBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "313"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -2105,53 +985,18 @@
   },
   {
     "service_code": "1100VELBANVV05L",
-    "route_number": "",
+    "route_number": "444T",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444T"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2167,53 +1012,18 @@
   },
   {
     "service_code": "1100VELBANVV05L",
-    "route_number": "",
+    "route_number": "444T",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444T"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2229,53 +1039,18 @@
   },
   {
     "service_code": "1130VELBANVV02L",
-    "route_number": "",
+    "route_number": "444E",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1130VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444E"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2291,53 +1066,18 @@
   },
   {
     "service_code": "1130VELBANVV02L",
-    "route_number": "",
+    "route_number": "444E",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1130VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444E"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2353,53 +1093,18 @@
   },
   {
     "service_code": "1145VELBANVV05L",
-    "route_number": "",
+    "route_number": "444MA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1145VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444MA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2415,53 +1120,18 @@
   },
   {
     "service_code": "1145VELBANVV05L",
-    "route_number": "",
+    "route_number": "444MA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "11:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1145VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444MA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2477,53 +1147,18 @@
   },
   {
     "service_code": "1240VELBANVV01L",
-    "route_number": "",
+    "route_number": "444MA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "12:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1240VELBANVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444MA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2539,53 +1174,18 @@
   },
   {
     "service_code": "1240VELBANVV01L",
-    "route_number": "",
+    "route_number": "444MA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "12:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1240VELBANVV01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444MA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2601,53 +1201,18 @@
   },
   {
     "service_code": "1345VELBANVV05L",
-    "route_number": "",
+    "route_number": "444X",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444X"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2663,53 +1228,18 @@
   },
   {
     "service_code": "1345VELBANVV05L",
-    "route_number": "",
+    "route_number": "444X",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444X"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2725,53 +1255,18 @@
   },
   {
     "service_code": "1400VELBANVV05L",
-    "route_number": "",
+    "route_number": "444X",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444X"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2787,53 +1282,18 @@
   },
   {
     "service_code": "1400VELBANVV05L",
-    "route_number": "",
+    "route_number": "444X",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444X"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2849,53 +1309,18 @@
   },
   {
     "service_code": "1500VELBANVV05L",
-    "route_number": "",
+    "route_number": "555AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2911,53 +1336,18 @@
   },
   {
     "service_code": "1500VELBANVV05L",
-    "route_number": "",
+    "route_number": "555AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -2973,53 +1363,18 @@
   },
   {
     "service_code": "1300CHEBAN",
-    "route_number": "",
+    "route_number": "831UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 313",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300CHEBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "313"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -3065,53 +1420,18 @@
   },
   {
     "service_code": "1300CHEBAN",
-    "route_number": "",
+    "route_number": "831UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 313",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300CHEBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "313"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -3157,53 +1477,18 @@
   },
   {
     "service_code": "1615VELBANVV02L",
-    "route_number": "",
+    "route_number": "444GA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3219,53 +1504,18 @@
   },
   {
     "service_code": "1615VELBANVV02L",
-    "route_number": "",
+    "route_number": "444GA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3281,53 +1531,18 @@
   },
   {
     "service_code": "1615VELBANVV02A",
-    "route_number": "",
+    "route_number": "444GA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:45",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 260",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615VELBANVV02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "260"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3343,53 +1558,18 @@
   },
   {
     "service_code": "1615VELBANVV02A",
-    "route_number": "",
+    "route_number": "444GA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:45",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 260",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615VELBANVV02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "260"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3405,53 +1585,18 @@
   },
   {
     "service_code": "1725VELBANVV05L",
-    "route_number": "",
+    "route_number": "444Q",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:25",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1725VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444Q"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3467,53 +1612,18 @@
   },
   {
     "service_code": "1725VELBANVV05L",
-    "route_number": "",
+    "route_number": "444Q",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:25",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1725VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444Q"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3529,53 +1639,18 @@
   },
   {
     "service_code": "1840VELBANVV02L",
-    "route_number": "",
+    "route_number": "444D",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1840VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444D"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3591,53 +1666,18 @@
   },
   {
     "service_code": "1840VELBANVV02L",
-    "route_number": "",
+    "route_number": "444D",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1840VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444D"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3653,53 +1693,18 @@
   },
   {
     "service_code": "1930VELBANVV02L",
-    "route_number": "",
+    "route_number": "444JA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444JA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3715,53 +1720,18 @@
   },
   {
     "service_code": "1930VELBANVV02L",
-    "route_number": "",
+    "route_number": "444JA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444JA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3777,53 +1747,18 @@
   },
   {
     "service_code": "2000VELBANVV02L",
-    "route_number": "",
+    "route_number": "444AA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444AA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3839,53 +1774,45 @@
   },
   {
     "service_code": "2000VELBANVV02L",
-    "route_number": "",
+    "route_number": "444AA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
       {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444AA"
-      },
-      {
         "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
+        "landmark": "VELLORE",
+        "time": "20:00"
       },
       {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
+        "city": "BENGALURU",
+        "landmark": "SATELLITE BS",
+        "time": "01:30"
+      }
+    ],
+    "scraped_at": "2026-01-13T18:49:23.196286"
+  },
+  {
+    "service_code": "2000VELBANVV05L",
+    "route_number": "444AA",
+    "corporation": "SETC",
+    "origin": "VELLORE",
+    "destination": "BENGALURU",
+    "departure_time": "20:00",
+    "duration": "6.30Hrs",
+    "arrival_time": "01:30",
+    "available_seats": "45 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 204",
+    "journey_date": "16/01/2026",
+    "stops": [
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -3901,115 +1828,18 @@
   },
   {
     "service_code": "2000VELBANVV05L",
-    "route_number": "",
+    "route_number": "444AA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444AA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "VELLORE",
-        "time": "20:00"
-      },
-      {
-        "city": "BENGALURU",
-        "landmark": "SATELLITE BS",
-        "time": "01:30"
-      }
-    ],
-    "scraped_at": "2026-01-13T18:49:23.196286"
-  },
-  {
-    "service_code": "2000VELBANVV05L",
-    "route_number": "",
-    "corporation": "SETC",
-    "origin": "VELLORE",
-    "destination": "BENGALURU",
-    "departure_time": "",
-    "duration": "6.30Hrs",
-    "arrival_time": "",
-    "available_seats": "45 Seats Available",
-    "bus_type": "Standard",
-    "fare": "Rs 204",
-    "journey_date": "16/01/2026",
-    "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444AA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4025,53 +1855,18 @@
   },
   {
     "service_code": "2030VELBANVV05L",
-    "route_number": "",
+    "route_number": "555AA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555AA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4087,53 +1882,18 @@
   },
   {
     "service_code": "2030VELBANVV05L",
-    "route_number": "",
+    "route_number": "555AA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "555AA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4149,53 +1909,18 @@
   },
   {
     "service_code": "2100VELBANVV02L",
-    "route_number": "",
+    "route_number": "444S",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444S"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4211,53 +1936,18 @@
   },
   {
     "service_code": "2100VELBANVV02L",
-    "route_number": "",
+    "route_number": "444S",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444S"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4273,53 +1963,18 @@
   },
   {
     "service_code": "2210VELBANVV02L",
-    "route_number": "",
+    "route_number": "444CA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:10",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2210VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444CA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4335,53 +1990,18 @@
   },
   {
     "service_code": "2210VELBANVV02L",
-    "route_number": "",
+    "route_number": "444CA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:10",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2210VELBANVV02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444CA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4397,53 +2017,18 @@
   },
   {
     "service_code": "2245VELBANVV05L",
-    "route_number": "",
+    "route_number": "444GF",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GF"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4459,53 +2044,18 @@
   },
   {
     "service_code": "2245VELBANVV05L",
-    "route_number": "",
+    "route_number": "444GF",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GF"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4521,53 +2071,18 @@
   },
   {
     "service_code": "2255VELBANVV05L",
-    "route_number": "",
+    "route_number": "444NA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:55",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:25",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2255VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444NA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4583,53 +2098,18 @@
   },
   {
     "service_code": "2255VELBANVV05L",
-    "route_number": "",
+    "route_number": "444NA",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:55",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:25",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2255VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444NA"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4645,53 +2125,18 @@
   },
   {
     "service_code": "2345VELBANVV05L",
-    "route_number": "",
+    "route_number": "444GE",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2345VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GE"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -4707,53 +2152,18 @@
   },
   {
     "service_code": "2345VELBANVV05L",
-    "route_number": "",
+    "route_number": "444GE",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:45",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2345VELBANVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "444GE"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "214.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",

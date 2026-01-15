@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1120VELEROCC01L",
-    "route_number": "",
+    "route_number": "27903",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "11:20",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1120VELEROCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "27903"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1120VELEROCC01L",
-    "route_number": "",
+    "route_number": "27903",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "11:20",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1120VELEROCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "27903"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1830TIPCOINS",
-    "route_number": "",
+    "route_number": "962TUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294/457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIPCOINS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962TUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -197,53 +92,18 @@
   },
   {
     "service_code": "1830TIPCOINS",
-    "route_number": "",
+    "route_number": "962TUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 294/457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIPCOINS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962TUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "294"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -269,53 +129,18 @@
   },
   {
     "service_code": "2320VELEROCC01L",
-    "route_number": "",
+    "route_number": "27902",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "23:20",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2320VELEROCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "27902"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",
@@ -331,53 +156,18 @@
   },
   {
     "service_code": "2320VELEROCC01L",
-    "route_number": "",
+    "route_number": "27902",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "23:20",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 216",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2320VELEROCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "27902"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "216"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "VELLORE",
         "landmark": "VELLORE",

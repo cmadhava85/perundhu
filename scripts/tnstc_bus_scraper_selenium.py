@@ -422,7 +422,19 @@ class TNSTCBusScraperSelenium:
                         landmark = cells[2].text.strip()
                         time_text = cells[3].text.strip()
                         
-                        if city and time_text:
+                        # Filter out header rows and metadata rows
+                        # Valid stops should have:
+                        # - Non-empty city and time
+                        # - City shouldn't be metadata field names or HTML entities
+                        # - Time should be in HH:MM format
+                        if (city and time_text and 
+                            city not in ['&nbsp;', 'City', '0800TPPARIKK05L'] and
+                            not city.startswith('0') and  # Avoid service codes
+                            ':' in time_text and  # Valid time format
+                            time_text not in ['Service&nbsp;Details', 'Route&nbsp;No.&nbsp;:', 
+                                             'To&nbsp;Place&nbsp;:', 'Journey&nbsp;Hours&nbsp;*:', 
+                                             'Corporation&nbsp;:', 'Adult&nbsp;Fare&nbsp;**',
+                                             'Land&nbsp;Mark&nbsp;', 'Dep.&nbsp;Time&nbsp;']):
                             stops.append({
                                 'city': city,
                                 'landmark': landmark,
@@ -621,6 +633,16 @@ class TNSTCBusScraperSelenium:
                         stop_info = self.click_route_link(route_data['service_code'])
                         stops = stop_info.get('stops', [])
                     
+                    # Extract departure and arrival times from stops if not already set
+                    departure_time = route_data.get('departure_time', '')
+                    arrival_time = route_data.get('arrival_time', '')
+                    
+                    if stops:
+                        if not departure_time and len(stops) > 0:
+                            departure_time = stops[0].get('time', '')
+                        if not arrival_time and len(stops) > 1:
+                            arrival_time = stops[-1].get('time', '')
+                    
                     # Create BusRoute object (we'll fill origin/destination/date later)
                     bus_route = BusRoute(
                         service_code=route_data.get('service_code', ''),
@@ -628,8 +650,8 @@ class TNSTCBusScraperSelenium:
                         corporation=route_data.get('corporation', ''),
                         origin='',  # Will be set in main method
                         destination='',  # Will be set in main method
-                        departure_time=route_data.get('departure_time', ''),
-                        arrival_time=route_data.get('arrival_time', ''),
+                        departure_time=departure_time,
+                        arrival_time=arrival_time,
                         duration=route_data.get('duration', ''),
                         available_seats=route_data.get('available_seats', ''),
                         bus_type=route_data.get('bus_type', ''),

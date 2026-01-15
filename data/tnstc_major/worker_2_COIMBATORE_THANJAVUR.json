@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1230COITHACC01L",
-    "route_number": "",
+    "route_number": "863D",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 195",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230COITHACC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863D"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "195"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1230COITHACC01L",
-    "route_number": "",
+    "route_number": "863D",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 195",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230COITHACC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863D"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "195"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1425COITHACC01A",
-    "route_number": "",
+    "route_number": "863A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "14:25",
     "duration": "7.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1425COITHACC01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:25"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1425COITHACC01A",
-    "route_number": "",
+    "route_number": "863A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "14:25",
     "duration": "7.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1425COITHACC01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:25"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1815COITHACC01L",
-    "route_number": "",
+    "route_number": "863C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 195",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815COITHACC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "195"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1815COITHACC01L",
-    "route_number": "",
+    "route_number": "863C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 195",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815COITHACC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "195"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "2130COIMYL",
-    "route_number": "",
+    "route_number": "722UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.20Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 284",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130COIMYL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "722UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:20"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "284"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -455,53 +210,18 @@
   },
   {
     "service_code": "2130COIMYL",
-    "route_number": "",
+    "route_number": "722UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.20Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 284",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130COIMYL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "722UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:20"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "284"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -537,53 +257,18 @@
   },
   {
     "service_code": "2235COITHACC01L",
-    "route_number": "",
+    "route_number": "866C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:35",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 195",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2235COITHACC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "866C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "195"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -599,53 +284,18 @@
   },
   {
     "service_code": "2235COITHACC01L",
-    "route_number": "",
+    "route_number": "866C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:35",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 195",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2235COITHACC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "866C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "195"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -661,53 +311,18 @@
   },
   {
     "service_code": "1700EKMVEANS",
-    "route_number": "",
+    "route_number": "770UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 293/457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700EKMVEANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "770UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "293"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERNAKULAM",
         "landmark": "ERNAKULAM SOUTH KSRTC B.S",
@@ -773,53 +388,18 @@
   },
   {
     "service_code": "1700EKMVEANS",
-    "route_number": "",
+    "route_number": "770UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 293/457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700EKMVEANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "770UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "293"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERNAKULAM",
         "landmark": "ERNAKULAM SOUTH KSRTC B.S",
@@ -885,53 +465,18 @@
   },
   {
     "service_code": "2250COITHACC01A",
-    "route_number": "",
+    "route_number": "863B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:50",
     "duration": "7.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2250COITHACC01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:25"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -947,53 +492,18 @@
   },
   {
     "service_code": "2250COITHACC01A",
-    "route_number": "",
+    "route_number": "863B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:50",
     "duration": "7.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2250COITHACC01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "863B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:25"
-      },
-      {
-        "city": "284.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",

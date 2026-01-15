@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0930KDIKCBAC",
-    "route_number": "",
+    "route_number": "133AC",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 475",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930KDIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "133AC"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "475"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -68,53 +33,18 @@
   },
   {
     "service_code": "0930KDIKCBAC",
-    "route_number": "",
+    "route_number": "133AC",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 475",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930KDIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "133AC"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "475"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -135,53 +65,18 @@
   },
   {
     "service_code": "2000KERKCB",
-    "route_number": "",
+    "route_number": "144UD",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KERKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144UD"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KEERAMANGALAM",
         "landmark": "KEERAMANGALAM",
@@ -207,53 +102,18 @@
   },
   {
     "service_code": "2000KERKCB",
-    "route_number": "",
+    "route_number": "144UD",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KERKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144UD"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KEERAMANGALAM",
         "landmark": "KEERAMANGALAM",
@@ -279,53 +139,18 @@
   },
   {
     "service_code": "2100PUKKCBNS",
-    "route_number": "",
+    "route_number": "126NS",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368/570",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100PUKKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "126NS"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -341,53 +166,18 @@
   },
   {
     "service_code": "2100PUKKCBNS",
-    "route_number": "",
+    "route_number": "126NS",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368/570",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100PUKKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "126NS"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -403,53 +193,18 @@
   },
   {
     "service_code": "1900EMBKCB",
-    "route_number": "",
+    "route_number": "145EUD",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "6.55Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900EMBKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "145EUD"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:55"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "EMBAL",
         "landmark": "EMBAL",
@@ -480,53 +235,18 @@
   },
   {
     "service_code": "1900EMBKCB",
-    "route_number": "",
+    "route_number": "145EUD",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "6.55Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900EMBKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "145EUD"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:55"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "EMBAL",
         "landmark": "EMBAL",
@@ -557,53 +277,18 @@
   },
   {
     "service_code": "2030KDIKCBAC",
-    "route_number": "",
+    "route_number": "133AC",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 475",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030KDIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "133AC"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "475"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -624,53 +309,18 @@
   },
   {
     "service_code": "2030KDIKCBAC",
-    "route_number": "",
+    "route_number": "133AC",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 475",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030KDIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "133AC"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "359.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "475"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -691,53 +341,18 @@
   },
   {
     "service_code": "2000KDIKCB",
-    "route_number": "",
+    "route_number": "133UD",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KDIKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "133UD"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "365.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -758,53 +373,18 @@
   },
   {
     "service_code": "2000KDIKCB",
-    "route_number": "",
+    "route_number": "133UD",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 368",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KDIKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "133UD"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "365.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "368"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",

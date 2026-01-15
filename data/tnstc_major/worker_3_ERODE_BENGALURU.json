@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0945EROBANDD01L",
-    "route_number": "",
+    "route_number": "950A",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:45",
     "duration": "7.05Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 226",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0945EROBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "950A"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:05"
-      },
-      {
-        "city": "267.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "226"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0945EROBANDD01L",
-    "route_number": "",
+    "route_number": "950A",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:45",
     "duration": "7.05Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 226",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0945EROBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "950A"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:05"
-      },
-      {
-        "city": "267.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "226"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "2230EROBANDD01L",
-    "route_number": "",
+    "route_number": "302A",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.05Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:35",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230EROBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "302A"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:05"
-      },
-      {
-        "city": "274.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "2230EROBANDD01L",
-    "route_number": "",
+    "route_number": "302A",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.05Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:35",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230EROBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "302A"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:05"
-      },
-      {
-        "city": "274.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1930POLBANNS",
-    "route_number": "",
+    "route_number": "854NS",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 373/472",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930POLBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "854NS"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "274.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "373"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "POLLACHI",
         "landmark": "POLLACHI",
@@ -326,53 +151,18 @@
   },
   {
     "service_code": "1930POLBANNS",
-    "route_number": "",
+    "route_number": "854NS",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 373/472",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930POLBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "854NS"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "274.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "373"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "POLLACHI",
         "landmark": "POLLACHI",
@@ -403,53 +193,18 @@
   },
   {
     "service_code": "2330EROBANDD01L",
-    "route_number": "",
+    "route_number": "502B",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "7.05Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330EROBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "502B"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:05"
-      },
-      {
-        "city": "274.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -465,53 +220,18 @@
   },
   {
     "service_code": "2330EROBANDD01L",
-    "route_number": "",
+    "route_number": "502B",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "7.05Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330EROBANDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "502B"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:05"
-      },
-      {
-        "city": "274.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1615KLMVEA",
-    "route_number": "",
+    "route_number": "777UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "4.01Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 170",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615KLMVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "777UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:01"
-      },
-      {
-        "city": "170.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "170"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KOLLAM",
         "landmark": "KOLLAM",
@@ -113,53 +78,18 @@
   },
   {
     "service_code": "1615KLMVEA",
-    "route_number": "",
+    "route_number": "777UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "4.01Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "8 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 170",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615KLMVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "777UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:01"
-      },
-      {
-        "city": "170.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "170"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KOLLAM",
         "landmark": "KOLLAM",

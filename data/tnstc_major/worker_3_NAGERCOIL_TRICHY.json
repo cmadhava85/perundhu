@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0700NAGTRI",
-    "route_number": "",
+    "route_number": "125BUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700NAGTRI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125BUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -78,53 +43,18 @@
   },
   {
     "service_code": "0700NAGTRI",
-    "route_number": "",
+    "route_number": "125BUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700NAGTRI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125BUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -155,53 +85,18 @@
   },
   {
     "service_code": "0715NAGTRITT03A",
-    "route_number": "",
+    "route_number": "505TCY",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:15",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 377",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715NAGTRITT03A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505TCY"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "377"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -217,53 +112,18 @@
   },
   {
     "service_code": "0715NAGTRITT03A",
-    "route_number": "",
+    "route_number": "505TCY",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:15",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 377",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715NAGTRITT03A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505TCY"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "377"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -279,53 +139,18 @@
   },
   {
     "service_code": "1000NAGTRIAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 470",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000NAGTRIAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "470"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -351,53 +176,18 @@
   },
   {
     "service_code": "1000NAGTRIAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 470",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000NAGTRIAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "470"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -423,53 +213,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 478/734",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "478"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -530,53 +285,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 478/734",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "478"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -637,53 +357,18 @@
   },
   {
     "service_code": "1930NAGTRITT03L",
-    "route_number": "",
+    "route_number": "505TRYB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 318",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930NAGTRITT03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505TRYB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "318"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -699,53 +384,18 @@
   },
   {
     "service_code": "1930NAGTRITT03L",
-    "route_number": "",
+    "route_number": "505TRYB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 318",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930NAGTRITT03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505TRYB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "318"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -761,53 +411,18 @@
   },
   {
     "service_code": "1900KAKNEV",
-    "route_number": "",
+    "route_number": "125KUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KAKNEV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125KUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "367.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -883,53 +498,18 @@
   },
   {
     "service_code": "1900KAKNEV",
-    "route_number": "",
+    "route_number": "125KUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KAKNEV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125KUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "367.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1005,53 +585,18 @@
   },
   {
     "service_code": "2200NAGTRI",
-    "route_number": "",
+    "route_number": "125BUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200NAGTRI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125BUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1087,53 +632,18 @@
   },
   {
     "service_code": "2200NAGTRI",
-    "route_number": "",
+    "route_number": "125BUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200NAGTRI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125BUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1169,53 +679,18 @@
   },
   {
     "service_code": "2230NAGTRIAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 470",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230NAGTRIAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "470"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -1246,53 +721,18 @@
   },
   {
     "service_code": "2230NAGTRIAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 470",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230NAGTRIAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "358.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "470"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",

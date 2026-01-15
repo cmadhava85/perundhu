@@ -5,6 +5,7 @@ import com.perundhu.domain.port.TranslationRepository;
 import com.perundhu.infrastructure.persistence.entity.TranslationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Translation> findTranslation(String entityType, Long entityId, String languageCode,
             String fieldName) {
         return jpaRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName(
@@ -28,6 +30,7 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Translation> findByEntityAndLanguage(String entityType, Long entityId, String languageCode) {
         return jpaRepository.findByEntityTypeAndEntityIdAndLanguageCode(
                 entityType, entityId, languageCode)
@@ -37,6 +40,7 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Translation> findByEntity(String entityType, Long entityId) {
         return jpaRepository.findByEntityTypeAndEntityId(entityType, entityId)
                 .stream()
@@ -75,12 +79,14 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean exists(String entityType, Long entityId, String languageCode, String fieldName) {
         return jpaRepository.existsByEntityTypeAndEntityIdAndLanguageCodeAndFieldName(
                 entityType, entityId, languageCode, fieldName);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Translation> findByEntityTypeAndEntityIdAndFieldNameAndLanguageCode(
             String entityType, Long entityId, String fieldName, String languageCode) {
         return jpaRepository.findByEntityTypeAndEntityIdAndLanguageCodeAndFieldName(
@@ -89,6 +95,7 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Translation> findByLanguage(String languageCode) {
         return jpaRepository.findByLanguageCode(languageCode)
                 .stream()
@@ -97,6 +104,7 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Translation> findByEntityTypeAndLanguage(String entityType, String languageCode) {
         return jpaRepository.findByEntityTypeAndLanguageCode(entityType, languageCode)
                 .stream()

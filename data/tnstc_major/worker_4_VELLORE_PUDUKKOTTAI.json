@@ -1,53 +1,18 @@
 [
   {
     "service_code": "2100TIPKDI",
-    "route_number": "",
+    "route_number": "969UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "PUDUKKOTTAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "6.20Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100TIPKDI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "969UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "PUDUKKOTTAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:20"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -83,53 +48,18 @@
   },
   {
     "service_code": "2100TIPKDI",
-    "route_number": "",
+    "route_number": "969UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "PUDUKKOTTAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "6.20Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100TIPKDI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "969UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "PUDUKKOTTAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:20"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",

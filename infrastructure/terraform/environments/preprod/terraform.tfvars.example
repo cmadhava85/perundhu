@@ -14,11 +14,12 @@ app_name    = "perundhu"
 db_version       = "MYSQL_8_0"
 db_instance_tier = "db-f1-micro"
 
-# Notifications Configuration
-notification_email = "alerts@perundhu.com"
+# SQL Auto-Stop Configuration (Cost Optimization)
+# Cloud Function automatically stops idle Cloud SQL instances
+sql_autostop_idle_minutes              = 30                      # Stop after 30 min of inactivity
+sql_autostop_dry_run_mode              = false                   # Set to true to test without stopping
+sql_autostop_cron_schedule             = "*/30 * * * *"          # Run every 30 minutes
+sql_autostop_schedule_interval_minutes = 30
+sql_autostop_time_zone                 = "Asia/Kolkata"
+sql_autostop_function_source_path      = "/tmp/sql-autostop.zip" # Update with actual path
 
-# Domain Configuration (optional - can override via -var if needed)
-domain_name = "preprod.perundhu.app"
-
-# Container Image (optional - managed by CI/CD, can override via -var if needed)
-container_image = "asia-south1-docker.pkg.dev/astute-strategy-406601/perundhu/backend:preprod-latest"

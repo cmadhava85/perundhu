@@ -1,53 +1,18 @@
 [
   {
     "service_code": "2200BANKCBAC",
-    "route_number": "",
+    "route_number": "831KAC",
     "corporation": "SETC",
     "origin": "KRISHNAGIRI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "5.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 340",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200BANKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831KAC"
-      },
-      {
-        "city": "KRISHNAGIRI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:45"
-      },
-      {
-        "city": "261.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "340"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "BENGALURU",
         "landmark": "SHANTHI NAGAR BS",
@@ -123,53 +88,18 @@
   },
   {
     "service_code": "2200BANKCBAC",
-    "route_number": "",
+    "route_number": "831KAC",
     "corporation": "SETC",
     "origin": "KRISHNAGIRI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "5.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 340",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200BANKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831KAC"
-      },
-      {
-        "city": "KRISHNAGIRI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:45"
-      },
-      {
-        "city": "261.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "340"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "BENGALURU",
         "landmark": "SHANTHI NAGAR BS",
@@ -245,53 +175,18 @@
   },
   {
     "service_code": "0800BANKCBAC",
-    "route_number": "",
+    "route_number": "831KAC",
     "corporation": "SETC",
     "origin": "KRISHNAGIRI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "6.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 340",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800BANKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831KAC"
-      },
-      {
-        "city": "KRISHNAGIRI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:45"
-      },
-      {
-        "city": "261.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "340"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "BENGALURU",
         "landmark": "SHANTHI NAGAR BS",
@@ -367,53 +262,18 @@
   },
   {
     "service_code": "0800BANKCBAC",
-    "route_number": "",
+    "route_number": "831KAC",
     "corporation": "SETC",
     "origin": "KRISHNAGIRI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "6.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 340",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800BANKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831KAC"
-      },
-      {
-        "city": "KRISHNAGIRI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:45"
-      },
-      {
-        "city": "261.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "340"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "BENGALURU",
         "landmark": "SHANTHI NAGAR BS",
@@ -489,53 +349,18 @@
   },
   {
     "service_code": "2100BANKCB",
-    "route_number": "",
+    "route_number": "831KUD",
     "corporation": "SETC",
     "origin": "KRISHNAGIRI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "6.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100BANKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831KUD"
-      },
-      {
-        "city": "KRISHNAGIRI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:45"
-      },
-      {
-        "city": "261.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "BENGALURU",
         "landmark": "SHANTHI NAGAR BS",
@@ -611,53 +436,18 @@
   },
   {
     "service_code": "2100BANKCB",
-    "route_number": "",
+    "route_number": "831KUD",
     "corporation": "SETC",
     "origin": "KRISHNAGIRI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "6.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100BANKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "831KUD"
-      },
-      {
-        "city": "KRISHNAGIRI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:45"
-      },
-      {
-        "city": "261.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "BENGALURU",
         "landmark": "SHANTHI NAGAR BS",

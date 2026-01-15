@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1700NAGPUU",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 505",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "507.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "505"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -103,53 +68,18 @@
   },
   {
     "service_code": "1700NAGPUU",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 505",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "507.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "505"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -205,53 +135,18 @@
   },
   {
     "service_code": "1700MARPUU",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 505",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MARPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "507.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "505"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -312,53 +207,18 @@
   },
   {
     "service_code": "1700MARPUU",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "CUDDALORE",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "12.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 505",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MARPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CUDDALORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:30"
-      },
-      {
-        "city": "507.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "505"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",

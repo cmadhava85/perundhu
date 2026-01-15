@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0330NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505DLXC",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "03:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0330NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXC"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0330NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505DLXC",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "03:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0330NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXC"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0530NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505DLXA",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXA"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0530NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505DLXA",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXA"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0615NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505J1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "06:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0615NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505J1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0615NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505J1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "06:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0615NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505J1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0755NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505DLXD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "07:55",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0755NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0755NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505DLXD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "07:55",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0755NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0900NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505R",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505R"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0900NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505R",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505R"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0915NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505DLXB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:45",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0915NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "0915NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505DLXB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:45",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0915NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505DLXB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "1015NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505Q",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1015NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505Q"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "1015NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505Q",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1015NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505Q"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "1115NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505S",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:45",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505S"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "1115NAGMADTT01A",
-    "route_number": "",
+    "route_number": "505S",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:45",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 250",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115NAGMADTT01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505S"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "250"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "1230NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505E2",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505E2"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "1230NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505E2",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505E2"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "1245NAGTIP",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:44",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1245NAGTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1234,53 +569,18 @@
   },
   {
     "service_code": "1245NAGTIP",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:44",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1245NAGTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1351,53 +651,18 @@
   },
   {
     "service_code": "1300NAGMADMM01A",
-    "route_number": "",
+    "route_number": "504G1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 251",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300NAGMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "504G1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "248.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "251"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1413,53 +678,18 @@
   },
   {
     "service_code": "1300NAGMADMM01A",
-    "route_number": "",
+    "route_number": "504G1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 251",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300NAGMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "504G1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "248.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "251"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1475,53 +705,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 311/478",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "311"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1582,53 +777,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 311/478",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "311"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1689,53 +849,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239/373",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1781,53 +906,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239/373",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1873,53 +963,18 @@
   },
   {
     "service_code": "1500NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505M1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505M1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1935,53 +990,18 @@
   },
   {
     "service_code": "1500NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505M1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505M1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1997,53 +1017,18 @@
   },
   {
     "service_code": "1700NAGPUU",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2099,53 +1084,18 @@
   },
   {
     "service_code": "1700NAGPUU",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "4.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:10"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2201,53 +1151,18 @@
   },
   {
     "service_code": "1700MARPUU",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MARPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -2308,53 +1223,18 @@
   },
   {
     "service_code": "1700MARPUU",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 239",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MARPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "239"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -2415,53 +1295,18 @@
   },
   {
     "service_code": "1940NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505A1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1940NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505A1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2477,53 +1322,18 @@
   },
   {
     "service_code": "1940NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505A1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1940NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505A1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2539,53 +1349,18 @@
   },
   {
     "service_code": "2200NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505E1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505E1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2601,53 +1376,18 @@
   },
   {
     "service_code": "2200NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505E1",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505E1"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2663,53 +1403,18 @@
   },
   {
     "service_code": "2300NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505A3",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505A3"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -2725,53 +1430,18 @@
   },
   {
     "service_code": "2300NAGMADTT01L",
-    "route_number": "",
+    "route_number": "505A3",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300NAGMADTT01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505A3"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "239.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

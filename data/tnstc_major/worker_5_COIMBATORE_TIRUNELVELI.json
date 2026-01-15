@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0620COITIUTT02L",
-    "route_number": "",
+    "route_number": "601B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "06:20",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 303",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0620COITIUTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "601B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "303"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0620COITIUTT02L",
-    "route_number": "",
+    "route_number": "601B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "06:20",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 303",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0620COITIUTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "601B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "303"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1050COITIUCC01L",
-    "route_number": "",
+    "route_number": "874A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "10:50",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 299",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1050COITIUCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "299"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1050COITIUCC01L",
-    "route_number": "",
+    "route_number": "874A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "10:50",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 299",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1050COITIUCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "299"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1445OOTTRV",
-    "route_number": "",
+    "route_number": "783UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:45",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 388",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1445OOTTRV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "783UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "388"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -351,53 +176,18 @@
   },
   {
     "service_code": "1445OOTTRV",
-    "route_number": "",
+    "route_number": "783UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:45",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 388",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1445OOTTRV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "783UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "388"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -453,53 +243,18 @@
   },
   {
     "service_code": "1300GULKAK",
-    "route_number": "",
+    "route_number": "664EUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 391",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300GULKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664EUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "391"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GUDALORE (OOTY)",
         "landmark": "GUDALORE (OOTY)",
@@ -545,53 +300,18 @@
   },
   {
     "service_code": "1300GULKAK",
-    "route_number": "",
+    "route_number": "664EUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 391",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300GULKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664EUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "391"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GUDALORE (OOTY)",
         "landmark": "GUDALORE (OOTY)",
@@ -637,53 +357,18 @@
   },
   {
     "service_code": "1515OOTMAR",
-    "route_number": "",
+    "route_number": "664MUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515OOTMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664MUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -724,53 +409,18 @@
   },
   {
     "service_code": "1515OOTMAR",
-    "route_number": "",
+    "route_number": "664MUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515OOTMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664MUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -811,53 +461,18 @@
   },
   {
     "service_code": "1930COITIUTT02L",
-    "route_number": "",
+    "route_number": "601A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 303",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COITIUTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "601A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "303"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -873,53 +488,18 @@
   },
   {
     "service_code": "1930COITIUTT02L",
-    "route_number": "",
+    "route_number": "601A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 303",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COITIUTT02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "601A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "303"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -935,53 +515,18 @@
   },
   {
     "service_code": "1545OOTKTM",
-    "route_number": "",
+    "route_number": "662UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "15:45",
     "duration": "8.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 388",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1545OOTKTM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "662UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:15"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "388"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1037,53 +582,18 @@
   },
   {
     "service_code": "1545OOTKTM",
-    "route_number": "",
+    "route_number": "662UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "15:45",
     "duration": "8.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 388",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1545OOTKTM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "662UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:15"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "388"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1139,53 +649,18 @@
   },
   {
     "service_code": "1605OOTNAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:05",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 391",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1605OOTNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "391"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1216,53 +691,18 @@
   },
   {
     "service_code": "1605OOTNAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:05",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 391",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1605OOTNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "391"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1293,53 +733,18 @@
   },
   {
     "service_code": "1645OOTKAK",
-    "route_number": "",
+    "route_number": "664kUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:45",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1645OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664kUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1375,53 +780,18 @@
   },
   {
     "service_code": "1645OOTKAK",
-    "route_number": "",
+    "route_number": "664kUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:45",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1645OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664kUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1457,53 +827,18 @@
   },
   {
     "service_code": "1735OOTKAK",
-    "route_number": "",
+    "route_number": "663AUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:35",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:35",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1735OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "663AUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1534,53 +869,18 @@
   },
   {
     "service_code": "1735OOTKAK",
-    "route_number": "",
+    "route_number": "663AUD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:35",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:35",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1735OOTKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "663AUD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1611,53 +911,18 @@
   },
   {
     "service_code": "2115COINAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115COINAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -1688,53 +953,18 @@
   },
   {
     "service_code": "2115COINAG",
-    "route_number": "",
+    "route_number": "664UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "27 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115COINAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -1765,53 +995,18 @@
   },
   {
     "service_code": "2120COITIUCC01L",
-    "route_number": "",
+    "route_number": "874B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:20",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 299",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2120COITIUCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "299"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1827,53 +1022,18 @@
   },
   {
     "service_code": "2120COITIUCC01L",
-    "route_number": "",
+    "route_number": "874B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:20",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 299",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2120COITIUCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "299"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1889,53 +1049,18 @@
   },
   {
     "service_code": "1830OOTPNM",
-    "route_number": "",
+    "route_number": "666UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830OOTPNM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "666UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1971,53 +1096,18 @@
   },
   {
     "service_code": "1830OOTPNM",
-    "route_number": "",
+    "route_number": "666UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 393",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830OOTPNM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "666UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "391.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "393"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",

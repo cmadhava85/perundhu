@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0610KCBARIKK01L",
-    "route_number": "",
+    "route_number": "510I",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "06:10",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 234",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0610KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510I"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "234"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0610KCBARIKK01L",
-    "route_number": "",
+    "route_number": "510I",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "06:10",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 234",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0610KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510I"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "234"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0700KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508E",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 234",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508E"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "234"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0700KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508E",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 234",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508E"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "234"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1040KCBARIKK01L",
-    "route_number": "",
+    "route_number": "510J",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "10:40",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1040KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510J"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1040KCBARIKK01L",
-    "route_number": "",
+    "route_number": "510J",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "10:40",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1040KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510J"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "2045KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508K",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 240",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508K"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "240"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "2045KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508K",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 240",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508K"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "240"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "2130KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508L",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508L"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "2130KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508L",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508L"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "2150KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508M",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "21:50",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2150KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508M"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "2150KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508M",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "21:50",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2150KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508M"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "2215KCBTHAMS",
-    "route_number": "",
+    "route_number": "323TMS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "0.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 462",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323TMS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "0:00"
-      },
-      {
-        "city": "273.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "462"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -857,53 +402,18 @@
   },
   {
     "service_code": "2215KCBTHAMS",
-    "route_number": "",
+    "route_number": "323TMS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "0.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 462",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323TMS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "0:00"
-      },
-      {
-        "city": "273.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "462"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -969,53 +479,18 @@
   },
   {
     "service_code": "2230KCBARIKK01L",
-    "route_number": "",
+    "route_number": "509G",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "509G"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "316.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1031,53 +506,18 @@
   },
   {
     "service_code": "2230KCBARIKK01L",
-    "route_number": "",
+    "route_number": "509G",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "509G"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "316.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1093,53 +533,18 @@
   },
   {
     "service_code": "2240KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "6.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 285/435",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:50"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "285"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1210,53 +615,18 @@
   },
   {
     "service_code": "2240KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "6.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 285/435",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:50"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "285"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1327,53 +697,18 @@
   },
   {
     "service_code": "2300KCBPUANS",
-    "route_number": "",
+    "route_number": "338NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300KCBPUANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "338NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1434,53 +769,18 @@
   },
   {
     "service_code": "2300KCBPUANS",
-    "route_number": "",
+    "route_number": "338NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300KCBPUANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "338NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1541,53 +841,18 @@
   },
   {
     "service_code": "2350KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508N",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508N"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1603,53 +868,18 @@
   },
   {
     "service_code": "2350KCBARIKK01L",
-    "route_number": "",
+    "route_number": "508N",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 231",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350KCBARIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "508N"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "272.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "231"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

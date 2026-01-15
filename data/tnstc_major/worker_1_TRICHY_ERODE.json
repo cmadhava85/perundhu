@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1730TRIEROKK01L",
-    "route_number": "",
+    "route_number": "807B",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "4.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 120",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730TRIEROKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "807B"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:30"
-      },
-      {
-        "city": "156.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "120"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1730TRIEROKK01L",
-    "route_number": "",
+    "route_number": "807B",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "4.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 120",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730TRIEROKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "807B"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:30"
-      },
-      {
-        "city": "156.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "120"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",

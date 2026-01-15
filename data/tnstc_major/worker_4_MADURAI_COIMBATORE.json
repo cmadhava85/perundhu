@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0030MADCOIMM05L",
-    "route_number": "",
+    "route_number": "026P",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:20",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030MADCOIMM05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "026P"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0030MADCOIMM05L",
-    "route_number": "",
+    "route_number": "026P",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:20",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030MADCOIMM05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "026P"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0215MADCOIMM02A",
-    "route_number": "",
+    "route_number": "142A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "02:15",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0215MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0215MADCOIMM02A",
-    "route_number": "",
+    "route_number": "142A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "02:15",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0215MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0705MADCOIMM01L",
-    "route_number": "",
+    "route_number": "143A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "07:05",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 167",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0705MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "143A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "167"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0705MADCOIMM01L",
-    "route_number": "",
+    "route_number": "143A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "07:05",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 167",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0705MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "143A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "167"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0830MADCOIMM02A",
-    "route_number": "",
+    "route_number": "144A2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:20",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144A2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0830MADCOIMM02A",
-    "route_number": "",
+    "route_number": "144A2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:20",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144A2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "1015MADCOIMM02A",
-    "route_number": "",
+    "route_number": "144E2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:15",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:05",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1015MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144E2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "1015MADCOIMM02A",
-    "route_number": "",
+    "route_number": "144E2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:15",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:05",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1015MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144E2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "1040MADCOIMM02L",
-    "route_number": "",
+    "route_number": "26L",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:40",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1040MADCOIMM02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "26L"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "1040MADCOIMM02L",
-    "route_number": "",
+    "route_number": "26L",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:40",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1040MADCOIMM02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "26L"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "1100MADCOIMM02L",
-    "route_number": "",
+    "route_number": "26V",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100MADCOIMM02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "26V"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "1100MADCOIMM02L",
-    "route_number": "",
+    "route_number": "26V",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100MADCOIMM02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "26V"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "1240MADCOIMM01L",
-    "route_number": "",
+    "route_number": "845A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "12:40",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1240MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "845A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "1240MADCOIMM01L",
-    "route_number": "",
+    "route_number": "845A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "12:40",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1240MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "845A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "1410MADCOIMM02A",
-    "route_number": "",
+    "route_number": "142A2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "1410MADCOIMM02A",
-    "route_number": "",
+    "route_number": "142A2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "1500MADCOIMM01L",
-    "route_number": "",
+    "route_number": "845K1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:50",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "845K1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "1500MADCOIMM01L",
-    "route_number": "",
+    "route_number": "845K1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:50",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "845K1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "2040MADCOIMM02A",
-    "route_number": "",
+    "route_number": "142A3",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:40",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2040MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A3"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "2040MADCOIMM02A",
-    "route_number": "",
+    "route_number": "142A3",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:40",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2040MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A3"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "2045MADCOIMM01L",
-    "route_number": "",
+    "route_number": "303A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:35",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1427,53 +622,18 @@
   },
   {
     "service_code": "2045MADCOIMM01L",
-    "route_number": "",
+    "route_number": "303A1",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:35",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045MADCOIMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303A1"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1489,53 +649,18 @@
   },
   {
     "service_code": "2245MADCOIMM02A",
-    "route_number": "",
+    "route_number": "144E2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:35",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144E2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",
@@ -1551,53 +676,18 @@
   },
   {
     "service_code": "2245MADCOIMM02A",
-    "route_number": "",
+    "route_number": "144E2",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:35",
     "available_seats": "46 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245MADCOIMM02A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144E2"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "ARAPALAYAM BS",

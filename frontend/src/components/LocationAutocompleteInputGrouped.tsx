@@ -3,6 +3,7 @@
  * Displays locations organized by city with bus stands and neighborhoods grouped together
  */
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { locationAutocompleteService } from '../services/locationAutocompleteService';
 import type { LocationSuggestion } from '../services/locationAutocompleteService';
 import type { LocationGroupDTO } from '../types/LocationGroupTypes';
@@ -32,11 +33,20 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
   className = '',
   useGrouped = false
 }) => {
+  const { i18n } = useTranslation();
   const [suggestionGroups, setSuggestionGroups] = useState<LocationGroupDTO[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
   const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  
+  // Helper function to get the display name based on current language
+  const getDisplayName = useCallback((location: LocationSuggestion) => {
+    if (i18n.language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  }, [i18n.language]);
 
   // Get flat list of all items for keyboard navigation
   const _getAllItems = useCallback((): (LocationSuggestion & { groupIndex: number; type: 'city' | 'bus_stand' | 'neighborhood' })[] => {
@@ -278,7 +288,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
                       📍 City
                     </span>
                     <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {group.cityOption.name}
+                      {getDisplayName(group.cityOption)}
                     </span>
                   </button>
                 )}
@@ -333,7 +343,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
                           🚌 Stand
                         </span>
                         <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {stand.name}
+                          {getDisplayName(stand)}
                         </span>
                       </button>
                     ))}
@@ -390,7 +400,7 @@ const LocationAutocompleteInputGrouped: React.FC<LocationAutocompleteInputGroupe
                           🏘️ Area
                         </span>
                         <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {area.name}
+                          {getDisplayName(area)}
                         </span>
                       </button>
                     ))}

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0922SALMADDD01L",
-    "route_number": "",
+    "route_number": "180I",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:22",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:32",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0922SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180I"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0922SALMADDD01L",
-    "route_number": "",
+    "route_number": "180I",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:22",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:32",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0922SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180I"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1023SALMADDD01L",
-    "route_number": "",
+    "route_number": "181B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:23",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:33",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1023SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "181B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1023SALMADDD01L",
-    "route_number": "",
+    "route_number": "181B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:23",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:33",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1023SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "181B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1042SALMADDD01L",
-    "route_number": "",
+    "route_number": "380A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:42",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:52",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1042SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "380A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1042SALMADDD01L",
-    "route_number": "",
+    "route_number": "380A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:42",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:52",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1042SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "380A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "1058SALMADDD01L",
-    "route_number": "",
+    "route_number": "180J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:58",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:08",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1058SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "1058SALMADDD01L",
-    "route_number": "",
+    "route_number": "180J",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:58",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:08",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1058SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180J"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "1115SALMADDD01L",
-    "route_number": "",
+    "route_number": "880A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:25",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "880A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "1115SALMADDD01L",
-    "route_number": "",
+    "route_number": "880A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:25",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "880A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "1210SALMADMM01A",
-    "route_number": "",
+    "route_number": "104B1",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:10",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:40",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 251",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1210SALMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "104B1"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "250.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "251"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "1210SALMADMM01A",
-    "route_number": "",
+    "route_number": "104B1",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:10",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:40",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 251",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1210SALMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "104B1"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "250.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "251"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "1345SALMADDD01L",
-    "route_number": "",
+    "route_number": "180M",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180M"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "1345SALMADDD01L",
-    "route_number": "",
+    "route_number": "180M",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180M"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "1428SALMADDD01L",
-    "route_number": "",
+    "route_number": "680D",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:28",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:38",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1428SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "680D"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "1428SALMADDD01L",
-    "route_number": "",
+    "route_number": "680D",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:28",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:38",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1428SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "680D"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "1500SALMADDD01L",
-    "route_number": "",
+    "route_number": "480A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "480A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "1500SALMADDD01L",
-    "route_number": "",
+    "route_number": "480A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "480A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "1515SALMADDD01L",
-    "route_number": "",
+    "route_number": "680B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:25",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "680B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "1515SALMADDD01L",
-    "route_number": "",
+    "route_number": "680B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:25",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "680B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "1540SALMADDD01L",
-    "route_number": "",
+    "route_number": "380B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:40",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1540SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "380B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "1540SALMADDD01L",
-    "route_number": "",
+    "route_number": "380B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:40",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1540SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "380B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "1600SALMADDD01L",
-    "route_number": "",
+    "route_number": "780A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "780A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1427,53 +622,18 @@
   },
   {
     "service_code": "1600SALMADDD01L",
-    "route_number": "",
+    "route_number": "780A",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "780A"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1489,53 +649,18 @@
   },
   {
     "service_code": "1616SALMADDD01L",
-    "route_number": "",
+    "route_number": "180O",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:16",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:26",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1616SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180O"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1551,53 +676,18 @@
   },
   {
     "service_code": "1616SALMADDD01L",
-    "route_number": "",
+    "route_number": "180O",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:16",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:26",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1616SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180O"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1613,53 +703,18 @@
   },
   {
     "service_code": "1750SALMADDD01L",
-    "route_number": "",
+    "route_number": "180P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:50",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:59",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1750SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1675,53 +730,18 @@
   },
   {
     "service_code": "1750SALMADDD01L",
-    "route_number": "",
+    "route_number": "180P",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:50",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:59",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1750SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180P"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1737,53 +757,18 @@
   },
   {
     "service_code": "1828SALMADDD01L",
-    "route_number": "",
+    "route_number": "180V",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "18:28",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:38",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1828SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180V"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1799,53 +784,18 @@
   },
   {
     "service_code": "1828SALMADDD01L",
-    "route_number": "",
+    "route_number": "180V",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "18:28",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:38",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 214",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1828SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180V"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "214"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -1861,53 +811,18 @@
   },
   {
     "service_code": "1615HOSKLM",
-    "route_number": "",
+    "route_number": "772UD",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615HOSKLM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "772UD"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "254"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "HOSUR",
         "landmark": "HOSUR",
@@ -1968,53 +883,18 @@
   },
   {
     "service_code": "1615HOSKLM",
-    "route_number": "",
+    "route_number": "772UD",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615HOSKLM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "772UD"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "254"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "HOSUR",
         "landmark": "HOSUR",
@@ -2075,53 +955,18 @@
   },
   {
     "service_code": "1930SALMADDD01L",
-    "route_number": "",
+    "route_number": "780B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:40",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "780B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2137,53 +982,18 @@
   },
   {
     "service_code": "1930SALMADDD01L",
-    "route_number": "",
+    "route_number": "780B",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:40",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "780B"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2199,53 +1009,18 @@
   },
   {
     "service_code": "2040SALMADDD01L",
-    "route_number": "",
+    "route_number": "180T",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:40",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2040SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180T"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2261,53 +1036,18 @@
   },
   {
     "service_code": "2040SALMADDD01L",
-    "route_number": "",
+    "route_number": "180T",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:40",
     "duration": "6.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2040SALMADDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180T"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:10"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2323,53 +1063,18 @@
   },
   {
     "service_code": "1830HOSPNM",
-    "route_number": "",
+    "route_number": "874HUD",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830HOSPNM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874HUD"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "254"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "HOSUR",
         "landmark": "HOSUR",
@@ -2410,53 +1115,18 @@
   },
   {
     "service_code": "1830HOSPNM",
-    "route_number": "",
+    "route_number": "874HUD",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830HOSPNM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874HUD"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "254"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "HOSUR",
         "landmark": "HOSUR",
@@ -2497,53 +1167,18 @@
   },
   {
     "service_code": "2220SALMADMM01A",
-    "route_number": "",
+    "route_number": "104B1",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:20",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 251",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2220SALMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "104B1"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "250.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "251"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2559,53 +1194,18 @@
   },
   {
     "service_code": "2220SALMADMM01A",
-    "route_number": "",
+    "route_number": "104B1",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:20",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 251",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2220SALMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "104B1"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "250.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "251"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SALEM",
         "landmark": "SALEM",
@@ -2621,53 +1221,18 @@
   },
   {
     "service_code": "1900HOSTIC",
-    "route_number": "",
+    "route_number": "871HUD",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900HOSTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "871HUD"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "254"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "HOSUR",
         "landmark": "HOSUR",
@@ -2698,53 +1263,18 @@
   },
   {
     "service_code": "1900HOSTIC",
-    "route_number": "",
+    "route_number": "871HUD",
     "corporation": "SETC",
     "origin": "SALEM",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900HOSTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "871HUD"
-      },
-      {
-        "city": "SALEM",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "253.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "254"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "HOSUR",
         "landmark": "HOSUR",

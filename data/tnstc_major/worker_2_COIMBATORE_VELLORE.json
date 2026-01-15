@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1830COITIPNS",
-    "route_number": "",
+    "route_number": "962TNS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397/620",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830COITIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962TNS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -83,53 +48,18 @@
   },
   {
     "service_code": "1830COITIPNS",
-    "route_number": "",
+    "route_number": "962TNS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397/620",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830COITIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962TNS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -165,53 +95,18 @@
   },
   {
     "service_code": "1600TRSCHE",
-    "route_number": "",
+    "route_number": "787UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TRSCHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "787UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRISSUR",
         "landmark": "TRISSUR KSRTC B.S",
@@ -247,53 +142,18 @@
   },
   {
     "service_code": "1600TRSCHE",
-    "route_number": "",
+    "route_number": "787UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TRSCHE",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "787UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRISSUR",
         "landmark": "TRISSUR KSRTC B.S",
@@ -329,53 +189,18 @@
   },
   {
     "service_code": "1930COITIPAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COITIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -416,53 +241,18 @@
   },
   {
     "service_code": "1930COITIPAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COITIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -503,53 +293,18 @@
   },
   {
     "service_code": "1930COICHEAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 517/798",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COICHEAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "517"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -590,53 +345,18 @@
   },
   {
     "service_code": "1930COICHEAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 517/798",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930COICHEAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "517"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -677,53 +397,18 @@
   },
   {
     "service_code": "2000COITIPAC",
-    "route_number": "",
+    "route_number": "962AC",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COITIPAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AC"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -764,53 +449,18 @@
   },
   {
     "service_code": "2000COITIPAC",
-    "route_number": "",
+    "route_number": "962AC",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COITIPAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AC"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -851,53 +501,18 @@
   },
   {
     "service_code": "2030COITIPAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030COITIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -938,53 +553,18 @@
   },
   {
     "service_code": "2030COITIPAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030COITIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",

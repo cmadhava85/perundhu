@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1525PUKEROKK05L",
-    "route_number": "",
+    "route_number": "664",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "15:25",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 166",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1525PUKEROKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "204.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "166"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1525PUKEROKK05L",
-    "route_number": "",
+    "route_number": "664",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "ERODE",
-    "departure_time": "",
+    "departure_time": "15:25",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 166",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1525PUKEROKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "664"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ERODE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "204.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "166"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",

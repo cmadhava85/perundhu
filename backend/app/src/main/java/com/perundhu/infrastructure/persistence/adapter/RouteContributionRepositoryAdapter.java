@@ -1,6 +1,8 @@
 package com.perundhu.infrastructure.persistence.adapter;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perundhu.domain.model.RouteContribution;
 import com.perundhu.domain.model.StopContribution;
 import com.perundhu.domain.port.RouteContributionRepository;
+import com.perundhu.infrastructure.config.CacheConfig;
 import com.perundhu.infrastructure.persistence.entity.RouteContributionJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepository;
 
@@ -37,6 +40,7 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     }
 
     @Override
+    @CacheEvict(value = {CacheConfig.ROUTE_CONTRIBUTIONS_CACHE, CacheConfig.PUBLIC_STATS_CACHE}, allEntries = true)
     public RouteContribution save(RouteContribution contribution) {
         RouteContributionJpaEntity entity = mapToJpaEntity(contribution);
         RouteContributionJpaEntity saved = repository.save(entity);
@@ -44,11 +48,13 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     }
 
     @Override
+    @Cacheable(value = CacheConfig.ROUTE_CONTRIBUTIONS_CACHE, key = "'id:' + #id")
     public Optional<RouteContribution> findById(String id) {
         return repository.findById(id).map(this::mapToDomainModel);
     }
 
     @Override
+    @Cacheable(value = CacheConfig.ROUTE_CONTRIBUTIONS_CACHE, key = "'userId:' + #userId")
     public List<RouteContribution> findByUserId(String userId) {
         return repository.findByUserId(userId).stream()
                 .map(this::mapToDomainModel)
@@ -56,6 +62,7 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     }
 
     @Override
+    @Cacheable(value = CacheConfig.ROUTE_CONTRIBUTIONS_CACHE, key = "'status:' + #status")
     public List<RouteContribution> findByStatus(String status) {
         // Use optimized JPA query instead of loading all records
         return repository.findByStatus(status).stream()
@@ -64,6 +71,7 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     }
 
     @Override
+    @Cacheable(value = CacheConfig.ROUTE_CONTRIBUTIONS_CACHE, key = "'submittedBy:' + #submittedBy")
     public List<RouteContribution> findBySubmittedBy(String submittedBy) {
         // Use optimized JPA query instead of loading all records
         return repository.findBySubmittedBy(submittedBy).stream()
@@ -88,6 +96,7 @@ public class RouteContributionRepositoryAdapter implements RouteContributionRepo
     }
 
     @Override
+    @CacheEvict(value = {CacheConfig.ROUTE_CONTRIBUTIONS_CACHE, CacheConfig.PUBLIC_STATS_CACHE}, allEntries = true)
     public void deleteById(String id) {
         repository.deleteById(id);
     }

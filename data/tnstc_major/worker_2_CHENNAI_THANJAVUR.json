@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0005KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241I",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "00:05",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0005KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241I"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0005KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241I",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "00:05",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0005KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241I"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0030KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241C",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241C"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0030KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241C",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241C"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0120KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "204A",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "01:20",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0120KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "204A"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0120KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "204A",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "01:20",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0120KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "204A"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0715KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241U",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241U"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0715KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241U",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241U"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0745KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241G",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "07:45",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0745KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241G"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0745KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241G",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "07:45",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0745KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241G"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0801KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "08:01",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:46",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0801KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -723,53 +338,18 @@
   },
   {
     "service_code": "0801KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "08:01",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:46",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0801KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -825,53 +405,18 @@
   },
   {
     "service_code": "0900KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -932,53 +477,18 @@
   },
   {
     "service_code": "0900KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1039,53 +549,18 @@
   },
   {
     "service_code": "0900KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1101,53 +576,18 @@
   },
   {
     "service_code": "0900KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1163,53 +603,18 @@
   },
   {
     "service_code": "0930KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1225,53 +630,18 @@
   },
   {
     "service_code": "0930KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1287,53 +657,18 @@
   },
   {
     "service_code": "0931KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:31",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:16",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0931KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1389,53 +724,18 @@
   },
   {
     "service_code": "0931KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "09:31",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:16",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0931KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1491,53 +791,18 @@
   },
   {
     "service_code": "1000KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1598,53 +863,18 @@
   },
   {
     "service_code": "1000KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1705,53 +935,18 @@
   },
   {
     "service_code": "1000KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/500",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1802,53 +997,18 @@
   },
   {
     "service_code": "1000KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/500",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1899,53 +1059,18 @@
   },
   {
     "service_code": "1030KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:15",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/502",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2001,53 +1126,18 @@
   },
   {
     "service_code": "1030KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:15",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/502",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2103,53 +1193,18 @@
   },
   {
     "service_code": "1100KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2210,53 +1265,18 @@
   },
   {
     "service_code": "1100KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2317,53 +1337,18 @@
   },
   {
     "service_code": "1130KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "11:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1130KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2419,53 +1404,18 @@
   },
   {
     "service_code": "1130KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "11:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1130KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2521,53 +1471,18 @@
   },
   {
     "service_code": "1230KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2613,53 +1528,18 @@
   },
   {
     "service_code": "1230KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2705,53 +1585,18 @@
   },
   {
     "service_code": "1500KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241B",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241B"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2767,53 +1612,18 @@
   },
   {
     "service_code": "1500KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241B",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241B"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2829,53 +1639,18 @@
   },
   {
     "service_code": "1530KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241S",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241S"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2891,53 +1666,18 @@
   },
   {
     "service_code": "1530KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241S",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241S"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2953,53 +1693,18 @@
   },
   {
     "service_code": "1600KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "205H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3015,53 +1720,18 @@
   },
   {
     "service_code": "1600KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "205H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3077,53 +1747,18 @@
   },
   {
     "service_code": "1700KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "205L",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205L"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3139,53 +1774,18 @@
   },
   {
     "service_code": "1700KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "205L",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205L"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3201,53 +1801,18 @@
   },
   {
     "service_code": "1800KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241T",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241T"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3263,53 +1828,18 @@
   },
   {
     "service_code": "1800KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241T",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241T"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3325,53 +1855,18 @@
   },
   {
     "service_code": "1830KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241V",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241V"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3387,53 +1882,18 @@
   },
   {
     "service_code": "1830KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241V",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241V"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3449,53 +1909,18 @@
   },
   {
     "service_code": "1900KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241R",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241R"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3511,53 +1936,18 @@
   },
   {
     "service_code": "1900KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241R",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241R"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3573,53 +1963,18 @@
   },
   {
     "service_code": "2035KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "20:35",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:16",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2035KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3675,53 +2030,18 @@
   },
   {
     "service_code": "2035KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "20:35",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:16",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2035KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3777,53 +2097,18 @@
   },
   {
     "service_code": "2100KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "205I",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205I"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3839,53 +2124,18 @@
   },
   {
     "service_code": "2100KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "205I",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205I"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3901,53 +2151,18 @@
   },
   {
     "service_code": "2105KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:05",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2105KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4008,53 +2223,18 @@
   },
   {
     "service_code": "2105KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:05",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2105KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4115,53 +2295,18 @@
   },
   {
     "service_code": "2130KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241F",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241F"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4177,53 +2322,18 @@
   },
   {
     "service_code": "2130KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241F",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241F"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4239,53 +2349,18 @@
   },
   {
     "service_code": "2130KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4331,53 +2406,18 @@
   },
   {
     "service_code": "2130KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4423,53 +2463,18 @@
   },
   {
     "service_code": "2200KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4525,53 +2530,18 @@
   },
   {
     "service_code": "2200KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4627,53 +2597,18 @@
   },
   {
     "service_code": "2200KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241A",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241A"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4689,53 +2624,18 @@
   },
   {
     "service_code": "2200KCBTHAKK01L",
-    "route_number": "",
+    "route_number": "241A",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBTHAKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241A"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4751,53 +2651,18 @@
   },
   {
     "service_code": "2215KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4858,53 +2723,18 @@
   },
   {
     "service_code": "2215KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420/646",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4965,53 +2795,18 @@
   },
   {
     "service_code": "2215KCBTHAMS",
-    "route_number": "",
+    "route_number": "323TMS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 546",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323TMS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "329.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "546"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5077,53 +2872,18 @@
   },
   {
     "service_code": "2215KCBTHAMS",
-    "route_number": "",
+    "route_number": "323TMS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "8.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "39 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 546",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323TMS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:45"
-      },
-      {
-        "city": "329.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "546"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5189,53 +2949,18 @@
   },
   {
     "service_code": "2230KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/500",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5291,53 +3016,18 @@
   },
   {
     "service_code": "2230KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/500",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5393,53 +3083,18 @@
   },
   {
     "service_code": "2240KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/502",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5510,53 +3165,18 @@
   },
   {
     "service_code": "2240KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328/502",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5627,53 +3247,18 @@
   },
   {
     "service_code": "2240KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241W",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241W"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5689,53 +3274,18 @@
   },
   {
     "service_code": "2240KCBTHAKK05L",
-    "route_number": "",
+    "route_number": "241W",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:40",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 264",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2240KCBTHAKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "241W"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "264"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5751,53 +3301,18 @@
   },
   {
     "service_code": "2250KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:50",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2250KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5843,53 +3358,18 @@
   },
   {
     "service_code": "2250KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "22:50",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2250KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5935,53 +3415,18 @@
   },
   {
     "service_code": "2300KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -6027,53 +3472,18 @@
   },
   {
     "service_code": "2300KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -6119,53 +3529,18 @@
   },
   {
     "service_code": "2325KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:25",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:10",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2325KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -6201,53 +3576,18 @@
   },
   {
     "service_code": "2325KCBTHAAC",
-    "route_number": "",
+    "route_number": "323AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:25",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:10",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 420",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2325KCBTHAAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "420"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -6283,53 +3623,18 @@
   },
   {
     "service_code": "2330KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -6360,53 +3665,18 @@
   },
   {
     "service_code": "2330KCBTHA",
-    "route_number": "",
+    "route_number": "323UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330KCBTHA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "323.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "328"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1000PEAKCBKK05L",
-    "route_number": "",
+    "route_number": "510C",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000PEAKCBKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510C"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "244.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PERAMBALUR",
         "landmark": "PERAMBALUR",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1000PEAKCBKK05L",
-    "route_number": "",
+    "route_number": "510C",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000PEAKCBKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510C"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "244.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PERAMBALUR",
         "landmark": "PERAMBALUR",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1200PEAKCBKK05L",
-    "route_number": "",
+    "route_number": "510D",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200PEAKCBKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510D"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "244.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PERAMBALUR",
         "landmark": "PERAMBALUR",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1200PEAKCBKK05L",
-    "route_number": "",
+    "route_number": "510D",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200PEAKCBKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "510D"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "244.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PERAMBALUR",
         "landmark": "PERAMBALUR",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "2130PUAKCBNS",
-    "route_number": "",
+    "route_number": "338NS",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249/383",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130PUAKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "338NS"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "248.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PULLAMBADI",
         "landmark": "PULLAMBADI",
@@ -336,53 +161,18 @@
   },
   {
     "service_code": "2130PUAKCBNS",
-    "route_number": "",
+    "route_number": "338NS",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249/383",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130PUAKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "338NS"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "248.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PULLAMBADI",
         "landmark": "PULLAMBADI",
@@ -423,53 +213,18 @@
   },
   {
     "service_code": "2230THRKCB",
-    "route_number": "",
+    "route_number": "120UD",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230THRKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "120UD"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "248.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "THURAIYUR BUS STAND",
         "landmark": "THURAIYUR",
@@ -490,53 +245,18 @@
   },
   {
     "service_code": "2230THRKCB",
-    "route_number": "",
+    "route_number": "120UD",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 249",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230THRKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "120UD"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "248.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "249"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "THURAIYUR BUS STAND",
         "landmark": "THURAIYUR",

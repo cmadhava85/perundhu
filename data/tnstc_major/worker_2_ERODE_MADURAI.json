@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1715MRCMADLB",
-    "route_number": "",
+    "route_number": "897LB",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "4.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 219/338",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715MRCMADLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "897LB"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:00"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "219"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADIKERI",
         "landmark": "MERCARA",
@@ -108,53 +73,18 @@
   },
   {
     "service_code": "1715MRCMADLB",
-    "route_number": "",
+    "route_number": "897LB",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "4.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 219/338",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715MRCMADLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "897LB"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:00"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "219"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADIKERI",
         "landmark": "MERCARA",
@@ -215,53 +145,18 @@
   },
   {
     "service_code": "1550EROMADKK01L",
-    "route_number": "",
+    "route_number": "1054A",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:50",
     "duration": "5.28Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:18",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 155",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1550EROMADKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "1054A"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:28"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "155"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",
@@ -277,53 +172,18 @@
   },
   {
     "service_code": "1550EROMADKK01L",
-    "route_number": "",
+    "route_number": "1054A",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "15:50",
     "duration": "5.28Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:18",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 155",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1550EROMADKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "1054A"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:28"
-      },
-      {
-        "city": "217.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "155"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "SOLAR NEW BUS STAND",

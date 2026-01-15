@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0135COITRIKK05A",
-    "route_number": "",
+    "route_number": "533EF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "01:35",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:05",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 213",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0135COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533EF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "213"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0135COITRIKK05A",
-    "route_number": "",
+    "route_number": "533EF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "01:35",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:05",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 213",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0135COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533EF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "213"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0140COITRIKK05A",
-    "route_number": "",
+    "route_number": "003A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "01:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0140COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "003A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0140COITRIKK05A",
-    "route_number": "",
+    "route_number": "003A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "01:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0140COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "003A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0345COITRIKK05L",
-    "route_number": "",
+    "route_number": "533AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "03:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0345COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0345COITRIKK05L",
-    "route_number": "",
+    "route_number": "533AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "03:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0345COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0400COITRIKK05L",
-    "route_number": "",
+    "route_number": "533D",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0400COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533D"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0400COITRIKK05L",
-    "route_number": "",
+    "route_number": "533D",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0400COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533D"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0530COITRIKK05A",
-    "route_number": "",
+    "route_number": "909H",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909H"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0530COITRIKK05A",
-    "route_number": "",
+    "route_number": "909H",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909H"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0600COITRIKK05L",
-    "route_number": "",
+    "route_number": "533GH",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533GH"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "0600COITRIKK05L",
-    "route_number": "",
+    "route_number": "533GH",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533GH"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "0725COITRIKK05A",
-    "route_number": "",
+    "route_number": "909L",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:25",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0725COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909L"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "0725COITRIKK05A",
-    "route_number": "",
+    "route_number": "909L",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:25",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0725COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909L"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "0740COITRIKK05L",
-    "route_number": "",
+    "route_number": "805M",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0740COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805M"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "0740COITRIKK05L",
-    "route_number": "",
+    "route_number": "805M",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0740COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805M"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "0800COITRIKK05L",
-    "route_number": "",
+    "route_number": "411AM",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "411AM"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "0800COITRIKK05L",
-    "route_number": "",
+    "route_number": "411AM",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "411AM"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "0940COITRIKK05A",
-    "route_number": "",
+    "route_number": "533EF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "09:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 213",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0940COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533EF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "213"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "0940COITRIKK05A",
-    "route_number": "",
+    "route_number": "533EF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "09:40",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 213",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0940COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533EF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "213"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "0945COITRIKK05L",
-    "route_number": "",
+    "route_number": "911J",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "09:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0945COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "911J"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "0945COITRIKK05L",
-    "route_number": "",
+    "route_number": "911J",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "09:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 185",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0945COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "911J"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "185"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "0730OOTTRI",
-    "route_number": "",
+    "route_number": "725UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0730OOTTRI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "725UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1432,53 +627,18 @@
   },
   {
     "service_code": "0730OOTTRI",
-    "route_number": "",
+    "route_number": "725UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "07:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0730OOTTRI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "725UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "OOTY",
         "landmark": "OOTY",
@@ -1499,53 +659,18 @@
   },
   {
     "service_code": "1150COITRIKK05L",
-    "route_number": "",
+    "route_number": "533GH",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "11:50",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1150COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533GH"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1561,53 +686,18 @@
   },
   {
     "service_code": "1150COITRIKK05L",
-    "route_number": "",
+    "route_number": "533GH",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "11:50",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1150COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533GH"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1623,53 +713,18 @@
   },
   {
     "service_code": "1200COITRIKK05L",
-    "route_number": "",
+    "route_number": "533AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1685,53 +740,18 @@
   },
   {
     "service_code": "1200COITRIKK05L",
-    "route_number": "",
+    "route_number": "533AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1747,53 +767,18 @@
   },
   {
     "service_code": "1315COITRIKK05L",
-    "route_number": "",
+    "route_number": "805T",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "13:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1315COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805T"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1809,53 +794,18 @@
   },
   {
     "service_code": "1315COITRIKK05L",
-    "route_number": "",
+    "route_number": "805T",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "13:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1315COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805T"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1871,53 +821,18 @@
   },
   {
     "service_code": "1330COITRIKK05A",
-    "route_number": "",
+    "route_number": "909K",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909K"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1933,53 +848,18 @@
   },
   {
     "service_code": "1330COITRIKK05A",
-    "route_number": "",
+    "route_number": "909K",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909K"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1995,53 +875,18 @@
   },
   {
     "service_code": "1515COITRIKK05L",
-    "route_number": "",
+    "route_number": "911T",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "911T"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2057,53 +902,18 @@
   },
   {
     "service_code": "1515COITRIKK05L",
-    "route_number": "",
+    "route_number": "911T",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "911T"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2119,53 +929,18 @@
   },
   {
     "service_code": "1525COITRIKK05A",
-    "route_number": "",
+    "route_number": "533EF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "15:25",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 213",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1525COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533EF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "213"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2181,53 +956,18 @@
   },
   {
     "service_code": "1525COITRIKK05A",
-    "route_number": "",
+    "route_number": "533EF",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "15:25",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 213",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1525COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533EF"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "213"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2243,53 +983,18 @@
   },
   {
     "service_code": "1545COITRIKK05L",
-    "route_number": "",
+    "route_number": "410A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "15:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1545COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "410A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2305,53 +1010,18 @@
   },
   {
     "service_code": "1545COITRIKK05L",
-    "route_number": "",
+    "route_number": "410A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "15:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1545COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "410A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2367,53 +1037,18 @@
   },
   {
     "service_code": "1600COITRIKK05A",
-    "route_number": "",
+    "route_number": "805H",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805H"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2429,53 +1064,18 @@
   },
   {
     "service_code": "1600COITRIKK05A",
-    "route_number": "",
+    "route_number": "805H",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805H"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2491,53 +1091,18 @@
   },
   {
     "service_code": "1615COITRICC01L",
-    "route_number": "",
+    "route_number": "20012",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615COITRICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "20012"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2553,53 +1118,18 @@
   },
   {
     "service_code": "1615COITRICC01L",
-    "route_number": "",
+    "route_number": "20012",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615COITRICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "20012"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2615,53 +1145,18 @@
   },
   {
     "service_code": "1630COITRICC01L",
-    "route_number": "",
+    "route_number": "20009",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630COITRICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "20009"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2677,53 +1172,18 @@
   },
   {
     "service_code": "1630COITRICC01L",
-    "route_number": "",
+    "route_number": "20009",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630COITRICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "20009"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2739,53 +1199,18 @@
   },
   {
     "service_code": "1730COITRIKK05A",
-    "route_number": "",
+    "route_number": "931A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "931A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2801,53 +1226,18 @@
   },
   {
     "service_code": "1730COITRIKK05A",
-    "route_number": "",
+    "route_number": "931A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 217",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730COITRIKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "931A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "217"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2863,53 +1253,18 @@
   },
   {
     "service_code": "1745COITRIKK05L",
-    "route_number": "",
+    "route_number": "533C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2925,53 +1280,18 @@
   },
   {
     "service_code": "1745COITRIKK05L",
-    "route_number": "",
+    "route_number": "533C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -2987,53 +1307,18 @@
   },
   {
     "service_code": "1800COITRIKK05L",
-    "route_number": "",
+    "route_number": "533AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3049,53 +1334,18 @@
   },
   {
     "service_code": "1800COITRIKK05L",
-    "route_number": "",
+    "route_number": "533AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3111,53 +1361,18 @@
   },
   {
     "service_code": "2135COITRIKK05L",
-    "route_number": "",
+    "route_number": "909G",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "21:35",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2135COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909G"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3173,53 +1388,18 @@
   },
   {
     "service_code": "2135COITRIKK05L",
-    "route_number": "",
+    "route_number": "909G",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "21:35",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:05",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2135COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909G"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3235,53 +1415,18 @@
   },
   {
     "service_code": "2205COITRIKK05L",
-    "route_number": "",
+    "route_number": "533GH",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:35",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2205COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533GH"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3297,53 +1442,18 @@
   },
   {
     "service_code": "2205COITRIKK05L",
-    "route_number": "",
+    "route_number": "533GH",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:35",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2205COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "533GH"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3359,53 +1469,18 @@
   },
   {
     "service_code": "2310COITRIKK05L",
-    "route_number": "",
+    "route_number": "911Y",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:10",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2310COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "911Y"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3421,53 +1496,18 @@
   },
   {
     "service_code": "2310COITRIKK05L",
-    "route_number": "",
+    "route_number": "911Y",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:10",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2310COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "911Y"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3483,53 +1523,18 @@
   },
   {
     "service_code": "2315COITRIKK05L",
-    "route_number": "",
+    "route_number": "909Q",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2315COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909Q"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3545,53 +1550,18 @@
   },
   {
     "service_code": "2315COITRIKK05L",
-    "route_number": "",
+    "route_number": "909Q",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:15",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2315COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909Q"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3607,53 +1577,18 @@
   },
   {
     "service_code": "2330COITRIKK05L",
-    "route_number": "",
+    "route_number": "534A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "534A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3669,53 +1604,18 @@
   },
   {
     "service_code": "2330COITRIKK05L",
-    "route_number": "",
+    "route_number": "534A",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "534A"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3731,53 +1631,18 @@
   },
   {
     "service_code": "2350COITRIKK05L",
-    "route_number": "",
+    "route_number": "805F",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805F"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3793,53 +1658,18 @@
   },
   {
     "service_code": "2350COITRIKK05L",
-    "route_number": "",
+    "route_number": "805F",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "805F"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3855,53 +1685,18 @@
   },
   {
     "service_code": "2355COITRIKK05L",
-    "route_number": "",
+    "route_number": "601E",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:55",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2355COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "601E"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3917,53 +1712,18 @@
   },
   {
     "service_code": "2355COITRIKK05L",
-    "route_number": "",
+    "route_number": "601E",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:55",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2355COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "601E"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -3979,53 +1739,18 @@
   },
   {
     "service_code": "2359COITRIKK05L",
-    "route_number": "",
+    "route_number": "909B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:59",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:29",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2359COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -4041,53 +1766,18 @@
   },
   {
     "service_code": "2359COITRIKK05L",
-    "route_number": "",
+    "route_number": "909B",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TRICHY",
-    "departure_time": "",
+    "departure_time": "23:59",
     "duration": "5.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:29",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2359COITRIKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "909B"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TRICHY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:30"
-      },
-      {
-        "city": "224.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",

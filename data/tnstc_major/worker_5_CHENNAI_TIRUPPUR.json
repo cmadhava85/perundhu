@@ -1,53 +1,18 @@
 [
   {
     "service_code": "2100KCBPOLAB",
-    "route_number": "",
+    "route_number": "T470AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 574/883",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBPOLAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "T470AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "443.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "574"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -118,53 +83,18 @@
   },
   {
     "service_code": "2100KCBPOLAB",
-    "route_number": "",
+    "route_number": "T470AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 574/883",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBPOLAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "T470AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "443.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "574"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -235,53 +165,18 @@
   },
   {
     "service_code": "2130KCBTPPMS",
-    "route_number": "",
+    "route_number": "470MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 750",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBTPPMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "470MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "443.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "750"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -342,53 +237,18 @@
   },
   {
     "service_code": "2130KCBTPPMS",
-    "route_number": "",
+    "route_number": "470MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUPPUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 750",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBTPPMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "470MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUPPUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "443.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "750"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

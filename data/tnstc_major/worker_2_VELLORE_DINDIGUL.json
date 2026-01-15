@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1630TIPCBA",
-    "route_number": "",
+    "route_number": "856CUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 407",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIPCBA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "856CUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "409.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "407"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "1630TIPCBA",
-    "route_number": "",
+    "route_number": "856CUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 407",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIPCBA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "856CUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "409.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "407"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -175,53 +105,18 @@
   },
   {
     "service_code": "2115TIPDIN",
-    "route_number": "",
+    "route_number": "856UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 407",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115TIPDIN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "856UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "396.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "407"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -252,53 +147,18 @@
   },
   {
     "service_code": "2115TIPDIN",
-    "route_number": "",
+    "route_number": "856UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 407",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115TIPDIN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "856UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "396.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "407"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",

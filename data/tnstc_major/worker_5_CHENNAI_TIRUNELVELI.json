@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1000KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -108,53 +73,18 @@
   },
   {
     "service_code": "1000KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -215,53 +145,18 @@
   },
   {
     "service_code": "1415KCBMARAB",
-    "route_number": "",
+    "route_number": "284AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 780/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1415KCBMARAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "780"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -337,53 +232,18 @@
   },
   {
     "service_code": "1415KCBMARAB",
-    "route_number": "",
+    "route_number": "284AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 780/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1415KCBMARAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "780"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -459,53 +319,18 @@
   },
   {
     "service_code": "1500KCBMAR",
-    "route_number": "",
+    "route_number": "284KUD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KCBMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284KUD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -586,53 +411,18 @@
   },
   {
     "service_code": "1500KCBMAR",
-    "route_number": "",
+    "route_number": "284KUD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KCBMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284KUD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -713,53 +503,18 @@
   },
   {
     "service_code": "1600KCBPNM",
-    "route_number": "",
+    "route_number": "190MUD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600KCBPNM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "190MUD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -820,53 +575,18 @@
   },
   {
     "service_code": "1600KCBPNM",
-    "route_number": "",
+    "route_number": "190MUD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600KCBPNM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "190MUD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -927,53 +647,18 @@
   },
   {
     "service_code": "1630KCBKAK",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "0.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630KCBKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "0:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1044,53 +729,18 @@
   },
   {
     "service_code": "1630KCBKAK",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "0.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630KCBKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "0:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1161,53 +811,18 @@
   },
   {
     "service_code": "1645KCBNAGAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 780/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1645KCBNAGAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "780"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1278,53 +893,18 @@
   },
   {
     "service_code": "1645KCBNAGAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "16:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:45",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 780/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1645KCBNAGAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "780"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1395,53 +975,18 @@
   },
   {
     "service_code": "1700KCBKUS",
-    "route_number": "",
+    "route_number": "H287UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBKUS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "H287UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1507,53 +1052,18 @@
   },
   {
     "service_code": "1700KCBKUS",
-    "route_number": "",
+    "route_number": "H287UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBKUS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "H287UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1619,53 +1129,18 @@
   },
   {
     "service_code": "1700KCBTIULB",
-    "route_number": "",
+    "route_number": "180LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBTIULB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1721,53 +1196,18 @@
   },
   {
     "service_code": "1700KCBTIULB",
-    "route_number": "",
+    "route_number": "180LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700KCBTIULB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1823,53 +1263,18 @@
   },
   {
     "service_code": "1715KCBMARNS",
-    "route_number": "",
+    "route_number": "284NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715KCBMARNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1945,53 +1350,18 @@
   },
   {
     "service_code": "1715KCBMARNS",
-    "route_number": "",
+    "route_number": "284NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715KCBMARNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2067,53 +1437,18 @@
   },
   {
     "service_code": "1730KCBMAR",
-    "route_number": "",
+    "route_number": "284UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KCBMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2184,53 +1519,18 @@
   },
   {
     "service_code": "1730KCBMAR",
-    "route_number": "",
+    "route_number": "284UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KCBMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "284UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2301,53 +1601,18 @@
   },
   {
     "service_code": "1800KCBTIU",
-    "route_number": "",
+    "route_number": "180UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KCBTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2408,53 +1673,18 @@
   },
   {
     "service_code": "1800KCBTIU",
-    "route_number": "",
+    "route_number": "180UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KCBTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2515,53 +1745,18 @@
   },
   {
     "service_code": "1800KCBNAGMS",
-    "route_number": "",
+    "route_number": "198MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1016",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KCBNAGMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1016"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2627,53 +1822,18 @@
   },
   {
     "service_code": "1800KCBNAGMS",
-    "route_number": "",
+    "route_number": "198MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1016",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KCBNAGMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1016"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2739,53 +1899,18 @@
   },
   {
     "service_code": "1830KCBTHS",
-    "route_number": "",
+    "route_number": "194UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBTHS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "194UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2846,53 +1971,18 @@
   },
   {
     "service_code": "1830KCBTHS",
-    "route_number": "",
+    "route_number": "194UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBTHS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "194UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2953,53 +2043,18 @@
   },
   {
     "service_code": "1830KCBNAGAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBNAGAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3065,53 +2120,18 @@
   },
   {
     "service_code": "1830KCBNAGAB",
-    "route_number": "",
+    "route_number": "198AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830KCBNAGAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3177,53 +2197,18 @@
   },
   {
     "service_code": "1900KCBTIUMS",
-    "route_number": "",
+    "route_number": "180MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1016",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KCBTIUMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "605.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1016"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3284,53 +2269,18 @@
   },
   {
     "service_code": "1900KCBTIUMS",
-    "route_number": "",
+    "route_number": "180MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "12.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1016",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KCBTIUMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:00"
-      },
-      {
-        "city": "605.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1016"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3391,53 +2341,18 @@
   },
   {
     "service_code": "1910KCBTIUNS",
-    "route_number": "",
+    "route_number": "180NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:10",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:10",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1910KCBTIUNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3493,53 +2408,18 @@
   },
   {
     "service_code": "1910KCBTIUNS",
-    "route_number": "",
+    "route_number": "180NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:10",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:10",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1910KCBTIUNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3595,53 +2475,18 @@
   },
   {
     "service_code": "1915KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3702,53 +2547,18 @@
   },
   {
     "service_code": "1915KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3809,53 +2619,18 @@
   },
   {
     "service_code": "1930KCBNAGLB",
-    "route_number": "",
+    "route_number": "198LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930KCBNAGLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3916,53 +2691,18 @@
   },
   {
     "service_code": "1930KCBNAGLB",
-    "route_number": "",
+    "route_number": "198LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930KCBNAGLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "198LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4023,53 +2763,18 @@
   },
   {
     "service_code": "2000KCBTIU",
-    "route_number": "",
+    "route_number": "180UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KCBTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4125,53 +2830,85 @@
   },
   {
     "service_code": "2000KCBTIU",
-    "route_number": "",
+    "route_number": "180UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
       {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KCBTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180UD"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "20:00"
       },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
+        "landmark": "GUDUVANCHERY",
+        "time": "20:05"
       },
       {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "20:10"
       },
       {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "20:20"
       },
       {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "20:30"
       },
       {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "20:40"
       },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "20:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "21:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "21:45"
+      },
+      {
+        "city": "TIRUNELVELI",
+        "landmark": "TIRUNELVELI",
+        "time": "07:00"
+      }
+    ],
+    "scraped_at": "2026-01-13T17:57:29.567232"
+  },
+  {
+    "service_code": "2000KCBTIUNS",
+    "route_number": "180NS",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "TIRUNELVELI",
+    "departure_time": "20:00",
+    "duration": "11.00Hrs",
+    "arrival_time": "07:00",
+    "available_seats": "33 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 600/930",
+    "journey_date": "16/01/2026",
+    "stops": [
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4227,155 +2964,18 @@
   },
   {
     "service_code": "2000KCBTIUNS",
-    "route_number": "",
+    "route_number": "180NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KCBTIUNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "CHENNAI KALAIGNAR CBT",
-        "time": "20:00"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "GUDUVANCHERY",
-        "time": "20:05"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "SRM UNIVERSITY",
-        "time": "20:10"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "MARAIMALAI NAGAR BUSSTOP",
-        "time": "20:20"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "MAHINDRA CITY",
-        "time": "20:30"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "CHENGALPATTU TOLL",
-        "time": "20:40"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "CHENGALPATTU BYPASS",
-        "time": "20:50"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "MELMARUVATHUR BUS STOP",
-        "time": "21:20"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "TINDIVANAM",
-        "time": "21:45"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "TIRUNELVELI",
-        "time": "07:00"
-      }
-    ],
-    "scraped_at": "2026-01-13T17:57:29.567232"
-  },
-  {
-    "service_code": "2000KCBTIUNS",
-    "route_number": "",
-    "corporation": "SETC",
-    "origin": "CHENNAI",
-    "destination": "TIRUNELVELI",
-    "departure_time": "",
-    "duration": "11.00Hrs",
-    "arrival_time": "",
-    "available_seats": "33 Seats Available",
-    "bus_type": "Standard",
-    "fare": "Rs 600/930",
-    "journey_date": "16/01/2026",
-    "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000KCBTIUNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4431,53 +3031,18 @@
   },
   {
     "service_code": "2015KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4538,53 +3103,18 @@
   },
   {
     "service_code": "2015KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4645,53 +3175,18 @@
   },
   {
     "service_code": "2015KCBKAK",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015KCBKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4752,53 +3247,18 @@
   },
   {
     "service_code": "2015KCBKAK",
-    "route_number": "",
+    "route_number": "282UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015KCBKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "282UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4859,53 +3319,18 @@
   },
   {
     "service_code": "2100KCBTIUNS",
-    "route_number": "",
+    "route_number": "180NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBTIUNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4961,53 +3386,18 @@
   },
   {
     "service_code": "2100KCBTIUNS",
-    "route_number": "",
+    "route_number": "180NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 600/930",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBTIUNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "600"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5063,53 +3453,18 @@
   },
   {
     "service_code": "2145KCBTIUAS",
-    "route_number": "",
+    "route_number": "180AS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2145KCBTIUAS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1197"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5165,53 +3520,18 @@
   },
   {
     "service_code": "2145KCBTIUAS",
-    "route_number": "",
+    "route_number": "180AS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:45",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2145KCBTIUAS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "1197"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5267,53 +3587,18 @@
   },
   {
     "service_code": "2230KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5369,53 +3654,18 @@
   },
   {
     "service_code": "2230KCBTIUAB",
-    "route_number": "",
+    "route_number": "180AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 779/1197",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBTIUAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "599.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "779"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

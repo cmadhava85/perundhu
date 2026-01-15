@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1410TPPTHACC03L",
-    "route_number": "",
+    "route_number": "798A",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 174",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410TPPTHACC03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "798A"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "232.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "174"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR NEW BUSSTAND",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1410TPPTHACC03L",
-    "route_number": "",
+    "route_number": "798A",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:25",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 174",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410TPPTHACC03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "798A"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "232.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "174"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR NEW BUSSTAND",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "2355TPPTHAKK05A",
-    "route_number": "",
+    "route_number": "151",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:55",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 243",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2355TPPTHAKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "151"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "232.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "243"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR NEW BUSSTAND",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "2355TPPTHAKK05A",
-    "route_number": "",
+    "route_number": "151",
     "corporation": "SETC",
     "origin": "TIRUPPUR",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "23:55",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:55",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 243",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2355TPPTHAKK05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "151"
-      },
-      {
-        "city": "TIRUPPUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "232.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "243"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPPUR",
         "landmark": "TIRUPPUR NEW BUSSTAND",

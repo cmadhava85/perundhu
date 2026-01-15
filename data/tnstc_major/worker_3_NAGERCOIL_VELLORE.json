@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 863/1328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "863"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -108,53 +73,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 863/1328",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "863"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -215,53 +145,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 665/1030",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "665"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -307,53 +202,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 665/1030",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "665"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -399,53 +259,18 @@
   },
   {
     "service_code": "1500KAKVELNS",
-    "route_number": "",
+    "route_number": "283NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "14.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 665/1035",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KAKVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "283NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:25"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "665"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -486,53 +311,18 @@
   },
   {
     "service_code": "1500KAKVELNS",
-    "route_number": "",
+    "route_number": "283NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "14.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 665/1035",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KAKVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "283NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:25"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "665"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -573,53 +363,18 @@
   },
   {
     "service_code": "1530MARVELLB",
-    "route_number": "",
+    "route_number": "297LB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "14.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 670/1040",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530MARVELLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "297LB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:15"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "670"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -665,53 +420,18 @@
   },
   {
     "service_code": "1530MARVELLB",
-    "route_number": "",
+    "route_number": "297LB",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "14.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 670/1040",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530MARVELLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "297LB"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:15"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "670"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -757,53 +477,18 @@
   },
   {
     "service_code": "1515TRVVELNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 670/1040",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515TRVVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "670"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -844,53 +529,18 @@
   },
   {
     "service_code": "1515TRVVELNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 670/1040",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515TRVVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "670.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "670"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",

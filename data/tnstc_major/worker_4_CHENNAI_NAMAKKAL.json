@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0735KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675E",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "07:35",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0735KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675E"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0735KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675E",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "07:35",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:35",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0735KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675E"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0915KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675C",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "09:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0915KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675C"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0915KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675C",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "09:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0915KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675C"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1940KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675D",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "19:40",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1940KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675D"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1940KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675D",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "19:40",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1940KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675D"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "2020KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675F",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "20:20",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2020KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675F"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "2020KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675F",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "20:20",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2020KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675F"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "2050KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675A",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "20:50",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2050KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675A"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "2050KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675A",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "20:50",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2050KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675A"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "2130KCBNAMNS",
-    "route_number": "",
+    "route_number": "425NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 353/552",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBNAMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "425NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "353"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -728,53 +343,18 @@
   },
   {
     "service_code": "2130KCBNAMNS",
-    "route_number": "",
+    "route_number": "425NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 353/552",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBNAMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "425NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "353"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -835,53 +415,18 @@
   },
   {
     "service_code": "2130KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675B",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675B"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -897,53 +442,18 @@
   },
   {
     "service_code": "2130KCBNAMDD01L",
-    "route_number": "",
+    "route_number": "675B",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 298",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBNAMDD01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "675B"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SALEM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "298"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -959,53 +469,18 @@
   },
   {
     "service_code": "2145KCBNAM",
-    "route_number": "",
+    "route_number": "425UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "21:45",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 353",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2145KCBNAM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "425UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "353"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1066,53 +541,18 @@
   },
   {
     "service_code": "2145KCBNAM",
-    "route_number": "",
+    "route_number": "425UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "21:45",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 353",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2145KCBNAM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "425UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "353"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1173,53 +613,18 @@
   },
   {
     "service_code": "2200KCBNAMAB",
-    "route_number": "",
+    "route_number": "425AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 458",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBNAMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "425AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "458"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1275,53 +680,18 @@
   },
   {
     "service_code": "2200KCBNAMAB",
-    "route_number": "",
+    "route_number": "425AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "NAMAKKAL",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 458",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200KCBNAMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "425AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAMAKKAL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "354.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "458"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

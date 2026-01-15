@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 767/1176",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "767"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -108,53 +73,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 767/1176",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "767"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -215,53 +145,18 @@
   },
   {
     "service_code": "1345PNMTIP",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 588",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345PNMTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "588"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PAPANASAM-TNV",
         "landmark": "PAPANASAM-TNV",
@@ -337,53 +232,18 @@
   },
   {
     "service_code": "1345PNMTIP",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 588",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345PNMTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "588"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PAPANASAM-TNV",
         "landmark": "PAPANASAM-TNV",
@@ -459,53 +319,18 @@
   },
   {
     "service_code": "1630TIUTIP",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 588",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIUTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "588"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -576,53 +401,18 @@
   },
   {
     "service_code": "1630TIUTIP",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 588",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIUTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "588"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -693,53 +483,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 590/910",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "590"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -785,53 +540,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 590/910",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "590"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -877,53 +597,18 @@
   },
   {
     "service_code": "1500KAKVELNS",
-    "route_number": "",
+    "route_number": "283NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "12.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 590/915",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KAKVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "283NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:25"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "590"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -964,53 +649,18 @@
   },
   {
     "service_code": "1500KAKVELNS",
-    "route_number": "",
+    "route_number": "283NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "12.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 590/915",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KAKVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "283NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:25"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "590"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1051,53 +701,18 @@
   },
   {
     "service_code": "1530MARVELLB",
-    "route_number": "",
+    "route_number": "297LB",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "12.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 595/920",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530MARVELLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "297LB"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:15"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "595"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1143,53 +758,18 @@
   },
   {
     "service_code": "1530MARVELLB",
-    "route_number": "",
+    "route_number": "297LB",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "12.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 595/920",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530MARVELLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "297LB"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "12:15"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "595"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -1235,53 +815,18 @@
   },
   {
     "service_code": "1515TRVVELNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 594/920",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515TRVVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "594"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",
@@ -1322,53 +867,18 @@
   },
   {
     "service_code": "1515TRVVELNS",
-    "route_number": "",
+    "route_number": "795NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 594/920",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1515TRVVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "795NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "594.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "594"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRIVANDRUM",
         "landmark": "TRIVANDRUM",

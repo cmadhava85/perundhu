@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "4.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259/402",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:30"
-      },
-      {
-        "city": "259.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -93,53 +58,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "4.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 259/402",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:30"
-      },
-      {
-        "city": "259.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "259"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",

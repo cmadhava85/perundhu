@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0700MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "0700MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -175,53 +105,18 @@
   },
   {
     "service_code": "0800MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -267,53 +162,18 @@
   },
   {
     "service_code": "0800MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0800MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -359,53 +219,18 @@
   },
   {
     "service_code": "0900MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -436,53 +261,18 @@
   },
   {
     "service_code": "0900MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -513,53 +303,18 @@
   },
   {
     "service_code": "0930MADBANAB",
-    "route_number": "",
+    "route_number": "846AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/944",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930MADBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -595,53 +350,18 @@
   },
   {
     "service_code": "0930MADBANAB",
-    "route_number": "",
+    "route_number": "846AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/944",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930MADBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -677,53 +397,18 @@
   },
   {
     "service_code": "1000MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -754,53 +439,18 @@
   },
   {
     "service_code": "1000MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -831,53 +481,18 @@
   },
   {
     "service_code": "1030MADBANLB",
-    "route_number": "",
+    "route_number": "846LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030MADBANLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -908,53 +523,18 @@
   },
   {
     "service_code": "1030MADBANLB",
-    "route_number": "",
+    "route_number": "846LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030MADBANLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -985,53 +565,18 @@
   },
   {
     "service_code": "1800MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1057,53 +602,18 @@
   },
   {
     "service_code": "1800MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1129,53 +639,18 @@
   },
   {
     "service_code": "1900MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1216,53 +691,18 @@
   },
   {
     "service_code": "1900MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1303,53 +743,18 @@
   },
   {
     "service_code": "1600TIUBANAB",
-    "route_number": "",
+    "route_number": "874AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 683",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TIUBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -1400,53 +805,18 @@
   },
   {
     "service_code": "1600TIUBANAB",
-    "route_number": "",
+    "route_number": "874AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 683",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TIUBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -1497,53 +867,18 @@
   },
   {
     "service_code": "2000MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1564,53 +899,18 @@
   },
   {
     "service_code": "2000MADBAN",
-    "route_number": "",
+    "route_number": "846UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000MADBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1631,53 +931,18 @@
   },
   {
     "service_code": "1730TUTBANAB",
-    "route_number": "",
+    "route_number": "872AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 683",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730TUTBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "872AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -1723,53 +988,18 @@
   },
   {
     "service_code": "1730TUTBANAB",
-    "route_number": "",
+    "route_number": "872AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 683",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730TUTBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "872AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -1815,53 +1045,18 @@
   },
   {
     "service_code": "1700TIUBANLB",
-    "route_number": "",
+    "route_number": "874LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700TIUBANLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -1912,53 +1107,18 @@
   },
   {
     "service_code": "1700TIUBANLB",
-    "route_number": "",
+    "route_number": "874LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700TIUBANLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -2009,53 +1169,18 @@
   },
   {
     "service_code": "2100MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2091,53 +1216,18 @@
   },
   {
     "service_code": "2100MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2173,53 +1263,18 @@
   },
   {
     "service_code": "1800TUTBANNS",
-    "route_number": "",
+    "route_number": "872NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800TUTBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "872NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -2275,53 +1330,18 @@
   },
   {
     "service_code": "1800TUTBANNS",
-    "route_number": "",
+    "route_number": "872NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800TUTBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "872NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -2377,53 +1397,18 @@
   },
   {
     "service_code": "2130MADBANAB",
-    "route_number": "",
+    "route_number": "846AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/944",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130MADBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2459,53 +1444,18 @@
   },
   {
     "service_code": "2130MADBANAB",
-    "route_number": "",
+    "route_number": "846AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "30 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/944",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130MADBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2541,53 +1491,18 @@
   },
   {
     "service_code": "1630NAGBANAB",
-    "route_number": "",
+    "route_number": "887AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/944",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630NAGBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -2633,53 +1548,18 @@
   },
   {
     "service_code": "1630NAGBANAB",
-    "route_number": "",
+    "route_number": "887AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/944",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630NAGBANAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "887AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "VADACHERRY",
@@ -2725,53 +1605,18 @@
   },
   {
     "service_code": "1800TIUBANNS",
-    "route_number": "",
+    "route_number": "874NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800TIUBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -2822,53 +1667,18 @@
   },
   {
     "service_code": "1800TIUBANNS",
-    "route_number": "",
+    "route_number": "874NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800TIUBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -2919,53 +1729,18 @@
   },
   {
     "service_code": "2201MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:01",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:31",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2201MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3001,53 +1776,18 @@
   },
   {
     "service_code": "2201MADBANNS",
-    "route_number": "",
+    "route_number": "846NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "22:01",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:31",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560/760",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2201MADBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "846NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3083,53 +1823,18 @@
   },
   {
     "service_code": "1830TIUBAN",
-    "route_number": "",
+    "route_number": "874UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "0.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIUBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "0:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -3195,53 +1900,18 @@
   },
   {
     "service_code": "1830TIUBAN",
-    "route_number": "",
+    "route_number": "874UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "0.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIUBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "0:00"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -3307,53 +1977,18 @@
   },
   {
     "service_code": "1915TIUBAN",
-    "route_number": "",
+    "route_number": "873UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915TIUBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "873UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -3419,53 +2054,18 @@
   },
   {
     "service_code": "1915TIUBAN",
-    "route_number": "",
+    "route_number": "873UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "9.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915TIUBAN",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "873UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:45"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "560"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -3531,53 +2131,18 @@
   },
   {
     "service_code": "2030TIUBANAL",
-    "route_number": "",
+    "route_number": "874AL",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.20Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/945",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TIUBANAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874AL"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:20"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -3628,53 +2193,18 @@
   },
   {
     "service_code": "2030TIUBANAL",
-    "route_number": "",
+    "route_number": "874AL",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.20Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 683/945",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TIUBANAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "874AL"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:20"
-      },
-      {
-        "city": "461.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "683"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",

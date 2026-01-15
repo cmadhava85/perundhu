@@ -1,43 +1,18 @@
 [
   {
     "service_code": "0400KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0400KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -88,43 +63,18 @@
   },
   {
     "service_code": "0400KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0400KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -175,43 +125,18 @@
   },
   {
     "service_code": "0800KCBMAD",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "9 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0800KCBMAD",
-        "landmark": "Route No. :",
-        "time": "137UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -272,43 +197,18 @@
   },
   {
     "service_code": "0800KCBMAD",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "08:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:30",
     "available_seats": "9 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0800KCBMAD",
-        "landmark": "Route No. :",
-        "time": "137UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -369,43 +269,18 @@
   },
   {
     "service_code": "0801KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "08:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0801KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -456,43 +331,18 @@
   },
   {
     "service_code": "0801KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "08:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0801KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -543,43 +393,18 @@
   },
   {
     "service_code": "0830KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0830KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -635,43 +460,18 @@
   },
   {
     "service_code": "0830KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0830KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -727,43 +527,18 @@
   },
   {
     "service_code": "0900KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0900KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -814,43 +589,18 @@
   },
   {
     "service_code": "0900KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "0900KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -901,43 +651,18 @@
   },
   {
     "service_code": "1000KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1000KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -988,43 +713,18 @@
   },
   {
     "service_code": "1000KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1000KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1075,43 +775,18 @@
   },
   {
     "service_code": "1030KCBTUTAB",
-    "route_number": "",
+    "route_number": "170AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1030KCBTUTAB",
-        "landmark": "Route No. :",
-        "time": "170AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1172,43 +847,18 @@
   },
   {
     "service_code": "1030KCBTUTAB",
-    "route_number": "",
+    "route_number": "170AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1030KCBTUTAB",
-        "landmark": "Route No. :",
-        "time": "170AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1269,43 +919,18 @@
   },
   {
     "service_code": "1045KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1045KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1356,43 +981,18 @@
   },
   {
     "service_code": "1045KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "10:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:15",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1045KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1443,43 +1043,18 @@
   },
   {
     "service_code": "1100KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1100KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1535,44 +1110,19 @@
   },
   {
     "service_code": "1100KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
       {
-        "city": "1100KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
-      {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
         "time": "11:00"
@@ -1627,43 +1177,18 @@
   },
   {
     "service_code": "1100KCBMAD",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1100KCBMAD",
-        "landmark": "Route No. :",
-        "time": "137UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1724,43 +1249,18 @@
   },
   {
     "service_code": "1100KCBMAD",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1100KCBMAD",
-        "landmark": "Route No. :",
-        "time": "137UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1821,43 +1321,18 @@
   },
   {
     "service_code": "1100KCBMADAL",
-    "route_number": "",
+    "route_number": "137AL",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1100KCBMADAL",
-        "landmark": "Route No. :",
-        "time": "137AL"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:30"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1903,43 +1378,18 @@
   },
   {
     "service_code": "1100KCBMADAL",
-    "route_number": "",
+    "route_number": "137AL",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1100KCBMADAL",
-        "landmark": "Route No. :",
-        "time": "137AL"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:30"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1985,43 +1435,18 @@
   },
   {
     "service_code": "1730TIITICNS",
-    "route_number": "",
+    "route_number": "H191NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1730TIITICNS",
-        "landmark": "Route No. :",
-        "time": "H191NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI TIRUVOTRIYUR",
         "landmark": "CHENNAI TIRUVOTRIYUR",
@@ -2092,43 +1517,18 @@
   },
   {
     "service_code": "1730TIITICNS",
-    "route_number": "",
+    "route_number": "H191NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1730TIITICNS",
-        "landmark": "Route No. :",
-        "time": "H191NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI TIRUVOTRIYUR",
         "landmark": "CHENNAI TIRUVOTRIYUR",
@@ -2199,43 +1599,18 @@
   },
   {
     "service_code": "1950KCBSVI",
-    "route_number": "",
+    "route_number": "185UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:50",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1950KCBSVI",
-        "landmark": "Route No. :",
-        "time": "185UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2306,43 +1681,18 @@
   },
   {
     "service_code": "1950KCBSVI",
-    "route_number": "",
+    "route_number": "185UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:50",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "1950KCBSVI",
-        "landmark": "Route No. :",
-        "time": "185UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2413,43 +1763,18 @@
   },
   {
     "service_code": "2001KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:31",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2001KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2500,43 +1825,18 @@
   },
   {
     "service_code": "2001KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:31",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2001KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2587,43 +1887,18 @@
   },
   {
     "service_code": "2030KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2030KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2679,43 +1954,18 @@
   },
   {
     "service_code": "2030KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2030KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2771,43 +2021,18 @@
   },
   {
     "service_code": "2030KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2030KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2858,43 +2083,18 @@
   },
   {
     "service_code": "2030KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2030KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2945,43 +2145,18 @@
   },
   {
     "service_code": "2100KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2100KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3032,43 +2207,18 @@
   },
   {
     "service_code": "2100KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2100KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3119,43 +2269,18 @@
   },
   {
     "service_code": "2130KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2130KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3211,43 +2336,85 @@
   },
   {
     "service_code": "2130KCBMADAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "15/01/2026",
     "stops": [
       {
-        "city": "2130KCBMADAB",
-        "landmark": "Route No. :",
-        "time": "137AB"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENNAI KALAIGNAR CBT",
+        "time": "21:30"
       },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
+        "landmark": "GUDUVANCHERY",
+        "time": "21:35"
       },
       {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "SRM UNIVERSITY",
+        "time": "21:40"
       },
       {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MARAIMALAI NAGAR BUSSTOP",
+        "time": "21:50"
       },
       {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MAHINDRA CITY",
+        "time": "22:00"
       },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU TOLL",
+        "time": "22:10"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "CHENGALPATTU BYPASS",
+        "time": "22:20"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "MELMARUVATHUR BUS STOP",
+        "time": "22:50"
+      },
+      {
+        "city": "CHENNAI-KILAMBAKKAM-KCBT",
+        "landmark": "TINDIVANAM",
+        "time": "23:10"
+      },
+      {
+        "city": "MADURAI",
+        "landmark": "MATTUTHAVANI BS",
+        "time": "06:00"
+      }
+    ],
+    "scraped_at": "2026-01-12T17:49:08.959409"
+  },
+  {
+    "service_code": "2130KCBMADMS",
+    "route_number": "137MS",
+    "corporation": "SETC",
+    "origin": "CHENNAI",
+    "destination": "MADURAI",
+    "departure_time": "21:30",
+    "duration": "9.30Hrs",
+    "arrival_time": "06:00",
+    "available_seats": "26 Seats Available",
+    "bus_type": "Standard",
+    "fare": "Rs 741",
+    "journey_date": "15/01/2026",
+    "stops": [
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3303,135 +2470,18 @@
   },
   {
     "service_code": "2130KCBMADMS",
-    "route_number": "",
+    "route_number": "137MS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 741",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2130KCBMADMS",
-        "landmark": "Route No. :",
-        "time": "137MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:30"
-      },
-      {
-        "city": "442.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "CHENNAI KALAIGNAR CBT",
-        "time": "21:30"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "GUDUVANCHERY",
-        "time": "21:35"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "SRM UNIVERSITY",
-        "time": "21:40"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "MARAIMALAI NAGAR BUSSTOP",
-        "time": "21:50"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "MAHINDRA CITY",
-        "time": "22:00"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "CHENGALPATTU TOLL",
-        "time": "22:10"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "CHENGALPATTU BYPASS",
-        "time": "22:20"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "MELMARUVATHUR BUS STOP",
-        "time": "22:50"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "TINDIVANAM",
-        "time": "23:10"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "MATTUTHAVANI BS",
-        "time": "06:00"
-      }
-    ],
-    "scraped_at": "2026-01-12T17:49:08.959409"
-  },
-  {
-    "service_code": "2130KCBMADMS",
-    "route_number": "",
-    "corporation": "SETC",
-    "origin": "CHENNAI",
-    "destination": "MADURAI",
-    "departure_time": "",
-    "duration": "9.30Hrs",
-    "arrival_time": "",
-    "available_seats": "26 Seats Available",
-    "bus_type": "Standard",
-    "fare": "Rs 741",
-    "journey_date": "15/01/2026",
-    "stops": [
-      {
-        "city": "2130KCBMADMS",
-        "landmark": "Route No. :",
-        "time": "137MS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:30"
-      },
-      {
-        "city": "442.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3487,43 +2537,18 @@
   },
   {
     "service_code": "2205KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2205KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3574,43 +2599,18 @@
   },
   {
     "service_code": "2205KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:35",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2205KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3661,43 +2661,18 @@
   },
   {
     "service_code": "2230KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2230KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3748,43 +2723,18 @@
   },
   {
     "service_code": "2230KCBMADNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2230KCBMADNS",
-        "landmark": "Route No. :",
-        "time": "137NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3835,43 +2785,18 @@
   },
   {
     "service_code": "2301KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "23:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:31",
     "available_seats": "20 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2301KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3917,43 +2842,18 @@
   },
   {
     "service_code": "2301KCBMADLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "23:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:31",
     "available_seats": "20 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "15/01/2026",
     "stops": [
-      {
-        "city": "2301KCBMADLB",
-        "landmark": "Route No. :",
-        "time": "137LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To Place :",
-        "time": "MADURAI"
-      },
-      {
-        "city": "15/01/2026",
-        "landmark": "Journey Hours *:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation :",
-        "time": "SETC"
-      },
-      {
-        "city": "Sl. No",
-        "landmark": "City",
-        "time": "Land Mark"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

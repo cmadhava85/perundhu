@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0827PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835B",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "08:27",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:57",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0827PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835B"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0827PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835B",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "08:27",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:57",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0827PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835B"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1035PUKCOIKK01L",
-    "route_number": "",
+    "route_number": "569C",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:35",
     "duration": "7.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 224",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1035PUKCOIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "569C"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:10"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "224"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1035PUKCOIKK01L",
-    "route_number": "",
+    "route_number": "569C",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:35",
     "duration": "7.10Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 224",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1035PUKCOIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "569C"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:10"
-      },
-      {
-        "city": "296.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "224"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1055PUKCOIKK01L",
-    "route_number": "",
+    "route_number": "187",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:55",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1055PUKCOIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "187"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "275.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1055PUKCOIKK01L",
-    "route_number": "",
+    "route_number": "187",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "10:55",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1055PUKCOIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "187"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "275.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "2030PUKCOIKK01L",
-    "route_number": "",
+    "route_number": "497",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030PUKCOIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "497"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "275.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "2030PUKCOIKK01L",
-    "route_number": "",
+    "route_number": "497",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 209",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030PUKCOIKK01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "497"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "275.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "209"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "2140PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835A",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "21:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:10",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2140PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835A"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "2140PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835A",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "21:40",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:10",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2140PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835A"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "2205PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835C",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:35",
     "available_seats": "38 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2205PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835C"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "2205PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835C",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:35",
     "available_seats": "38 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2205PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835C"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "2224PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835D",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "22:24",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:54",
     "available_seats": "38 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2224PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835D"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "2224PUKCOICC01L",
-    "route_number": "",
+    "route_number": "835D",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "22:24",
     "duration": "6.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:54",
     "available_seats": "38 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 204",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2224PUKCOICC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "835D"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:30"
-      },
-      {
-        "city": "262.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "204"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUKKOTTAI",
         "landmark": "PUDUKKOTTAI",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "2015KCBPLL",
-    "route_number": "",
+    "route_number": "433UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "8.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015KCBPLL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "433UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:15"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -118,53 +83,18 @@
   },
   {
     "service_code": "2015KCBPLL",
-    "route_number": "",
+    "route_number": "433UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "8.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015KCBPLL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "433UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:15"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -235,53 +165,18 @@
   },
   {
     "service_code": "2045KCBKRU",
-    "route_number": "",
+    "route_number": "429UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045KCBKRU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "429UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -342,53 +237,18 @@
   },
   {
     "service_code": "2045KCBKRU",
-    "route_number": "",
+    "route_number": "429UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "20:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2045KCBKRU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "429UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -449,53 +309,18 @@
   },
   {
     "service_code": "2100KCBDHRCC01U",
-    "route_number": "",
+    "route_number": "100UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 358",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBDHRCC01U",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "358"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -516,53 +341,18 @@
   },
   {
     "service_code": "2100KCBDHRCC01U",
-    "route_number": "",
+    "route_number": "100UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 358",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100KCBDHRCC01U",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "100UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "358"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -583,53 +373,18 @@
   },
   {
     "service_code": "2130KCBKRU",
-    "route_number": "",
+    "route_number": "429UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBKRU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "429UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -685,53 +440,18 @@
   },
   {
     "service_code": "2130KCBKRU",
-    "route_number": "",
+    "route_number": "429UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KARUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 363",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130KCBKRU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "429UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "361.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "363"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

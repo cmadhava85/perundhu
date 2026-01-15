@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1230TRINAGAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 380",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230TRINAGAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "380"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -73,53 +38,18 @@
   },
   {
     "service_code": "1230TRINAGAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 380",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230TRINAGAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "380"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -145,53 +75,18 @@
   },
   {
     "service_code": "2100TRINAG",
-    "route_number": "",
+    "route_number": "125UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 290",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100TRINAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "290"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -217,53 +112,18 @@
   },
   {
     "service_code": "2100TRINAG",
-    "route_number": "",
+    "route_number": "125UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 290",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100TRINAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "290"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -289,53 +149,18 @@
   },
   {
     "service_code": "1700NEVKAK",
-    "route_number": "",
+    "route_number": "125KUD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 289",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NEVKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125KUD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "291.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "289"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NEYVELI",
         "landmark": "NEYVELI",
@@ -401,53 +226,18 @@
   },
   {
     "service_code": "1700NEVKAK",
-    "route_number": "",
+    "route_number": "125KUD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 289",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NEVKAK",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125KUD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "291.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "289"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NEYVELI",
         "landmark": "NEYVELI",
@@ -513,53 +303,18 @@
   },
   {
     "service_code": "2200TRINAGAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 373",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200TRINAGAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "373"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -585,53 +340,18 @@
   },
   {
     "service_code": "2200TRINAGAC",
-    "route_number": "",
+    "route_number": "125AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 373",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200TRINAGAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "282.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "373"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -657,53 +377,18 @@
   },
   {
     "service_code": "1430TIPNAG",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 289",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430TIPNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "287.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "289"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -754,53 +439,18 @@
   },
   {
     "service_code": "1430TIPNAG",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 289",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430TIPNAG",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "287.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "289"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",

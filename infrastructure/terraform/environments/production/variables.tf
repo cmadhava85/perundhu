@@ -256,6 +256,28 @@ variable "db_general_log_enabled" {
 }
 
 # ============================================
+# Read Replica Configuration (100k users scale)
+# ============================================
+
+variable "create_read_replica" {
+  description = "Create read replica for scaling read operations"
+  type        = bool
+  default     = false # Enable in production when scaling to 100k users
+}
+
+variable "read_replica_tier" {
+  description = "Database tier for read replica"
+  type        = string
+  default     = "db-n1-standard-1" # Can be same or smaller than primary
+}
+
+variable "read_replica_zone" {
+  description = "Zone for read replica (different from primary for HA)"
+  type        = string
+  default     = "asia-south1-b"
+}
+
+# ============================================
 # Storage Configuration
 # ============================================
 

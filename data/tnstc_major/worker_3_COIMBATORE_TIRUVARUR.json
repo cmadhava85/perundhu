@@ -1,53 +1,18 @@
 [
   {
     "service_code": "2030COIVEA",
-    "route_number": "",
+    "route_number": "724UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUVARUR",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 343",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030COIVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "724UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUVARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "343"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -78,53 +43,18 @@
   },
   {
     "service_code": "2030COIVEA",
-    "route_number": "",
+    "route_number": "724UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUVARUR",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 343",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030COIVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "724UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUVARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "343"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -155,53 +85,18 @@
   },
   {
     "service_code": "1700EKMVEANS",
-    "route_number": "",
+    "route_number": "770UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUVARUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 358/555",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700EKMVEANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "770UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUVARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "358"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERNAKULAM",
         "landmark": "ERNAKULAM SOUTH KSRTC B.S",
@@ -267,53 +162,18 @@
   },
   {
     "service_code": "1700EKMVEANS",
-    "route_number": "",
+    "route_number": "770UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "TIRUVARUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 358/555",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700EKMVEANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "770UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUVARUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "345.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "358"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERNAKULAM",
         "landmark": "ERNAKULAM SOUTH KSRTC B.S",

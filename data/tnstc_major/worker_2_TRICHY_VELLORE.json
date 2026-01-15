@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0030TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304M",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304M"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0030TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304M",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "00:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0030TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304M"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0100TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304T",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "01:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0100TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304T"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0100TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304T",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "01:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0100TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304T"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0400TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304Q",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0400TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304Q"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0400TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304Q",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0400TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304Q"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0500TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304U",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0500TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304U"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0500TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304U",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0500TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304U"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0630TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304F",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "06:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:10",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0630TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304F"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0630TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304F",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "06:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:10",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0630TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304F"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0700TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304V",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304V"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -683,53 +298,18 @@
   },
   {
     "service_code": "0700TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304V",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "07:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0700TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304V"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -745,53 +325,18 @@
   },
   {
     "service_code": "0730TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304G",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "07:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:10",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0730TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304G"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -807,53 +352,18 @@
   },
   {
     "service_code": "0730TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304G",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "07:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:10",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0730TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304G"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -869,53 +379,18 @@
   },
   {
     "service_code": "0830TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304ACB",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304ACB"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -931,53 +406,18 @@
   },
   {
     "service_code": "0830TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304ACB",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304ACB"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -993,53 +433,18 @@
   },
   {
     "service_code": "0900TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304N",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304N"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1055,53 +460,18 @@
   },
   {
     "service_code": "0900TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304N",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304N"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1117,53 +487,18 @@
   },
   {
     "service_code": "0940TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304H",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "09:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:20",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0940TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304H"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1179,53 +514,18 @@
   },
   {
     "service_code": "0940TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304H",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "09:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:20",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0940TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304H"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1241,53 +541,18 @@
   },
   {
     "service_code": "1020TRIVELVV05A",
-    "route_number": "",
+    "route_number": "304ACC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "10:20",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 321",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1020TRIVELVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304ACC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "321"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1303,53 +568,18 @@
   },
   {
     "service_code": "1020TRIVELVV05A",
-    "route_number": "",
+    "route_number": "304ACC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "10:20",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 321",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1020TRIVELVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304ACC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "321"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1365,53 +595,18 @@
   },
   {
     "service_code": "1100TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304I",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304I"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1427,53 +622,18 @@
   },
   {
     "service_code": "1100TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304I",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304I"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1489,53 +649,18 @@
   },
   {
     "service_code": "1140TRIVELVV05L",
-    "route_number": "",
+    "route_number": "305A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1140TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "305A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1551,53 +676,18 @@
   },
   {
     "service_code": "1140TRIVELVV05L",
-    "route_number": "",
+    "route_number": "305A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "11:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1140TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "305A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1613,53 +703,18 @@
   },
   {
     "service_code": "1300TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:40",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1675,53 +730,18 @@
   },
   {
     "service_code": "1300TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:40",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1737,53 +757,18 @@
   },
   {
     "service_code": "1400TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304J",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:40",
     "available_seats": "40 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304J"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1799,53 +784,18 @@
   },
   {
     "service_code": "1400TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304J",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:40",
     "available_seats": "40 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304J"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1861,53 +811,18 @@
   },
   {
     "service_code": "1440TRIVELVV05A",
-    "route_number": "",
+    "route_number": "304O",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:20",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 321",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1440TRIVELVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304O"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "321"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1923,53 +838,18 @@
   },
   {
     "service_code": "1440TRIVELVV05A",
-    "route_number": "",
+    "route_number": "304O",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:20",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 321",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1440TRIVELVV05A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304O"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "321"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -1985,53 +865,18 @@
   },
   {
     "service_code": "1550TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304B",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:50",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1550TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304B"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2047,53 +892,18 @@
   },
   {
     "service_code": "1550TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304B",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:50",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1550TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304B"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2109,53 +919,18 @@
   },
   {
     "service_code": "1630TRIVELVV05L",
-    "route_number": "",
+    "route_number": "307B",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "307B"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2171,53 +946,18 @@
   },
   {
     "service_code": "1630TRIVELVV05L",
-    "route_number": "",
+    "route_number": "307B",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "23:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "307B"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2233,53 +973,18 @@
   },
   {
     "service_code": "1750TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304K",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "17:50",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1750TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304K"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2295,53 +1000,18 @@
   },
   {
     "service_code": "1750TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304K",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "17:50",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1750TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304K"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2357,53 +1027,18 @@
   },
   {
     "service_code": "1840TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304P",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1840TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304P"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2419,53 +1054,18 @@
   },
   {
     "service_code": "1840TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304P",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:40",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1840TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304P"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2481,53 +1081,18 @@
   },
   {
     "service_code": "1930TRITIPAC",
-    "route_number": "",
+    "route_number": "850AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 401",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930TRITIPAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "850AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "401"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2578,53 +1143,18 @@
   },
   {
     "service_code": "1930TRITIPAC",
-    "route_number": "",
+    "route_number": "850AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "29 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 401",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930TRITIPAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "850AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "401"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2675,53 +1205,18 @@
   },
   {
     "service_code": "1930TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304C",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:10",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304C"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2737,53 +1232,18 @@
   },
   {
     "service_code": "1930TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304C",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:10",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304C"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2799,53 +1259,18 @@
   },
   {
     "service_code": "2015TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304R",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304R"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2861,53 +1286,18 @@
   },
   {
     "service_code": "2015TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304R",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:15",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:55",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2015TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304R"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -2923,53 +1313,18 @@
   },
   {
     "service_code": "2030TRITIP",
-    "route_number": "",
+    "route_number": "850UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "20 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TRITIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "850UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3020,53 +1375,18 @@
   },
   {
     "service_code": "2030TRITIP",
-    "route_number": "",
+    "route_number": "850UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "20 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TRITIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "850UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3117,53 +1437,18 @@
   },
   {
     "service_code": "1800KDITIP",
-    "route_number": "",
+    "route_number": "969UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KDITIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "969UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -3199,53 +1484,18 @@
   },
   {
     "service_code": "1800KDITIP",
-    "route_number": "",
+    "route_number": "969UD",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "16 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 308",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800KDITIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "969UD"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "308"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KARAIKUDI",
         "landmark": "KARAIKUDI",
@@ -3281,53 +1531,18 @@
   },
   {
     "service_code": "2115TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304ACA",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:55",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304ACA"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3343,53 +1558,18 @@
   },
   {
     "service_code": "2115TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304ACA",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "21:15",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:55",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2115TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304ACA"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3405,53 +1585,18 @@
   },
   {
     "service_code": "2130TRITIPAC",
-    "route_number": "",
+    "route_number": "850AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 401",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130TRITIPAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "850AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "294.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "401"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3502,53 +1647,18 @@
   },
   {
     "service_code": "2130TRITIPAC",
-    "route_number": "",
+    "route_number": "850AC",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 401",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130TRITIPAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "850AC"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "294.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "401"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3599,53 +1709,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 391/603",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "391"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -3706,53 +1781,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "6.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 391/603",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:15"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "391"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -3813,53 +1853,18 @@
   },
   {
     "service_code": "2200TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304E",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:40",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304E"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3875,53 +1880,18 @@
   },
   {
     "service_code": "2200TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304E",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "22:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:40",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2200TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304E"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3937,53 +1907,18 @@
   },
   {
     "service_code": "2230TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304S",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304S"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -3999,53 +1934,18 @@
   },
   {
     "service_code": "2230TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304S",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304S"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -4061,53 +1961,18 @@
   },
   {
     "service_code": "2300TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304L",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304L"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -4123,53 +1988,18 @@
   },
   {
     "service_code": "2300TRIVELVV05L",
-    "route_number": "",
+    "route_number": "304L",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "304L"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -4185,53 +2015,18 @@
   },
   {
     "service_code": "2350TRIVELVV05L",
-    "route_number": "",
+    "route_number": "307A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "307A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -4247,53 +2042,18 @@
   },
   {
     "service_code": "2350TRIVELVV05L",
-    "route_number": "",
+    "route_number": "307A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "7.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 269",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350TRIVELVV05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "307A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:40"
-      },
-      {
-        "city": "303.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "VILLUPURAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "269"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1700MARPUU",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MARPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -108,53 +73,18 @@
   },
   {
     "service_code": "1700MARPUU",
-    "route_number": "",
+    "route_number": "531MUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "7.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:15",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MARPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531MUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:45"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -215,53 +145,18 @@
   },
   {
     "service_code": "1705MARVEA",
-    "route_number": "",
+    "route_number": "560CUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:05",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "7 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1705MARVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "560CUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -317,53 +212,18 @@
   },
   {
     "service_code": "1705MARVEA",
-    "route_number": "",
+    "route_number": "560CUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "17:05",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "7 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1705MARVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "560CUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -419,53 +279,18 @@
   },
   {
     "service_code": "1930KAKVEA",
-    "route_number": "",
+    "route_number": "561UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930KAKVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "561UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -526,53 +351,18 @@
   },
   {
     "service_code": "1930KAKVEA",
-    "route_number": "",
+    "route_number": "561UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930KAKVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "561UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -633,53 +423,18 @@
   },
   {
     "service_code": "2130NAGVEA",
-    "route_number": "",
+    "route_number": "531VUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "4.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130NAGVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531VUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:30"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -725,53 +480,18 @@
   },
   {
     "service_code": "2130NAGVEA",
-    "route_number": "",
+    "route_number": "531VUD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "THANJAVUR",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "4.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 333",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130NAGVEA",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531VUD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "THANJAVUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:30"
-      },
-      {
-        "city": "333.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "333"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

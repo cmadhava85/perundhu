@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1345NAGDINTT05L",
-    "route_number": "",
+    "route_number": "505JDGL",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 274",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345NAGDINTT05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505JDGL"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "317.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "274"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1345NAGDINTT05L",
-    "route_number": "",
+    "route_number": "505JDGL",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "8.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 274",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345NAGDINTT05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "505JDGL"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:30"
-      },
-      {
-        "city": "317.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "TIRUNELVEL"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "274"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

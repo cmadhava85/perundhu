@@ -1,7 +1,5 @@
 package com.perundhu.infrastructure.config;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.cache.CacheManager;
@@ -34,6 +32,13 @@ public class CacheConfig {
         public static final String STOPS_CACHE = "stopsCache";
         public static final String CONNECTING_ROUTES_CACHE = "connectingRoutesCache";
         public static final String PUBLIC_STATS_CACHE = "publicStatsCache";
+        
+        // Entity-level caches for 100k user scale optimization
+        public static final String ROUTE_CONTRIBUTIONS_CACHE = "routeContributionsCache";
+        public static final String IMAGE_CONTRIBUTIONS_CACHE = "imageContributionsCache";
+        public static final String REVIEWS_CACHE = "reviewsCache";
+        public static final String BUSES_CACHE = "busesCache";
+        public static final String BUS_ROUTES_CACHE = "busRoutesCache";
 
         /**
          * Custom cache manager with specific TTLs for different cache types.
@@ -65,7 +70,12 @@ public class CacheConfig {
                                 BUS_SEARCH_CACHE,
                                 STOPS_CACHE,
                                 CONNECTING_ROUTES_CACHE,
-                                PUBLIC_STATS_CACHE));
+                                PUBLIC_STATS_CACHE,
+                                ROUTE_CONTRIBUTIONS_CACHE,
+                                IMAGE_CONTRIBUTIONS_CACHE,
+                                REVIEWS_CACHE,
+                                BUSES_CACHE,
+                                BUS_ROUTES_CACHE));
 
                 cacheManager.setAllowNullValues(false);
                 return cacheManager;
@@ -111,6 +121,30 @@ public class CacheConfig {
                         case PUBLIC_STATS_CACHE -> Caffeine.newBuilder()
                                         .expireAfterWrite(60, TimeUnit.MINUTES)
                                         .maximumSize(10)
+                                        .recordStats();
+
+                        // Route contributions cache (moderate TTL, user actions)
+                        case ROUTE_CONTRIBUTIONS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                                        .maximumSize(1000)
+                                        .recordStats();
+
+                        // Image contributions cache (moderate TTL)
+                        case IMAGE_CONTRIBUTIONS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                                        .maximumSize(500)
+                                        .recordStats();
+
+                        // Reviews cache (longer TTL, less frequent updates)
+                        case REVIEWS_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(15, TimeUnit.MINUTES)
+                                        .maximumSize(5000)
+                                        .recordStats();
+
+                        // Buses cache (longer TTL, schedule data)
+                        case BUSES_CACHE, BUS_ROUTES_CACHE -> Caffeine.newBuilder()
+                                        .expireAfterWrite(30, TimeUnit.MINUTES)
+                                        .maximumSize(2000)
                                         .recordStats();
 
                         // Default for all other caches

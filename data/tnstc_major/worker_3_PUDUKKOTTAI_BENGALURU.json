@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1900DEVBANNS",
-    "route_number": "",
+    "route_number": "857NS",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 500",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900DEVBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "857NS"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "403.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "500"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "DEVAKOTTAI",
         "landmark": "DEVAKOTTAI",
@@ -78,53 +43,18 @@
   },
   {
     "service_code": "1900DEVBANNS",
-    "route_number": "",
+    "route_number": "857NS",
     "corporation": "SETC",
     "origin": "PUDUKKOTTAI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "",
     "bus_type": "Standard",
     "fare": "Rs 500",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900DEVBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "857NS"
-      },
-      {
-        "city": "PUDUKKOTTAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "403.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "500"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "DEVAKOTTAI",
         "landmark": "DEVAKOTTAI",

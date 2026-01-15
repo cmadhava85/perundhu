@@ -49,3 +49,28 @@ output "database_url" {
   value       = "jdbc:mysql://google/${google_sql_database.database.name}?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=${google_sql_database_instance.mysql_instance.connection_name}"
   sensitive   = true
 }
+
+# ============================================
+# Read Replica Outputs (for 100k users scale)
+# ============================================
+
+output "read_replica_instance_name" {
+  description = "The name of the read replica instance"
+  value       = var.create_read_replica ? google_sql_database_instance.read_replica[0].name : null
+}
+
+output "read_replica_connection_name" {
+  description = "The connection name of the read replica instance"
+  value       = var.create_read_replica ? google_sql_database_instance.read_replica[0].connection_name : null
+}
+
+output "read_replica_private_ip" {
+  description = "The private IP address of the read replica instance"
+  value       = var.create_read_replica ? google_sql_database_instance.read_replica[0].private_ip_address : null
+}
+
+output "read_replica_url" {
+  description = "JDBC URL for connecting to the read replica"
+  value       = var.create_read_replica ? "jdbc:mysql://google/${google_sql_database.database.name}?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=${google_sql_database_instance.read_replica[0].connection_name}" : null
+  sensitive   = true
+}

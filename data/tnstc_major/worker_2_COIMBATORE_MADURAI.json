@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1115COIMADMM05L",
-    "route_number": "",
+    "route_number": "026P",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:15",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115COIMADMM05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "026P"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1115COIMADMM05L",
-    "route_number": "",
+    "route_number": "026P",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "11:15",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:15",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1115COIMADMM05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "026P"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1335COIMADMM01A",
-    "route_number": "",
+    "route_number": "144A2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:35",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:35",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1335COIMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144A2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "240.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1335COIMADMM01A",
-    "route_number": "",
+    "route_number": "144A2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:35",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:35",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1335COIMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144A2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "240.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1410COIMADMM01L",
-    "route_number": "",
+    "route_number": "146I1",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410COIMADMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "146I1"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1410COIMADMM01L",
-    "route_number": "",
+    "route_number": "146I1",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:10",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1410COIMADMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "146I1"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "1610COIMADMM05L",
-    "route_number": "",
+    "route_number": "015C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:10",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1610COIMADMM05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "015C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "1610COIMADMM05L",
-    "route_number": "",
+    "route_number": "015C",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:10",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:10",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1610COIMADMM05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "015C"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "1945COIMADMM01L",
-    "route_number": "",
+    "route_number": "161B2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1945COIMADMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "161B2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "1945COIMADMM01L",
-    "route_number": "",
+    "route_number": "161B2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "19:45",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:45",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1945COIMADMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "161B2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "2000COIRAM",
-    "route_number": "",
+    "route_number": "636UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 224",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COIRAM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "636UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "224"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -698,53 +313,18 @@
   },
   {
     "service_code": "2000COIRAM",
-    "route_number": "",
+    "route_number": "636UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 224",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COIRAM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "636UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "224"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -775,53 +355,18 @@
   },
   {
     "service_code": "2010COIMADMM01A",
-    "route_number": "",
+    "route_number": "142A2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:10",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2010COIMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "240.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -837,53 +382,18 @@
   },
   {
     "service_code": "2010COIMADMM01A",
-    "route_number": "",
+    "route_number": "142A2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:10",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:10",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2010COIMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "142A2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "240.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -899,53 +409,18 @@
   },
   {
     "service_code": "2020COIMADMM01L",
-    "route_number": "",
+    "route_number": "131CA1",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:20",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2020COIMADMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "131CA1"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -961,53 +436,18 @@
   },
   {
     "service_code": "2020COIMADMM01L",
-    "route_number": "",
+    "route_number": "131CA1",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "20:20",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:20",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2020COIMADMM01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "131CA1"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "218.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1023,53 +463,18 @@
   },
   {
     "service_code": "1630GURTIC",
-    "route_number": "",
+    "route_number": "785UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "3.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630GURTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "785UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:00"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GURUVAYUR",
         "landmark": "GURUVAYUR",
@@ -1110,53 +515,18 @@
   },
   {
     "service_code": "1630GURTIC",
-    "route_number": "",
+    "route_number": "785UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "3.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 229",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630GURTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "785UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:00"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "229"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GURUVAYUR",
         "landmark": "GURUVAYUR",
@@ -1197,53 +567,18 @@
   },
   {
     "service_code": "2130COIRAM",
-    "route_number": "",
+    "route_number": "636UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 224",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130COIRAM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "636UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "224"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1284,53 +619,18 @@
   },
   {
     "service_code": "2130COIRAM",
-    "route_number": "",
+    "route_number": "636UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 224",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130COIRAM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "636UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "228.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "224"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1371,53 +671,18 @@
   },
   {
     "service_code": "2350COIMADMM01A",
-    "route_number": "",
+    "route_number": "144A2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350COIMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144A2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "240.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",
@@ -1433,53 +698,18 @@
   },
   {
     "service_code": "2350COIMADMM01A",
-    "route_number": "",
+    "route_number": "144A2",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "23:50",
     "duration": "5.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 203",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2350COIMADMM01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "144A2"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:00"
-      },
-      {
-        "city": "240.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "203"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "SINGANALLUR BS",

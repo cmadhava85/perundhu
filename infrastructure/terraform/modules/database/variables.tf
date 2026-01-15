@@ -160,3 +160,25 @@ variable "create_test_database" {
   type        = bool
   default     = true
 }
+
+# ============================================
+# Read Replica Configuration (for 100k users scale)
+# ============================================
+
+variable "create_read_replica" {
+  description = "Whether to create a read replica for scaling read operations"
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_tier" {
+  description = "Database tier for read replica (can be smaller than primary)"
+  type        = string
+  default     = "db-f1-micro"
+}
+
+variable "read_replica_zone" {
+  description = "Zone for read replica (should be different from primary for HA)"
+  type        = string
+  default     = "asia-south1-b"
+}

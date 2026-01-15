@@ -8,6 +8,7 @@ import com.perundhu.domain.model.LocationId;
 import com.perundhu.domain.port.LocationRepository;
 import com.perundhu.infrastructure.persistence.entity.LocationJpaEntity;
 import com.perundhu.infrastructure.persistence.jpa.LocationJpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 // Remove @Repository annotation - managed by HexagonalConfig
 public class LocationJpaRepositoryAdapter implements LocationRepository {
@@ -19,18 +20,21 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Location> findById(LocationId id) {
         return jpaRepository.findById(id.getValue())
                 .map(LocationJpaEntity::toDomainModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Location> findById(Long id) {
         return jpaRepository.findById(id)
                 .map(LocationJpaEntity::toDomainModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Location> findAll() {
         return jpaRepository.findAll().stream()
                 .map(LocationJpaEntity::toDomainModel)
@@ -38,6 +42,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Location> findAllExcept(LocationId id) {
         return jpaRepository.findAll().stream()
                 .filter(entity -> !entity.getId().equals(id.getValue()))
@@ -46,6 +51,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Location> findByName(String name) {
         return jpaRepository.findByNameContainingIgnoreCase(name).stream()
                 .map(LocationJpaEntity::toDomainModel)
@@ -53,6 +59,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Location> findByExactName(String name) {
         // Use case-insensitive matching to avoid duplicate locations with different
         // cases
@@ -62,6 +69,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Location> findNearbyLocation(Double latitude, Double longitude, double radiusDegrees) {
         // Calculate bounds for approximate search
         double latMin = latitude - radiusDegrees;
@@ -76,6 +84,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Location> findCommonConnections(Long fromLocationId, Long toLocationId) {
         // This is a complex query - for now return empty list until proper
         // implementation
@@ -107,6 +116,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     /**
      * Find locations that have valid coordinates
      */
+    @Transactional(readOnly = true)
     public List<Location> findLocationsWithValidCoordinates() {
         return jpaRepository.findAll().stream()
                 .map(LocationJpaEntity::toDomainModel)
@@ -115,6 +125,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Location> findByNameContaining(String namePattern) {
         if (namePattern == null || namePattern.trim().length() < 3) {
             return List.of();
@@ -135,6 +146,7 @@ public class LocationJpaRepositoryAdapter implements LocationRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long count() {
         return jpaRepository.count();
     }

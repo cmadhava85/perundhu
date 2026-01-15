@@ -35,18 +35,21 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<UserTrackingSession> findById(Long id) {
         return repository.findById(id)
                 .map(UserTrackingSessionEntity::toDomainModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<UserTrackingSession> findBySessionId(String sessionId) {
         return repository.findBySessionId(sessionId)
                 .map(UserTrackingSessionEntity::toDomainModel);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserTrackingSession> findAll() {
         return repository.findAll().stream()
                 .map(UserTrackingSessionEntity::toDomainModel)
@@ -59,6 +62,7 @@ public class UserTrackingSessionRepositoryAdapter implements UserTrackingSession
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserTrackingSession> findByUserId(String userId) {
         return repository.findByUserId(userId).stream()
                 .map(UserTrackingSessionEntity::toDomainModel)

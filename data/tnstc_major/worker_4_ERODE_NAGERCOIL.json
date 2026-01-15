@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1930EROMAR",
-    "route_number": "",
+    "route_number": "668UD",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930EROMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "668UD"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "456.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "457"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -93,53 +58,18 @@
   },
   {
     "service_code": "1930EROMAR",
-    "route_number": "",
+    "route_number": "668UD",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930EROMAR",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "668UD"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "456.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "457"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERODE",
         "landmark": "ERODE",
@@ -185,53 +115,18 @@
   },
   {
     "service_code": "1850ANTNAGCC01L",
-    "route_number": "",
+    "route_number": "39201",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "18:50",
     "duration": "10.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 345",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1850ANTNAGCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "39201"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:25"
-      },
-      {
-        "city": "456.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "345"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ANTHIYUR",
         "landmark": "ANTHIYUR",
@@ -252,53 +147,18 @@
   },
   {
     "service_code": "1850ANTNAGCC01L",
-    "route_number": "",
+    "route_number": "39201",
     "corporation": "SETC",
     "origin": "ERODE",
     "destination": "NAGERCOIL",
-    "departure_time": "",
+    "departure_time": "18:50",
     "duration": "10.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:50",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 345",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1850ANTNAGCC01L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "39201"
-      },
-      {
-        "city": "ERODE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "NAGERCOIL VADACHERRY"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:25"
-      },
-      {
-        "city": "456.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "345"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ANTHIYUR",
         "landmark": "ANTHIYUR",

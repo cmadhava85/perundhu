@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1000TRIDINKK01A",
-    "route_number": "",
+    "route_number": "575A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 104",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000TRIDINKK01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "575A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "95.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "104"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "1000TRIDINKK01A",
-    "route_number": "",
+    "route_number": "575A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 104",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000TRIDINKK01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "575A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "95.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "104"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "1300TRIDINKK01A",
-    "route_number": "",
+    "route_number": "575C",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 104",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300TRIDINKK01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "575C"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "95.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "104"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "1300TRIDINKK01A",
-    "route_number": "",
+    "route_number": "575C",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 104",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300TRIDINKK01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "575C"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "95.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "104"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "1600TRIDINKK01A",
-    "route_number": "",
+    "route_number": "575A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 104",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TRIDINKK01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "575A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "95.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "104"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "1600TRIDINKK01A",
-    "route_number": "",
+    "route_number": "575A",
     "corporation": "SETC",
     "origin": "TRICHY",
     "destination": "DINDIGUL",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "3.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "47 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 104",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TRIDINKK01A",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "575A"
-      },
-      {
-        "city": "TRICHY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "DINDIGUL"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "3:30"
-      },
-      {
-        "city": "95.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "104"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TRICHY",
         "landmark": "TRICHY KKBT",

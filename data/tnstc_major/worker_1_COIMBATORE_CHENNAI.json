@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0715COIKCBNS",
-    "route_number": "",
+    "route_number": "460NS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715COIKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460NS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -108,53 +73,18 @@
   },
   {
     "service_code": "0715COIKCBNS",
-    "route_number": "",
+    "route_number": "460NS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715COIKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460NS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -215,53 +145,18 @@
   },
   {
     "service_code": "1430COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -322,53 +217,18 @@
   },
   {
     "service_code": "1430COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -429,53 +289,18 @@
   },
   {
     "service_code": "1700COIKCBAC",
-    "route_number": "",
+    "route_number": "460AC",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 630",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700COIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AC"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "630"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -521,53 +346,18 @@
   },
   {
     "service_code": "1700COIKCBAC",
-    "route_number": "",
+    "route_number": "460AC",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 630",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700COIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AC"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "630"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -613,53 +403,18 @@
   },
   {
     "service_code": "1800COIKCB",
-    "route_number": "",
+    "route_number": "460UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800COIKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -710,53 +465,18 @@
   },
   {
     "service_code": "1800COIKCB",
-    "route_number": "",
+    "route_number": "460UD",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800COIKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460UD"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -807,53 +527,18 @@
   },
   {
     "service_code": "1400GURKCBLB",
-    "route_number": "",
+    "route_number": "785LB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400GURKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "785LB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GURUVAYUR",
         "landmark": "GURUVAYUR",
@@ -884,53 +569,18 @@
   },
   {
     "service_code": "1400GURKCBLB",
-    "route_number": "",
+    "route_number": "785LB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400GURKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "785LB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "GURUVAYUR",
         "landmark": "GURUVAYUR",
@@ -961,53 +611,18 @@
   },
   {
     "service_code": "1900COITIVAB",
-    "route_number": "",
+    "route_number": "460TAB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "9.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900COITIVAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460TAB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:40"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -1063,53 +678,18 @@
   },
   {
     "service_code": "1900COITIVAB",
-    "route_number": "",
+    "route_number": "460TAB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "9.40Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900COITIVAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460TAB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:40"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "COIMBATORE",
@@ -1165,53 +745,18 @@
   },
   {
     "service_code": "1915COIKCBAC",
-    "route_number": "",
+    "route_number": "460AC",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915COIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AC"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1257,53 +802,18 @@
   },
   {
     "service_code": "1915COIKCBAC",
-    "route_number": "",
+    "route_number": "460AC",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1915COIKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AC"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1349,53 +859,18 @@
   },
   {
     "service_code": "2000COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1456,53 +931,18 @@
   },
   {
     "service_code": "2000COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1563,53 +1003,18 @@
   },
   {
     "service_code": "2000COIKCBMS",
-    "route_number": "",
+    "route_number": "460MS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 826",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COIKCBMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460MS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "492.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "826"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1655,53 +1060,18 @@
   },
   {
     "service_code": "2000COIKCBMS",
-    "route_number": "",
+    "route_number": "460MS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 826",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000COIKCBMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460MS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "492.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "826"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1747,53 +1117,18 @@
   },
   {
     "service_code": "2030COIKCBNS",
-    "route_number": "",
+    "route_number": "460NS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030COIKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460NS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1854,53 +1189,18 @@
   },
   {
     "service_code": "2030COIKCBNS",
-    "route_number": "",
+    "route_number": "460NS",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030COIKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460NS"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -1961,53 +1261,18 @@
   },
   {
     "service_code": "1430EKMKCBAB",
-    "route_number": "",
+    "route_number": "791AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 630/970",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430EKMKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "791AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "630"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERNAKULAM",
         "landmark": "ERNAKULAM SOUTH KSRTC B.S",
@@ -2083,53 +1348,18 @@
   },
   {
     "service_code": "1430EKMKCBAB",
-    "route_number": "",
+    "route_number": "791AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 630/970",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1430EKMKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "791AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "630"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "ERNAKULAM",
         "landmark": "ERNAKULAM SOUTH KSRTC B.S",
@@ -2205,53 +1435,18 @@
   },
   {
     "service_code": "2100COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 632/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "632"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2312,53 +1507,18 @@
   },
   {
     "service_code": "2100COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 632/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "632"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2419,53 +1579,18 @@
   },
   {
     "service_code": "2130COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2526,53 +1651,18 @@
   },
   {
     "service_code": "2130COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2633,53 +1723,18 @@
   },
   {
     "service_code": "2230COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:30",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2730,53 +1785,18 @@
   },
   {
     "service_code": "2230COIKCBAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:30",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230COIKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2827,53 +1847,18 @@
   },
   {
     "service_code": "2235COIKCBLB",
-    "route_number": "",
+    "route_number": "460LB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:35",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:35",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2235COIKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460LB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -2919,53 +1904,18 @@
   },
   {
     "service_code": "2235COIKCBLB",
-    "route_number": "",
+    "route_number": "460LB",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:35",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:35",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 487/755",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2235COIKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460LB"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "487"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -3011,53 +1961,18 @@
   },
   {
     "service_code": "2315COIKCBAL",
-    "route_number": "",
+    "route_number": "460AL",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:15",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2315COIKCBAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AL"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",
@@ -3103,53 +2018,18 @@
   },
   {
     "service_code": "2315COIKCBAL",
-    "route_number": "",
+    "route_number": "460AL",
     "corporation": "SETC",
     "origin": "COIMBATORE",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:15",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:15",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 631/969",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2315COIKCBAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AL"
-      },
-      {
-        "city": "COIMBATORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "486.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "631"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "COIMBATORE",
         "landmark": "GANDHIPURAM SETC BS",

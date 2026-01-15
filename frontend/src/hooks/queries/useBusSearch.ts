@@ -212,7 +212,8 @@ export function useBusStops(
   busId: number | null,
   fromLocationId: number | null,
   toLocationId: number | null,
-  enabled = true
+  enabled = true,
+  languageCode = 'en'
 ) {
   return useQuery({
     queryKey: busId && fromLocationId && toLocationId
@@ -228,6 +229,7 @@ export function useBusStops(
         params: {
           fromLocationId,
           toLocationId,
+          lang: languageCode
         },
       });
       

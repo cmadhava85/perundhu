@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1900KAKNEV",
-    "route_number": "",
+    "route_number": "125KUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "11.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KAKNEV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125KUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:30"
-      },
-      {
-        "city": "455.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "457"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -123,53 +88,18 @@
   },
   {
     "service_code": "1900KAKNEV",
-    "route_number": "",
+    "route_number": "125KUD",
     "corporation": "SETC",
     "origin": "NAGERCOIL",
     "destination": "ARIYALUR",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "11.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 457",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900KAKNEV",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "125KUD"
-      },
-      {
-        "city": "NAGERCOIL VADACHERRY",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "ARIYALUR"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:30"
-      },
-      {
-        "city": "455.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "457"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",

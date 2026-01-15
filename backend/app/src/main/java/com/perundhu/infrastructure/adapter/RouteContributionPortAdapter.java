@@ -1,6 +1,7 @@
 package com.perundhu.infrastructure.adapter;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import com.perundhu.domain.model.RouteContribution;
@@ -21,16 +22,19 @@ public class RouteContributionPortAdapter implements RouteContributionPort {
   private final RouteContributionRepository routeContributionRepository;
 
   @Override
+  @Transactional(readOnly = true)
   public List<RouteContribution> findAllRouteContributions() {
     return routeContributionRepository.findAll();
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<RouteContribution> findRouteContributionsByStatus(String status) {
     return routeContributionRepository.findByStatus(status);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public Optional<RouteContribution> findRouteContributionById(String id) {
     return routeContributionRepository.findById(id);
   }

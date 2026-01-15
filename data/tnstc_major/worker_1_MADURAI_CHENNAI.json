@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0600MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0600MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0801MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:01",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0801MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -197,53 +92,18 @@
   },
   {
     "service_code": "0801MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:01",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0801MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -269,53 +129,18 @@
   },
   {
     "service_code": "0830MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -331,53 +156,18 @@
   },
   {
     "service_code": "0830MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -393,53 +183,18 @@
   },
   {
     "service_code": "0831MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:31",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:31",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0831MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -465,53 +220,18 @@
   },
   {
     "service_code": "0831MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "08:31",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "15:31",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0831MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -537,53 +257,18 @@
   },
   {
     "service_code": "0900MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:00",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -599,53 +284,18 @@
   },
   {
     "service_code": "0900MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:00",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -661,53 +311,18 @@
   },
   {
     "service_code": "0930MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -743,53 +358,18 @@
   },
   {
     "service_code": "0930MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "09:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "18:30",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0930MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -825,53 +405,18 @@
   },
   {
     "service_code": "1000MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -887,53 +432,18 @@
   },
   {
     "service_code": "1000MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -949,53 +459,18 @@
   },
   {
     "service_code": "1030MADKCBAL",
-    "route_number": "",
+    "route_number": "137AL",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030MADKCBAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AL"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1021,53 +496,18 @@
   },
   {
     "service_code": "1030MADKCBAL",
-    "route_number": "",
+    "route_number": "137AL",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "10:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1030MADKCBAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AL"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1093,53 +533,18 @@
   },
   {
     "service_code": "1100MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1175,53 +580,18 @@
   },
   {
     "service_code": "1100MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1257,53 +627,18 @@
   },
   {
     "service_code": "1130MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "11:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1130MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1339,53 +674,18 @@
   },
   {
     "service_code": "1130MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "11:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1130MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1421,53 +721,18 @@
   },
   {
     "service_code": "1200MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1503,53 +768,18 @@
   },
   {
     "service_code": "1200MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1585,53 +815,18 @@
   },
   {
     "service_code": "1200MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1667,53 +862,18 @@
   },
   {
     "service_code": "1200MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1749,53 +909,18 @@
   },
   {
     "service_code": "1231MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:31",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:31",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1231MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1831,53 +956,18 @@
   },
   {
     "service_code": "1231MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "12:31",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:31",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1231MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1913,53 +1003,18 @@
   },
   {
     "service_code": "1300MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -1995,53 +1050,18 @@
   },
   {
     "service_code": "1300MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2077,53 +1097,18 @@
   },
   {
     "service_code": "1400MADKCBAC",
-    "route_number": "",
+    "route_number": "137AC",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400MADKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AC"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2159,53 +1144,18 @@
   },
   {
     "service_code": "1400MADKCBAC",
-    "route_number": "",
+    "route_number": "137AC",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400MADKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AC"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2241,53 +1191,18 @@
   },
   {
     "service_code": "1615MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:15",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2323,53 +1238,18 @@
   },
   {
     "service_code": "1615MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "01:15",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2405,53 +1285,18 @@
   },
   {
     "service_code": "1700MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2487,53 +1332,18 @@
   },
   {
     "service_code": "1700MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "02:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2569,53 +1379,18 @@
   },
   {
     "service_code": "1800MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2651,53 +1426,18 @@
   },
   {
     "service_code": "1800MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2733,53 +1473,18 @@
   },
   {
     "service_code": "1900MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2815,53 +1520,18 @@
   },
   {
     "service_code": "1900MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1900MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -2897,53 +1567,18 @@
   },
   {
     "service_code": "1415SHEAVANS",
-    "route_number": "",
+    "route_number": "184RNS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1415SHEAVANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184RNS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -2989,53 +1624,18 @@
   },
   {
     "service_code": "1415SHEAVANS",
-    "route_number": "",
+    "route_number": "184RNS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "14:15",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1415SHEAVANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184RNS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -3081,53 +1681,18 @@
   },
   {
     "service_code": "1930MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3163,53 +1728,18 @@
   },
   {
     "service_code": "1930MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3245,53 +1775,18 @@
   },
   {
     "service_code": "1600TICTIINS",
-    "route_number": "",
+    "route_number": "191TNS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TICTIINS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "191TNS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUCHENDUR",
         "landmark": "TIRUCHENDUR",
@@ -3347,53 +1842,18 @@
   },
   {
     "service_code": "1600TICTIINS",
-    "route_number": "",
+    "route_number": "191TNS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "3 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1600TICTIINS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "191TNS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUCHENDUR",
         "landmark": "TIRUCHENDUR",
@@ -3449,53 +1909,18 @@
   },
   {
     "service_code": "2001MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:01",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2001MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3531,53 +1956,18 @@
   },
   {
     "service_code": "2001MADKCBLB",
-    "route_number": "",
+    "route_number": "137LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:01",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:01",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2001MADKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3613,53 +2003,18 @@
   },
   {
     "service_code": "2030MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3695,53 +2050,18 @@
   },
   {
     "service_code": "2030MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3777,53 +2097,18 @@
   },
   {
     "service_code": "2100MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3859,53 +2144,18 @@
   },
   {
     "service_code": "2100MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "6 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2100MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -3941,53 +2191,18 @@
   },
   {
     "service_code": "1615SHEKCBAB",
-    "route_number": "",
+    "route_number": "184AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615SHEKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -4043,53 +2258,18 @@
   },
   {
     "service_code": "1615SHEKCBAB",
-    "route_number": "",
+    "route_number": "184AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "16:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:15",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1615SHEKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -4145,53 +2325,18 @@
   },
   {
     "service_code": "2130MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -4227,53 +2372,18 @@
   },
   {
     "service_code": "2130MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -4309,53 +2419,18 @@
   },
   {
     "service_code": "2130MADKCBMS",
-    "route_number": "",
+    "route_number": "137MS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 741",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130MADKCBMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137MS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "442.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "741"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -4391,53 +2466,18 @@
   },
   {
     "service_code": "2130MADKCBMS",
-    "route_number": "",
+    "route_number": "137MS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "21:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 741",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2130MADKCBMS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137MS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "442.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "741"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -4473,53 +2513,18 @@
   },
   {
     "service_code": "1930SVIKCB",
-    "route_number": "",
+    "route_number": "185UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930SVIKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "185UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SIVAKASI",
         "landmark": "SIVAKASI",
@@ -4550,53 +2555,18 @@
   },
   {
     "service_code": "1930SVIKCB",
-    "route_number": "",
+    "route_number": "185UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930SVIKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "185UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SIVAKASI",
         "landmark": "SIVAKASI",
@@ -4627,53 +2597,18 @@
   },
   {
     "service_code": "1815TIUTIVAB",
-    "route_number": "",
+    "route_number": "143AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815TIUTIVAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "143AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -4734,53 +2669,18 @@
   },
   {
     "service_code": "1815TIUTIVAB",
-    "route_number": "",
+    "route_number": "143AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:15",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "4 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1815TIUTIVAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "143AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -4841,53 +2741,18 @@
   },
   {
     "service_code": "2205MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2205MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -4923,53 +2788,18 @@
   },
   {
     "service_code": "2205MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:05",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:05",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2205MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5005,53 +2835,18 @@
   },
   {
     "service_code": "1830TIUKCBLB",
-    "route_number": "",
+    "route_number": "180LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIUKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -5107,53 +2902,18 @@
   },
   {
     "service_code": "1830TIUKCBLB",
-    "route_number": "",
+    "route_number": "180LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "2 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIUKCBLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -5209,53 +2969,18 @@
   },
   {
     "service_code": "2230MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5286,53 +3011,18 @@
   },
   {
     "service_code": "2230MADKCBAB",
-    "route_number": "",
+    "route_number": "137AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "22 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230MADKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5363,53 +3053,18 @@
   },
   {
     "service_code": "2245MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:45",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5445,53 +3100,18 @@
   },
   {
     "service_code": "2245MADKCBNS",
-    "route_number": "",
+    "route_number": "137NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "22:45",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:45",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437/675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2245MADKCBNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5527,53 +3147,18 @@
   },
   {
     "service_code": "2300MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5609,53 +3194,18 @@
   },
   {
     "service_code": "2300MADKCB",
-    "route_number": "",
+    "route_number": "137UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "15 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300MADKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5691,53 +3241,18 @@
   },
   {
     "service_code": "1800SHEKCBAB",
-    "route_number": "",
+    "route_number": "184AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "9 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800SHEKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -5788,53 +3303,18 @@
   },
   {
     "service_code": "1800SHEKCBAB",
-    "route_number": "",
+    "route_number": "184AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "9 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1800SHEKCBAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -5885,53 +3365,18 @@
   },
   {
     "service_code": "2300MADKCBAL",
-    "route_number": "",
+    "route_number": "137AL",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300MADKCBAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AL"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -5957,53 +3402,18 @@
   },
   {
     "service_code": "2300MADKCBAL",
-    "route_number": "",
+    "route_number": "137AL",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565/869",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300MADKCBAL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AL"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -6029,53 +3439,18 @@
   },
   {
     "service_code": "2000TUTKCBNB",
-    "route_number": "",
+    "route_number": "170NB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000TUTKCBNB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "170NB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -6106,53 +3481,18 @@
   },
   {
     "service_code": "2000TUTKCBNB",
-    "route_number": "",
+    "route_number": "170NB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "20:00",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "10 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 675",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2000TUTKCBNB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "170NB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "675"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -6183,53 +3523,18 @@
   },
   {
     "service_code": "1830SHEKCB",
-    "route_number": "",
+    "route_number": "184UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830SHEKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -6285,53 +3590,18 @@
   },
   {
     "service_code": "1830SHEKCB",
-    "route_number": "",
+    "route_number": "184UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "11 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 437",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830SHEKCB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "184UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "437"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -6387,53 +3657,18 @@
   },
   {
     "service_code": "2330MADKCBAC",
-    "route_number": "",
+    "route_number": "137AC",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330MADKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AC"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -6469,53 +3704,18 @@
   },
   {
     "service_code": "2330MADKCBAC",
-    "route_number": "",
+    "route_number": "137AC",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "CHENNAI",
-    "departure_time": "",
+    "departure_time": "23:30",
     "duration": "9.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2330MADKCBAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "137AC"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "CHENNAI-KILAMBAKKAM-KCBT"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:00"
-      },
-      {
-        "city": "436.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "565"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",

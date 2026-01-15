@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1700TIPCOIAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700TIPCOIAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -73,53 +38,18 @@
   },
   {
     "service_code": "1700TIPCOIAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700TIPCOIAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -145,53 +75,18 @@
   },
   {
     "service_code": "1730CHETRS",
-    "route_number": "",
+    "route_number": "787UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730CHETRS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "787UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -237,53 +132,18 @@
   },
   {
     "service_code": "1730CHETRS",
-    "route_number": "",
+    "route_number": "787UD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730CHETRS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "787UD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -329,53 +189,18 @@
   },
   {
     "service_code": "1830TIPCOINS",
-    "route_number": "",
+    "route_number": "962TUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397/620",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIPCOINS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962TUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -401,53 +226,18 @@
   },
   {
     "service_code": "1830TIPCOINS",
-    "route_number": "",
+    "route_number": "962TUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "10.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 397/620",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830TIPCOINS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962TUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "397"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -473,53 +263,18 @@
   },
   {
     "service_code": "1830CHECOIAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 517/798",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830CHECOIAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "517"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -560,53 +315,18 @@
   },
   {
     "service_code": "1830CHECOIAB",
-    "route_number": "",
+    "route_number": "460AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "18:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 517/798",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1830CHECOIAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "460AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "517"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-PT DR. M.G.R. BS",
         "landmark": "CHENNAI-PT Dr.M.G.R. BS",
@@ -647,53 +367,18 @@
   },
   {
     "service_code": "1930TIPCOI",
-    "route_number": "",
+    "route_number": "962AUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 407",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930TIPCOI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "407"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -739,53 +424,18 @@
   },
   {
     "service_code": "1930TIPCOI",
-    "route_number": "",
+    "route_number": "962AUD",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "19:30",
     "duration": "11.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 407",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1930TIPCOI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AUD"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "11:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "407"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -831,53 +481,18 @@
   },
   {
     "service_code": "2030TIPCOIAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TIPCOIAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",
@@ -903,53 +518,18 @@
   },
   {
     "service_code": "2030TIPCOIAB",
-    "route_number": "",
+    "route_number": "962AB",
     "corporation": "SETC",
     "origin": "VELLORE",
     "destination": "COIMBATORE",
-    "departure_time": "",
+    "departure_time": "20:30",
     "duration": "8.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 519/800",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2030TIPCOIAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "962AB"
-      },
-      {
-        "city": "VELLORE",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "COIMBATORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:00"
-      },
-      {
-        "city": "399.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "519"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUPATHI",
         "landmark": "TIRUPATHI",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1730KAKBANNS",
-    "route_number": "",
+    "route_number": "888NS",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 820/1165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KAKBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "888NS"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "720.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "820"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "1730KAKBANNS",
-    "route_number": "",
+    "route_number": "888NS",
     "corporation": "SETC",
     "origin": "KANYAKUMARI",
     "destination": "BENGALURU",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "14.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:30",
     "available_seats": "5 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 820/1165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KAKBANNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "888NS"
-      },
-      {
-        "city": "KANYAKUMARI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "BENGALURU"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:00"
-      },
-      {
-        "city": "720.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "820"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",

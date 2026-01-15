@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1715PUUTIC",
-    "route_number": "",
+    "route_number": "847EUD",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:05",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715PUUTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "847EUD"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "203.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -113,53 +78,18 @@
   },
   {
     "service_code": "1715PUUTIC",
-    "route_number": "",
+    "route_number": "847EUD",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "5.50Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:05",
     "available_seats": "12 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715PUUTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "847EUD"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "5:50"
-      },
-      {
-        "city": "203.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -225,53 +155,18 @@
   },
   {
     "service_code": "1740PUUTIC",
-    "route_number": "",
+    "route_number": "847EUD",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:40",
     "duration": "4.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1740PUUTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "847EUD"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:15"
-      },
-      {
-        "city": "203.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",
@@ -337,53 +232,18 @@
   },
   {
     "service_code": "1740PUUTIC",
-    "route_number": "",
+    "route_number": "847EUD",
     "corporation": "SETC",
     "origin": "PERAMBALUR",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:40",
     "duration": "4.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 190",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1740PUUTIC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "847EUD"
-      },
-      {
-        "city": "PERAMBALUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "4:15"
-      },
-      {
-        "city": "203.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "190"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PUDUCHERRY",
         "landmark": "PUDUCHERRY",

@@ -1,53 +1,18 @@
 [
   {
     "service_code": "0100KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205K",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "01:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0100KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205K"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -63,53 +28,18 @@
   },
   {
     "service_code": "0100KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205K",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "01:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0100KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205K"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -125,53 +55,18 @@
   },
   {
     "service_code": "0140KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205K",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "01:40",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0140KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205K"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -187,53 +82,18 @@
   },
   {
     "service_code": "0140KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205K",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "01:40",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:40",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0140KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205K"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -249,53 +109,18 @@
   },
   {
     "service_code": "0230KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "205J",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "02:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0230KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205J"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -311,53 +136,18 @@
   },
   {
     "service_code": "0230KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "205J",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "02:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "09:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0230KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205J"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -373,53 +163,18 @@
   },
   {
     "service_code": "0300KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205O",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "03:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0300KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205O"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -435,53 +190,18 @@
   },
   {
     "service_code": "0300KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205O",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "03:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "10:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0300KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205O"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -497,53 +217,18 @@
   },
   {
     "service_code": "0400KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "201J",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0400KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201J"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -559,53 +244,18 @@
   },
   {
     "service_code": "0400KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "201J",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "04:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0400KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201J"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -621,53 +271,18 @@
   },
   {
     "service_code": "0500KCBKUM",
-    "route_number": "",
+    "route_number": "303UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0500KCBKUM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -723,53 +338,18 @@
   },
   {
     "service_code": "0500KCBKUM",
-    "route_number": "",
+    "route_number": "303UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:00",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:00",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0500KCBKUM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -825,53 +405,18 @@
   },
   {
     "service_code": "0515KCBKUMAC",
-    "route_number": "",
+    "route_number": "303AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:15",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 364",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0515KCBKUMAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "364"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -927,53 +472,18 @@
   },
   {
     "service_code": "0515KCBKUMAC",
-    "route_number": "",
+    "route_number": "303AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:15",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:15",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 364",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0515KCBKUMAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "364"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1029,53 +539,18 @@
   },
   {
     "service_code": "0530KCBKUM",
-    "route_number": "",
+    "route_number": "303UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530KCBKUM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1131,53 +606,18 @@
   },
   {
     "service_code": "0530KCBKUM",
-    "route_number": "",
+    "route_number": "303UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "11:30",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530KCBKUM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1233,53 +673,18 @@
   },
   {
     "service_code": "0530KCBKUMKK05L",
-    "route_number": "",
+    "route_number": "201",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530KCBKUMKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1295,53 +700,18 @@
   },
   {
     "service_code": "0530KCBKUMKK05L",
-    "route_number": "",
+    "route_number": "201",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "05:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0530KCBKUMKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1357,53 +727,18 @@
   },
   {
     "service_code": "0600KCBKUMNS",
-    "route_number": "",
+    "route_number": "303NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600KCBKUMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1449,53 +784,18 @@
   },
   {
     "service_code": "0600KCBKUMNS",
-    "route_number": "",
+    "route_number": "303NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "06:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:00",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0600KCBKUMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1541,53 +841,18 @@
   },
   {
     "service_code": "0630KCBKUMAB",
-    "route_number": "",
+    "route_number": "303AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "06:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365/560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0630KCBKUMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1643,53 +908,18 @@
   },
   {
     "service_code": "0630KCBKUMAB",
-    "route_number": "",
+    "route_number": "303AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "06:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "12:30",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365/560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0630KCBKUMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1745,53 +975,18 @@
   },
   {
     "service_code": "0715KCBKUM",
-    "route_number": "",
+    "route_number": "303UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:15",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715KCBKUM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1847,53 +1042,18 @@
   },
   {
     "service_code": "0715KCBKUM",
-    "route_number": "",
+    "route_number": "303UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "07:15",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "13:15",
     "available_seats": "31 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0715KCBKUM",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -1949,53 +1109,18 @@
   },
   {
     "service_code": "0830KCBKUMNS",
-    "route_number": "",
+    "route_number": "303NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:30",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830KCBKUMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2041,53 +1166,18 @@
   },
   {
     "service_code": "0830KCBKUMNS",
-    "route_number": "",
+    "route_number": "303NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "08:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "14:30",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0830KCBKUMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2133,53 +1223,18 @@
   },
   {
     "service_code": "0900KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 370/565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "370"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2240,53 +1295,18 @@
   },
   {
     "service_code": "0900KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "09:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 370/565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "0900KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "370"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2347,53 +1367,18 @@
   },
   {
     "service_code": "1000KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2444,53 +1429,18 @@
   },
   {
     "service_code": "1000KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "10:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:45",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1000KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2541,53 +1491,18 @@
   },
   {
     "service_code": "1015KCBKUMLB",
-    "route_number": "",
+    "route_number": "303LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "10:15",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:15",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1015KCBKUMLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2633,53 +1548,18 @@
   },
   {
     "service_code": "1015KCBKUMLB",
-    "route_number": "",
+    "route_number": "303LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "10:15",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "16:15",
     "available_seats": "28 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1015KCBKUMLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2725,53 +1605,18 @@
   },
   {
     "service_code": "1100KCBKUMNS",
-    "route_number": "",
+    "route_number": "303NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100KCBKUMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2827,53 +1672,18 @@
   },
   {
     "service_code": "1100KCBKUMNS",
-    "route_number": "",
+    "route_number": "303NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "11:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "17:00",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1100KCBKUMNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2929,53 +1739,18 @@
   },
   {
     "service_code": "1200KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "205M",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205M"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -2991,53 +1766,18 @@
   },
   {
     "service_code": "1200KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "205M",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:00",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205M"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3053,53 +1793,18 @@
   },
   {
     "service_code": "1230KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205G",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205G"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3115,53 +1820,18 @@
   },
   {
     "service_code": "1230KCBKUMKK04L",
-    "route_number": "",
+    "route_number": "205G",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "12:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "19:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1230KCBKUMKK04L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205G"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3177,53 +1847,18 @@
   },
   {
     "service_code": "1300KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "205Z",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205Z"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3239,53 +1874,18 @@
   },
   {
     "service_code": "1300KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "205Z",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "13:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1300KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205Z"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3301,53 +1901,18 @@
   },
   {
     "service_code": "1330KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "224H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "224H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3363,53 +1928,18 @@
   },
   {
     "service_code": "1330KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "224H",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "20:30",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "224H"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3425,53 +1955,18 @@
   },
   {
     "service_code": "1400KCBKUMKK05L",
-    "route_number": "",
+    "route_number": "201B",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KCBKUMKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201B"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3487,53 +1982,18 @@
   },
   {
     "service_code": "1400KCBKUMKK05L",
-    "route_number": "",
+    "route_number": "201B",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "21:00",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KCBKUMKK05L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201B"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3549,53 +2009,18 @@
   },
   {
     "service_code": "1630KCBKUMAC",
-    "route_number": "",
+    "route_number": "303AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630KCBKUMAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3651,53 +2076,18 @@
   },
   {
     "service_code": "1630KCBKUMAC",
-    "route_number": "",
+    "route_number": "303AC",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "22:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630KCBKUMAC",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AC"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3753,53 +2143,18 @@
   },
   {
     "service_code": "1715KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "205X",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205X"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3815,53 +2170,18 @@
   },
   {
     "service_code": "1715KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "205X",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "17:15",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:15",
     "available_seats": "45 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1715KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "205X"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3877,53 +2197,18 @@
   },
   {
     "service_code": "1730KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "201M",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201M"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -3939,53 +2224,18 @@
   },
   {
     "service_code": "1730KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "201M",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "17:30",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:30",
     "available_seats": "43 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1730KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201M"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4001,53 +2251,18 @@
   },
   {
     "service_code": "1745KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "201U",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:45",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201U"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4063,53 +2278,18 @@
   },
   {
     "service_code": "1745KCBKUMKK03L",
-    "route_number": "",
+    "route_number": "201U",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "00:45",
     "available_seats": "44 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745KCBKUMKK03L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201U"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4125,53 +2305,18 @@
   },
   {
     "service_code": "2105KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "21:05",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 370/565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2105KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "370"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4232,53 +2377,18 @@
   },
   {
     "service_code": "2105KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "21:05",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:50",
     "available_seats": "37 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 370/565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2105KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "370"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4339,53 +2449,18 @@
   },
   {
     "service_code": "2215KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 370/565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "370"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4446,53 +2521,18 @@
   },
   {
     "service_code": "2215KCBTHAAB",
-    "route_number": "",
+    "route_number": "323AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:15",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 370/565",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2215KCBTHAAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "370"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4553,53 +2593,18 @@
   },
   {
     "service_code": "2230KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4655,53 +2660,18 @@
   },
   {
     "service_code": "2230KCBTHANS",
-    "route_number": "",
+    "route_number": "323NS",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/432",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBTHANS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "323NS"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4757,53 +2727,18 @@
   },
   {
     "service_code": "2230KCBADI",
-    "route_number": "",
+    "route_number": "333UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBADI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "333UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4834,53 +2769,18 @@
   },
   {
     "service_code": "2230KCBADI",
-    "route_number": "",
+    "route_number": "333UD",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:30",
     "duration": "7.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2230KCBADI",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "333UD"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:15"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -4911,53 +2811,18 @@
   },
   {
     "service_code": "2235KCBKUMLB",
-    "route_number": "",
+    "route_number": "303LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:35",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:35",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2235KCBKUMLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5003,53 +2868,18 @@
   },
   {
     "service_code": "2235KCBKUMLB",
-    "route_number": "",
+    "route_number": "303LB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "22:35",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:35",
     "available_seats": "33 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 279/445",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2235KCBKUMLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303LB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "279"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5095,53 +2925,18 @@
   },
   {
     "service_code": "2300KCBKUMAB",
-    "route_number": "",
+    "route_number": "303AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365/560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300KCBKUMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5192,53 +2987,18 @@
   },
   {
     "service_code": "2300KCBKUMAB",
-    "route_number": "",
+    "route_number": "303AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "23:00",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:00",
     "available_seats": "32 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365/560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2300KCBKUMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5289,53 +3049,18 @@
   },
   {
     "service_code": "2331KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "201E",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "23:31",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:31",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2331KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201E"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5351,53 +3076,18 @@
   },
   {
     "service_code": "2331KCBKUMKK02L",
-    "route_number": "",
+    "route_number": "201E",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "23:31",
     "duration": "7.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:31",
     "available_seats": "42 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 220",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2331KCBKUMKK02L",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "201E"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "220"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5413,53 +3103,18 @@
   },
   {
     "service_code": "2345KCBKUMAB",
-    "route_number": "",
+    "route_number": "303AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "23:45",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365/560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2345KCBKUMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",
@@ -5515,53 +3170,18 @@
   },
   {
     "service_code": "2345KCBKUMAB",
-    "route_number": "",
+    "route_number": "303AB",
     "corporation": "SETC",
     "origin": "CHENNAI",
     "destination": "KUMBAKONAM",
-    "departure_time": "",
+    "departure_time": "23:45",
     "duration": "6.00Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:45",
     "available_seats": "36 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 365/560",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "2345KCBKUMAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "303AB"
-      },
-      {
-        "city": "CHENNAI-KILAMBAKKAM-KCBT",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "KUMBAKONAM"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:00"
-      },
-      {
-        "city": "279.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "365"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "CHENNAI-KILAMBAKKAM-KCBT",
         "landmark": "CHENNAI KALAIGNAR CBT",

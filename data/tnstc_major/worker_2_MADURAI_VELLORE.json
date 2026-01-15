@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1200SHETIP",
-    "route_number": "",
+    "route_number": "990UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200SHETIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "990UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -103,53 +68,18 @@
   },
   {
     "service_code": "1200SHETIP",
-    "route_number": "",
+    "route_number": "990UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "12:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:00",
     "available_seats": "26 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1200SHETIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "990UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -205,53 +135,18 @@
   },
   {
     "service_code": "1400TUTTIPNS",
-    "route_number": "",
+    "route_number": "985NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "6.29Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 428/665",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400TUTTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "985NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:29"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "428"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -292,53 +187,18 @@
   },
   {
     "service_code": "1400TUTTIPNS",
-    "route_number": "",
+    "route_number": "985NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "6.29Hrs",
-    "arrival_time": "",
+    "arrival_time": "03:00",
     "available_seats": "25 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 428/665",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400TUTTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "985NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "6:29"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "428"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TUTICORIN",
         "landmark": "TUTICORIN",
@@ -379,53 +239,18 @@
   },
   {
     "service_code": "1335TICTIPNS",
-    "route_number": "",
+    "route_number": "981NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:35",
     "duration": "8.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:35",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427/660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1335TICTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "981NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:25"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUCHENDUR",
         "landmark": "TIRUCHENDUR",
@@ -466,53 +291,18 @@
   },
   {
     "service_code": "1335TICTIPNS",
-    "route_number": "",
+    "route_number": "981NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:35",
     "duration": "8.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "04:35",
     "available_seats": "24 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427/660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1335TICTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "981NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:25"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUCHENDUR",
         "landmark": "TIRUCHENDUR",
@@ -553,53 +343,18 @@
   },
   {
     "service_code": "1840MADTIP",
-    "route_number": "",
+    "route_number": "966UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:40",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:40",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1840MADTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "966UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -625,53 +380,18 @@
   },
   {
     "service_code": "1840MADTIP",
-    "route_number": "",
+    "route_number": "966UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "18:40",
     "duration": "10.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:40",
     "available_seats": "35 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1840MADTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "966UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "10:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MADURAI",
         "landmark": "MATTUTHAVANI BS",
@@ -697,53 +417,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 553/852",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "553"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -804,53 +489,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 553/852",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "553"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -911,53 +561,18 @@
   },
   {
     "service_code": "1345PNMTIP",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 425",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345PNMTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "425"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PAPANASAM-TNV",
         "landmark": "PAPANASAM-TNV",
@@ -1033,53 +648,18 @@
   },
   {
     "service_code": "1345PNMTIP",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 425",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345PNMTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "425"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PAPANASAM-TNV",
         "landmark": "PAPANASAM-TNV",
@@ -1155,53 +735,18 @@
   },
   {
     "service_code": "1630TIUTIP",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 425",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIUTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "425"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -1272,53 +817,18 @@
   },
   {
     "service_code": "1630TIUTIP",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 425",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIUTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "425"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -1389,53 +899,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427/660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1481,53 +956,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427/660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1573,53 +1013,18 @@
   },
   {
     "service_code": "1500KAKVELNS",
-    "route_number": "",
+    "route_number": "283NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "8.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427/660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KAKVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "283NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:25"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1660,53 +1065,18 @@
   },
   {
     "service_code": "1500KAKVELNS",
-    "route_number": "",
+    "route_number": "283NS",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:00",
     "duration": "8.25Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:25",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427/660",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1500KAKVELNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "283NS"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "8:25"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1747,53 +1117,18 @@
   },
   {
     "service_code": "1745SHEVEL",
-    "route_number": "",
+    "route_number": "990VUD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "20 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745SHEVEL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "990VUD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -1839,53 +1174,18 @@
   },
   {
     "service_code": "1745SHEVEL",
-    "route_number": "",
+    "route_number": "990VUD",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "7.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:45",
     "available_seats": "20 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 427",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745SHEVEL",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "990VUD"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "7:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "427"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "SHENCOTTAH",
         "landmark": "SHENCOTTAH",
@@ -1931,53 +1231,18 @@
   },
   {
     "service_code": "1530MARVELLB",
-    "route_number": "",
+    "route_number": "297LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 432/670",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530MARVELLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "297LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "432"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",
@@ -2023,53 +1288,18 @@
   },
   {
     "service_code": "1530MARVELLB",
-    "route_number": "",
+    "route_number": "297LB",
     "corporation": "SETC",
     "origin": "MADURAI",
     "destination": "VELLORE",
-    "departure_time": "",
+    "departure_time": "15:30",
     "duration": "9.30Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:15",
     "available_seats": "14 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 432/670",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1530MARVELLB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "297LB"
-      },
-      {
-        "city": "MADURAI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "VELLORE"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "9:30"
-      },
-      {
-        "city": "431.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "432"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "MARTHANDAM",
         "landmark": "MARTHANDAM",

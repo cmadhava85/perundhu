@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1245NAGTIP",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:44",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1245NAGTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -118,53 +83,18 @@
   },
   {
     "service_code": "1245NAGTIP",
-    "route_number": "",
+    "route_number": "995UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "12:44",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "05:30",
     "available_seats": "19 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1245NAGTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "995UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -235,53 +165,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 212/326",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "212"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -342,53 +237,18 @@
   },
   {
     "service_code": "1330NAGTIPAB",
-    "route_number": "",
+    "route_number": "V995AB",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:15",
     "available_seats": "18 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 212/326",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1330NAGTIPAB",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "V995AB"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "212"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -449,53 +309,18 @@
   },
   {
     "service_code": "1345PNMTIP",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 163",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345PNMTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "163"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PAPANASAM-TNV",
         "landmark": "PAPANASAM-TNV",
@@ -571,53 +396,18 @@
   },
   {
     "service_code": "1345PNMTIP",
-    "route_number": "",
+    "route_number": "983UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "13:45",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:00",
     "available_seats": "21 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 163",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1345PNMTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "983UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "163"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "PAPANASAM-TNV",
         "landmark": "PAPANASAM-TNV",
@@ -693,53 +483,18 @@
   },
   {
     "service_code": "1630TIUTIP",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 163",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIUTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "163"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -810,53 +565,18 @@
   },
   {
     "service_code": "1630TIUTIP",
-    "route_number": "",
+    "route_number": "984UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "16:30",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "34 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 163",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1630TIUTIP",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "984UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "163"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUNELVELI",
         "landmark": "TIRUNELVELI",
@@ -927,53 +647,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160/254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1019,53 +704,18 @@
   },
   {
     "service_code": "1400KAKTIPNS",
-    "route_number": "",
+    "route_number": "996NS",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "14:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "06:30",
     "available_seats": "17 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 160/254",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1400KAKTIPNS",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "996NS"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "160"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "KANYAKUMARI",
         "landmark": "KANYAKUMARI",
@@ -1111,53 +761,18 @@
   },
   {
     "service_code": "1700NAGPUU",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",
@@ -1213,53 +828,18 @@
   },
   {
     "service_code": "1700NAGPUU",
-    "route_number": "",
+    "route_number": "531UD",
     "corporation": "SETC",
     "origin": "TIRUNELVELI",
     "destination": "MADURAI",
-    "departure_time": "",
+    "departure_time": "17:00",
     "duration": "2.45Hrs",
-    "arrival_time": "",
+    "arrival_time": "07:00",
     "available_seats": "13 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 165",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1700NAGPUU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "531UD"
-      },
-      {
-        "city": "TIRUNELVELI",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "MADURAI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "2:45"
-      },
-      {
-        "city": "163.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "165"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "NAGERCOIL VADACHERRY",
         "landmark": "NAGERCOIL",

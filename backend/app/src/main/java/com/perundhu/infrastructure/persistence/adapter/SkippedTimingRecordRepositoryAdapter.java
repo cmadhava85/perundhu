@@ -35,6 +35,7 @@ public class SkippedTimingRecordRepositoryAdapter implements SkippedTimingRecord
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SkippedTimingRecord> findByContributionId(Long contributionId) {
     return jpaRepository.findByContributionId(contributionId).stream()
         .map(this::mapToDomain)
@@ -42,6 +43,7 @@ public class SkippedTimingRecordRepositoryAdapter implements SkippedTimingRecord
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SkippedTimingRecord> findBySkipReason(SkipReason reason) {
     SkippedTimingRecordEntity.SkipReason entityReason = mapSkipReasonToEntity(reason);
     return jpaRepository.findBySkipReason(entityReason).stream()
@@ -50,6 +52,7 @@ public class SkippedTimingRecordRepositoryAdapter implements SkippedTimingRecord
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SkippedTimingRecord> findByProcessedBy(String processedBy) {
     return jpaRepository.findByProcessedBy(processedBy).stream()
         .map(this::mapToDomain)
@@ -57,6 +60,7 @@ public class SkippedTimingRecordRepositoryAdapter implements SkippedTimingRecord
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SkippedTimingRecord> findByFromLocationIdAndToLocationId(Long fromLocationId, Long toLocationId) {
     return jpaRepository.findByFromLocationIdAndToLocationId(fromLocationId, toLocationId).stream()
         .map(this::mapToDomain)
@@ -64,12 +68,14 @@ public class SkippedTimingRecordRepositoryAdapter implements SkippedTimingRecord
   }
 
   @Override
+  @Transactional(readOnly = true)
   public long countBySkipReason(SkipReason reason) {
     SkippedTimingRecordEntity.SkipReason entityReason = mapSkipReasonToEntity(reason);
     return jpaRepository.countBySkipReason(entityReason);
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SkippedTimingRecord> findAll() {
     return jpaRepository.findAll().stream()
         .map(this::mapToDomain)

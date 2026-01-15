@@ -1,53 +1,18 @@
 [
   {
     "service_code": "1745TILTIU",
-    "route_number": "",
+    "route_number": "180RUD",
     "corporation": "SETC",
     "origin": "TIRUVALLUR",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "14.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 635",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745TILTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180RUD"
-      },
-      {
-        "city": "TIRUVALLUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:15"
-      },
-      {
-        "city": "634.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "635"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUVALLUR",
         "landmark": "TIRUVALLUR",
@@ -88,53 +53,18 @@
   },
   {
     "service_code": "1745TILTIU",
-    "route_number": "",
+    "route_number": "180RUD",
     "corporation": "SETC",
     "origin": "TIRUVALLUR",
     "destination": "TIRUNELVELI",
-    "departure_time": "",
+    "departure_time": "17:45",
     "duration": "14.15Hrs",
-    "arrival_time": "",
+    "arrival_time": "08:00",
     "available_seats": "23 Seats Available",
     "bus_type": "Standard",
     "fare": "Rs 635",
     "journey_date": "16/01/2026",
     "stops": [
-      {
-        "city": "&nbsp;",
-        "landmark": "",
-        "time": "Service&nbsp;Details"
-      },
-      {
-        "city": "1745TILTIU",
-        "landmark": "Route&nbsp;No.&nbsp;:",
-        "time": "180RUD"
-      },
-      {
-        "city": "TIRUVALLUR",
-        "landmark": "To&nbsp;Place&nbsp;:",
-        "time": "TIRUNELVELI"
-      },
-      {
-        "city": "16/01/2026",
-        "landmark": "Journey&nbsp;Hours&nbsp;*:",
-        "time": "14:15"
-      },
-      {
-        "city": "634.00",
-        "landmark": "Corporation&nbsp;:",
-        "time": "SETC"
-      },
-      {
-        "city": "&nbsp;",
-        "landmark": "Adult&nbsp;Fare&nbsp;**",
-        "time": "635"
-      },
-      {
-        "city": "City",
-        "landmark": "Land&nbsp;Mark&nbsp;",
-        "time": "Dep.&nbsp;Time&nbsp;"
-      },
       {
         "city": "TIRUVALLUR",
         "landmark": "TIRUVALLUR",
