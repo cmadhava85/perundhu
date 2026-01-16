@@ -9,6 +9,8 @@ import ConnectingRoutes from './ConnectingRoutes';
 import BusCardModern from './BusCardModern';
 import { TerminalInfoAlert } from './TerminalInfoAlert';
 import { useTerminalResolution } from '../hooks/queries/useTerminalResolution';
+import { PremiumAdContainer } from './GoogleAdContainer';
+import useGoogleAds from '../hooks/useGoogleAds';
 import type { Bus, Stop, Location as AppLocation, ConnectingRoute } from '../types';
 import { ApiError } from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
@@ -41,6 +43,7 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
 }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { adsEnabled, getAdConfig } = useGoogleAds();
   const [selectedBusId, setSelectedBusId] = useState<number | null>(null);
   const [selectedBusStops, setSelectedBusStops] = useState<Stop[]>([]);
   const [reportIssueBus, setReportIssueBus] = useState<Bus | null>(null);
@@ -348,18 +351,28 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
           ) : (
             <div className="modern-bus-cards">
               {buses.map((bus, index) => (
-                <BusCardModern
-                  key={bus.id}
-                  bus={bus}
-                  index={index}
-                  isSelected={selectedBusId === bus.id}
-                  onSelect={handleSelectBus}
-                  onAddStops={handleAddStops}
-                  onReportIssue={handleReportIssue}
-                  fromLocation={fromLocation}
-                  toLocation={toLocation}
-                  stops={stopsMap[bus.id] || stops.filter(s => s.busId === bus.id)}
-                />
+                <React.Fragment key={bus.id}>
+                  <BusCardModern
+                    bus={bus}
+                    index={index}
+                    isSelected={selectedBusId === bus.id}
+                    onSelect={handleSelectBus}
+                    onAddStops={handleAddStops}
+                    onReportIssue={handleReportIssue}
+                    fromLocation={fromLocation}
+                    toLocation={toLocation}
+                    stops={stopsMap[bus.id] || stops.filter(s => s.busId === bus.id)}
+                  />
+                  {/* Show ad between results - every 3 buses */}
+                  {adsEnabled && (index + 1) % 3 === 0 && (
+                    <PremiumAdContainer
+                      adSlot={getAdConfig('betweenSearchResults').adSlot}
+                      adFormat="square"
+                      placement="between-routes"
+                      placementKey="betweenSearchResults"
+                    />
+                  )}
+                </React.Fragment>
               ))}
             </div>
           )}

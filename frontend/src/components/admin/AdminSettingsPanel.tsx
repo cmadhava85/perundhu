@@ -29,6 +29,7 @@ import {
   Upload
 } from 'lucide-react';
 import './AdminSettingsPanel.css';
+import AdSettingsPanel from './AdSettingsPanel';
 
 type SettingsTab = 'features' | 'security' | 'system';
 
@@ -317,6 +318,9 @@ const AdminSettingsPanel: React.FC = () => {
                 />
               </div>
             </div>
+
+            {/* Google AdSense Settings */}
+            <AdSettingsPanel />
           </div>
         )}
 

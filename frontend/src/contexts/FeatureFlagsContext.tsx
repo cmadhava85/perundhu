@@ -40,6 +40,13 @@ export interface FeatureFlags {
   enableBusReviews: boolean;
   busReviewsRequireLogin: boolean;
   busReviewsAutoApprove: boolean;
+  
+  // Google AdSense Features
+  enableAds: boolean;
+  enableAdBetweenSearchResults: boolean;
+  enableAdSidebarRight: boolean;
+  enableAdFooterSection: boolean;
+  enableAdAboveSearchForm: boolean;
 }
 
 interface FeatureFlagsContextType {
@@ -87,16 +94,23 @@ const defaultFlags: FeatureFlags = {
   requireEmailVerification: false,
   
   // Additional features from backend
-  enableSocialMedia: false,
-  enableCommunityRewards: false,
-  enableBusinessPartners: false,
-  enableOsmIntegration: false,
-  enableRealTimeUpdates: false,
+  enableSocialMedia: true,
+  enableCommunityRewards: true,
+  enableBusinessPartners: true,
+  enableOsmIntegration: true,
+  enableRealTimeUpdates: true,
   
   // Bus Reviews Feature
-  enableBusReviews: false,
-  busReviewsRequireLogin: true,
+  enableBusReviews: true,
+  busReviewsRequireLogin: false,
   busReviewsAutoApprove: true,
+  
+  // Google AdSense Features (all disabled by default until setup)
+  enableAds: false,
+  enableAdBetweenSearchResults: false,
+  enableAdSidebarRight: false,
+  enableAdFooterSection: false,
+  enableAdAboveSearchForm: false,
 };
 
 const FeatureFlagsContext = createContext<FeatureFlagsContextType | undefined>(undefined);
@@ -357,3 +371,4 @@ export const useIsFeatureEnabled = (flagName: keyof FeatureFlags): boolean => {
 };
 
 export default FeatureFlagsContext;
+export { FeatureFlagsContext };

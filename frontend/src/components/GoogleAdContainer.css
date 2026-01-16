@@ -1,0 +1,179 @@
+/* Google AdSense Container Styles */
+/* Follows the design system from ad-mockup-local-business.html */
+
+:root {
+  --ad-primary: #0ea5e9;
+  --ad-gray-100: #f1f5f9;
+  --ad-gray-200: #e2e8f0;
+  --ad-gray-500: #64748b;
+  --ad-gray-600: #475569;
+  --ad-gray-900: #0f172a;
+  --ad-radius-lg: 16px;
+  --ad-space-4: 16px;
+}
+
+/* Main Ad Container */
+.google-ad-container {
+  background: white;
+  border-radius: var(--ad-radius-lg);
+  padding: var(--ad-space-4);
+  margin: var(--ad-space-4) auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--ad-gray-200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.google-ad-container:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Premium Ad Wrapper (with label) */
+.premium-ad-wrapper {
+  position: relative;
+}
+
+.premium-ad-wrapper .ad-label {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(100, 116, 139, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+/* Format-specific styles */
+
+/* Horizontal format (728x90, 320x50) */
+.google-ad-horizontal {
+  width: 100%;
+  max-width: 728px;
+  min-height: 90px;
+}
+
+@media (max-width: 768px) {
+  .google-ad-horizontal {
+    max-width: 320px;
+    min-height: 50px;
+  }
+}
+
+/* Vertical format (300x600) */
+.google-ad-vertical {
+  width: 100%;
+  max-width: 300px;
+  min-height: 600px;
+}
+
+/* Square/Rectangle format (300x250) */
+.google-ad-square {
+  width: 100%;
+  max-width: 300px;
+  min-height: 250px;
+}
+
+/* Placement-specific styles */
+
+/* Between search results */
+.google-ad-placement-between-routes {
+  margin: 24px auto;
+  animation: slideIn 0.3s ease;
+}
+
+/* Search results - full width container but centered ad */
+.google-ad-placement-search-results {
+  margin: 20px auto;
+  width: 100%;
+}
+
+/* Right sidebar */
+.google-ad-placement-sidebar-right {
+  position: sticky;
+  top: 20px;
+  margin: 0;
+}
+
+/* Footer area */
+.google-ad-placement-footer {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+/* Google AdSense responsive styles */
+.google-ad-container ins.adsbygoogle {
+  display: block !important;
+  margin: 0 auto;
+}
+
+/* Prevent ads from appearing in certain areas */
+.header .google-ad-container,
+.app-header .google-ad-container,
+.navigation .google-ad-container,
+.sidebar-menu .google-ad-container {
+  display: none !important;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .google-ad-container {
+    padding: 12px;
+  }
+
+  .google-ad-placement-sidebar-right {
+    position: static;
+    margin: 16px auto;
+  }
+
+  .premium-ad-wrapper .ad-label {
+    top: 8px;
+    right: 8px;
+    font-size: 10px;
+  }
+}
+
+/* Dark mode support (if applicable) */
+@media (prefers-color-scheme: dark) {
+  .google-ad-container {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  .premium-ad-wrapper .ad-label {
+    background: rgba(71, 85, 105, 0.8);
+  }
+}
+
+/* Accessibility */
+.google-ad-container:focus-within {
+  outline: 2px solid var(--ad-primary);
+  outline-offset: 2px;
+}
+
+/* Print styles - hide ads when printing */
+@media print {
+  .google-ad-container,
+  .premium-ad-wrapper {
+    display: none !important;
+  }
+}
