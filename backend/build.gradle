@@ -285,6 +285,13 @@ dependencies {
     // Micrometer for metrics and monitoring
     implementation 'io.micrometer:micrometer-registry-prometheus:1.12.0'
     
+    // ============================================
+    // ANTI-SCRAPING SECURITY
+    // ============================================
+    // Bucket4j for rate limiting - disabled due to artifact unavailability
+    // Can be re-enabled when a stable version becomes available
+    // implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.15.0'
+    
 }
 
 flyway {

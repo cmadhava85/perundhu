@@ -1,0 +1,61 @@
+# Robots.txt for Perundhu Bus Tracking System
+# Prevents unauthorized scraping and crawling
+
+# Default rules for all bots
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /uploads/
+Disallow: /user/
+Disallow: /settings/
+Disallow: /auth/
+Allow: /
+
+# Search engines - standard crawling
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 1
+
+# Block aggressive scrapers
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: SEMrushBot
+User-agent: EvtarnBot
+Disallow: /
+
+# Block data miners
+User-agent: DataForSeoBot
+User-agent: SentiBot
+User-agent: AwarioSmartBot
+Disallow: /
+
+# Block other bots
+User-agent: ScrapyBot
+User-agent: SeleniumBot
+User-agent: WgetBot
+User-agent: CurlBot
+User-agent: PythonBot
+Disallow: /
+
+# Specific tool blocks
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://perundhu.in/sitemap.xml
+
+# Crawl delay for responsible bots
+Request-rate: 30/60
+
+# Comment: Last updated 2026-01-15

@@ -1,46 +1,519 @@
 # Advertisement Strategy Documentation - Perundhu
 
-**Last Updated:** December 16, 2025  
-**Version:** 1.0  
-**Status:** Design Phase (No Code Implementation Yet)
+**Last Updated:** January 15, 2026  
+**Version:** 2.0 - Phased Approach (AdSense → Custom Ads)  
+**Status:** Ready for Phase 1 Implementation
 
 ---
 
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Advertisement Models](#advertisement-models)
-3. [Native Sponsored Ads](#native-sponsored-ads)
-4. [Local Business Partnerships](#local-business-partnerships)
-5. [Design System Integration](#design-system-integration)
-6. [Responsive Design](#responsive-design)
-7. [Implementation Roadmap](#implementation-roadmap)
-8. [Revenue Projections](#revenue-projections)
-9. [Mockup Files Reference](#mockup-files-reference)
+2. [Phase 1: Google AdSense Strategy](#phase-1-google-adsense-strategy)
+3. [Alternatives to Google AdSense](#alternatives-to-google-adsense)
+4. [Advertisement Models (Phase 2)](#advertisement-models-phase-2)
+5. [Native Sponsored Ads](#native-sponsored-ads)
+6. [Local Business Partnerships](#local-business-partnerships)
+7. [Design System Integration](#design-system-integration)
+8. [Responsive Design](#responsive-design)
+9. [Implementation Roadmap](#implementation-roadmap)
+10. [Revenue Projections](#revenue-projections)
+11. [Mockup Files Reference](#mockup-files-reference)
 
 ---
 
 ## Overview
 
 ### Purpose
-Generate revenue from the Perundhu bus route application through non-intrusive, location-aware advertising without disrupting user experience.
+Generate revenue from the Perundhu bus route application through a phased approach:
+- **Phase 1 (Current):** Google AdSense with dedicated ad spaces
+- **Phase 2 (Future):** Native sponsored ads + local business partnerships
 
 ### Key Principles
 - **User First:** Ads should enhance journey planning, not block content
-- **Location-Aware:** Use browser geolocation to show relevant local businesses
-- **Native Integration:** Ads blend with existing design language
+- **Location-Aware:** (Phase 2) Use browser geolocation to show relevant local businesses
+- **Native Integration:** (Phase 2) Ads blend with existing design language
 - **Clear Labeling:** Always mark ads/sponsored content with visible badges
 - **Mobile Optimized:** Fully responsive across all device sizes
+- **Dedicated Spaces:** (Phase 1) Ads only in pre-defined containers, not scattered throughout
 
-### Target Locations for Ads
-1. Between bus search results (every 4-5 results)
-2. At journey start location (departure bus stand)
-3. At journey end location (arrival bus stand)
-4. Compact horizontal cards between results
+### Phased Approach
+
+**Phase 1: Google AdSense (Weeks 1-8)**
+- Simple revenue stream while building business relationships
+- Display ads in 2-3 dedicated containers only
+- No custom ad logic needed
+- Immediate monetization
+
+**Phase 2: Native + Local Business (Weeks 9+)**
+- Replace or supplement AdSense with custom ads
+- Direct business partnerships
+- Higher profit margins
+- Custom design control
 
 ---
 
-## Advertisement Models
+## Phase 1: Google AdSense Strategy
+
+### What is Google AdSense?
+Google AdSense is a free advertising program that shows relevant text/image ads in your app. Google handles:
+- Finding advertisers
+- Serving relevant ads
+- Tracking clicks & impressions
+- Paying you monthly
+
+### Why Google AdSense First?
+
+**Advantages:**
+- ✓ Zero setup cost
+- ✓ No business relationships needed
+- ✓ Automatic, Google-matched ads
+- ✓ Immediate revenue (passive income)
+- ✓ Handles all compliance & verification
+- ✓ Works across all devices automatically
+- ✓ No custom coding needed for ad logic
+
+**Disadvantages:**
+- ✗ Lower revenue per user (~$0.25-2 per 1000 impressions)
+- ✗ Less control over ad appearance
+- ✗ Can appear generic
+- ✗ Revenue split (Google takes 32%, you get 68%)
+
+### Ad Unit Placement (Phase 1)
+
+**2-3 Dedicated Ad Spaces Only:**
+
+**Ad Unit #1: Top of Search Results**
+```
+┌─────────────────────────────────────┐
+│  🔍 Search: Chennai → Coimbatore    │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│  [GOOGLE AD UNIT - 336x280]         │
+│  (Leaderboard or Rectangle)         │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│  🚌 150 - Express - ₹180            │
+│  (First bus result)                 │
+└─────────────────────────────────────┘
+```
+
+**Ad Unit #2: Sidebar (Desktop Only)**
+```
+Main Content (900px)     Sidebar (300px)
+──────────────────       ──────────────
+                         ┌──────────┐
+                         │ AD #2    │
+                         │ 300x600  │
+Bus Results              │ (Half    │
+│                        │  Page)   │
+│                        └──────────┘
+│
+│                        [Sticky on scroll]
+```
+
+**Ad Unit #3: After 5 Bus Results (Mobile)**
+```
+Mobile Layout (full width)
+──────────────────────────
+│ 🚌 Bus 1                │
+├──────────────────────────┤
+│ 🚌 Bus 2                │
+├──────────────────────────┤
+│ 🚌 Bus 3                │
+├──────────────────────────┤
+│ [GOOGLE AD - 320x50]   │
+│ (Mobile Banner)         │
+├──────────────────────────┤
+│ 🚌 Bus 4                │
+└──────────────────────────┘
+```
+
+### Google AdSense Implementation
+
+#### Step 1: Sign Up
+```
+1. Go to www.google.com/adsense
+2. Sign in with Google account
+3. Enter website URL: perundhu.com
+4. Accept terms & policies
+5. Google reviews (1-3 days)
+```
+
+#### Step 2: Get Ad Code
+Google provides HTML snippets like:
+```html
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+```
+
+#### Step 3: Add to Frontend
+```javascript
+// React Component Example
+export function SearchResults() {
+  useEffect(() => {
+    // Push AdSense script after component loads
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }, []);
+
+  return (
+    <div className="search-results">
+      {/* Ad Unit #1 - Top of results */}
+      <div id="ad-unit-1">
+        <ins className="adsbygoogle"
+             style={{display:'block'}}
+             data-ad-client="ca-pub-YOUR-ID"
+             data-ad-slot="YOUR-SLOT-1"
+             data-ad-format="auto"></ins>
+      </div>
+
+      {/* Bus results */}
+      {buses.map((bus, index) => (
+        <div key={bus.id}>
+          <BusCard bus={bus} />
+          
+          {/* Ad Unit #3 - After 5th result (mobile only) */}
+          {index === 4 && (
+            <div id="ad-unit-3" className="mobile-only">
+              <ins className="adsbygoogle"
+                   style={{display:'block'}}
+                   data-ad-client="ca-pub-YOUR-ID"
+                   data-ad-slot="YOUR-SLOT-3"
+                   data-ad-format="auto"></ins>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Ad Unit Sizes (Responsive)
+
+| Name | Size | Best For | CPM* |
+|------|------|----------|------|
+| Leaderboard | 728×90 | Top of page | $0.50-2.00 |
+| Mobile Banner | 320×50 | Between content | $0.25-1.50 |
+| Vertical Banner | 120×600 | Sidebar | $0.80-3.00 |
+| Rectangle | 336×280 | Multi-purpose | $0.90-4.00 |
+| Half Page | 300×600 | Sidebar | $1.20-5.00 |
+| Responsive | Fluid | Any space | $0.50-3.50 |
+
+*CPM = Cost Per Mille (per 1000 impressions) - varies by country & content
+
+### Revenue Projections (Google AdSense)
+
+**Assumptions:**
+- 100 daily active users
+- 2 searches per user = 200 searches/day
+- 3 ad impressions per search = 600 impressions/day
+- Average CPM (India): ₹50 per 1000 impressions = ₹0.05 per impression
+- CTR (Click-Through Rate): 0.5% = 3 clicks/day
+
+**Calculations:**
+```
+Daily Impressions: 600
+Daily CPM Revenue: 600 × ₹0.05 = ₹30
+(Google takes 32%, you get): ₹30 × 68% = ₹20.40/day
+
+Monthly: ₹20.40 × 30 = ₹612/month
+Annual: ₹612 × 12 = ₹7,344/year
+```
+
+**Scaling Projections:**
+| Monthly Users | Daily Searches | Daily Impressions | Monthly Revenue |
+|---------------|----------------|-------------------|-----------------|
+| 1,000 | 2,000 | 6,000 | ₹6,120 |
+| 5,000 | 10,000 | 30,000 | ₹30,600 |
+| 10,000 | 20,000 | 60,000 | ₹61,200 |
+| 50,000 | 100,000 | 300,000 | ₹306,000 |
+
+### Google AdSense Optimization Tips
+
+1. **Ad Placement:**
+   - Ads near search results perform best
+   - Sidebar ads get more clicks on desktop
+   - Above-the-fold (top) ads get higher CTR
+
+2. **Ad Density:**
+   - Google max: 3 ad units per page
+   - Stick to 2-3 units for best UX
+   - Don't overload with ads
+
+3. **Content Quality:**
+   - More users = higher CPM
+   - Niche content (bus travel) can get 10-20% higher CPM
+   - Consistent traffic = better rates
+
+4. **Invalid Traffic Prevention:**
+   - Don't click your own ads
+   - Don't encourage users to click ads
+   - Google will suspend account for fraud
+
+5. **Category Optimization:**
+   - Travel content typically gets ₹0.03-0.10 CPM
+   - Finance/insurance travel ads get ₹0.05-0.15 CPM
+   - Better keywords = higher CPM
+
+### Google AdSense Account Requirements
+
+- ✓ Website must be live & publicly accessible
+- ✓ Content must be original (you own the rights)
+- ✓ 6+ months old (recommended, but new sites can apply)
+- ✓ No copyright-protected content
+- ✓ No duplicate content from other sites
+- ✓ Privacy policy page required
+- ✓ No ads promoting illegal content
+- ✓ Must be 18+ years old
+
+---
+
+## Alternatives to Google AdSense
+
+If you want options beyond AdSense, here are similar monetization networks:
+
+### 1. **Facebook Audience Network** (Recommended for India)
+
+**What it is:**
+- Display ads from Facebook advertisers on your website
+- Similar to AdSense but focuses on Facebook's advertiser network
+
+**Pros:**
+- ✓ Higher CPM for India (~₹0.08-0.15)
+- ✓ Facebook has large travel/bus advertiser base
+- ✓ Easy integration (similar to AdSense)
+- ✓ Lower approval time
+- ✓ Good for mobile traffic
+
+**Cons:**
+- ✗ Requires Facebook developer account
+- ✗ Less diverse ad sources than Google
+- ✗ Revenue split: Facebook takes 30%, you get 70%
+
+**Best For:** Travel/bus content in India
+
+**Setup Time:** 1-2 weeks
+
+**Revenue:** ₹10K-₹80K/month (10K users)
+
+---
+
+### 2. **AdMob** (Mobile-focused version of AdSense)
+
+**What it is:**
+- Google's ad network specifically for mobile apps
+- Works great if you build a React Native app later
+
+**Pros:**
+- ✓ Same parent company as AdSense
+- ✓ Better for mobile users
+- ✓ Can combine with web AdSense for unified dashboard
+- ✓ Higher CPM for mobile (~₹0.06-0.12)
+
+**Cons:**
+- ✗ Primarily for mobile apps (not web)
+- ✗ Need app to use effectively
+
+**Best For:** If you build mobile app
+
+**Setup Time:** 1 week
+
+**Revenue:** ₹15K-₹100K/month (10K users)
+
+---
+
+### 3. **Mediavine** (Premium Network)
+
+**What it is:**
+- Premium ad network for high-traffic sites
+- Handpicked advertisers, better quality
+
+**Pros:**
+- ✓ Higher CPM (₹0.20-0.80 for travel content)
+- ✓ Better ad quality (less intrusive)
+- ✓ Dedicated account manager
+- ✓ Revenue split: 55% for you, 45% for them
+
+**Cons:**
+- ✗ Requires 25,000 monthly pageviews minimum
+- ✗ Higher approval standards
+- ✗ Takes longer to get approved (30+ days)
+
+**Best For:** Later, when you have 25K+ monthly users
+
+**Setup Time:** 1 month (approval process)
+
+**Revenue:** ₹40K-₹200K/month (10K users)
+
+---
+
+### 4. **Outbrain/Taboola** (Content Recommendation)
+
+**What it is:**
+- Recommendation engine showing suggested articles
+- Appears as "You may also like" cards
+
+**Pros:**
+- ✓ High engagement for travel content
+- ✓ Good revenue (CPM: ₹0.10-0.25)
+- ✓ Non-intrusive (blends with content)
+- ✓ Works well with bus travel content
+
+**Cons:**
+- ✗ Works better with content-heavy sites
+- ✗ Requires editorial review
+
+**Best For:** If you add blog/articles section
+
+**Setup Time:** 1-2 weeks
+
+**Revenue:** ₹8K-₹50K/month (10K users)
+
+---
+
+### 5. **InfoLinks/Exponential** (Pop-under Ads)
+
+**What it is:**
+- In-text links & pop-under ads
+- Monetizes existing content
+
+**Pros:**
+- ✓ No space needed (uses existing text)
+- ✓ Decent CPM (₹0.05-0.15)
+- ✓ Easy setup (add one script)
+- ✓ Works for any traffic level
+
+**Cons:**
+- ✗ Poor user experience (very intrusive)
+- ✗ Can hurt retention
+- ✗ Looks unprofessional
+
+**Best For:** Not recommended - avoid
+
+---
+
+### 6. **Google Ad Manager** (Advanced Multi-Network)
+
+**What it is:**
+- Combines multiple ad networks (AdSense + Facebook + others)
+- Automatically picks best-paying ads
+
+**Pros:**
+- ✓ Highest CPM (combines all networks)
+- ✓ Google manages optimization
+- ✓ One dashboard for all ads
+- ✓ Flexible inventory management
+
+**Cons:**
+- ✗ Steeper learning curve
+- ✗ Setup is more complex
+- ✗ Better for large sites (100K+ users)
+- ✗ May take longer to see revenue
+
+**Best For:** Once you scale to 100K+ users
+
+**Setup Time:** 2-3 weeks
+
+**Revenue:** ₹60K-₹400K+/month (10K users)
+
+---
+
+## Comparison Table: All Options
+
+| Network | Setup Time | Min Traffic | CPM (India) | Revenue Split | Best For |
+|---------|-----------|----------|-------------|----------------|----------|
+| **Google AdSense** | 1 week | None | ₹0.03-0.07 | 68% for you | Starting out (RECOMMENDED) |
+| **Facebook Audience** | 1-2 weeks | Low | ₹0.08-0.15 | 70% for you | Travel content, India |
+| **AdMob** | 1 week | Mobile only | ₹0.06-0.12 | 68% for you | Mobile app (future) |
+| **Mediavine** | 30 days | 25K monthly PV | ₹0.20-0.80 | 55% for you | Premium, scaled site |
+| **Outbrain** | 1-2 weeks | 10K+ monthly | ₹0.10-0.25 | 60% for you | Content/blog section |
+| **Google Ad Manager** | 2-3 weeks | 100K+ monthly | ₹0.15-0.50 | 68% for you | Large-scale operations |
+
+---
+
+## Hybrid Approach (Recommended)
+
+**Best Strategy:**
+```
+Week 1-8:       Start with Google AdSense
+                ↓
+Week 9-16:      Add Facebook Audience Network (parallel)
+                Compare CPM & revenue
+                ↓
+Week 17-24:     If traffic > 25K/month: Apply to Mediavine
+                If traffic < 25K/month: Optimize AdSense + Facebook combo
+                ↓
+Week 25+:       Transition to Google Ad Manager (if needed)
+                Combine all networks for maximum revenue
+```
+
+**Why This Works:**
+- AdSense is easiest to start (no traffic requirement)
+- Facebook Audience adds diversity (different advertisers)
+- Mediavine provides premium tier when you're ready
+- Ad Manager combines everything at scale
+- Diversification protects against single-network dependency
+
+---
+
+## Revenue Comparison: Single Network vs Hybrid
+
+**10,000 Monthly Users Example:**
+
+**Single Network (AdSense Only):**
+- Daily impressions: 60,000
+- CPM: ₹0.05
+- Daily revenue: ₹300
+- Your cut (68%): ₹204
+- **Monthly: ₹6,120**
+
+**Hybrid Approach (AdSense + Facebook):**
+- AdSense: 50% of inventory @ ₹0.05 CPM = ₹150/day
+- Facebook: 50% of inventory @ ₹0.10 CPM = ₹300/day
+- Total gross: ₹450/day
+- Your cut (68% + 70%): ₹319/day
+- **Monthly: ₹9,570**
+
+**Difference: +56% revenue increase!**
+
+---
+
+## Recommendation for Perundhu
+
+### Phase 1 (Weeks 1-8): Start with Google AdSense
+**Why:**
+- Easiest to set up
+- No traffic requirements
+- Immediate revenue
+- Good baseline for travel content
+
+### Phase 2 (Weeks 9-16): Add Facebook Audience Network
+**Why:**
+- Simple parallel addition
+- Higher CPM for India
+- Diversifies revenue sources
+- No traffic minimums
+
+### Phase 3 (Week 17+): Optimize Based on Growth
+- **If 25K+ monthly users:** Apply for Mediavine
+- **If 100K+ users:** Switch to Google Ad Manager
+- **If blog section added:** Add Outbrain for content recommendations
+
+---
+
+## Advertisement Models (Phase 2)
 
 ### Model Comparison
 
@@ -440,44 +913,134 @@ xl: 1280px  (large desktops)
 
 ## Implementation Roadmap
 
-### Phase 1: Planning & Approval (Weeks 1-2)
-- [ ] Get executive approval on ad models
-- [ ] Identify first 3 local business partners
-- [ ] Contact 2-3 premium bus operators
-- [ ] Finalize revenue sharing agreements
+### Phase 1: Google AdSense Launch (Weeks 1-8)
 
-### Phase 2: Backend Setup (Weeks 3-4)
-- [ ] Create `Advertisement` database table
-- [ ] Create `BusinessPartner` database table
-- [ ] Create `AdPlacement` configuration table
-- [ ] Build admin panel for managing ads
-- [ ] Implement geolocation API endpoints
+**Week 1-2: Setup & Approval**
+- [ ] Create Google AdSense account
+- [ ] Add privacy policy to website
+- [ ] Submit website for review
+- [ ] Wait for Google approval (1-3 days)
 
-### Phase 3: Frontend Components (Weeks 5-6)
-- [ ] Build `<SponsoredBusCard>` component
-- [ ] Build `<LocalBusinessFullCard>` component
-- [ ] Build `<LocalBusinessCompactCard>` component
-- [ ] Build `<AdContainer>` wrapper component
-- [ ] Implement lazy loading (Intersection Observer)
+**Week 3-4: Integration**
+- [ ] Get AdSense ad codes from Google
+- [ ] Create 3 ad unit containers in frontend
+  - [ ] Top of results (Rectangle 336×280)
+  - [ ] Sidebar (Half Page 300×600) - desktop only
+  - [ ] Mobile banner (after 5th result, 320×50)
+- [ ] Add responsive CSS for ad containers
+- [ ] Implement AdSense script loading
 
-### Phase 4: Integration (Weeks 7-8)
-- [ ] Integrate into `<TransitBusList>` component
-- [ ] Add geolocation detection to `<SearchResults>`
-- [ ] Implement loading skeletons
-- [ ] Add analytics tracking (clicks, impressions)
+**Week 5-6: Testing**
+- [ ] Test ad display on desktop, tablet, mobile
+- [ ] Verify ads render correctly
+- [ ] Check ad responsiveness
+- [ ] Test on different browsers
 
-### Phase 5: Testing & Launch (Weeks 9-10)
-- [ ] QA testing (desktop, tablet, mobile)
-- [ ] Performance testing (load time impact)
-- [ ] A/B testing (placement, frequency)
-- [ ] Soft launch (5% of users)
-- [ ] Full launch with partner agreements
+**Week 7-8: Launch & Monitoring**
+- [ ] Deploy to production
+- [ ] Monitor AdSense dashboard for clicks/impressions
+- [ ] Check for any issues
+- [ ] Optimize ad placement if needed
+
+**Success Metrics (Week 8):**
+- ✓ Ads displaying on all pages
+- ✓ No layout issues or crashes
+- ✓ Revenue tracking working
+- ✓ 50+ clicks in first week
 
 ---
 
-## Revenue Projections
+### Phase 2: Native + Local Business Ads (Weeks 9+)
 
-### Native Sponsored Ads
+**Timeline:** After AdSense is stable and revenue is flowing
+
+**Approach:**
+- Keep AdSense running (passive income)
+- Add custom ad system for Native Sponsored & Local Business
+- Transition high-value partners away from AdSense
+- Eventually replace some AdSense units with better-performing custom ads
+
+**When to Switch:**
+- [ ] Business contacts established (20+ businesses interested)
+- [ ] Revenue model negotiated (pricing & commission settled)
+- [ ] Custom ad components built & tested
+- [ ] Monitoring system ready (click tracking, analytics)
+
+### Phase 1-2 Transition Plan
+
+### Phase 1-2 Transition Plan
+
+**Running Both Simultaneously (Weeks 9-16):**
+```
+Weeks 1-8:     AdSense only
+               ↓
+Weeks 9-16:    AdSense + Native/Local Business ads
+               (Test custom ads while keeping AdSense)
+               ↓
+Weeks 17+:     Native/Local Business primary (if profitable)
+               AdSense as fallback for remaining spaces
+```
+
+**Implementation Approach:**
+1. Keep AdSense in sidebar & mobile banner (lower-performing)
+2. Replace top ad slot with Native Sponsored ads (better performing)
+3. Add Local Business cards between results (test engagement)
+4. Monitor metrics for both systems
+5. Scale custom ads if they outperform AdSense
+
+**Success Criteria for Phase 2 Launch:**
+- AdSense revenue stable (₹5,000+/month minimum)
+- 15+ business partners signed up & verified
+- Custom ad components built & tested
+- Analytics tracking ready
+- Partner agreements finalized
+
+---
+
+## Revenue Comparison: AdSense vs Custom Ads
+
+### Google AdSense Revenue (Phase 1)
+```
+10,000 Daily Users:
+- 20,000 searches/day
+- 60,000 impressions/day
+- ₹0.05 per impression (average)
+- ₹3,000/day gross × 68% = ₹2,040/day
+- Monthly: ₹61,200
+```
+
+### Custom Ads Revenue (Phase 2)
+```
+20 Native Sponsored Buses:
+- ₹100/month each = ₹2,000
+- Clicks: 5,000/month × ₹10 = ₹50,000
+
+30 Local Business Partners:
+- ₹500/month × 20 (standard) = ₹10,000
+- ₹1,500/month × 10 (premium) = ₹15,000
+- Calls: 3,000/month × ₹15 avg = ₹45,000
+
+Total Custom Ads: ₹122,000/month
+```
+
+### Hybrid Approach (Phase 1 + 2)
+```
+AdSense:        ₹61,200/month
+Custom Ads:     ₹122,000/month
+─────────────────────────────
+TOTAL:          ₹183,200/month (at 10K users)
+```
+
+**Why This Works:**
+- Start simple with AdSense (no custom logic needed)
+- Build revenue while acquiring business partners
+- Transition smoothly to custom ads
+- Higher margins on custom ads once you have partners
+- Diversified revenue (don't depend on Google)
+
+---
+
+## Revenue Projections (Combined)
 
 **Assumptions:**
 - 100 daily active users (conservative estimate)
