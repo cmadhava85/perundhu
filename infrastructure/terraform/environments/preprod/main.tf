@@ -205,23 +205,25 @@ module "cloud_run" {
 
 # SQL Auto-Stop Cloud Function and Scheduler
 # Automatically stops idle Cloud SQL instances to reduce costs
-module "sql_autostop" {
-  source = "../../modules/sql-autostop"
-
-  project_id                 = var.project_id
-  region                     = var.region
-  sql_instance_name          = module.database.db_instance_name
-  idle_minutes_threshold     = var.sql_autostop_idle_minutes
-  dry_run_mode               = var.sql_autostop_dry_run_mode
-  cron_schedule              = var.sql_autostop_cron_schedule
-  schedule_interval_minutes  = var.sql_autostop_schedule_interval_minutes
-  time_zone                  = var.sql_autostop_time_zone
-  function_source_path       = var.sql_autostop_function_source_path
-
-  depends_on = [module.database]
-}
+# TEMPORARILY DISABLED: Fix storage object resource issue first
+# module "sql_autostop" {
+#   source = "../../modules/sql-autostop"
+#
+#   project_id                 = var.project_id
+#   region                     = var.region
+#   sql_instance_name          = module.database.db_instance_name
+#   idle_minutes_threshold     = var.sql_autostop_idle_minutes
+#   dry_run_mode               = var.sql_autostop_dry_run_mode
+#   cron_schedule              = var.sql_autostop_cron_schedule
+#   schedule_interval_minutes  = var.sql_autostop_schedule_interval_minutes
+#   time_zone                  = var.sql_autostop_time_zone
+#   function_source_path       = var.sql_autostop_function_source_path
+#
+#   depends_on = [module.database]
+# }
 
 # NOTE: Pub/Sub removed - app uses synchronous processing
 # NOTE: Redis removed - not needed for current app scale
 # NOTE: Monitoring, Budget, and Logging modules removed - using default GCP free tier
+# NOTE: SQL Auto-Stop temporarily disabled - use GitHub Actions workflow for scheduled stop/start
 

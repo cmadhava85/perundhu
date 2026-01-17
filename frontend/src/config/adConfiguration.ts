@@ -29,12 +29,12 @@ export interface GoogleAdsConfig {
  */
 export const DEFAULT_ADS_CONFIG: GoogleAdsConfig = {
   enabled: true,
-  clientId: process.env.REACT_APP_GOOGLE_AD_CLIENT || 'ca-pub-xxxxxxxxxxxxxxxx',
+  clientId: import.meta.env.VITE_GOOGLE_AD_CLIENT || 'ca-pub-xxxxxxxxxxxxxxxx',
   placements: {
     // Between search results (every 3-4 buses)
     betweenSearchResults: {
       enabled: true,
-      adSlot: process.env.REACT_APP_AD_SLOT_RESULTS || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx1',
+      adSlot: import.meta.env.VITE_AD_SLOT_RESULTS || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx1',
       adFormat: 'square', // 300x250 medium rectangle
       description: 'Between search results',
       width: 300,
@@ -44,7 +44,7 @@ export const DEFAULT_ADS_CONFIG: GoogleAdsConfig = {
     // Right sidebar (sticky)
     sidebarRight: {
       enabled: true,
-      adSlot: process.env.REACT_APP_AD_SLOT_SIDEBAR || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx2',
+      adSlot: import.meta.env.VITE_AD_SLOT_SIDEBAR || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx2',
       adFormat: 'vertical', // 300x600
       description: 'Right sidebar (sticky)',
       width: 300,
@@ -54,7 +54,7 @@ export const DEFAULT_ADS_CONFIG: GoogleAdsConfig = {
     // Footer section
     footerSection: {
       enabled: true,
-      adSlot: process.env.REACT_APP_AD_SLOT_FOOTER || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx3',
+      adSlot: import.meta.env.VITE_AD_SLOT_FOOTER || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx3',
       adFormat: 'horizontal', // 728x90 leaderboard
       description: 'Footer section',
       width: 728,
@@ -64,7 +64,7 @@ export const DEFAULT_ADS_CONFIG: GoogleAdsConfig = {
     // Above search form (premium position)
     aboveSearchForm: {
       enabled: false, // Disabled by default (less intrusive)
-      adSlot: process.env.REACT_APP_AD_SLOT_ABOVE || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx4',
+      adSlot: import.meta.env.VITE_AD_SLOT_ABOVE || 'ca-pub-xxxxxxxxxxxxxxxx/xxxxxxxx4',
       adFormat: 'horizontal',
       description: 'Above search form',
       width: 728,

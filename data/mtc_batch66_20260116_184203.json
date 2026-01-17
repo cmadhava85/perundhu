@@ -1,0 +1,3872 @@
+[
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "06:10",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "06:29",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "07:09",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "07:51",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "08:31",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "09:13",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "09:53",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "10:35",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "11:57",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "12:37",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "14:54",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "15:34",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "16:16",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "16:56",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "17:38",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "18:18",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "20:17",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "20:57",
+    "scraped_at": "2026-01-16T18:43:09.287896"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "05:25",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "06:29",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "07:09",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "07:51",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "08:31",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "09:13",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "09:53",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "10:35",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "11:57",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "12:37",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "14:54",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "15:34",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "16:16",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "16:56",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "17:38",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "18:18",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "20:17",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "ALANDUR METRO R.S",
+    "origin_name": "ALANDUR METRO R.S",
+    "destination_value": "GURUNANAK COLLEGE",
+    "destination_name": "GURUNANAK COLLEGE",
+    "timing": "20:57",
+    "scraped_at": "2026-01-16T18:43:10.207495"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "05:57",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "06:37",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "07:14",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "07:54",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "08:36",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "09:16",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "09:58",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "10:38",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "12:50",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "14:17",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "14:57",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "15:39",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "16:19",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "17:01",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "17:41",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "18:23",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "19:03",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "20:49",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S83",
+    "route_name": "S83",
+    "origin_value": "GURUNANAK COLLEGE",
+    "origin_name": "GURUNANAK COLLEGE",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "21:29",
+    "scraped_at": "2026-01-16T18:43:10.239700"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "05:57",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "06:37",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "07:14",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "07:54",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "08:36",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "09:14",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "09:58",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "10:38",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "12:50",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "14:17",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "14:57",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "15:39",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "16:19",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "17:01",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "17:41",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "18:23",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "19:03",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "20:49",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S84",
+    "route_name": "S84",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "ALANDUR METRO R.S",
+    "destination_name": "ALANDUR METRO R.S",
+    "timing": "21:29",
+    "scraped_at": "2026-01-16T18:43:10.283229"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "K.K.NAGAR B.S",
+    "origin_name": "K.K.NAGAR B.S",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T18:43:10.880556"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "K.K.NAGAR B.S",
+    "origin_name": "K.K.NAGAR B.S",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "06:45",
+    "scraped_at": "2026-01-16T18:43:10.880556"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "K.K.NAGAR B.S",
+    "origin_name": "K.K.NAGAR B.S",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "14:25",
+    "scraped_at": "2026-01-16T18:43:10.880556"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "K.K.NAGAR B.S",
+    "origin_name": "K.K.NAGAR B.S",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "15:05",
+    "scraped_at": "2026-01-16T18:43:10.880556"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "07:55",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "10:48",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "11:28",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "11:56",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "12:36",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "17:25",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "18:35",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "19:05",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "19:45",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "20:12",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "20:52",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "21:17",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "RAMAPURAM",
+    "origin_name": "RAMAPURAM",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "21:57",
+    "scraped_at": "2026-01-16T18:43:11.774388"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "K.K.NAGAR B.S",
+    "destination_name": "K.K.NAGAR B.S",
+    "timing": "13:32",
+    "scraped_at": "2026-01-16T18:43:11.791560"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "K.K.NAGAR B.S",
+    "destination_name": "K.K.NAGAR B.S",
+    "timing": "14:12",
+    "scraped_at": "2026-01-16T18:43:11.791560"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "K.K.NAGAR B.S",
+    "destination_name": "K.K.NAGAR B.S",
+    "timing": "21:50",
+    "scraped_at": "2026-01-16T18:43:11.791560"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "K.K.NAGAR B.S",
+    "destination_name": "K.K.NAGAR B.S",
+    "timing": "22:30",
+    "scraped_at": "2026-01-16T18:43:11.791560"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "07:55",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "09:05",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "09:45",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "10:15",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "10:55",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "11:23",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "12:03",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "12:28",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "13:08",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "15:40",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "16:50",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "20:45",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S86",
+    "route_name": "S86",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "RAMAPURAM",
+    "destination_name": "RAMAPURAM",
+    "timing": "21:25",
+    "scraped_at": "2026-01-16T18:43:11.845095"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "IYYAPPANTHANGAL",
+    "origin_name": "IYYAPPANTHANGAL",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "05:35",
+    "scraped_at": "2026-01-16T18:43:12.515380"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "IYYAPPANTHANGAL",
+    "destination_name": "IYYAPPANTHANGAL",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T18:43:13.323792"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "10:40",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "12:40",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "16:35",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "NANDAMBAKKAM VILLAGE",
+    "origin_name": "NANDAMBAKKAM VILLAGE",
+    "destination_value": "PORUR",
+    "destination_name": "PORUR",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T18:43:13.352529"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S88A",
+    "route_name": "S88A",
+    "origin_value": "PORUR",
+    "origin_name": "PORUR",
+    "destination_value": "NANDAMBAKKAM VILLAGE",
+    "destination_name": "NANDAMBAKKAM VILLAGE",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T18:43:13.407844"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "GUNDUMEDU ANNANAGAR",
+    "origin_name": "GUNDUMEDU ANNANAGAR",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:43:14.156484"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "GUNDUMEDU ANNANAGAR",
+    "origin_name": "GUNDUMEDU ANNANAGAR",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "12:30",
+    "scraped_at": "2026-01-16T18:43:14.156484"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "GUNDUMEDU ANNANAGAR",
+    "origin_name": "GUNDUMEDU ANNANAGAR",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "17:05",
+    "scraped_at": "2026-01-16T18:43:14.156484"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "GUNDUMEDU ANNANAGAR",
+    "origin_name": "GUNDUMEDU ANNANAGAR",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:43:14.156484"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "MANNIVAKKAM RD.JN.",
+    "origin_name": "MANNIVAKKAM RD.JN.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T18:43:14.893388"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "MANNIVAKKAM RD.JN.",
+    "origin_name": "MANNIVAKKAM RD.JN.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "10:55",
+    "scraped_at": "2026-01-16T18:43:14.893388"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "MANNIVAKKAM RD.JN.",
+    "origin_name": "MANNIVAKKAM RD.JN.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:43:14.893388"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "MANNIVAKKAM RD.JN.",
+    "origin_name": "MANNIVAKKAM RD.JN.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "15:15",
+    "scraped_at": "2026-01-16T18:43:14.893388"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "GUNDUMEDU ANNANAGAR",
+    "destination_name": "GUNDUMEDU ANNANAGAR",
+    "timing": "07:30",
+    "scraped_at": "2026-01-16T18:43:14.917264"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "GUNDUMEDU ANNANAGAR",
+    "destination_name": "GUNDUMEDU ANNANAGAR",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T18:43:14.917264"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "GUNDUMEDU ANNANAGAR",
+    "destination_name": "GUNDUMEDU ANNANAGAR",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T18:43:14.917264"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "GUNDUMEDU ANNANAGAR",
+    "destination_name": "GUNDUMEDU ANNANAGAR",
+    "timing": "17:45",
+    "scraped_at": "2026-01-16T18:43:14.917264"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MANNIVAKKAM RD.JN.",
+    "destination_name": "MANNIVAKKAM RD.JN.",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:43:14.959128"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MANNIVAKKAM RD.JN.",
+    "destination_name": "MANNIVAKKAM RD.JN.",
+    "timing": "10:15",
+    "scraped_at": "2026-01-16T18:43:14.959128"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MANNIVAKKAM RD.JN.",
+    "destination_name": "MANNIVAKKAM RD.JN.",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T18:43:14.959128"
+  },
+  {
+    "route_number": "S90",
+    "route_name": "S90",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MANNIVAKKAM RD.JN.",
+    "destination_name": "MANNIVAKKAM RD.JN.",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:43:14.959128"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "KUMARAN KUNDRAM",
+    "destination_name": "KUMARAN KUNDRAM",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T18:43:15.704282"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "KUMARAN KUNDRAM",
+    "destination_name": "KUMARAN KUNDRAM",
+    "timing": "22:05",
+    "scraped_at": "2026-01-16T18:43:15.704282"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "10:15",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "12:05",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "DURGA NAGAR",
+    "origin_name": "DURGA NAGAR",
+    "destination_value": "THIRUMUDIVAKKAM SIDCO",
+    "destination_name": "THIRUMUDIVAKKAM SIDCO",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:43:16.441250"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "KUMARAN KUNDRAM",
+    "origin_name": "KUMARAN KUNDRAM",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T18:43:16.469818"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "KUMARAN KUNDRAM",
+    "origin_name": "KUMARAN KUNDRAM",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:43:16.469818"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "07:30",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "15:45",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S94",
+    "route_name": "S94",
+    "origin_value": "THIRUMUDIVAKKAM SIDCO",
+    "origin_name": "THIRUMUDIVAKKAM SIDCO",
+    "destination_value": "DURGA NAGAR",
+    "destination_name": "DURGA NAGAR",
+    "timing": "21:15",
+    "scraped_at": "2026-01-16T18:43:16.518954"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "09:55",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "10:25",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "12:05",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "17:25",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "PERUNGUDI",
+    "origin_name": "PERUNGUDI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:43:17.263050"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THARAMANI KALLUTTAI",
+    "origin_name": "THARAMANI KALLUTTAI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T18:43:17.999115"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THARAMANI KALLUTTAI",
+    "origin_name": "THARAMANI KALLUTTAI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T18:43:17.999115"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THARAMANI KALLUTTAI",
+    "origin_name": "THARAMANI KALLUTTAI",
+    "destination_value": "Y.M.C.A KALLUKUTTAI",
+    "destination_name": "Y.M.C.A KALLUKUTTAI",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T18:43:18.022647"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THARAMANI KALLUTTAI",
+    "origin_name": "THARAMANI KALLUTTAI",
+    "destination_value": "Y.M.C.A KALLUKUTTAI",
+    "destination_name": "Y.M.C.A KALLUKUTTAI",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T18:43:18.022647"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THIRUVANMIYUR",
+    "origin_name": "THIRUVANMIYUR",
+    "destination_value": "THARAMANI KALLUTTAI",
+    "destination_name": "THARAMANI KALLUTTAI",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T18:43:18.073214"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THIRUVANMIYUR",
+    "origin_name": "THIRUVANMIYUR",
+    "destination_value": "THARAMANI KALLUTTAI",
+    "destination_name": "THARAMANI KALLUTTAI",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T18:43:18.073214"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "THIRUVANMIYUR",
+    "origin_name": "THIRUVANMIYUR",
+    "destination_value": "THIRUVANMIYUR",
+    "destination_name": "THIRUVANMIYUR",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:43:18.809981"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "09:05",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "09:25",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "10:25",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "12:05",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "17:00",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "PERUNGUDI",
+    "destination_name": "PERUNGUDI",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T18:43:19.544648"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "THIRUVANMIYUR",
+    "destination_name": "THIRUVANMIYUR",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:43:19.572915"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "THIRUVANMIYUR",
+    "destination_name": "THIRUVANMIYUR",
+    "timing": "18:55",
+    "scraped_at": "2026-01-16T18:43:19.572915"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "Y.M.C.A KALLUKUTTAI",
+    "destination_name": "Y.M.C.A KALLUKUTTAI",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:43:19.626863"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "VELACHERY",
+    "origin_name": "VELACHERY",
+    "destination_value": "Y.M.C.A KALLUKUTTAI",
+    "destination_name": "Y.M.C.A KALLUKUTTAI",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T18:43:19.626863"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "Y.M.C.A KALLUKUTTAI",
+    "origin_name": "Y.M.C.A KALLUKUTTAI",
+    "destination_value": "THARAMANI KALLUTTAI",
+    "destination_name": "THARAMANI KALLUTTAI",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T18:43:20.403279"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "Y.M.C.A KALLUKUTTAI",
+    "origin_name": "Y.M.C.A KALLUKUTTAI",
+    "destination_value": "THARAMANI KALLUTTAI",
+    "destination_name": "THARAMANI KALLUTTAI",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T18:43:20.403279"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "Y.M.C.A KALLUKUTTAI",
+    "origin_name": "Y.M.C.A KALLUKUTTAI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "08:45",
+    "scraped_at": "2026-01-16T18:43:21.117718"
+  },
+  {
+    "route_number": "S95",
+    "route_name": "S95",
+    "origin_value": "Y.M.C.A KALLUKUTTAI",
+    "origin_name": "Y.M.C.A KALLUKUTTAI",
+    "destination_value": "VELACHERY",
+    "destination_name": "VELACHERY",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T18:43:21.117718"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "K.K.NAGAR B.S",
+    "destination_name": "K.K.NAGAR B.S",
+    "timing": "21:42",
+    "scraped_at": "2026-01-16T18:43:21.136145"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "K.K.NAGAR B.S",
+    "destination_name": "K.K.NAGAR B.S",
+    "timing": "22:17",
+    "scraped_at": "2026-01-16T18:43:21.136145"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "09:50",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "10:25",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "12:45",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "15:55",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "17:05",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "17:40",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "18:15",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "GUINDY METRO",
+    "origin_name": "GUINDY METRO",
+    "destination_value": "VELACHERY VIJAYA NAGAR",
+    "destination_name": "VELACHERY VIJAYA NAGAR",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T18:43:21.190306"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "K.K.NAGAR B.S",
+    "origin_name": "K.K.NAGAR B.S",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "06:03",
+    "scraped_at": "2026-01-16T18:43:21.955461"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "K.K.NAGAR B.S",
+    "origin_name": "K.K.NAGAR B.S",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "06:38",
+    "scraped_at": "2026-01-16T18:43:21.955461"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "06:50",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "09:50",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "10:25",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "12:45",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "15:55",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "17:05",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "17:40",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "18:15",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S97",
+    "route_name": "S97",
+    "origin_value": "VELACHERY VIJAYA NAGAR",
+    "origin_name": "VELACHERY VIJAYA NAGAR",
+    "destination_value": "GUINDY METRO",
+    "destination_name": "GUINDY METRO",
+    "timing": "21:45",
+    "scraped_at": "2026-01-16T18:43:22.680999"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "07:05",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "10:45",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "11:17",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "11:50",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "15:40",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "17:50",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "18:55",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "LITTLE MOUNT",
+    "origin_name": "LITTLE MOUNT",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "21:40",
+    "scraped_at": "2026-01-16T18:43:22.710765"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "07:05",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "10:45",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "11:17",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "11:50",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "13:10",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "15:40",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "17:50",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "18:55",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "LITTLE MOUNT",
+    "destination_name": "LITTLE MOUNT",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T18:43:22.757555"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "THIRUVANMIYUR",
+    "destination_name": "THIRUVANMIYUR",
+    "timing": "21:37",
+    "scraped_at": "2026-01-16T18:43:23.517315"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "TARAMANI",
+    "origin_name": "TARAMANI",
+    "destination_value": "THIRUVANMIYUR",
+    "destination_name": "THIRUVANMIYUR",
+    "timing": "22:07",
+    "scraped_at": "2026-01-16T18:43:23.517315"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "THIRUVANMIYUR",
+    "origin_name": "THIRUVANMIYUR",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "05:53",
+    "scraped_at": "2026-01-16T18:43:24.295534"
+  },
+  {
+    "route_number": "S98",
+    "route_name": "S98",
+    "origin_value": "THIRUVANMIYUR",
+    "origin_name": "THIRUVANMIYUR",
+    "destination_value": "TARAMANI",
+    "destination_name": "TARAMANI",
+    "timing": "06:23",
+    "scraped_at": "2026-01-16T18:43:24.295534"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "15:40",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "16:35",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T18:43:24.299905"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "TONDIARPET",
+    "destination_name": "TONDIARPET",
+    "timing": "13:02",
+    "scraped_at": "2026-01-16T18:43:24.316635"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "I.O.C",
+    "origin_name": "I.O.C",
+    "destination_value": "TONDIARPET",
+    "destination_name": "TONDIARPET",
+    "timing": "21:22",
+    "scraped_at": "2026-01-16T18:43:24.316635"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "TONDIARPET",
+    "origin_name": "TONDIARPET",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "05:15",
+    "scraped_at": "2026-01-16T18:43:25.077222"
+  },
+  {
+    "route_number": "SC1",
+    "route_name": "SC1",
+    "origin_value": "TONDIARPET",
+    "origin_name": "TONDIARPET",
+    "destination_value": "I.O.C",
+    "destination_name": "I.O.C",
+    "timing": "13:35",
+    "scraped_at": "2026-01-16T18:43:25.077222"
+  }
+]

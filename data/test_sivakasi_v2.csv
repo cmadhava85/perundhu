@@ -1,0 +1,10 @@
+bus_number,bus_type,operator_name,origin,destination,departure_time,arrival_time,stops_json,scraped_at
+Sivakasi → Madurai,Moffusil Bus,Sivakasi → Madurai,Sivakasi,Madurai,01:10,,[],2026-01-16T09:20:13.979270
+503,Moffusil Bus,503,Sivakasi,Madurai,01:10,,[],2026-01-16T09:20:13.979270
+STAR,Private Bus,STAR,Sivakasi,Madurai,04:15,,[],2026-01-16T09:20:13.979270
+RSR,Private Bus,RSR,Sivakasi,Madurai,05:00,,[],2026-01-16T09:20:13.979270
+VENKATESHWARA,Private Bus,VENKATESHWARA,Sivakasi,Madurai,01:20,,[],2026-01-16T09:20:13.979270
+511,Unknown,511,Sivakasi,Madurai,,,[],2026-01-16T09:20:13.979270
+KNRK,Unknown,KNRK,Sivakasi,Madurai,,,[],2026-01-16T09:20:13.979270
+SRINIVASA,Unknown,SRINIVASA,Sivakasi,Madurai,,,[],2026-01-16T09:20:13.979270
+SNR,Unknown,SNR,Sivakasi,Madurai,,,[],2026-01-16T09:20:13.979270

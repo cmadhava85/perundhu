@@ -1,0 +1,5802 @@
+[
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T18:09:03.930963"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T18:09:03.930963"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T18:09:03.930963"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T18:09:04.830813"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T18:09:04.830813"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "06:50",
+    "scraped_at": "2026-01-16T18:09:04.830813"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "07:00",
+    "scraped_at": "2026-01-16T18:09:04.830813"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "21:25",
+    "scraped_at": "2026-01-16T18:09:04.860853"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "21:55",
+    "scraped_at": "2026-01-16T18:09:04.860853"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "22:45",
+    "scraped_at": "2026-01-16T18:09:04.860853"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "22:55",
+    "scraped_at": "2026-01-16T18:09:04.860853"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "07:45",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "09:05",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "09:55",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "10:45",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "12:45",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "13:10",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "13:35",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "15:05",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "15:55",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "16:35",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "16:55",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "17:15",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "17:40",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "18:05",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "18:35",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "19:50",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "20:15",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "20:50",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "I.C.F",
+    "origin_name": "I.C.F",
+    "destination_value": "THIRUVERKADU",
+    "destination_name": "THIRUVERKADU",
+    "timing": "21:15",
+    "scraped_at": "2026-01-16T18:09:04.904821"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "20:50",
+    "scraped_at": "2026-01-16T18:09:05.488457"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "22:05",
+    "scraped_at": "2026-01-16T18:09:05.488457"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "22:35",
+    "scraped_at": "2026-01-16T18:09:05.488457"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "AZEEZEE NAGAR",
+    "origin_name": "AZEEZEE NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T18:09:06.447132"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "AZEEZEE NAGAR",
+    "origin_name": "AZEEZEE NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:45",
+    "scraped_at": "2026-01-16T18:09:06.447132"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "06:45",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "08:50",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "10:35",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "10:55",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "11:45",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "13:55",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "15:40",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "15:55",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "18:20",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "18:40",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "19:35",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "21:15",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "63",
+    "route_name": "63",
+    "origin_value": "THIRUVERKADU",
+    "origin_name": "THIRUVERKADU",
+    "destination_value": "I.C.F",
+    "destination_name": "I.C.F",
+    "timing": "21:35",
+    "scraped_at": "2026-01-16T18:09:06.452612"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "07:05",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "07:50",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "09:50",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "10:15",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "10:30",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "11:05",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "12:15",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "12:30",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "12:45",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "13:10",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "13:55",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "15:15",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "15:45",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "17:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "17:50",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "18:15",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "18:45",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "19:50",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "20:15",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "20:55",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MANALI",
+    "destination_name": "MANALI",
+    "timing": "21:30",
+    "scraped_at": "2026-01-16T18:09:06.458556"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:35",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:50",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:05",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:55",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09:45",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:55",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:25",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:25",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:45",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:55",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:05",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:40",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:55",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:20",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:35",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:50",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:10",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANALI",
+    "origin_name": "MANALI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:25",
+    "scraped_at": "2026-01-16T18:09:07.097173"
+  },
+  {
+    "route_number": "64C",
+    "route_name": "64C",
+    "origin_value": "MANJAMPAKKAM",
+    "origin_name": "MANJAMPAKKAM",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:35",
+    "scraped_at": "2026-01-16T18:09:07.994257"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T18:09:08.027054"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KOSAPPUR",
+    "destination_name": "KOSAPPUR",
+    "timing": "06:45",
+    "scraped_at": "2026-01-16T18:09:08.057653"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KOSAPPUR",
+    "destination_name": "KOSAPPUR",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T18:09:08.057653"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KOSAPPUR",
+    "destination_name": "KOSAPPUR",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:09:08.057653"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KOSAPPUR",
+    "destination_name": "KOSAPPUR",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:09:08.057653"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KOSAPPUR",
+    "destination_name": "KOSAPPUR",
+    "timing": "21:00",
+    "scraped_at": "2026-01-16T18:09:08.057653"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "KOSAPPUR",
+    "origin_name": "KOSAPPUR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T18:09:08.699002"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "KOSAPPUR",
+    "origin_name": "KOSAPPUR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T18:09:08.699002"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "KOSAPPUR",
+    "origin_name": "KOSAPPUR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T18:09:08.699002"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "KOSAPPUR",
+    "origin_name": "KOSAPPUR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:05",
+    "scraped_at": "2026-01-16T18:09:08.699002"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "KOSAPPUR",
+    "origin_name": "KOSAPPUR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:45",
+    "scraped_at": "2026-01-16T18:09:08.699002"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "KOSAPPUR",
+    "origin_name": "KOSAPPUR",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "22:07",
+    "scraped_at": "2026-01-16T18:09:09.559024"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T18:09:09.597516"
+  },
+  {
+    "route_number": "64D",
+    "route_name": "64D",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "KOSAPPUR",
+    "destination_name": "KOSAPPUR",
+    "timing": "05:03",
+    "scraped_at": "2026-01-16T18:09:09.631542"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "18:35",
+    "scraped_at": "2026-01-16T18:09:10.337129"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:50",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:20",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:25",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:25",
+    "scraped_at": "2026-01-16T18:09:11.157985"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "05:50",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "06:02",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "06:50",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "07:45",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "07:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "08:45",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "09:50",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "10:05",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "10:22",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "10:30",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "10:47",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "12:05",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "12:15",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "12:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "13:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:15",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:25",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "17:15",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "18:08",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "18:17",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "18:40",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "19:13",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "19:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:02",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:25",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:47",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "21:17",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "21:30",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "21:55",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "21:57",
+    "scraped_at": "2026-01-16T18:09:11.165272"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "10:45",
+    "scraped_at": "2026-01-16T18:09:11.181720"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "K.KANNADASAN NAGAR",
+    "origin_name": "K.KANNADASAN NAGAR",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "12:40",
+    "scraped_at": "2026-01-16T18:09:11.181720"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "04:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:05",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:20",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:35",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "05:45",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:30",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:45",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:00",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:45",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:55",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:05",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:30",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:40",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:05",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:30",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12:35",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:05",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:25",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:55",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:25",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:01",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:45",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:58",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:20",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:45",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:18",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:28",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:35",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:10",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:28",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:53",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:55",
+    "scraped_at": "2026-01-16T18:09:11.982225"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "06:10",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "09:25",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "09:55",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "10:55",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "14:15",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "15:15",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "16:05",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "18:15",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "19:45",
+    "scraped_at": "2026-01-16T18:09:12.797567"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T18:09:12.799201"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "K.KANNADASAN NAGAR",
+    "destination_name": "K.KANNADASAN NAGAR",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:09:12.799201"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "06:45",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "07:52",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "10:30",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "11:30",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "12:15",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:15",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "15:25",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "16:35",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "18:05",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "18:55",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:09:12.802481"
+  },
+  {
+    "route_number": "64K",
+    "route_name": "64K",
+    "origin_value": "SECRETARIAT",
+    "origin_name": "SECRETARIAT",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T18:09:13.613304"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "09:59",
+    "scraped_at": "2026-01-16T18:09:14.346120"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "13:10",
+    "scraped_at": "2026-01-16T18:09:14.346120"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T18:09:14.346120"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:09:14.346120"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KODUNGAYUR PARVATHY",
+    "destination_name": "KODUNGAYUR PARVATHY",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T18:09:14.383003"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "KODUNGAYUR PARVATHY",
+    "destination_name": "KODUNGAYUR PARVATHY",
+    "timing": "17:50",
+    "scraped_at": "2026-01-16T18:09:14.383003"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T18:09:14.415655"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "12:12",
+    "scraped_at": "2026-01-16T18:09:14.415655"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:09:14.415655"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:09:14.415655"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "11:07",
+    "scraped_at": "2026-01-16T18:09:15.251043"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KAVIARASU KANNADASAN",
+    "origin_name": "KAVIARASU KANNADASAN",
+    "destination_value": "PERAMBUR B.S",
+    "destination_name": "PERAMBUR B.S",
+    "timing": "21:25",
+    "scraped_at": "2026-01-16T18:09:15.251043"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KODUNGAYUR PARVATHY",
+    "origin_name": "KODUNGAYUR PARVATHY",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T18:09:15.894695"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "KODUNGAYUR PARVATHY",
+    "origin_name": "KODUNGAYUR PARVATHY",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:09:15.894695"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "11:37",
+    "scraped_at": "2026-01-16T18:09:15.932253"
+  },
+  {
+    "route_number": "64KET",
+    "route_name": "64KET",
+    "origin_value": "PERAMBUR B.S",
+    "origin_name": "PERAMBUR B.S",
+    "destination_value": "KAVIARASU KANNADASAN",
+    "destination_name": "KAVIARASU KANNADASAN",
+    "timing": "21:55",
+    "scraped_at": "2026-01-16T18:09:15.932253"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "05:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "11:15",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "13:25",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "14:25",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "18:20",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.G.R.CENTRAL",
+    "origin_name": "M.G.R.CENTRAL",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T18:09:15.969163"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "04:30",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "05:25",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "10:15",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "14:25",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "64M",
+    "route_name": "64M",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.CENTRAL",
+    "destination_name": "M.G.R.CENTRAL",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T18:09:16.892438"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:50",
+    "scraped_at": "2026-01-16T18:09:17.446506"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "14:15",
+    "scraped_at": "2026-01-16T18:09:17.446506"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "MUTHAPUDUPET",
+    "origin_name": "MUTHAPUDUPET",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T18:09:17.481840"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "MUTHAPUDUPET",
+    "origin_name": "MUTHAPUDUPET",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T18:09:17.481840"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "MUTHAPUDUPET",
+    "destination_name": "MUTHAPUDUPET",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T18:09:17.522434"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "11:45",
+    "scraped_at": "2026-01-16T18:09:18.448817"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "THYAGARAYA NAGAR",
+    "destination_name": "THYAGARAYA NAGAR",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:09:18.448817"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "13:15",
+    "scraped_at": "2026-01-16T18:09:18.994908"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "21:30",
+    "scraped_at": "2026-01-16T18:09:18.994908"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "MUTHAPUDUPET",
+    "destination_name": "MUTHAPUDUPET",
+    "timing": "16:25",
+    "scraped_at": "2026-01-16T18:09:19.035728"
+  },
+  {
+    "route_number": "65A",
+    "route_name": "65A",
+    "origin_value": "THYAGARAYA NAGAR",
+    "origin_name": "THYAGARAYA NAGAR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T18:09:19.070339"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "04:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:15",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:25",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:45",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "06:30",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "07:55",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "09:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "11:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "11:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "12:15",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "14:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "15:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "15:25",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "17:15",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "17:45",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "18:10",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "19:05",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "19:35",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "19:45",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "20:35",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "20:40",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "21:00",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "22:00",
+    "scraped_at": "2026-01-16T18:09:20.077051"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "H.V.F",
+    "origin_name": "H.V.F",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "08:45",
+    "scraped_at": "2026-01-16T18:09:20.576381"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "H.V.F",
+    "origin_name": "H.V.F",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:09:20.576381"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "IYYAPPANTHANGAL",
+    "origin_name": "IYYAPPANTHANGAL",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "04:45",
+    "scraped_at": "2026-01-16T18:09:20.585973"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "IYYAPPANTHANGAL",
+    "origin_name": "IYYAPPANTHANGAL",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T18:09:20.585973"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "IYYAPPANTHANGAL",
+    "origin_name": "IYYAPPANTHANGAL",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:45",
+    "scraped_at": "2026-01-16T18:09:20.585973"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "MUTHAPUDUPET",
+    "origin_name": "MUTHAPUDUPET",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "09:05",
+    "scraped_at": "2026-01-16T18:09:20.637760"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "05:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "06:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "07:00",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "07:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "07:50",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "08:45",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "10:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "10:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "10:45",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "11:25",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "11:45",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "12:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "12:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "14:05",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "14:55",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "16:25",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "17:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "18:05",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "19:35",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "20:15",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "20:25",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "20:50",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "21:05",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "21:40",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "22:00",
+    "scraped_at": "2026-01-16T18:09:21.633321"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "IYYAPPANTHANGAL",
+    "destination_name": "IYYAPPANTHANGAL",
+    "timing": "21:50",
+    "scraped_at": "2026-01-16T18:09:22.216007"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "IYYAPPANTHANGAL",
+    "destination_name": "IYYAPPANTHANGAL",
+    "timing": "22:10",
+    "scraped_at": "2026-01-16T18:09:22.216007"
+  },
+  {
+    "route_number": "65B",
+    "route_name": "65B",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "IYYAPPANTHANGAL",
+    "destination_name": "IYYAPPANTHANGAL",
+    "timing": "23:02",
+    "scraped_at": "2026-01-16T18:09:22.216007"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "PAKKAM VILLAGE",
+    "destination_name": "PAKKAM VILLAGE",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T18:09:22.218084"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "PAKKAM VILLAGE",
+    "destination_name": "PAKKAM VILLAGE",
+    "timing": "08:20",
+    "scraped_at": "2026-01-16T18:09:22.218084"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "PAKKAM VILLAGE",
+    "destination_name": "PAKKAM VILLAGE",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T18:09:22.218084"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "PAKKAM VILLAGE",
+    "destination_name": "PAKKAM VILLAGE",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T18:09:22.218084"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "PAKKAM VILLAGE",
+    "destination_name": "PAKKAM VILLAGE",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T18:09:22.218084"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "AMBATHUR ESTATE",
+    "origin_name": "AMBATHUR ESTATE",
+    "destination_value": "PAKKAM VILLAGE",
+    "destination_name": "PAKKAM VILLAGE",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T18:09:22.218084"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "PAKKAM VILLAGE",
+    "origin_name": "PAKKAM VILLAGE",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "07:00",
+    "scraped_at": "2026-01-16T18:09:22.219909"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "PAKKAM VILLAGE",
+    "origin_name": "PAKKAM VILLAGE",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T18:09:22.219909"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "PAKKAM VILLAGE",
+    "origin_name": "PAKKAM VILLAGE",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T18:09:22.219909"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "PAKKAM VILLAGE",
+    "origin_name": "PAKKAM VILLAGE",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T18:09:22.219909"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "PAKKAM VILLAGE",
+    "origin_name": "PAKKAM VILLAGE",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T18:09:22.219909"
+  },
+  {
+    "route_number": "65CCT",
+    "route_name": "65CCT",
+    "origin_value": "PAKKAM VILLAGE",
+    "origin_name": "PAKKAM VILLAGE",
+    "destination_value": "AMBATHUR ESTATE",
+    "destination_name": "AMBATHUR ESTATE",
+    "timing": "21:32",
+    "scraped_at": "2026-01-16T18:09:22.219909"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "AVADI",
+    "origin_name": "AVADI",
+    "destination_value": "MELKONDAIYUR",
+    "destination_name": "MELKONDAIYUR",
+    "timing": "05:25",
+    "scraped_at": "2026-01-16T18:09:23.239994"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "AVADI",
+    "origin_name": "AVADI",
+    "destination_value": "MELKONDAIYUR",
+    "destination_name": "MELKONDAIYUR",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T18:09:23.239994"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "AVADI",
+    "origin_name": "AVADI",
+    "destination_value": "MELKONDAIYUR",
+    "destination_name": "MELKONDAIYUR",
+    "timing": "11:05",
+    "scraped_at": "2026-01-16T18:09:23.239994"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "AVADI",
+    "origin_name": "AVADI",
+    "destination_value": "MELKONDAIYUR",
+    "destination_name": "MELKONDAIYUR",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T18:09:23.239994"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "AVADI",
+    "origin_name": "AVADI",
+    "destination_value": "MELKONDAIYUR",
+    "destination_name": "MELKONDAIYUR",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T18:09:23.239994"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "AVADI",
+    "origin_name": "AVADI",
+    "destination_value": "MELKONDAIYUR",
+    "destination_name": "MELKONDAIYUR",
+    "timing": "19:15",
+    "scraped_at": "2026-01-16T18:09:23.239994"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "MELKONDAIYUR",
+    "origin_name": "MELKONDAIYUR",
+    "destination_value": "AVADI",
+    "destination_name": "AVADI",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T18:09:23.851556"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "MELKONDAIYUR",
+    "origin_name": "MELKONDAIYUR",
+    "destination_value": "AVADI",
+    "destination_name": "AVADI",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T18:09:23.851556"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "MELKONDAIYUR",
+    "origin_name": "MELKONDAIYUR",
+    "destination_value": "AVADI",
+    "destination_name": "AVADI",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T18:09:23.851556"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "MELKONDAIYUR",
+    "origin_name": "MELKONDAIYUR",
+    "destination_value": "AVADI",
+    "destination_name": "AVADI",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T18:09:23.851556"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "MELKONDAIYUR",
+    "origin_name": "MELKONDAIYUR",
+    "destination_value": "AVADI",
+    "destination_name": "AVADI",
+    "timing": "17:45",
+    "scraped_at": "2026-01-16T18:09:23.851556"
+  },
+  {
+    "route_number": "65D",
+    "route_name": "65D",
+    "origin_value": "MELKONDAIYUR",
+    "origin_name": "MELKONDAIYUR",
+    "destination_value": "AVADI",
+    "destination_name": "AVADI",
+    "timing": "20:40",
+    "scraped_at": "2026-01-16T18:09:23.851556"
+  }
+]

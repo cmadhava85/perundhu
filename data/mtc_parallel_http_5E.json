@@ -1,0 +1,1072 @@
+[
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "01:15",
+    "scraped_at": "2026-01-16T11:24:32.472846"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "02:35",
+    "scraped_at": "2026-01-16T11:24:32.472846"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "03:55",
+    "scraped_at": "2026-01-16T11:24:32.472846"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "22:20",
+    "scraped_at": "2026-01-16T11:24:32.472846"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "23:50",
+    "scraped_at": "2026-01-16T11:24:32.472846"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "00:35",
+    "scraped_at": "2026-01-16T11:24:32.474876"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "01:55",
+    "scraped_at": "2026-01-16T11:24:32.474876"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "03:15",
+    "scraped_at": "2026-01-16T11:24:32.474876"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "04:35",
+    "scraped_at": "2026-01-16T11:24:32.474876"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "23:05",
+    "scraped_at": "2026-01-16T11:24:32.474876"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "05:04",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "05:22",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "06:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "06:28",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "06:38",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "06:56",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "07:06",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "07:16",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "07:24",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "07:34",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "07:44",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "08:02",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "08:12",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "08:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "08:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "08:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:08",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:18",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:25",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:36",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:46",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "09:56",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "10:04",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "10:14",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "10:24",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "10:42",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "10:52",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:02",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:48",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "11:58",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "12:16",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "12:26",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "12:36",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "12:44",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "12:54",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "13:22",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "13:32",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "14:58",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "15:06",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "15:16",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "15:26",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "15:34",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "15:44",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "16:02",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "16:12",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "16:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:38",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:46",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "17:56",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "18:06",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "18:14",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "18:24",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "18:42",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "18:52",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "19:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "19:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "20:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "20:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "20:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "21:00",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "21:40",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  },
+  {
+    "route_number": "5E",
+    "route_name": "5E",
+    "origin_value": "BESANT NAGAR",
+    "origin_name": "BESANT NAGAR",
+    "destination_value": "VADAPALANI B.S",
+    "destination_name": "VADAPALANI B.S",
+    "timing": "21:50",
+    "scraped_at": "2026-01-16T11:24:32.492101"
+  }
+]

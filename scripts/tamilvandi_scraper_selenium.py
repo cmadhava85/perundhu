@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import List, Dict, Optional, Set, Tuple
 from dataclasses import dataclass, asdict, field
 import re
+import requests
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -57,6 +58,7 @@ class TamilVandiScraperSelenium:
     """Selenium-based scraper for Tamil Vandi bus timings"""
     
     BASE_URL = "https://www.tamilvandi.com/timings"
+    API_URL = "https://www.tamilvandi.com/_api/wix-code-public-dispatcher-ng/siteview/_webMethods/backend/googleSheetFetch.jsw/getSheetDataPaginated.ajax?gridAppId=ee62bd20-2f2c-4073-bdd3-3e5bb29c2a48&viewMode=site"
     
     def __init__(
         self,
@@ -65,6 +67,7 @@ class TamilVandiScraperSelenium:
         checkpoint_path: Optional[Path] = None,
         processed_pairs: Optional[Set[Tuple[str, str]]] = None,
         existing_routes: Optional[List[BusRoute]] = None,
+        auth_token: Optional[str] = None,
     ):
         """
         Initialize the Selenium scraper
@@ -75,6 +78,7 @@ class TamilVandiScraperSelenium:
             checkpoint_path: Path to checkpoint file for resuming
             processed_pairs: Set of already processed (from, to) pairs
             existing_routes: List of routes already scraped
+            auth_token: Optional pre-provided Wix authorization token for API pagination
         """
         self.delay = delay
         self.headless = headless
@@ -82,6 +86,9 @@ class TamilVandiScraperSelenium:
         self.all_routes: List[BusRoute] = existing_routes or []
         self.checkpoint_path = checkpoint_path
         self.processed_pairs: Set[Tuple[str, str]] = processed_pairs or set()
+        self.session = requests.Session()
+        self.auth_token = auth_token  # Can be provided externally
+        self.xsrf_token = None
         
     def _setup_driver(self):
         """Setup Chrome WebDriver"""
@@ -98,6 +105,9 @@ class TamilVandiScraperSelenium:
         chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
         chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
         chrome_options.add_experimental_option('useAutomationExtension', False)
+        
+        # Enable performance logging to capture network requests
+        chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
         
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.set_page_load_timeout(60)
@@ -142,6 +152,159 @@ class TamilVandiScraperSelenium:
                     pass
         except:
             pass
+    
+    def _capture_token_from_network_logs(self):
+        """Capture auth token from browser network logs"""
+        try:
+            logs = self.driver.get_log('performance')
+            for entry in logs:
+                try:
+                    log = json.loads(entry['message'])['message']
+                    
+                    # Look for network requests
+                    if log.get('method') == 'Network.requestWillBeSent':
+                        request = log.get('params', {}).get('request', {})
+                        headers = request.get('headers', {})
+                        
+                        # Check for authorization header
+                        auth_header = headers.get('authorization') or headers.get('Authorization')
+                        if auth_header and 'wixcode-pub' in auth_header:
+                            self.auth_token = auth_header
+                            logger.info(f"✓ Captured auth token from network: {auth_header[:60]}...")
+                            return True
+                        
+                        # Check for x-wix-app-instance
+                        app_instance = headers.get('x-wix-app-instance')
+                        if app_instance and 'wixcode-pub' in app_instance:
+                            self.auth_token = app_instance
+                            logger.info(f"✓ Captured auth token from x-wix-app-instance: {app_instance[:60]}...")
+                            return True
+                        
+                        # Check URL for embedded tokens
+                        url = request.get('url', '')
+                        if 'wix-code-public-dispatcher' in url and 'wixcode-pub' in str(headers):
+                            # Token might be in any header
+                            for header_val in headers.values():
+                                if isinstance(header_val, str) and 'wixcode-pub' in header_val and len(header_val) > 100:
+                                    self.auth_token = header_val
+                                    logger.info(f"✓ Found token in headers: {header_val[:60]}...")
+                                    return True
+                                    
+                except Exception as e:
+                    continue
+                    
+            return False
+        except Exception as e:
+            logger.debug(f"Error capturing from network logs: {e}")
+            return False
+    
+    def _extract_auth_tokens(self):
+        """Extract authorization and XSRF tokens from page"""
+        try:
+            # Strategy 0: Check if token already provided
+            if self.auth_token:
+                logger.info(f"✓ Using pre-provided auth token")
+                return True
+            
+            # Strategy 1: Try to capture from network logs first
+            if self._capture_token_from_network_logs():
+                return True
+            
+            # Strategy 2: Try to get from JavaScript execution context
+            try:
+                # Execute JavaScript to fetch from various sources
+                js_script = """
+                return (function() {
+                    // Try window objects
+                    if (window.wixBiSession && window.wixBiSession.viewerSessionId) {
+                        return window.wixBiSession.viewerSessionId;
+                    }
+                    // Try from config objects
+                    if (window.rendererModel && window.rendererModel.clientSpecMap) {
+                        var config = JSON.stringify(window.rendererModel);
+                        var match = config.match(/wixcode-pub\\.[a-f0-9]{30,}\\.[A-Za-z0-9_-]{100,}/);
+                        if (match) return match[0];
+                    }
+                    // Try localStorage/sessionStorage
+                    try {
+                        var storage = JSON.stringify(localStorage) + JSON.stringify(sessionStorage);
+                        var match = storage.match(/wixcode-pub\\.[a-f0-9]{30,}\\.[A-Za-z0-9_-]{100,}/);
+                        if (match) return match[0];
+                    } catch(e) {}
+                    return null;
+                })();
+                """
+                result = self.driver.execute_script(js_script)
+                if result and 'wixcode-pub' in str(result):
+                    self.auth_token = str(result)
+                    logger.info(f"✓ Found auth token via JavaScript: {self.auth_token[:60]}...")
+                    
+            except Exception as e:
+                logger.debug(f"JS extraction failed: {e}")
+            
+            # Strategy 2: Extract from page source
+            if not self.auth_token:
+                page_source = self.driver.page_source
+                
+                # Look for authorization token - try multiple strategies
+                auth_patterns = [
+                    # In JSON objects
+                    r'"authorization"\s*:\s*"(wixcode-pub\.[^"]+)"',
+                    r"'authorization'\s*:\s*'(wixcode-pub\.[^']+)'",
+                    # In x-wix-app-instance
+                    r'"x-wix-app-instance"\s*:\s*"(wixcode-pub\.[^"]+)"',
+                    r"'x-wix-app-instance'\s*:\s*'(wixcode-pub\.[^']+)'",
+                    # Direct token pattern
+                    r'(wixcode-pub\.[a-f0-9]{32,64}\.[A-Za-z0-9_-]{100,})',
+                    # In URL-encoded format
+                    r'authorization[=:]([^&\s"\']+wixcode-pub[^&\s"\']+)',
+                ]
+                
+                for pattern in auth_patterns:
+                    matches = re.findall(pattern, page_source)
+                    if matches:
+                        for token in matches:
+                            if 'wixcode-pub' in token and len(token) > 100:
+                                self.auth_token = token
+                                logger.info(f"✓ Found auth token: {token[:60]}...")
+                                break
+                    if self.auth_token:
+                        break
+            
+            # Look for XSRF token in cookies or page
+            try:
+                cookies = self.driver.get_cookies()
+                for cookie in cookies:
+                    if 'XSRF' in cookie.get('name', '').upper():
+                        self.xsrf_token = cookie.get('value')
+                        logger.debug(f"Found XSRF token from cookie")
+                        break
+            except:
+                pass
+            
+            # Fallback: extract from page content
+            if not self.xsrf_token:
+                xsrf_patterns = [
+                    r'["\']?x-xsrf-token["\']?\s*:\s*["\']([^"\',]+)',
+                    r'xsrfToken["\']?\s*:\s*["\']([^"\',]+)',
+                ]
+                for pattern in xsrf_patterns:
+                    xsrf_match = re.search(pattern, page_source)
+                    if xsrf_match:
+                        self.xsrf_token = xsrf_match.group(1)
+                        logger.debug(f"Found XSRF token from page")
+                        break
+            
+            if self.auth_token:
+                logger.info(f"✓ Auth tokens extracted successfully")
+            else:
+                logger.warning(f"⚠️  Could not extract auth token from page")
+            
+            return bool(self.auth_token)
+            
+        except Exception as e:
+            logger.debug(f"Error extracting auth tokens: {e}")
+            return False
     
     def fetch_all_cities(self) -> List[str]:
         """
@@ -317,6 +480,67 @@ class TamilVandiScraperSelenium:
             # Close any popups
             self._close_popups()
             
+            # Wait for JavaScript to fully load and inject tokens
+            logger.debug("Waiting for dynamic content to load...")
+            time.sleep(3)  # Give extra time for Wix scripts to execute
+            
+            # Try to trigger network activity by scrolling to load more content
+            try:
+                self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(2)
+                
+                # Try to find and monitor Next button to capture API calls
+                if not self.auth_token:
+                    logger.debug("Looking for Next button to capture API token...")
+                    next_button_selectors = [
+                        "//button[contains(., 'Next') or contains(., 'next')]",
+                        "//button[contains(@class, 'wixui-button')]//span[contains(text(), 'Next')]/..",
+                        "//*[@role='button' and contains(., 'Next')]"
+                    ]
+                    
+                    for selector in next_button_selectors:
+                        try:
+                            buttons = self.driver.find_elements(By.XPATH, selector)
+                            for btn in buttons:
+                                if btn.is_displayed() and btn.is_enabled():
+                                    # Scroll to button
+                                    self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", btn)
+                                    time.sleep(1)
+                                    
+                                    # Click to trigger API call
+                                    logger.debug("  Clicking Next button to trigger API call...")
+                                    btn.click()
+                                    time.sleep(2)
+                                    
+                                    # Now check network logs for the token
+                                    if self._capture_token_from_network_logs():
+                                        logger.info("✓ Successfully captured token from Next button click!")
+                                        # Navigate back to first page
+                                        self.driver.back()
+                                        time.sleep(2)
+                                        break
+                                    break
+                            if self.auth_token:
+                                break
+                        except Exception as e:
+                            logger.debug(f"Could not click Next button: {e}")
+                            continue
+            except Exception as e:
+                logger.debug(f"Error during button interaction: {e}")
+            
+            # Extract auth tokens for API calls (will check network logs)
+            if not self._extract_auth_tokens():
+                # Save page source for debugging
+                logger.debug("Saving page source for token debugging...")
+                try:
+                    debug_file = Path("data/tamilvandi_debug_page.html")
+                    debug_file.parent.mkdir(parents=True, exist_ok=True)
+                    with open(debug_file, 'w', encoding='utf-8') as f:
+                        f.write(self.driver.page_source)
+                    logger.info(f"📄 Page source saved to: {debug_file}")
+                except Exception as e:
+                    logger.debug(f"Could not save debug page: {e}")
+            
             # Wait for results to load
             try:
                 # Check if results are present
@@ -339,6 +563,64 @@ class TamilVandiScraperSelenium:
         except Exception as e:
             logger.error(f"Error loading search page: {e}")
             return False
+    
+    def fetch_paginated_data_via_api(self, from_city: str, to_city: str, page_number: int, page_size: int = 50) -> Optional[List[Dict]]:
+        """
+        Fetch paginated bus data via Wix API
+        
+        Args:
+            from_city: Origin city
+            to_city: Destination city
+            page_number: Page number (0 for first page, 1 for second page, etc.)
+            page_size: Number of results per page
+            
+        Returns:
+            List of bus data dictionaries or None if request fails
+        """
+        if not self.auth_token:
+            logger.warning("No auth token available, cannot use API")
+            return None
+        
+        try:
+            headers = {
+                'accept': 'application/json, text/plain, */*',
+                'accept-language': 'en-US,en;q=0.9',
+                'authorization': self.auth_token,
+                'content-type': 'application/json',
+                'origin': 'https://www.tamilvandi.com',
+                'referer': f'https://www.tamilvandi.com/timings?from={from_city}&to={to_city}',
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                'x-wix-brand': 'wix',
+                'x-wix-app-instance': self.auth_token,
+            }
+            
+            if self.xsrf_token:
+                headers['x-xsrf-token'] = self.xsrf_token
+            
+            # Build request body: [page_number, page_size, origin, destination]
+            # Example: [4, 9, "SIVakasi", "madurai"] means page 4 with 9 results per page
+            payload = [page_number, page_size, from_city, to_city]
+            
+            logger.debug(f"API call: page={page_number}, size={page_size}, from={from_city}, to={to_city}")
+            
+            response = self.session.post(
+                self.API_URL,
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                logger.debug(f"API response type: {type(data)}")
+                return data
+            else:
+                logger.warning(f"API request failed: {response.status_code}")
+                return None
+                
+        except Exception as e:
+            logger.debug(f"Error fetching paginated data via API: {e}")
+            return None
     
     def extract_bus_details(self, bus_element) -> Optional[Dict]:
         """
@@ -500,6 +782,126 @@ class TamilVandiScraperSelenium:
             logger.error(f"Error parsing page results: {e}")
             return []
     
+    def _parse_api_response(self, api_data, from_city: str, to_city: str) -> List[BusRoute]:
+        """
+        Parse bus data from API response
+        
+        Args:
+            api_data: API response data (structure varies)
+            from_city: Origin city
+            to_city: Destination city
+            
+        Returns:
+            List of BusRoute objects
+        """
+        routes = []
+        scraped_at = datetime.now().isoformat()
+        
+        try:
+            # API response could be a list or dict, need to handle both
+            if isinstance(api_data, list):
+                items = api_data
+            elif isinstance(api_data, dict):
+                # Check if response has 'result' wrapper (Wix API format)
+                if 'result' in api_data and isinstance(api_data['result'], dict):
+                    result = api_data['result']
+                    items = result.get('results', [])
+                    logger.debug(f"API returned {result.get('total', 0)} total, page {result.get('page', 0)}, {len(items)} items")
+                else:
+                    # Try common keys for data
+                    items = api_data.get('items', api_data.get('data', api_data.get('results', [])))
+            else:
+                logger.warning(f"Unexpected API response type: {type(api_data)}")
+                return []
+            
+            if not items:
+                return []
+            
+            for item in items:
+                try:
+                    # Parse item based on structure
+                    if isinstance(item, dict):
+                        # Wix API format: {'_id': '54194', 'from': 'SIVAKASI', 'to': 'MADURAI', 
+                        #                  'dep': '01:10', 'type': 'Moffusil Bus', 'corporation': '503'}
+                        operator_name = (
+                            item.get('corporation') or 
+                            item.get('operator') or 
+                            item.get('bus_number') or 
+                            item.get('name') or 
+                            'N/A'
+                        )
+                        departure_time = (
+                            item.get('dep') or 
+                            item.get('departure') or 
+                            item.get('time') or 
+                            item.get('departure_time') or 
+                            ''
+                        )
+                        bus_type = item.get('type') or item.get('bus_type') or 'Unknown'
+                        
+                        # Use API-provided origin/destination if available
+                        origin = item.get('from', from_city)
+                        destination = item.get('to', to_city)
+                        
+                        # Clean time format
+                        if departure_time:
+                            time_match = re.search(r'(\d{1,2}):(\d{2})', str(departure_time))
+                            if time_match:
+                                hour = int(time_match.group(1))
+                                minute = time_match.group(2)
+                                departure_time = f"{hour:02d}:{minute}"
+                        
+                        if operator_name and departure_time:
+                            route = BusRoute(
+                                bus_number=str(operator_name),
+                                bus_type=str(bus_type),
+                                operator_name=str(operator_name),
+                                origin=origin,
+                                destination=destination,
+                                departure_time=str(departure_time),
+                                arrival_time='',
+                                stops=[],
+                                scraped_at=scraped_at
+                            )
+                            routes.append(route)
+                    elif isinstance(item, (list, tuple)):
+                        # Handle array format: [operator, type, time, ...]
+                        if len(item) >= 3:
+                            operator_name = str(item[0]) if item[0] else 'N/A'
+                            bus_type = str(item[1]) if len(item) > 1 and item[1] else 'Unknown'
+                            departure_time = str(item[2]) if len(item) > 2 and item[2] else ''
+                            
+                            # Clean time format
+                            if departure_time:
+                                time_match = re.search(r'(\d{1,2}):(\d{2})', departure_time)
+                                if time_match:
+                                    hour = int(time_match.group(1))
+                                    minute = time_match.group(2)
+                                    departure_time = f"{hour:02d}:{minute}"
+                            
+                            if operator_name and departure_time:
+                                route = BusRoute(
+                                    bus_number=operator_name,
+                                    bus_type=bus_type,
+                                    operator_name=operator_name,
+                                    origin=from_city,
+                                    destination=to_city,
+                                    departure_time=departure_time,
+                                    arrival_time='',
+                                    stops=[],
+                                    scraped_at=scraped_at
+                                )
+                                routes.append(route)
+                except Exception as e:
+                    logger.debug(f"Error parsing API item: {e}")
+                    continue
+            
+            return routes
+            
+        except Exception as e:
+            logger.error(f"Error parsing API response: {e}")
+            return []
+    
     def _parse_from_text(self, page_text: str, from_city: str, to_city: str, scraped_at: str) -> List[BusRoute]:
         """
         Parse bus data directly from page text (fallback method)
@@ -558,151 +960,6 @@ class TamilVandiScraperSelenium:
         logger.info(f"Parsed {len(routes)} routes from text")
         return routes
     
-    def has_next_page(self) -> bool:
-        """
-        Check if there's a next page of results
-        
-        Returns:
-            True if next page exists, False otherwise
-        """
-        try:
-            # Strategy 1: Look for "Next" button or link (case-insensitive)
-            next_selectors = [
-                "//a[contains(translate(text(), 'NEXT', 'next'), 'next')]",
-                "//button[contains(translate(text(), 'NEXT', 'next'), 'next')]",
-                "//a[contains(@class, 'next')]",
-                "//button[contains(@class, 'next')]",
-                "//a[@rel='next']",
-                "//*[@data-page='next']",
-                "//a[contains(@href, 'page=')]",
-            ]
-            
-            for selector in next_selectors:
-                try:
-                    links = self.driver.find_elements(By.XPATH, selector)
-                    for link in links:
-                        if link.is_displayed() and link.is_enabled():
-                            # Check if not disabled
-                            classes = link.get_attribute('class') or ''
-                            aria_disabled = link.get_attribute('aria-disabled') or ''
-                            
-                            if 'disabled' not in classes.lower() and aria_disabled.lower() != 'true':
-                                logger.debug(f"Found next page button: {selector}")
-                                return True
-                except:
-                    continue
-            
-            # Strategy 2: Check for pagination numbers
-            try:
-                pagination_links = self.driver.find_elements(By.XPATH, 
-                    "//a[contains(@class, 'page')] | //button[contains(@class, 'page')]")
-                
-                if pagination_links:
-                    # Check if there's a higher page number available
-                    current_page_elem = self.driver.find_elements(By.XPATH, 
-                        "//*[contains(@class, 'active') or contains(@class, 'current')]")
-                    if current_page_elem:
-                        logger.debug("Found pagination with active page")
-                        # If there's an active page indicator, check for next
-                        return True
-            except:
-                pass
-            
-            return False
-            
-        except Exception as e:
-            logger.debug(f"Error checking for next page: {e}")
-            return False
-    
-    def go_to_next_page(self) -> bool:
-        """
-        Navigate to next page of results
-        
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            # Strategy 1: Click "Next" button or link
-            next_selectors = [
-                "//a[contains(translate(text(), 'NEXT', 'next'), 'next') and not(contains(@class, 'disabled'))]",
-                "//button[contains(translate(text(), 'NEXT', 'next'), 'next') and not(contains(@class, 'disabled'))]",
-                "//a[contains(@class, 'next') and not(contains(@class, 'disabled'))]",
-                "//button[contains(@class, 'next') and not(contains(@class, 'disabled'))]",
-                "//a[@rel='next']",
-            ]
-            
-            for selector in next_selectors:
-                try:
-                    links = self.driver.find_elements(By.XPATH, selector)
-                    for link in links:
-                        if link.is_displayed() and link.is_enabled():
-                            classes = link.get_attribute('class') or ''
-                            aria_disabled = link.get_attribute('aria-disabled') or ''
-                            
-                            if 'disabled' not in classes.lower() and aria_disabled.lower() != 'true':
-                                logger.info(f"    Clicking next page button")
-                                self._scroll_to_element(link)
-                                time.sleep(0.5)
-                                
-                                # Get current URL to verify page change
-                                current_url = self.driver.current_url
-                                
-                                # Try clicking
-                                try:
-                                    link.click()
-                                except:
-                                    # Try JavaScript click if regular click fails
-                                    self.driver.execute_script("arguments[0].click();", link)
-                                
-                                # Wait for page to load
-                                time.sleep(self.delay * 2)
-                                
-                                # Verify page changed
-                                new_url = self.driver.current_url
-                                if new_url != current_url:
-                                    logger.info(f"    Successfully navigated to next page")
-                                    return True
-                                else:
-                                    # Even if URL didn't change, check if content changed
-                                    logger.debug("    URL unchanged but checking for new content...")
-                                    return True
-                except Exception as e:
-                    logger.debug(f"Error with selector {selector}: {e}")
-                    continue
-            
-            # Strategy 2: Look for numbered pagination and click next number
-            try:
-                # Find current page number
-                current_page_elems = self.driver.find_elements(By.XPATH,
-                    "//*[contains(@class, 'active') or contains(@class, 'current')]//text()")
-                
-                if current_page_elems:
-                    try:
-                        current_page = int(current_page_elems[0].get_attribute('textContent'))
-                        next_page = current_page + 1
-                        
-                        # Find and click next page number
-                        next_page_link = self.driver.find_element(By.XPATH, 
-                            f"//a[text()='{next_page}'] | //button[text()='{next_page}']")
-                        
-                        if next_page_link.is_displayed():
-                            self._scroll_to_element(next_page_link)
-                            next_page_link.click()
-                            time.sleep(self.delay * 2)
-                            logger.info(f"    Clicked page number {next_page}")
-                            return True
-                    except:
-                        pass
-            except:
-                pass
-            
-            logger.debug("    Could not find or click next page button")
-            return False
-            
-        except Exception as e:
-            logger.error(f"Error going to next page: {e}")
-            return False
-    
     def scrape_route_pair(self, from_city: str, to_city: str) -> List[BusRoute]:
         """
         Scrape all buses for a specific origin-destination pair (all pages)
@@ -721,61 +978,82 @@ class TamilVandiScraperSelenium:
         max_pages = 50  # Safety limit to prevent infinite loops
         consecutive_empty_pages = 0  # Track empty pages
         max_empty_pages = 3  # Stop after 3 consecutive empty pages
+        page_size = 50  # Results per API call
         
-        # Load first page
+        # Load first page to extract auth tokens
         if not self.search_buses(from_city, to_city):
             logger.warning(f"Could not load search results for {from_city} -> {to_city}")
             return []
         
-        page_num = 1
+        # Parse first page from HTML
+        logger.info(f"  📄 Page 1 (from HTML)...")
+        routes = self.parse_page_results(from_city, to_city)
         
-        # Parse results from all pages
-        while page_num <= max_pages:
-            logger.info(f"  📄 Page {page_num}...")
+        if routes:
+            for route in routes:
+                key = (route.operator_name, route.departure_time)
+                if key not in seen_buses:
+                    seen_buses.add(key)
+                    all_routes.append(route)
+            logger.info(f"    ✓ Found {len(routes)} routes from first page")
+        else:
+            logger.warning(f"    ⚠️  No routes found on first page")
+            return []
+        
+        # Use API for subsequent pages if auth token is available
+        if self.auth_token:
+            logger.info("  🔑 Using API pagination (Wix endpoint)")
+            page_num = 2
+            # Page number is 0-indexed in API: page 1 (HTML) = index 0, page 2 = index 1, etc.
+            page_index = 1  # Start from second page (index 1)
             
-            routes = self.parse_page_results(from_city, to_city)
-            
-            if not routes:
-                consecutive_empty_pages += 1
-                logger.warning(f"    ⚠️  No routes found on page {page_num} (empty page {consecutive_empty_pages}/{max_empty_pages})")
+            while page_num <= max_pages:
+                logger.info(f"  📄 Page {page_num} (via API, page_index={page_index})...")
                 
-                if consecutive_empty_pages >= max_empty_pages:
-                    logger.info(f"    🛑 Stopping: {consecutive_empty_pages} consecutive empty pages")
-                    break
-            else:
-                consecutive_empty_pages = 0  # Reset counter on successful page
+                api_data = self.fetch_paginated_data_via_api(from_city, to_city, page_index, page_size)
                 
-                # Filter duplicates
-                new_routes = []
-                for route in routes:
-                    # Create unique key from operator name and departure time
-                    key = (route.operator_name, route.departure_time)
-                    if key not in seen_buses:
-                        seen_buses.add(key)
-                        new_routes.append(route)
-                        all_routes.append(route)
-                    else:
-                        logger.debug(f"    Skipping duplicate: {route.operator_name} at {route.departure_time}")
-                
-                logger.info(f"    ✓ Found {len(new_routes)} new routes ({len(routes) - len(new_routes)} duplicates)")
-            
-            # Check for next page
-            if self.has_next_page():
-                logger.info("    ➡️  Next page available")
-                if self.go_to_next_page():
+                if api_data is None:
+                    logger.warning(f"    ⚠️  API call failed")
+                    consecutive_empty_pages += 1
+                    if consecutive_empty_pages >= max_empty_pages:
+                        break
+                    page_index += 1
                     page_num += 1
-                    time.sleep(self.delay)
+                    continue
+                
+                # Parse API response
+                routes = self._parse_api_response(api_data, from_city, to_city)
+                
+                if not routes:
+                    consecutive_empty_pages += 1
+                    logger.info(f"    ℹ️  No more routes (empty page {consecutive_empty_pages}/{max_empty_pages})")
+                    if consecutive_empty_pages >= max_empty_pages:
+                        logger.info(f"    🛑 Stopping: {consecutive_empty_pages} consecutive empty pages")
+                        break
                 else:
-                    logger.warning("    ⚠️  Could not navigate to next page")
-                    break
-            else:
-                logger.info("    ℹ️  No more pages")
-                break
+                    consecutive_empty_pages = 0
+                    
+                    # Filter duplicates
+                    new_routes = []
+                    for route in routes:
+                        key = (route.operator_name, route.departure_time)
+                        if key not in seen_buses:
+                            seen_buses.add(key)
+                            new_routes.append(route)
+                            all_routes.append(route)
+                    
+                    logger.info(f"    ✓ Found {len(new_routes)} new routes ({len(routes) - len(new_routes)} duplicates)")
+                
+                page_index += 1  # Increment page number (not offset)
+                page_num += 1
+                time.sleep(self.delay * 0.5)  # Shorter delay for API calls
+            
+            if page_num >= max_pages:
+                logger.warning(f"  ⚠️  Reached maximum page limit ({max_pages})")
+        else:
+            logger.warning("  ⚠️  No auth token, cannot use API pagination (only first page scraped)")
         
-        if page_num >= max_pages:
-            logger.warning(f"  ⚠️  Reached maximum page limit ({max_pages})")
-        
-        logger.info(f"  ✅ Total unique routes collected: {len(all_routes)} (across {page_num} pages)")
+        logger.info(f"  ✅ Total unique routes collected: {len(all_routes)}")
         self.all_routes.extend(all_routes)
         
         return all_routes
@@ -972,6 +1250,10 @@ Examples:
         action='store_true',
         help='Enable verbose logging'
     )
+    parser.add_argument(
+        '--auth-token',
+        help='Wix authorization token for API pagination (optional, for advanced usage)'
+    )
     
     args = parser.parse_args()
     
@@ -1024,7 +1306,8 @@ Examples:
         headless=headless,
         checkpoint_path=checkpoint_path,
         processed_pairs=processed_pairs,
-        existing_routes=existing_routes
+        existing_routes=existing_routes,
+        auth_token=args.auth_token
     )
     
     try:

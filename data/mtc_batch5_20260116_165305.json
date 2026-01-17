@@ -1,0 +1,2272 @@
+[
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "10:45",
+    "scraped_at": "2026-01-16T16:54:08.852145"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "THAMARAIPAKKAM KOOT RD",
+    "origin_name": "THAMARAIPAKKAM KOOT RD",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T16:54:08.854193"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "THAMARAIPAKKAM KOOT RD",
+    "origin_name": "THAMARAIPAKKAM KOOT RD",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "15:45",
+    "scraped_at": "2026-01-16T16:54:08.854193"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "THAMARAIPAKKAM KOOT RD",
+    "origin_name": "THAMARAIPAKKAM KOOT RD",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "20:15",
+    "scraped_at": "2026-01-16T16:54:08.854193"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T16:54:08.860915"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THAMARAIPAKKAM KOOT RD",
+    "destination_name": "THAMARAIPAKKAM KOOT RD",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T16:54:09.217679"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THAMARAIPAKKAM KOOT RD",
+    "destination_name": "THAMARAIPAKKAM KOOT RD",
+    "timing": "13:12",
+    "scraped_at": "2026-01-16T16:54:09.217679"
+  },
+  {
+    "route_number": "114C",
+    "route_name": "114C",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "THAMARAIPAKKAM KOOT RD",
+    "destination_name": "THAMARAIPAKKAM KOOT RD",
+    "timing": "18:07",
+    "scraped_at": "2026-01-16T16:54:09.217679"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "04:45",
+    "scraped_at": "2026-01-16T16:54:12.329789"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T16:54:12.329789"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T16:54:12.382134"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "21:20",
+    "scraped_at": "2026-01-16T16:54:12.382134"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T16:54:12.397549"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "15:45",
+    "scraped_at": "2026-01-16T16:54:12.397549"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T16:54:12.698747"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "10:05",
+    "scraped_at": "2026-01-16T16:54:16.000952"
+  },
+  {
+    "route_number": "114CCT",
+    "route_name": "114CCT",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T16:54:16.020234"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T16:54:16.023477"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T16:54:16.023477"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T16:54:16.023477"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T16:54:16.023477"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T16:54:16.023477"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T16:54:16.023477"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T16:54:16.320015"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "ARANI",
+    "origin_name": "ARANI",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T16:54:16.320015"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T16:54:19.480490"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "10:00",
+    "scraped_at": "2026-01-16T16:54:19.480490"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T16:54:19.480490"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T16:54:19.480490"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T16:54:19.480490"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T16:54:19.480490"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T16:54:19.512124"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "ARANI",
+    "destination_name": "ARANI",
+    "timing": "19:50",
+    "scraped_at": "2026-01-16T16:54:19.512124"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "21:55",
+    "scraped_at": "2026-01-16T16:54:19.562130"
+  },
+  {
+    "route_number": "114D",
+    "route_name": "114D",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T16:54:19.746906"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "NEW ERUMAIVETTI PALAYAM",
+    "destination_name": "NEW ERUMAIVETTI PALAYAM",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T16:54:22.998616"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "NEW ERUMAIVETTI PALAYAM",
+    "destination_name": "NEW ERUMAIVETTI PALAYAM",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T16:54:23.063301"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "NEW ERUMAIVETTI PALAYAM",
+    "destination_name": "NEW ERUMAIVETTI PALAYAM",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T16:54:23.063301"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "NEW ERUMAIVETTI PALAYAM",
+    "destination_name": "NEW ERUMAIVETTI PALAYAM",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T16:54:23.063301"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "NEW ERUMAIVETTI PALAYAM",
+    "origin_name": "NEW ERUMAIVETTI PALAYAM",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "06:25",
+    "scraped_at": "2026-01-16T16:54:23.092906"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "NEW ERUMAIVETTI PALAYAM",
+    "origin_name": "NEW ERUMAIVETTI PALAYAM",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "10:05",
+    "scraped_at": "2026-01-16T16:54:23.216782"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "NEW ERUMAIVETTI PALAYAM",
+    "origin_name": "NEW ERUMAIVETTI PALAYAM",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T16:54:23.216782"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "NEW ERUMAIVETTI PALAYAM",
+    "origin_name": "NEW ERUMAIVETTI PALAYAM",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T16:54:23.216782"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "NEW ERUMAIVETTI PALAYAM",
+    "origin_name": "NEW ERUMAIVETTI PALAYAM",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "20:45",
+    "scraped_at": "2026-01-16T16:54:26.455765"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "ANNA NAGAR WEST",
+    "origin_name": "ANNA NAGAR WEST",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T16:54:26.583117"
+  },
+  {
+    "route_number": "114E",
+    "route_name": "114E",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "NEW ERUMAIVETTI PALAYAM",
+    "destination_name": "NEW ERUMAIVETTI PALAYAM",
+    "timing": "05:35",
+    "scraped_at": "2026-01-16T16:54:26.618372"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "ANNA NAGAR WEST",
+    "destination_name": "ANNA NAGAR WEST",
+    "timing": "21:54",
+    "scraped_at": "2026-01-16T16:54:26.661285"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "MAHINDRA IND.PARK",
+    "destination_name": "MAHINDRA IND.PARK",
+    "timing": "07:45",
+    "scraped_at": "2026-01-16T16:54:29.936970"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "MAHINDRA IND.PARK",
+    "destination_name": "MAHINDRA IND.PARK",
+    "timing": "15:57",
+    "scraped_at": "2026-01-16T16:54:29.936970"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "05:57",
+    "scraped_at": "2026-01-16T16:54:30.082631"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "11:43",
+    "scraped_at": "2026-01-16T16:54:30.082631"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "14:07",
+    "scraped_at": "2026-01-16T16:54:30.082631"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "20:07",
+    "scraped_at": "2026-01-16T16:54:30.082631"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "MAHINDRA IND.PARK",
+    "origin_name": "MAHINDRA IND.PARK",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "09:45",
+    "scraped_at": "2026-01-16T16:54:30.105587"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "MAHINDRA IND.PARK",
+    "origin_name": "MAHINDRA IND.PARK",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T16:54:30.105587"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "06:47",
+    "scraped_at": "2026-01-16T16:54:30.159127"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "12:37",
+    "scraped_at": "2026-01-16T16:54:30.159127"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "15:02",
+    "scraped_at": "2026-01-16T16:54:30.159127"
+  },
+  {
+    "route_number": "114ET",
+    "route_name": "114ET",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "21:07",
+    "scraped_at": "2026-01-16T16:54:30.159127"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "05:20",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "07:20",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "11:25",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "18:45",
+    "scraped_at": "2026-01-16T16:54:33.399153"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "09:25",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "13:25",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "20:55",
+    "scraped_at": "2026-01-16T16:54:33.571761"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "19:20",
+    "scraped_at": "2026-01-16T16:54:33.607617"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T16:54:33.632634"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T16:54:36.859535"
+  },
+  {
+    "route_number": "114G",
+    "route_name": "114G",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T16:54:37.013411"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T16:54:37.106794"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "16:05",
+    "scraped_at": "2026-01-16T16:54:37.106794"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "ANNA NAGAR WEST",
+    "origin_name": "ANNA NAGAR WEST",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T16:54:37.170862"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "M.M.B.T",
+    "destination_name": "M.M.B.T",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T16:54:40.293636"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "06:30",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "08:50",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "10:55",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "20:10",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "PADIYANALLUR",
+    "destination_name": "PADIYANALLUR",
+    "timing": "20:55",
+    "scraped_at": "2026-01-16T16:54:40.471050"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T16:54:40.560576"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "14:05",
+    "scraped_at": "2026-01-16T16:54:40.560576"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "18:20",
+    "scraped_at": "2026-01-16T16:54:40.560576"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "M.M.B.T",
+    "origin_name": "M.M.B.T",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "15:35",
+    "scraped_at": "2026-01-16T16:54:40.604872"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "ANNA NAGAR WEST",
+    "destination_name": "ANNA NAGAR WEST",
+    "timing": "21:15",
+    "scraped_at": "2026-01-16T16:54:43.742003"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "09:55",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "12:45",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "14:05",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "17:15",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "PADIYANALLUR",
+    "origin_name": "PADIYANALLUR",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "22:00",
+    "scraped_at": "2026-01-16T16:54:43.916662"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "06:25",
+    "scraped_at": "2026-01-16T16:54:44.025818"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "15:05",
+    "scraped_at": "2026-01-16T16:54:44.025818"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "10:40",
+    "scraped_at": "2026-01-16T16:54:44.040630"
+  },
+  {
+    "route_number": "114P",
+    "route_name": "114P",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "19:15",
+    "scraped_at": "2026-01-16T16:54:44.040630"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "SEEMAVARAM",
+    "destination_name": "SEEMAVARAM",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T16:54:47.275080"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "KOYAMBEDU MARKET",
+    "origin_name": "KOYAMBEDU MARKET",
+    "destination_value": "SEEMAVARAM",
+    "destination_name": "SEEMAVARAM",
+    "timing": "21:20",
+    "scraped_at": "2026-01-16T16:54:47.275080"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "SEEMAVARAM",
+    "destination_name": "SEEMAVARAM",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T16:54:47.413233"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "SEEMAVARAM",
+    "destination_name": "SEEMAVARAM",
+    "timing": "16:05",
+    "scraped_at": "2026-01-16T16:54:47.486538"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "SEEMAVARAM",
+    "destination_name": "SEEMAVARAM",
+    "timing": "18:10",
+    "scraped_at": "2026-01-16T16:54:47.486538"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "SEEMAVARAM",
+    "origin_name": "SEEMAVARAM",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "05:10",
+    "scraped_at": "2026-01-16T16:54:47.556363"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "SEEMAVARAM",
+    "origin_name": "SEEMAVARAM",
+    "destination_value": "KOYAMBEDU MARKET",
+    "destination_name": "KOYAMBEDU MARKET",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T16:54:47.556363"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "SEEMAVARAM",
+    "origin_name": "SEEMAVARAM",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T16:54:50.779281"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "SEEMAVARAM",
+    "origin_name": "SEEMAVARAM",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "15:05",
+    "scraped_at": "2026-01-16T16:54:50.870076"
+  },
+  {
+    "route_number": "114S",
+    "route_name": "114S",
+    "origin_value": "SEEMAVARAM",
+    "origin_name": "SEEMAVARAM",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T16:54:50.870076"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "KEERAPAKKAM",
+    "origin_name": "KEERAPAKKAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T16:54:50.948015"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "KEERAPAKKAM",
+    "origin_name": "KEERAPAKKAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T16:54:50.948015"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MAHENDRA CITY",
+    "origin_name": "MAHENDRA CITY",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T16:54:51.057104"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MAHENDRA CITY",
+    "origin_name": "MAHENDRA CITY",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "09:45",
+    "scraped_at": "2026-01-16T16:54:51.057104"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "05:50",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "06:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "06:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "07:40",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "09:50",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "10:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "11:50",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "12:00",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "12:20",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "12:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "13:25",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "16:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "18:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "18:20",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "18:40",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:00",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:20",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:40",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "21:35",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "MARAIMALAI NAGAR I.E.",
+    "origin_name": "MARAIMALAI NAGAR I.E.",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "22:10",
+    "scraped_at": "2026-01-16T16:54:54.237969"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "NEELAMANGALAM",
+    "origin_name": "NEELAMANGALAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "07:45",
+    "scraped_at": "2026-01-16T16:54:54.371053"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "NEELAMANGALAM",
+    "origin_name": "NEELAMANGALAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T16:54:54.371053"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KEERAPAKKAM",
+    "destination_name": "KEERAPAKKAM",
+    "timing": "07:00",
+    "scraped_at": "2026-01-16T16:54:54.401951"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KEERAPAKKAM",
+    "destination_name": "KEERAPAKKAM",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T16:54:54.401951"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MAHENDRA CITY",
+    "destination_name": "MAHENDRA CITY",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T16:54:54.526074"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MAHENDRA CITY",
+    "destination_name": "MAHENDRA CITY",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T16:54:54.526074"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "04:52",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "05:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "07:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "07:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "08:52",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "10:35",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "10:52",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "11:20",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "11:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "13:02",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "13:20",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "15:02",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "15:20",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "15:40",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "17:40",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "19:02",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "19:20",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "MARAIMALAI NAGAR I.E.",
+    "destination_name": "MARAIMALAI NAGAR I.E.",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T16:54:57.718194"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "NEELAMANGALAM",
+    "destination_name": "NEELAMANGALAM",
+    "timing": "06:52",
+    "scraped_at": "2026-01-16T16:54:57.865600"
+  },
+  {
+    "route_number": "118",
+    "route_name": "118",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "NEELAMANGALAM",
+    "destination_name": "NEELAMANGALAM",
+    "timing": "17:02",
+    "scraped_at": "2026-01-16T16:54:57.865600"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "KALIVANTHAPATTU",
+    "origin_name": "KALIVANTHAPATTU",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T16:54:57.878338"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "KALIVANTHAPATTU",
+    "origin_name": "KALIVANTHAPATTU",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T16:54:57.878338"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "KALIVANTHAPATTU",
+    "origin_name": "KALIVANTHAPATTU",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "12:40",
+    "scraped_at": "2026-01-16T16:54:57.878338"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "KALIVANTHAPATTU",
+    "origin_name": "KALIVANTHAPATTU",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "15:15",
+    "scraped_at": "2026-01-16T16:54:57.878338"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "KALIVANTHAPATTU",
+    "origin_name": "KALIVANTHAPATTU",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "17:50",
+    "scraped_at": "2026-01-16T16:54:57.878338"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "KALIVANTHAPATTU",
+    "origin_name": "KALIVANTHAPATTU",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T16:54:57.878338"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KALIVANTHAPATTU",
+    "destination_name": "KALIVANTHAPATTU",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T16:54:57.960513"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KALIVANTHAPATTU",
+    "destination_name": "KALIVANTHAPATTU",
+    "timing": "08:50",
+    "scraped_at": "2026-01-16T16:54:57.960513"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KALIVANTHAPATTU",
+    "destination_name": "KALIVANTHAPATTU",
+    "timing": "11:25",
+    "scraped_at": "2026-01-16T16:54:57.960513"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KALIVANTHAPATTU",
+    "destination_name": "KALIVANTHAPATTU",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T16:54:57.960513"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KALIVANTHAPATTU",
+    "destination_name": "KALIVANTHAPATTU",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T16:54:57.960513"
+  },
+  {
+    "route_number": "118ET",
+    "route_name": "118ET",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KALIVANTHAPATTU",
+    "destination_name": "KALIVANTHAPATTU",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T16:54:57.960513"
+  }
+]

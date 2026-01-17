@@ -183,11 +183,16 @@ start_backend() {
     (
         cd "$BACKEND_DIR"
         
-        # Set environment variables
-        export SPRING_PROFILES_ACTIVE=dev
+        # Set environment variables for local development
+        export SPRING_PROFILES_ACTIVE=local
         export DB_URL=${DB_URL:-jdbc:mysql://localhost:3306/perundhu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true}
         export DB_USERNAME=${DB_USERNAME:-root}
         export DB_PASSWORD=${DB_PASSWORD:-root}
+        
+        # Disable security filters for easier local development
+        export ORIGIN_VALIDATION_ENABLED=${ORIGIN_VALIDATION_ENABLED:-false}
+        export RATE_LIMIT_ENABLED=${RATE_LIMIT_ENABLED:-false}
+        export API_KEY_ENABLED=${API_KEY_ENABLED:-false}
         
         # CRITICAL: Pass GEMINI_API_KEY if set in environment or .env file
         GEMINI_PARAM=""
@@ -198,9 +203,11 @@ start_backend() {
             log_warning "GEMINI_API_KEY not set - AI extraction will not be available"
         fi
         
+        log_info "Local development mode: security filters disabled"
+        
         # Start backend with nohup - completely detached
         # Pass database credentials and Gemini API key as system properties to ensure they reach Gradle/Spring
-        nohup ./gradlew bootRun \
+        nohup ./gradlew bootRun --no-daemon \
             -Dspring.datasource.password="$DB_PASSWORD" \
             -Dspring.datasource.username="$DB_USERNAME" \
             -Dspring.datasource.url="$DB_URL" \

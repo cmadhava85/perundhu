@@ -1,0 +1,22 @@
+{
+  "processed": [
+    [
+      "Arakkonam",
+      "Chengalpattu"
+    ]
+  ],
+  "routes": [
+    {
+      "bus_number": "Arakkonam → Chengalpattu",
+      "bus_type": "Moffusil Bus",
+      "operator_name": "Arakkonam → Chengalpattu",
+      "origin": "Arakkonam",
+      "destination": "Chengalpattu",
+      "departure_time": "07:20",
+      "arrival_time": "",
+      "stops": [],
+      "scraped_at": "2026-01-16T10:28:34.710992"
+    }
+  ],
+  "saved_at": "2026-01-16T10:29:41.693355"
+}

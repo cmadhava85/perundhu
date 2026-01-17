@@ -33,6 +33,9 @@ db_disk_autoresize_limit = 20       # Auto-grow up to 20GB
 # Database Availability (cost-optimized)
 db_availability_type = "ZONAL" # Cheaper than REGIONAL
 
+# Database Activation Policy (NEVER = stopped, saves ~$18/month)
+db_activation_policy = "NEVER" # ALWAYS = always running, NEVER = stopped
+
 # Database Backups (disabled in preprod to save costs)
 db_backup_enabled                 = false
 db_retained_backups_count         = 3
@@ -57,12 +60,12 @@ read_replica_tier   = "db-f1-micro"
 read_replica_zone   = "asia-south1-b"
 
 # ============================================
-# Cloud Run Configuration
+# Cloud Run Configuration (Optimized for < $10/month)
 # ============================================
 cloud_run_min_instances = 0       # Scale to zero for cost savings
-cloud_run_max_instances = 3       # Conservative max for preprod (changed from 2 to align with typical testing load)
+cloud_run_max_instances = 2       # Reduced from 3 for cost savings
 cloud_run_cpu_limit     = "1000m" # 1 CPU
-cloud_run_memory_limit  = "512Mi" # Minimal memory
+cloud_run_memory_limit  = "512Mi" # Min required for Gen2 (256Mi not supported)
 
 # ============================================
 # VPC Configuration

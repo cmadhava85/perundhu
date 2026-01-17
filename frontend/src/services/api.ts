@@ -122,10 +122,13 @@ const getEnv = (key: string, defaultValue: string): string => {
 // Create axios instance with common configuration
 export const createApiInstance = (): AxiosInstance => {
   // Use the safe environment variable getter
-  const apiUrl = getEnv('VITE_API_URL', getEnv('VITE_API_BASE_URL', 'http://localhost:8080'));
+  // If VITE_API_URL is empty string, use empty string (for Vite proxy in dev)
+  // Otherwise fall back to VITE_API_BASE_URL or localhost:8080
+  const envUrl = getEnv('VITE_API_URL', '');
+  const apiUrl = envUrl !== '' ? envUrl : getEnv('VITE_API_BASE_URL', '');
   
   // Log API URL to help with debugging
-  logger.debug(`Creating API instance with baseURL: ${apiUrl}`);
+  logger.debug(`Creating API instance with baseURL: ${apiUrl || '(using relative paths/proxy)'}`);
   
   const instance = axios.create({
     baseURL: apiUrl,

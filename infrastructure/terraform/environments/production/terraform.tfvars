@@ -17,23 +17,26 @@ environment = "production"
 app_name    = "perundhu"
 
 # ============================================
-# Database Configuration
+# Database Configuration (Optimized for < $20/month)
 # ============================================
 db_version              = "MYSQL_8_0"
-db_instance_tier        = "db-n1-standard-1" # Standard tier for production (1 vCPU, 3.75GB RAM)
+db_instance_tier        = "db-g1-small" # Shared-core for cost optimization (was db-n1-standard-1)
 db_instance_name_suffix = ""
 
 database_name = "perundhu"
 database_user = "perundhu_user"
 
-# Database Storage (production-grade)
+# Database Storage (cost-optimized)
 db_disk_type             = "PD_HDD" # HDD for balance of cost and performance
-db_disk_size             = 50       # Start with 50GB in production
-db_disk_autoresize_limit = 100      # Allow growth up to 100GB
+db_disk_size             = 20       # Reduced from 50GB for cost savings
+db_disk_autoresize_limit = 50       # Reduced from 100GB for cost savings
 
 # Database Availability (production-grade)
 db_availability_type   = "ZONAL" # ZONAL is cost-effective; upgrade to REGIONAL if HA needed
 db_deletion_protection = true    # Prevent accidental deletion in production
+
+# Database Activation Policy (NEVER = stopped, saves ~$19/month)
+db_activation_policy = "NEVER" # ALWAYS = always running, NEVER = stopped
 
 # Database Backups (ENABLED in production)
 db_backup_enabled                 = true
@@ -47,12 +50,12 @@ db_slow_query_log_enabled = true  # Monitor slow queries for performance tuning
 db_general_log_enabled    = false # Disabled to avoid performance impact (enable if needed for debugging)
 
 # ============================================
-# Cloud Run Configuration
+# Cloud Run Configuration (Optimized for < $20/month)
 # ============================================
-cloud_run_min_instances = 1       # Always have 1 instance running
-cloud_run_max_instances = 10      # Scale up to 10 for load
-cloud_run_cpu_limit     = "2000m" # 2 CPUs for production
-cloud_run_memory_limit  = "1Gi"   # 1GB memory for production
+cloud_run_min_instances = 0       # Changed from 1 to scale to zero for cost savings
+cloud_run_max_instances = 5       # Reduced from 10 for cost optimization
+cloud_run_cpu_limit     = "1000m" # Reduced from 2000m for cost savings
+cloud_run_memory_limit  = "512Mi" # Reduced from 1Gi for cost optimization
 
 # ============================================
 # VPC Configuration

@@ -23,6 +23,16 @@ from mysql.connector import Error as MySQLError
 import difflib
 import argparse
 
+# Import Tamil translation module
+sys.path.insert(0, str(Path(__file__).parent))
+try:
+    from tamil_translator import TamilTranslator, create_translation_entry
+except ImportError:
+    logger_temp = logging.getLogger(__name__)
+    logger_temp.warning("tamil_translator module not found. Translation features disabled.")
+    TamilTranslator = None
+    create_translation_entry = None
+
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
@@ -130,12 +140,24 @@ class BusDataUploader:
         self.connection = None
         self.cursor = None
         self.location_cache = {}  # Cache for location lookups
+        self.translation_cache = {}  # Cache for Tamil translations
+        
+        # Initialize Tamil translator
+        self.translator = None
+        if TamilTranslator:
+            try:
+                self.translator = TamilTranslator(use_api=False)  # Use offline dictionary
+                logger.info("Tamil translation enabled")
+            except Exception as e:
+                logger.warning(f"Failed to initialize Tamil translator: {e}")
+        
         self.stats = {
             'locations_created': 0,
             'locations_skipped': 0,
             'buses_created': 0,
             'stops_created': 0,
             'connecting_routes_created': 0,
+            'translations_created': 0,
             'errors': 0
         }
         
@@ -204,6 +226,50 @@ class BusDataUploader:
             self.connection.close()
         logger.info("Database connection closed")
     
+    def create_translation(self, entity_type: str, entity_id: int, field_name: str, english_text: str, tamil_text: str):
+        """Create translation entry in database"""
+        try:
+            query = """
+                INSERT INTO translations 
+                (entity_type, entity_id, language_code, field_name, translated_value, created_at, updated_at)
+                VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
+                ON DUPLICATE KEY UPDATE
+                translated_value = VALUES(translated_value),
+                updated_at = NOW()
+            """
+            self.cursor.execute(query, (
+                entity_type,
+                entity_id,
+                'ta',  # Tamil language code
+                field_name,
+                tamil_text
+            ))
+            self.stats['translations_created'] += 1
+            logger.debug(f"Created translation: {entity_type}({entity_id}).{field_name} = {tamil_text}")
+        except MySQLError as e:
+            logger.warning(f"Failed to create translation: {e}")
+    
+    def translate_and_store(self, text: str, entity_type: str, entity_id: int, field_name: str = 'name') -> Optional[str]:
+        """Translate text to Tamil and store in database"""
+        if not text or not self.translator:
+            return None
+        
+        # Check cache first
+        cache_key = f"{entity_type}:{entity_id}:{field_name}"
+        if cache_key in self.translation_cache:
+            return self.translation_cache[cache_key]
+        
+        # Translate
+        tamil_text = self.translator.translate_location(text)
+        
+        if tamil_text:
+            # Store in database
+            self.create_translation(entity_type, entity_id, field_name, text, tamil_text)
+            self.translation_cache[cache_key] = tamil_text
+            return tamil_text
+        
+        return None
+    
     def _find_similar_location(self, name: str) -> Optional[int]:
         """Find similar location using fuzzy matching to prevent duplicates"""
         name_lower = name.lower().strip()
@@ -257,6 +323,12 @@ class BusDataUploader:
                 None   # Longitude (to be added later)
             ))
             location_id = self.cursor.lastrowid
+            
+            # Translate location name to Tamil and store
+            if self.translator:
+                tamil_name = self.translator.translate_location(name)
+                if tamil_name:
+                    self.create_translation('location', location_id, 'name', name, tamil_name)
             
             # Update cache
             self.location_cache[name.lower().strip()] = location_id
@@ -443,6 +515,7 @@ class BusDataUploader:
         logger.info(f"  Buses Created: {self.stats['buses_created']}")
         logger.info(f"  Stops Created: {self.stats['stops_created']}")
         logger.info(f"  Connecting Routes Created: {self.stats['connecting_routes_created']}")
+        logger.info(f"  Tamil Translations Created: {self.stats['translations_created']}")
         logger.info(f"  Errors: {self.stats['errors']}")
         logger.info("=" * 60)
     
@@ -507,6 +580,12 @@ Examples:
         help='Validate data without uploading to database'
     )
     
+    parser.add_argument(
+        '--enable-translation',
+        action='store_true',
+        help='Enable Tamil language translation for locations'
+    )
+    
     args = parser.parse_args()
     
     try:
@@ -518,6 +597,12 @@ Examples:
             return
         
         uploader = BusDataUploader(environment=args.environment, operator=args.operator)
+        
+        # Disable translator if not enabled
+        if not args.enable_translation:
+            uploader.translator = None
+            logger.info("Tamil translation disabled (use --enable-translation to enable)")
+        
         uploader.run()
         
         sys.exit(0)

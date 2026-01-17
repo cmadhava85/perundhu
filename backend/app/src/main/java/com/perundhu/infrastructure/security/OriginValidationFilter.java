@@ -41,7 +41,8 @@ public class OriginValidationFilter extends OncePerRequestFilter {
   private static final Set<String> ALWAYS_ALLOWED_PATHS = Set.of(
       "/actuator/health",
       "/actuator/info",
-      "/api/admin/auth/");
+      "/api/admin/auth/",
+      "/api/v1/bus-schedules/");
 
   // Paths that require strict origin validation (write operations)
   private static final Set<String> STRICT_VALIDATION_PATHS = Set.of(

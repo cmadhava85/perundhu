@@ -18,10 +18,11 @@ resource "google_sql_database_instance" "mysql_instance" {
   deletion_protection = false # Set to true for production
 
   settings {
-    tier                  = var.db_instance_tier
-    disk_type             = var.db_disk_type
-    disk_size             = var.db_disk_size
-    disk_autoresize       = true
+    tier              = var.db_instance_tier
+    activation_policy = var.db_activation_policy # ALWAYS or NEVER
+    disk_type         = var.db_disk_type
+    disk_size         = var.db_disk_size
+    disk_autoresize   = true
     disk_autoresize_limit = var.db_disk_autoresize_limit
 
     availability_type = var.db_availability_type
@@ -79,7 +80,8 @@ resource "google_sql_database_instance" "mysql_instance" {
     ignore_changes = [
       settings[0].backup_configuration,
       settings[0].disk_type,
-      settings[0].disk_size
+      settings[0].disk_size,
+      settings[0].activation_policy
     ]
   }
 }

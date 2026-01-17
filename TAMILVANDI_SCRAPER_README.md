@@ -7,6 +7,7 @@ This scraper fetches bus timing data from [TamilVandi.com](https://www.tamilvand
 ## Features
 
 - ✅ Scrapes bus timings between any two cities
+- ✅ **API-based pagination** using Wix backend endpoints for reliable multi-page results
 - ✅ Handles multiple pages of results automatically
 - ✅ Extracts comprehensive data:
   - Origin (from city)
@@ -165,6 +166,23 @@ To start fresh, delete the checkpoint file:
 ```bash
 rm data/tamilvandi_routes.checkpoint.json
 ```
+
+## How It Works
+
+### Pagination Strategy
+
+The scraper uses a **hybrid approach** for best results:
+
+1. **First Page**: Loads the search page via browser and scrapes visible results from HTML
+2. **Auth Token Extraction**: Extracts Wix authorization tokens from the page source
+3. **API Pagination**: Uses Wix's backend API endpoint for subsequent pages:
+   ```
+   POST https://www.tamilvandi.com/_api/wix-code-public-dispatcher-ng/siteview/_webMethods/backend/googleSheetFetch.jsw/getSheetDataPaginated.ajax
+   ```
+4. **Request Format**: `[page_offset, page_size, origin_city, destination_city]`
+5. **Automatic Deduplication**: Filters duplicate buses across all pages
+
+This approach is **significantly more reliable** than trying to click "Next" buttons on a dynamic Wix site.
 
 ## Rate Limiting
 

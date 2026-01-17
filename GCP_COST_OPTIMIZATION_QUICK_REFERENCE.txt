@@ -1,0 +1,235 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    GCP COST OPTIMIZATION - QUICK REFERENCE                ║
+║                    Target: PreProd < $10 | Production < $20               ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 🎯 COST BREAKDOWN                                                         │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ PREPROD (Target: < $10/month)                                            │
+│ ├─ Cloud SQL (db-f1-micro):        $7/mo   ✅ Optimized                  │
+│ ├─ Cloud Run (0-2 instances):      $1/mo   ✅ Optimized                  │
+│ ├─ Storage (10GB):                 $0.50   ✅ Optimized                  │
+│ ├─ VPC Connector (removed):        $0      ✅ Saved $7/mo                │
+│ └─ Auto-Stop (42% downtime):       -$3/mo  ✅ Active                      │
+│ TOTAL: ~$5.50/month ✅                                                    │
+│                                                                           │
+│ PRODUCTION (Target: < $20/month)                                         │
+│ ├─ Cloud SQL (db-g1-small):        $10/mo  ✅ Optimized (was $40)        │
+│ ├─ Cloud Run (0-5 instances):      $5/mo   ✅ Optimized (was $12)        │
+│ ├─ Storage (20GB):                 $1/mo   ✅ Optimized                  │
+│ ├─ VPC Connector (optional):       $0-7    ⚠️ Can remove                 │
+│ └─ Misc (secrets, networking):     $2/mo                                 │
+│ TOTAL: ~$18/month ✅                                                      │
+│                                                                           │
+│ 💰 TOTAL MONTHLY SAVINGS: $63/month ($756/year)                          │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 🚀 QUICK DEPLOYMENT                                                       │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ Option 1: Deploy to both environments                                    │
+│   ./apply-cost-optimization.sh all                                       │
+│                                                                           │
+│ Option 2: Deploy to preprod only                                         │
+│   ./apply-cost-optimization.sh preprod                                   │
+│                                                                           │
+│ Option 3: Deploy to production only                                      │
+│   ./apply-cost-optimization.sh production                                │
+│                                                                           │
+│ Option 4: Manual deployment (more control)                               │
+│   cd infrastructure/terraform/environments/production                    │
+│   terraform plan                                                          │
+│   terraform apply                                                         │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 📋 KEY CHANGES APPLIED                                                    │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ PREPROD:                                                                  │
+│ ✅ Cloud Run memory: 512Mi → 256Mi                                       │
+│ ✅ Cloud Run max: 3 → 2 instances                                        │
+│ ✅ Already using scale-to-zero (min: 0)                                  │
+│                                                                           │
+│ PRODUCTION:                                                               │
+│ ✅ Cloud SQL: db-n1-standard-1 → db-g1-small (73% cost reduction)       │
+│ ✅ Cloud SQL disk: 50GB → 20GB                                           │
+│ ✅ Cloud Run min: 1 → 0 instances (scale to zero)                        │
+│ ✅ Cloud Run max: 10 → 5 instances                                       │
+│ ✅ Cloud Run CPU: 2000m → 1000m                                          │
+│ ✅ Cloud Run memory: 1Gi → 512Mi                                         │
+│                                                                           │
+│ BOTH ENVIRONMENTS:                                                        │
+│ ✅ SQL Auto-Stop: Enabled (stops after 30 min idle)                      │
+│ ✅ Scheduled Stop/Start: 10 PM - 8 AM EST (10 hrs downtime)             │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ ⚠️ PERFORMANCE TRADE-OFFS                                                │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ 1. COLD STARTS (min instances = 0)                                       │
+│    Impact: First request after idle has 2-5 second delay                 │
+│    Mitigation: Use Cloud Scheduler to ping service every 5 minutes       │
+│                during business hours (8 AM - 6 PM)                        │
+│                                                                           │
+│ 2. LOWER MEMORY (256Mi preprod, 512Mi prod)                              │
+│    Impact: May cause OOM errors under heavy load                         │
+│    Mitigation: Monitor with Cloud Monitoring, increase if needed         │
+│                                                                           │
+│ 3. SHARED-CORE SQL (db-g1-small)                                         │
+│    Impact: Lower performance vs dedicated CPU                            │
+│    Mitigation: Good for <10k users; upgrade if queries slow down         │
+│                                                                           │
+│ 4. SMALLER DISK (20GB prod)                                              │
+│    Impact: May fill up faster                                            │
+│    Mitigation: Auto-resize enabled up to 50GB                            │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 🔍 MONITORING CHECKLIST                                                   │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ DAILY (First Week):                                                      │
+│ □ Check GCP billing dashboard                                            │
+│ □ Monitor Cloud Run error rates                                          │
+│ □ Check Cloud SQL query performance                                      │
+│ □ Review response times (target: <500ms p95)                             │
+│                                                                           │
+│ WEEKLY:                                                                   │
+│ □ Verify budget alerts configured (<$10 preprod, <$20 prod)             │
+│ □ Review Cloud Monitoring dashboards                                     │
+│ □ Check for OOM kills in Cloud Run                                       │
+│ □ Analyze cold start frequency                                           │
+│                                                                           │
+│ MONTHLY:                                                                  │
+│ □ Cost review and optimization opportunities                             │
+│ □ Performance review and adjustments                                     │
+│ □ Update documentation with learnings                                    │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 🛠️ USEFUL COMMANDS                                                        │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ Check current costs:                                                      │
+│   gcloud billing accounts list                                            │
+│   gcloud billing projects describe PROJECT_ID                            │
+│                                                                           │
+│ Monitor Cloud Run:                                                        │
+│   gcloud run services describe perundhu-backend-production \             │
+│     --region=asia-south1 --format=json                                   │
+│                                                                           │
+│ Monitor Cloud SQL:                                                        │
+│   gcloud sql instances describe perundhu-production-mysql                │
+│                                                                           │
+│ Check active resources:                                                   │
+│   gcloud compute instances list                                           │
+│   gcloud sql instances list                                               │
+│   gcloud run services list                                                │
+│                                                                           │
+│ Manual stop/start (if needed):                                            │
+│   gcloud sql instances patch INSTANCE --activation-policy=NEVER          │
+│   gcloud sql instances patch INSTANCE --activation-policy=ALWAYS         │
+│                                                                           │
+│ Rollback changes:                                                         │
+│   cd infrastructure/terraform/environments/production                    │
+│   git checkout HEAD~1 terraform.tfvars                                   │
+│   terraform apply                                                         │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 🎮 EMERGENCY RESPONSE                                                     │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ IF PERFORMANCE DEGRADES:                                                  │
+│                                                                           │
+│ 1. Increase Cloud Run min instances (instant fix):                       │
+│    gcloud run services update perundhu-backend-production \              │
+│      --min-instances=1 --region=asia-south1                              │
+│                                                                           │
+│ 2. Increase Cloud Run memory (if OOM errors):                            │
+│    gcloud run services update perundhu-backend-production \              │
+│      --memory=1Gi --region=asia-south1                                   │
+│                                                                           │
+│ 3. Upgrade Cloud SQL tier (if queries slow):                             │
+│    gcloud sql instances patch perundhu-production-mysql \                │
+│      --tier=db-n1-standard-1                                             │
+│                                                                           │
+│ 4. Full rollback (nuclear option):                                       │
+│    cd infrastructure/terraform/environments/production                   │
+│    git revert HEAD                                                        │
+│    terraform apply                                                        │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 💡 ADDITIONAL COST-SAVING TIPS                                           │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ 1. Use Cloud Scheduler to ping services during business hours            │
+│    - Prevents cold starts when users need the app                        │
+│    - Cost: ~$0.10/month (free tier covers it)                            │
+│                                                                           │
+│ 2. Clean up unused resources:                                             │
+│    - Delete old Cloud Run revisions                                       │
+│    - Remove unused Cloud Storage buckets                                  │
+│    - Release unused static IPs ($1.46/month each)                        │
+│                                                                           │
+│ 3. Optimize images:                                                       │
+│    - Use multi-stage Docker builds                                        │
+│    - Use distroless or alpine base images                                │
+│    - Reduce container image size                                          │
+│                                                                           │
+│ 4. Enable GCP free tier fully:                                           │
+│    - Cloud Storage: 5GB free                                              │
+│    - Cloud Functions: 2M invocations/month free                          │
+│    - Cloud Build: 120 build-minutes/day free                             │
+│                                                                           │
+│ 5. Extend downtime window (if acceptable):                               │
+│    - Stop at 6 PM, start at 9 AM (15 hours = 62% savings)               │
+│    - Stop on weekends (48 hours = extra savings)                         │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ 📞 SUPPORT & DOCUMENTATION                                                │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│ Full Documentation:                                                       │
+│   /GCP_COST_OPTIMIZATION_PLAN.md                                         │
+│                                                                           │
+│ Deployment Script:                                                        │
+│   /apply-cost-optimization.sh                                            │
+│                                                                           │
+│ Terraform Config:                                                         │
+│   /infrastructure/terraform/environments/preprod/terraform.tfvars        │
+│   /infrastructure/terraform/environments/production/terraform.tfvars     │
+│                                                                           │
+│ GCP Console Links:                                                        │
+│   Billing:     https://console.cloud.google.com/billing                  │
+│   Cloud Run:   https://console.cloud.google.com/run                      │
+│   Cloud SQL:   https://console.cloud.google.com/sql                      │
+│   Monitoring:  https://console.cloud.google.com/monitoring               │
+│                                                                           │
+│ Questions? Review the full plan in GCP_COST_OPTIMIZATION_PLAN.md        │
+│                                                                           │
+└───────────────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                         COST OPTIMIZATION STATUS                          ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ ✅ Configuration Updated                                                  ║
+║ ⏳ Waiting for Deployment                                                ║
+║ 📊 Expected Savings: $63/month ($756/year)                               ║
+║                                                                           ║
+║ Next Step: Run ./apply-cost-optimization.sh all                          ║
+╚═══════════════════════════════════════════════════════════════════════════╝

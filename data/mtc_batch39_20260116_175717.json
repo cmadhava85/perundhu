@@ -1,0 +1,2182 @@
+[
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "KUNNAM",
+    "destination_name": "KUNNAM",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T17:58:33.976965"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "KUNNAM",
+    "origin_name": "KUNNAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "07:30",
+    "scraped_at": "2026-01-16T17:58:34.858815"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "SUNGUVARCHATHIRAM",
+    "destination_name": "SUNGUVARCHATHIRAM",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T17:58:34.892811"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "SUNGUVARCHATHIRAM",
+    "destination_name": "SUNGUVARCHATHIRAM",
+    "timing": "12:05",
+    "scraped_at": "2026-01-16T17:58:34.892811"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "SUNGUVARCHATHIRAM",
+    "destination_name": "SUNGUVARCHATHIRAM",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T17:58:34.892811"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "SUNGUVARCHATHIRAM",
+    "destination_name": "SUNGUVARCHATHIRAM",
+    "timing": "18:10",
+    "scraped_at": "2026-01-16T17:58:34.892811"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "M.G.R.KOYAMBEDU",
+    "origin_name": "M.G.R.KOYAMBEDU",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T17:58:34.931465"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "SUNGUVARCHATHIRAM",
+    "origin_name": "SUNGUVARCHATHIRAM",
+    "destination_value": "M.G.R.KOYAMBEDU",
+    "destination_name": "M.G.R.KOYAMBEDU",
+    "timing": "19:40",
+    "scraped_at": "2026-01-16T17:58:35.530674"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "SUNGUVARCHATHIRAM",
+    "origin_name": "SUNGUVARCHATHIRAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "10:40",
+    "scraped_at": "2026-01-16T17:58:36.476936"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "SUNGUVARCHATHIRAM",
+    "origin_name": "SUNGUVARCHATHIRAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T17:58:36.476936"
+  },
+  {
+    "route_number": "578ET",
+    "route_name": "578ET",
+    "origin_value": "SUNGUVARCHATHIRAM",
+    "origin_name": "SUNGUVARCHATHIRAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T17:58:36.476936"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "IYYAPPANTHANGAL",
+    "origin_name": "IYYAPPANTHANGAL",
+    "destination_value": "MEPPEDU RD.JN.",
+    "destination_name": "MEPPEDU RD.JN.",
+    "timing": "06:40",
+    "scraped_at": "2026-01-16T17:58:36.478717"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "MEPPEDU RD.JN.",
+    "origin_name": "MEPPEDU RD.JN.",
+    "destination_value": "IYYAPPANTHANGAL",
+    "destination_name": "IYYAPPANTHANGAL",
+    "timing": "21:15",
+    "scraped_at": "2026-01-16T17:58:36.488433"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "MEPPEDU RD.JN.",
+    "origin_name": "MEPPEDU RD.JN.",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T17:58:37.085360"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "MEPPEDU RD.JN.",
+    "origin_name": "MEPPEDU RD.JN.",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T17:58:37.085360"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "MEPPEDU RD.JN.",
+    "origin_name": "MEPPEDU RD.JN.",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "17:15",
+    "scraped_at": "2026-01-16T17:58:37.085360"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "ELAMBAKKAM",
+    "origin_name": "ELAMBAKKAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T17:58:38.115440"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "ELAMBAKKAM",
+    "origin_name": "ELAMBAKKAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "16:55",
+    "scraped_at": "2026-01-16T17:58:38.115440"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "MEPPEDU RD.JN.",
+    "destination_name": "MEPPEDU RD.JN.",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T17:58:38.116583"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "MEPPEDU RD.JN.",
+    "destination_name": "MEPPEDU RD.JN.",
+    "timing": "15:10",
+    "scraped_at": "2026-01-16T17:58:38.116583"
+  },
+  {
+    "route_number": "578M",
+    "route_name": "578M",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "MEPPEDU RD.JN.",
+    "destination_name": "MEPPEDU RD.JN.",
+    "timing": "19:15",
+    "scraped_at": "2026-01-16T17:58:38.116583"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "ELAMBAKKAM",
+    "origin_name": "ELAMBAKKAM",
+    "destination_value": "IYYAPPANTHANGAL",
+    "destination_name": "IYYAPPANTHANGAL",
+    "timing": "20:50",
+    "scraped_at": "2026-01-16T17:58:38.130397"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "IYYAPPANTHANGAL",
+    "origin_name": "IYYAPPANTHANGAL",
+    "destination_value": "ELAMBAKKAM",
+    "destination_name": "ELAMBAKKAM",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T17:58:38.652828"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "ELAMBAKKAM",
+    "destination_name": "ELAMBAKKAM",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T17:58:39.667308"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "ELAMBAKKAM",
+    "destination_name": "ELAMBAKKAM",
+    "timing": "18:55",
+    "scraped_at": "2026-01-16T17:58:39.667308"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "SRIPERUMBUDUR",
+    "destination_name": "SRIPERUMBUDUR",
+    "timing": "13:00",
+    "scraped_at": "2026-01-16T17:58:39.708415"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "POONAMALLEE B.S",
+    "origin_name": "POONAMALLEE B.S",
+    "destination_value": "SUNGUVARCHATHIRAM",
+    "destination_name": "SUNGUVARCHATHIRAM",
+    "timing": "10:05",
+    "scraped_at": "2026-01-16T17:58:39.741495"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "SRIPERUMBUDUR",
+    "origin_name": "SRIPERUMBUDUR",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T17:58:40.263457"
+  },
+  {
+    "route_number": "578P",
+    "route_name": "578P",
+    "origin_value": "SUNGUVARCHATHIRAM",
+    "origin_name": "SUNGUVARCHATHIRAM",
+    "destination_value": "POONAMALLEE B.S",
+    "destination_name": "POONAMALLEE B.S",
+    "timing": "11:30",
+    "scraped_at": "2026-01-16T17:58:41.289733"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "NEHRU NAGAR",
+    "origin_name": "NEHRU NAGAR",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "04:45",
+    "scraped_at": "2026-01-16T17:58:41.293557"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "NEHRU NAGAR",
+    "origin_name": "NEHRU NAGAR",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T17:58:41.293557"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "NEHRU NAGAR",
+    "origin_name": "NEHRU NAGAR",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "06:00",
+    "scraped_at": "2026-01-16T17:58:41.293557"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "NEHRU NAGAR",
+    "origin_name": "NEHRU NAGAR",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T17:58:41.293557"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "NEHRU NAGAR",
+    "origin_name": "NEHRU NAGAR",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T17:58:41.293557"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "ORAGADAM",
+    "origin_name": "ORAGADAM",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T17:58:41.297798"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "ORAGADAM",
+    "destination_name": "ORAGADAM",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T17:58:41.906972"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "07:50",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "08:55",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "09:30",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "12:35",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "16:05",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "16:30",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "17:35",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "18:25",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "18:50",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "19:25",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "19:45",
+    "scraped_at": "2026-01-16T17:58:42.844720"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "NEHRU NAGAR",
+    "destination_name": "NEHRU NAGAR",
+    "timing": "19:15",
+    "scraped_at": "2026-01-16T17:58:42.880536"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "NEHRU NAGAR",
+    "destination_name": "NEHRU NAGAR",
+    "timing": "20:05",
+    "scraped_at": "2026-01-16T17:58:42.880536"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "NEHRU NAGAR",
+    "destination_name": "NEHRU NAGAR",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T17:58:42.880536"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "NEHRU NAGAR",
+    "destination_name": "NEHRU NAGAR",
+    "timing": "20:50",
+    "scraped_at": "2026-01-16T17:58:42.880536"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "NEHRU NAGAR",
+    "destination_name": "NEHRU NAGAR",
+    "timing": "21:25",
+    "scraped_at": "2026-01-16T17:58:42.880536"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "06:15",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "07:15",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "07:55",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "08:35",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "09:25",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "10:35",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "10:50",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "11:10",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "11:45",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "12:45",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "14:00",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "15:00",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "17:50",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579A",
+    "route_name": "579A",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T17:58:42.916985"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "ORAGADAM",
+    "origin_name": "ORAGADAM",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T17:58:43.465759"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "ORAGADAM",
+    "destination_name": "ORAGADAM",
+    "timing": "13:10",
+    "scraped_at": "2026-01-16T17:58:44.404785"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "09:55",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "11:30",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "14:40",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "15:50",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "18:00",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "19:05",
+    "scraped_at": "2026-01-16T17:58:44.442213"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "08:15",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "09:45",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "13:05",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "17:30",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "19:30",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579C",
+    "route_name": "579C",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "21:00",
+    "scraped_at": "2026-01-16T17:58:44.473214"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "19:45",
+    "scraped_at": "2026-01-16T17:58:45.076634"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "20:40",
+    "scraped_at": "2026-01-16T17:58:45.076634"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "TAMBARAM WEST",
+    "destination_name": "TAMBARAM WEST",
+    "timing": "22:30",
+    "scraped_at": "2026-01-16T17:58:45.076634"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "04:30",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "11:40",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "14:45",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "16:45",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "KCBT KILAMBAKKAM",
+    "origin_name": "KCBT KILAMBAKKAM",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "19:50",
+    "scraped_at": "2026-01-16T17:58:45.969556"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "07:30",
+    "scraped_at": "2026-01-16T17:58:46.010172"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T17:58:46.010172"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "10:40",
+    "scraped_at": "2026-01-16T17:58:46.010172"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "13:50",
+    "scraped_at": "2026-01-16T17:58:46.010172"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "16:50",
+    "scraped_at": "2026-01-16T17:58:46.010172"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM NEW B.S",
+    "origin_name": "TAMBARAM NEW B.S",
+    "destination_value": "WALAJABATH",
+    "destination_name": "WALAJABATH",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T17:58:46.010172"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "04:05",
+    "scraped_at": "2026-01-16T17:58:46.044804"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "05:05",
+    "scraped_at": "2026-01-16T17:58:46.044804"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "TAMBARAM WEST",
+    "origin_name": "TAMBARAM WEST",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "07:00",
+    "scraped_at": "2026-01-16T17:58:46.044804"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "08:55",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "10:05",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "12:05",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "13:30",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "18:15",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "19:00",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "KCBT KILAMBAKKAM",
+    "destination_name": "KCBT KILAMBAKKAM",
+    "timing": "21:10",
+    "scraped_at": "2026-01-16T17:58:46.647973"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "05:55",
+    "scraped_at": "2026-01-16T17:58:47.540049"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "06:55",
+    "scraped_at": "2026-01-16T17:58:47.540049"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "09:10",
+    "scraped_at": "2026-01-16T17:58:47.540049"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T17:58:47.540049"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "15:15",
+    "scraped_at": "2026-01-16T17:58:47.540049"
+  },
+  {
+    "route_number": "579K",
+    "route_name": "579K",
+    "origin_value": "WALAJABATH",
+    "origin_name": "WALAJABATH",
+    "destination_value": "TAMBARAM NEW B.S",
+    "destination_name": "TAMBARAM NEW B.S",
+    "timing": "16:00",
+    "scraped_at": "2026-01-16T17:58:47.540049"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "ANGADU",
+    "origin_name": "ANGADU",
+    "destination_value": "VALLALAR NAGAR",
+    "destination_name": "VALLALAR NAGAR",
+    "timing": "05:40",
+    "scraped_at": "2026-01-16T17:58:47.588013"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "ANGADU",
+    "origin_name": "ANGADU",
+    "destination_value": "VALLALAR NAGAR",
+    "destination_name": "VALLALAR NAGAR",
+    "timing": "08:30",
+    "scraped_at": "2026-01-16T17:58:47.588013"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "ANGADU",
+    "origin_name": "ANGADU",
+    "destination_value": "VALLALAR NAGAR",
+    "destination_name": "VALLALAR NAGAR",
+    "timing": "11:25",
+    "scraped_at": "2026-01-16T17:58:47.588013"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "ANGADU",
+    "origin_name": "ANGADU",
+    "destination_value": "VALLALAR NAGAR",
+    "destination_name": "VALLALAR NAGAR",
+    "timing": "14:20",
+    "scraped_at": "2026-01-16T17:58:47.588013"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "ANGADU",
+    "origin_name": "ANGADU",
+    "destination_value": "VALLALAR NAGAR",
+    "destination_name": "VALLALAR NAGAR",
+    "timing": "17:25",
+    "scraped_at": "2026-01-16T17:58:47.588013"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "BUDUR HEALTH CARE",
+    "origin_name": "BUDUR HEALTH CARE",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "20:30",
+    "scraped_at": "2026-01-16T17:58:47.617872"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "ANGADU",
+    "destination_name": "ANGADU",
+    "timing": "05:05",
+    "scraped_at": "2026-01-16T17:58:48.193382"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "VALLALAR NAGAR",
+    "origin_name": "VALLALAR NAGAR",
+    "destination_value": "ANGADU",
+    "destination_name": "ANGADU",
+    "timing": "07:02",
+    "scraped_at": "2026-01-16T17:58:49.104795"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "VALLALAR NAGAR",
+    "origin_name": "VALLALAR NAGAR",
+    "destination_value": "ANGADU",
+    "destination_name": "ANGADU",
+    "timing": "10:02",
+    "scraped_at": "2026-01-16T17:58:49.104795"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "VALLALAR NAGAR",
+    "origin_name": "VALLALAR NAGAR",
+    "destination_value": "ANGADU",
+    "destination_name": "ANGADU",
+    "timing": "12:55",
+    "scraped_at": "2026-01-16T17:58:49.104795"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "VALLALAR NAGAR",
+    "origin_name": "VALLALAR NAGAR",
+    "destination_value": "ANGADU",
+    "destination_name": "ANGADU",
+    "timing": "15:47",
+    "scraped_at": "2026-01-16T17:58:49.104795"
+  },
+  {
+    "route_number": "57A",
+    "route_name": "57A",
+    "origin_value": "VALLALAR NAGAR",
+    "origin_name": "VALLALAR NAGAR",
+    "destination_value": "BUDUR HEALTH CARE",
+    "destination_name": "BUDUR HEALTH CARE",
+    "timing": "19:05",
+    "scraped_at": "2026-01-16T17:58:49.141169"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "06:05",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "10:20",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "11:35",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "12:50",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "14:15",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "15:30",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "16:40",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "17:55",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "POTHUR",
+    "origin_name": "POTHUR",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "20:45",
+    "scraped_at": "2026-01-16T17:58:49.183894"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "05:30",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "06:45",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "09:40",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "12:10",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "14:50",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "16:05",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "17:20",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "POTHUR",
+    "destination_name": "POTHUR",
+    "timing": "20:05",
+    "scraped_at": "2026-01-16T17:58:49.764750"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "UPPARAPALAYAM",
+    "destination_name": "UPPARAPALAYAM",
+    "timing": "08:10",
+    "scraped_at": "2026-01-16T17:58:50.661801"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "UPPARAPALAYAM",
+    "destination_name": "UPPARAPALAYAM",
+    "timing": "18:30",
+    "scraped_at": "2026-01-16T17:58:50.661801"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "UPPARAPALAYAM",
+    "origin_name": "UPPARAPALAYAM",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "08:55",
+    "scraped_at": "2026-01-16T17:58:50.705570"
+  },
+  {
+    "route_number": "57B",
+    "route_name": "57B",
+    "origin_value": "UPPARAPALAYAM",
+    "origin_name": "UPPARAPALAYAM",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "19:15",
+    "scraped_at": "2026-01-16T17:58:50.705570"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "05:45",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "07:25",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "09:15",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "11:00",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "11:50",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "12:40",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "14:30",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "15:25",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "16:15",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "18:05",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "20:05",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "GNAYARU",
+    "origin_name": "GNAYARU",
+    "destination_value": "REDHILLS",
+    "destination_name": "REDHILLS",
+    "timing": "21:00",
+    "scraped_at": "2026-01-16T17:58:50.749874"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "05:00",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "05:50",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "06:35",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "07:35",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "08:25",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "09:20",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "10:10",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "11:05",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "11:55",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "12:50",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "13:40",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "14:35",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "15:25",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "16:20",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "17:10",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "18:10",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "19:10",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57CCT",
+    "route_name": "57CCT",
+    "origin_value": "REDHILLS",
+    "origin_name": "REDHILLS",
+    "destination_value": "GNAYARU",
+    "destination_name": "GNAYARU",
+    "timing": "20:15",
+    "scraped_at": "2026-01-16T17:58:51.317859"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "MOOLAKADAI",
+    "destination_name": "MOOLAKADAI",
+    "timing": "09:35",
+    "scraped_at": "2026-01-16T17:58:52.243588"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POOCHIATHIPEDU",
+    "destination_name": "POOCHIATHIPEDU",
+    "timing": "06:20",
+    "scraped_at": "2026-01-16T17:58:52.255950"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POOCHIATHIPEDU",
+    "destination_name": "POOCHIATHIPEDU",
+    "timing": "15:25",
+    "scraped_at": "2026-01-16T17:58:52.255950"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POOCHIATHIPEDU",
+    "destination_name": "POOCHIATHIPEDU",
+    "timing": "18:40",
+    "scraped_at": "2026-01-16T17:58:52.255950"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "BROADWAY",
+    "origin_name": "BROADWAY",
+    "destination_value": "POOCHIATHIPEDU",
+    "destination_name": "POOCHIATHIPEDU",
+    "timing": "21:45",
+    "scraped_at": "2026-01-16T17:58:52.255950"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "MOOLAKADAI",
+    "origin_name": "MOOLAKADAI",
+    "destination_value": "POOCHIATHIPEDU",
+    "destination_name": "POOCHIATHIPEDU",
+    "timing": "12:25",
+    "scraped_at": "2026-01-16T17:58:52.302880"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "POOCHIATHIPEDU",
+    "origin_name": "POOCHIATHIPEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "04:50",
+    "scraped_at": "2026-01-16T17:58:52.883775"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "POOCHIATHIPEDU",
+    "origin_name": "POOCHIATHIPEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "08:00",
+    "scraped_at": "2026-01-16T17:58:52.883775"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "POOCHIATHIPEDU",
+    "origin_name": "POOCHIATHIPEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "13:45",
+    "scraped_at": "2026-01-16T17:58:52.883775"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "POOCHIATHIPEDU",
+    "origin_name": "POOCHIATHIPEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "17:00",
+    "scraped_at": "2026-01-16T17:58:52.883775"
+  },
+  {
+    "route_number": "57D",
+    "route_name": "57D",
+    "origin_value": "POOCHIATHIPEDU",
+    "origin_name": "POOCHIATHIPEDU",
+    "destination_value": "BROADWAY",
+    "destination_name": "BROADWAY",
+    "timing": "20:15",
+    "scraped_at": "2026-01-16T17:58:52.883775"
+  }
+]

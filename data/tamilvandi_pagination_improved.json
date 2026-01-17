@@ -1,0 +1,101 @@
+[
+  {
+    "bus_number": "Sivakasi → Madurai",
+    "bus_type": "Moffusil Bus",
+    "operator_name": "Sivakasi → Madurai",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "01:10",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "503",
+    "bus_type": "Moffusil Bus",
+    "operator_name": "503",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "01:10",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "STAR",
+    "bus_type": "Private Bus",
+    "operator_name": "STAR",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "04:15",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "RSR",
+    "bus_type": "Private Bus",
+    "operator_name": "RSR",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "05:00",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "VENKATESHWARA",
+    "bus_type": "Private Bus",
+    "operator_name": "VENKATESHWARA",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "01:20",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "511",
+    "bus_type": "Unknown",
+    "operator_name": "511",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "KNRK",
+    "bus_type": "Unknown",
+    "operator_name": "KNRK",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "SRINIVASA",
+    "bus_type": "Unknown",
+    "operator_name": "SRINIVASA",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  },
+  {
+    "bus_number": "SNR",
+    "bus_type": "Unknown",
+    "operator_name": "SNR",
+    "origin": "Sivakasi",
+    "destination": "Madurai",
+    "departure_time": "",
+    "arrival_time": "",
+    "stops": [],
+    "scraped_at": "2026-01-16T07:00:21.158597"
+  }
+]
