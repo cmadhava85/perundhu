@@ -44,7 +44,7 @@ resource "google_sql_database_instance" "mysql_instance" {
     ip_configuration {
       ipv4_enabled                                  = true
       private_network                               = var.use_public_ip ? null : var.vpc_network
-      require_ssl                                   = true
+      ssl_mode                                      = "ENCRYPTED_ONLY"
       enable_private_path_for_google_cloud_services = !var.use_public_ip
     }
 
@@ -161,7 +161,7 @@ resource "google_sql_database_instance" "read_replica" {
     ip_configuration {
       ipv4_enabled                                  = true
       private_network                               = var.use_public_ip ? null : var.vpc_network
-      require_ssl                                   = true
+      ssl_mode                                      = "ENCRYPTED_ONLY"
       enable_private_path_for_google_cloud_services = !var.use_public_ip
     }
 
