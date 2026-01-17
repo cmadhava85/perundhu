@@ -327,6 +327,21 @@ jobs:
           terraform plan -no-color -out=tfplan -lock=false
         fi
 
+    - name: Ensure SQL instance is running
+      env:
+        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql' || 'perundhu-production-mysql' }}
+      run: |
+        CURRENT=$(gcloud sql instances describe ${INSTANCE_NAME} --project ${PROJECT_ID} --format='value(settings.activationPolicy)' || echo "")
+        echo "Current activationPolicy=${CURRENT}"
+        if [ "$CURRENT" = "NEVER" ] || [ -z "$CURRENT" ]; then
+          echo "Patching activationPolicy to ALWAYS to allow updates..."
+          gcloud sql instances patch ${INSTANCE_NAME} --project ${PROJECT_ID} --activation-policy=ALWAYS --quiet || true
+        else
+          echo "Instance already running."
+        fi
+        echo "Re-planning after potential start..."
+        cd ${{ env.TF_ENV_DIR }} && terraform plan -no-color -out=tfplan -lock=false
+
     - name: Terraform Apply
       working-directory: ${{ env.TF_ENV_DIR }}
       run: terraform apply -auto-approve tfplan
