@@ -310,7 +310,23 @@ jobs:
           exit 1
         fi
         echo "✓ Plan file verified"
-    
+
+    - name: Ensure Cloud SQL instance is imported
+      working-directory: ${{ env.TF_ENV_DIR }}
+      env:
+        INSTANCE_NAME: ${{ github.event.inputs.environment == 'preprod' && 'perundhu-preprod-mysql' || 'perundhu-production-mysql' }}
+      run: |
+        echo "Checking Terraform state for Cloud SQL instance..."
+        if ! terraform state list | grep -q "module.database.google_sql_database_instance.mysql_instance"; then
+          echo "Instance not in state; importing ${INSTANCE_NAME}..."
+          terraform import 'module.database.google_sql_database_instance.mysql_instance' ${PROJECT_ID}/${INSTANCE_NAME}
+          echo "Import completed. Re-planning to align state..."
+          terraform plan -no-color -out=tfplan -lock=false
+        else
+          echo "Instance already in state. Re-planning to ensure no create actions..."
+          terraform plan -no-color -out=tfplan -lock=false
+        fi
+
     - name: Terraform Apply
       working-directory: ${{ env.TF_ENV_DIR }}
       run: terraform apply -auto-approve tfplan
