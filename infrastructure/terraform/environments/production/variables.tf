@@ -39,7 +39,7 @@ variable "db_version" {
 }
 
 variable "db_instance_tier" {
-  description = "Database instance tier"
+  description = "Database instance tier (db-f1-micro for cost optimization)"
   type        = string
 }
 

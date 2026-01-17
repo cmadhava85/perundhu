@@ -4,6 +4,11 @@
 # - Backend configuration: production/backend.tf
 # - Infrastructure modules: main.tf (below)
 # - Variables: variables.tf
+# 
+# Database Cost Optimization (Jan 2026):
+# - Downgraded from db-n1-standard-1 to db-f1-micro
+# - Saves ~$20/month (~$240/year) with minimal performance impact
+# - db-f1-micro is suitable for read-heavy bus tracking workloads
 
 terraform {
   required_version = ">= 1.0"

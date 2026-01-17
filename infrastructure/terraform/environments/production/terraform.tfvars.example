@@ -12,7 +12,7 @@ app_name    = "perundhu"
 
 # Database Configuration - Production settings
 db_version       = "MYSQL_8_0"
-db_instance_tier = "db-n1-standard-1"  # Higher tier for production
+db_instance_tier = "db-f1-micro"  # Downgraded from db-n1-standard-1 for cost savings (~$20/month)
 
 # Notifications Configuration
 notification_email = "ops@perundhu.com"  # Alert email address
