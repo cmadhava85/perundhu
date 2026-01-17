@@ -140,7 +140,7 @@ variable "db_deletion_protection" {
 }
 variable "db_activation_policy" {
   description = "Activation policy for Cloud SQL instance (ALWAYS or NEVER)"
-  type        = "string"
+  type        = string
   default     = "ALWAYS"
   # ALWAYS = instance always running (default)
   # NEVER = instance never auto-starts (manual or app-triggered restart required)
