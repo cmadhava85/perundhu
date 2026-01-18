@@ -48,8 +48,8 @@ db_general_log_enabled    = false
 db_deletion_protection    = false
 
 # Use public IP for Cloud SQL (cost optimization by eliminating Cloud SQL Proxy)
-# Saves $5-10/month per Cloud SQL Proxy instance
-use_public_ip = true
+# Current instance uses private IP; set false to avoid replacement
+use_public_ip = false
 
 # ============================================
 # Read Replica Configuration (Optional - for testing 100k scale)

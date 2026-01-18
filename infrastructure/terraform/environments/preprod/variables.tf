@@ -255,6 +255,12 @@ variable "db_general_log_enabled" {
   default     = false
 }
 
+variable "db_activation_policy" {
+  description = "Activation policy for Cloud SQL instance (ALWAYS or NEVER)"
+  type        = string
+  default     = "NEVER"
+}
+
 variable "use_public_ip" {
   description = "Use public IP for Cloud SQL instead of private IP (saves cost by eliminating Cloud SQL Proxy overhead)"
   type        = bool

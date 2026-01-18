@@ -57,4 +57,30 @@ __pycache__/
 .env
 
 # Cloud SQL proxy
-cloud_sql_proxy.secrets-production-checklist.txt
+cloud_sql_proxy
+
+# Temporary directories
+temp_chunks/
+backup_conflicting_files/
+tnstc_local_extraction/
+tnstc_timetable_results/
+
+# Test and demo files
+*_test.py
+*_debug.py
+test_*.html
+demo_*.html
+*-mockup-*.html
+
+# Generated data files
+*.checkpoint.json
+location_name_updates_*.csv
+tamil_translations_*.sql
+deleted_duplicates_*.txt
+preprod_deleted_duplicates_*.txt
+mtc_batch*_*.json
+
+# Old/obsolete scripts (archived)
+*_old.py
+*_backup.sh
+*_deprecated.*.secrets-production-checklist.txt

@@ -103,6 +103,7 @@ module "database" {
   db_instance_name_suffix = var.db_instance_name_suffix
   database_name           = var.database_name
   database_user           = var.database_user
+  db_activation_policy    = var.db_activation_policy
 
   db_disk_type                      = var.db_disk_type
   db_disk_size                      = var.db_disk_size
