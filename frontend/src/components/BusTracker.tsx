@@ -460,6 +460,7 @@ const formatTime = (date: Date): string => {
 };
 
 // Helper function to calculate duration between two dates
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const calculateDuration = (startTime: Date, endTime: Date, t: any): string => {
   const diffMs = endTime.getTime() - startTime.getTime();
   const hours = Math.floor(diffMs / 3600000);

@@ -91,6 +91,7 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
   }, [stops.length]);
 
   const getDuration = () => {
+    // Return empty string if arrival time is not available (MTC buses don't have estimated arrival)
     if (!bus.departureTime || !bus.arrivalTime) return '';
     
     const [depHours, depMinutes] = bus.departureTime.split(':').map(Number);
@@ -199,16 +200,24 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
         <div className="journey-connector">
           <div className="connector-line"></div>
           <div className="connector-info">
-            <div className="duration-badge">{getDuration()}</div>
+            {getDuration() && <div className="duration-badge">{getDuration()}</div>}
             <span className="connector-icon">🚌</span>
           </div>
           <div className="connector-line"></div>
         </div>
 
-        <div className="journey-item">
-          <div className="journey-time">{bus.arrivalTime ? bus.arrivalTime.split(':').slice(0, 2).join(':') : '--:--'}</div>
-          <div className="journey-location">{getLocationDisplayName(toLocation)}</div>
-        </div>
+        {/* Only show arrival time if available (MTC buses may not have estimated arrival) */}
+        {bus.arrivalTime ? (
+          <div className="journey-item">
+            <div className="journey-time">{bus.arrivalTime.split(':').slice(0, 2).join(':')}</div>
+            <div className="journey-location">{getLocationDisplayName(toLocation)}</div>
+          </div>
+        ) : (
+          <div className="journey-item">
+            <div className="journey-time" style={{ color: '#9CA3AF', fontStyle: 'italic' }}>Est. arrival</div>
+            <div className="journey-location">{getLocationDisplayName(toLocation)}</div>
+          </div>
+        )}
       </div>
 
       {/* View Stops Section - Always visible, shows chevron to indicate expandable */}

@@ -1,0 +1,225 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { render, screen, cleanup } from '../../test-utils';
+import SearchResults from '../SearchResults';
+import type { Bus, Location, Stop } from '../../types';
+
+// Mock react-hot-toast
+vi.mock('react-hot-toast', () => ({
+  default: {
+    error: vi.fn(),
+    success: vi.fn(),
+    loading: vi.fn(),
+  },
+}));
+
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string, defaultValue?: string) => defaultValue || key,
+    i18n: {
+      language: 'en',
+      changeLanguage: vi.fn(),
+    },
+  }),
+}));
+
+// Mock hooks
+vi.mock('../../hooks/queries/useTerminalResolution', () => ({
+  useTerminalResolution: vi.fn(() => ({
+    data: null,
+    isLoading: false,
+    error: null,
+  })),
+}));
+
+vi.mock('../../hooks/useGoogleAds', () => ({
+  default: vi.fn(() => ({
+    adsEnabled: false,
+    getAdConfig: vi.fn(() => ({ format: 'auto', responsive: 'true' })),
+  })),
+}));
+
+// Mock child components
+vi.mock('../LoadingSkeleton', () => ({
+  LoadingSkeleton: ({ count, type }: { count: number; type: string }) => (
+    <div data-testid="loading-skeleton" data-count={count} data-type={type}>
+      Loading...
+    </div>
+  ),
+}));
+
+vi.mock('../OpenStreetMapComponent', () => ({
+  default: () => <div data-testid="openstreetmap">OSM Map</div>,
+}));
+
+vi.mock('../FallbackMapComponent', () => ({
+  default: () => <div data-testid="fallback-map">Fallback Map</div>,
+}));
+
+vi.mock('../BusCardModern', () => ({
+  default: ({ bus }: any) => (
+    <div data-testid={`bus-card-${bus.id}`}>
+      <div>{bus.name}</div>
+    </div>
+  ),
+}));
+
+vi.mock('../contribution/ReportIssue', () => ({
+  default: () => <div data-testid="report-issue-modal">Report Issue</div>,
+}));
+
+vi.mock('../ConnectingRoutes', () => ({
+  default: () => <div data-testid="connecting-routes">Connecting Routes</div>,
+}));
+
+vi.mock('../TerminalInfoAlert', () => ({
+  TerminalInfoAlert: () => <div data-testid="terminal-info-alert">Terminal Info</div>,
+}));
+
+vi.mock('./GoogleAdContainer', () => ({
+  PremiumAdContainer: () => <div data-testid="premium-ad">Ad</div>,
+}));
+
+// Mock react-router-dom
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+    Link: ({ to, children, ...props }: any) => <a href={to} {...props}>{children}</a>,
+  };
+});
+
+describe('SearchResults Component - Basic Tests', () => {
+  const mockFromLocation: Location = {
+    id: 1,
+    name: 'Chennai Central',
+    translatedName: 'சென்னை சென்ட்ரல்',
+    latitude: 13.0827,
+    longitude: 80.2707,
+  };
+
+  const mockToLocation: Location = {
+    id: 2,
+    name: 'Bangalore Majestic',
+    translatedName: 'பெங்களூர் மகேஸ்டிக்',
+    latitude: 12.9716,
+    longitude: 77.5946,
+  };
+
+  const mockBuses: Bus[] = [
+    {
+      id: 1,
+      name: 'Express 1',
+      type: 'express',
+      operator: 'BMTC',
+      fare: 250,
+      capacity: 45,
+    },
+  ];
+
+  const mockStops: Stop[] = [
+    { id: 1, name: 'Stop 1', busId: 1, latitude: 13.0, longitude: 80.0 },
+  ];
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockNavigate.mockClear();
+  });
+
+  afterEach(() => {
+    cleanup();
+    vi.clearAllTimers();
+  });
+
+  describe('Basic Rendering', () => {
+    it('should render without crashing', () => {
+      const { container } = render(
+        <SearchResults
+          buses={mockBuses}
+          fromLocation={mockFromLocation}
+          toLocation={mockToLocation}
+          stops={mockStops}
+        />
+      );
+      expect(container).toBeInTheDocument();
+    });
+
+    it('should display location names', () => {
+      render(
+        <SearchResults
+          buses={mockBuses}
+          fromLocation={mockFromLocation}
+          toLocation={mockToLocation}
+          stops={mockStops}
+        />
+      );
+
+      expect(screen.getByText('Chennai Central')).toBeInTheDocument();
+      expect(screen.getByText('Bangalore Majestic')).toBeInTheDocument();
+    });
+
+    it('should render bus cards', () => {
+      render(
+        <SearchResults
+          buses={mockBuses}
+          fromLocation={mockFromLocation}
+          toLocation={mockToLocation}
+          stops={mockStops}
+        />
+      );
+
+      expect(screen.getByTestId('bus-card-1')).toBeInTheDocument();
+    });
+  });
+
+  describe('Loading State', () => {
+    it('should display loading skeleton when loading is true', () => {
+      render(
+        <SearchResults
+          buses={[]}
+          fromLocation={mockFromLocation}
+          toLocation={mockToLocation}
+          stops={[]}
+          loading={true}
+        />
+      );
+
+      expect(screen.getByTestId('loading-skeleton')).toBeInTheDocument();
+    });
+  });
+
+  describe('Error State', () => {
+    it('should display error message when error exists', () => {
+      const error = new Error('Search failed');
+
+      render(
+        <SearchResults
+          buses={[]}
+          fromLocation={mockFromLocation}
+          toLocation={mockToLocation}
+          stops={[]}
+          error={error}
+        />
+      );
+
+      expect(screen.getByText(/Search Error/)).toBeInTheDocument();
+    });
+  });
+
+  describe('Empty Results', () => {
+    it('should display empty state when no buses found', () => {
+      render(
+        <SearchResults
+          buses={[]}
+          fromLocation={mockFromLocation}
+          toLocation={mockToLocation}
+          stops={[]}
+        />
+      );
+
+      expect(screen.getByText(/No buses found for this route/)).toBeInTheDocument();
+    });
+  });
+});

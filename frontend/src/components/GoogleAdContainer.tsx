@@ -41,7 +41,7 @@ export const GoogleAdContainer: React.FC<GoogleAdContainerProps> = ({
   const { adsEnabled, isAdEnabled } = useGoogleAds();
 
   // Check if this ad should be shown based on feature flags
-  const shouldShowAd = adsEnabled && (!placementKey || isAdEnabled(placementKey as any));
+  const shouldShowAd = adsEnabled && (!placementKey || isAdEnabled(placementKey as 'betweenSearchResults' | 'sidebarRight' | 'footerSection' | 'aboveSearchForm'));
 
   useEffect(() => {
     if (!shouldShowAd) return;

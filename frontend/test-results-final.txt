@@ -1,0 +1,337 @@
+
+> perundhu@0.0.0 test
+> NODE_OPTIONS='--max-old-space-size=8192 --disable-warning=MaxListenersExceededWarning --expose-gc' vitest run --no-coverage --run --reporter=basic
+
+
+ RUN  v2.1.9 /Users/mchand69/Documents/perundhu/frontend
+
+ ✓ src/__tests__/services/authService.test.ts (34 tests | 1 skipped) 170ms
+stderr | src/components/__tests__/RouteResults.test.tsx > RouteResults Component > Rendering > should render results container
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/components/__tests__/RouteResults.test.tsx (27 tests) 283ms
+ ✓ src/components/__tests__/BusTracker.test.tsx (12 tests) 197ms
+stderr | src/__tests__/App.test.tsx > App Component > renders the application with header and footer
+Error accessing browser APIs: TypeError: Cannot read properties of undefined (reading 'matches')
+    at /Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx:46:80
+    at Object.react_stack_bottom_frame (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15504:11)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+
+stderr | src/__tests__/App.test.tsx > App Component > renders the application with header and footer
+Error setting up media query listener: TypeError: Cannot read properties of undefined (reading 'addEventListener')
+    at /Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx:98:18
+    at Object.react_stack_bottom_frame (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15504:11)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+
+stderr | src/__tests__/App.test.tsx > App Component > loads locations and destinations when component mounts
+Error accessing browser APIs: TypeError: Cannot read properties of undefined (reading 'matches')
+    at /Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx:46:80
+    at Object.react_stack_bottom_frame (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15504:11)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+Error setting up media query listener: TypeError: Cannot read properties of undefined (reading 'addEventListener')
+    at /Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx:98:18
+    at Object.react_stack_bottom_frame (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15504:11)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+
+stderr | src/__tests__/App.test.tsx > App Component > renders without crashing
+Error accessing browser APIs: TypeError: Cannot read properties of undefined (reading 'matches')
+    at /Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx:46:80
+    at Object.react_stack_bottom_frame (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15504:11)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+Error setting up media query listener: TypeError: Cannot read properties of undefined (reading 'addEventListener')
+    at /Users/mchand69/Documents/perundhu/frontend/src/context/ThemeContext.tsx:98:18
+    at Object.react_stack_bottom_frame (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15504:11)
+    at recursivelyTraversePassiveMountEffects (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)
+    at commitPassiveMountOnFiber (/Users/mchand69/Documents/perundhu/frontend/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)
+
+ ✓ src/__tests__/App.test.tsx (4 tests | 1 skipped) 516ms
+   ✓ App Component > renders the application with header and footer 486ms
+ ✓ src/__tests__/paste-contribution.test.ts (23 tests) 191ms
+ ✓ src/__tests__/components/HistoricalAnalytics.test.tsx (5 tests | 1 skipped) 53ms
+ ✓ src/__tests__/services/busTimingService.test.ts (12 tests) 103ms
+stderr | src/__tests__/services/securityService.test.ts > SecurityService > Secure Storage > should detect tampering
+[ERROR][1768864965112-7d1d3801] Security breach detected: { errorDetails: 'Data tampering detected for key: tamper_key' }
+
+stderr | src/__tests__/services/securityService.test.ts > SecurityService > Rate Limiting > should reset rate limits after time window
+[WARN][1768864965112-7d1d3801] Rate limit exceeded for https://api.example.com/test 
+
+stderr | src/__tests__/services/securityService.test.ts > SecurityService > Security Headers Validation > should reject missing security headers
+[WARN][1768864965112-7d1d3801] Missing security header: x-content-type-options 
+
+stderr | src/__tests__/services/securityService.test.ts > SecurityService > Security Breach Handling > should log security breaches
+[ERROR][1768864965112-7d1d3801] Security breach detected: { errorDetails: 'Test security breach' }
+
+ ✓ src/__tests__/services/securityService.test.ts (26 tests) 235ms
+ ✓ src/__tests__/utils/reactSecurity.test.ts (33 tests) 276ms
+ ✓ src/__tests__/searchBusesContinuingBeyond.test.ts (12 tests) 134ms
+stdout | src/__tests__/components/search/LocationDropdown.test.tsx > LocationDropdown Component > displays the selected location name when provided
+[DEBUG][1768864965112-7d1d3801] Formatting location name: "Chennai" 
+
+ ✓ src/__tests__/components/search/LocationDropdown.test.tsx (7 tests | 5 skipped) 25ms
+ ✓ src/components/__tests__/RouteMap.test.tsx (14 tests) 154ms
+ ↓ src/components/__tests__/CombinedMapTracker.test.tsx (1 test | 1 skipped)
+ ✓ src/components/__tests__/RouteSearch.test.tsx (14 tests) 216ms
+ ✓ src/components/__tests__/BottomNavigation.test.tsx (12 tests) 154ms
+ ✓ src/__tests__/components/analytics/BusUtilizationChart.test.tsx (4 tests) 63ms
+ ✓ src/components/ui/__tests__/FormTextArea.test.tsx (16 tests) 202ms
+ ✓ src/components/__tests__/ConnectingRoutes.test.tsx (5 tests) 72ms
+ ✓ src/components/ui/__tests__/FormInput.test.tsx (16 tests) 183ms
+ ✓ src/__tests__/components/analytics/CrowdLevelsChart.test.tsx (4 tests | 1 skipped) 38ms
+ ✓ src/utils/__tests__/deviceId.test.ts (18 tests) 237ms
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should call the geocoding service with the correct parameters
+[DEBUG][1768864965112-7d1d3801] searchLocations called with query: "Chennai", limit: 10 
+[DEBUG][1768864965112-7d1d3801] Making API call to autocomplete endpoint 
+[DEBUG][1768864965112-7d1d3801] Hybrid search for "Chennai" returned 2 results 
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should fallback to offline locations when geocoding service fails
+[DEBUG][1768864965112-7d1d3801] searchLocations called with query: "Chennai", limit: 10 
+[DEBUG][1768864965112-7d1d3801] Making API call to autocomplete endpoint 
+[DEBUG][1768864965112-7d1d3801] Offline fallback for "Chennai" returned 1 results 
+
+stderr | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should fallback to offline locations when geocoding service fails
+[ERROR][1768864965112-7d1d3801] Hybrid search failed, falling back to offline locations: {
+  errorName: 'Error',
+  errorMessage: 'Service unavailable',
+  stack: 'Error: Service unavailable\n' +
+    '    at /Users/mchand69/Documents/perundhu/frontend/src/__tests__/services/locationService.test.ts:57:81\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:146:14\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:533:11\n' +
+    '    at runWithTimeout (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:39:7)\n' +
+    '    at runTest (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1056:17)\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runFiles (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1262:5)'
+}
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should filter results to match the query using local locations
+[DEBUG][1768864965112-7d1d3801] searchLocations called with query: "Ch", limit: 10 
+[DEBUG][1768864965112-7d1d3801] Short query "Ch" - using local filtering, found 1 results 
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should return empty array when all services fail
+[DEBUG][1768864965112-7d1d3801] searchLocations called with query: "NonexistentPlace", limit: 10 
+[DEBUG][1768864965112-7d1d3801] Making API call to autocomplete endpoint 
+
+stderr | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should return empty array when all services fail
+[ERROR][1768864965112-7d1d3801] Hybrid search failed, falling back to offline locations: {
+  errorName: 'Error',
+  errorMessage: 'Service unavailable',
+  stack: 'Error: Service unavailable\n' +
+    '    at /Users/mchand69/Documents/perundhu/frontend/src/__tests__/services/locationService.test.ts:98:81\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:146:14\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:533:11\n' +
+    '    at runWithTimeout (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:39:7)\n' +
+    '    at runTest (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1056:17)\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runFiles (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1262:5)'
+}
+[ERROR][1768864965112-7d1d3801] Offline fallback also failed: {
+  errorName: 'Error',
+  errorMessage: 'Offline unavailable',
+  stack: 'Error: Offline unavailable\n' +
+    '    at /Users/mchand69/Documents/perundhu/frontend/src/__tests__/services/locationService.test.ts:101:77\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:146:14\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:533:11\n' +
+    '    at runWithTimeout (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:39:7)\n' +
+    '    at runTest (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1056:17)\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runFiles (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1262:5)'
+}
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > error handling > should handle network errors gracefully
+[DEBUG][1768864965112-7d1d3801] searchLocations called with query: "TestCity", limit: 10 
+[DEBUG][1768864965112-7d1d3801] Making API call to autocomplete endpoint 
+[DEBUG][1768864965112-7d1d3801] Offline fallback for "TestCity" returned 1 results 
+
+stderr | src/__tests__/services/locationService.test.ts > Location Service > error handling > should handle network errors gracefully
+[ERROR][1768864965112-7d1d3801] Hybrid search failed, falling back to offline locations: {
+  errorName: 'Error',
+  errorMessage: 'Network Error',
+  stack: 'Error: Network Error\n' +
+    '    at /Users/mchand69/Documents/perundhu/frontend/src/__tests__/services/locationService.test.ts:117:81\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:146:14\n' +
+    '    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:533:11\n' +
+    '    at runWithTimeout (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:39:7)\n' +
+    '    at runTest (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1056:17)\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)\n' +
+    '    at runFiles (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1262:5)'
+}
+
+ ✓ src/__tests__/services/locationService.test.ts (5 tests) 68ms
+ ✓ src/__tests__/components/analytics/AnalyticsFilterControls.test.tsx (5 tests) 59ms
+ ✓ src/__tests__/components/analytics/PunctualityChart.test.tsx (3 tests) 41ms
+ ✓ src/components/__tests__/UserRewards.test.tsx (7 tests | 6 skipped) 11ms
+ ✓ src/__tests__/config/featureFlags.test.ts (9 tests) 98ms
+ ✓ src/components/review/BusReviewSection.test.tsx (10 tests) 114ms
+ ✓ src/components/__tests__/MapComponent.test.tsx (5 tests) 64ms
+ ✓ src/components/__tests__/StopsList.test.tsx (3 tests) 39ms
+ ✓ src/__tests__/components/analytics/CustomTooltip.test.tsx (5 tests) 59ms
+stdout | src/utils/__tests__/geocoding.test.ts > Geocoding Functions > should handle async geocoding for unknown cities
+[DEBUG][1768864968626-679e3f9d] Attempting to geocode unknown location: "UnknownCity" { component: 'cityCoordinates', stopName: 'UnknownCity' }
+
+stderr | src/utils/__tests__/geocoding.test.ts > Geocoding Functions > should handle async geocoding for unknown cities
+Error geocoding city: UnknownCity TypeError: Cannot read properties of undefined (reading 'ok')
+    at geocodeCity (/Users/mchand69/Documents/perundhu/frontend/src/utils/cityCoordinates.ts:383:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Module.getStopCoordinatesAsync (/Users/mchand69/Documents/perundhu/frontend/src/utils/cityCoordinates.ts:456:26)
+    at /Users/mchand69/Documents/perundhu/frontend/src/utils/__tests__/geocoding.test.ts:34:20
+    at file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:533:5
+    at runTest (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1056:11)
+    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1262:5)
+    at startTests (file:///Users/mchand69/Documents/perundhu/frontend/node_modules/@vitest/runner/dist/index.js:1271:3)
+
+ ✓ src/utils/__tests__/geocoding.test.ts (5 tests) 52ms
+ ✓ src/components/__tests__/bus/BusHeader.test.tsx (6 tests) 70ms
+
+<--- Last few GCs --->
+
+[69371:0x7a940c000]   221313 ms: Scavenge (interleaved) 8187.6 (8194.2) -> 8185.9 (8198.2) MB, pooled: 0 MB, 31.96 / 0.00 ms  (average mu = 0.417, current mu = 0.564) allocation failure; 
+[69371:0x7a940c000]   222338 ms: Mark-Compact (reduce) 8189.8 (8198.2) -> 8188.6 (8194.0) MB, pooled: 0 MB, 654.33 / 0.00 ms  (+ 301.9 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 1025 ms) (average mu = 0.368,
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x1050b5f5c node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 2: 0x105260b10 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 3: 0x10541db40 v8::internal::Heap::CallGCPrologueCallbacks(v8::GCType, v8::GCCallbackFlags, v8::internal::GCTracer::Scope::ScopeId) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 4: 0x10541b19c v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 5: 0x1054147c0 v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 6: 0x105415188 v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 7: 0x105406234 v8::internal::Factory::NewFillerObject(int, v8::internal::AllocationAlignment, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 8: 0x1056c9070 v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+ 9: 0x104ea79f4 Builtins_CEntry_Return1_ArgvOnStack_NoBuiltinExit [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+10: 0x111e7b4cc 
+11: 0x111e7df80 
+12: 0x111e9e1a0 
+13: 0x111e8a5d0 
+14: 0x111e64f2c 
+15: 0x111e650b4 
+16: 0x111e64db8 
+17: 0x111e650b4 
+18: 0x111e650b4 
+19: 0x111e64db8 
+20: 0x111e64db8 
+21: 0x111e650b4 
+22: 0x111e64db8 
+23: 0x111e64db8 
+24: 0x111c11ecc 
+25: 0x111e64a10 
+26: 0x111e8cb44 
+27: 0x111e97f4c 
+28: 0x111ea59c8 
+29: 0x111a9c6a0 
+30: 0x111aa1744 
+31: 0x111ab637c 
+32: 0x111ab7c8c 
+33: 0x104e10838 Builtins_InterpreterEntryTrampoline [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+34: 0x104e10838 Builtins_InterpreterEntryTrampoline [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+35: 0x104e10838 Builtins_InterpreterEntryTrampoline [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+36: 0x1118c4a0c 
+37: 0x1118d303c 
+38: 0x1118bcbd8 
+39: 0x1118ce21c 
+40: 0x104e4de20 Builtins_AsyncFunctionAwaitResolveClosure [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+41: 0x104f1b298 Builtins_PromiseFulfillReactionJob [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+42: 0x104e3d214 Builtins_RunMicrotasks [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+43: 0x104e0e3f0 Builtins_JSRunMicrotasksEntry [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+44: 0x105392a38 v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+45: 0x1053931a4 v8::internal::(anonymous namespace)::InvokeWithTryCatch(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+46: 0x1053bd758 v8::internal::MicrotaskQueue::PerformCheckpointInternal(v8::Isolate*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+47: 0x104e12978 Builtins_CallApiCallbackGeneric [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+48: 0x11181205c 
+49: 0x104e0e50c Builtins_JSEntryTrampoline [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+50: 0x104e0e1b0 Builtins_JSEntry [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+51: 0x105392a60 v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+52: 0x1053923c8 v8::internal::Execution::Call(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+53: 0x105277650 v8::Function::Call(v8::Isolate*, v8::Local<v8::Context>, v8::Local<v8::Value>, int, v8::Local<v8::Value>*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+54: 0x104fc96d4 node::InternalCallbackScope::Close() [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+55: 0x104fc9b94 node::InternalMakeCallback(node::Environment*, v8::Local<v8::Object>, v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*, node::async_context, v8::Local<v8::Value>) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+56: 0x104fe1dcc node::AsyncWrap::MakeCallback(v8::Local<v8::Function>, int, v8::Local<v8::Value>*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+57: 0x1051ceb60 node::StreamBase::CallJSOnreadMethod(long, v8::Local<v8::ArrayBuffer>, unsigned long, node::StreamBase::StreamBaseJSChecks) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+58: 0x1051cede4 node::EmitToJSStreamListener::OnStreamRead(long, uv_buf_t const&) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+59: 0x1051d51cc node::LibuvStreamWrap::OnUvRead(long, uv_buf_t const*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+60: 0x1051d4ed4 node::LibuvStreamWrap::ReadStart()::$_1::__invoke(uv_stream_s*, long, uv_buf_t const*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+61: 0x108967af0 uv__stream_io [/opt/homebrew/Cellar/libuv/1.51.0/lib/libuv.1.dylib]
+62: 0x10896eca8 uv__io_poll [/opt/homebrew/Cellar/libuv/1.51.0/lib/libuv.1.dylib]
+63: 0x10895eb58 uv_run [/opt/homebrew/Cellar/libuv/1.51.0/lib/libuv.1.dylib]
+64: 0x104fca488 node::SpinEventLoopInternal(node::Environment*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+65: 0x1050fd5e8 node::NodeMainInstance::Run(node::ExitCode*, node::Environment*) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+66: 0x1050fd33c node::NodeMainInstance::Run() [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+67: 0x10507496c node::Start(int, char**) [/opt/homebrew/Cellar/node/23.10.0_1/bin/node]
+68: 0x18d0b9d54 start [/usr/lib/dyld]
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯⎯ Unhandled Error ⎯⎯⎯⎯⎯⎯⎯
+Error: Worker exited unexpectedly
+ ❯ ChildProcess.onUnexpectedExit node_modules/tinypool/dist/index.js:118:30
+ ❯ ChildProcess.emit node:events:519:35
+ ❯ ChildProcess._handle.onexit node:internal/child_process:294:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ Test Files  31 passed | 1 skipped (33)
+      Tests  346 passed | 16 skipped (363)
+     Errors  1 error
+   Start at  18:22:42
+   Duration  222.59s (transform 604ms, setup 225ms, collect 1.49s, tests 4.18s, environment 453ms, prepare 41ms)
+

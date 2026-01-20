@@ -43,6 +43,10 @@ interface AppRoutesProps {
   searchError: Error | null;
   connectingRoutes: ConnectingRoute[];
   busesLoading: boolean;
+  loadingMore?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
+  totalCount?: number;
   showAnalytics: boolean;
   userId: string;
   featureSettings: {
@@ -73,6 +77,10 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
   searchError,
   connectingRoutes,
   busesLoading,
+  loadingMore,
+  hasNextPage,
+  fetchNextPage,
+  totalCount,
   showAnalytics,
   userId,
   featureSettings,
@@ -130,6 +138,10 @@ const AppRoutes: React.FC<AppRoutesProps> = React.memo(({
               error={searchError}
               connectingRoutes={connectingRoutes}
               loading={busesLoading}
+              loadingMore={loadingMore}
+              hasNextPage={hasNextPage}
+              onLoadMore={fetchNextPage}
+              totalCount={totalCount}
             />
           ) : (
             <LoadingSkeleton count={1} type="text" />

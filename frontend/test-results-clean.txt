@@ -1,0 +1,83 @@
+
+> perundhu@0.0.0 test
+> NODE_OPTIONS='--max-old-space-size=8192 --disable-warning=MaxListenersExceededWarning --expose-gc' vitest run --no-coverage --run --reporter=basic
+
+
+ RUN  v2.1.9 /Users/mchand69/Documents/perundhu/frontend
+
+ ✓ src/__tests__/services/authService.test.ts (34 tests | 1 skipped) 229ms
+ ✓ src/components/__tests__/TransitBusList.test.tsx (34 tests) 579ms
+ ✓ src/components/__tests__/RouteResults.test.tsx (27 tests) 286ms
+ ✓ src/components/__tests__/BusTracker.test.tsx (12 tests) 282ms
+ ✓ src/__tests__/App.test.tsx (4 tests | 1 skipped) 1056ms
+   ✓ App Component > renders the application with header and footer 1019ms
+ ✓ src/__tests__/paste-contribution.test.ts (23 tests) 234ms
+ ✓ src/__tests__/components/HistoricalAnalytics.test.tsx (5 tests | 1 skipped) 64ms
+ ✓ src/__tests__/services/busTimingService.test.ts (12 tests) 137ms
+ ✓ src/components/__tests__/TransitBusCard.test.tsx (17 tests) 439ms
+ ✓ src/__tests__/services/securityService.test.ts (26 tests) 316ms
+ ✓ src/__tests__/utils/reactSecurity.test.ts (33 tests) 374ms
+ ✓ src/__tests__/searchBusesContinuingBeyond.test.ts (12 tests) 141ms
+stdout | src/__tests__/components/search/LocationDropdown.test.tsx > LocationDropdown Component > displays the selected location name when provided
+[DEBUG][1768863812823-6f403a27] Formatting location name: "Chennai" 
+
+ ✓ src/__tests__/components/search/LocationDropdown.test.tsx (7 tests | 5 skipped) 30ms
+ ✓ src/components/__tests__/RouteMap.test.tsx (14 tests) 179ms
+ ↓ src/components/__tests__/CombinedMapTracker.test.tsx (1 test | 1 skipped)
+ ✓ src/components/__tests__/RouteSearch.test.tsx (14 tests) 282ms
+ ✓ src/components/__tests__/BottomNavigation.test.tsx (12 tests) 207ms
+ ✓ src/__tests__/components/analytics/BusUtilizationChart.test.tsx (4 tests) 66ms
+ ✓ src/components/ui/__tests__/FormTextArea.test.tsx (16 tests) 333ms
+ ✓ src/components/__tests__/ConnectingRoutes.test.tsx (5 tests) 121ms
+ ✓ src/components/ui/__tests__/FormInput.test.tsx (16 tests) 266ms
+ ✓ src/__tests__/components/analytics/CrowdLevelsChart.test.tsx (4 tests | 1 skipped) 57ms
+ ✓ src/utils/__tests__/deviceId.test.ts (18 tests) 254ms
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should call the geocoding service with the correct parameters
+[DEBUG][1768863812823-6f403a27] searchLocations called with query: "Chennai", limit: 10 
+[DEBUG][1768863812823-6f403a27] Making API call to autocomplete endpoint 
+[DEBUG][1768863812823-6f403a27] Hybrid search for "Chennai" returned 2 results 
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should fallback to offline locations when geocoding service fails
+[DEBUG][1768863812823-6f403a27] searchLocations called with query: "Chennai", limit: 10 
+[DEBUG][1768863812823-6f403a27] Making API call to autocomplete endpoint 
+[DEBUG][1768863812823-6f403a27] Offline fallback for "Chennai" returned 1 results 
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should filter results to match the query using local locations
+[DEBUG][1768863812823-6f403a27] searchLocations called with query: "Ch", limit: 10 
+[DEBUG][1768863812823-6f403a27] Short query "Ch" - using local filtering, found 1 results 
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > searchLocations > should return empty array when all services fail
+[DEBUG][1768863812823-6f403a27] searchLocations called with query: "NonexistentPlace", limit: 10 
+[DEBUG][1768863812823-6f403a27] Making API call to autocomplete endpoint 
+
+stdout | src/__tests__/services/locationService.test.ts > Location Service > error handling > should handle network errors gracefully
+[DEBUG][1768863812823-6f403a27] searchLocations called with query: "TestCity", limit: 10 
+[DEBUG][1768863812823-6f403a27] Making API call to autocomplete endpoint 
+[DEBUG][1768863812823-6f403a27] Offline fallback for "TestCity" returned 1 results 
+
+ ✓ src/__tests__/services/locationService.test.ts (5 tests) 71ms
+ ✓ src/__tests__/components/analytics/AnalyticsFilterControls.test.tsx (5 tests) 91ms
+ ✓ src/__tests__/components/analytics/PunctualityChart.test.tsx (3 tests) 56ms
+ ✓ src/components/__tests__/UserRewards.test.tsx (7 tests | 6 skipped) 15ms
+ ✓ src/__tests__/config/featureFlags.test.ts (9 tests) 150ms
+ ✓ src/components/review/BusReviewSection.test.tsx (10 tests) 158ms
+ ✓ src/components/__tests__/MapComponent.test.tsx (5 tests) 80ms
+ ✓ src/components/__tests__/StopsList.test.tsx (3 tests) 56ms
+ ✓ src/__tests__/components/analytics/CustomTooltip.test.tsx (5 tests) 76ms
+stdout | src/utils/__tests__/geocoding.test.ts > Geocoding Functions > should handle async geocoding for unknown cities
+[DEBUG][1768863820192-22ce5f8b] Attempting to geocode unknown location: "UnknownCity" { component: 'cityCoordinates', stopName: 'UnknownCity' }
+
+ ✓ src/utils/__tests__/geocoding.test.ts (5 tests) 79ms
+ ✓ src/components/__tests__/bus/BusHeader.test.tsx (6 tests) 105ms
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ Test Files  33 passed | 1 skipped (35)
+      Tests  397 passed | 16 skipped (414)
+     Errors  1 error
+   Start at  18:03:20
+   Duration  237.17s (transform 1.71s, setup 1.36s, collect 2.97s, tests 6.87s, environment 4.16s, prepare 131ms)
+

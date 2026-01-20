@@ -111,7 +111,7 @@ describe('BottomNavigation Component', () => {
 
   describe('User Interaction', () => {
     it('should call onTabChange when clicking enabled tab', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <BottomNavigation 
           activeTab="search" 
@@ -125,7 +125,7 @@ describe('BottomNavigation Component', () => {
     });
 
     it('should not call onTabChange when clicking disabled tab', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <BottomNavigation 
           activeTab="search" 
@@ -139,7 +139,7 @@ describe('BottomNavigation Component', () => {
     });
 
     it('should call onTabChange when clicking same active tab', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <BottomNavigation 
           activeTab="search" 

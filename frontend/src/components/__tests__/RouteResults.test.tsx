@@ -248,7 +248,7 @@ describe('RouteResults Component', () => {
 
   describe('Route Selection', () => {
     it('should call setSelectedRoute when clicking a route', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteResults
           results={mockRoutes}
@@ -313,7 +313,7 @@ describe('RouteResults Component', () => {
     });
 
     it('should deselect route when clicking selected route', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteResults
           results={mockRoutes}
@@ -463,7 +463,7 @@ describe('RouteResults Component', () => {
 
   describe('Accessibility', () => {
     it('should have clickable route items', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteResults
           results={mockRoutes}

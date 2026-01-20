@@ -46,7 +46,7 @@ describe('FormTextArea Component', () => {
 
   describe('User Interaction', () => {
     it('should call onChange when user types', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       const onChange = vi.fn();
       
       render(

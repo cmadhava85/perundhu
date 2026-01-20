@@ -20,8 +20,8 @@ export function disableContextMenu(): void {
 export function disableTextSelection(): void {
   document.body.style.userSelect = 'none';
   document.body.style.webkitUserSelect = 'none';
-  (document.body.style as any).msUserSelect = 'none';
-  (document.body.style as any).MozUserSelect = 'none';
+  (document.body.style as CSSStyleDeclaration & { msUserSelect?: string }).msUserSelect = 'none';
+  (document.body.style as CSSStyleDeclaration & { MozUserSelect?: string }).MozUserSelect = 'none';
 
   document.addEventListener('selectstart', (event) => {
     event.preventDefault();
@@ -34,7 +34,6 @@ export function disableTextSelection(): void {
  */
 export function disableKeyboardShortcuts(): void {
   const blockedKeys = ['F12', 'F11', 'F3'];
-  const blockedCombinations = ['Ctrl+Shift+I', 'Ctrl+Shift+C', 'Ctrl+Shift+J', 'Ctrl+I'];
 
   document.addEventListener('keydown', (event) => {
     let shouldBlock = false;
@@ -99,20 +98,23 @@ export function detectConsoleOpening(): void {
 
   const check = () => {
     const startTime = performance.now();
-    debugger;
+    // Note: debugger removed for production - console detection disabled
     const endTime = performance.now();
 
     if (endTime - startTime > 100) {
       if (!isOpen) {
         isOpen = true;
+        // eslint-disable-next-line no-console
         console.log(
           '%c⚠️ Security Warning',
           'font-size: 16px; color: red; font-weight: bold;'
         );
+        // eslint-disable-next-line no-console
         console.log(
           '%cThis browser console is for authorized use only.',
           'font-size: 14px; color: orange;'
         );
+        // eslint-disable-next-line no-console
         console.log(
           '%cUnauthorized access attempts are logged and monitored.',
           'font-size: 12px; color: red;'
@@ -156,7 +158,7 @@ export function getRandomDelay(): number {
 /**
  * Log security event to backend
  */
-export async function logSecurityEvent(eventType: string, details?: Record<string, any>): Promise<void> {
+export async function logSecurityEvent(eventType: string, details?: Record<string, string | number | boolean>): Promise<void> {
   try {
     await fetch('/api/security/events', {
       method: 'POST',

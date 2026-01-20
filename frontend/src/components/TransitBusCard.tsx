@@ -71,6 +71,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
   // Calculate journey duration
   const getDuration = () => {
     try {
+      // Return empty if arrival time not available (MTC buses don't have estimated arrival)
       if (!bus.departureTime || !bus.arrivalTime) return '';
       
       const [depHours, depMinutes] = bus.departureTime.split(':').map(Number);

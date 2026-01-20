@@ -91,7 +91,7 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
     });
   }, [stops, originName, destName]);
 
-  // Calculate journey duration
+  // Calculate journey duration (only if arrival time exists)
   const duration = useMemo(() => {
     if (!bus.departureTime || !bus.arrivalTime) return 0;
     const [depH, depM] = bus.departureTime.split(':').map(Number);
@@ -143,16 +143,18 @@ const JourneyTimeline: React.FC<JourneyTimelineProps> = ({
         <div className="journey-info-compact">
           <div className="journey-line"></div>
           <div className="journey-meta">
-            <span className="duration-compact">{formatDuration(duration)}</span>
+            {duration > 0 && <span className="duration-compact">{formatDuration(duration)}</span>}
             {stopCount > 0 && (
               <span className="stops-count-compact">{stopCount} stops</span>
             )}
           </div>
         </div>
 
-        {/* Destination */}
+        {/* Destination - Show "Est. arrival" if no arrival time (MTC buses) */}
         <div className="endpoint-compact destination">
-          <span className="time-compact">{formatTime(bus.arrivalTime)}</span>
+          <span className="time-compact" style={!bus.arrivalTime ? { color: '#9CA3AF', fontStyle: 'italic' } : {}}>
+            {bus.arrivalTime ? formatTime(bus.arrivalTime) : 'Est. arrival'}
+          </span>
           <span 
             className="dot-compact destination-dot"
             style={{ background: 'var(--semantic-error, #EF4444)', width: '12px', height: '12px', borderRadius: '50%', border: '2px solid var(--transit-surface, #fff)' }}

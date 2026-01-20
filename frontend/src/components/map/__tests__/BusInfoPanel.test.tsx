@@ -3,18 +3,6 @@ import { vi, beforeEach, describe, it, expect } from 'vitest';
 import BusInfoPanel from '../BusInfoPanel';
 import type { BusLocation } from '../../../types';
 
-// Mock the react-i18next hook
-vi.mock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (key: string, fallback: string) => fallback || key,
-      i18n: {
-        language: 'en'
-      }
-    };
-  }
-}));
-
 describe('BusInfoPanel Component', () => {
   // Test data
   const mockBus: BusLocation = {

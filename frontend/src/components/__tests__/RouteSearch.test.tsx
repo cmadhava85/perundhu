@@ -55,7 +55,7 @@ describe('RouteSearch Component', () => {
 
   describe('User Input', () => {
     it('should call setSearchQuery when input changes', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteSearch
           searchQuery=""
@@ -75,7 +75,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should update input value as user types', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       const { rerender } = render(
         <RouteSearch
           searchQuery=""
@@ -104,7 +104,7 @@ describe('RouteSearch Component', () => {
 
   describe('Form Submission', () => {
     it('should call onSearch when form is submitted', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteSearch
           searchQuery="test route"
@@ -121,7 +121,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should call onSearch on Enter key press', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteSearch
           searchQuery="test route"
@@ -138,7 +138,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should not call onSearch when query is empty', async () => {
-      const user = userEvent.setup();
+      const user = userEvent.setup({ delay: null });
       render(
         <RouteSearch
           searchQuery=""
@@ -156,7 +156,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should not call onSearch when query is only whitespace', async () => {
-      const _user = userEvent.setup();
+      const _user = userEvent.setup({ delay: null });
       render(
         <RouteSearch
           searchQuery="   "
@@ -231,7 +231,7 @@ describe('RouteSearch Component', () => {
     });
 
     it('should prevent default form submission', async () => {
-      const _user = userEvent.setup();
+      const _user = userEvent.setup({ delay: null });
       render(
         <RouteSearch
           searchQuery="test"

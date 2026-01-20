@@ -6,18 +6,19 @@ import type { RouteContribution, ImageContribution } from '../../types/contribut
 vi.mock('axios', () => ({
   default: {
     create: vi.fn(() => ({
-      get: vi.fn(),
-      post: vi.fn(),
-      put: vi.fn(),
-      delete: vi.fn(),
+      get: vi.fn(() => Promise.resolve({ data: [] })),
+      post: vi.fn(() => Promise.resolve({ data: {} })),
+      put: vi.fn(() => Promise.resolve({ data: {} })),
+      delete: vi.fn(() => Promise.resolve({ data: {} })),
       interceptors: {
         request: { use: vi.fn(), eject: vi.fn() },
         response: { use: vi.fn(), eject: vi.fn() }
       }
     })),
-    get: vi.fn(),
-    post: vi.fn(),
-    delete: vi.fn(),
+    get: vi.fn(() => Promise.resolve({ data: [] })),
+    post: vi.fn(() => Promise.resolve({ data: {} })),
+    put: vi.fn(() => Promise.resolve({ data: {} })),
+    delete: vi.fn(() => Promise.resolve({ data: {} })),
     interceptors: {
       request: { use: vi.fn(), eject: vi.fn() },
       response: { use: vi.fn(), eject: vi.fn() }
@@ -101,7 +102,7 @@ describe('AdminService', () => {
     describe('getRouteContributions', () => {
       it('should fetch all route contributions with auth header', async () => {
         const mockContributions: RouteContribution[] = [mockRouteContribution];
-        mockedAxios.get.mockResolvedValue({ data: mockContributions });
+        mockedAxios.get = vi.fn().mockResolvedValue({ data: mockContributions });
 
         const result = await AdminService.getRouteContributions();
 
@@ -118,7 +119,7 @@ describe('AdminService', () => {
     describe('getPendingRouteContributions', () => {
       it('should fetch pending route contributions', async () => {
         const mockContributions: RouteContribution[] = [mockRouteContribution];
-        mockedAxios.get.mockResolvedValue({ data: mockContributions });
+        mockedAxios.get = vi.fn().mockResolvedValue({ data: mockContributions });
 
         const result = await AdminService.getPendingRouteContributions();
 
@@ -133,7 +134,7 @@ describe('AdminService', () => {
     describe('approveRouteContribution', () => {
       it('should approve a route contribution', async () => {
         const approvedContribution = { ...mockRouteContribution, status: 'APPROVED' };
-        mockedAxios.post.mockResolvedValue({ data: approvedContribution });
+        mockedAxios.post = vi.fn().mockResolvedValue({ data: approvedContribution });
 
         const result = await AdminService.approveRouteContribution(1);
 
@@ -151,7 +152,7 @@ describe('AdminService', () => {
     describe('rejectRouteContribution', () => {
       it('should reject a route contribution with reason', async () => {
         const rejectedContribution = { ...mockRouteContribution, status: 'REJECTED' };
-        mockedAxios.post.mockResolvedValue({ data: rejectedContribution });
+        mockedAxios.post = vi.fn().mockResolvedValue({ data: rejectedContribution });
 
         const result = await AdminService.rejectRouteContribution(1, 'Invalid route');
 
@@ -166,7 +167,7 @@ describe('AdminService', () => {
 
     describe('deleteRouteContribution', () => {
       it('should delete a route contribution', async () => {
-        mockedAxios.delete.mockResolvedValue({});
+        mockedAxios.delete = vi.fn().mockResolvedValue({ data: {} });
 
         await AdminService.deleteRouteContribution(1);
 
@@ -182,7 +183,7 @@ describe('AdminService', () => {
     describe('getImageContributions', () => {
       it('should fetch all image contributions', async () => {
         const mockContributions: ImageContribution[] = [mockImageContribution];
-        mockedAxios.get.mockResolvedValue({ data: mockContributions });
+        mockedAxios.get = vi.fn().mockResolvedValue({ data: mockContributions });
 
         const result = await AdminService.getImageContributions();
 
@@ -197,7 +198,7 @@ describe('AdminService', () => {
     describe('getPendingImageContributions', () => {
       it('should fetch pending image contributions', async () => {
         const mockContributions: ImageContribution[] = [mockImageContribution];
-        mockedAxios.get.mockResolvedValue({ data: mockContributions });
+        mockedAxios.get = vi.fn().mockResolvedValue({ data: mockContributions });
 
         const result = await AdminService.getPendingImageContributions();
 
@@ -212,7 +213,7 @@ describe('AdminService', () => {
     describe('approveImageContribution', () => {
       it('should approve an image contribution', async () => {
         const approvedContribution = { ...mockImageContribution, status: 'APPROVED' };
-        mockedAxios.post.mockResolvedValue({ data: approvedContribution });
+        mockedAxios.post = vi.fn().mockResolvedValue({ data: approvedContribution });
 
         const result = await AdminService.approveImageContribution(1);
 
@@ -228,7 +229,7 @@ describe('AdminService', () => {
     describe('rejectImageContribution', () => {
       it('should reject an image contribution with reason', async () => {
         const rejectedContribution = { ...mockImageContribution, status: 'REJECTED' };
-        mockedAxios.post.mockResolvedValue({ data: rejectedContribution });
+        mockedAxios.post = vi.fn().mockResolvedValue({ data: rejectedContribution });
 
         const result = await AdminService.rejectImageContribution(1, 'Low quality image');
 
@@ -243,7 +244,7 @@ describe('AdminService', () => {
 
     describe('deleteImageContribution', () => {
       it('should delete an image contribution', async () => {
-        mockedAxios.delete.mockResolvedValue({});
+        mockedAxios.delete = vi.fn().mockResolvedValue({ data: {} });
 
         await AdminService.deleteImageContribution(1);
 
@@ -259,7 +260,7 @@ describe('AdminService', () => {
     describe('integrateApprovedRoutes', () => {
       it('should integrate approved routes successfully', async () => {
         const mockResult = { successCount: 5, message: 'Integration complete' };
-        mockedAxios.post.mockResolvedValue({ data: mockResult });
+        mockedAxios.post = vi.fn().mockResolvedValue({ data: mockResult });
 
         const result = await AdminService.integrateApprovedRoutes();
 
@@ -272,7 +273,7 @@ describe('AdminService', () => {
       });
 
       it('should return manual integration instructions when endpoint not available', async () => {
-        mockedAxios.post.mockRejectedValue(new Error('Not found'));
+        mockedAxios.post = vi.fn().mockRejectedValue(new Error('Not found'));
 
         const result = await AdminService.integrateApprovedRoutes();
 
@@ -286,7 +287,7 @@ describe('AdminService', () => {
     describe('integrateSpecificRoute', () => {
       it('should integrate a specific route', async () => {
         const mockResult = { successCount: 1 };
-        mockedAxios.post.mockResolvedValue({ data: mockResult });
+        mockedAxios.post = vi.fn().mockResolvedValue({ data: mockResult });
 
         const result = await AdminService.integrateSpecificRoute(1);
 
@@ -299,7 +300,7 @@ describe('AdminService', () => {
       });
 
       it('should throw error when integration fails', async () => {
-        mockedAxios.post.mockRejectedValue(new Error('Integration failed'));
+        mockedAxios.post = vi.fn().mockRejectedValue(new Error('Integration failed'));
 
         await expect(AdminService.integrateSpecificRoute(999)).rejects.toThrow(
           'Integration service not available'
@@ -310,7 +311,7 @@ describe('AdminService', () => {
     describe('getIntegrationStatus', () => {
       it('should get integration status', async () => {
         const mockStatus = { pendingCount: 10, integratedCount: 50 };
-        mockedAxios.get.mockResolvedValue({ data: mockStatus });
+        mockedAxios.get = vi.fn().mockResolvedValue({ data: mockStatus });
 
         const result = await AdminService.getIntegrationStatus();
 
@@ -318,7 +319,7 @@ describe('AdminService', () => {
       });
 
       it('should return error object when status endpoint not available', async () => {
-        mockedAxios.get.mockRejectedValue(new Error('Not found'));
+        mockedAxios.get = vi.fn().mockRejectedValue(new Error('Not found'));
 
         const result = await AdminService.getIntegrationStatus();
 
@@ -342,7 +343,7 @@ describe('AdminService', () => {
         { name: 'Dindigul', arrivalTime: '09:30', departureTime: '09:35', stopOrder: 1 }
       ];
 
-      mockedAxios.get
+      mockedAxios.get = vi.fn()
         .mockResolvedValueOnce({ data: mockBus })
         .mockResolvedValueOnce({ data: mockStops });
 
@@ -364,7 +365,7 @@ describe('AdminService', () => {
         toLocationName: 'Chennai'
       };
 
-      mockedAxios.get
+      mockedAxios.get = vi.fn()
         .mockResolvedValueOnce({ data: mockBus })
         .mockRejectedValueOnce(new Error('Stops not found'));
 

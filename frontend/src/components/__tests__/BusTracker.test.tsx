@@ -76,16 +76,20 @@ describe('BusTracker Component with Device ID', () => {
       timestamp: Date.now()
     };
 
-    (global.navigator.geolocation as unknown) = {
-      getCurrentPosition: vi.fn((success) => {
-        success(mockPosition);
-      }),
-      watchPosition: vi.fn((success) => {
-        success(mockPosition);
-        return 1;
-      }),
-      clearWatch: vi.fn()
-    };
+    // Mock geolocation properly for happy-dom
+    Object.defineProperty(global.navigator, 'geolocation', {
+      writable: true,
+      value: {
+        getCurrentPosition: vi.fn((success) => {
+          success(mockPosition);
+        }),
+        watchPosition: vi.fn((success) => {
+          success(mockPosition);
+          return 1;
+        }),
+        clearWatch: vi.fn()
+      }
+    });
 
     // Reset fetch mock
     (global.fetch as unknown as jest.Mock).mockReset();

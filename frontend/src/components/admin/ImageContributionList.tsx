@@ -157,7 +157,7 @@ const ImageContributionList: React.FC = () => {
     if (!contribution.id) return '';
     
     // Use the new API endpoint to serve image data from database
-    const API_URL = import.meta.env.VITE_API_URL || 'https://perundhu-backend-preprod-1032721240281.asia-south1.run.app';
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
     return `${API_URL}/api/admin/contributions/images/${contribution.id}/data`;
   };
 

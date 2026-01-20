@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBusSearch as useReactQueryBusSearch, useBusStops, useConnectingRoutes } from './queries/useBusSearch';
+import { useBusSearchEnhanced as useReactQueryBusSearch, useBusStopsEnhanced as useBusStops, useConnectingRoutesEnhanced as useConnectingRoutes } from './queries/useBusSearchEnhanced';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
 import { useTranslation } from 'react-i18next';
 import { api } from '../services/api';
@@ -19,10 +19,18 @@ export function useBusSearchEnhanced() {
   const busSearchQuery = useReactQueryBusSearch({
     fromLocationId: fromLocation?.id ?? null,
     toLocationId: toLocation?.id ?? null,
-    fromLocation: fromLocation,
-    toLocation: toLocation,
+    pageSize: 20,
     enabled: !!fromLocation && !!toLocation && hasSearched,
   });
+
+  // Flatten all pages of results for infinite query
+  const allBuses = React.useMemo(() => {
+    if (!busSearchQuery.data?.pages) return [];
+    return busSearchQuery.data.pages.flatMap((page: { buses?: Bus[] }) => page.buses || []);
+  }, [busSearchQuery.data]);
+
+  // Get total count from first page
+  const totalCount = busSearchQuery.data?.pages?.[0]?.totalCount ?? 0;
 
   const busStopsQuery = useBusStops(
     selectedBusId,
@@ -38,7 +46,7 @@ export function useBusSearchEnhanced() {
     !!fromLocation && !!toLocation && hasSearched
   );
 
-  // Fetch stops for all buses in search results
+  // Fetch stops for all buses in search results  
   const { i18n } = useTranslation();
   const [stopsMap, setStopsMap] = React.useState<Record<number, Stop[]>>({});
 
@@ -104,7 +112,7 @@ export function useBusSearchEnhanced() {
   };
 
   React.useEffect(() => {
-    if (!busSearchQuery.data?.buses || busSearchQuery.data.buses.length === 0) {
+    if (allBuses.length === 0) {
       setStopsMap({});
       return;
     }
@@ -117,7 +125,7 @@ export function useBusSearchEnhanced() {
       const newStopsMap: Record<number, Stop[]> = {};
       
       // Parallelize API calls for better performance
-      const promises = busSearchQuery.data.buses.map((bus) => 
+      const promises = allBuses.map((bus: Bus) => 
         fetchBusStops(bus, abortController.signal)
       );
 
@@ -141,7 +149,7 @@ export function useBusSearchEnhanced() {
       isMounted = false;
       abortController.abort();
     };
-  }, [busSearchQuery.data?.buses]);
+  }, [allBuses, i18n.language]);
 
   // Backward compatible search function
   const searchBuses = React.useCallback(
@@ -182,12 +190,18 @@ export function useBusSearchEnhanced() {
 
   return {
     // State
-    buses: busSearchQuery.data?.buses ?? [],
+    buses: allBuses,
     selectedBusId,
     stopsMap,
     loading: busSearchQuery.isLoading || busStopsQuery.isLoading,
+    loadingMore: busSearchQuery.isFetchingNextPage,
     error: busSearchQuery.error || busStopsQuery.error,
     connectingRoutes: connectingRoutesQuery.data ?? [],
+    totalCount,
+    
+    // Pagination
+    hasNextPage: busSearchQuery.hasNextPage,
+    fetchNextPage: busSearchQuery.fetchNextPage,
     
     // Query states for more granular control
     busSearchQuery,

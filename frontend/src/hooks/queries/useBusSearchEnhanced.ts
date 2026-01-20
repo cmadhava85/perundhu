@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { api } from '../../services/api';
 import { queryKeys } from '../../lib/queryClient';
 import type { Bus, Stop } from '../../types';
@@ -21,23 +21,22 @@ interface BusSearchResponse {
 }
 
 /**
- * Enhanced React Query hook for bus search with pagination
+ * Enhanced React Query hook for bus search with infinite pagination
  */
 export function useBusSearchEnhanced({ 
   fromLocationId, 
   toLocationId,
   includeContinuing = true,
-  page = 0,
   pageSize = 20,
   enabled = true 
 }: UseBusSearchEnhancedParams) {
   
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: fromLocationId && toLocationId 
-      ? [...queryKeys.busSearch(fromLocationId, toLocationId), page, pageSize, includeContinuing]
+      ? [...queryKeys.busSearch(fromLocationId, toLocationId), pageSize, includeContinuing]
       : ['buses', 'search'],
     
-    queryFn: async (): Promise<BusSearchResponse> => {
+    queryFn: async ({ pageParam = 0 }): Promise<BusSearchResponse> => {
       if (!fromLocationId || !toLocationId) {
         throw new Error('Both from and to locations are required');
       }
@@ -47,7 +46,7 @@ export function useBusSearchEnhanced({
           fromLocationId,
           toLocationId,
           includeContinuing,
-          page,
+          page: pageParam,
           size: pageSize,
         },
       });
@@ -68,6 +67,16 @@ export function useBusSearchEnhanced({
         totalCount: response.data?.length || 0,
         hasConnectingRoutes: false,
       };
+    },
+    
+    // Pagination configuration
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page !== undefined && lastPage.totalPages !== undefined) {
+        const nextPage = lastPage.page + 1;
+        return nextPage < lastPage.totalPages ? nextPage : undefined;
+      }
+      return undefined;
     },
     
     // Only enable when we have valid positive location IDs

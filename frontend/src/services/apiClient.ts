@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { traceContext, TRACE_HEADERS, incrementRequestCount } from '../utils/traceId';
 import logger, { LogCategory } from '../utils/logger';
-import { getRandomDelay, logSecurityEvent } from '../utils/security';
 
 // Helper function to get environment variables that works in both Vite and Jest
 const getEnv = (key: string, defaultValue: string = ''): string => {
