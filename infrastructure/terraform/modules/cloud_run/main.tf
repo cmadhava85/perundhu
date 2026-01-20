@@ -6,17 +6,22 @@ resource "google_cloud_run_service" "backend" {
 
   template {
     metadata {
-      annotations = {
-        "autoscaling.knative.dev/maxScale"        = tostring(var.max_instances)
-        "autoscaling.knative.dev/minScale"        = tostring(var.min_instances)
-        "run.googleapis.com/cloudsql-instances"   = var.db_connection_name
-        "run.googleapis.com/vpc-access-connector" = var.vpc_connector_name
-        "run.googleapis.com/vpc-access-egress"    = "private-ranges-only"
-        # Cost optimization: CPU throttling and Gen2
-        "run.googleapis.com/cpu-throttling"        = "true"
-        "run.googleapis.com/startup-cpu-boost"     = "true"
-        "run.googleapis.com/execution-environment" = "gen2"
-      }
+      annotations = merge(
+        {
+          "autoscaling.knative.dev/maxScale"         = tostring(var.max_instances)
+          "autoscaling.knative.dev/minScale"         = tostring(var.min_instances)
+          "run.googleapis.com/cloudsql-instances"    = var.db_connection_name
+          # Cost optimization: CPU throttling and Gen2
+          "run.googleapis.com/cpu-throttling"        = "true"
+          "run.googleapis.com/startup-cpu-boost"     = "true"
+          "run.googleapis.com/execution-environment" = "gen2"
+        },
+        # VPC connector is optional - only set if provided (saves $14/month when disabled)
+        var.vpc_connector_name != "" ? {
+          "run.googleapis.com/vpc-access-connector" = var.vpc_connector_name
+          "run.googleapis.com/vpc-access-egress"    = "private-ranges-only"
+        } : {}
+      )
     }
 
     spec {

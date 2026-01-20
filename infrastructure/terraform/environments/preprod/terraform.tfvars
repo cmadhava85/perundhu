@@ -1,6 +1,14 @@
 # Perundhu PreProd Environment Configuration
 # Generated for GCP Project: astute-strategy-406601
 # Region: asia-south1 (Mumbai - optimal for India)
+# 
+# COST OPTIMIZATION ENABLED (Jan 2026)
+# ======================================
+# Monthly Cost Reduction: Similar to production
+# - Database: STOPPED (db_activation_policy = NEVER) - saves ~$18/month
+# - Cloud Run: Scale to zero (min_instances = 0) - saves ~$3/month
+# - VPC Connector: DISABLED - saves $14/month
+# Total Savings: ~$35/month
 
 # ============================================
 # GCP Configuration
@@ -68,17 +76,18 @@ cloud_run_cpu_limit     = "1000m" # 1 CPU
 cloud_run_memory_limit  = "512Mi" # Min required for Gen2 (256Mi not supported)
 
 # ============================================
-# VPC Configuration (Cost Optimized)
+# VPC Configuration (Cost Optimized - VPC Connector DISABLED)
 # ============================================
 vpc_cidr                    = "10.0.0.0/16"
 public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
-# VPC Connector optimization: Use e2-micro for better cost efficiency
-# Note: GCP requires min < max, so keeping 2-3 but using smaller machine type
-vpc_connector_min_instances = 2 # Minimum instances for reliability
-vpc_connector_max_instances = 3 # Maximum for burst traffic (GCP requires min < max)
-vpc_connector_machine_type  = "e2-micro" # Smallest instance type for cost savings (~30% cheaper than f1-micro)
+# VPC Connector DISABLED for cost savings (saves $14/month)
+# Cloud Run will use public IP to connect to Cloud SQL
+# Note: Database must allow public connections for this to work
+vpc_connector_min_instances = 2 # Kept for reference only (connector disabled)
+vpc_connector_max_instances = 3 # Kept for reference only (connector disabled)
+vpc_connector_machine_type  = "e2-micro" # Kept for reference only (connector disabled)
 
 # ============================================
 # Storage Configuration

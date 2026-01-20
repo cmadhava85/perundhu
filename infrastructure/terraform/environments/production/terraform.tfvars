@@ -1,7 +1,15 @@
 # Perundhu Production Environment Configuration
 # Generated for GCP Project: perundhu-prod-001
 # Region: asia-south1 (Mumbai - optimal for India)
-# This configuration is production-grade with HA and monitoring
+# 
+# COST OPTIMIZATION ENABLED (Jan 2026)
+# ======================================
+# Monthly Cost Reduction: $60 → ~$2
+# - Database: STOPPED (db_activation_policy = NEVER) - saves $34/month
+# - Cloud Run: Scale to zero (min_instances = 0) - saves $6/month
+# - VPC Connector: DISABLED - saves $14/month
+# - Artifact Registry: Clean old images manually - saves $4/month
+# Total Savings: ~$58/month
 
 # ============================================
 # GCP Configuration
@@ -61,17 +69,18 @@ cloud_run_cpu_limit     = "1000m" # Reduced from 2000m for cost savings
 cloud_run_memory_limit  = "512Mi" # Reduced from 1Gi for cost optimization
 
 # ============================================
-# VPC Configuration (Cost Optimized)
+# VPC Configuration (Cost Optimized - VPC Connector DISABLED)
 # ============================================
 vpc_cidr                    = "10.0.0.0/16"
 public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
-# VPC Connector optimization: Use e2-micro for better cost efficiency
-# Note: GCP requires min < max, so keeping 2-3 but using smaller machine type
-vpc_connector_min_instances = 2 # Minimum instances for reliability
-vpc_connector_max_instances = 3 # Maximum for burst traffic (GCP requires min < max)
-vpc_connector_machine_type  = "e2-micro" # Smallest instance type for cost savings
+# VPC Connector DISABLED for cost savings (saves $14/month)
+# Cloud Run will use public IP to connect to Cloud SQL
+# Note: Database must allow public connections for this to work
+vpc_connector_min_instances = 2 # Kept for reference only (connector disabled)
+vpc_connector_max_instances = 3 # Kept for reference only (connector disabled)
+vpc_connector_machine_type  = "e2-micro" # Kept for reference only (connector disabled)
 
 # ============================================
 # Storage Configuration

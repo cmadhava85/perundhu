@@ -54,18 +54,20 @@ resource "google_compute_router_nat" "nat" {
 }
 
 # VPC Connector for Cloud Run to access VPC resources
-resource "google_vpc_access_connector" "connector" {
-  provider = google-beta
-
-  name          = var.environment == "production" ? "${var.app_name}-prod-vpc-conn" : "${var.app_name}-${var.environment}-vpc-conn"
-  region        = var.region
-  ip_cidr_range = var.vpc_connector_cidr
-  network       = google_compute_network.vpc_network.name
-
-  min_instances = var.vpc_connector_min_instances
-  max_instances = var.vpc_connector_max_instances
-  machine_type  = var.vpc_connector_machine_type
-}
+# DISABLED FOR COST SAVINGS ($14/month) - Cloud Run will use public IP only
+# To re-enable: uncomment the resource block below
+# resource "google_vpc_access_connector" "connector" {
+#   provider = google-beta
+#
+#   name          = var.environment == "production" ? "${var.app_name}-prod-vpc-conn" : "${var.app_name}-${var.environment}-vpc-conn"
+#   region        = var.region
+#   ip_cidr_range = var.vpc_connector_cidr
+#   network       = google_compute_network.vpc_network.name
+#
+#   min_instances = var.vpc_connector_min_instances
+#   max_instances = var.vpc_connector_max_instances
+#   machine_type  = var.vpc_connector_machine_type
+# }
 
 # ============================================
 # Firewall Rules (Configurable via variables)

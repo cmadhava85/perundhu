@@ -34,13 +34,13 @@ output "private_subnet_id" {
 }
 
 output "vpc_connector_name" {
-  description = "The name of the VPC connector for Cloud Run"
-  value       = google_vpc_access_connector.connector.name
+  description = "The name of the VPC connector for Cloud Run (empty if disabled for cost savings)"
+  value       = try(google_vpc_access_connector.connector[0].name, "")
 }
 
 output "vpc_connector_id" {
-  description = "The ID of the VPC connector for Cloud Run"
-  value       = google_vpc_access_connector.connector.id
+  description = "The ID of the VPC connector for Cloud Run (empty if disabled for cost savings)"
+  value       = try(google_vpc_access_connector.connector[0].id, "")
 }
 
 output "router_name" {
