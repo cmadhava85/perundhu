@@ -72,7 +72,8 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
-    // CSRF protection: Use HttpOnly=false so JavaScript can read the token for AJAX requests
+    // CSRF protection: Use HttpOnly=false so JavaScript can read the token for AJAX
+    // requests
     XorCsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new XorCsrfTokenRequestAttributeHandler();
     csrfTokenRequestAttributeHandler.setCsrfRequestAttributeName("_csrf");
 
@@ -81,7 +82,7 @@ public class SecurityConfig {
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
             .ignoringRequestMatchers(
-                "/api/v1/analytics/**",  // Analytics can be without CSRF (stateless API)
+                "/api/v1/analytics/**", // Analytics can be without CSRF (stateless API)
                 "/api/v1/contributions/analyze-image" // Image analysis is stateless
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -98,7 +99,8 @@ public class SecurityConfig {
             .requestMatchers("/api/v1/analytics/**").permitAll()
             .requestMatchers("/api/v1/contributions/analyze-image").permitAll()
             .requestMatchers("/api/v1/contributions/routes").permitAll() // Allow anonymous route contributions
-            .requestMatchers("/api/v1/contributions/routes/stops").permitAll() // Allow anonymous stop contributions to existing routes
+            .requestMatchers("/api/v1/contributions/routes/stops").permitAll() // Allow anonymous stop contributions to
+                                                                               // existing routes
             .requestMatchers("/api/v1/contributions/buses/**").permitAll() // Allow anonymous bus contributions
             .requestMatchers("/api/v1/contributions/stops/**").permitAll() // Allow anonymous stop contributions
             .requestMatchers("/api/v1/buses/**").permitAll()
@@ -197,8 +199,7 @@ public class SecurityConfig {
             .username(adminUsername)
             .password("{noop}" + adminPassword) // {noop} means no encoding
             .roles("ADMIN", "USER")
-            .build()
-    );
+            .build());
   }
 
   @Bean

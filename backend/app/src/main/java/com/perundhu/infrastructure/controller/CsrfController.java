@@ -25,8 +25,7 @@ public class CsrfController {
     return new CsrfTokenResponse(
         token.getToken(),
         token.getHeaderName(),
-        token.getParameterName()
-    );
+        token.getParameterName());
   }
 
   /**
@@ -35,6 +34,6 @@ public class CsrfController {
   public record CsrfTokenResponse(
       String token,
       String headerName,
-      String parameterName
-  ) {}
+      String parameterName) {
+  }
 }
