@@ -45,6 +45,7 @@
     "@tanstack/react-query-devtools": "^5.90.2",
     "@types/crypto-js": "^4.2.2",
     "axios": "^1.7.7",
+    "axios-retry": "^4.5.0",
     "crypto-js": "^4.2.0",
     "date-fns": "^3.6.0",
     "i18next": "^25.4.1",

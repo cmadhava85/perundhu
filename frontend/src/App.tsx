@@ -30,6 +30,7 @@ import { useBusSearchEnhanced } from './hooks/useBusSearchEnhanced';
 import { ThemeProvider } from './context/ThemeContext';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import { FeatureFlagsProvider } from './contexts/FeatureFlagsContext';
+import { ErrorProvider } from './contexts/ErrorContext';
 
 // Utils
 import { getFeatureFlag } from './utils/environment';
@@ -43,11 +44,13 @@ function App() {
       <ThemeProvider>
         <FeatureFlagsProvider>
           <AdminAuthProvider>
-            <ToastProvider>
-              <Router>
-                <AppContent />
-              </Router>
-            </ToastProvider>
+            <ErrorProvider>
+              <ToastProvider>
+                <Router>
+                  <AppContent />
+                </Router>
+              </ToastProvider>
+            </ErrorProvider>
           </AdminAuthProvider>
         </FeatureFlagsProvider>
       </ThemeProvider>
@@ -90,6 +93,10 @@ function AppContent() {
     selectedBusId,
     stopsMap,
     loading: busesLoading,
+    loadingMore,
+    hasNextPage,
+    fetchNextPage,
+    totalCount,
     error: searchError,
     connectingRoutes,
     searchBuses,
@@ -365,6 +372,10 @@ function AppContent() {
           searchError={searchError}
           connectingRoutes={connectingRoutes}
           busesLoading={busesLoading}
+          loadingMore={loadingMore}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          totalCount={totalCount}
           showAnalytics={showAnalytics}
           userId={userId}
           featureSettings={featureSettings}

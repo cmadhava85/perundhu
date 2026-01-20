@@ -536,7 +536,32 @@ test {
     enabled = true
 }
 
-// Configure bootRun to set JNA library path for Tesseract
+// Configure bootRun to set JNA library path for Tesseract and JVM memory
 bootRun {
     systemProperty 'jna.library.path', '/opt/homebrew/lib'
+    jvmArgs = [
+        '--enable-preview',
+        '-Dspring.threads.virtual.enabled=true',
+        '-Xmx4g',          // Max heap memory
+        '-Xms1g',          // Initial heap memory
+        '-XX:+UseG1GC',    // Efficient garbage collector (default in Java 9+)
+        '-XX:MaxGCPauseMillis=200',
+        '-XX:+UnlockDiagnosticVMOptions',
+        '-XX:+DebugNonSafepoints',
+        '-Djdk.jfr.enabled=true'  // Java Flight Recorder for profiling
+    ]
+}
+
+// Configure test tasks to use adequate memory to prevent OOM errors
+tasks.withType(Test) {
+    jvmArgs = [
+        '--enable-preview',
+        '-Xmx2g',          // Reduced max heap for test environment
+        '-Xms512m',        // Smaller initial heap for tests
+        '-XX:+UseG1GC',
+        '-XX:MaxGCPauseMillis=200'
+    ]
+    // Disable parallel test execution to reduce memory pressure
+    // Can be re-enabled with: gradle test -Dorg.gradle.parallel=true
+    // maxParallelForks = 1
 }

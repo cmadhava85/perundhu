@@ -1,5 +1,6 @@
 import { logger } from '../utils/logger';
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import type { AxiosError, AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
 /**
@@ -100,6 +101,7 @@ function sleep(ms: number): Promise<void> {
 
 /**
  * Setup retry interceptors on an Axios instance
+ * Uses both axios-retry library for reliability and custom logic for additional cases
  * 
  * @param axiosInstance - The Axios instance to configure
  * @param customConfig - Optional custom retry configuration
@@ -110,7 +112,56 @@ export function setupRetryInterceptor(
 ): void {
   const config: RetryConfig = { ...DEFAULT_RETRY_CONFIG, ...customConfig };
 
-  // Response interceptor for retry logic
+  // Setup axios-retry for robust automatic retry handling
+  // This handles network errors and retryable status codes
+  axiosRetry(axiosInstance, {
+    retries: config.maxRetries,
+    retryDelay: (retryCount) => {
+      // Exponential backoff: start with 1s, double each time, max 10s
+      return Math.min(
+        config.retryDelay * Math.pow(config.backoffMultiplier, retryCount - 1) + Math.random() * 200,
+        config.maxDelay
+      );
+    },
+    retryCondition: (error: AxiosError) => {
+      // Network errors (no response)
+      if (!error.response) {
+        return axiosRetry.isNetworkOrIdempotentRequestError(error);
+      }
+
+      // Retryable status codes
+      const status = error.response.status;
+      if (config.retryableStatusCodes.includes(status)) {
+        logger.debug(`Retrying due to status ${status}`);
+        return true;
+      }
+
+      // Rate limiting (429) with Retry-After header
+      if (status === 429) {
+        const retryAfter = error.response.headers['retry-after'];
+        if (retryAfter) {
+          logger.debug(`Rate limited. Retry-After: ${retryAfter}s`);
+        }
+        return true;
+      }
+
+      return false;
+    },
+    onRetry: (retryCount, error) => {
+      const status = error.response?.status || 'NETWORK_ERROR';
+      logger.debug(
+        `API request failed. Retrying (${retryCount}/${config.maxRetries}) for ${error.config?.url} - Status: ${status}`
+      );
+    },
+    onMaxRetryExceeded: (error) => {
+      logger.error(`Max retries exceeded for ${error.config?.url}`, {
+        status: error.response?.status,
+        message: error.message
+      });
+    }
+  });
+
+  // Additional custom response interceptor for logging and edge cases
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => response,
     async (error: AxiosError) => {
@@ -120,29 +171,16 @@ export function setupRetryInterceptor(
         return Promise.reject(error);
       }
 
-      // Initialize retry count if not set
-      const currentRetryCount = originalRequest.__retryCount || 0;
-      originalRequest.__retryCount = currentRetryCount;
-      originalRequest.__retryConfig = config;
-
-      if (shouldRetry(error, config, currentRetryCount)) {
-        originalRequest.__retryCount = currentRetryCount + 1;
-        
-        const delay = calculateRetryDelay(currentRetryCount, config);
-        
-        logger.debug(
-          `API request failed. Retrying (${currentRetryCount + 1}/${config.maxRetries}) in ${delay}ms...`,
-          {
-            url: originalRequest.url,
-            status: error.response?.status,
-            error: error.message,
-          }
-        );
-
-        await sleep(delay);
-        
-        return axiosInstance.request(originalRequest);
-      }
+      // Log any errors that made it through axios-retry
+      const status = error.response?.status || 'NETWORK_ERROR';
+      logger.error(
+        `API request failed permanently: ${originalRequest.url}`,
+        {
+          status,
+          message: error.message,
+          retryCount: originalRequest.__retryCount
+        }
+      );
 
       return Promise.reject(error);
     }
