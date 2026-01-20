@@ -24,9 +24,6 @@ zone       = "asia-south1-a"
 environment = "production"
 app_name    = "perundhu"
 
-# VPC Connector Machine Type (Cost Optimized)
-vpc_connector_machine_type = "e2-micro" # Use smallest instance type for cost savings
-
 # ============================================
 # Database Configuration (Optimized for < $20/month)
 # ============================================

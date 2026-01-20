@@ -23,10 +23,15 @@ terraform {
     }
   }
 
-  backend "gcs" {
-    bucket = "perundhu-prod-001-tf-state-1767644488"
-    prefix = "production/state"
+  backend "local" {
+    path = "terraform.tfstate"
   }
+  
+  # Original GCS backend (disabled due to VPC Service Controls)
+  # backend "gcs" {
+  #   bucket = "perundhu-prod-001-tf-state-1767644488"
+  #   prefix = "production/state"
+  # }
 }
 
 # Configure the Google Cloud Provider
@@ -46,10 +51,10 @@ provider "google-beta" {
 # This sources the actual infrastructure modules and resources
 # Values are passed from terraform.tfvars and ../shared/variables.tf
 
-# Data sources
-data "google_project" "project" {
-  project_id = var.project_id
-}
+# Data sources (commented out - not needed for this operation)
+# data "google_project" "project" {
+#   project_id = var.project_id
+# }
 
 # Enable required APIs (simplified - only essential services)
 resource "google_project_service" "required_apis" {

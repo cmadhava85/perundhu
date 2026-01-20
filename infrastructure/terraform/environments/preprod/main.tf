@@ -18,10 +18,15 @@ terraform {
     }
   }
 
-  backend "gcs" {
-    bucket = "astute-strategy-406601-tf-state"
-    prefix = "preprod/state"
+  backend "local" {
+    path = "terraform.tfstate"
   }
+  
+  # Original GCS backend (disabled due to VPC Service Controls)
+  # backend "gcs" {
+  #   bucket = "astute-strategy-406601-tf-state"
+  #   prefix = "preprod/state"
+  # }
 }
 
 # Configure the Google Cloud Provider
@@ -41,10 +46,10 @@ provider "google-beta" {
 # This sources the actual infrastructure modules and resources
 # Values are passed from terraform.tfvars and ../shared/variables.tf
 
-# Data sources
-data "google_project" "project" {
-  project_id = var.project_id
-}
+# Data sources (commented out - not needed for this operation)
+# data "google_project" "project" {
+#   project_id = var.project_id
+# }
 
 # Enable required APIs (simplified - only essential services)
 resource "google_project_service" "required_apis" {
