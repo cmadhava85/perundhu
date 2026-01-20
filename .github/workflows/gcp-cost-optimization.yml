@@ -1,11 +1,12 @@
 name: GCP Cost Optimization - Stop/Start Services
 
 on:
-  schedule:
-    # Stop services at 10 PM EST (3:00 AM UTC next day)
-    - cron: '0 3 * * *'
-    # Start services at 8 AM EST (1:00 PM UTC)
-    - cron: '0 13 * * *'
+  # Automatic schedule disabled - run manually via workflow_dispatch
+  # schedule:
+  #   # Stop services at 10 PM EST (3:00 AM UTC next day)
+  #   - cron: '0 3 * * *'
+  #   # Start services at 8 AM EST (1:00 PM UTC)
+  #   - cron: '0 13 * * *'
   workflow_dispatch:
     inputs:
       action:

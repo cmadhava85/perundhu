@@ -68,14 +68,17 @@ cloud_run_cpu_limit     = "1000m" # 1 CPU
 cloud_run_memory_limit  = "512Mi" # Min required for Gen2 (256Mi not supported)
 
 # ============================================
-# VPC Configuration
+# VPC Configuration (Cost Optimized)
 # ============================================
 vpc_cidr                    = "10.0.0.0/16"
 public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
-vpc_connector_min_instances = 2
-vpc_connector_max_instances = 3
+# VPC Connector optimization: Use e2-micro for better cost efficiency
+# Note: GCP requires min < max, so keeping 2-3 but using smaller machine type
+vpc_connector_min_instances = 2 # Minimum instances for reliability
+vpc_connector_max_instances = 3 # Maximum for burst traffic (GCP requires min < max)
+vpc_connector_machine_type  = "e2-micro" # Smallest instance type for cost savings (~30% cheaper than f1-micro)
 
 # ============================================
 # Storage Configuration

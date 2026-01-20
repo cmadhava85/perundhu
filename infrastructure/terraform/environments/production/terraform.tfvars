@@ -16,6 +16,9 @@ zone       = "asia-south1-a"
 environment = "production"
 app_name    = "perundhu"
 
+# VPC Connector Machine Type (Cost Optimized)
+vpc_connector_machine_type = "e2-micro" # Use smallest instance type for cost savings
+
 # ============================================
 # Database Configuration (Optimized for < $20/month)
 # ============================================
@@ -58,14 +61,17 @@ cloud_run_cpu_limit     = "1000m" # Reduced from 2000m for cost savings
 cloud_run_memory_limit  = "512Mi" # Reduced from 1Gi for cost optimization
 
 # ============================================
-# VPC Configuration
+# VPC Configuration (Cost Optimized)
 # ============================================
 vpc_cidr                    = "10.0.0.0/16"
 public_subnet_cidr          = "10.0.1.0/24"
 private_subnet_cidr         = "10.0.2.0/24"
 vpc_connector_cidr          = "10.8.0.0/28"
-vpc_connector_min_instances = 2 # Match existing connector in GCP
-vpc_connector_max_instances = 3 # Match existing connector in GCP
+# VPC Connector optimization: Use e2-micro for better cost efficiency
+# Note: GCP requires min < max, so keeping 2-3 but using smaller machine type
+vpc_connector_min_instances = 2 # Minimum instances for reliability
+vpc_connector_max_instances = 3 # Maximum for burst traffic (GCP requires min < max)
+vpc_connector_machine_type  = "e2-micro" # Smallest instance type for cost savings
 
 # ============================================
 # Storage Configuration
