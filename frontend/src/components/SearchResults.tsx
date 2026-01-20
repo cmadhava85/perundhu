@@ -1,6 +1,7 @@
-import React, { useState, useEffect, memo, useCallback } from 'react';
+import React, { useState, useEffect, memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { FixedSizeList as List } from 'react-window';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import OpenStreetMapComponent from './OpenStreetMapComponent';
 import FallbackMapComponent from './FallbackMapComponent';
@@ -17,6 +18,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/premium-design-system.css';
 import '../styles/transit-design-system.css';
 import '../styles/premium-bus-grid.css';
+
+// Inline CSS for spin animation
+const spinKeyframes = `
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`;
+
+// Inject animation into head
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = spinKeyframes;
+  document.head.appendChild(style);
+}
+
 // Using TransitBusList with new Transit design system
 
 interface SearchResultsProps {
@@ -28,7 +45,65 @@ interface SearchResultsProps {
   error?: Error | ApiError | null;
   connectingRoutes?: ConnectingRoute[];
   loading?: boolean;  // Add loading prop
+  loadingMore?: boolean;  // Loading state for next page
+  hasNextPage?: boolean;  // Whether more results are available
+  onLoadMore?: () => void;  // Function to load next page
+  totalCount?: number;  // Total number of results across all pages
 }
+
+// Virtual list item renderer for efficient large-list rendering
+// Each row includes a bus card + optional ad
+interface VirtualBusRowProps {
+  index: number;
+  style: React.CSSProperties;
+  data: {
+    buses: Bus[];
+    selectedBusId: number | null;
+    handleSelectBus: (bus: Bus) => void;
+    handleAddStops: (bus: Bus) => void;
+    handleReportIssue: (bus: Bus) => void;
+    fromLocation: AppLocation;
+    toLocation: AppLocation;
+    stopsMap: Record<number, Stop[]>;
+    stops: Stop[];
+    adsEnabled: boolean;
+    getAdConfig: (key: 'betweenSearchResults' | 'sidebarRight' | 'footerSection' | 'aboveSearchForm') => { adSlot: string };
+  };
+}
+
+const VirtualBusRow = memo(({ index, style, data }: VirtualBusRowProps) => {
+  const bus = data.buses[index];
+  if (!bus) return null;
+
+  return (
+    <div style={style} key={`bus-row-${bus.id}`}>
+      <React.Fragment key={bus.id}>
+        <BusCardModern
+          bus={bus}
+          index={index}
+          isSelected={data.selectedBusId === bus.id}
+          onSelect={data.handleSelectBus}
+          onAddStops={data.handleAddStops}
+          onReportIssue={data.handleReportIssue}
+          fromLocation={data.fromLocation}
+          toLocation={data.toLocation}
+          stops={data.stopsMap[bus.id] || data.stops.filter(s => s.busId === bus.id)}
+        />
+        {/* Show ad between results - every 3 buses */}
+        {data.adsEnabled && (index + 1) % 3 === 0 && (
+          <PremiumAdContainer
+            adSlot={data.getAdConfig('betweenSearchResults').adSlot}
+            adFormat="square"
+            placement="between-routes"
+            placementKey="betweenSearchResults"
+          />
+        )}
+      </React.Fragment>
+    </div>
+  );
+});
+
+VirtualBusRow.displayName = 'VirtualBusRow';
 
 // PHASE 2 OPTIMIZATION: Memoize SearchResults to prevent unnecessary re-renders
 const SearchResults: React.FC<SearchResultsProps> = memo(({
@@ -39,7 +114,11 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
   stopsMap = {},
   error,
   connectingRoutes = [],
-  loading = false
+  loading = false,
+  loadingMore = false,
+  hasNextPage = false,
+  onLoadMore,
+  totalCount
 }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -84,8 +163,9 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
     if (buses.length > 0 && selectedBusId === null) {
       setSelectedBusId(buses[0].id);
     }
-  }, [buses, selectedBusId]);
+  }, [buses.length, selectedBusId]); // ✅ Only depend on buses.length to avoid unnecessary re-renders
   
+  // ✅ Optimized: Compute selected bus stops - removed state setter from dependencies
   useEffect(() => {
     if (selectedBusId) {
       // Compute allStops inside effect to avoid dependency issues
@@ -99,7 +179,7 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
     } else {
       setSelectedBusStops([]);
     }
-  }, [selectedBusId, stopsMap, stops]);
+  }, [selectedBusId, stopsMap, stops]); // ✅ State setter (setSelectedBusStops) is stable and doesn't need to be in deps
   
   // PHASE 2 OPTIMIZATION: Memoize callbacks to prevent child re-renders
   const handleSelectBus = useCallback((bus: Bus) => {
@@ -349,32 +429,141 @@ const SearchResults: React.FC<SearchResultsProps> = memo(({
               </div>
             </div>
           ) : (
-            <div className="modern-bus-cards">
-              {buses.map((bus, index) => (
-                <React.Fragment key={bus.id}>
-                  <BusCardModern
-                    bus={bus}
-                    index={index}
-                    isSelected={selectedBusId === bus.id}
-                    onSelect={handleSelectBus}
-                    onAddStops={handleAddStops}
-                    onReportIssue={handleReportIssue}
-                    fromLocation={fromLocation}
-                    toLocation={toLocation}
-                    stops={stopsMap[bus.id] || stops.filter(s => s.busId === bus.id)}
-                  />
-                  {/* Show ad between results - every 3 buses */}
-                  {adsEnabled && (index + 1) % 3 === 0 && (
-                    <PremiumAdContainer
-                      adSlot={getAdConfig('betweenSearchResults').adSlot}
-                      adFormat="square"
-                      placement="between-routes"
-                      placementKey="betweenSearchResults"
-                    />
+            <>
+              <div className="modern-bus-cards">
+                {/* Use virtual scrolling for performance with large lists (50+) */}
+                {buses.length > 50 ? (
+                  <List
+                    height={600}
+                    itemCount={buses.length}
+                    itemSize={420}
+                    width="100%"
+                    itemData={{
+                      buses,
+                      selectedBusId,
+                      handleSelectBus,
+                      handleAddStops,
+                      handleReportIssue,
+                      fromLocation,
+                      toLocation,
+                      stopsMap,
+                      stops,
+                      adsEnabled,
+                      getAdConfig
+                    }}
+                  >
+                    {VirtualBusRow}
+                  </List>
+                ) : (
+                  // Non-virtualized rendering for small lists (< 50 buses)
+                  buses.map((bus, index) => (
+                    <React.Fragment key={bus.id}>
+                      <BusCardModern
+                        bus={bus}
+                        index={index}
+                        isSelected={selectedBusId === bus.id}
+                        onSelect={handleSelectBus}
+                        onAddStops={handleAddStops}
+                        onReportIssue={handleReportIssue}
+                        fromLocation={fromLocation}
+                        toLocation={toLocation}
+                        stops={stopsMap[bus.id] || stops.filter(s => s.busId === bus.id)}
+                      />
+                      {/* Show ad between results - every 3 buses */}
+                      {adsEnabled && (index + 1) % 3 === 0 && (
+                        <PremiumAdContainer
+                          adSlot={getAdConfig('betweenSearchResults').adSlot}
+                          adFormat="square"
+                          placement="between-routes"
+                          placementKey="betweenSearchResults"
+                        />
+                      )}
+                    </React.Fragment>
+                  ))
+                )}
+              </div>
+              
+              {/* Load More Button */}
+              {hasNextPage && onLoadMore && (
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  alignItems: 'center', 
+                  gap: '12px',
+                  marginTop: '24px',
+                  padding: '16px'
+                }}>
+                  {totalCount && (
+                    <div style={{
+                      fontSize: '14px',
+                      color: '#6B7280',
+                      fontWeight: 500
+                    }}>
+                      {t('searchResults.showingResults', { count: buses.length, total: totalCount }) || `Showing ${buses.length} of ${totalCount} results`}
+                    </div>
                   )}
-                </React.Fragment>
-              ))}
-            </div>
+                  <button
+                    onClick={onLoadMore}
+                    disabled={loadingMore}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '14px 32px',
+                      background: loadingMore ? '#E5E7EB' : 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+                      color: loadingMore ? '#9CA3AF' : '#FFFFFF',
+                      border: 'none',
+                      borderRadius: '12px',
+                      fontSize: '15px',
+                      fontWeight: 600,
+                      cursor: loadingMore ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.2s ease',
+                      boxShadow: loadingMore ? 'none' : '0 4px 12px rgba(59, 130, 246, 0.3)',
+                      minWidth: '180px',
+                      justifyContent: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!loadingMore) {
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(59, 130, 246, 0.4)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!loadingMore) {
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.3)';
+                      }
+                    }}
+                  >
+                    {loadingMore ? (
+                      <>
+                        <svg 
+                          width="18" 
+                          height="18" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2"
+                          style={{ animation: 'spin 1s linear infinite' }}
+                        >
+                          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        <span>{t('searchResults.loadingMore', 'Loading...')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M12 5v14M5 12l7 7 7-7" />
+                        </svg>
+                        <span>{t('searchResults.loadMore', 'Load More Buses')}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
         

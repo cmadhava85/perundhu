@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useCallback, useState, type ReactNode } from 'react';
 import { StructuredLogger } from '../utils/structuredLogger';
 
 /**
@@ -62,6 +62,13 @@ export const ErrorProvider: React.FC<ErrorProviderProps> = ({
   const [lastError, setLastError] = useState<AppError | null>(null);
 
   /**
+   * Remove a specific error by ID
+   */
+  const removeError = useCallback((id: string) => {
+    setErrors(prev => prev.filter(err => err.id !== id));
+  }, []);
+
+  /**
    * Add a new error to the error state and log it
    */
   const addError = useCallback(
@@ -108,23 +115,13 @@ export const ErrorProvider: React.FC<ErrorProviderProps> = ({
 
       // Auto-remove non-critical errors after delay
       if (appError.severity !== 'critical' && appError.severity !== 'error') {
-        const timeoutId = setTimeout(() => {
+        setTimeout(() => {
           removeError(appError.id);
         }, autoRemoveDelay);
-
-        // Store timeout ID for cleanup if needed
-        return () => clearTimeout(timeoutId);
       }
     },
-    [maxErrors, autoRemoveDelay]
+    [maxErrors, autoRemoveDelay, removeError]
   );
-
-  /**
-   * Remove a specific error by ID
-   */
-  const removeError = useCallback((id: string) => {
-    setErrors(prev => prev.filter(err => err.id !== id));
-  }, []);
 
   /**
    * Clear all errors

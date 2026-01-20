@@ -34,10 +34,16 @@ export const mockFeatureFlags = {
 
 /**
  * Create a test query client with disabled retries
+ * Each test gets a fresh client to prevent memory leaks
  */
 const createTestQueryClient = () => new QueryClient({
   defaultOptions: {
     queries: {
+      retry: false,
+      gcTime: 0, // Disable cache time to free memory immediately
+      staleTime: 0, // Don't keep data fresh
+    },
+    mutations: {
       retry: false,
     },
   },
@@ -46,13 +52,23 @@ const createTestQueryClient = () => new QueryClient({
 /**
  * All providers wrapper for testing
  * Wraps components with all necessary context providers
+ * Creates new instances per render to avoid memory leaks
  */
 interface AllProvidersProps {
   children: React.ReactNode;
 }
 
 const AllProviders: React.FC<AllProvidersProps> = ({ children }) => {
-  const queryClient = createTestQueryClient();
+  // Create a fresh query client for each test component
+  const [queryClient] = React.useState(() => createTestQueryClient());
+  
+  // Cleanup query client on unmount
+  React.useEffect(() => {
+    return () => {
+      queryClient.clear();
+      queryClient.unmount();
+    };
+  }, [queryClient]);
   
   return (
     <QueryClientProvider client={queryClient}>

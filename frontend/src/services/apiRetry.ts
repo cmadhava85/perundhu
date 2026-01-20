@@ -153,7 +153,7 @@ export function setupRetryInterceptor(
         `API request failed. Retrying (${retryCount}/${config.maxRetries}) for ${error.config?.url} - Status: ${status}`
       );
     },
-    onMaxRetryExceeded: (error) => {
+    onMaxRetryTimesExceeded: (error: any) => {
       logger.error(`Max retries exceeded for ${error.config?.url}`, {
         status: error.response?.status,
         message: error.message
