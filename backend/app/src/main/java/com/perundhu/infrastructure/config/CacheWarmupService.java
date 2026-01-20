@@ -1,6 +1,5 @@
 package com.perundhu.infrastructure.config;
 
-import com.perundhu.domain.port.BusRepository;
 import com.perundhu.domain.port.LocationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,16 +72,10 @@ public class CacheWarmupService {
     try {
       Cache locationsCache = cacheManager.getCache(CacheConfig.LOCATIONS_CACHE);
       if (locationsCache != null) {
-        // Pre-load locations for each language
-        String[] languages = { "en", "ta" };
-
-        for (String lang : languages) {
-          var locations = locationRepository.findAllActive(lang);
-          String cacheKey = "all_locations_" + lang;
-          locationsCache.put(cacheKey, locations);
-          log.info("  ✓ Warmed up locations cache for language '{}' ({} locations)",
-              lang, locations.size());
-        }
+        var locations = locationRepository.findAll();
+        String cacheKey = "all_locations";
+        locationsCache.put(cacheKey, locations);
+        log.info("  ✓ Warmed up locations cache ({} locations)", locations.size());
       }
     } catch (Exception e) {
       log.warn("Failed to warm up locations cache: {}", e.getMessage());

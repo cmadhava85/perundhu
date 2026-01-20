@@ -100,9 +100,10 @@ public record PaginatedResponse<T>(
   }
 
   /**
-   * Create empty response
+   * Create empty response (named to avoid record accessor clash with component
+   * {@code empty}).
    */
-  public static <T> PaginatedResponse<T> empty() {
+  public static <T> PaginatedResponse<T> emptyResponse() {
     return new PaginatedResponse<>(List.of(), 0, 0, 0, 0, true, true, true);
   }
 }
