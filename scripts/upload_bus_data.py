@@ -107,20 +107,31 @@ class SecretManager:
 class BusDataUploader:
     """Upload bus scraped data (MTC, TNSTC, etc.) to MySQL database"""
     
-    LOCATION_SIMILARITY_THRESHOLD = 0.80  # 80% match for duplicate detection
+    LOCATION_SIMILARITY_THRESHOLD = 0.85  # 85% match for duplicate detection (increased)
+    
+    # Normalized suffixes to strip for better matching
+    LOCATION_SUFFIXES = [
+        ' BS',
+        ' B.S',
+        ' B.S.',
+        ' bus stand',
+        ' bus stop',
+        ' bus station',
+        ' bus terminus',
+        ' MTC terminus',
+        ' MTC bus stand',
+        ' TNSTC bus stand',
+        ' depot'
+    ]
     
     # Supported operators and their configurations
     OPERATOR_CONFIGS = {
         'MTC': {
-            'category': 'MTC',
-            'checkpoint_file': 'data/mtc_bus_timings.checkpoint.json',
-            'data_key': 'all_timings',
+            'data_file': 'data/mtc_bus_timings_merged.json',
             'display_name': 'Metropolitan Transport Corporation (MTC)'
         },
         'TNSTC': {
-            'category': 'TNSTC',
-            'checkpoint_file': 'data/tnstc_bus_timings.checkpoint.json',
-            'data_key': 'all_timings',
+            'data_file': 'data/tnstc_bus_timings_merged.json',
             'display_name': 'Tamil Nadu State Transport Corporation (TNSTC)'
         }
     }
@@ -270,54 +281,124 @@ class BusDataUploader:
         
         return None
     
+    def _find_location_by_exact_name(self, name: str) -> Optional[int]:
+        """Find location by exact name match (case-insensitive)"""
+        name_lower = name.lower().strip()
+        
+        try:
+            # Try exact match first (case-insensitive)
+            query = "SELECT id FROM locations WHERE LOWER(TRIM(name)) = %s LIMIT 1"
+            self.cursor.execute(query, (name_lower,))
+            result = self.cursor.fetchone()
+            
+            if result:
+                logger.debug(f"Found exact location match: '{name}' (ID: {result['id']})")
+                self.location_cache[name_lower] = result['id']
+                return result['id']
+        except MySQLError as e:
+            logger.warning(f"Error searching for exact location: {e}")
+        
+        return None
+    
+    def _normalize_location_name(self, name: str) -> str:
+        """Normalize location name for better matching by removing common suffixes"""
+        name_lower = name.lower().strip()
+        
+        # Remove common suffixes
+        for suffix in self.LOCATION_SUFFIXES:
+            if name_lower.endswith(suffix.lower()):
+                name_lower = name_lower[:-len(suffix)].strip()
+                break
+        
+        # Remove extra spaces
+        name_lower = ' '.join(name_lower.split())
+        
+        return name_lower
+    
     def _find_similar_location(self, name: str) -> Optional[int]:
         """Find similar location using fuzzy matching to prevent duplicates"""
         name_lower = name.lower().strip()
+        name_normalized = self._normalize_location_name(name)
         
         # Check exact cache match first
         if name_lower in self.location_cache:
             return self.location_cache[name_lower]
         
-        # Query existing locations
-        query = "SELECT id, name FROM locations WHERE category = %s"
-        self.cursor.execute(query, (self.operator_config['category'],))
-        locations = self.cursor.fetchall()
+        # Try exact name match in database
+        exact_match_id = self._find_location_by_exact_name(name)
+        if exact_match_id:
+            return exact_match_id
         
-        # Find best match using difflib
+        # Query existing locations for fuzzy matching
+        # Use LIKE query to narrow down candidates first for performance
+        try:
+            # Extract first significant word for LIKE query
+            first_word = name_normalized.split()[0] if name_normalized.split() else name_normalized
+            query = "SELECT id, name FROM locations WHERE LOWER(name) LIKE %s LIMIT 100"
+            self.cursor.execute(query, (f"%{first_word}%",))
+            locations = self.cursor.fetchall()
+            
+            logger.debug(f"Found {len(locations)} candidate locations for '{name}' (first word: '{first_word}')")
+        except MySQLError as e:
+            logger.warning(f"Error querying locations for fuzzy match: {e}")
+            return None
+        
+        # Find best match using normalized names
         best_match = None
         best_ratio = 0.0
         
         for loc in locations:
-            ratio = difflib.SequenceMatcher(None, name_lower, loc['name'].lower().strip()).ratio()
+            loc_normalized = self._normalize_location_name(loc['name'])
+            
+            # Calculate similarity on normalized names
+            ratio = difflib.SequenceMatcher(None, name_normalized, loc_normalized).ratio()
+            
+            # Also check if one is substring of other (e.g., "Vadapalani" in "Vadapalani BS")
+            if name_normalized in loc_normalized or loc_normalized in name_normalized:
+                ratio = max(ratio, 0.95)  # Boost substring matches
+            
             if ratio > best_ratio:
                 best_ratio = ratio
                 best_match = loc
         
         # Return match if above threshold
         if best_match and best_ratio >= self.LOCATION_SIMILARITY_THRESHOLD:
-            logger.debug(f"Found similar location: '{name}' -> '{best_match['name']}' (match: {best_ratio:.2%})")
+            logger.info(f"✅ Found similar location: '{name}' -> '{best_match['name']}' (match: {best_ratio:.2%}, normalized: '{name_normalized}' vs '{self._normalize_location_name(best_match['name'])}')")
             self.location_cache[name_lower] = best_match['id']
             return best_match['id']
         
         return None
     
     def get_or_create_location(self, name: str, location_type: str = 'bus_stop') -> int:
-        """Get existing location or create new one with duplicate prevention"""
-        # Check for similar location first
+        """Get existing location or create new one with duplicate prevention
+        
+        Strategy:
+        1. Check in-memory cache
+        2. Try exact name match in database
+        3. Use fuzzy matching for similar names
+        4. Create new location if no match found
+        """
+        name_lower = name.lower().strip()
+        
+        # 1. Check cache first
+        if name_lower in self.location_cache:
+            self.stats['locations_skipped'] += 1
+            return self.location_cache[name_lower]
+        
+        # 2 & 3. Find existing location (exact or fuzzy match)
         location_id = self._find_similar_location(name)
         if location_id:
             self.stats['locations_skipped'] += 1
             return location_id
         
-        # Create new location
+        # 4. Create new location if not found
         try:
             query = """
-                INSERT INTO locations (name, category, type, latitude, longitude, created_at, updated_at)
-                VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
+                INSERT INTO locations (name, type, latitude, longitude, created_at, updated_at)
+                VALUES (%s, %s, %s, %s, NOW(), NOW())
             """
             self.cursor.execute(query, (
                 name.strip(),
-                self.operator_config['category'],
                 location_type,
                 None,  # Latitude (to be added later)
                 None   # Longitude (to be added later)
@@ -331,7 +412,7 @@ class BusDataUploader:
                     self.create_translation('location', location_id, 'name', name, tamil_name)
             
             # Update cache
-            self.location_cache[name.lower().strip()] = location_id
+            self.location_cache[name_lower] = location_id
             self.stats['locations_created'] += 1
             logger.info(f"Created location: {name} (ID: {location_id})")
             
@@ -355,22 +436,30 @@ class BusDataUploader:
             origin_location_id = self.get_or_create_location(origin, 'bus_terminal')
             destination_location_id = self.get_or_create_location(destination, 'bus_terminal')
             
+            # Extract departure time from departure_time field
+            # Note: MTC data only has departure time, no arrival time information
+            departure_time = route_data.get('departure_time', '').strip() or None
+            
             # Create bus entry
+            # arrival_time is NULL because MTC data doesn't include estimated arrival times
             query = """
-                INSERT INTO buses (route_number, origin_location_id, destination_location_id, 
-                                   operator, created_at, updated_at)
-                VALUES (%s, %s, %s, %s, NOW(), NOW())
+                INSERT INTO buses (name, bus_number, from_location_id, to_location_id, 
+                                   departure_time, arrival_time, capacity, created_at, updated_at)
+                VALUES (%s, %s, %s, %s, %s, NULL, %s, NOW(), NOW())
             """
+            bus_name = f"{origin} - {destination}"
             self.cursor.execute(query, (
+                bus_name,
                 route_number,
                 origin_location_id,
                 destination_location_id,
-                self.operator_config['category']
+                departure_time,
+                50  # Default capacity
             ))
             bus_id = self.cursor.lastrowid
             self.stats['buses_created'] += 1
             
-            logger.info(f"Created bus: {route_number} ({origin} → {destination}) [ID: {bus_id}]")
+            logger.info(f"Created bus: {route_number} ({origin} → {destination}) [ID: {bus_id}] departure: {departure_time}")
             return bus_id
         except MySQLError as e:
             logger.error(f"Failed to create bus: {e}")
@@ -489,19 +578,29 @@ class BusDataUploader:
             raise
     
     def load_checkpoint_data(self) -> List[Dict]:
-        """Load data from checkpoint JSON file"""
-        checkpoint_file = Path(self.operator_config['checkpoint_file'])
+        """Load data from original merged JSON file and transform it"""
+        data_file = Path(self.operator_config['data_file'])
         
-        if not checkpoint_file.exists():
-            raise FileNotFoundError(f"Checkpoint file not found: {checkpoint_file}")
+        if not data_file.exists():
+            raise FileNotFoundError(f"Data file not found: {data_file}")
         
-        logger.info(f"Loading data from: {checkpoint_file}")
+        logger.info(f"Loading data from: {data_file}")
         
-        with open(checkpoint_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        with open(data_file, 'r', encoding='utf-8') as f:
+            raw_data = json.load(f)
         
-        timings_data = data.get(self.operator_config['data_key'], [])
-        logger.info(f"Loaded {len(timings_data)} routes from checkpoint")
+        # Transform raw data: extract origin_name, destination_name, and departure_time
+        timings_data = []
+        for record in raw_data:
+            timings_data.append({
+                'route_number': record.get('route_number', ''),
+                'origin': record.get('origin_name', ''),
+                'destination': record.get('destination_name', ''),
+                'departure_time': record.get('departure_time', ''),  # Use departure_time field
+                'stops': record.get('stops', [])
+            })
+        
+        logger.info(f"Loaded {len(timings_data)} route records from merged data")
         
         return timings_data
     
