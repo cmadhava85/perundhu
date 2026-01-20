@@ -383,19 +383,73 @@ export class LocationAutocompleteService {
    * Remove duplicate locations based on exact name match only
    * Keep bus stand variants (e.g., "Sivakasi - Bus Stop") separate from generic locations (e.g., "Sivakasi")
    */
+  /**
+   * Deduplicate location results using intelligent matching
+   * Handles exact duplicates and similar base locations
+   */
   private deduplicateResults(locations: LocationSuggestion[]): LocationSuggestion[] {
     const filtered: LocationSuggestion[] = [];
     const seen = new Set<string>();
+    const baseLocationMap = new Map<string, LocationSuggestion>(); // Track base locations
     
     for (const location of locations) {
-      // Create a key based on exact name match
-      // This allows "Sivakasi" and "Sivakasi - Bus Stop" to coexist
-      const key = location.name.toLowerCase();
+      const nameLower = location.name.toLowerCase();
       
-      if (!seen.has(key)) {
-        seen.add(key);
-        filtered.push(location);
+      // Skip if exact duplicate
+      if (seen.has(nameLower)) {
+        logger.debug(`⚠️ Skipping exact duplicate: "${location.name}"`);
+        continue;
       }
+      
+      // Normalize the name for comparison (remove spaces, hyphens, special chars)
+      const normalizedName = nameLower
+        .replace(/[-\s()]/g, '')
+        .replace(/bus\s*(stop|stand|station|terminus)/gi, '');
+      
+      // Extract base location name (before " - " separator)
+      // E.g., "Chennai - CMBT (Koyambedu)" -> "chennai"
+      // E.g., "CHENNAI-KILAMBAKKAM-KCBT - CHENNAI KALAIGNAR CBT" -> "chennaikilambakkamkcbt"
+      const baseName = nameLower.split(' - ')[0].trim().replace(/[-\s()]/g, '');
+      
+      // Check if this is a simple location name (no suffix/description)
+      const isSimpleName = !nameLower.includes(' - ') && 
+                          !nameLower.includes('(') && 
+                          !nameLower.match(/bus\s*(stop|stand|station)/i);
+      
+      // If simple name, check against base names of detailed entries
+      if (isSimpleName) {
+        // Check if we already have a detailed version of this location
+        const existingDetailed = baseLocationMap.get(normalizedName);
+        if (existingDetailed) {
+          logger.debug(`⚠️ Skipping simple name "${location.name}" - already have detailed "${existingDetailed.name}"`);
+          continue;
+        }
+        
+        // Mark this simple name as seen
+        baseLocationMap.set(normalizedName, location);
+      } else {
+        // For detailed names, check if we already have this base location
+        const existingSimple = baseLocationMap.get(baseName);
+        if (existingSimple && !existingSimple.name.includes(' - ')) {
+          // Replace simple name with detailed one
+          const index = filtered.indexOf(existingSimple);
+          if (index !== -1) {
+            filtered[index] = location;
+            logger.debug(`✅ Replacing simple "${existingSimple.name}" with detailed "${location.name}"`);
+          }
+          baseLocationMap.set(baseName, location);
+          seen.add(nameLower);
+          continue;
+        }
+        
+        // Update base location map with this detailed entry
+        if (!baseLocationMap.has(baseName)) {
+          baseLocationMap.set(baseName, location);
+        }
+      }
+      
+      seen.add(nameLower);
+      filtered.push(location);
     }
     
     return filtered;
