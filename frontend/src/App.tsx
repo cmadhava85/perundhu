@@ -34,6 +34,7 @@ import { ErrorProvider } from './contexts/ErrorContext';
 
 // Utils
 import { getFeatureFlag } from './utils/environment';
+import { csrfTokenManager } from './utils/csrfTokenManager';
 
 /**
  * Main App component with router
@@ -131,6 +132,14 @@ function AppContent() {
       localStorage.setItem('hasVisitedBefore', 'true');
     }
     setIsInitialized(true);
+    
+    // Initialize CSRF token for state-changing operations
+    // This ensures the token is cached before any POST/PUT/DELETE requests
+    csrfTokenManager.getToken()
+      .catch(error => {
+        // Log but don't fail - CSRF is optional for GET requests
+        console.warn('Could not initialize CSRF token:', error);
+      });
   }, []);
 
   // Get destinations when from location changes

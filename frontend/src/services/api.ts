@@ -3,6 +3,7 @@ import type { AxiosInstance, AxiosResponse, Method, InternalAxiosRequestConfig }
 import type { Bus, Stop, Location, BusLocationReport, BusLocation, RewardPoints, ConnectingRoute, RouteContribution, ImageContribution, BusStand, MultiStandSearchResponse, MultiStandCheckResponse } from '../types/index';
 import { getLocationsOffline } from './offlineService';
 import { setupRetryInterceptor } from './apiRetry';
+import { csrfTokenManager } from '../utils/csrfTokenManager';
 import { logger } from '../utils/logger';
 import { traceContext, TRACE_HEADERS } from '../utils/traceId';
 
@@ -152,6 +153,26 @@ export const createApiInstance = (): AxiosInstance => {
       // Add trace headers
       config.headers.set(TRACE_HEADERS.TRACE_ID, traceId);
       config.headers.set(TRACE_HEADERS.SESSION_ID, sessionId);
+      
+      // Add CSRF token for state-changing requests (POST, PUT, DELETE, PATCH)
+      // But not for GET, OPTIONS, HEAD, or analytics endpoints
+      const isStateChanging = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(config.method?.toUpperCase() || '');
+      const isAnalyticsRequest = config.url?.includes('/api/v1/analytics/');
+      const isImageAnalysis = config.url?.includes('/api/v1/contributions/analyze-image');
+      
+      if (isStateChanging && !isAnalyticsRequest && !isImageAnalysis) {
+        // Get cached CSRF token synchronously if available, otherwise queue fetch
+        // Note: This requires the token to have been pre-fetched on app init
+        // For better UX, fetch CSRF token before making state-changing requests
+        csrfTokenManager.getToken()
+          .then(tokenInfo => {
+            config.headers.set(tokenInfo.headerName, tokenInfo.token);
+          })
+          .catch(error => {
+            logger.warn('Failed to add CSRF token to request:', error);
+            // Continue without CSRF token - server will reject if required
+          });
+      }
       
       return config;
     },

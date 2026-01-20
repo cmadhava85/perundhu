@@ -24,6 +24,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -70,8 +72,18 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
+    // CSRF protection: Use HttpOnly=false so JavaScript can read the token for AJAX requests
+    XorCsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new XorCsrfTokenRequestAttributeHandler();
+    csrfTokenRequestAttributeHandler.setCsrfRequestAttributeName("_csrf");
+
     http
-        .csrf(csrf -> csrf.disable())
+        .csrf(csrf -> csrf
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
+            .ignoringRequestMatchers(
+                "/api/v1/analytics/**",  // Analytics can be without CSRF (stateless API)
+                "/api/v1/contributions/analyze-image" // Image analysis is stateless
+            ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // Add security filters before authentication
@@ -157,10 +169,12 @@ public class SecurityConfig {
     configuration.setAllowedHeaders(List.of(
         "Authorization", "Content-Type", "X-Requested-With", "X-API-Key", "Accept-Language",
         "X-Recaptcha-Token", "X-Form-Timestamp",
-        "X-Trace-Id", "X-Session-Id", "X-Request-Id")); // Distributed tracing headers
+        "X-Trace-Id", "X-Session-Id", "X-Request-Id",
+        "X-CSRF-TOKEN", "X-XSRF-TOKEN")); // CSRF tokens headers
     configuration.setExposedHeaders(List.of(
         "X-Request-ID", "X-Security-Level", "X-Rate-Limit-Remaining",
-        "X-Trace-Id", "X-Session-Id", "X-Request-Id")); // Expose tracing headers to client
+        "X-Trace-Id", "X-Session-Id", "X-Request-Id",
+        "X-CSRF-TOKEN", "X-XSRF-TOKEN")); // Expose CSRF headers to client
     configuration.setAllowCredentials(true);
     configuration.setMaxAge(3600L);
 
