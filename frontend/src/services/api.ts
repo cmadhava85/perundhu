@@ -155,14 +155,13 @@ export const createApiInstance = (): AxiosInstance => {
       config.headers.set(TRACE_HEADERS.SESSION_ID, sessionId);
       
       // Add CSRF token for state-changing requests (POST, PUT, DELETE, PATCH)
-      // But not for GET, OPTIONS, HEAD, or endpoints with own security (analytics, image upload, etc.)
+      // But not for GET, OPTIONS, HEAD, or read-only validation endpoints
       const isStateChanging = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(config.method?.toUpperCase() || '');
       const isAnalyticsRequest = config.url?.includes('/api/v1/analytics/');
       const isImageAnalysis = config.url?.includes('/api/v1/contributions/analyze-image');
-      const isImageUpload = config.url?.includes('/api/v1/contributions/images');
       const isVoiceTranscribe = config.url?.includes('/api/v1/contributions/voice/transcribe');
       
-      if (isStateChanging && !isAnalyticsRequest && !isImageAnalysis && !isImageUpload && !isVoiceTranscribe) {
+      if (isStateChanging && !isAnalyticsRequest && !isImageAnalysis && !isVoiceTranscribe) {
         try {
           // Wait for CSRF token before returning config
           // This ensures token is attached before request is sent

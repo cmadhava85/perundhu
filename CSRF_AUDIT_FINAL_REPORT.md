@@ -11,8 +11,8 @@
 
 | Category | Count | Status |
 |----------|-------|--------|
-| CSRF Protected | 35 | ✅ Secure |
-| Excluded (with justification) | 5 | ✅ Secure |
+| CSRF Protected | 36 | ✅ Secure |
+| Excluded (with justification) | 4 | ✅ Secure |
 | **Total** | **40+** | **✅ ALL SECURE** |
 
 ---
@@ -24,32 +24,9 @@
     "/api/v1/analytics/**",                    // Stateless analytics API
     "/api/v1/contributions/analyze-image",     // Read-only analysis
     "/api/v1/contributions/paste/validate",    // Read-only validation
-    "/api/v1/contributions/voice/transcribe",  // Read-only validation
-    "/api/v1/contributions/images"             // ✅ FIXED: Has alternative security
+    "/api/v1/contributions/voice/transcribe"   // Read-only validation
 )
 ```
-
----
-
-## Fix Applied (Commit: 891defa)
-
-### Problem
-- Image upload endpoint (`POST /api/v1/contributions/images`) was getting 403 Forbidden
-- Root cause: CSRF protection was enabled but multipart/form-data token handling was problematic
-
-### Solution
-1. **Backend:** Added `/api/v1/contributions/images` to CSRF exclusion list
-2. **Frontend:** Updated request interceptor to skip CSRF token for image uploads
-
-### Justification
-The image upload endpoint already has comprehensive security:
-- ✅ **Honeypot** - Bot detection via hidden form field
-- ✅ **CAPTCHA** - reCAPTCHA v3 for anonymous/new users
-- ✅ **Rate Limiting** - 5 uploads per hour per client
-- ✅ **File Validation** - Format/size/content integrity checks
-- ✅ **Duplicate Detection** - Image hash tracking (24-hour window)
-- ✅ **Content Safety** - Image content scanning
-- ✅ **OCR Validation** - Tesseract filters junk images (selfies, personal photos, etc.)
 
 ---
 
@@ -74,7 +51,6 @@ Backend logs: NO CSRF errors found
 Request interceptor correctly excludes CSRF token for:
 - ✅ `/api/v1/analytics/**`
 - ✅ `/api/v1/contributions/analyze-image`
-- ✅ `/api/v1/contributions/images` ← **NEWLY ADDED**
 - ✅ `/api/v1/contributions/voice/transcribe`
 
 ---
@@ -87,7 +63,7 @@ Request interceptor correctly excludes CSRF token for:
 |----------|--------|--------|-------|
 | `/api/v1/contributions/routes` | POST | 🟢 CSRF Protected | Honeypot, rate limiting |
 | `/api/v1/contributions/routes/stops` | POST | 🟢 CSRF Protected | Honeypot, rate limiting |
-| `/api/v1/contributions/images` | POST | 🟡 EXCLUDED | Has 7 security layers |
+| `/api/v1/contributions/images` | POST | � CSRF Protected | CSRF + Honeypot, CAPTCHA, rate limiting (defense in depth) |
 | `/api/v1/contributions/voice/transcribe` | POST | 🟡 EXCLUDED | Read-only validation |
 | `/api/v1/contributions/voice` | POST | 🟢 CSRF Protected | Honeypot, rate limiting |
 | `/api/v1/contributions/paste` | POST | 🟢 CSRF Protected | Honeypot, rate limiting |
@@ -133,9 +109,9 @@ Request interceptor correctly excludes CSRF token for:
 - [ ] `POST /api/admin/contributions/routes/{id}/approve` - Should require token
 
 ### Excluded Endpoints (Should NOT get CSRF 403)
-- [x] `POST /api/v1/contributions/images` - ✅ VERIFIED (no CSRF 403)
 - [ ] `POST /api/v1/analytics/...` - Should succeed without token
 - [ ] `POST /api/v1/contributions/paste/validate` - Should succeed without token
+- [ ] `POST /api/v1/contributions/voice/transcribe` - Should succeed without token
 
 ### Token Endpoint
 - [ ] `GET /api/v1/csrf/token` - Returns token info
@@ -160,11 +136,14 @@ Request interceptor correctly excludes CSRF token for:
 ## Files Modified
 
 1. `backend/app/src/main/java/com/perundhu/infrastructure/config/SecurityConfig.java`
-   - Added `/api/v1/contributions/images` to CSRF exclusion list
+   - Removed `/api/v1/contributions/images` from CSRF exclusion list
+   - Image upload now requires CSRF token for defense-in-depth security
 
 2. `frontend/src/services/api.ts`
-   - Added image upload endpoint to CSRF exclusion logic
-   - Updated request interceptor to skip token injection
+   - Removed image upload endpoint from CSRF exclusion logic
+   - Updated request interceptor to include CSRF token for image uploads
+
+**Change Summary:** Image upload endpoint now requires CSRF protection in addition to existing security layers (honeypot, CAPTCHA, rate limiting, file validation, etc.) for enhanced defense-in-depth security.
 
 ---
 
