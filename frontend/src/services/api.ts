@@ -168,7 +168,7 @@ export const createApiInstance = (): AxiosInstance => {
           const tokenInfo = await csrfTokenManager.getToken();
           config.headers.set(tokenInfo.headerName, tokenInfo.token);
         } catch (error) {
-          logger.warn('Failed to add CSRF token to request:', error);
+            logger.warn('Failed to add CSRF token to request:', { error });
           // Continue without CSRF token - server will reject if required
         }
       }
