@@ -85,7 +85,8 @@ public class SecurityConfig {
                 "/api/v1/analytics/**", // Analytics can be without CSRF (stateless API)
                 "/api/v1/contributions/analyze-image", // Image analysis is stateless
                 "/api/v1/contributions/paste/validate", // Validation endpoint (read-only)
-                "/api/v1/contributions/voice/transcribe" // Voice transcription (read-only, no persistence)
+                "/api/v1/contributions/voice/transcribe", // Voice transcription (read-only, no persistence)
+                "/api/v1/contributions/images" // Image upload has own security checks (honeypot, CAPTCHA, rate limiting)
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
