@@ -83,7 +83,9 @@ public class SecurityConfig {
             .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
             .ignoringRequestMatchers(
                 "/api/v1/analytics/**", // Analytics can be without CSRF (stateless API)
-                "/api/v1/contributions/analyze-image" // Image analysis is stateless
+                "/api/v1/contributions/analyze-image", // Image analysis is stateless
+                "/api/v1/contributions/paste/validate", // Validation endpoint (read-only)
+                "/api/v1/contributions/voice/transcribe" // Voice transcription (read-only, no persistence)
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
