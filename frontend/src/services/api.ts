@@ -143,9 +143,9 @@ export const createApiInstance = (): AxiosInstance => {
     }
   });
 
-  // Add request interceptor to attach traceId to all requests
+  // Add request interceptor to attach traceId and CSRF token to all requests
   instance.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
+    async (config: InternalAxiosRequestConfig) => {
       // Generate a new traceId for each request
       const traceId = traceContext.newTraceId();
       const sessionId = traceContext.getSessionId();
@@ -161,17 +161,15 @@ export const createApiInstance = (): AxiosInstance => {
       const isImageAnalysis = config.url?.includes('/api/v1/contributions/analyze-image');
       
       if (isStateChanging && !isAnalyticsRequest && !isImageAnalysis) {
-        // Get cached CSRF token synchronously if available, otherwise queue fetch
-        // Note: This requires the token to have been pre-fetched on app init
-        // For better UX, fetch CSRF token before making state-changing requests
-        csrfTokenManager.getToken()
-          .then(tokenInfo => {
-            config.headers.set(tokenInfo.headerName, tokenInfo.token);
-          })
-          .catch(error => {
-            logger.warn('Failed to add CSRF token to request:', error);
-            // Continue without CSRF token - server will reject if required
-          });
+        try {
+          // Wait for CSRF token before returning config
+          // This ensures token is attached before request is sent
+          const tokenInfo = await csrfTokenManager.getToken();
+          config.headers.set(tokenInfo.headerName, tokenInfo.token);
+        } catch (error) {
+          logger.warn('Failed to add CSRF token to request:', error);
+          // Continue without CSRF token - server will reject if required
+        }
       }
       
       return config;
