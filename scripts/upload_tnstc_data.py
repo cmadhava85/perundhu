@@ -147,9 +147,9 @@ class TNSTCDataUploader:
         return city, city
     
     def _find_similar_location(self, location_name: str) -> Optional[int]:
-        """Find existing location with similar name"""
+        """Find existing location with similar name + alias support"""
         try:
-            # First try exact match
+            # 1. Try exact match on location name
             query = "SELECT id FROM locations WHERE name = %s"
             self.cursor.execute(query, (location_name,))
             result = self.cursor.fetchone()
@@ -158,7 +158,16 @@ class TNSTCDataUploader:
                 logger.debug(f"Exact match found for '{location_name}'")
                 return result['id']
             
-            # Try fuzzy match
+            # 2. Try exact match on alias
+            query = "SELECT location_id FROM location_aliases WHERE UPPER(alias_name) = UPPER(%s)"
+            self.cursor.execute(query, (location_name,))
+            result = self.cursor.fetchone()
+            self.cursor.fetchall()
+            if result:
+                logger.debug(f"Alias match found for '{location_name}'")
+                return result['location_id']
+            
+            # 3. Try fuzzy match on location names
             query = "SELECT id, name FROM locations WHERE name LIKE %s"
             self.cursor.execute(query, (f"%{location_name[:15]}%",))
             results = self.cursor.fetchall()
@@ -173,6 +182,22 @@ class TNSTCDataUploader:
                 if similarity >= self.LOCATION_SIMILARITY_THRESHOLD:
                     logger.debug(f"Fuzzy match: '{result['name']}' (~{similarity*100:.0f}%)")
                     return result['id']
+            
+            # 4. Try fuzzy match on aliases
+            query = "SELECT location_id, alias_name FROM location_aliases WHERE alias_name LIKE %s"
+            self.cursor.execute(query, (f"%{location_name[:15]}%",))
+            results = self.cursor.fetchall()
+            
+            for result in results:
+                similarity = difflib.SequenceMatcher(
+                    None, 
+                    location_name.lower(), 
+                    result['alias_name'].lower()
+                ).ratio()
+                
+                if similarity >= self.LOCATION_SIMILARITY_THRESHOLD:
+                    logger.debug(f"Alias fuzzy match: '{result['alias_name']}' (~{similarity*100:.0f}%)")
+                    return result['location_id']
             
             return None
         

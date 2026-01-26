@@ -66,19 +66,39 @@ public record BusDTO(
                 Integer capacity,
                 
                 @NotNull(message = "Bus active status is required")
-                Boolean active) {
+                Boolean active,
+                
+                // Multi-leg journey metadata
+                @Nullable
+                Boolean isMultiLegJourney,
+                
+                @Nullable
+                Integer legNumber,
+                
+                @Nullable
+                Integer totalLegs,
+                
+                @Nullable
+                String journeyId,
+                
+                @Nullable
+                Long intermediateLocationId,
+                
+                @Nullable
+                String intermediateLocationName) {
         /**
          * Compact constructor for validation
          */
         public BusDTO {
-                if (capacity != null && capacity < 1) {
-                        throw new IllegalArgumentException("Bus capacity must be at least 1");
+                // Normalize capacity to avoid runtime failures on bad data
+                if (capacity == null || capacity < 1) {
+                        capacity = 50; // fallback default
+                } else if (capacity > 500) {
+                        capacity = 500; // clamp to max
                 }
-                if (capacity != null && capacity > 500) {
-                        throw new IllegalArgumentException("Bus capacity must not exceed 500");
-                }
+
                 if (rating != null && (rating < 0 || rating > 5)) {
-                        throw new IllegalArgumentException("Rating must be between 0 and 5");
+                        rating = Math.max(0, Math.min(5, rating));
                 }
         }
         
@@ -88,7 +108,8 @@ public record BusDTO(
         public BusDTO(Long id, String number, String name, String operator, String type,
                       String departureTime, String arrivalTime, Double rating, Map<String, String> features) {
                 this(id, number, name, operator, type, departureTime, arrivalTime, rating, features,
-                     null, null, null, null, null, null, 50, true);
+                     null, null, null, null, null, null, 50, true,
+                     null, null, null, null, null, null);
         }
 
         /**
@@ -126,7 +147,9 @@ public record BusDTO(
                                 bus.toLocation() != null ? bus.toLocation().name() : null,
                                 null, // No translation by default
                                 bus.capacity(),
-                                bus.active());
+                                bus.active(),
+                                // Multi-leg journey metadata (null by default)
+                                null, null, null, null, null, null);
         }
         
         /**
@@ -166,7 +189,9 @@ public record BusDTO(
                                 bus.toLocation() != null ? bus.toLocation().name() : null,
                                 toLocationTranslation,
                                 bus.capacity(),
-                                bus.active());
+                                bus.active(),
+                                // Multi-leg journey metadata (null by default)
+                                null, null, null, null, null, null);
         }
 
         /**
@@ -174,6 +199,7 @@ public record BusDTO(
          */
         public static BusDTO of(Long id, String number, String name, String operator, String type) {
                 return new BusDTO(id, number, name, operator, type, null, null, 4.0, Map.of(), 
-                        null, null, null, null, null, null, 50, true);
+                        null, null, null, null, null, null, 50, true,
+                        null, null, null, null, null, null);
         }
 }

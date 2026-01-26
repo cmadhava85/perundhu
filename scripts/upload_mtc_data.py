@@ -205,16 +205,27 @@ class BusDataUploader:
             logger.info("Database connection closed")
     
     def _find_similar_location(self, location_name: str) -> Optional[int]:
-        """Find existing location with similar name (fuzzy matching)"""
+        """Find existing location with similar name (fuzzy matching + alias support)"""
         try:
+            # 1. Try exact match on location name
+            query = "SELECT id FROM locations WHERE UPPER(name) = UPPER(%s)"
+            self.cursor.execute(query, (location_name,))
+            result = self.cursor.fetchone()
+            if result:
+                return result['id']
+            
+            # 2. Try exact match on alias (handles: BROADWAY → Broadway Bus Terminus)
+            query = "SELECT location_id FROM location_aliases WHERE UPPER(alias_name) = UPPER(%s)"
+            self.cursor.execute(query, (location_name,))
+            result = self.cursor.fetchone()
+            if result:
+                return result['location_id']
+            
+            # 3. Try fuzzy match on location names
             query = "SELECT id, name FROM locations WHERE name LIKE %s"
             self.cursor.execute(query, (f"%{location_name[:20]}%",))
             results = self.cursor.fetchall()
             
-            if not results:
-                return None
-            
-            # Fuzzy match against results
             for result in results:
                 similarity = difflib.SequenceMatcher(None, 
                     location_name.lower(), 
@@ -224,6 +235,21 @@ class BusDataUploader:
                 if similarity >= self.LOCATION_SIMILARITY_THRESHOLD:
                     logger.debug(f"Found similar location: '{result['name']}' (~{similarity*100:.0f}%)")
                     return result['id']
+            
+            # 4. Try fuzzy match on aliases
+            query = "SELECT location_id, alias_name FROM location_aliases WHERE alias_name LIKE %s"
+            self.cursor.execute(query, (f"%{location_name[:20]}%",))
+            results = self.cursor.fetchall()
+            
+            for result in results:
+                similarity = difflib.SequenceMatcher(None, 
+                    location_name.lower(), 
+                    result['alias_name'].lower()
+                ).ratio()
+                
+                if similarity >= self.LOCATION_SIMILARITY_THRESHOLD:
+                    logger.debug(f"Found via alias: '{result['alias_name']}' (~{similarity*100:.0f}%)")
+                    return result['location_id']
             
             return None
         

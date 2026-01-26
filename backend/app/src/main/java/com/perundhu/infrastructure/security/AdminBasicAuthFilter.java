@@ -237,15 +237,32 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Validate Bearer token for admin access (development mode)
-     * Accepts dev-admin-token or any token containing "admin"
+     * Validate Bearer token for admin access (development mode ONLY)
+     * SECURITY: Only accepts hardcoded dev token in non-production environments
+     * In production, this should return false or integrate with proper JWT validation
      */
     private boolean isValidBearerToken(String token) {
         if (token == null || token.isBlank()) {
             return false;
         }
-        // Accept dev-admin-token or tokens containing "admin" (for development)
-        return token.equals("dev-admin-token") || token.contains("admin");
+        
+        // CRITICAL SECURITY: Only allow bearer token auth in development/test environments
+        boolean isDevelopment = activeProfile != null && 
+            (activeProfile.contains("dev") || activeProfile.contains("test") || activeProfile.contains("local"));
+        
+        if (!isDevelopment) {
+            log.warn("Bearer token authentication attempted in non-development environment: {}", activeProfile);
+            return false;
+        }
+        
+        // Only accept the exact dev token - NO wildcards or partial matches
+        boolean isValid = token.equals("dev-admin-token");
+        
+        if (!isValid) {
+            log.debug("Invalid bearer token attempted in development mode");
+        }
+        
+        return isValid;
     }
 
     /**

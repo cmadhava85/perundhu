@@ -1,0 +1,4886 @@
+{
+  "summary": {
+    "total_bus_locations": 515,
+    "exact_matches": 458,
+    "fuzzy_matches": 57,
+    "missing_locations": 0,
+    "match_percentage": 100.0
+  },
+  "exact_matches": {
+    "A.G.NAGAR": {
+      "name": "A.G.NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "A.I.R NAGAR": {
+      "name": "A.I.R NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ADAMBAKKAM": {
+      "name": "Adambakkam",
+      "type": "suburb",
+      "latitude": 12.9822215,
+      "longitude": 80.209121,
+      "osm_id": 256202991,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ADAYAR B.S.": {
+      "name": "ADAYAR B.S.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ADIRAMAPATTINAM": {
+      "name": "ADIRAMAPATTINAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "AGARAM": {
+      "name": "Agaram",
+      "type": "hamlet",
+      "latitude": 11.3850962,
+      "longitude": 78.0127909,
+      "osm_id": 11739250316,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "ALAMADHI": {
+      "name": "Alamadhi",
+      "type": "village",
+      "latitude": 13.2098383,
+      "longitude": 80.1101218,
+      "osm_id": 344733611,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ALANDUR": {
+      "name": "ALANDUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ALANDUR GANDHI MARKE": {
+      "name": "ALANDUR GANDHI MARKE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ALANDUR METRO R.S": {
+      "name": "ALANDUR METRO R.S",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ALWARPET": {
+      "name": "Alwarpet",
+      "type": "suburb",
+      "latitude": 13.0338602,
+      "longitude": 80.2545491,
+      "osm_id": 243053506,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "AMARAMBEDU": {
+      "name": "Amarambedu",
+      "type": "village",
+      "latitude": 12.9575815,
+      "longitude": 80.0194768,
+      "osm_id": 331915784,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "AMBATTUR O.T": {
+      "name": "Ambattur O.T",
+      "type": "bus_stop",
+      "latitude": 13.1196613,
+      "longitude": 80.1501222,
+      "osm_id": 7895958715,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "AMBEDKAR STATUE": {
+      "name": "AMBEDKAR STATUE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ANAKAPUTHUR": {
+      "name": "Anakaputhur",
+      "type": "suburb",
+      "latitude": 12.9806162,
+      "longitude": 80.1297551,
+      "osm_id": 301138039,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ANGADU": {
+      "name": "Angadu",
+      "type": "hamlet",
+      "latitude": 13.2272218,
+      "longitude": 80.1869756,
+      "osm_id": 344731811,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ANNA CENTENARY LIBRA": {
+      "name": "ANNA CENTENARY LIBRA",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ANNA NAGAR EAST": {
+      "name": "Anna Nagar East",
+      "type": "neighborhood",
+      "latitude": 13.0852124,
+      "longitude": 80.2258887,
+      "osm_id": 257937894,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ANNA NAGAR WEST": {
+      "name": "Anna Nagar West",
+      "type": "suburb",
+      "latitude": 13.0940791,
+      "longitude": 80.1922978,
+      "osm_id": 257937900,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ANNA SQUARE": {
+      "name": "ANNA SQUARE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ANNAMALAICHERY": {
+      "name": "ANNAMALAICHERY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ANTHIYUR": {
+      "name": "Anthiyur",
+      "type": "town",
+      "latitude": 11.575293,
+      "longitude": 77.5886003,
+      "osm_id": 245595343,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "ARAKKAMBAKKAM": {
+      "name": "ARAKKAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ARANI": {
+      "name": "Arani",
+      "type": "village",
+      "latitude": 13.0092127,
+      "longitude": 76.7085336,
+      "osm_id": 3883752044,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ARANTHANGI": {
+      "name": "Aranthangi",
+      "type": "town",
+      "latitude": 10.1686451,
+      "longitude": 78.9927909,
+      "osm_id": 5205016587,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ARIYALUR": {
+      "name": "Ariyalur",
+      "type": "village",
+      "latitude": 10.4949097,
+      "longitude": 79.5580708,
+      "osm_id": 11022903028,
+      "state": "Tamil Nadu",
+      "district": "Ariyalur"
+    },
+    "ARMY PUBLIC SCHOOL NANDAMBAKKA": {
+      "name": "ARMY PUBLIC SCHOOL NANDAMBAKKA",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ASHOK NAGAR METRO R.S": {
+      "name": "ASHOK NAGAR METRO R.S",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ASHOK PILLAR": {
+      "name": "ASHOK PILLAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ATHIPET I.C.F. COLONY": {
+      "name": "ATHIPET I.C.F. COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "AVADI": {
+      "name": "Avadi",
+      "type": "city",
+      "latitude": 13.1194809,
+      "longitude": 80.1026704,
+      "osm_id": 245617971,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "AVURIVAKKAM": {
+      "name": "AVURIVAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "AYAPPAKKAM": {
+      "name": "Ayappakkam",
+      "type": "village",
+      "latitude": 12.5057641,
+      "longitude": 80.1129406,
+      "osm_id": 5131606480,
+      "state": "Tamil Nadu",
+      "district": "Chengalpattu"
+    },
+    "AZEEZEE NAGAR": {
+      "name": "AZEEZEE NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "BALAJI NAGAR": {
+      "name": "Balaji Nagar",
+      "type": "hamlet",
+      "latitude": 11.3498706,
+      "longitude": 79.8202141,
+      "osm_id": 12085853585,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "BASINBRIDGE": {
+      "name": "BASINBRIDGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "BENGALURU": {
+      "name": "Bengaluru",
+      "type": "city",
+      "latitude": 12.9767936,
+      "longitude": 77.590082,
+      "osm_id": 3401391999,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "BESANT NAGAR": {
+      "name": "Besant Nagar",
+      "type": "suburb",
+      "latitude": 12.9996907,
+      "longitude": 80.2682259,
+      "osm_id": 249497705,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "BHARATHI WOMEN ARTS COL": {
+      "name": "BHARATHI WOMEN ARTS COL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "BODI": {
+      "name": "BODI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "BROADWAY": {
+      "name": "BROADWAY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "C.R.P.F": {
+      "name": "C.R.P.F",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CEMENT ROAD": {
+      "name": "CEMENT ROAD",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CENTRAL METRO": {
+      "name": "CENTRAL METRO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CHEMBARAMBAKKAM": {
+      "name": "Chembarambakkam",
+      "type": "village",
+      "latitude": 13.0323819,
+      "longitude": 80.055997,
+      "osm_id": 294073738,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "CHENGALPET": {
+      "name": "CHENGALPET",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CHENNAI AIRPORT": {
+      "name": "CHENNAI AIRPORT",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "CHENNAI TAMBARAM": {
+      "name": "CHENNAI TAMBARAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "CHENNANG KARANAI": {
+      "name": "CHENNANG KARANAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CHETTIAR AGARAM": {
+      "name": "CHETTIAR AGARAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CHITHALAPAKKAM TNHB": {
+      "name": "CHITHALAPAKKAM TNHB",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CHITLAPAKKAM": {
+      "name": "Chitlapakkam",
+      "type": "suburb",
+      "latitude": 12.9330984,
+      "longitude": 80.1413832,
+      "osm_id": 256197931,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "CHRIST KING GIRLS HR SPL#": {
+      "name": "CHRIST KING GIRLS HR SPL#",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CHROMEPET": {
+      "name": "Chromepet",
+      "type": "suburb",
+      "latitude": 12.9496841,
+      "longitude": 80.135642,
+      "osm_id": 256197927,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "CHROMPET": {
+      "name": "CHROMPET",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "COIMBATORE": {
+      "name": "Coimbatore",
+      "type": "city",
+      "latitude": 11.0018115,
+      "longitude": 76.9628425,
+      "osm_id": 245589078,
+      "state": "Tamil Nadu",
+      "district": "Coimbatore"
+    },
+    "COWL BAZAAR": {
+      "name": "COWL BAZAAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CRPF CO-OP SHOP": {
+      "name": "CRPF CO-OP SHOP",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "CUDDALORE": {
+      "name": "Cuddalore",
+      "type": "city",
+      "latitude": 11.7564329,
+      "longitude": 79.7634644,
+      "osm_id": 4592194577,
+      "state": "Tamil Nadu",
+      "district": "Cuddalore"
+    },
+    "CUMBAM": {
+      "name": "CUMBAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "Chennai - CMBT (Koyambedu)": {
+      "name": "Chennai - CMBT (Koyambedu)",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "D.L.F.": {
+      "name": "D.L.F.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "D.M.S. METRO": {
+      "name": "D.M.S. METRO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "DASARATHAPURAM": {
+      "name": "DASARATHAPURAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "DEFENCE COLONY": {
+      "name": "Defence Colony",
+      "type": "neighborhood",
+      "latitude": 12.976171,
+      "longitude": 77.6435315,
+      "osm_id": 736207253,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "DEVAKOTTAI": {
+      "name": "Devakottai",
+      "type": "town",
+      "latitude": 9.9456925,
+      "longitude": 78.826915,
+      "osm_id": 4592194578,
+      "state": "Tamil Nadu",
+      "district": "Sivaganga"
+    },
+    "DEVI KARUMARIAMMAN KOVIL": {
+      "name": "DEVI KARUMARIAMMAN KOVIL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "DEVIK ESWARI NAGAR": {
+      "name": "DEVIK ESWARI NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "DHARAPURAM": {
+      "name": "Dharapuram",
+      "type": "village",
+      "latitude": 11.7872967,
+      "longitude": 78.0476649,
+      "osm_id": 12430710553,
+      "state": "Tamil Nadu",
+      "district": "Namakkal"
+    },
+    "DHARGAS NAGAR": {
+      "name": "DHARGAS NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "DHARMAPURI": {
+      "name": "Dharmapuri",
+      "type": "village",
+      "latitude": 13.1051637,
+      "longitude": 78.6537053,
+      "osm_id": 5884490861,
+      "state": "Tamil Nadu",
+      "district": "Vellore"
+    },
+    "DINDIGUL": {
+      "name": "Dindigul",
+      "type": "city",
+      "latitude": 10.365646,
+      "longitude": 77.9693256,
+      "osm_id": 245586375,
+      "state": "Tamil Nadu",
+      "district": "Dindigul"
+    },
+    "DOVETON": {
+      "name": "Doveton",
+      "type": "neighborhood",
+      "latitude": 13.0873218,
+      "longitude": 80.258079,
+      "osm_id": 333218841,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ECHANKARANAI": {
+      "name": "ECHANKARANAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "EGMORE": {
+      "name": "Egmore",
+      "type": "suburb",
+      "latitude": 13.0728321,
+      "longitude": 80.2576906,
+      "osm_id": 247689846,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "EGMORE NORTH RS": {
+      "name": "EGMORE NORTH RS",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "EKKATTUTHANGAL": {
+      "name": "Ekkattuthangal",
+      "type": "suburb",
+      "latitude": 13.0242453,
+      "longitude": 80.2065506,
+      "osm_id": 364280369,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ELAMBAKKAM": {
+      "name": "ELAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ELANGO NAGAR OFF.COLONY": {
+      "name": "ELANGO NAGAR OFF.COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ELLAIAMMAN NAGAR": {
+      "name": "ELLAIAMMAN NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "EMBAL": {
+      "name": "Embal",
+      "type": "village",
+      "latitude": 10.0219975,
+      "longitude": 78.9589977,
+      "osm_id": 5200594975,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ENAMBAKKAM": {
+      "name": "ENAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ENNORE": {
+      "name": "Ennore",
+      "type": "suburb",
+      "latitude": 13.2258262,
+      "longitude": 80.3243551,
+      "osm_id": 309346480,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ERNAKULAM": {
+      "name": "Ernakulam",
+      "type": "city",
+      "latitude": 9.9837257,
+      "longitude": 76.2740001,
+      "osm_id": 2278426212,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ERNAVOOR": {
+      "name": "ERNAVOOR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ERODE": {
+      "name": "Erode",
+      "type": "city",
+      "latitude": 11.3306483,
+      "longitude": 77.7276519,
+      "osm_id": 314626472,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "ETHIRAJ COLLEGE": {
+      "name": "ETHIRAJ COLLEGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "EZHIL NAGAR": {
+      "name": "Ezhil Nagar",
+      "type": "neighborhood",
+      "latitude": 13.1287209,
+      "longitude": 80.2724837,
+      "osm_id": 321186195,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "FORESHORE ESTATE": {
+      "name": "Foreshore Estate",
+      "type": "suburb",
+      "latitude": 13.0249209,
+      "longitude": 80.2776875,
+      "osm_id": 264040697,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "FORT STATION": {
+      "name": "FORT STATION",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "G.K.M.COLONY": {
+      "name": "G.K.M.COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GEMINI": {
+      "name": "Gemini",
+      "type": "neighborhood",
+      "latitude": 13.0521036,
+      "longitude": 80.2500075,
+      "osm_id": 301758149,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "GNAYARU": {
+      "name": "Gnayaru",
+      "type": "village",
+      "latitude": 13.2617935,
+      "longitude": 80.216875,
+      "osm_id": 344722380,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "GOLDEN FLATS": {
+      "name": "GOLDEN FLATS",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GOVT. GIRLS HR.SCHOO": {
+      "name": "GOVT. GIRLS HR.SCHOO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GOVT. GIRLS HR.SEC, PORUR": {
+      "name": "GOVT. GIRLS HR.SEC, PORUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GOVT. HR. SEC SCHOOL": {
+      "name": "GOVT. HR. SEC SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GOVT.GIRLS SCHOOL": {
+      "name": "GOVT.GIRLS SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GOVT.GIRLS.HR.SEC. SCHOOL": {
+      "name": "GOVT.GIRLS.HR.SEC. SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GREAMS ROAD": {
+      "name": "GREAMS ROAD",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GUDALORE (OOTY)": {
+      "name": "GUDALORE (OOTY)",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GUDUVANCHERY": {
+      "name": "GUDUVANCHERY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GUINDY METRO": {
+      "name": "GUINDY METRO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GUINDY RACE COURSE": {
+      "name": "GUINDY RACE COURSE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GUINDY TVK ESTATE": {
+      "name": "GUINDY TVK ESTATE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GUMMIDIPOONDI": {
+      "name": "Gummidipoondi",
+      "type": "town",
+      "latitude": 13.4167141,
+      "longitude": 80.1270858,
+      "osm_id": 1069366786,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "GUNDUMEDU ANNANAGAR": {
+      "name": "GUNDUMEDU ANNANAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GURUNANAK COLLEGE": {
+      "name": "GURUNANAK COLLEGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "GURUVAYUR": {
+      "name": "Guruvayur",
+      "type": "town",
+      "latitude": 10.5950431,
+      "longitude": 76.0417924,
+      "osm_id": 1981613388,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "HASTHINAPURAM": {
+      "name": "Hasthinapuram",
+      "type": "suburb",
+      "latitude": 12.9372824,
+      "longitude": 80.1519854,
+      "osm_id": 256197932,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "HIGH COURT": {
+      "name": "HIGH COURT",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "HOSUR": {
+      "name": "Hosur",
+      "type": "hamlet",
+      "latitude": 13.0533901,
+      "longitude": 76.1574678,
+      "osm_id": 11341853714,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "I.C.F": {
+      "name": "I.C.F",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "I.O.C": {
+      "name": "I.O.C",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "INDIRA NAGAR": {
+      "name": "Indira Nagar",
+      "type": "hamlet",
+      "latitude": 11.5518237,
+      "longitude": 78.6315876,
+      "osm_id": 12400524016,
+      "state": "Tamil Nadu",
+      "district": "Perambalur"
+    },
+    "IYYAPPANMADAM": {
+      "name": "IYYAPPANMADAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "IYYAPPANTHANGAL": {
+      "name": "IYYAPPANTHANGAL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "J.J.NAGAR EAST": {
+      "name": "J.J.NAGAR EAST",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "J.J.NAGAR WEST": {
+      "name": "J.J.NAGAR WEST",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "JAYANKONDAM": {
+      "name": "Jayankondam",
+      "type": "town",
+      "latitude": 11.2119861,
+      "longitude": 79.3648642,
+      "osm_id": 245589987,
+      "state": "Tamil Nadu",
+      "district": "Ariyalur"
+    },
+    "JOTHI NAGAR MADAMBAKKAM": {
+      "name": "JOTHI NAGAR MADAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "K.K.D NAGAR": {
+      "name": "K.K.D NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "K.K.D NAGAR-I": {
+      "name": "K.K.D NAGAR-I",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "K.K.D NAGAR-II": {
+      "name": "K.K.D NAGAR-II",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "K.K.NAGAR": {
+      "name": "K.K.Nagar",
+      "type": "suburb",
+      "latitude": 13.0407235,
+      "longitude": 80.1992108,
+      "osm_id": 12899837948,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "K.KANNADASAN NAGAR": {
+      "name": "K.KANNADASAN NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KADHAVOOR": {
+      "name": "KADHAVOOR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KALIVANTHAPATTU": {
+      "name": "Kalivanthapattu",
+      "type": "village",
+      "latitude": 12.775004,
+      "longitude": 80.0744732,
+      "osm_id": 11014895008,
+      "state": "Tamil Nadu",
+      "district": "Chengalpattu"
+    },
+    "KALLAKURICHI": {
+      "name": "Kallakurichi",
+      "type": "town",
+      "latitude": 11.7406259,
+      "longitude": 78.9637131,
+      "osm_id": 245598247,
+      "state": "Tamil Nadu",
+      "district": "Chindwara"
+    },
+    "KALLUR": {
+      "name": "Kallur",
+      "type": "village",
+      "latitude": 10.97552,
+      "longitude": 79.09655,
+      "osm_id": 11331311436,
+      "state": "Tamil Nadu",
+      "district": "Ariyalur"
+    },
+    "KALYANAM GIRLS. HR.SEC.": {
+      "name": "KALYANAM GIRLS. HR.SEC.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KAMARAJ NAGAR": {
+      "name": "Kamaraj nagar",
+      "type": "hamlet",
+      "latitude": 11.8902576,
+      "longitude": 78.0704065,
+      "osm_id": 12430710442,
+      "state": "Tamil Nadu",
+      "district": "Namakkal"
+    },
+    "KANDIGAI": {
+      "name": "Kandigai",
+      "type": "hamlet",
+      "latitude": 13.2333086,
+      "longitude": 80.209424,
+      "osm_id": 344722369,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KANDIGAI JUNCTION": {
+      "name": "KANDIGAI JUNCTION",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KANNIAMMAN NAGAR": {
+      "name": "KANNIAMMAN NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KANYAKUMARI": {
+      "name": "Kanyakumari",
+      "type": "town",
+      "latitude": 8.079252,
+      "longitude": 77.5499338,
+      "osm_id": 353039871,
+      "state": "Tamil Nadu",
+      "district": "Kanniyakumari"
+    },
+    "KARAIKUDI": {
+      "name": "Karaikudi",
+      "type": "hamlet",
+      "latitude": 10.8295475,
+      "longitude": 78.2874117,
+      "osm_id": 9217626446,
+      "state": "Tamil Nadu",
+      "district": "Karur"
+    },
+    "KARANAI": {
+      "name": "Karanai",
+      "type": "hamlet",
+      "latitude": 12.8573272,
+      "longitude": 80.2005344,
+      "osm_id": 335755162,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KARANODAI": {
+      "name": "Karanodai",
+      "type": "village",
+      "latitude": 13.2481043,
+      "longitude": 80.1578484,
+      "osm_id": 300616820,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KARGIL NAGAR": {
+      "name": "Kargil Nagar",
+      "type": "suburb",
+      "latitude": 13.1730186,
+      "longitude": 80.2922411,
+      "osm_id": 12916928116,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KARUMBAKKAM": {
+      "name": "Karumbakkam",
+      "type": "village",
+      "latitude": 12.7037914,
+      "longitude": 80.0919693,
+      "osm_id": 826127007,
+      "state": "Tamil Nadu",
+      "district": "Chengalpattu"
+    },
+    "KARUR": {
+      "name": "Karur",
+      "type": "hamlet",
+      "latitude": 10.840275,
+      "longitude": 79.1043858,
+      "osm_id": 10574554380,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "KATRAMBAKKAM": {
+      "name": "KATRAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KAVANOOR KOOT ROAD": {
+      "name": "KAVANOOR KOOT ROAD",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KAVARAPETTAI": {
+      "name": "KAVARAPETTAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KAVIARASU KANNADASAN": {
+      "name": "KAVIARASU KANNADASAN",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KAYARAMBEDU PUO": {
+      "name": "KAYARAMBEDU PUO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KCBT KILAMBAKKAM": {
+      "name": "KCBT KILAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KEELKATTALAI": {
+      "name": "Keelkattalai",
+      "type": "suburb",
+      "latitude": 12.9548473,
+      "longitude": 80.1852685,
+      "osm_id": 310360632,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KEERAMANGALAM": {
+      "name": "Keeramangalam",
+      "type": "village",
+      "latitude": 10.8780214,
+      "longitude": 78.7265649,
+      "osm_id": 9862347584,
+      "state": "Tamil Nadu",
+      "district": "Trichy"
+    },
+    "KEERAPAKKAM": {
+      "name": "KEERAPAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KEERAPAKKAM TNUHDB": {
+      "name": "KEERAPAKKAM TNUHDB",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KELAMBAKKAM": {
+      "name": "Kelambakkam",
+      "type": "town",
+      "latitude": 12.7871437,
+      "longitude": 80.219987,
+      "osm_id": 297473137,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KILKONDAIYUR": {
+      "name": "KILKONDAIYUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KODAIKANAL": {
+      "name": "Kodaikanal",
+      "type": "town",
+      "latitude": 10.233712,
+      "longitude": 77.4919719,
+      "osm_id": 577559391,
+      "state": "Tamil Nadu",
+      "district": "Theni"
+    },
+    "KODUNGAYUR PARVATHY": {
+      "name": "KODUNGAYUR PARVATHY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KOLATHUR": {
+      "name": "Kolathur",
+      "type": "hamlet",
+      "latitude": 11.0861489,
+      "longitude": 78.131308,
+      "osm_id": 3125882489,
+      "state": "Tamil Nadu",
+      "district": "Karur"
+    },
+    "KOLLAM": {
+      "name": "Kollam",
+      "type": "city",
+      "latitude": 8.8870533,
+      "longitude": 76.5906696,
+      "osm_id": 245582090,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KORATTUR": {
+      "name": "Korattur",
+      "type": "suburb",
+      "latitude": 13.1115484,
+      "longitude": 80.1846272,
+      "osm_id": 262308395,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KORATTUR WATER CANAL": {
+      "name": "KORATTUR WATER CANAL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KORUKKUPET": {
+      "name": "Korukkupet",
+      "type": "suburb",
+      "latitude": 13.1215344,
+      "longitude": 80.2837912,
+      "osm_id": 289741260,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KOSAPPUR": {
+      "name": "Kosappur",
+      "type": "village",
+      "latitude": 13.1818301,
+      "longitude": 80.2350982,
+      "osm_id": 321663368,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KOTTAIYUR": {
+      "name": "Kottaiyur",
+      "type": "hamlet",
+      "latitude": 10.70782,
+      "longitude": 78.00228,
+      "osm_id": 11396533909,
+      "state": "Tamil Nadu",
+      "district": "Dindigul"
+    },
+    "KOTTURPURAM": {
+      "name": "Kotturpuram",
+      "type": "suburb",
+      "latitude": 13.0193703,
+      "longitude": 80.2435512,
+      "osm_id": 249497870,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KOVALAM": {
+      "name": "Kovalam",
+      "type": "hamlet",
+      "latitude": 9.7588795,
+      "longitude": 79.866122,
+      "osm_id": 4623430469,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KOVUR": {
+      "name": "Kovur",
+      "type": "suburb",
+      "latitude": 13.0113616,
+      "longitude": 80.1208582,
+      "osm_id": 294073647,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KOVUR E.B.": {
+      "name": "KOVUR E.B.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KOYAMBAKKAM": {
+      "name": "KOYAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KRISHNAGIRI": {
+      "name": "Krishnagiri",
+      "type": "town",
+      "latitude": 12.5188835,
+      "longitude": 78.2206536,
+      "osm_id": 353316321,
+      "state": "Tamil Nadu",
+      "district": "Krishnagiri"
+    },
+    "KULASEKARAM": {
+      "name": "Kulasekaram",
+      "type": "town",
+      "latitude": 8.3646941,
+      "longitude": 77.2996678,
+      "osm_id": 360402746,
+      "state": "Tamil Nadu",
+      "district": "Kanniyakumari"
+    },
+    "KUMARAN KUNDRAM": {
+      "name": "KUMARAN KUNDRAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KUMBAKONAM": {
+      "name": "Kumbakonam",
+      "type": "city",
+      "latitude": 10.9604108,
+      "longitude": 79.3820861,
+      "osm_id": 245588875,
+      "state": "Tamil Nadu",
+      "district": "Ariyalur"
+    },
+    "KUMIZHI": {
+      "name": "Kumizhi",
+      "type": "village",
+      "latitude": 12.8002759,
+      "longitude": 80.1228794,
+      "osm_id": 11014847700,
+      "state": "Tamil Nadu",
+      "district": "Chengalpattu"
+    },
+    "KUMUNANCHAVADI": {
+      "name": "KUMUNANCHAVADI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KUNNAM": {
+      "name": "Kunnam",
+      "type": "neighborhood",
+      "latitude": 9.9178759,
+      "longitude": 76.7454419,
+      "osm_id": 7480073897,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "KUTHAMBAKKAM": {
+      "name": "Kuthambakkam",
+      "type": "village",
+      "latitude": 13.0579517,
+      "longitude": 80.0281858,
+      "osm_id": 347468676,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "KUTTAM": {
+      "name": "Kuttam",
+      "type": "village",
+      "latitude": 8.3202688,
+      "longitude": 77.9388975,
+      "osm_id": 1083229325,
+      "state": "Tamil Nadu",
+      "district": "Kanniyakumari"
+    },
+    "L.F.C": {
+      "name": "L.F.C",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "LADY WELLINGTON SCH": {
+      "name": "LADY WELLINGTON SCH",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "LADY WELLINGTON VIVEKANANDA HO": {
+      "name": "LADY WELLINGTON VIVEKANANDA HO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "LFC": {
+      "name": "LFC",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "LITTEL MOUNT": {
+      "name": "LITTEL MOUNT",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "LITTLE FLOWER CONVENT": {
+      "name": "LITTLE FLOWER CONVENT",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "LITTLE MOUNT": {
+      "name": "Little Mount",
+      "type": "suburb",
+      "latitude": 13.0141864,
+      "longitude": 80.2266882,
+      "osm_id": 249497723,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "LUCAS T.V.S": {
+      "name": "LUCAS T.V.S",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "M.G.R.CENTRAL": {
+      "name": "M.G.R.CENTRAL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "M.K.B.NAGAR": {
+      "name": "M.K.B.NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "M.M.B.T": {
+      "name": "M.M.B.T",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "M.M.C": {
+      "name": "M.M.C",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "M.M.D.A.COLONY": {
+      "name": "M.M.D.A.COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MADANAKUPPAM": {
+      "name": "Madanakuppam",
+      "type": "village",
+      "latitude": 12.5690011,
+      "longitude": 78.2881381,
+      "osm_id": 11449042331,
+      "state": "Tamil Nadu",
+      "district": "Krishnagiri"
+    },
+    "MADARAPAKKAM": {
+      "name": "Madarapakkam",
+      "type": "village",
+      "latitude": 13.4449559,
+      "longitude": 79.9818795,
+      "osm_id": 344722313,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MADHYAKAILASH": {
+      "name": "MADHYAKAILASH",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MADIKERI": {
+      "name": "MADIKERI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MADURAPAKKAM": {
+      "name": "MADURAPAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MADURAVOYAL": {
+      "name": "Maduravoyal",
+      "type": "suburb",
+      "latitude": 13.0601732,
+      "longitude": 80.1665988,
+      "osm_id": 294073566,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MAHENDRA CITY": {
+      "name": "MAHENDRA CITY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MAHINDRA IND.PARK": {
+      "name": "MAHINDRA IND.PARK",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MALANTHUR": {
+      "name": "MALANTHUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MAMALLAPURAM": {
+      "name": "MAMALLAPURAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MAMBAKKAM KOOTROAD": {
+      "name": "MAMBAKKAM KOOTROAD",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MANALI": {
+      "name": "Manali",
+      "type": "hamlet",
+      "latitude": 10.9619975,
+      "longitude": 79.7466008,
+      "osm_id": 11019881755,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "MANALI NEW TOWN": {
+      "name": "MANALI NEW TOWN",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MANAMATHI": {
+      "name": "MANAMATHI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MANDAVELI": {
+      "name": "Mandaveli",
+      "type": "suburb",
+      "latitude": 13.0258445,
+      "longitude": 80.2627877,
+      "osm_id": 247677647,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MANGADU": {
+      "name": "Mangadu",
+      "type": "suburb",
+      "latitude": 13.0314415,
+      "longitude": 80.1096576,
+      "osm_id": 294073692,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MANIMANGALAM": {
+      "name": "Manimangalam",
+      "type": "village",
+      "latitude": 12.916831,
+      "longitude": 80.0412449,
+      "osm_id": 340356305,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "MANIMEDU(AKASHNAGAR)": {
+      "name": "MANIMEDU(AKASHNAGAR)",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MANIVAKKAM W.TANK": {
+      "name": "MANIVAKKAM W.TANK",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MANJAMPAKKAM": {
+      "name": "MANJAMPAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MANNADY": {
+      "name": "Mannady",
+      "type": "neighborhood",
+      "latitude": 13.0959441,
+      "longitude": 80.2871013,
+      "osm_id": 254151775,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MANNIVAKKAM K.K.NAGAR": {
+      "name": "MANNIVAKKAM K.K.NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MARTHANDAM": {
+      "name": "Marthandam",
+      "type": "town",
+      "latitude": 8.3065018,
+      "longitude": 77.2223116,
+      "osm_id": 334644583,
+      "state": "Tamil Nadu",
+      "district": "Kanniyakumari"
+    },
+    "MATHUR M.M.D.A.": {
+      "name": "MATHUR M.M.D.A.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MAYILADUTHURAI": {
+      "name": "Mayiladuthurai",
+      "type": "town",
+      "latitude": 11.1018614,
+      "longitude": 79.6503162,
+      "osm_id": 2271360789,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "MEDAVAKKAM JAYACHANDRAN": {
+      "name": "MEDAVAKKAM JAYACHANDRAN",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MEL SEMBEDU": {
+      "name": "MEL SEMBEDU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MEL SURAPATTU": {
+      "name": "MEL SURAPATTU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MELKONDAIYUR": {
+      "name": "MELKONDAIYUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MELKOTTIYUR": {
+      "name": "MELKOTTIYUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MENAMBEDU": {
+      "name": "Menambedu",
+      "type": "neighborhood",
+      "latitude": 13.1230211,
+      "longitude": 80.1656093,
+      "osm_id": 402517482,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MEPPEDU RD.JN.": {
+      "name": "MEPPEDU RD.JN.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MEPPUR": {
+      "name": "Meppur",
+      "type": "village",
+      "latitude": 13.0291978,
+      "longitude": 80.0828348,
+      "osm_id": 294073718,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MEYYUR": {
+      "name": "Meyyur",
+      "type": "village",
+      "latitude": 13.2421271,
+      "longitude": 79.9463635,
+      "osm_id": 824795445,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MINJUR": {
+      "name": "Minjur",
+      "type": "town",
+      "latitude": 13.2786146,
+      "longitude": 80.2577671,
+      "osm_id": 344709755,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MITTANAMALLEE": {
+      "name": "MITTANAMALLEE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MOGAPPAIR OFF. COLONY": {
+      "name": "MOGAPPAIR OFF. COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MONAHAN GIRLS HIGHER SECONDARY": {
+      "name": "MONAHAN GIRLS HIGHER SECONDARY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MOOLAKADAI": {
+      "name": "Moolakadai",
+      "type": "hamlet",
+      "latitude": 11.7754179,
+      "longitude": 77.7297071,
+      "osm_id": 12436322800,
+      "state": "Tamil Nadu",
+      "district": "Salem"
+    },
+    "MUGALIVAKKAM": {
+      "name": "Mugalivakkam",
+      "type": "village",
+      "latitude": 13.0205798,
+      "longitude": 80.1685163,
+      "osm_id": 294073614,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MULLIPAKKAM": {
+      "name": "MULLIPAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MUNNAR": {
+      "name": "Munnar",
+      "type": "town",
+      "latitude": 10.0869959,
+      "longitude": 77.0600915,
+      "osm_id": 3870703092,
+      "state": "Tamil Nadu",
+      "district": "Theni"
+    },
+    "MURTHUZAVIYA ORIENTAL SECONDAR": {
+      "name": "MURTHUZAVIYA ORIENTAL SECONDAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "MUTHAPUDUPET": {
+      "name": "Muthapudupet",
+      "type": "neighborhood",
+      "latitude": 13.1479522,
+      "longitude": 80.0622889,
+      "osm_id": 403189843,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "MYLAPORE": {
+      "name": "Mylapore",
+      "type": "suburb",
+      "latitude": 13.0316473,
+      "longitude": 80.2700166,
+      "osm_id": 247677540,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "Madurai - Mattuthavani": {
+      "name": "Madurai - Mattuthavani",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Madurai"
+    },
+    "N.BAKKAM KALAIGNAR NAGAR": {
+      "name": "N.BAKKAM KALAIGNAR NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "N.G.O.COLONY": {
+      "name": "N.G.O.COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "N.K.T.GIRLS.HR.SEC SPL#": {
+      "name": "N.K.T.GIRLS.HR.SEC SPL#",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NADUVEERAPATTU": {
+      "name": "Naduveerapattu",
+      "type": "village",
+      "latitude": 12.9380331,
+      "longitude": 80.055865,
+      "osm_id": 402294609,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "NAGAPATTINAM": {
+      "name": "Nagapattinam",
+      "type": "town",
+      "latitude": 10.7647952,
+      "longitude": 79.8430779,
+      "osm_id": 891394162,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "NAGERCOIL": {
+      "name": "Nagercoil",
+      "type": "city",
+      "latitude": 8.1839904,
+      "longitude": 77.4315437,
+      "osm_id": 245580128,
+      "state": "Tamil Nadu",
+      "district": "Kanniyakumari"
+    },
+    "NAGOOR": {
+      "name": "NAGOOR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NALLAMBAKKAM": {
+      "name": "NALLAMBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NALLUR": {
+      "name": "Nallur",
+      "type": "hamlet",
+      "latitude": 11.1750083,
+      "longitude": 78.1956283,
+      "osm_id": 12382166500,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "NAMAKKAL": {
+      "name": "Namakkal",
+      "type": "town",
+      "latitude": 11.2191692,
+      "longitude": 78.16787,
+      "osm_id": 3473202651,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "NANDAMBAKKAM": {
+      "name": "Nandambakkam",
+      "type": "suburb",
+      "latitude": 13.0166484,
+      "longitude": 80.1911885,
+      "osm_id": 294073575,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "NANGANALLUR": {
+      "name": "Nanganallur",
+      "type": "suburb",
+      "latitude": 12.9801242,
+      "longitude": 80.184902,
+      "osm_id": 278512528,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "NARIKURAVAR COLONY": {
+      "name": "Narikuravar Colony",
+      "type": "hamlet",
+      "latitude": 10.7321805,
+      "longitude": 78.8833436,
+      "osm_id": 10312960388,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "NATTARASAN PETTAI": {
+      "name": "NATTARASAN PETTAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NAVALUR TNUHDB": {
+      "name": "NAVALUR TNUHDB",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NEELAMANGALAM": {
+      "name": "Neelamangalam",
+      "type": "village",
+      "latitude": 11.722072,
+      "longitude": 79.0029444,
+      "osm_id": 12756682645,
+      "state": "Tamil Nadu",
+      "district": "Chindwara"
+    },
+    "NEHRU NAGAR": {
+      "name": "Nehru Nagar",
+      "type": "hamlet",
+      "latitude": 11.443756,
+      "longitude": 78.1914256,
+      "osm_id": 12397942624,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "NEMAM": {
+      "name": "Nemam",
+      "type": "hamlet",
+      "latitude": 10.1463885,
+      "longitude": 78.6883306,
+      "osm_id": 5574507226,
+      "state": "Tamil Nadu",
+      "district": "Sivaganga"
+    },
+    "NEW ERUMAIVETTI PALAYAM": {
+      "name": "NEW ERUMAIVETTI PALAYAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NEYVELI": {
+      "name": "Neyveli",
+      "type": "village",
+      "latitude": 10.5999126,
+      "longitude": 78.9169836,
+      "osm_id": 5404057898,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "NOLAMBUR": {
+      "name": "Nolambur",
+      "type": "suburb",
+      "latitude": 13.0747182,
+      "longitude": 80.1682206,
+      "osm_id": 1446805946,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "NOLAMBUR SAKTHI NAGAR": {
+      "name": "NOLAMBUR SAKTHI NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "NORTH PRAKASH NAGAR": {
+      "name": "NORTH PRAKASH NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "OKK.THORAIPAKM SEC.COLONY": {
+      "name": "OKK.THORAIPAKM SEC.COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "OM MANGALAM VILLAGE": {
+      "name": "OM MANGALAM VILLAGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "OONAMANCHERI": {
+      "name": "OONAMANCHERI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "OOTY": {
+      "name": "OOTY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "OPPILAN": {
+      "name": "Oppilan",
+      "type": "village",
+      "latitude": 9.1423825,
+      "longitude": 78.5061228,
+      "osm_id": 9242547818,
+      "state": "Tamil Nadu",
+      "district": "Ramanathapuram"
+    },
+    "ORAGADAM": {
+      "name": "Oragadam",
+      "type": "neighborhood",
+      "latitude": 13.130791,
+      "longitude": 80.1529145,
+      "osm_id": 1516387651,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "ORAGADAM HIGH SCH": {
+      "name": "ORAGADAM HIGH SCH",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "OTTERI": {
+      "name": "Otteri",
+      "type": "suburb",
+      "latitude": 13.0969576,
+      "longitude": 80.2487215,
+      "osm_id": 344492756,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "OTTIAMBAKKAM": {
+      "name": "Ottiambakkam",
+      "type": "village",
+      "latitude": 12.8610723,
+      "longitude": 80.191851,
+      "osm_id": 335753159,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PADAPPAI": {
+      "name": "Padappai",
+      "type": "suburb",
+      "latitude": 12.8876927,
+      "longitude": 80.0220457,
+      "osm_id": 340359558,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "PADIKUPPAM": {
+      "name": "PADIKUPPAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PADIYANALLUR": {
+      "name": "PADIYANALLUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PADUVANCHERY": {
+      "name": "PADUVANCHERY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PAKKAM": {
+      "name": "Pakkam",
+      "type": "hamlet",
+      "latitude": 10.8029784,
+      "longitude": 79.5207518,
+      "osm_id": 11134408559,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "PAKKAM VILLAGE": {
+      "name": "PAKKAM VILLAGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PALANJUR": {
+      "name": "Palanjur",
+      "type": "village",
+      "latitude": 10.3824897,
+      "longitude": 79.3640032,
+      "osm_id": 10576754930,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "PALLAPATTI": {
+      "name": "Pallapatti",
+      "type": "suburb",
+      "latitude": 11.6593345,
+      "longitude": 78.1341692,
+      "osm_id": 358785394,
+      "state": "Tamil Nadu",
+      "district": "Namakkal"
+    },
+    "PALLAVARAM": {
+      "name": "Pallavaram",
+      "type": "suburb",
+      "latitude": 12.9654669,
+      "longitude": 80.1451178,
+      "osm_id": 256197928,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PAMMAL KAMARAJAPURAM": {
+      "name": "PAMMAL KAMARAJAPURAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PANAGAL PARK": {
+      "name": "PANAGAL PARK",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PARAMESWARI NAGAR": {
+      "name": "Parameswari Nagar",
+      "type": "neighborhood",
+      "latitude": 13.0027868,
+      "longitude": 80.2581254,
+      "osm_id": 313775329,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PATRAVAKKAM R.S": {
+      "name": "PATRAVAKKAM R.S",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PATTABIRAM": {
+      "name": "Pattabiram",
+      "type": "suburb",
+      "latitude": 13.1224924,
+      "longitude": 80.0633914,
+      "osm_id": 1891061628,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PATTUR": {
+      "name": "PATTUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PAZHANTHANDALAM": {
+      "name": "PAZHANTHANDALAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PAZHAVERKADU": {
+      "name": "Pazhaverkadu",
+      "type": "town",
+      "latitude": 13.4176606,
+      "longitude": 80.3166702,
+      "osm_id": 322481124,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PAZHAVERKADU LIGHT HOUSE": {
+      "name": "PAZHAVERKADU LIGHT HOUSE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PERAMBAKKAM": {
+      "name": "Perambakkam",
+      "type": "village",
+      "latitude": 13.0377208,
+      "longitude": 79.8133227,
+      "osm_id": 2124729407,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "PERAMBALUR": {
+      "name": "Perambalur",
+      "type": "town",
+      "latitude": 11.2356695,
+      "longitude": 78.8688353,
+      "osm_id": 245590129,
+      "state": "Tamil Nadu",
+      "district": "Ariyalur"
+    },
+    "PERAMBUR": {
+      "name": "Perambur",
+      "type": "suburb",
+      "latitude": 13.1121242,
+      "longitude": 80.245022,
+      "osm_id": 248560758,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PERATHUR": {
+      "name": "PERATHUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PERAVALLUR KUMARAN N": {
+      "name": "PERAVALLUR KUMARAN N",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PERAVALLUR KUMARAN NAGAR": {
+      "name": "PERAVALLUR KUMARAN NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PERIYA COLONY": {
+      "name": "Periya colony",
+      "type": "village",
+      "latitude": 11.3643632,
+      "longitude": 78.2172508,
+      "osm_id": 12397991725,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "PERIYAPALAYAM": {
+      "name": "Periyapalayam",
+      "type": "village",
+      "latitude": 13.3094056,
+      "longitude": 80.0474138,
+      "osm_id": 344712602,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PERIYAR NAGAR": {
+      "name": "Periyar nagar",
+      "type": "hamlet",
+      "latitude": 11.8589515,
+      "longitude": 77.7908239,
+      "osm_id": 12436687332,
+      "state": "Tamil Nadu",
+      "district": "Salem"
+    },
+    "PERUMPAKKAM COLLEGE": {
+      "name": "PERUMPAKKAM COLLEGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PERUMPAKKAM TNUHDB": {
+      "name": "PERUMPAKKAM TNUHDB",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PERUNGUDI": {
+      "name": "Perungudi",
+      "type": "hamlet",
+      "latitude": 10.7522884,
+      "longitude": 79.6107912,
+      "osm_id": 10959699590,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "PERUNTHANDALAM": {
+      "name": "PERUNTHANDALAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PGHS SCHOOL": {
+      "name": "PGHS SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "POLLACHI": {
+      "name": "Pollachi",
+      "type": "town",
+      "latitude": 10.6588234,
+      "longitude": 77.00873,
+      "osm_id": 5319194504,
+      "state": "Tamil Nadu",
+      "district": "Coimbatore"
+    },
+    "PONMAR": {
+      "name": "Ponmar",
+      "type": "village",
+      "latitude": 12.8574825,
+      "longitude": 80.1719383,
+      "osm_id": 335748740,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PONNERI": {
+      "name": "Ponneri",
+      "type": "village",
+      "latitude": 11.1541516,
+      "longitude": 78.2725829,
+      "osm_id": 11739250263,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "POOCHIATHIPEDU": {
+      "name": "POOCHIATHIPEDU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "POOMBUHAR NAGAR": {
+      "name": "POOMBUHAR NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "POOMPUHAR": {
+      "name": "Poompuhar",
+      "type": "village",
+      "latitude": 11.1452914,
+      "longitude": 79.8537308,
+      "osm_id": 3780080258,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "POONTHANDALAM": {
+      "name": "Poonthandalam",
+      "type": "village",
+      "latitude": 12.9642395,
+      "longitude": 80.0497578,
+      "osm_id": 331163303,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "PORUR": {
+      "name": "Porur",
+      "type": "suburb",
+      "latitude": 13.0320131,
+      "longitude": 80.158304,
+      "osm_id": 243327790,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "POTHUR": {
+      "name": "Pothur",
+      "type": "hamlet",
+      "latitude": 10.7269324,
+      "longitude": 77.8896227,
+      "osm_id": 11396533897,
+      "state": "Tamil Nadu",
+      "district": "Dindigul"
+    },
+    "POZHICHALUR": {
+      "name": "Pozhichalur",
+      "type": "suburb",
+      "latitude": 12.9905297,
+      "longitude": 80.1440498,
+      "osm_id": 1780106324,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PRATHYANGIRA DEVI TEMPLE": {
+      "name": "PRATHYANGIRA DEVI TEMPLE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PRESIDENCY GIRLS. HR.SEC.": {
+      "name": "PRESIDENCY GIRLS. HR.SEC.",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PUDHUCHERYMEDU": {
+      "name": "PUDHUCHERYMEDU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PUDUCHERRY": {
+      "name": "Puducherry",
+      "type": "city",
+      "latitude": 11.9340568,
+      "longitude": 79.8306447,
+      "osm_id": 245600130,
+      "state": "Tamil Nadu",
+      "district": "Cuddalore"
+    },
+    "PUDUKKOTTAI": {
+      "name": "Pudukkottai",
+      "type": "village",
+      "latitude": 10.8921002,
+      "longitude": 78.511455,
+      "osm_id": 9395974132,
+      "state": "Tamil Nadu",
+      "district": "Trichy"
+    },
+    "PUDUPAKKAM/VANDALOOR RD.J": {
+      "name": "PUDUPAKKAM/VANDALOOR RD.J",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PUDUR": {
+      "name": "Pudur",
+      "type": "hamlet",
+      "latitude": 11.7136663,
+      "longitude": 77.7785081,
+      "osm_id": 12436322756,
+      "state": "Tamil Nadu",
+      "district": "Salem"
+    },
+    "PUDUVOYAL": {
+      "name": "Puduvoyal",
+      "type": "village",
+      "latitude": 13.3354813,
+      "longitude": 80.1444903,
+      "osm_id": 344712611,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PULLAMBADI": {
+      "name": "Pullambadi",
+      "type": "town",
+      "latitude": 10.9400879,
+      "longitude": 78.9078938,
+      "osm_id": 1888633561,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "PUNGERI": {
+      "name": "PUNGERI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PUTHAGARAM": {
+      "name": "Puthagaram",
+      "type": "hamlet",
+      "latitude": 10.6720195,
+      "longitude": 79.6022214,
+      "osm_id": 11032246471,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "PUTHUPAKKAM LAW COLL": {
+      "name": "PUTHUPAKKAM LAW COLL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "PUZHAL": {
+      "name": "Puzhal",
+      "type": "suburb",
+      "latitude": 13.1636492,
+      "longitude": 80.2038067,
+      "osm_id": 417915587,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "PUZHUTHIVAKKAM": {
+      "name": "Puzhuthivakkam",
+      "type": "suburb",
+      "latitude": 12.9691428,
+      "longitude": 80.2062626,
+      "osm_id": 280518793,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "Q.M.ARTS COLLEGE": {
+      "name": "Q.M.ARTS COLLEGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "Q.M.C": {
+      "name": "Q.M.C",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "RAJ SHANMUGAM NAGAR": {
+      "name": "RAJ SHANMUGAM NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "RAJAJI BHAVAN": {
+      "name": "RAJAJI BHAVAN",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "RAJBHAVAN": {
+      "name": "RAJBHAVAN",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "RAMAPURAM": {
+      "name": "Ramapuram",
+      "type": "hamlet",
+      "latitude": 10.72335,
+      "longitude": 79.78218,
+      "osm_id": 11165401851,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "RAMESWARAM": {
+      "name": "Rameswaram",
+      "type": "town",
+      "latitude": 9.2844657,
+      "longitude": 79.3125553,
+      "osm_id": 339884241,
+      "state": "Tamil Nadu",
+      "district": "Ramanathapuram"
+    },
+    "RANI MEIYAMMAI GIRLS": {
+      "name": "RANI MEIYAMMAI GIRLS",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "RANIPET": {
+      "name": "Ranipet",
+      "type": "town",
+      "latitude": 12.9292452,
+      "longitude": 79.3321712,
+      "osm_id": 263014503,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "REDHILLS": {
+      "name": "REDHILLS",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "S.M.C": {
+      "name": "S.M.C",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SAIDAPET": {
+      "name": "Saidapet",
+      "type": "suburb",
+      "latitude": 13.020817,
+      "longitude": 80.2239536,
+      "osm_id": 247689106,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SAIDAPET GURUKULAM": {
+      "name": "SAIDAPET GURUKULAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SALEM": {
+      "name": "Salem",
+      "type": "city",
+      "latitude": 11.6551982,
+      "longitude": 78.1581771,
+      "osm_id": 3780703409,
+      "state": "Tamil Nadu",
+      "district": "Namakkal"
+    },
+    "SALIGRAMAM": {
+      "name": "Saligramam",
+      "type": "suburb",
+      "latitude": 13.0583406,
+      "longitude": 80.1985327,
+      "osm_id": 248420921,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SANKAR NAGAR": {
+      "name": "SANKAR NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SANKARA HEALTH CENTRE": {
+      "name": "SANKARA HEALTH CENTRE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SANTHOME": {
+      "name": "Santhome",
+      "type": "suburb",
+      "latitude": 13.0298372,
+      "longitude": 80.275738,
+      "osm_id": 247689726,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SANTHOME SCHOOL": {
+      "name": "SANTHOME SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SATHIYAMANGALAM": {
+      "name": "Sathiyamangalam",
+      "type": "hamlet",
+      "latitude": 10.68079,
+      "longitude": 79.77247,
+      "osm_id": 11165401812,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "SATHUMA NAGAR": {
+      "name": "SATHUMA NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SATHYA NAGAR": {
+      "name": "Sathya Nagar",
+      "type": "hamlet",
+      "latitude": 11.4493636,
+      "longitude": 78.4322118,
+      "osm_id": 12347666007,
+      "state": "Tamil Nadu",
+      "district": "Salem"
+    },
+    "SATHYA NAGAR (WAR MEMORIAL)": {
+      "name": "SATHYA NAGAR (WAR MEMORIAL)",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SEEMAVARAM": {
+      "name": "SEEMAVARAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SEMMANCHERI TNUHDB": {
+      "name": "SEMMANCHERI TNUHDB",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SENTHIL NAGAR": {
+      "name": "Senthil Nagar",
+      "type": "neighborhood",
+      "latitude": 13.1196875,
+      "longitude": 80.1351508,
+      "osm_id": 402708971,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SEVASATHAN SCHOOL": {
+      "name": "SEVASATHAN SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SHANTHI COLONY": {
+      "name": "SHANTHI COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SHENCOTTAH": {
+      "name": "SHENCOTTAH",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SHOLINGANALLUR": {
+      "name": "Sholinganallur",
+      "type": "suburb",
+      "latitude": 12.8935356,
+      "longitude": 80.2320634,
+      "osm_id": 256197959,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SIDCO NAGAR": {
+      "name": "SIDCO Nagar",
+      "type": "neighborhood",
+      "latitude": 13.1075596,
+      "longitude": 80.2009613,
+      "osm_id": 290657152,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SIRANJIVI NAGAR": {
+      "name": "SIRANJIVI NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SIRUCHERY I.T.PARK": {
+      "name": "SIRUCHERY I.T.PARK",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SIRUVAPURI": {
+      "name": "SIRUVAPURI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SIVAGANGA": {
+      "name": "Sivaganga",
+      "type": "town",
+      "latitude": 9.8486881,
+      "longitude": 78.4870461,
+      "osm_id": 1053978493,
+      "state": "Tamil Nadu",
+      "district": "Madurai"
+    },
+    "SIVAKASI": {
+      "name": "Sivakasi",
+      "type": "city",
+      "latitude": 9.45083,
+      "longitude": 77.7976686,
+      "osm_id": 3415500140,
+      "state": "Tamil Nadu",
+      "district": "Virudhunagar"
+    },
+    "SOMANGALAM": {
+      "name": "Somangalam",
+      "type": "village",
+      "latitude": 12.9482883,
+      "longitude": 80.0341452,
+      "osm_id": 331918549,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "SONALLUR": {
+      "name": "SONALLUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SOUNDRAPANDIAN SUPPAMMAL": {
+      "name": "SOUNDRAPANDIAN SUPPAMMAL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SOUTH MALAYAMPAKKAM": {
+      "name": "SOUTH MALAYAMPAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SRINIVASA NAGAR": {
+      "name": "Srinivasa Nagar",
+      "type": "neighborhood",
+      "latitude": 12.9503003,
+      "longitude": 80.2469674,
+      "osm_id": 415858178,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "SRIPERUMBUDUR": {
+      "name": "Sriperumbudur",
+      "type": "town",
+      "latitude": 12.9666144,
+      "longitude": 79.9458077,
+      "osm_id": 243327628,
+      "state": "Tamil Nadu",
+      "district": "Kanchipuram"
+    },
+    "SRIRANGAM": {
+      "name": "Srirangam",
+      "type": "suburb",
+      "latitude": 10.8573308,
+      "longitude": 78.6930848,
+      "osm_id": 367564056,
+      "state": "Tamil Nadu",
+      "district": "Trichy"
+    },
+    "ST FRANCIS XAVIER SCHOOL": {
+      "name": "ST FRANCIS XAVIER SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ST. RAPHEALS GIRLS H": {
+      "name": "ST. RAPHEALS GIRLS H",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ST. RAPHEALS GIRLS HR. SEC": {
+      "name": "ST. RAPHEALS GIRLS HR. SEC",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "ST.LOUIS COLLEGE ADY": {
+      "name": "ST.LOUIS COLLEGE ADY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "STERLING ROAD": {
+      "name": "STERLING ROAD",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SULERIKADU": {
+      "name": "SULERIKADU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SUNGUVARCHATHIRAM": {
+      "name": "SUNGUVARCHATHIRAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "SUNNAMBU KOLATHUR": {
+      "name": "SUNNAMBU KOLATHUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "T.ACHARAVAKKAM": {
+      "name": "T.ACHARAVAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TAMARAIPAKKAM KOOT R": {
+      "name": "TAMARAIPAKKAM KOOT R",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TARAMANI": {
+      "name": "Taramani",
+      "type": "suburb",
+      "latitude": 12.9849067,
+      "longitude": 80.2404069,
+      "osm_id": 325198962,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "TEACHERS COLONY": {
+      "name": "Teachers Colony",
+      "type": "suburb",
+      "latitude": 11.3322055,
+      "longitude": 77.7063414,
+      "osm_id": 4172411932,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "THAIYUR KOMAN NAGAR": {
+      "name": "THAIYUR KOMAN NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THAMARAIPAKKAM": {
+      "name": "Thamaraipakkam",
+      "type": "village",
+      "latitude": 13.2200491,
+      "longitude": 80.0321236,
+      "osm_id": 359134094,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "THANDALAM VILLAGE": {
+      "name": "THANDALAM VILLAGE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THANGAL TOLLGATE": {
+      "name": "THANGAL TOLLGATE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THANIKACHALAM NAGAR": {
+      "name": "THANIKACHALAM NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THANJAVUR": {
+      "name": "Thanjavur",
+      "type": "city",
+      "latitude": 10.7860267,
+      "longitude": 79.1381497,
+      "osm_id": 245587589,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "THARAMANI KALLUTTAI": {
+      "name": "THARAMANI KALLUTTAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THENDRAL NAGAR": {
+      "name": "Thendral Nagar",
+      "type": "neighborhood",
+      "latitude": 9.4735935,
+      "longitude": 77.5393963,
+      "osm_id": 8344799952,
+      "state": "Tamil Nadu",
+      "district": "Virudhunagar"
+    },
+    "THENI": {
+      "name": "Theni",
+      "type": "town",
+      "latitude": 10.0108143,
+      "longitude": 77.4810104,
+      "osm_id": 245585698,
+      "state": "Tamil Nadu",
+      "district": "Theni"
+    },
+    "THIRISULAM SAKHI NAGAR": {
+      "name": "THIRISULAM SAKHI NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRU.VI.KA.NAGAR": {
+      "name": "THIRU.VI.KA.NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUMANGALAM": {
+      "name": "Thirumangalam",
+      "type": "hamlet",
+      "latitude": 11.4304135,
+      "longitude": 77.9383932,
+      "osm_id": 12397870806,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "THIRUMAZHISAI": {
+      "name": "Thirumazhisai",
+      "type": "town",
+      "latitude": 13.0540139,
+      "longitude": 80.0607568,
+      "osm_id": 294073748,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "THIRUMULLAIVOYAL COLONY": {
+      "name": "THIRUMULLAIVOYAL COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUMULLAIVOYAL SIDCO": {
+      "name": "THIRUMULLAIVOYAL SIDCO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUNINDRAVOOR": {
+      "name": "THIRUNINDRAVOOR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUPORUR": {
+      "name": "Thiruporur",
+      "type": "town",
+      "latitude": 12.7258558,
+      "longitude": 80.189518,
+      "osm_id": 308873521,
+      "state": "Tamil Nadu",
+      "district": "Chengalpattu"
+    },
+    "THIRUVALLUR": {
+      "name": "THIRUVALLUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUVALLUR COLLECTOR OFFICE": {
+      "name": "THIRUVALLUR COLLECTOR OFFICE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUVALLUVAR NAGAR": {
+      "name": "Thiruvalluvar Nagar",
+      "type": "hamlet",
+      "latitude": 11.28962,
+      "longitude": 78.06358,
+      "osm_id": 12382166450,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "THIRUVANMIYUR": {
+      "name": "Thiruvanmiyur",
+      "type": "suburb",
+      "latitude": 12.9858948,
+      "longitude": 80.2644215,
+      "osm_id": 249497808,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "THIRUVEDANTHAI": {
+      "name": "THIRUVEDANTHAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THIRUVERKADU": {
+      "name": "Thiruverkadu",
+      "type": "suburb",
+      "latitude": 13.0727699,
+      "longitude": 80.1204591,
+      "osm_id": 297429289,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "THIRUVOTRIYUR": {
+      "name": "THIRUVOTRIYUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THONDI": {
+      "name": "Thondi",
+      "type": "town",
+      "latitude": 9.7422651,
+      "longitude": 79.0175877,
+      "osm_id": 245584800,
+      "state": "Tamil Nadu",
+      "district": "Ramanathapuram"
+    },
+    "THRUVANMIYUR": {
+      "name": "THRUVANMIYUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THURAIYUR BUS STAND": {
+      "name": "THURAIYUR BUS STAND",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THYAGARAYA NAGAR": {
+      "name": "THYAGARAYA NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "THYSAYANVILAI": {
+      "name": "THYSAYANVILAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TIRUCHENDUR": {
+      "name": "Tiruchendur",
+      "type": "town",
+      "latitude": 8.495568,
+      "longitude": 78.123324,
+      "osm_id": 3421197615,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TIRUNELVELI": {
+      "name": "Tirunelveli",
+      "type": "city",
+      "latitude": 8.7284271,
+      "longitude": 77.7112925,
+      "osm_id": 245581857,
+      "state": "Tamil Nadu",
+      "district": "Tenkasi"
+    },
+    "TIRUPATHI": {
+      "name": "TIRUPATHI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TIRUPATHUR (RMD)": {
+      "name": "TIRUPATHUR (RMD)",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TIRUPPUR": {
+      "name": "Tiruppur",
+      "type": "city",
+      "latitude": 11.1017815,
+      "longitude": 77.345192,
+      "osm_id": 4437851490,
+      "state": "Tamil Nadu",
+      "district": "Coimbatore"
+    },
+    "TIRUTHURAIPOONDI": {
+      "name": "TIRUTHURAIPOONDI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TIRUVALLUR": {
+      "name": "Tiruvallur",
+      "type": "town",
+      "latitude": 13.1394221,
+      "longitude": 79.9070839,
+      "osm_id": 335885603,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "TIRUVARUR": {
+      "name": "TIRUVARUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TODD HUNTER NAGAR": {
+      "name": "TODD HUNTER NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TOLLGATE": {
+      "name": "Tollgate",
+      "type": "neighborhood",
+      "latitude": 13.1429527,
+      "longitude": 80.2955738,
+      "osm_id": 289687358,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "TONDIARPET": {
+      "name": "Tondiarpet",
+      "type": "suburb",
+      "latitude": 13.1277669,
+      "longitude": 80.2895845,
+      "osm_id": 282001734,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "TRICHY": {
+      "name": "TRICHY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Trichy"
+    },
+    "TRIPLICANE": {
+      "name": "Triplicane",
+      "type": "suburb",
+      "latitude": 13.0604285,
+      "longitude": 80.2750704,
+      "osm_id": 247689792,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "TRISSUR": {
+      "name": "TRISSUR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "TRIVANDRUM": {
+      "name": "TRIVANDRUM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "URANIPURAM": {
+      "name": "Uranipuram",
+      "type": "village",
+      "latitude": 10.494532,
+      "longitude": 79.1937158,
+      "osm_id": 10607850745,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "USILAMPATTI": {
+      "name": "Usilampatti",
+      "type": "hamlet",
+      "latitude": 10.6797026,
+      "longitude": 78.9103289,
+      "osm_id": 10312960375,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "UTHUKOTTAI": {
+      "name": "Uthukottai",
+      "type": "town",
+      "latitude": 13.3342334,
+      "longitude": 79.8910439,
+      "osm_id": 6211766617,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "VADAKKU MALAIAMBAKKA": {
+      "name": "VADAKKU MALAIAMBAKKA",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VADANEMILI": {
+      "name": "VADANEMILI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VADATHUR COLONY": {
+      "name": "VADATHUR COLONY",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VALASARAVAKKAM": {
+      "name": "Valasaravakkam",
+      "type": "suburb",
+      "latitude": 13.0410164,
+      "longitude": 80.1721682,
+      "osm_id": 294073565,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "VALLALAR NAGAR": {
+      "name": "Vallalar Nagar",
+      "type": "suburb",
+      "latitude": 13.1019255,
+      "longitude": 80.2787773,
+      "osm_id": 248560791,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "VARUSANADU": {
+      "name": "VARUSANADU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VAZHUTHIGAIMEDU": {
+      "name": "VAZHUTHIGAIMEDU",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VEDARANYAM": {
+      "name": "Vedaranyam",
+      "type": "town",
+      "latitude": 10.3750072,
+      "longitude": 79.8489418,
+      "osm_id": 1853006891,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VEERACHOLAN": {
+      "name": "VEERACHOLAN",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VEERAPURAM GOVT SCHO": {
+      "name": "VEERAPURAM GOVT SCHO",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VEL TECH": {
+      "name": "VEL TECH",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VELACHERY": {
+      "name": "Velachery",
+      "type": "village",
+      "latitude": 10.7457411,
+      "longitude": 79.5039038,
+      "osm_id": 10973904709,
+      "state": "Tamil Nadu",
+      "district": "Thanjavur"
+    },
+    "VELACHERY HOSPITAL": {
+      "name": "VELACHERY HOSPITAL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VELACHERY VIJAYA NAGAR": {
+      "name": "VELACHERY VIJAYA NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VELANKANNI": {
+      "name": "Velankanni",
+      "type": "town",
+      "latitude": 10.6821882,
+      "longitude": 79.8481424,
+      "osm_id": 705159579,
+      "state": "Tamil Nadu",
+      "district": "Nagapattinam"
+    },
+    "VELLAVEDU": {
+      "name": "Vellavedu",
+      "type": "village",
+      "latitude": 13.0668482,
+      "longitude": 80.0364489,
+      "osm_id": 294073766,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "VELLORE": {
+      "name": "Vellore",
+      "type": "village",
+      "latitude": 13.4108641,
+      "longitude": 79.8043571,
+      "osm_id": 5518559784,
+      "state": "Tamil Nadu",
+      "district": "Vellore"
+    },
+    "VENBAKKAM": {
+      "name": "VENBAKKAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VENGAL": {
+      "name": "Vengal",
+      "type": "village",
+      "latitude": 13.2524417,
+      "longitude": 80.0132151,
+      "osm_id": 359136142,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "VENKADAMANGALAM": {
+      "name": "VENKADAMANGALAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VENKATACHALAM NAGAR": {
+      "name": "VENKATACHALAM NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VEPPAMPATTU E.WARAN NAGAR": {
+      "name": "VEPPAMPATTU E.WARAN NAGAR",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VEPPAMPATTU R.S": {
+      "name": "VEPPAMPATTU R.S",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VICHOOR": {
+      "name": "Vichoor",
+      "type": "village",
+      "latitude": 10.0217484,
+      "longitude": 79.2089328,
+      "osm_id": 5204909399,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "VILLIVAKKAM": {
+      "name": "Villivakkam",
+      "type": "suburb",
+      "latitude": 13.1125875,
+      "longitude": 80.2081378,
+      "osm_id": 248559761,
+      "state": "Tamil Nadu",
+      "district": "Chennai"
+    },
+    "VILLUPURAM": {
+      "name": "VILLUPURAM",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Villupuram"
+    },
+    "VINAYAGAPURAM": {
+      "name": "Vinayagapuram",
+      "type": "hamlet",
+      "latitude": 11.367145,
+      "longitude": 77.8192408,
+      "osm_id": 12397809915,
+      "state": "Tamil Nadu",
+      "district": "Erode"
+    },
+    "VIVEKANANDA HOUSE": {
+      "name": "VIVEKANANDA HOUSE",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "W.SAIDAPET PARSN NAG": {
+      "name": "W.SAIDAPET PARSN NAG",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "WALAJABATH": {
+      "name": "WALAJABATH",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "Y.M.C.A KALLUKUTTAI": {
+      "name": "Y.M.C.A KALLUKUTTAI",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    },
+    "YMCA HR. SCHOOL": {
+      "name": "YMCA HR. SCHOOL",
+      "type": "bus_stop",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "osm_id": null,
+      "state": "Tamil Nadu",
+      "district": "Unknown"
+    }
+  },
+  "fuzzy_matches": {
+    "ADYAR B.S": {
+      "matched_to": "ADYAR",
+      "score": 0.71,
+      "location_data": {
+        "name": "Adyar",
+        "type": "suburb",
+        "latitude": 13.00645,
+        "longitude": 80.2577791,
+        "osm_id": 249497711,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "AGARAMTHEN": {
+      "matched_to": "AGARAM",
+      "score": 0.75,
+      "location_data": {
+        "name": "Agaram",
+        "type": "hamlet",
+        "latitude": 11.3850962,
+        "longitude": 78.0127909,
+        "osm_id": 11739250316,
+        "state": "Tamil Nadu",
+        "district": "Erode"
+      }
+    },
+    "AMARAMBEDU EAST": {
+      "matched_to": "AMARAMBEDU",
+      "score": 0.8,
+      "location_data": {
+        "name": "Amarambedu",
+        "type": "village",
+        "latitude": 12.9575815,
+        "longitude": 80.0194768,
+        "osm_id": 331915784,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "AMBATTUR I.E": {
+      "matched_to": "AMBATTUR",
+      "score": 0.8,
+      "location_data": {
+        "name": "Ambattur",
+        "type": "suburb",
+        "latitude": 13.1193746,
+        "longitude": 80.1507648,
+        "osm_id": 262308390,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "AMBATTUR R.S": {
+      "matched_to": "AMBATTUR",
+      "score": 0.8,
+      "location_data": {
+        "name": "Ambattur",
+        "type": "suburb",
+        "latitude": 13.1193746,
+        "longitude": 80.1507648,
+        "osm_id": 262308390,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "AVADI B.S": {
+      "matched_to": "AVADI",
+      "score": 0.71,
+      "location_data": {
+        "name": "Avadi",
+        "type": "city",
+        "latitude": 13.1194809,
+        "longitude": 80.1026704,
+        "osm_id": 245617971,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "AYANAVARAM B.S": {
+      "matched_to": "AYANAVARAM",
+      "score": 0.83,
+      "location_data": {
+        "name": "Ayanavaram",
+        "type": "suburb",
+        "latitude": 13.0946157,
+        "longitude": 80.23541,
+        "osm_id": 257937905,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "AYAPPAKKAM TNHB": {
+      "matched_to": "AYAPPAKKAM",
+      "score": 0.8,
+      "location_data": {
+        "name": "Ayappakkam",
+        "type": "village",
+        "latitude": 12.5057641,
+        "longitude": 80.1129406,
+        "osm_id": 5131606480,
+        "state": "Tamil Nadu",
+        "district": "Chengalpattu"
+      }
+    },
+    "CHROMEPET ESI": {
+      "matched_to": "CHROMEPET",
+      "score": 0.82,
+      "location_data": {
+        "name": "Chromepet",
+        "type": "suburb",
+        "latitude": 12.9496841,
+        "longitude": 80.135642,
+        "osm_id": 256197927,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "DURGA NAGAR": {
+      "matched_to": "DURGA NAGAR COLONY",
+      "score": 0.76,
+      "location_data": {
+        "name": "Durga Nagar Colony",
+        "type": "village",
+        "latitude": 13.1943586,
+        "longitude": 79.0869287,
+        "osm_id": 12385578620,
+        "state": "Tamil Nadu",
+        "district": "Vellore"
+      }
+    },
+    "GEMINI P.H": {
+      "matched_to": "GEMINI",
+      "score": 0.75,
+      "location_data": {
+        "name": "Gemini",
+        "type": "neighborhood",
+        "latitude": 13.0521036,
+        "longitude": 80.2500075,
+        "osm_id": 301758149,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "GUINDY G.H": {
+      "matched_to": "GUINDY",
+      "score": 0.75,
+      "location_data": {
+        "name": "Guindy",
+        "type": "suburb",
+        "latitude": 13.0087095,
+        "longitude": 80.2203646,
+        "osm_id": 249497729,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "GUINDY R.S": {
+      "matched_to": "GUINDY",
+      "score": 0.75,
+      "location_data": {
+        "name": "Guindy",
+        "type": "suburb",
+        "latitude": 13.0087095,
+        "longitude": 80.2203646,
+        "osm_id": 249497729,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "KALLIKUPPAM": {
+      "matched_to": "KALLIKUPPA",
+      "score": 0.95,
+      "location_data": {
+        "name": "Kallikuppa",
+        "type": "village",
+        "latitude": 13.0551657,
+        "longitude": 78.317036,
+        "osm_id": 3829748853,
+        "state": "Tamil Nadu",
+        "district": "Unknown"
+      }
+    },
+    "KANNAGI NAGAR TNUHDB": {
+      "matched_to": "KANNAGI NAGAR",
+      "score": 0.79,
+      "location_data": {
+        "name": "Kannagi Nagar",
+        "type": "neighborhood",
+        "latitude": 12.927645,
+        "longitude": 80.2396671,
+        "osm_id": 401654480,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "KARUKKU": {
+      "matched_to": "KARUKKUDI",
+      "score": 0.88,
+      "location_data": {
+        "name": "Karukkudi",
+        "type": "village",
+        "latitude": 11.1915793,
+        "longitude": 79.7568262,
+        "osm_id": 9404349013,
+        "state": "Tamil Nadu",
+        "district": "Nagapattinam"
+      }
+    },
+    "KATTUPALLI": {
+      "matched_to": "KATTUPALLI PORT",
+      "score": 0.8,
+      "location_data": {
+        "name": "Kattupalli Port",
+        "type": "neighborhood",
+        "latitude": 13.3049382,
+        "longitude": 80.3396701,
+        "osm_id": 8292254110,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "KORUKKUPET R.S": {
+      "matched_to": "KORUKKUPET",
+      "score": 0.83,
+      "location_data": {
+        "name": "Korukkupet",
+        "type": "suburb",
+        "latitude": 13.1215344,
+        "longitude": 80.2837912,
+        "osm_id": 289741260,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "KOTTURPURAM R.S.": {
+      "matched_to": "KOTTURPURAM",
+      "score": 0.81,
+      "location_data": {
+        "name": "Kotturpuram",
+        "type": "suburb",
+        "latitude": 13.0193703,
+        "longitude": 80.2435512,
+        "osm_id": 249497870,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "KUMILI": {
+      "matched_to": "KUMILIYAM",
+      "score": 0.8,
+      "location_data": {
+        "name": "Kumiliyam",
+        "type": "village",
+        "latitude": 11.1894443,
+        "longitude": 79.2370973,
+        "osm_id": 11255486913,
+        "state": "Tamil Nadu",
+        "district": "Ariyalur"
+      }
+    },
+    "KUNDRATHUR B.S": {
+      "matched_to": "KUNDRATHUR",
+      "score": 0.83,
+      "location_data": {
+        "name": "Kundrathur",
+        "type": "town",
+        "latitude": 12.9957704,
+        "longitude": 80.0973114,
+        "osm_id": 294073627,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "KUNDRATHUR MURUGAN": {
+      "matched_to": "KUNDRATHUR",
+      "score": 0.71,
+      "location_data": {
+        "name": "Kundrathur",
+        "type": "town",
+        "latitude": 12.9957704,
+        "longitude": 80.0973114,
+        "osm_id": 294073627,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "MADHAVARAM B.S": {
+      "matched_to": "MADHAVARA",
+      "score": 0.78,
+      "location_data": {
+        "name": "Madhavara",
+        "type": "suburb",
+        "latitude": 13.0531988,
+        "longitude": 77.4729679,
+        "osm_id": 503002366,
+        "state": "Tamil Nadu",
+        "district": "Unknown"
+      }
+    },
+    "MADHAVARAM VILLAGE": {
+      "matched_to": "MADHAVARAM",
+      "score": 0.71,
+      "location_data": {
+        "name": "Madhavaram",
+        "type": "suburb",
+        "latitude": 13.1429313,
+        "longitude": 80.2325166,
+        "osm_id": 321661517,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MADIPAKKAM B.S": {
+      "matched_to": "MADIPAKKAM",
+      "score": 0.83,
+      "location_data": {
+        "name": "Madipakkam",
+        "type": "suburb",
+        "latitude": 12.9611348,
+        "longitude": 80.2001292,
+        "osm_id": 278544356,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MADURAVOYAL ERIKARAI": {
+      "matched_to": "MADURAVOYAL",
+      "score": 0.71,
+      "location_data": {
+        "name": "Maduravoyal",
+        "type": "suburb",
+        "latitude": 13.0601732,
+        "longitude": 80.1665988,
+        "osm_id": 294073566,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MANNIVAKKAM RD.JN.": {
+      "matched_to": "MANNIVAKKAM",
+      "score": 0.76,
+      "location_data": {
+        "name": "Mannivakkam",
+        "type": "suburb",
+        "latitude": 12.8943694,
+        "longitude": 80.0652271,
+        "osm_id": 340358334,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "MANNIVAKKAM W.TANK": {
+      "matched_to": "MANNIVAKKAM",
+      "score": 0.76,
+      "location_data": {
+        "name": "Mannivakkam",
+        "type": "suburb",
+        "latitude": 12.8943694,
+        "longitude": 80.0652271,
+        "osm_id": 340358334,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "MARAIMALAI NAGAR I.E.": {
+      "matched_to": "MARAIMALAI NAGAR",
+      "score": 0.86,
+      "location_data": {
+        "name": "Maraimalai Nagar",
+        "type": "town",
+        "latitude": 12.7958223,
+        "longitude": 80.0269097,
+        "osm_id": 1180849763,
+        "state": "Tamil Nadu",
+        "district": "Chengalpattu"
+      }
+    },
+    "MEDAVAKKAM KOOT RD": {
+      "matched_to": "MEDAVAKKAM",
+      "score": 0.71,
+      "location_data": {
+        "name": "Medavakkam",
+        "type": "suburb",
+        "latitude": 12.9229928,
+        "longitude": 80.1882897,
+        "osm_id": 256197949,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MINJUR NT": {
+      "matched_to": "MINJUR",
+      "score": 0.8,
+      "location_data": {
+        "name": "Minjur",
+        "type": "town",
+        "latitude": 13.2786146,
+        "longitude": 80.2577671,
+        "osm_id": 344709755,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MUGALIVAKKAM AGSCO": {
+      "matched_to": "MUGALIVAKKAM",
+      "score": 0.8,
+      "location_data": {
+        "name": "Mugalivakkam",
+        "type": "village",
+        "latitude": 13.0205798,
+        "longitude": 80.1685163,
+        "osm_id": 294073614,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MUGALIVAKKAM MM KOIL": {
+      "matched_to": "MUGALIVAKKAM",
+      "score": 0.75,
+      "location_data": {
+        "name": "Mugalivakkam",
+        "type": "village",
+        "latitude": 13.0205798,
+        "longitude": 80.1685163,
+        "osm_id": 294073614,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "MURUGAMANGALAM TNUHDB": {
+      "matched_to": "MURUGAMANGALAM",
+      "score": 0.8,
+      "location_data": {
+        "name": "Murugamangalam",
+        "type": "village",
+        "latitude": 11.1156644,
+        "longitude": 79.5549631,
+        "osm_id": 9323612387,
+        "state": "Tamil Nadu",
+        "district": "Nagapattinam"
+      }
+    },
+    "MYLAPORE TANK": {
+      "matched_to": "MYLAPORE",
+      "score": 0.76,
+      "location_data": {
+        "name": "Mylapore",
+        "type": "suburb",
+        "latitude": 13.0316473,
+        "longitude": 80.2700166,
+        "osm_id": 247677540,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "NANDAMBAKKAM VILLAGE": {
+      "matched_to": "NANDAMBAKKAM",
+      "score": 0.75,
+      "location_data": {
+        "name": "Nandambakkam",
+        "type": "suburb",
+        "latitude": 13.0166484,
+        "longitude": 80.1911885,
+        "osm_id": 294073575,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "NUNGAMBAKKAM R.S": {
+      "matched_to": "NUNGAMBAKKAM",
+      "score": 0.86,
+      "location_data": {
+        "name": "Nungambakkam",
+        "type": "suburb",
+        "latitude": 13.0620626,
+        "longitude": 80.240487,
+        "osm_id": 247688962,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "PADURMEDU": {
+      "matched_to": "PADUR",
+      "score": 0.71,
+      "location_data": {
+        "name": "Padur",
+        "type": "suburb",
+        "latitude": 12.8052162,
+        "longitude": 80.2240356,
+        "osm_id": 9942141872,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "PALLAVARAM R.S": {
+      "matched_to": "PALLAVARAM",
+      "score": 0.83,
+      "location_data": {
+        "name": "Pallavaram",
+        "type": "suburb",
+        "latitude": 12.9654669,
+        "longitude": 80.1451178,
+        "osm_id": 256197928,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "PAPANASAM-TNV": {
+      "matched_to": "PAPANASAM",
+      "score": 0.82,
+      "location_data": {
+        "name": "Papanasam",
+        "type": "village",
+        "latitude": 8.7130312,
+        "longitude": 77.3674487,
+        "osm_id": 979028532,
+        "state": "Tamil Nadu",
+        "district": "Tenkasi"
+      }
+    },
+    "PERAMBAKKAM L.N.KOIL": {
+      "matched_to": "PERAMBAKKAM",
+      "score": 0.71,
+      "location_data": {
+        "name": "Perambakkam",
+        "type": "village",
+        "latitude": 13.0377208,
+        "longitude": 79.8133227,
+        "osm_id": 2124729407,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "PERAMBUR B.S": {
+      "matched_to": "PERAMBUR",
+      "score": 0.8,
+      "location_data": {
+        "name": "Perambur",
+        "type": "suburb",
+        "latitude": 13.1121242,
+        "longitude": 80.245022,
+        "osm_id": 248560758,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "PERUMBAKKAM COLLEGE": {
+      "matched_to": "PERUMBAKKAM",
+      "score": 0.73,
+      "location_data": {
+        "name": "Perumbakkam",
+        "type": "suburb",
+        "latitude": 12.9050095,
+        "longitude": 80.1968629,
+        "osm_id": 256197952,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "PERUMBEDUKUPPAM": {
+      "matched_to": "PERUMBEDU",
+      "score": 0.75,
+      "location_data": {
+        "name": "Perumbedu",
+        "type": "village",
+        "latitude": 13.3576349,
+        "longitude": 80.2424233,
+        "osm_id": 5229866621,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "POONAMALLEE B.S": {
+      "matched_to": "POONAMALLEE",
+      "score": 0.85,
+      "location_data": {
+        "name": "Poonamallee",
+        "type": "town",
+        "latitude": 13.0492031,
+        "longitude": 80.1010677,
+        "osm_id": 243327788,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "SAIDAPET WEST": {
+      "matched_to": "SAIDAPET",
+      "score": 0.76,
+      "location_data": {
+        "name": "Saidapet",
+        "type": "suburb",
+        "latitude": 13.020817,
+        "longitude": 80.2239536,
+        "osm_id": 247689106,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "SECRETARIAT": {
+      "matched_to": "SECRETARIAT COLONY",
+      "score": 0.76,
+      "location_data": {
+        "name": "Secretariat Colony",
+        "type": "neighborhood",
+        "latitude": 13.0894501,
+        "longitude": 80.2428196,
+        "osm_id": 618743795,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "THAMARAIPAKKAM KOOT RD": {
+      "matched_to": "THAMARAIPAKKAM",
+      "score": 0.78,
+      "location_data": {
+        "name": "Thamaraipakkam",
+        "type": "village",
+        "latitude": 13.2200491,
+        "longitude": 80.0321236,
+        "osm_id": 359134094,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "THIRUMANGALAM METRO R.S": {
+      "matched_to": "THIRUMANGALAM",
+      "score": 0.72,
+      "location_data": {
+        "name": "Thirumangalam",
+        "type": "hamlet",
+        "latitude": 11.4304135,
+        "longitude": 77.9383932,
+        "osm_id": 12397870806,
+        "state": "Tamil Nadu",
+        "district": "Erode"
+      }
+    },
+    "THIRUMUDIVAKKAM SIDCO": {
+      "matched_to": "THIRUMUDIVAKKAM",
+      "score": 0.83,
+      "location_data": {
+        "name": "Thirumudivakkam",
+        "type": "village",
+        "latitude": 12.9646786,
+        "longitude": 80.0817377,
+        "osm_id": 301134399,
+        "state": "Tamil Nadu",
+        "district": "Kanchipuram"
+      }
+    },
+    "THIRUVANMIYUR R.S": {
+      "matched_to": "THIRUVANMIYUR",
+      "score": 0.87,
+      "location_data": {
+        "name": "Thiruvanmiyur",
+        "type": "suburb",
+        "latitude": 12.9858948,
+        "longitude": 80.2644215,
+        "osm_id": 249497808,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "TONDIARPET-I": {
+      "matched_to": "TONDIARPET",
+      "score": 0.91,
+      "location_data": {
+        "name": "Tondiarpet",
+        "type": "suburb",
+        "latitude": 13.1277669,
+        "longitude": 80.2895845,
+        "osm_id": 282001734,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "TONDIARPET-II": {
+      "matched_to": "TONDIARPET",
+      "score": 0.87,
+      "location_data": {
+        "name": "Tondiarpet",
+        "type": "suburb",
+        "latitude": 13.1277669,
+        "longitude": 80.2895845,
+        "osm_id": 282001734,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    },
+    "TUTICORIN": {
+      "matched_to": "TUTICORIN PORT",
+      "score": 0.78,
+      "location_data": {
+        "name": "Tuticorin Port",
+        "type": "suburb",
+        "latitude": 8.7557474,
+        "longitude": 78.1777553,
+        "osm_id": 978834667,
+        "state": "Tamil Nadu",
+        "district": "Unknown"
+      }
+    },
+    "VADAPALANI B.S": {
+      "matched_to": "VADAPALANI",
+      "score": 0.83,
+      "location_data": {
+        "name": "Vadapalani",
+        "type": "hamlet",
+        "latitude": 10.99001,
+        "longitude": 77.85194,
+        "osm_id": 11579599216,
+        "state": "Tamil Nadu",
+        "district": "Karur"
+      }
+    },
+    "VELACHERY MRTS": {
+      "matched_to": "VELACHERY",
+      "score": 0.78,
+      "location_data": {
+        "name": "Velachery",
+        "type": "village",
+        "latitude": 10.7457411,
+        "longitude": 79.5039038,
+        "osm_id": 10973904709,
+        "state": "Tamil Nadu",
+        "district": "Thanjavur"
+      }
+    },
+    "VENGAMBAKKAM / V.RD JN": {
+      "matched_to": "VENGAMBAKKAM",
+      "score": 0.71,
+      "location_data": {
+        "name": "Vengambakkam",
+        "type": "neighborhood",
+        "latitude": 12.8678177,
+        "longitude": 80.1273273,
+        "osm_id": 332382632,
+        "state": "Tamil Nadu",
+        "district": "Chennai"
+      }
+    }
+  },
+  "missing_locations": [],
+  "recommendations": [
+    "⚠️  11 locations have low confidence fuzzy matches (< 75%)",
+    "   Please review these manually:",
+    "   - 'ADYAR B.S' → 'ADYAR' (confidence: 0.71)",
+    "   - 'AVADI B.S' → 'AVADI' (confidence: 0.71)",
+    "   - 'KUNDRATHUR MURUGAN' → 'KUNDRATHUR' (confidence: 0.71)",
+    "   - 'MADHAVARAM VILLAGE' → 'MADHAVARAM' (confidence: 0.71)",
+    "   - 'MADURAVOYAL ERIKARAI' → 'MADURAVOYAL' (confidence: 0.71)"
+  ]
+}

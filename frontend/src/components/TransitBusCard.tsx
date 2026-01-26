@@ -328,7 +328,7 @@ const TransitBusCard: React.FC<TransitBusCardProps> = ({
         {/* Bus Info Row - Number and Type on same line */}
         <div className="bus-info-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <div className="bus-number-display">
-            {bus.busNumber || bus.busName || 'Bus'}
+            {bus.name ? `${bus.name} • ${bus.busNumber || bus.busName || 'Bus'}` : (bus.busNumber || bus.busName || 'Bus')}
           </div>
           <div className="bus-type-display" style={{ 
             backgroundColor: `${busTypeInfo.color}20`, 

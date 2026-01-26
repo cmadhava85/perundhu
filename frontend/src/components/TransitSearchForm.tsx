@@ -11,6 +11,9 @@ import {
   type LocationData,
   type ValidationResult 
 } from '../utils/validationService';
+import { 
+  normalizeLocationName
+} from '../utils/locationNormalizer';
 import '../styles/premium-design-system.css';
 import '../styles/transit-design-system.css';
 
@@ -349,18 +352,51 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     setValidationError(null);
     
     // Try to find matching locations from the database
-    const selectedFrom = selectedFromLocation || locations.find(loc => 
-      loc.name.toLowerCase() === fromQuery.toLowerCase() ||
-      loc.translatedName?.toLowerCase() === fromQuery.toLowerCase() ||
-      loc.name.toLowerCase().includes(fromQuery.toLowerCase()) ||
-      fromQuery.toLowerCase().includes(loc.name.toLowerCase())
-    );
-    const selectedTo = selectedToLocation || locations.find(loc => 
-      loc.name.toLowerCase() === toQuery.toLowerCase() ||
-      loc.translatedName?.toLowerCase() === toQuery.toLowerCase() ||
-      loc.name.toLowerCase().includes(toQuery.toLowerCase()) ||
-      toQuery.toLowerCase().includes(loc.name.toLowerCase())
-    );
+    // First check if already selected
+    let selectedFrom = selectedFromLocation;
+    let selectedTo = selectedToLocation;
+    
+    // If not already selected, try to find by normalized name
+    // This allows "Besant Nagar MTC Terminus" to match "Besant Nagar" in database
+    if (!selectedFrom && fromQuery.trim()) {
+      const normalizedQuery = normalizeLocationName(fromQuery.toLowerCase());
+      
+      // Try exact match first with normalization
+      selectedFrom = locations.find(loc => 
+        normalizeLocationName(loc.name.toLowerCase()) === normalizedQuery ||
+        normalizeLocationName(loc.translatedName?.toLowerCase() || '').toLowerCase() === normalizedQuery
+      );
+      
+      // If no exact match, try partial match
+      if (!selectedFrom) {
+        selectedFrom = locations.find(loc => 
+          loc.name.toLowerCase().includes(normalizedQuery) ||
+          normalizedQuery.includes(loc.name.toLowerCase()) ||
+          loc.translatedName?.toLowerCase().includes(normalizedQuery) ||
+          normalizedQuery.includes(loc.translatedName?.toLowerCase() || '')
+        );
+      }
+    }
+    
+    if (!selectedTo && toQuery.trim()) {
+      const normalizedQuery = normalizeLocationName(toQuery.toLowerCase());
+      
+      // Try exact match first with normalization
+      selectedTo = locations.find(loc => 
+        normalizeLocationName(loc.name.toLowerCase()) === normalizedQuery ||
+        normalizeLocationName(loc.translatedName?.toLowerCase() || '').toLowerCase() === normalizedQuery
+      );
+      
+      // If no exact match, try partial match
+      if (!selectedTo) {
+        selectedTo = locations.find(loc => 
+          loc.name.toLowerCase().includes(normalizedQuery) ||
+          normalizedQuery.includes(loc.name.toLowerCase()) ||
+          loc.translatedName?.toLowerCase().includes(normalizedQuery) ||
+          normalizedQuery.includes(loc.translatedName?.toLowerCase() || '')
+        );
+      }
+    }
     
     // Validation 1: Check if origin is selected from list (not just typed)
     if (!selectedFrom && fromQuery.trim().length > 0) {

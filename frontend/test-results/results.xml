@@ -1,38 +1,8 @@
-<testsuites id="" name="" tests="98" failures="17" skipped="36" errors="0" time="101.21254800000041">
-<testsuite name="complete-user-journey.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="9" failures="0" skipped="0" time="56.222" errors="0">
-<testcase name="Complete User Journey - Search to Results › should complete full search flow: type locations → search → see results" classname="complete-user-journey.spec.ts" time="11.429">
-</testcase>
-<testcase name="Bus List Interactions › should expand bus row and show stops when clicked" classname="complete-user-journey.spec.ts" time="5.221">
-</testcase>
-<testcase name="Bus List Interactions › should show map with stops markers when bus is expanded" classname="complete-user-journey.spec.ts" time="5.223">
-</testcase>
-<testcase name="Sorting Features › should sort buses by different criteria" classname="complete-user-journey.spec.ts" time="5.259">
-</testcase>
-<testcase name="Sorting Features › should highlight active sort option" classname="complete-user-journey.spec.ts" time="5.154">
-</testcase>
-<testcase name="Edit Search and Refetch › should allow editing search and fetch new results" classname="complete-user-journey.spec.ts" time="5.239">
-</testcase>
-<testcase name="Additional User Scenarios › should handle no results gracefully" classname="complete-user-journey.spec.ts" time="6.083">
-</testcase>
-<testcase name="Additional User Scenarios › should filter buses by type if filter available" classname="complete-user-journey.spec.ts" time="6.265">
-</testcase>
-<testcase name="Additional User Scenarios › should show bus details like fare, duration, stops count" classname="complete-user-journey.spec.ts" time="6.349">
-</testcase>
-</testsuite>
-<testsuite name="connectivity.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="4" failures="0" skipped="0" time="17.016" errors="0">
-<testcase name="Application Connectivity › should load the application successfully" classname="connectivity.spec.ts" time="6.154">
-</testcase>
-<testcase name="Application Connectivity › should display search inputs on homepage" classname="connectivity.spec.ts" time="6.808">
-</testcase>
-<testcase name="Application Connectivity › should allow user interactions" classname="connectivity.spec.ts" time="2.646">
-</testcase>
-<testcase name="Application Connectivity › should not have critical console errors" classname="connectivity.spec.ts" time="1.408">
-</testcase>
-</testsuite>
-<testsuite name="search-flow.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="6" failures="5" skipped="0" time="59.038" errors="0">
-<testcase name="Search and Results Flow › should display search form on homepage" classname="search-flow.spec.ts" time="12.545">
-<failure message="search-flow.spec.ts:10:3 should display search form on homepage" type="FAILURE">
-<![CDATA[  [chromium] › search-flow.spec.ts:10:3 › Search and Results Flow › should display search form on homepage 
+<testsuites id="" name="" tests="108" failures="4" skipped="17" errors="0" time="153.55061500000022">
+<testsuite name="complete-user-journey.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="9" failures="1" skipped="0" time="127.216" errors="0">
+<testcase name="Complete User Journey - Search to Results › should complete full search flow: type locations → search → see results" classname="complete-user-journey.spec.ts" time="18.057">
+<failure message="complete-user-journey.spec.ts:5:3 should complete full search flow: type locations → search → see results" type="FAILURE">
+<![CDATA[  [chromium] › complete-user-journey.spec.ts:5:3 › Complete User Journey - Search to Results › should complete full search flow: type locations → search → see results 
 
     Error: expect(locator).toBeVisible() failed
 
@@ -46,722 +16,242 @@
       - waiting for locator('input[placeholder*="departure"]').first()
 
 
-      16 |     const toInput = page.locator('input[placeholder*="destination"]').first();
+      13 |     
+      14 |     // Verify inputs are visible
+    > 15 |     await expect(fromInput).toBeVisible({ timeout: 10000 });
+         |                             ^
+      16 |     await expect(toInput).toBeVisible({ timeout: 10000 });
       17 |     
-    > 18 |     await expect(fromInput).toBeVisible({ timeout: 10000 });
-         |                             ^
-      19 |     await expect(toInput).toBeVisible({ timeout: 10000 });
-      20 |   });
-      21 |
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/search-flow.spec.ts:18:29
+      18 |     // Type locations
+        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/complete-user-journey.spec.ts:15:29
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-714f3-lay-search-form-on-homepage-chromium/test-failed-1.png
+    ../../test-results/complete-user-journey-Comp-8b843-ions-→-search-→-see-results-chromium/test-failed-1.png
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
     attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-714f3-lay-search-form-on-homepage-chromium/video.webm
+    ../../test-results/complete-user-journey-Comp-8b843-ions-→-search-→-see-results-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-    Error Context: ../../test-results/search-flow-Search-and-Res-714f3-lay-search-form-on-homepage-chromium/error-context.md
+    Error Context: ../../test-results/complete-user-journey-Comp-8b843-ions-→-search-→-see-results-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
-[[ATTACHMENT|search-flow-Search-and-Res-714f3-lay-search-form-on-homepage-chromium/test-failed-1.png]]
+[[ATTACHMENT|complete-user-journey-Comp-8b843-ions-→-search-→-see-results-chromium/test-failed-1.png]]
 
-[[ATTACHMENT|search-flow-Search-and-Res-714f3-lay-search-form-on-homepage-chromium/video.webm]]
+[[ATTACHMENT|complete-user-journey-Comp-8b843-ions-→-search-→-see-results-chromium/video.webm]]
 
-[[ATTACHMENT|search-flow-Search-and-Res-714f3-lay-search-form-on-homepage-chromium/error-context.md]]
+[[ATTACHMENT|complete-user-journey-Comp-8b843-ions-→-search-→-see-results-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Search and Results Flow › should allow typing in search inputs" classname="search-flow.spec.ts" time="12.547">
-<failure message="search-flow.spec.ts:22:3 should allow typing in search inputs" type="FAILURE">
-<![CDATA[  [chromium] › search-flow.spec.ts:22:3 › Search and Results Flow › should allow typing in search inputs 
+<testcase name="Bus List Interactions › should expand bus row and show stops when clicked" classname="complete-user-journey.spec.ts" time="17.471">
+</testcase>
+<testcase name="Bus List Interactions › should show map with stops markers when bus is expanded" classname="complete-user-journey.spec.ts" time="17.176">
+</testcase>
+<testcase name="Sorting Features › should sort buses by different criteria" classname="complete-user-journey.spec.ts" time="17.485">
+</testcase>
+<testcase name="Sorting Features › should highlight active sort option" classname="complete-user-journey.spec.ts" time="17.137">
+</testcase>
+<testcase name="Edit Search and Refetch › should allow editing search and fetch new results" classname="complete-user-journey.spec.ts" time="16.855">
+</testcase>
+<testcase name="Additional User Scenarios › should handle no results gracefully" classname="complete-user-journey.spec.ts" time="5.827">
+</testcase>
+<testcase name="Additional User Scenarios › should filter buses by type if filter available" classname="complete-user-journey.spec.ts" time="11.526">
+</testcase>
+<testcase name="Additional User Scenarios › should show bus details like fare, duration, stops count" classname="complete-user-journey.spec.ts" time="5.682">
+</testcase>
+</testsuite>
+<testsuite name="connectivity.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="4" failures="1" skipped="0" time="25.075" errors="0">
+<testcase name="Application Connectivity › should load the application successfully" classname="connectivity.spec.ts" time="4.552">
+</testcase>
+<testcase name="Application Connectivity › should display search inputs on homepage" classname="connectivity.spec.ts" time="6.294">
+</testcase>
+<testcase name="Application Connectivity › should allow user interactions" classname="connectivity.spec.ts" time="6.445">
+</testcase>
+<testcase name="Application Connectivity › should not have critical console errors" classname="connectivity.spec.ts" time="7.784">
+<failure message="connectivity.spec.ts:43:3 should not have critical console errors" type="FAILURE">
+<![CDATA[  [chromium] › connectivity.spec.ts:43:3 › Application Connectivity › should not have critical console errors 
 
-    TimeoutError: locator.fill: Timeout 10000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"]').first()
+    Error: expect(received).toBe(expected) // Object.is equality
 
+    Expected: 0
+    Received: 3
 
-      25 |     
-      26 |     // Type location names
-    > 27 |     await fromInput.fill('Chennai');
-         |                     ^
-      28 |     await toInput.fill('Coimbatore');
-      29 |     
-      30 |     // Verify values are set
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/search-flow.spec.ts:27:21
+      60 |     );
+      61 |     
+    > 62 |     expect(criticalErrors.length).toBe(0);
+         |                                   ^
+      63 |   });
+      64 | });
+      65 |
+        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/connectivity.spec.ts:62:35
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-d5ef9-low-typing-in-search-inputs-chromium/test-failed-1.png
+    ../../test-results/connectivity-Application-C-c1ad1-ave-critical-console-errors-chromium/test-failed-1.png
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
     attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-d5ef9-low-typing-in-search-inputs-chromium/video.webm
+    ../../test-results/connectivity-Application-C-c1ad1-ave-critical-console-errors-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-    Error Context: ../../test-results/search-flow-Search-and-Res-d5ef9-low-typing-in-search-inputs-chromium/error-context.md
+    Error Context: ../../test-results/connectivity-Application-C-c1ad1-ave-critical-console-errors-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
-[[ATTACHMENT|search-flow-Search-and-Res-d5ef9-low-typing-in-search-inputs-chromium/test-failed-1.png]]
+[[ATTACHMENT|connectivity-Application-C-c1ad1-ave-critical-console-errors-chromium/test-failed-1.png]]
 
-[[ATTACHMENT|search-flow-Search-and-Res-d5ef9-low-typing-in-search-inputs-chromium/video.webm]]
+[[ATTACHMENT|connectivity-Application-C-c1ad1-ave-critical-console-errors-chromium/video.webm]]
 
-[[ATTACHMENT|search-flow-Search-and-Res-d5ef9-low-typing-in-search-inputs-chromium/error-context.md]]
-]]>
-</system-out>
-</testcase>
-<testcase name="Search and Results Flow › should show location suggestions when typing" classname="search-flow.spec.ts" time="12.539">
-<failure message="search-flow.spec.ts:35:3 should show location suggestions when typing" type="FAILURE">
-<![CDATA[  [chromium] › search-flow.spec.ts:35:3 › Search and Results Flow › should show location suggestions when typing 
-
-    TimeoutError: locator.click: Timeout 10000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      37 |     
-      38 |     // Start typing
-    > 39 |     await fromInput.click();
-         |                     ^
-      40 |     await fromInput.fill('Chen');
-      41 |     
-      42 |     // Wait a bit for suggestions to appear
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/search-flow.spec.ts:39:21
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-b7a4d-ion-suggestions-when-typing-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-b7a4d-ion-suggestions-when-typing-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/search-flow-Search-and-Res-b7a4d-ion-suggestions-when-typing-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|search-flow-Search-and-Res-b7a4d-ion-suggestions-when-typing-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|search-flow-Search-and-Res-b7a4d-ion-suggestions-when-typing-chromium/video.webm]]
-
-[[ATTACHMENT|search-flow-Search-and-Res-b7a4d-ion-suggestions-when-typing-chromium/error-context.md]]
-]]>
-</system-out>
-</testcase>
-<testcase name="Search and Results Flow › should handle empty search gracefully" classname="search-flow.spec.ts" time="2.772">
-</testcase>
-<testcase name="Search and Results Flow › should work on mobile viewport" classname="search-flow.spec.ts" time="7.301">
-<failure message="search-flow.spec.ts:80:3 should work on mobile viewport" type="FAILURE">
-<![CDATA[  [chromium] › search-flow.spec.ts:80:3 › Search and Results Flow › should work on mobile viewport ─
-
-    Error: expect(locator).toBeVisible() failed
-
-    Locator: locator('input[placeholder*="departure"]').first()
-    Expected: visible
-    Timeout: 5000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toBeVisible" with timeout 5000ms
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      87 |     
-      88 |     // Verify mobile layout shows inputs
-    > 89 |     await expect(fromInput).toBeVisible();
-         |                             ^
-      90 |     await expect(toInput).toBeVisible();
-      91 |     
-      92 |     // Test interaction on mobile
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/search-flow.spec.ts:89:29
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-1db5c-uld-work-on-mobile-viewport-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-1db5c-uld-work-on-mobile-viewport-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/search-flow-Search-and-Res-1db5c-uld-work-on-mobile-viewport-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|search-flow-Search-and-Res-1db5c-uld-work-on-mobile-viewport-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|search-flow-Search-and-Res-1db5c-uld-work-on-mobile-viewport-chromium/video.webm]]
-
-[[ATTACHMENT|search-flow-Search-and-Res-1db5c-uld-work-on-mobile-viewport-chromium/error-context.md]]
-]]>
-</system-out>
-</testcase>
-<testcase name="Search and Results Flow › should preserve search inputs when navigating" classname="search-flow.spec.ts" time="11.334">
-<failure message="search-flow.spec.ts:97:3 should preserve search inputs when navigating" type="FAILURE">
-<![CDATA[  [chromium] › search-flow.spec.ts:97:3 › Search and Results Flow › should preserve search inputs when navigating 
-
-    TimeoutError: locator.fill: Timeout 10000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      100 |     
-      101 |     // Fill inputs
-    > 102 |     await fromInput.fill('Kolkata');
-          |                     ^
-      103 |     await toInput.fill('Mumbai');
-      104 |     
-      105 |     // Click somewhere else on the page
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/search-flow.spec.ts:102:21
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-caae3-arch-inputs-when-navigating-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/search-flow-Search-and-Res-caae3-arch-inputs-when-navigating-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/search-flow-Search-and-Res-caae3-arch-inputs-when-navigating-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|search-flow-Search-and-Res-caae3-arch-inputs-when-navigating-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|search-flow-Search-and-Res-caae3-arch-inputs-when-navigating-chromium/video.webm]]
-
-[[ATTACHMENT|search-flow-Search-and-Res-caae3-arch-inputs-when-navigating-chromium/error-context.md]]
+[[ATTACHMENT|connectivity-Application-C-c1ad1-ave-critical-console-errors-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="simple.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="4" failures="3" skipped="0" time="32.211" errors="0">
-<testcase name="Simple E2E Tests › page loads successfully" classname="simple.spec.ts" time="1.617">
-</testcase>
-<testcase name="Simple E2E Tests › search inputs are visible" classname="simple.spec.ts" time="10.976">
-<failure message="simple.spec.ts:11:3 search inputs are visible" type="FAILURE">
-<![CDATA[  [chromium] › simple.spec.ts:11:3 › Simple E2E Tests › search inputs are visible ──────────────────
+<testsuite name="phase3-enhanced.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="10" failures="1" skipped="0" time="51.83" errors="0">
+<testcase name="Phase 3: Enhanced User Journeys › Accessibility Compliance › keyboard navigation works throughout app" classname="phase3-enhanced.spec.ts" time="6.741">
+<failure message="phase3-enhanced.spec.ts:10:5 keyboard navigation works throughout app" type="FAILURE">
+<![CDATA[  [chromium] › phase3-enhanced.spec.ts:10:5 › Phase 3: Enhanced User Journeys › Accessibility Compliance › keyboard navigation works throughout app 
 
-    Error: expect(locator).toBeVisible() failed
+    Error: expect(received).toContain(expected) // indexOf
 
-    Locator: locator('input[placeholder*="departure"]').first()
-    Expected: visible
-    Timeout: 10000ms
-    Error: element(s) not found
+    Expected value: "select"
+    Received array: ["input", "button", "a"]
 
-    Call log:
-      - Expect "toBeVisible" with timeout 10000ms
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      16 |     const toInput = page.locator('input[placeholder*="destination"]').first();
-      17 |     
-    > 18 |     await expect(fromInput).toBeVisible({ timeout: 10000 });
-         |                             ^
-      19 |     await expect(toInput).toBeVisible({ timeout: 10000 });
-      20 |   });
-      21 |
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/simple.spec.ts:18:29
+      22 |       });
+      23 |       
+    > 24 |       expect(['input', 'button', 'a']).toContain(focusedElement);
+         |                                        ^
+      25 |     });
+      26 |
+      27 |     test('all images have alt text', async ({ page }) => {
+        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/phase3-enhanced.spec.ts:24:40
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/simple-Simple-E2E-Tests-search-inputs-are-visible-chromium/test-failed-1.png
+    ../../test-results/phase3-enhanced-Phase-3-En-af0d6-gation-works-throughout-app-chromium/test-failed-1.png
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
     attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/simple-Simple-E2E-Tests-search-inputs-are-visible-chromium/video.webm
+    ../../test-results/phase3-enhanced-Phase-3-En-af0d6-gation-works-throughout-app-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-    Error Context: ../../test-results/simple-Simple-E2E-Tests-search-inputs-are-visible-chromium/error-context.md
+    Error Context: ../../test-results/phase3-enhanced-Phase-3-En-af0d6-gation-works-throughout-app-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
-[[ATTACHMENT|simple-Simple-E2E-Tests-search-inputs-are-visible-chromium/test-failed-1.png]]
+[[ATTACHMENT|phase3-enhanced-Phase-3-En-af0d6-gation-works-throughout-app-chromium/test-failed-1.png]]
 
-[[ATTACHMENT|simple-Simple-E2E-Tests-search-inputs-are-visible-chromium/video.webm]]
+[[ATTACHMENT|phase3-enhanced-Phase-3-En-af0d6-gation-works-throughout-app-chromium/video.webm]]
 
-[[ATTACHMENT|simple-Simple-E2E-Tests-search-inputs-are-visible-chromium/error-context.md]]
+[[ATTACHMENT|phase3-enhanced-Phase-3-En-af0d6-gation-works-throughout-app-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Simple E2E Tests › can type in search inputs" classname="simple.spec.ts" time="13.308">
-<failure message="simple.spec.ts:22:3 can type in search inputs" type="FAILURE">
-<![CDATA[  [chromium] › simple.spec.ts:22:3 › Simple E2E Tests › can type in search inputs ──────────────────
-
-    TimeoutError: locator.fill: Timeout 10000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      25 |     
-      26 |     const fromInput = page.locator('input[placeholder*="departure"]').first();
-    > 27 |     await fromInput.fill('Chennai');
-         |                     ^
-      28 |     await expect(fromInput).toHaveValue('Chennai');
-      29 |   });
-      30 |
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/simple.spec.ts:27:21
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/simple-Simple-E2E-Tests-can-type-in-search-inputs-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/simple-Simple-E2E-Tests-can-type-in-search-inputs-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/simple-Simple-E2E-Tests-can-type-in-search-inputs-chromium/error-context.md
-]]>
-</failure>
+<testcase name="Phase 3: Enhanced User Journeys › Accessibility Compliance › all images have alt text" classname="phase3-enhanced.spec.ts" time="6.454">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Accessibility Compliance › buttons have accessible labels" classname="phase3-enhanced.spec.ts" time="3.326">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Accessibility Compliance › proper heading hierarchy" classname="phase3-enhanced.spec.ts" time="3.396">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Performance Metrics › page loads within performance budget" classname="phase3-enhanced.spec.ts" time="2.434">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Performance Metrics › lazy loading works for routes" classname="phase3-enhanced.spec.ts" time="4.442">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Error Boundaries › app remains functional after component error" classname="phase3-enhanced.spec.ts" time="2.448">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Mobile Experience › touch targets are at least 44x44 pixels" classname="phase3-enhanced.spec.ts" time="2.069">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Mobile Experience › viewport meta tag is set correctly" classname="phase3-enhanced.spec.ts" time="4.321">
+</testcase>
+<testcase name="Phase 3: Enhanced User Journeys › Network Resilience › handles offline mode gracefully" classname="phase3-enhanced.spec.ts" time="16.199">
+</testcase>
+</testsuite>
+<testsuite name="search-flow.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="6" failures="0" skipped="0" time="14.102" errors="0">
+<testcase name="Search and Results Flow › should display search form on homepage" classname="search-flow.spec.ts" time="1.78">
+</testcase>
+<testcase name="Search and Results Flow › should allow typing in search inputs" classname="search-flow.spec.ts" time="2.012">
+</testcase>
+<testcase name="Search and Results Flow › should show location suggestions when typing" classname="search-flow.spec.ts" time="3.241">
+</testcase>
+<testcase name="Search and Results Flow › should handle empty search gracefully" classname="search-flow.spec.ts" time="2.334">
+</testcase>
+<testcase name="Search and Results Flow › should work on mobile viewport" classname="search-flow.spec.ts" time="2.786">
+</testcase>
+<testcase name="Search and Results Flow › should preserve search inputs when navigating" classname="search-flow.spec.ts" time="1.949">
+</testcase>
+</testsuite>
+<testsuite name="simple.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="4" failures="0" skipped="0" time="14.516" errors="0">
+<testcase name="Simple E2E Tests › page loads successfully" classname="simple.spec.ts" time="1.833">
+</testcase>
+<testcase name="Simple E2E Tests › search inputs are visible" classname="simple.spec.ts" time="3.297">
+</testcase>
+<testcase name="Simple E2E Tests › can type in search inputs" classname="simple.spec.ts" time="4.759">
+</testcase>
+<testcase name="Simple E2E Tests › works on mobile viewport" classname="simple.spec.ts" time="4.627">
+</testcase>
+</testsuite>
+<testsuite name="smoke.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="3" failures="0" skipped="0" time="13.375" errors="0">
+<testcase name="Basic Smoke Tests › should load the homepage" classname="smoke.spec.ts" time="4.797">
 <system-out>
-<![CDATA[
-[[ATTACHMENT|simple-Simple-E2E-Tests-can-type-in-search-inputs-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|simple-Simple-E2E-Tests-can-type-in-search-inputs-chromium/video.webm]]
-
-[[ATTACHMENT|simple-Simple-E2E-Tests-can-type-in-search-inputs-chromium/error-context.md]]
+<![CDATA[✅ Homepage loaded successfully
 ]]>
 </system-out>
 </testcase>
-<testcase name="Simple E2E Tests › works on mobile viewport" classname="simple.spec.ts" time="6.31">
-<failure message="simple.spec.ts:31:3 works on mobile viewport" type="FAILURE">
-<![CDATA[  [chromium] › simple.spec.ts:31:3 › Simple E2E Tests › works on mobile viewport ───────────────────
-
-    Error: expect(locator).toBeVisible() failed
-
-    Locator: locator('input[placeholder*="departure"]').first()
-    Expected: visible
-    Timeout: 5000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toBeVisible" with timeout 5000ms
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      35 |     
-      36 |     const fromInput = page.locator('input[placeholder*="departure"]').first();
-    > 37 |     await expect(fromInput).toBeVisible();
-         |                             ^
-      38 |   });
-      39 | });
-      40 |
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/simple.spec.ts:37:29
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/simple-Simple-E2E-Tests-works-on-mobile-viewport-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/simple-Simple-E2E-Tests-works-on-mobile-viewport-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/simple-Simple-E2E-Tests-works-on-mobile-viewport-chromium/error-context.md
-]]>
-</failure>
+<testcase name="Basic Smoke Tests › should be responsive on mobile" classname="smoke.spec.ts" time="3.217">
 <system-out>
-<![CDATA[
-[[ATTACHMENT|simple-Simple-E2E-Tests-works-on-mobile-viewport-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|simple-Simple-E2E-Tests-works-on-mobile-viewport-chromium/video.webm]]
-
-[[ATTACHMENT|simple-Simple-E2E-Tests-works-on-mobile-viewport-chromium/error-context.md]]
+<![CDATA[✅ Mobile responsiveness verified
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic Smoke Tests › should work across different browsers" classname="smoke.spec.ts" time="5.361">
+<system-out>
+<![CDATA[✅ Working correctly in chromium
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="smoke.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="3" failures="3" skipped="0" time="69.512" errors="0">
-<testcase name="Basic Smoke Tests › should load the homepage" classname="smoke.spec.ts" time="30.568">
-<failure message="smoke.spec.ts:4:3 should load the homepage" type="FAILURE">
-<![CDATA[  [chromium] › smoke.spec.ts:4:3 › Basic Smoke Tests › should load the homepage ────────────────────
-
-    Test timeout of 30000ms exceeded.
-
-    Error: page.waitForLoadState: Test timeout of 30000ms exceeded.
-
-       6 |     
-       7 |     // Wait for the page to load
-    >  8 |     await page.waitForLoadState('networkidle');
-         |                ^
-       9 |     
-      10 |     // Check if the page title contains our app name
-      11 |     await expect(page).toHaveTitle(/Perundhu/i);
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/smoke.spec.ts:8:16
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/smoke-Basic-Smoke-Tests-should-load-the-homepage-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/smoke-Basic-Smoke-Tests-should-load-the-homepage-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/smoke-Basic-Smoke-Tests-should-load-the-homepage-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-should-load-the-homepage-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-should-load-the-homepage-chromium/video.webm]]
-
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-should-load-the-homepage-chromium/error-context.md]]
-]]>
-</system-out>
+<testsuite name="user-journey/01-bus-search.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="11" failures="0" skipped="0" time="113.521" errors="0">
+<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.1: Search for buses between two Tamil Nadu locations" classname="user-journey/01-bus-search.spec.ts" time="8.934">
 </testcase>
-<testcase name="Basic Smoke Tests › should be responsive on mobile" classname="smoke.spec.ts" time="30.314">
-<failure message="smoke.spec.ts:23:3 should be responsive on mobile" type="FAILURE">
-<![CDATA[  [chromium] › smoke.spec.ts:23:3 › Basic Smoke Tests › should be responsive on mobile ─────────────
-
-    Test timeout of 30000ms exceeded.
-
-    Error: page.waitForLoadState: Test timeout of 30000ms exceeded.
-
-      27 |     
-      28 |     // Wait for page load
-    > 29 |     await page.waitForLoadState('networkidle');
-         |                ^
-      30 |     
-      31 |     // Check if search inputs are visible on mobile
-      32 |     const fromInput = page.locator('input[placeholder*="departure"]').first();
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/smoke.spec.ts:29:16
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/smoke-Basic-Smoke-Tests-should-be-responsive-on-mobile-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/smoke-Basic-Smoke-Tests-should-be-responsive-on-mobile-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/smoke-Basic-Smoke-Tests-should-be-responsive-on-mobile-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-should-be-responsive-on-mobile-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-should-be-responsive-on-mobile-chromium/video.webm]]
-
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-should-be-responsive-on-mobile-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.2: Search with same source and destination" classname="user-journey/01-bus-search.spec.ts" time="8.344">
 </testcase>
-<testcase name="Basic Smoke Tests › should work across different browsers" classname="smoke.spec.ts" time="8.63">
-<failure message="smoke.spec.ts:38:3 should work across different browsers" type="FAILURE">
-<![CDATA[  [chromium] › smoke.spec.ts:38:3 › Basic Smoke Tests › should work across different browsers ──────
-
-    Error: expect(locator).toBeVisible() failed
-
-    Locator: locator('input[placeholder*="departure"]').first()
-    Expected: visible
-    Timeout: 5000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toBeVisible" with timeout 5000ms
-      - waiting for locator('input[placeholder*="departure"]').first()
-
-
-      42 |     // Basic functionality should work in all browsers
-      43 |     const fromInput = page.locator('input[placeholder*="departure"]').first();
-    > 44 |     await expect(fromInput).toBeVisible();
-         |                             ^
-      45 |     
-      46 |     console.log(`✅ Working correctly in ${browserName}`);
-      47 |   });
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/smoke.spec.ts:44:29
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/smoke-Basic-Smoke-Tests-sh-1755e-k-across-different-browsers-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/smoke-Basic-Smoke-Tests-sh-1755e-k-across-different-browsers-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/smoke-Basic-Smoke-Tests-sh-1755e-k-across-different-browsers-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-sh-1755e-k-across-different-browsers-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-sh-1755e-k-across-different-browsers-chromium/video.webm]]
-
-[[ATTACHMENT|smoke-Basic-Smoke-Tests-sh-1755e-k-across-different-browsers-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.3: Search with invalid location" classname="user-journey/01-bus-search.spec.ts" time="17.096">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.4: Clear search filters and start fresh" classname="user-journey/01-bus-search.spec.ts" time="9.223">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.1: Type location name and select from suggestions" classname="user-journey/01-bus-search.spec.ts" time="9.744">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.2: Autocomplete with partial text" classname="user-journey/01-bus-search.spec.ts" time="8.136">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.3: Autocomplete with special characters (Tamil)" classname="user-journey/01-bus-search.spec.ts" time="7.934">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.4: Clear location field" classname="user-journey/01-bus-search.spec.ts" time="10.944">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.3 Bus Schedule Display › TC-U1.3.1: View bus card with all details" classname="user-journey/01-bus-search.spec.ts" time="12.405">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.3 Bus Schedule Display › TC-U1.3.2: View stop-by-stop route details" classname="user-journey/01-bus-search.spec.ts" time="10.018">
+</testcase>
+<testcase name="Bus Search &amp; Schedule Lookup › 1.3 Bus Schedule Display › TC-U1.3.3: Multiple results sorting/filtering" classname="user-journey/01-bus-search.spec.ts" time="10.743">
 </testcase>
 </testsuite>
-<testsuite name="user-journey/01-bus-search.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="11" failures="6" skipped="0" time="141.91" errors="0">
-<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.1: Search for buses between two Tamil Nadu locations" classname="user-journey/01-bus-search.spec.ts" time="16.392">
-<failure message="01-bus-search.spec.ts:12:5 TC-U1.1.1: Search for buses between two Tamil Nadu locations" type="FAILURE">
-<![CDATA[  [chromium] › user-journey/01-bus-search.spec.ts:12:5 › Bus Search & Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.1: Search for buses between two Tamil Nadu locations 
-
-    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"], input[placeholder*="From"]').first() to be visible
-
-
-      16 |       
-      17 |       const fromInput = page.locator('input[placeholder*="departure"], input[placeholder*="From"]').first();
-    > 18 |       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
-         |                       ^
-      19 |       const toInput = page.locator('input[placeholder*="destination"], input[placeholder*="To"]').first();
-      20 |       
-      21 |       // Verify inputs are visible
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/user-journey/01-bus-search.spec.ts:18:23
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-1cf60-en-two-Tamil-Nadu-locations-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-1cf60-en-two-Tamil-Nadu-locations-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/user-journey-01-bus-search-1cf60-en-two-Tamil-Nadu-locations-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|user-journey-01-bus-search-1cf60-en-two-Tamil-Nadu-locations-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|user-journey-01-bus-search-1cf60-en-two-Tamil-Nadu-locations-chromium/video.webm]]
-
-[[ATTACHMENT|user-journey-01-bus-search-1cf60-en-two-Tamil-Nadu-locations-chromium/error-context.md]]
-]]>
-</system-out>
+<testsuite name="user-journey/02-bus-tracking.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="6" failures="0" skipped="0" time="69.933" errors="0">
+<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.1: View live bus position on map" classname="user-journey/02-bus-tracking.spec.ts" time="8.411">
 </testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.2: Search with same source and destination" classname="user-journey/01-bus-search.spec.ts" time="16.308">
-<failure message="01-bus-search.spec.ts:54:5 TC-U1.1.2: Search with same source and destination" type="FAILURE">
-<![CDATA[  [chromium] › user-journey/01-bus-search.spec.ts:54:5 › Bus Search & Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.2: Search with same source and destination 
-
-    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"], input[placeholder*="From"]').first() to be visible
-
-
-      58 |       
-      59 |       const fromInput = page.locator('input[placeholder*="departure"], input[placeholder*="From"]').first();
-    > 60 |       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
-         |                       ^
-      61 |       const toInput = page.locator('input[placeholder*="destination"], input[placeholder*="To"]').first();
-      62 |       
-      63 |       // Enter same location
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/user-journey/01-bus-search.spec.ts:60:23
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-f9011-same-source-and-destination-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-f9011-same-source-and-destination-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/user-journey-01-bus-search-f9011-same-source-and-destination-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|user-journey-01-bus-search-f9011-same-source-and-destination-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|user-journey-01-bus-search-f9011-same-source-and-destination-chromium/video.webm]]
-
-[[ATTACHMENT|user-journey-01-bus-search-f9011-same-source-and-destination-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.2: Bus not running (offline)" classname="user-journey/02-bus-tracking.spec.ts" time="8.07">
 </testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.3: Search with invalid location" classname="user-journey/01-bus-search.spec.ts" time="19.414">
-<failure message="01-bus-search.spec.ts:82:5 TC-U1.1.3: Search with invalid location" type="FAILURE">
-<![CDATA[  [chromium] › user-journey/01-bus-search.spec.ts:82:5 › Bus Search & Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.3: Search with invalid location 
-
-    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"], input[placeholder*="From"]').first() to be visible
-
-
-      86 |       
-      87 |       const fromInput = page.locator('input[placeholder*="departure"], input[placeholder*="From"]').first();
-    > 88 |       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
-         |                       ^
-      89 |       const toInput = page.locator('input[placeholder*="destination"], input[placeholder*="To"]').first();
-      90 |       
-      91 |       await fromInput.fill('InvalidCity123');
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/user-journey/01-bus-search.spec.ts:88:23
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-75cf1-earch-with-invalid-location-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-75cf1-earch-with-invalid-location-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/user-journey-01-bus-search-75cf1-earch-with-invalid-location-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|user-journey-01-bus-search-75cf1-earch-with-invalid-location-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|user-journey-01-bus-search-75cf1-earch-with-invalid-location-chromium/video.webm]]
-
-[[ATTACHMENT|user-journey-01-bus-search-75cf1-earch-with-invalid-location-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.3: Map zoom and pan" classname="user-journey/02-bus-tracking.spec.ts" time="10.037">
 </testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.4: Clear search filters and start fresh" classname="user-journey/01-bus-search.spec.ts" time="19.829">
-<failure message="01-bus-search.spec.ts:112:5 TC-U1.1.4: Clear search filters and start fresh" type="FAILURE">
-<![CDATA[  [chromium] › user-journey/01-bus-search.spec.ts:112:5 › Bus Search & Schedule Lookup › 1.1 Basic Bus Search › TC-U1.1.4: Clear search filters and start fresh 
-
-    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"], input[placeholder*="From"]').first() to be visible
-
-
-      116 |       
-      117 |       const fromInput = page.locator('input[placeholder*="departure"], input[placeholder*="From"]').first();
-    > 118 |       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
-          |                       ^
-      119 |       const toInput = page.locator('input[placeholder*="destination"], input[placeholder*="To"]').first();
-      120 |       
-      121 |       // Perform search
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/user-journey/01-bus-search.spec.ts:118:23
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-9ed67-rch-filters-and-start-fresh-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-9ed67-rch-filters-and-start-fresh-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/user-journey-01-bus-search-9ed67-rch-filters-and-start-fresh-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|user-journey-01-bus-search-9ed67-rch-filters-and-start-fresh-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|user-journey-01-bus-search-9ed67-rch-filters-and-start-fresh-chromium/video.webm]]
-
-[[ATTACHMENT|user-journey-01-bus-search-9ed67-rch-filters-and-start-fresh-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.4: View next stops on tracking screen" classname="user-journey/02-bus-tracking.spec.ts" time="18.765">
 </testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.1: Type location name and select from suggestions" classname="user-journey/01-bus-search.spec.ts" time="16.877">
-<failure message="01-bus-search.spec.ts:148:5 TC-U1.2.1: Type location name and select from suggestions" type="FAILURE">
-<![CDATA[  [chromium] › user-journey/01-bus-search.spec.ts:148:5 › Bus Search & Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.1: Type location name and select from suggestions 
-
-    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"], input[placeholder*="From"]').first() to be visible
-
-
-      152 |       
-      153 |       const fromInput = page.locator('input[placeholder*="departure"], input[placeholder*="From"]').first();
-    > 154 |       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
-          |                       ^
-      155 |       
-      156 |       await fromInput.click();
-      157 |       await fromInput.fill('Chen');
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/user-journey/01-bus-search.spec.ts:154:23
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-f1d55-and-select-from-suggestions-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-f1d55-and-select-from-suggestions-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/user-journey-01-bus-search-f1d55-and-select-from-suggestions-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|user-journey-01-bus-search-f1d55-and-select-from-suggestions-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|user-journey-01-bus-search-f1d55-and-select-from-suggestions-chromium/video.webm]]
-
-[[ATTACHMENT|user-journey-01-bus-search-f1d55-and-select-from-suggestions-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Bus Tracking (Real-Time Location) › 2.2 Route Visualization › TC-U2.2.1: View entire route on map" classname="user-journey/02-bus-tracking.spec.ts" time="7.536">
 </testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.2: Autocomplete with partial text" classname="user-journey/01-bus-search.spec.ts" time="16.59">
-<failure message="01-bus-search.spec.ts:175:5 TC-U1.2.2: Autocomplete with partial text" type="FAILURE">
-<![CDATA[  [chromium] › user-journey/01-bus-search.spec.ts:175:5 › Bus Search & Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.2: Autocomplete with partial text 
-
-    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
-    Call log:
-      - waiting for locator('input[placeholder*="departure"], input[placeholder*="From"]').first() to be visible
-
-
-      179 |       
-      180 |       const fromInput = page.locator('input[placeholder*="departure"], input[placeholder*="From"]').first();
-    > 181 |       await fromInput.waitFor({ state: 'visible', timeout: 15000 });
-          |                       ^
-      182 |       
-      183 |       await fromInput.click();
-      184 |       await fromInput.fill('ch');
-        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/user-journey/01-bus-search.spec.ts:181:23
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-465ce-ocomplete-with-partial-text-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../test-results/user-journey-01-bus-search-465ce-ocomplete-with-partial-text-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../test-results/user-journey-01-bus-search-465ce-ocomplete-with-partial-text-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|user-journey-01-bus-search-465ce-ocomplete-with-partial-text-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|user-journey-01-bus-search-465ce-ocomplete-with-partial-text-chromium/video.webm]]
-
-[[ATTACHMENT|user-journey-01-bus-search-465ce-ocomplete-with-partial-text-chromium/error-context.md]]
-]]>
-</system-out>
-</testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.3: Autocomplete with special characters (Tamil)" classname="user-journey/01-bus-search.spec.ts" time="10.89">
-</testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.2 Location Autocomplete › TC-U1.2.4: Clear location field" classname="user-journey/01-bus-search.spec.ts" time="9.579">
-</testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.3 Bus Schedule Display › TC-U1.3.1: View bus card with all details" classname="user-journey/01-bus-search.spec.ts" time="5.313">
-</testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.3 Bus Schedule Display › TC-U1.3.2: View stop-by-stop route details" classname="user-journey/01-bus-search.spec.ts" time="5.386">
-</testcase>
-<testcase name="Bus Search &amp; Schedule Lookup › 1.3 Bus Schedule Display › TC-U1.3.3: Multiple results sorting/filtering" classname="user-journey/01-bus-search.spec.ts" time="5.332">
+<testcase name="Bus Tracking (Real-Time Location) › 2.2 Route Visualization › TC-U2.2.2: Stop markers on route" classname="user-journey/02-bus-tracking.spec.ts" time="17.114">
 </testcase>
 </testsuite>
-<testsuite name="user-journey/02-bus-tracking.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="6" failures="0" skipped="0" time="35.463" errors="0">
-<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.1: View live bus position on map" classname="user-journey/02-bus-tracking.spec.ts" time="3.11">
-</testcase>
-<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.2: Bus not running (offline)" classname="user-journey/02-bus-tracking.spec.ts" time="4.168">
-</testcase>
-<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.3: Map zoom and pan" classname="user-journey/02-bus-tracking.spec.ts" time="8.795">
-</testcase>
-<testcase name="Bus Tracking (Real-Time Location) › 2.1 Live Bus Location Tracking › TC-U2.1.4: View next stops on tracking screen" classname="user-journey/02-bus-tracking.spec.ts" time="8.12">
-</testcase>
-<testcase name="Bus Tracking (Real-Time Location) › 2.2 Route Visualization › TC-U2.2.1: View entire route on map" classname="user-journey/02-bus-tracking.spec.ts" time="5.655">
-</testcase>
-<testcase name="Bus Tracking (Real-Time Location) › 2.2 Route Visualization › TC-U2.2.2: Stop markers on route" classname="user-journey/02-bus-tracking.spec.ts" time="5.615">
-</testcase>
-</testsuite>
-<testsuite name="user-journey/03-user-authentication.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testsuite name="user-journey/03-user-authentication.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
 <testcase name="User Authentication &amp; Profiles › 3.1 User Registration › TC-U3.1.1: Register with valid email and password" classname="user-journey/03-user-authentication.spec.ts" time="0">
 <properties>
 <property name="skip" value="">
@@ -859,95 +349,73 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="user-journey/04-user-contributions.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="12" failures="0" skipped="0" time="57.555" errors="0">
-<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.1: Submit new bus route manually" classname="user-journey/04-user-contributions.spec.ts" time="5.656">
+<testsuite name="user-journey/04-user-contributions.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="12" failures="0" skipped="0" time="137.765" errors="0">
+<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.1: Submit new bus route manually" classname="user-journey/04-user-contributions.spec.ts" time="15.756">
 </testcase>
-<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.2: Add bus stops to route" classname="user-journey/04-user-contributions.spec.ts" time="7.443">
+<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.2: Add bus stops to route" classname="user-journey/04-user-contributions.spec.ts" time="17.54">
 </testcase>
-<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.3: Submit with incomplete information" classname="user-journey/04-user-contributions.spec.ts" time="4.632">
+<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.3: Submit with incomplete information" classname="user-journey/04-user-contributions.spec.ts" time="15.422">
 </testcase>
-<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.4: Cancel contribution" classname="user-journey/04-user-contributions.spec.ts" time="4.61">
+<testcase name="User Contributions › 4.1 Route Contribution (Manual) › TC-U4.1.4: Cancel contribution" classname="user-journey/04-user-contributions.spec.ts" time="14.856">
 </testcase>
-<testcase name="User Contributions › 4.2 Image Contribution › TC-U4.2.1: Upload bus stop image" classname="user-journey/04-user-contributions.spec.ts" time="5.873">
+<testcase name="User Contributions › 4.2 Image Contribution › TC-U4.2.1: Upload bus stop image" classname="user-journey/04-user-contributions.spec.ts" time="10.36">
 </testcase>
-<testcase name="User Contributions › 4.2 Image Contribution › TC-U4.2.4: Cancel image upload" classname="user-journey/04-user-contributions.spec.ts" time="4.105">
+<testcase name="User Contributions › 4.2 Image Contribution › TC-U4.2.4: Cancel image upload" classname="user-journey/04-user-contributions.spec.ts" time="9.396">
 </testcase>
-<testcase name="User Contributions › 4.3 Voice/OCR Contribution (Advanced) › TC-U4.3.1: Record voice contribution" classname="user-journey/04-user-contributions.spec.ts" time="4.065">
+<testcase name="User Contributions › 4.3 Voice/OCR Contribution (Advanced) › TC-U4.3.1: Record voice contribution" classname="user-journey/04-user-contributions.spec.ts" time="10.873">
 </testcase>
-<testcase name="User Contributions › 4.3 Voice/OCR Contribution (Advanced) › TC-U4.3.2: Deny microphone permission" classname="user-journey/04-user-contributions.spec.ts" time="5.017">
+<testcase name="User Contributions › 4.3 Voice/OCR Contribution (Advanced) › TC-U4.3.2: Deny microphone permission" classname="user-journey/04-user-contributions.spec.ts" time="8.656">
 </testcase>
-<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.1: View all user contributions" classname="user-journey/04-user-contributions.spec.ts" time="2.457">
+<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.1: View all user contributions" classname="user-journey/04-user-contributions.spec.ts" time="7.736">
 </testcase>
-<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.2: View contribution details" classname="user-journey/04-user-contributions.spec.ts" time="4.815">
+<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.2: View contribution details" classname="user-journey/04-user-contributions.spec.ts" time="10.297">
 </testcase>
-<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.3: Contribution approval notification" classname="user-journey/04-user-contributions.spec.ts" time="4.406">
+<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.3: Contribution approval notification" classname="user-journey/04-user-contributions.spec.ts" time="8.389">
 </testcase>
-<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.4: Contribution rejection with reason" classname="user-journey/04-user-contributions.spec.ts" time="4.476">
-</testcase>
-</testsuite>
-<testsuite name="user-journey/05-reviews-ratings.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="9" failures="0" skipped="2" time="38.985" errors="0">
-<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.1: Leave review with rating and comment" classname="user-journey/05-reviews-ratings.spec.ts" time="4.414">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.2: Review with only rating (no comment)" classname="user-journey/05-reviews-ratings.spec.ts" time="4.673">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.3: Review with only comment (no rating)" classname="user-journey/05-reviews-ratings.spec.ts" time="5.601">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.4: Submit profanity/spam review" classname="user-journey/05-reviews-ratings.spec.ts" time="5.351">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.2 View Reviews › TC-U5.2.1: View all reviews for a bus" classname="user-journey/05-reviews-ratings.spec.ts" time="4.422">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.2 View Reviews › TC-U5.2.2: Filter reviews by rating" classname="user-journey/05-reviews-ratings.spec.ts" time="4.483">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.2 View Reviews › TC-U5.2.3: View review helpfulness" classname="user-journey/05-reviews-ratings.spec.ts" time="4.477">
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.3 Edit/Delete Own Review › TC-U5.3.1: Edit own review" classname="user-journey/05-reviews-ratings.spec.ts" time="4.244">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Reviews &amp; Ratings › 5.3 Edit/Delete Own Review › TC-U5.3.2: Delete own review" classname="user-journey/05-reviews-ratings.spec.ts" time="1.32">
-<skipped>
-</skipped>
+<testcase name="User Contributions › 4.4 Contribution Status Tracking › TC-U4.4.4: Contribution rejection with reason" classname="user-journey/04-user-contributions.spec.ts" time="8.484">
 </testcase>
 </testsuite>
-<testsuite name="user-journey/06-settings-preferences.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="9" failures="0" skipped="9" time="4.857" errors="0">
-<testcase name="Settings &amp; Preferences › 9.1 Language Selection › TC-U9.1.1: Switch language from English to Tamil" classname="user-journey/06-settings-preferences.spec.ts" time="1.387">
-<skipped>
-</skipped>
+<testsuite name="user-journey/05-reviews-ratings.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="9" failures="0" skipped="0" time="77.427" errors="0">
+<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.1: Leave review with rating and comment" classname="user-journey/05-reviews-ratings.spec.ts" time="7.247">
 </testcase>
-<testcase name="Settings &amp; Preferences › 9.1 Language Selection › TC-U9.1.2: Tamil keyboard input" classname="user-journey/06-settings-preferences.spec.ts" time="1.125">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.2: Review with only rating (no comment)" classname="user-journey/05-reviews-ratings.spec.ts" time="7.095">
 </testcase>
-<testcase name="Settings &amp; Preferences › 9.2 Theme Selection › TC-U9.2.1: Switch to dark mode" classname="user-journey/06-settings-preferences.spec.ts" time="1.247">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.3: Review with only comment (no rating)" classname="user-journey/05-reviews-ratings.spec.ts" time="7.551">
 </testcase>
-<testcase name="Settings &amp; Preferences › 9.2 Theme Selection › TC-U9.2.2: Theme persistence" classname="user-journey/06-settings-preferences.spec.ts" time="1.098">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.1 Submit Bus Review › TC-U5.1.4: Submit profanity/spam review" classname="user-journey/05-reviews-ratings.spec.ts" time="8.881">
 </testcase>
-<testcase name="Settings &amp; Preferences › 9.3 Notification Settings › TC-U9.3.1: Enable/disable notifications" classname="user-journey/06-settings-preferences.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.2 View Reviews › TC-U5.2.1: View all reviews for a bus" classname="user-journey/05-reviews-ratings.spec.ts" time="10.293">
 </testcase>
-<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.1: View all settings categories" classname="user-journey/06-settings-preferences.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.2 View Reviews › TC-U5.2.2: Filter reviews by rating" classname="user-journey/05-reviews-ratings.spec.ts" time="8.776">
 </testcase>
-<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.2: Save settings changes" classname="user-journey/06-settings-preferences.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.2 View Reviews › TC-U5.2.3: View review helpfulness" classname="user-journey/05-reviews-ratings.spec.ts" time="9.405">
 </testcase>
-<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.3: Reset settings to default" classname="user-journey/06-settings-preferences.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.3 Edit/Delete Own Review › TC-U5.3.1: Edit own review" classname="user-journey/05-reviews-ratings.spec.ts" time="9.24">
 </testcase>
-<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.4: Access settings from different pages" classname="user-journey/06-settings-preferences.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Reviews &amp; Ratings › 5.3 Edit/Delete Own Review › TC-U5.3.2: Delete own review" classname="user-journey/05-reviews-ratings.spec.ts" time="8.939">
 </testcase>
 </testsuite>
-<testsuite name="user-journey/07-integration-tests.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testsuite name="user-journey/06-settings-preferences.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="9" failures="0" skipped="0" time="77.205" errors="0">
+<testcase name="Settings &amp; Preferences › 9.1 Language Selection › TC-U9.1.1: Switch language from English to Tamil" classname="user-journey/06-settings-preferences.spec.ts" time="10.909">
+</testcase>
+<testcase name="Settings &amp; Preferences › 9.1 Language Selection › TC-U9.1.2: Tamil keyboard input" classname="user-journey/06-settings-preferences.spec.ts" time="11.649">
+</testcase>
+<testcase name="Settings &amp; Preferences › 9.2 Theme Selection › TC-U9.2.1: Switch to dark mode" classname="user-journey/06-settings-preferences.spec.ts" time="8.633">
+</testcase>
+<testcase name="Settings &amp; Preferences › 9.2 Theme Selection › TC-U9.2.2: Theme persistence" classname="user-journey/06-settings-preferences.spec.ts" time="8.481">
+</testcase>
+<testcase name="Settings &amp; Preferences › 9.3 Notification Settings › TC-U9.3.1: Enable/disable notifications" classname="user-journey/06-settings-preferences.spec.ts" time="8.479">
+</testcase>
+<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.1: View all settings categories" classname="user-journey/06-settings-preferences.spec.ts" time="8.551">
+</testcase>
+<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.2: Save settings changes" classname="user-journey/06-settings-preferences.spec.ts" time="6.864">
+</testcase>
+<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.3: Reset settings to default" classname="user-journey/06-settings-preferences.spec.ts" time="5.256">
+</testcase>
+<testcase name="Settings &amp; Preferences › Additional Settings › TC-U9.4.4: Access settings from different pages" classname="user-journey/06-settings-preferences.spec.ts" time="8.383">
+</testcase>
+</testsuite>
+<testsuite name="user-journey/07-integration-tests.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="8" failures="0" skipped="4" time="34.195" errors="0">
 <testcase name="Cross-Module Integration Tests › Integration Test 1: End-to-End Contribution Flow › User submits route → Admin approves → Route appears in search" classname="user-journey/07-integration-tests.spec.ts" time="0">
 <properties>
 <property name="skip" value="">
@@ -964,9 +432,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Cross-Module Integration Tests › Integration Test 3: Search to Tracking Flow › User searches bus → Views details → Tracks live location → Views stop details" classname="user-journey/07-integration-tests.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Cross-Module Integration Tests › Integration Test 3: Search to Tracking Flow › User searches bus → Views details → Tracks live location → Views stop details" classname="user-journey/07-integration-tests.spec.ts" time="8.692">
 </testcase>
 <testcase name="Cross-Module Integration Tests › Integration Test 4: Authentication State Persistence › User logs in → Navigates between pages → Session persists → Logout works" classname="user-journey/07-integration-tests.spec.ts" time="0">
 <properties>
@@ -984,39 +450,61 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Cross-Module Integration Tests › Integration Test 6: Mobile Responsiveness › All features work on mobile viewport" classname="user-journey/07-integration-tests.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Cross-Module Integration Tests › Integration Test 6: Mobile Responsiveness › All features work on mobile viewport" classname="user-journey/07-integration-tests.spec.ts" time="4.752">
 </testcase>
-<testcase name="Cross-Module Integration Tests › Integration Test 7: Performance and Load › App loads quickly and handles rapid interactions" classname="user-journey/07-integration-tests.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Cross-Module Integration Tests › Integration Test 7: Performance and Load › App loads quickly and handles rapid interactions" classname="user-journey/07-integration-tests.spec.ts" time="11.205">
 </testcase>
-<testcase name="Cross-Module Integration Tests › Integration Test 8: Error Recovery › App recovers gracefully from errors" classname="user-journey/07-integration-tests.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Cross-Module Integration Tests › Integration Test 8: Error Recovery › App recovers gracefully from errors" classname="user-journey/07-integration-tests.spec.ts" time="9.546">
 </testcase>
 </testsuite>
-<testsuite name="working-e2e.spec.ts" timestamp="2026-01-12T14:35:24.525Z" hostname="chromium" tests="5" failures="0" skipped="5" time="0" errors="0">
-<testcase name="Working E2E Tests › should load the page and show search inputs" classname="working-e2e.spec.ts" time="0">
+<testsuite name="working-e2e.spec.ts" timestamp="2026-01-23T16:14:58.082Z" hostname="chromium" tests="5" failures="1" skipped="1" time="37.682" errors="0">
+<testcase name="Working E2E Tests › should load the page and show search inputs" classname="working-e2e.spec.ts" time="8.304">
+</testcase>
+<testcase name="Working E2E Tests › should allow typing in search inputs" classname="working-e2e.spec.ts" time="9.091">
+</testcase>
+<testcase name="Working E2E Tests › should work on mobile viewport" classname="working-e2e.spec.ts" time="7.287">
+</testcase>
+<testcase name="Working E2E Tests › should handle keyboard navigation" classname="working-e2e.spec.ts" time="10.097">
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Working E2E Tests › should allow typing in search inputs" classname="working-e2e.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Working E2E Tests › should work on mobile viewport" classname="working-e2e.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Working E2E Tests › should handle keyboard navigation" classname="working-e2e.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Working E2E Tests › should display page without errors" classname="working-e2e.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Working E2E Tests › should display page without errors" classname="working-e2e.spec.ts" time="2.903">
+<failure message="working-e2e.spec.ts:63:3 should display page without errors" type="FAILURE">
+<![CDATA[  [chromium] › working-e2e.spec.ts:63:3 › Working E2E Tests › should display page without errors ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 9
+
+      79 |     );
+      80 |     
+    > 81 |     expect(criticalErrors.length).toBe(0);
+         |                                   ^
+      82 |   });
+      83 | });
+        at /Users/mchand69/Documents/perundhu/frontend/tests/e2e/working-e2e.spec.ts:81:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/working-e2e-Working-E2E-Te-7820d-display-page-without-errors-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/working-e2e-Working-E2E-Te-7820d-display-page-without-errors-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/working-e2e-Working-E2E-Te-7820d-display-page-without-errors-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|working-e2e-Working-E2E-Te-7820d-display-page-without-errors-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|working-e2e-Working-E2E-Te-7820d-display-page-without-errors-chromium/video.webm]]
+
+[[ATTACHMENT|working-e2e-Working-E2E-Te-7820d-display-page-without-errors-chromium/error-context.md]]
+]]>
+</system-out>
 </testcase>
 </testsuite>
 </testsuites>

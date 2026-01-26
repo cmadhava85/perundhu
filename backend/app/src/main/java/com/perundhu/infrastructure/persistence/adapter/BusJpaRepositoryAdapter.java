@@ -200,6 +200,19 @@ public class BusJpaRepositoryAdapter implements BusRepository {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Bus> findBusesBetweenLocationSets(List<Long> fromLocationIds, List<Long> toLocationIds) {
+        if (fromLocationIds == null || fromLocationIds.isEmpty() ||
+                toLocationIds == null || toLocationIds.isEmpty()) {
+            return List.of();
+        }
+        return jpaRepository.findBusesBetweenLocationSets(fromLocationIds, toLocationIds)
+                .stream()
+                .map(BusJpaEntity::toDomainModel)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public long count() {
         return jpaRepository.count();
     }

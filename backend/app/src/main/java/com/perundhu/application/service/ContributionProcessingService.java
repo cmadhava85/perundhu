@@ -675,6 +675,18 @@ public class ContributionProcessingService {
             return existingByName.get();
         }
 
+        // Strategy 1.5: Try to find by alias (handles name variations)
+        var existingByAlias = locationRepository.findByAlias(normalizedName);
+        if (existingByAlias.isPresent()) {
+            log.debug("Found existing location by alias: {} (ID: {}, actual name: {})",
+                    normalizedName, existingByAlias.get().id().value(), existingByAlias.get().name());
+            // If original input was Tamil, ensure translation is saved
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(existingByAlias.get(), originalName);
+            }
+            return existingByAlias.get();
+        }
+
         // Strategy 2: Try with original name (case might differ)
         existingByName = locationRepository.findByExactName(englishName);
         if (existingByName.isPresent()) {
@@ -684,6 +696,17 @@ public class ContributionProcessingService {
                 locationTranslationService.saveLocationTranslation(existingByName.get(), originalName);
             }
             return existingByName.get();
+        }
+
+        // Strategy 2.5: Try original name as alias
+        existingByAlias = locationRepository.findByAlias(englishName);
+        if (existingByAlias.isPresent()) {
+            log.debug("Found existing location by alias (original name): {} (ID: {}, actual name: {})",
+                    englishName, existingByAlias.get().id().value(), existingByAlias.get().name());
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(existingByAlias.get(), originalName);
+            }
+            return existingByAlias.get();
         }
 
         // Strategy 3: Try uppercase version (for OCR-extracted names like "SIVAKASI")
@@ -719,6 +742,19 @@ public class ContributionProcessingService {
             Location matched = partialMatches.getFirst();
             log.debug("Found existing location by partial match: {} (ID: {})",
                     matched.name(), matched.id().value());
+            if (isTamilInput) {
+                locationTranslationService.saveLocationTranslation(matched, originalName);
+            }
+            return matched;
+        }
+
+        // Strategy 5.5: Search for partial matches in aliases
+        var aliasMatches = locationRepository.findByAliasContaining(normalizedName);
+        if (!aliasMatches.isEmpty()) {
+            // Return the first match (most likely the correct one)
+            Location matched = aliasMatches.getFirst();
+            log.debug("Found existing location by partial alias match: {} (ID: {}, actual name: {})",
+                    normalizedName, matched.id().value(), matched.name());
             if (isTamilInput) {
                 locationTranslationService.saveLocationTranslation(matched, originalName);
             }

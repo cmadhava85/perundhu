@@ -10,6 +10,8 @@ import mysql.connector
 from typing import List, Dict, Tuple, Optional
 from pathlib import Path
 import sys
+import re
+from difflib import SequenceMatcher
 
 class LocationDeduplicator:
     """Deduplicate and format locations with proper bus stand naming"""
@@ -30,6 +32,49 @@ class LocationDeduplicator:
             'database': os.getenv('DB_NAME', 'perundhu'),
             'port': int(os.getenv('DB_PORT', '3307'))  # Cloud SQL Proxy port
         }
+    
+    def _normalize_name(self, name: str) -> str:
+        """Normalize location name for deduplication"""
+        name = ' '.join(name.split())
+        
+        # Standardize bus-related keywords
+        name = re.sub(r'bus\s+stop', 'bus stop', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+station', 'bus station', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+stand', 'bus stand', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+terminal', 'bus terminal', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+port', 'bus port', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+garage', 'bus garage', name, flags=re.IGNORECASE)
+        name = re.sub(r'mtc\s+terminus', 'mtc terminus', name, flags=re.IGNORECASE)
+        name = re.sub(r'kkbt|kaliamman\s+karikkal\s+bhagavathi\s+temple', 'central bus terminal', name, flags=re.IGNORECASE)
+        
+        # Remove common abbreviations and prefixes
+        name = re.sub(r'^(m\.g\.r|cmbt|dr\.)\s+', '', name, flags=re.IGNORECASE)
+        
+        # Remove common suffixes
+        name = re.sub(r'\s+(bus\s+(stop|stand|station|terminal|port))\s*$', '', name, flags=re.IGNORECASE)
+        
+        # Handle modifiers
+        name = re.sub(r'\s+(old|new|central|main)\s+bus', ' bus', name, flags=re.IGNORECASE)
+        
+        # Remove trailing punctuation
+        name = re.sub(r'[,\-\.\s]+$', '', name).strip()
+        
+        return name.lower()
+    
+    def _extract_city_from_name(self, name: str) -> Optional[str]:
+        """Extract city name from location string"""
+        patterns = [
+            r'^([A-Za-z\s]+?)\s*-\s*',
+            r'^([A-Za-z\s]+?)\s+(central|old|new|main)\s+bus',
+            r'^([A-Za-z\s]+?)\s+bus\s+(stand|station|stop|port|terminal)',
+        ]
+        
+        for pattern in patterns:
+            match = re.match(pattern, name, re.IGNORECASE)
+            if match:
+                return match.group(1).strip().lower()
+        
+        return None
     
     def connect(self):
         """Connect to database"""
@@ -98,7 +143,7 @@ class LocationDeduplicator:
             return self._find_fuzzy_duplicates()
     
     def _find_fuzzy_duplicates(self) -> List[Tuple]:
-        """Find fuzzy duplicates using Python string similarity"""
+        """Find fuzzy duplicates using improved normalization"""
         from difflib import SequenceMatcher
         
         query = "SELECT id, name, type, latitude, longitude FROM locations ORDER BY name"
@@ -108,16 +153,66 @@ class LocationDeduplicator:
         duplicates = []
         for i, loc1 in enumerate(all_locs):
             for loc2 in all_locs[i+1:]:
-                # Check name similarity
-                similarity = SequenceMatcher(None, 
-                    loc1['name'].lower(), 
-                    loc2['name'].lower()).ratio()
+                # Normalize names
+                norm1 = self._normalize_name(loc1['name'])
+                norm2 = self._normalize_name(loc2['name'])
                 
-                # Check coordinate proximity
+                # Check exact match on normalized names
+                if norm1 == norm2:
+                    lat_diff = abs(loc1['latitude'] - loc2['latitude'])
+                    lon_diff = abs(loc1['longitude'] - loc2['longitude'])
+                    
+                    if lat_diff < 0.01 and lon_diff < 0.01:
+                        duplicates.append({
+                            'id1': loc1['id'],
+                            'name1': loc1['name'],
+                            'type1': loc1['type'],
+                            'id2': loc2['id'],
+                            'name2': loc2['name'],
+                            'type2': loc2['type'],
+                            'similarity': 1.0,
+                            'lat1': loc1['latitude'],
+                            'lon1': loc1['longitude'],
+                            'lat2': loc2['latitude'],
+                            'lon2': loc2['longitude'],
+                            'reason': 'normalized_match'
+                        })
+                        continue
+                
+                # Extract cities
+                city1 = self._extract_city_from_name(loc1['name'])
+                city2 = self._extract_city_from_name(loc2['name'])
+                
+                # Check if same city bus stands
+                if city1 and city2 and city1 == city2:
+                    # Fuzzy match for same city locations
+                    similarity = SequenceMatcher(None, norm1, norm2).ratio()
+                    lat_diff = abs(loc1['latitude'] - loc2['latitude'])
+                    lon_diff = abs(loc1['longitude'] - loc2['longitude'])
+                    
+                    if similarity > 0.75 and lat_diff < 0.01 and lon_diff < 0.01:
+                        duplicates.append({
+                            'id1': loc1['id'],
+                            'name1': loc1['name'],
+                            'type1': loc1['type'],
+                            'id2': loc2['id'],
+                            'name2': loc2['name'],
+                            'type2': loc2['type'],
+                            'similarity': similarity,
+                            'lat1': loc1['latitude'],
+                            'lon1': loc1['longitude'],
+                            'lat2': loc2['latitude'],
+                            'lon2': loc2['longitude'],
+                            'reason': f'same_city_match ({city1})'
+                        })
+                        continue
+                
+                # General fuzzy match
+                similarity = SequenceMatcher(None, norm1, norm2).ratio()
                 lat_diff = abs(loc1['latitude'] - loc2['latitude'])
                 lon_diff = abs(loc1['longitude'] - loc2['longitude'])
                 
-                if similarity > 0.85 and lat_diff < 0.01 and lon_diff < 0.01:
+                if similarity > 0.85 and lat_diff < 0.005 and lon_diff < 0.005:
                     duplicates.append({
                         'id1': loc1['id'],
                         'name1': loc1['name'],
@@ -129,7 +224,8 @@ class LocationDeduplicator:
                         'lat1': loc1['latitude'],
                         'lon1': loc1['longitude'],
                         'lat2': loc2['latitude'],
-                        'lon2': loc2['longitude']
+                        'lon2': loc2['longitude'],
+                        'reason': 'fuzzy_match'
                     })
         
         return duplicates
@@ -225,36 +321,61 @@ class LocationDeduplicator:
         print("🔍 SCANNING FOR DUPLICATE LOCATIONS")
         print("="*70 + "\n")
         
-        duplicates = self.get_duplicate_locations()
+        # First find exact duplicates
+        exact_duplicates = self.get_duplicate_locations()
         
-        if not duplicates:
+        # Then find fuzzy duplicates
+        fuzzy_duplicates = self.get_similar_locations()
+        
+        all_dups = exact_duplicates or []
+        
+        if not all_dups and not fuzzy_duplicates:
             print("✅ No exact duplicates found")
-            return {}
+        else:
+            if exact_duplicates:
+                print(f"Found {len(exact_duplicates)} exact duplicate location names:\n")
+                for dup in exact_duplicates:
+                    print(f"📍 {dup['name']} (x{dup['count']})")
+                    print(f"   Type: {dup['type']}")
+                    print(f"   Coordinates: ({dup['latitude']}, {dup['longitude']})")
+                    
+                    query = """
+                    SELECT id, name, type, created_at FROM locations
+                    WHERE LOWER(name) = LOWER(%s)
+                    AND latitude = %s AND longitude = %s
+                    ORDER BY created_at
+                    """
+                    self.cursor.execute(query, (dup['name'], dup['latitude'], dup['longitude']))
+                    instances = self.cursor.fetchall()
+                    
+                    for i, inst in enumerate(instances):
+                        mark = "🔴 DELETE" if i > 0 else "✅ KEEP"
+                        print(f"   {mark}: ID {inst['id']} (created: {inst['created_at']})")
+                    
+                    print()
         
-        print(f"Found {len(duplicates)} duplicate location names:\n")
+        if fuzzy_duplicates:
+            print(f"\nFound {len(fuzzy_duplicates)} fuzzy duplicate pairs:\n")
+            
+            shown = set()
+            for dup in fuzzy_duplicates:
+                pair_id = tuple(sorted([dup['id1'], dup['id2']]))
+                if pair_id in shown:
+                    continue
+                shown.add(pair_id)
+                
+                reason = dup.get('reason', 'similar_names')
+                similarity = dup.get('similarity', 0)
+                
+                print(f"📍 Potential Duplicate [Reason: {reason}] ({similarity:.1%} similar)")
+                print(f"   ID {dup['id1']}: {dup['name1']} ({dup['type1']})")
+                print(f"   ID {dup['id2']}: {dup['name2']} ({dup['type2']})")
+                print(f"   Coords: ({dup['lat1']:.4f}, {dup['lon1']:.4f}) vs ({dup['lat2']:.4f}, {dup['lon2']:.4f})")
+                print()
         
         result = {}
-        for dup in duplicates:
-            print(f"📍 {dup['name']} (x{dup['count']})")
-            print(f"   Type: {dup['type']}")
-            print(f"   Coordinates: ({dup['latitude']}, {dup['longitude']})")
-            
-            # Get all instances
-            query = """
-            SELECT id, name, type, created_at FROM locations
-            WHERE LOWER(name) = LOWER(%s)
-            AND latitude = %s AND longitude = %s
-            ORDER BY created_at
-            """
-            self.cursor.execute(query, (dup['name'], dup['latitude'], dup['longitude']))
-            instances = self.cursor.fetchall()
-            
-            for i, inst in enumerate(instances):
-                mark = "🔴 DELETE" if i > 0 else "✅ KEEP"
-                print(f"   {mark}: ID {inst['id']} (created: {inst['created_at']})")
-            
-            print()
-            result[dup['name']] = instances
+        for dup in all_dups:
+            result[dup['name']] = []
         
         return result
     

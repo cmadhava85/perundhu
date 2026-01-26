@@ -374,11 +374,11 @@ const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation
     logger.debug(`Bus ${busDTO.id}: No departureTime from backend, using fallback: ${departureTime}`);
   }
   
-  if (!arrivalTime && departureTime) {
-    // Calculate arrival time based on travel duration (6-10 hours for variety)
-    const travelHours = 6 + (busDTO.id % 5);
-    arrivalTime = calculateArrivalTime(departureTime, travelHours);
-    logger.debug(`Bus ${busDTO.id}: No arrivalTime from backend, calculated: ${arrivalTime}`);
+  // Do NOT calculate arrival time if not provided by backend
+  // Calculating it leads to inaccurate data, especially for MTC buses
+  // Only use actual arrival times from the source data
+  if (!arrivalTime) {
+    logger.debug(`Bus ${busDTO.id}: No arrivalTime from backend, leaving blank (avoid inaccurate calculation)`);
   }
   
   // Calculate duration from actual times if both are available
@@ -400,9 +400,12 @@ const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation
   const fromName = busDTO.fromLocationNameTranslated || busDTO.fromLocationName || fromLocation.name;
   const toName = busDTO.toLocationNameTranslated || busDTO.toLocationName || toLocation.name;
   
+  // Detect corporation/operator label (e.g., TNSTC/SETC) from operator or type
+  const corporation = (busDTO.operator || '').trim() || (busDTO.type || '').trim();
+
   return {
     id: busDTO.id,
-    busName: busDTO.name || 'Unknown Bus',
+    busName: busDTO.name || corporation || 'Unknown Bus',
     busNumber: busDTO.number || 'N/A',
     from: fromName,
     to: toName,
@@ -414,6 +417,7 @@ const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation
     arrivalTime: arrivalTime || '00:00',
     category: busDTO.type || 'Express Service',
     busType: busDTO.type || 'Express Service',
+    corporation: corporation || undefined,
     status: busDTO.id % 3 === 0 ? 'Delayed' : 'On Time',
     duration: duration,
     name: busDTO.name,
@@ -476,14 +480,47 @@ export const searchBuses = async (
       transformBusDTOToBus(busDTO, fromLocation, toLocation)
     );
     
+    // Helper to compute duration between two HH:MM times (handles overnight)
+    const computeDuration = (dep: string, arr: string): string => {
+      if (!dep || !arr) return '';
+      const [depH, depM] = dep.split(':').map(Number);
+      const [arrH, arrM] = arr.split(':').map(Number);
+      let hours = arrH - depH;
+      let minutes = arrM - depM;
+      if (hours < 0) hours += 24; // Overnight handling
+      if (minutes < 0) {
+        hours -= 1;
+        minutes += 60;
+      }
+      return `${hours}h ${minutes}m`;
+    };
+
     // Fetch real stops data for each bus
     for (const bus of buses) {
       try {
         const stops = await getStops(bus.id, languageCode);
         if (stops.length > 0) {
-          // Update bus timing with actual stop times
-          bus.departureTime = stops[0].departureTime;
-          bus.arrivalTime = stops[stops.length - 1].arrivalTime;
+          // Prefer segment times that match the user's search (from -> to)
+          const stopMatches = (s: Stop, loc: Location): boolean => {
+            if (s.locationId && s.locationId === loc.id) return true;
+            // Fallback to flexible name match if locationId missing
+            const sName = (s.name || '').toLowerCase();
+            const sTranslated = (s.translatedName || '').toLowerCase();
+            const locName = (loc.name || '').toLowerCase();
+            return sName === locName || sName.includes(locName) || sTranslated.includes(locName);
+          };
+
+          const fromStop = stops.find(s => stopMatches(s, fromLocation));
+          const toStop = stops.find(s => stopMatches(s, toLocation));
+
+          // Update bus timing using matched segment when available
+          const newDeparture = fromStop?.departureTime || stops[0].departureTime || bus.departureTime;
+          const newArrival = toStop?.arrivalTime || stops[stops.length - 1].arrivalTime || bus.arrivalTime;
+          bus.departureTime = newDeparture || bus.departureTime;
+          bus.arrivalTime = newArrival || bus.arrivalTime;
+
+          // Recalculate duration based on chosen segment
+          bus.duration = computeDuration(bus.departureTime, bus.arrivalTime);
         }
       } catch (error) {
         logger.warn(`Failed to fetch stops for bus ${bus.id}: ${error instanceof Error ? error.message : String(error)}`);
@@ -1246,6 +1283,42 @@ export const searchBusesMultiStand = async (
       transformBusDTOToBus(busDTO, fromLoc, toLoc)
     );
     
+    // Enhance with segment-based timing using stops
+    const computeDuration = (dep: string, arr: string): string => {
+      if (!dep || !arr) return '';
+      const [depH, depM] = dep.split(':').map(Number);
+      const [arrH, arrM] = arr.split(':').map(Number);
+      let hours = arrH - depH;
+      let minutes = arrM - depM;
+      if (hours < 0) hours += 24;
+      if (minutes < 0) { hours -= 1; minutes += 60; }
+      return `${hours}h ${minutes}m`;
+    };
+
+    const cityMatch = (s: Stop, city: string): boolean => {
+      const name = (s.name || '').toLowerCase();
+      const trans = (s.translatedName || '').toLowerCase();
+      const cityLc = (city || '').toLowerCase();
+      return name === cityLc || name.includes(cityLc) || trans.includes(cityLc);
+    };
+
+    for (const bus of transformedBuses) {
+      try {
+        const stops = await getStops(bus.id, languageCode);
+        if (stops.length > 0) {
+          const fromStop = stops.find(s => cityMatch(s, rawResult.fromCity));
+          const toStop = stops.find(s => cityMatch(s, rawResult.toCity));
+          const newDeparture = fromStop?.departureTime || stops[0].departureTime || bus.departureTime;
+          const newArrival = toStop?.arrivalTime || stops[stops.length - 1].arrivalTime || bus.arrivalTime;
+          bus.departureTime = newDeparture || bus.departureTime;
+          bus.arrivalTime = newArrival || bus.arrivalTime;
+          bus.duration = computeDuration(bus.departureTime, bus.arrivalTime);
+        }
+      } catch (err) {
+        logger.warn(`Stops fetch failed for bus ${bus.id} (multi-stand): ${err instanceof Error ? err.message : String(err)}`);
+      }
+    }
+
     const result: MultiStandSearchResponse = {
       ...rawResult,
       buses: transformedBuses

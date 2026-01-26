@@ -1,0 +1,142 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Go to home page" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]: 🚌
+          - generic [ref=e9]:
+            - heading "பேருந்து" [level=1] [ref=e10]
+            - paragraph [ref=e11]: Bus in Seconds
+        - combobox "Select language" [active] [ref=e14] [cursor=pointer]:
+          - option "🌐 English" [selected]
+          - option "🌐 தமிழ்"
+    - generic [ref=e16]:
+      - generic [ref=e18]:
+        - button "Switch to search for bus routes" [pressed] [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]:
+            - generic [ref=e21]: 🔍
+            - generic [ref=e22]:
+              - generic [ref=e23]: Search
+              - generic [ref=e24]: Find Routes
+        - button "Switch to contribute route data" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]:
+            - img [ref=e28]
+            - generic [ref=e31]:
+              - generic [ref=e32]: Contribute
+              - generic [ref=e33]: Share Routes
+      - paragraph [ref=e37]: Discover bus routes across Tamil Nadu
+    - main [ref=e38]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - heading "🚌 Plan Your Journey" [level=2] [ref=e42]
+          - paragraph [ref=e43]: Find the best buses for your route
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - generic [ref=e47]:
+                - generic [ref=e48]:
+                  - generic [ref=e49]: 🟢 From
+                  - generic [ref=e50]: ✓ Verified
+                - button "📍 Use my location" [ref=e51] [cursor=pointer]
+              - generic [ref=e52]:
+                - textbox "From" [ref=e53]:
+                  - /placeholder: Enter departure location
+                  - text: Chennai
+                - button "Clear from location" [ref=e54] [cursor=pointer]: ✕
+            - button "Swap locations" [ref=e56] [cursor=pointer]: ⇅
+            - generic [ref=e57]:
+              - generic [ref=e59]:
+                - generic [ref=e60]: 🔴 To
+                - generic [ref=e61]: ✓ Verified
+              - generic [ref=e62]:
+                - textbox "To" [ref=e63]:
+                  - /placeholder: Enter destination location
+                  - text: Coimbatore
+                - button "Clear to location" [ref=e64] [cursor=pointer]: ✕
+          - button "🔍 Search Buses" [ref=e65] [cursor=pointer]
+          - generic [ref=e66]: 💡 Press Enter to search
+          - generic [ref=e67]:
+            - button "🗺️ View on Map" [ref=e68] [cursor=pointer]
+            - button "🕐 Schedule View" [ref=e69] [cursor=pointer]
+            - button "💡 Suggestions" [ref=e70] [cursor=pointer]
+    - contentinfo [ref=e71]:
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - img [ref=e76]
+            - generic [ref=e80]: 50K+
+            - generic [ref=e81]: Bus Routes
+          - generic [ref=e82]:
+            - img [ref=e84]
+            - generic [ref=e89]: 5K+
+            - generic [ref=e90]: Contributors
+          - generic [ref=e91]:
+            - img [ref=e93]
+            - generic [ref=e96]: 26K+
+            - generic [ref=e97]: Cities Covered
+          - generic [ref=e98]:
+            - generic [ref=e99]: 👥
+            - generic [ref=e100]: 45K+
+            - generic [ref=e101]: Daily Users
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - generic [ref=e104]:
+              - generic [ref=e105]: 🚌
+              - generic [ref=e106]:
+                - heading "பேருந்து" [level=2] [ref=e107]
+                - generic [ref=e108]: Perundhu
+            - paragraph [ref=e109]: Community-powered bus schedule platform for Tamil Nadu. Helping commuters find accurate bus timings.
+            - generic [ref=e110]:
+              - link "Twitter" [ref=e111] [cursor=pointer]:
+                - /url: https://twitter.com/perundhu
+                - img [ref=e113]
+              - link "Facebook" [ref=e115] [cursor=pointer]:
+                - /url: https://facebook.com/perundhu
+                - img [ref=e117]
+              - link "Instagram" [ref=e119] [cursor=pointer]:
+                - /url: https://instagram.com/perundhu
+                - img [ref=e121]
+              - link "Email" [ref=e124] [cursor=pointer]:
+                - /url: mailto:support@perundhu.in
+                - img [ref=e126]
+          - generic [ref=e129]:
+            - heading "Quick Links" [level=3] [ref=e130]
+            - generic [ref=e131]:
+              - link "About Us" [ref=e132] [cursor=pointer]:
+                - /url: /about
+                - img [ref=e134]
+                - text: About Us
+              - link "FAQ" [ref=e136] [cursor=pointer]:
+                - /url: /faq
+                - img [ref=e138]
+                - text: FAQ
+              - link "Contact Us" [ref=e141] [cursor=pointer]:
+                - /url: /contact
+                - img [ref=e143]
+                - text: Contact Us
+          - generic [ref=e146]:
+            - heading "Legal" [level=3] [ref=e147]
+            - generic [ref=e148]:
+              - link "Privacy Policy" [ref=e149] [cursor=pointer]:
+                - /url: /privacy
+                - img [ref=e151]
+                - text: Privacy Policy
+              - link "Terms of Service" [ref=e154] [cursor=pointer]:
+                - /url: /terms
+                - img [ref=e156]
+                - text: Terms of Service
+        - generic [ref=e159]:
+          - paragraph [ref=e160]: © 2026 Tamil Nadu Bus Scheduler. All Rights Reserved.
+          - paragraph [ref=e161]:
+            - text: Made with
+            - img [ref=e163]
+            - text: in Tamil Nadu
+  - generic [ref=e165]:
+    - img [ref=e167]
+    - button "Open Tanstack query devtools" [ref=e215] [cursor=pointer]:
+      - img [ref=e216]
+```

@@ -97,21 +97,43 @@ public class SecurityFilterChainManager {
   }
 
   /**
-   * Order 4: Admin Basic Auth Filter
+   * Order 4: Admin Rate Limiting Filter
+   * 
+   * Purpose: Apply stricter rate limits for admin endpoints
+   * Config: 5 login attempts per 15 min, 20 writes/min, 60 reads/min, 5 bulk ops/hour
+   * 
+   * Why fourth? After general rate limiting, apply admin-specific limits
+   * before authentication to prevent brute force attacks.
+   */
+  // TODO: Re-enable after fixing AdminRateLimitFilter dependencies
+  /*
+  @Bean
+  public FilterRegistrationBean<AdminRateLimitFilter> adminRateLimitFilterRegistration(
+      AdminRateLimitFilter adminRateLimitFilter) {
+    FilterRegistrationBean<AdminRateLimitFilter> registration = new FilterRegistrationBean<>();
+    registration.setFilter(adminRateLimitFilter);
+    registration.addUrlPatterns("/api/admin/*", "/api/v1/admin/*");
+    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 3); // Order 4
+    registration.setName("adminRateLimitFilter");
+    return registration;
+  }
+  */
+
+  /**
+   * Order 5: Admin Basic Auth Filter
    * 
    * Purpose: Handle HTTP Basic authentication for admin endpoints
    * Config: Admin credentials from configuration
    * 
-   * Why fourth? After all basic security checks, handle admin
-   * authentication before JWT processing.
+   * Why fifth? After rate limiting, handle admin authentication before JWT processing.
    */
   @Bean
   public FilterRegistrationBean<AdminBasicAuthFilter> adminBasicAuthFilterRegistration(
       AdminBasicAuthFilter adminBasicAuthFilter) {
     FilterRegistrationBean<AdminBasicAuthFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(adminBasicAuthFilter);
-    registration.addUrlPatterns("/api/v1/admin/*");
-    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 3); // Order 4
+    registration.addUrlPatterns("/api/admin/*", "/api/v1/admin/*");
+    registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 4); // Order 5
     registration.setName("adminBasicAuthFilter");
     return registration;
   }

@@ -386,47 +386,61 @@ export class LocationAutocompleteService {
   /**
    * Deduplicate location results using intelligent matching
    * Handles exact duplicates and similar base locations
+   * Normalizes names to handle "Besant Nagar MTC Terminus" vs "Besant Nagar" variants
    */
   private deduplicateResults(locations: LocationSuggestion[]): LocationSuggestion[] {
+    // Import normalization function for better matching
+    const normalizeForDedup = (name: string): string => {
+      return name
+        .toLowerCase()
+        .replace(/\s*-\s*(MTC|TNSTC|CMBT|DTC|SETC|KSRTC|KSDC)\s+(Terminus|Stand|Station|Bus Stand|Bus Terminus|Bus Station)?/gi, '')
+        .replace(/\s+(MTC|TNSTC)\s+(Terminus|Stand|Station)?$/gi, '')
+        .replace(/\s+(Bus\s+(Stand|Stop|Station|Terminus))$/gi, '')
+        .replace(/\s*\([^)]*\)$/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    };
+
     const filtered: LocationSuggestion[] = [];
     const seen = new Set<string>();
     const baseLocationMap = new Map<string, LocationSuggestion>(); // Track base locations
     
     for (const location of locations) {
       const nameLower = location.name.toLowerCase();
+      const normalizedName = normalizeForDedup(location.name);
       
-      // Skip if exact duplicate
-      if (seen.has(nameLower)) {
-        logger.debug(`⚠️ Skipping exact duplicate: "${location.name}"`);
+      // Skip if exact duplicate or normalized duplicate
+      if (seen.has(nameLower) || seen.has(normalizedName)) {
+        logger.debug(`⚠️ Skipping duplicate: "${location.name}" (normalized: "${normalizedName}")`);
         continue;
       }
       
       // Normalize the name for comparison (remove spaces, hyphens, special chars)
-      const normalizedName = nameLower
+      const comparisonName = normalizedName
         .replace(/[-\s()]/g, '')
         .replace(/bus\s*(stop|stand|station|terminus)/gi, '');
       
       // Extract base location name (before " - " separator)
       // E.g., "Chennai - CMBT (Koyambedu)" -> "chennai"
       // E.g., "CHENNAI-KILAMBAKKAM-KCBT - CHENNAI KALAIGNAR CBT" -> "chennaikilambakkamkcbt"
-      const baseName = nameLower.split(' - ')[0].trim().replace(/[-\s()]/g, '');
+      const baseName = normalizedName.split(' - ')[0].trim().replace(/[-\s()]/g, '');
       
       // Check if this is a simple location name (no suffix/description)
-      const isSimpleName = !nameLower.includes(' - ') && 
-                          !nameLower.includes('(') && 
-                          !nameLower.match(/bus\s*(stop|stand|station)/i);
+      const isSimpleName = !normalizedName.includes(' - ') && 
+                          !normalizedName.includes('(') && 
+                          !normalizedName.match(/bus\s*(stop|stand|station)/i);
       
       // If simple name, check against base names of detailed entries
       if (isSimpleName) {
         // Check if we already have a detailed version of this location
-        const existingDetailed = baseLocationMap.get(normalizedName);
+        const existingDetailed = baseLocationMap.get(comparisonName);
         if (existingDetailed) {
           logger.debug(`⚠️ Skipping simple name "${location.name}" - already have detailed "${existingDetailed.name}"`);
           continue;
         }
         
         // Mark this simple name as seen
-        baseLocationMap.set(normalizedName, location);
+        baseLocationMap.set(comparisonName, location);
       } else {
         // For detailed names, check if we already have this base location
         const existingSimple = baseLocationMap.get(baseName);
@@ -439,6 +453,7 @@ export class LocationAutocompleteService {
           }
           baseLocationMap.set(baseName, location);
           seen.add(nameLower);
+          seen.add(normalizedName);
           continue;
         }
         
@@ -449,6 +464,7 @@ export class LocationAutocompleteService {
       }
       
       seen.add(nameLower);
+      seen.add(normalizedName);
       filtered.push(location);
     }
     

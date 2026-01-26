@@ -3,8 +3,6 @@ package com.perundhu.application.service;
 import com.perundhu.domain.port.InputValidationPort;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +16,6 @@ import java.util.Arrays;
 @Service
 @Slf4j
 public class InputValidationService implements InputValidationPort {
-
-  private static final Logger log = LoggerFactory.getLogger(InputValidationService.class);
 
   // Malicious pattern detection
   private static final List<Pattern> MALICIOUS_PATTERNS = Arrays.asList(

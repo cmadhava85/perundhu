@@ -35,6 +35,13 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
   const [isExpanded, setIsExpanded] = useState(false);
   const [leavingIn, setLeavingIn] = useState<string | null>(null);
 
+  // Calculate bus title with operator name
+  const busTitle = React.useMemo(() => {
+    const operatorLabel = bus.name || bus.corporation?.toUpperCase() || '';
+    const titleBase = bus.busName || bus.routeName || bus.busNumber || 'Bus';
+    return operatorLabel ? `${operatorLabel} • ${titleBase}` : titleBase;
+  }, [bus.name, bus.corporation, bus.busName, bus.routeName, bus.busNumber]);
+
   // Sync expansion with selection
   useEffect(() => {
     if (isSelected && stops.length > 0) {
@@ -90,25 +97,36 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
     }
   }, [stops.length]);
 
+  // Prefer segment-based times from stops when available
+  const matchStop = (s: Stop, loc?: AppLocation): boolean => {
+    if (!loc) return false;
+    if (s.locationId && loc.id && s.locationId === loc.id) return true;
+    const sName = (s.name || '').toLowerCase();
+    const sTranslated = (s.translatedName || '').toLowerCase();
+    const locName = (loc.name || '').toLowerCase();
+    return sName === locName || sName.includes(locName) || sTranslated.includes(locName);
+  };
+
+  const segmentDepartureTime = React.useMemo(() => {
+    const fromStop = stops.find(s => matchStop(s, fromLocation));
+    return fromStop?.departureTime || bus.departureTime || '';
+  }, [stops, fromLocation, bus.departureTime]);
+
+  const segmentArrivalTime = React.useMemo(() => {
+    const toStop = stops.find(s => matchStop(s, toLocation));
+    // Fall back to last stop if destination not found
+    const lastStopArrival = stops.length > 0 ? stops[stops.length - 1].arrivalTime : '';
+    return toStop?.arrivalTime || lastStopArrival || bus.arrivalTime || '';
+  }, [stops, toLocation, bus.arrivalTime]);
+
   const getDuration = () => {
-    // Return empty string if arrival time is not available (MTC buses don't have estimated arrival)
-    if (!bus.departureTime || !bus.arrivalTime) return '';
-    
-    const [depHours, depMinutes] = bus.departureTime.split(':').map(Number);
-    const [arrHours, arrMinutes] = bus.arrivalTime.split(':').map(Number);
-    
+    if (!segmentDepartureTime || !segmentArrivalTime) return '';
+    const [depHours, depMinutes] = segmentDepartureTime.split(':').map(Number);
+    const [arrHours, arrMinutes] = segmentArrivalTime.split(':').map(Number);
     let durationHours = arrHours - depHours;
     let durationMinutes = arrMinutes - depMinutes;
-    
-    if (durationMinutes < 0) {
-      durationHours -= 1;
-      durationMinutes += 60;
-    }
-    
-    if (durationHours < 0) {
-      durationHours += 24;
-    }
-    
+    if (durationMinutes < 0) { durationHours -= 1; durationMinutes += 60; }
+    if (durationHours < 0) { durationHours += 24; }
     return `${durationHours}h ${durationMinutes}m`;
   };
 
@@ -181,7 +199,7 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
       {/* Header Section */}
       <div className="bus-card-header">
         <div className="bus-card-title">
-          <h3>{bus.busName || 'Bus'}</h3>
+          <h3>{busTitle}</h3>
           <p className="bus-card-subtitle">Bus #{bus.busNumber || bus.number || 'N/A'} • {bus.category || 'Standard'}</p>
         </div>
         <div className="bus-card-rating">
@@ -193,7 +211,7 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
       {/* Journey Timeline Section */}
       <div className="bus-card-journey">
         <div className="journey-item">
-          <div className="journey-time">{bus.departureTime ? bus.departureTime.split(':').slice(0, 2).join(':') : '--:--'}</div>
+          <div className="journey-time">{segmentDepartureTime ? segmentDepartureTime.split(':').slice(0, 2).join(':') : '--:--'}</div>
           <div className="journey-location">{getLocationDisplayName(fromLocation)}</div>
         </div>
 
@@ -207,9 +225,9 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
         </div>
 
         {/* Only show arrival time if available (MTC buses may not have estimated arrival) */}
-        {bus.arrivalTime ? (
+        {segmentArrivalTime ? (
           <div className="journey-item">
-            <div className="journey-time">{bus.arrivalTime.split(':').slice(0, 2).join(':')}</div>
+            <div className="journey-time">{segmentArrivalTime.split(':').slice(0, 2).join(':')}</div>
             <div className="journey-location">{getLocationDisplayName(toLocation)}</div>
           </div>
         ) : (

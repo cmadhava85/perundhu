@@ -52,6 +52,7 @@ export interface Bus {
   // Adding missing properties referenced in BusItem component
   status?: string;
   category?: string;
+  corporation?: string; // TNSTC/SETC operator name
   capacity?: number;
   // Add properties to match apiTypes.ts structure
   name?: string;

@@ -72,6 +72,9 @@ public class BusJpaEntity {
 
     private String category;
 
+    @Nullable
+    private String routeType;
+
     @Builder.Default
     private Boolean active = true;
 

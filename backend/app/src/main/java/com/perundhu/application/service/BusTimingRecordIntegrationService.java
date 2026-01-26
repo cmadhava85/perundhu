@@ -223,6 +223,11 @@ public class BusTimingRecordIntegrationService {
     // Strategy 1: Exact match
     location = locationRepository.findByExactName(locationName.trim()).orElse(null);
 
+    // Strategy 1.1: Exact alias match
+    if (location == null) {
+      location = locationRepository.findByAlias(locationName.trim()).orElse(null);
+    }
+
     // Strategy 2: Case-insensitive match
     if (location == null) {
       location = locationRepository.findByExactName(normalizePlaceName(locationName)).orElse(null);

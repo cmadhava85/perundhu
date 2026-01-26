@@ -75,4 +75,53 @@ public interface LocationRepository {
      * @return The total number of locations
      */
     long count();
+
+    /**
+     * Get all location IDs for hierarchical search
+     * If the location is a CITY with child terminals, returns the city ID + all child terminal IDs
+     * Otherwise, returns just the location ID
+     * 
+     * This enables users to search "Chennai" and get buses from all Chennai terminals
+     * (CMBT, KCBT, Madhavaram, etc.) without having to specify the exact terminal.
+     * 
+     * Example: For Chennai (ID 1) with terminals CMBT (62428), KCBT (99355), Tambaram (99295)
+     * Returns: [1, 62428, 99355, 99295, ...]
+     * 
+     * @param locationId The location ID to search from
+     * @return List of location IDs to include in the search (parent + children)
+     */
+    List<Long> findLocationIdsForHierarchicalSearch(Long locationId);
+
+    /**
+     * Find location by alias name (supports alternative names)
+     * 
+     * This enables users to search using any variation of a location name.
+     * Example: "Broadway", "Broadway Bus Terminus", "Chennai - Broadway" all return the same location
+     * 
+     * @param aliasName The alias name to search for (case-insensitive)
+     * @return Optional containing the location if found via alias
+     */
+    Optional<Location> findByAlias(String aliasName);
+
+    /**
+     * Find all locations matching an alias pattern (autocomplete with alias support)
+     * 
+     * This searches both location names and their aliases for autocomplete.
+     * Example: Searching "broad" returns locations with aliases like "Broadway", "Broadway Bus Terminus"
+     * 
+     * @param aliasPattern The partial alias name to search for (minimum 3 characters)
+     * @return List of unique locations matching the pattern in names or aliases
+     */
+    List<Location> findByAliasContaining(String aliasPattern);
+
+    /**
+     * Get all location IDs that match a location name or its aliases
+     * 
+     * This combines alias resolution with hierarchical search.
+     * Example: Searching "Broadway" returns all location IDs for Broadway and its variations
+     * 
+     * @param locationName The location name or alias to search for
+     * @return List of location IDs matching the name/alias (including hierarchical children)
+     */
+    List<Long> findLocationIdsByNameOrAlias(String locationName);
 }

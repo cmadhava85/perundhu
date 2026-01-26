@@ -21,6 +21,12 @@ class EnhancedOverpassFetcher:
     TAMIL_NADU_BBOX = [8.0, 76.0, 13.5, 80.5]
     OVERPASS_API = "https://overpass-api.de/api/interpreter"
     
+    # Valid coordinate ranges for Tamil Nadu
+    COORD_BOUNDS = {
+        'lat_min': 8.0, 'lat_max': 13.5,
+        'lon_min': 76.0, 'lon_max': 80.5
+    }
+    
     # Known bus stand names to preserve
     BUS_STAND_KEYWORDS = {
         'bus station', 'bus stand', 'bus stop', 'terminus', 'depot',
@@ -103,7 +109,7 @@ class EnhancedOverpassFetcher:
             return []
     
     def _parse_element(self, element: Dict, location_type: str) -> Optional[Dict]:
-        """Parse Overpass element into location"""
+        """Parse Overpass element into location with validation"""
         try:
             tags = element.get('tags', {})
             
@@ -112,7 +118,7 @@ class EnhancedOverpassFetcher:
                    tags.get('official_name') or 
                    '').strip()
             
-            if not name:
+            if not name or len(name) < 2:
                 return None
             
             lat = element.get('lat')
@@ -127,6 +133,10 @@ class EnhancedOverpassFetcher:
             if lat is None or lon is None:
                 return None
             
+            # Validate coordinates are within Tamil Nadu bounds
+            if not self._is_valid_coordinate(lat, lon):
+                return None
+            
             return {
                 'name': name,
                 'latitude': float(lat),
@@ -139,34 +149,97 @@ class EnhancedOverpassFetcher:
         except:
             return None
     
+    def _is_valid_coordinate(self, lat: float, lon: float) -> bool:
+        """Validate coordinate is within Tamil Nadu bounds"""
+        try:
+            lat = float(lat)
+            lon = float(lon)
+            return (self.COORD_BOUNDS['lat_min'] <= lat <= self.COORD_BOUNDS['lat_max'] and
+                    self.COORD_BOUNDS['lon_min'] <= lon <= self.COORD_BOUNDS['lon_max'])
+        except:
+            return False
+    
     def _normalize_location_name(self, name: str) -> str:
         """Normalize location name for deduplication"""
         # Remove extra whitespace
         name = ' '.join(name.split())
-        # Standardize bus-related keywords
+        
+        # Standardize bus-related keywords (all to lowercase for comparison)
         name = re.sub(r'bus\s+stop', 'bus stop', name, flags=re.IGNORECASE)
         name = re.sub(r'bus\s+station', 'bus station', name, flags=re.IGNORECASE)
-        name = re.sub(r'mtc\s+terminus', 'MTC Terminus', name, flags=re.IGNORECASE)
-        return name.strip()
+        name = re.sub(r'bus\s+stand', 'bus stand', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+terminal', 'bus terminal', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+port', 'bus port', name, flags=re.IGNORECASE)
+        name = re.sub(r'bus\s+garage', 'bus garage', name, flags=re.IGNORECASE)
+        name = re.sub(r'mtc\s+terminus', 'mtc terminus', name, flags=re.IGNORECASE)
+        name = re.sub(r'kkbt|kaliamman\s+karikkal\s+bhagavathi\s+temple', 'central bus terminal', name, flags=re.IGNORECASE)
+        
+        # Remove common abbreviations and prefixes
+        name = re.sub(r'^(m\.g\.r|cmbt|dr\.)\s+', '', name, flags=re.IGNORECASE)
+        
+        # Remove common suffixes (bus stop/stand variations)
+        name = re.sub(r'\s+(bus\s+(stop|stand|station|terminal|port))\s*$', '', name, flags=re.IGNORECASE)
+        
+        # Handle "Old", "New", "Central", "Main" variations
+        name = re.sub(r'\s+(old|new|central|main)\s+bus', ' bus', name, flags=re.IGNORECASE)
+        
+        # Remove trailing punctuation and extra spaces
+        name = re.sub(r'[,\-\.\s]+$', '', name).strip()
+        
+        return name.lower()
     
-    def _is_duplicate(self, loc1: Dict, loc2: Dict, similarity_threshold: float = 0.90) -> bool:
-        """Check if two locations are duplicates"""
-        # Exact match
-        if (loc1['name'].lower() == loc2['name'].lower() and 
-            abs(loc1['latitude'] - loc2['latitude']) < 0.001 and 
-            abs(loc1['longitude'] - loc2['longitude']) < 0.001):
-            return True
+    def _extract_city_from_location(self, name: str) -> Optional[str]:
+        """Extract city name from location string"""
+        # Pattern: "City - Area" or "City Area Bus Stand"
+        patterns = [
+            r'^([A-Za-z\s]+?)\s*-\s*',  # "City - Area"
+            r'^([A-Za-z\s]+?)\s+(central|old|new|main)\s+bus',  # "City Central Bus Stand"
+            r'^([A-Za-z\s]+?)\s+bus\s+(stand|station|stop|port|terminal)',  # "City Bus Stand"
+        ]
         
-        # Similar names + same/very close coordinates
-        name_sim = SequenceMatcher(None, 
-                                   loc1['name'].lower(), 
-                                   loc2['name'].lower()).ratio()
+        for pattern in patterns:
+            match = re.match(pattern, name, re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
         
+        return None
+    
+    def _is_duplicate(self, loc1: Dict, loc2: Dict, similarity_threshold: float = 0.85) -> bool:
+        """Check if two locations are duplicates with improved logic"""
+        # Extract normalized names
+        norm_name1 = self._normalize_location_name(loc1['name'])
+        norm_name2 = self._normalize_location_name(loc2['name'])
+        
+        # Exact match on normalized names
+        if norm_name1 == norm_name2:
+            # Check coordinate proximity (same city bus stands should be very close)
+            lat_diff = abs(loc1['latitude'] - loc2['latitude'])
+            lon_diff = abs(loc1['longitude'] - loc2['longitude'])
+            if lat_diff < 0.01 and lon_diff < 0.01:  # ~1km proximity
+                return True
+        
+        # Extract city names for smarter comparison
+        city1 = self._extract_city_from_location(norm_name1)
+        city2 = self._extract_city_from_location(norm_name2)
+        
+        # If both are bus stops in same city with similar names
+        if city1 and city2 and city1.lower() == city2.lower():
+            # Check name similarity (more lenient for same city)
+            name_sim = SequenceMatcher(None, norm_name1, norm_name2).ratio()
+            lat_diff = abs(loc1['latitude'] - loc2['latitude'])
+            lon_diff = abs(loc1['longitude'] - loc2['longitude'])
+            
+            # If names are very similar and locations are close, it's a duplicate
+            if name_sim >= 0.80 and lat_diff < 0.005 and lon_diff < 0.005:
+                return True
+        
+        # Fuzzy match on original names with higher threshold
+        name_sim = SequenceMatcher(None, norm_name1, norm_name2).ratio()
         lat_diff = abs(loc1['latitude'] - loc2['latitude'])
         lon_diff = abs(loc1['longitude'] - loc2['longitude'])
-        coord_close = lat_diff < 0.005 and lon_diff < 0.005
         
-        if name_sim >= similarity_threshold and coord_close:
+        # Very close coordinates + good name similarity = duplicate
+        if name_sim >= similarity_threshold and lat_diff < 0.005 and lon_diff < 0.005:
             return True
         
         return False
@@ -419,14 +492,15 @@ out center;
         return str(csv_file)
     
     def generate_sql(self) -> str:
-        """Generate SQL from fetched data"""
-        print("\n📝 Generating SQL migrations (deduplicated)...\n")
+        """Generate SQL from fetched data with validation"""
+        print("\n📝 Generating SQL migrations (deduplicated & validated)...\n")
         
         if not self.locations:
             print("❌ No locations fetched")
             return ""
         
         statements = []
+        invalid_count = 0
         
         for loc_type in sorted(self.by_type.keys()):
             locs = self.by_type[loc_type]
@@ -439,8 +513,15 @@ out center;
                 lon = loc.get('longitude', 0)
                 district = (loc.get('district') or 'Tamil Nadu').replace("'", "''")
                 
-                if name and lat and lon:
-                    values.append(f"('{name}', {lat}, {lon}, '{district}')")
+                # Validate before adding
+                if not name or name.strip() == '':
+                    invalid_count += 1
+                    continue
+                if not self._is_valid_coordinate(lat, lon):
+                    invalid_count += 1
+                    continue
+                
+                values.append(f"('{name}', {lat}, {lon}, '{district}')")
             
             if values:
                 sql = f"""-- {type_label} Locations ({len(values)} total, from Overpass API)
@@ -449,6 +530,9 @@ INSERT INTO locations (name, latitude, longitude, district) VALUES
 ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitude);
 """
                 statements.append(sql)
+        
+        if invalid_count > 0:
+            print(f"⚠️  Warning: {invalid_count} invalid locations filtered out")
         
         return '\n'.join(statements)
     
@@ -475,7 +559,7 @@ ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitud
         filepath = migrations_dir / filename
         
         header = f"""-- V{next_version}__load_deduplicated_tamil_nadu_locations.sql
--- Comprehensive Tamil Nadu Locations from Overpass API (DEDUPLICATED)
+-- Comprehensive Tamil Nadu Locations from Overpass API (DEDUPLICATED & VALIDATED)
 -- ⭐ REAL DATA - Fetched from Overpass API (FREE, unlimited, no API key needed)
 --
 -- Data Source: OpenStreetMap via Overpass API
@@ -484,7 +568,7 @@ ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitud
 --
 -- Total Locations: {len(self.locations)}
 -- Duplicates Removed: {self.duplicates_removed}
--- Query Success Rate: {len(self.locations) - len(self.failed_queries)} queries successful
+-- Locations Processed: {len(self.locations)}
 --
 -- Data Breakdown:
 """
@@ -503,13 +587,69 @@ ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitud
 -- - All bus stops and bus stations (including nearby city areas)
 -- - All neighborhoods
 -- - Exact coordinates verified from OSM
+-- - Coordinates validated within Tamil Nadu bounds
 -- - Legal to store (ODbL license)
+-- - Production-ready with conflict handling
 --
 -- Perfect for bus tracking application!
+
+-- ============================================================================
+-- PRE-LOAD VERIFICATION
+-- ============================================================================
+
+-- Check current state before load
+SELECT 'PRE-LOAD CHECK: Existing locations' as check_type;
+SELECT COUNT(*) as existing_locations FROM locations;
+
+-- ============================================================================
+-- DATA LOAD
+-- ============================================================================
 
 """
         
         full_sql = header + sql
+        
+        # Add post-load verification
+        verification_after = """
+-- ============================================================================
+-- POST-LOAD VERIFICATION & VALIDATION
+-- ============================================================================
+
+-- 1. Verify all coordinates are within Tamil Nadu bounds
+SELECT COUNT(*) as invalid_coords FROM locations 
+WHERE latitude < 8.0 OR latitude > 13.5 
+   OR longitude < 76.0 OR longitude > 80.5;
+
+-- 2. Check for remaining duplicates
+SELECT name, COUNT(*) as dup_count FROM locations 
+GROUP BY LOWER(name) HAVING COUNT(*) > 1 
+ORDER BY dup_count DESC LIMIT 20;
+
+-- 3. Verify foreign key integrity
+SELECT COUNT(*) as orphaned_from_locations FROM buses 
+WHERE from_location_id NOT IN (SELECT id FROM locations);
+
+SELECT COUNT(*) as orphaned_to_locations FROM buses 
+WHERE to_location_id NOT IN (SELECT id FROM locations);
+
+SELECT COUNT(*) as orphaned_stops FROM stops 
+WHERE location_id NOT IN (SELECT id FROM locations);
+
+-- 4. Summary by type
+SELECT 'POST-LOAD SUMMARY' as summary;
+SELECT type, COUNT(*) as count FROM locations 
+GROUP BY type ORDER BY count DESC;
+
+SELECT 'Total Unique Locations' as summary_type;
+SELECT COUNT(DISTINCT name) as total_unique FROM locations;
+
+SELECT 'Data Quality Check' as quality_check;
+SELECT COUNT(*) as blank_names FROM locations WHERE name IS NULL OR name = '';
+SELECT COUNT(*) as zero_coords FROM locations WHERE latitude = 0 AND longitude = 0;
+
+"""
+        
+        full_sql += verification_after
         
         with open(filepath, 'w') as f:
             f.write(full_sql)
@@ -518,6 +658,7 @@ ON DUPLICATE KEY UPDATE latitude = VALUES(latitude), longitude = VALUES(longitud
         print(f"   Version: V{next_version}")
         print(f"   File: {filename}")
         print(f"   Locations: {len(self.locations)}")
+        print(f"   With comprehensive verification queries")
         
         return str(filepath)
     

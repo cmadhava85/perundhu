@@ -37,6 +37,7 @@ import com.perundhu.infrastructure.persistence.jpa.RouteContributionJpaRepositor
 import com.perundhu.infrastructure.persistence.jpa.StopJpaRepository;
 import com.perundhu.infrastructure.persistence.jpa.TranslationJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.BusTimingRecordJpaRepository;
+import com.perundhu.infrastructure.persistence.repository.LocationAliasJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.SkippedTimingRecordJpaRepository;
 import com.perundhu.infrastructure.persistence.repository.TimingImageContributionJpaRepository;
 import com.perundhu.infrastructure.service.TranslationServiceImpl;
@@ -65,8 +66,9 @@ public class HexagonalConfig {
 
   @Bean
   public LocationRepository locationRepository(
-      @Qualifier("repositoryPackageLocationJpaRepository") LocationJpaRepository locationJpaRepository) {
-    return new LocationJpaRepositoryAdapter(locationJpaRepository);
+      @Qualifier("repositoryPackageLocationJpaRepository") LocationJpaRepository locationJpaRepository,
+      LocationAliasJpaRepository aliasJpaRepository) {
+    return new LocationJpaRepositoryAdapter(locationJpaRepository, aliasJpaRepository);
   }
 
   @Bean

@@ -15,7 +15,7 @@ import logging
 import sys
 import os
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 from dataclasses import dataclass
 import mysql.connector
@@ -131,7 +131,7 @@ class BusDataUploader:
             'display_name': 'Metropolitan Transport Corporation (MTC)'
         },
         'TNSTC': {
-            'data_file': 'data/tnstc_bus_timings_merged.json',
+            'data_file': 'data/tnstc_consolidated.json',
             'display_name': 'Tamil Nadu State Transport Corporation (TNSTC)'
         }
     }
@@ -152,6 +152,8 @@ class BusDataUploader:
         self.cursor = None
         self.location_cache = {}  # Cache for location lookups
         self.translation_cache = {}  # Cache for Tamil translations
+        self._location_columns: List[str] = []  # detected schema for locations table
+        self._city_cache: Dict[str, int] = {}   # cache of known city names -> id (for parent linking)
         
         # Initialize Tamil translator
         self.translator = None
@@ -225,6 +227,34 @@ class BusDataUploader:
             self.connection = mysql.connector.connect(**connection_params)
             self.cursor = self.connection.cursor(dictionary=True)
             logger.info(f"Connected to database: {self.config.database}")
+
+            # Detect locations table columns for backward/forward compatibility
+            try:
+                self.cursor.execute("SHOW COLUMNS FROM locations")
+                cols = self.cursor.fetchall() or []
+                self._location_columns = [c['Field'] for c in cols if 'Field' in c]
+                logger.debug(f"Locations schema columns: {self._location_columns}")
+            except Exception as e:
+                logger.warning(f"Could not introspect locations schema: {e}")
+
+            # Preload city ids if location_type column exists
+            try:
+                if self._has_column('location_type'):
+                    self.cursor.execute("SELECT id, name FROM locations WHERE location_type = 'CITY'")
+                    for row in self.cursor.fetchall() or []:
+                        self._city_cache[row['name'].strip().lower()] = row['id']
+                else:
+                    # Fallback: seed a few common city names for parent inference
+                    seed_cities = [
+                        'Chennai','Madurai','Coimbatore','Tiruchirappalli','Salem','Vellore','Tirunelveli',
+                        'Erode','Tiruppur','Nagercoil','Thanjavur','Dindigul','Kancheepuram','Kanchipuram'
+                    ]
+                    for name in seed_cities:
+                        city_id = self._find_location_by_exact_name(name)
+                        if city_id:
+                            self._city_cache[name.lower()] = city_id
+            except Exception as e:
+                logger.debug(f"City cache preload skipped: {e}")
         except MySQLError as e:
             logger.error(f"Database connection failed: {e}")
             raise
@@ -282,11 +312,11 @@ class BusDataUploader:
         return None
     
     def _find_location_by_exact_name(self, name: str) -> Optional[int]:
-        """Find location by exact name match (case-insensitive)"""
+        """Find location by exact name match (case-insensitive) + alias support"""
         name_lower = name.lower().strip()
         
         try:
-            # Try exact match first (case-insensitive)
+            # 1. Try exact match on location name (case-insensitive)
             query = "SELECT id FROM locations WHERE LOWER(TRIM(name)) = %s LIMIT 1"
             self.cursor.execute(query, (name_lower,))
             result = self.cursor.fetchone()
@@ -295,6 +325,17 @@ class BusDataUploader:
                 logger.debug(f"Found exact location match: '{name}' (ID: {result['id']})")
                 self.location_cache[name_lower] = result['id']
                 return result['id']
+            
+            # 2. Try exact match on alias
+            query = "SELECT location_id FROM location_aliases WHERE LOWER(TRIM(alias_name)) = %s LIMIT 1"
+            self.cursor.execute(query, (name_lower,))
+            result = self.cursor.fetchone()
+            
+            if result:
+                logger.debug(f"Found location via alias: '{name}' (ID: {result['location_id']})")
+                self.location_cache[name_lower] = result['location_id']
+                return result['location_id']
+                
         except MySQLError as e:
             logger.warning(f"Error searching for exact location: {e}")
         
@@ -314,6 +355,61 @@ class BusDataUploader:
         name_lower = ' '.join(name_lower.split())
         
         return name_lower
+
+    def _has_column(self, column: str) -> bool:
+        """Check if locations table has a specific column (schema compatibility)."""
+        return column in self._location_columns
+
+    # --- Hierarchy helpers -------------------------------------------------
+    TERMINAL_KEYWORDS = [
+        'terminus', 'bus stand', 'busstand', 'bus stop', 'b.s', 'b.s.', 'bs',
+        'bus station', 'mtc terminus', 'mtc bus stand', 'tnstc bus stand', 'depot'
+    ]
+
+    TERMINAL_PARENT_MAP = {
+        # Curated mapping for well-known Chennai terminals
+        'cmbt': 'chennai',
+        'koyambedu': 'chennai',
+        'kilambakkam': 'chennai',
+        'kcbt': 'chennai',
+        'tambaram': 'chennai',
+        'adyar': 'chennai',
+        'vadapalani': 'chennai',
+        'broadway': 'chennai',
+        't nagar': 'chennai', 't. nagar': 'chennai', 'tnagar': 'chennai',
+        # Other major cities (expand as needed)
+        'gandhipuram': 'coimbatore',
+        'singanallur': 'coimbatore',
+        'central bus stand': 'tiruchirappalli',
+        'mattuthavani': 'madurai',
+    }
+
+    def _infer_location_type_and_parent(self, name: str, fallback_type: str) -> Tuple[str, Optional[int]]:
+        """Infer LocationType (domain) and parent city id from a name.
+
+        Returns: (location_type_str, parent_city_id or None)
+        """
+        n = (name or '').strip().lower()
+        # Decide type
+        is_terminal = any(k in n for k in self.TERMINAL_KEYWORDS) or fallback_type.lower().startswith('bus_terminal')
+        loc_type = 'TERMINAL' if is_terminal else ('STATION' if 'stop' in n or fallback_type.lower().startswith('bus_stop') else 'TOWN')
+
+        parent_id = None
+        # Curated direct parent mapping
+        for key, city in self.TERMINAL_PARENT_MAP.items():
+            if key in n:
+                parent_id = self._city_cache.get(city.lower())
+                if parent_id:
+                    break
+
+        # If not resolved, try substring match to any cached city name
+        if parent_id is None and self._city_cache:
+            for city_name, cid in self._city_cache.items():
+                if city_name in n:
+                    parent_id = cid
+                    break
+
+        return loc_type, parent_id
     
     def _find_similar_location(self, name: str) -> Optional[int]:
         """Find similar location using fuzzy matching to prevent duplicates"""
@@ -367,6 +463,27 @@ class BusDataUploader:
             self.location_cache[name_lower] = best_match['id']
             return best_match['id']
         
+        # Also try fuzzy match on aliases as a fallback
+        try:
+            query = "SELECT location_id, alias_name FROM location_aliases WHERE LOWER(alias_name) LIKE %s LIMIT 100"
+            self.cursor.execute(query, (f"%{first_word}%",))
+            aliases = self.cursor.fetchall()
+            
+            for alias in aliases:
+                alias_normalized = self._normalize_location_name(alias['alias_name'])
+                ratio = difflib.SequenceMatcher(None, name_normalized, alias_normalized).ratio()
+                
+                if name_normalized in alias_normalized or alias_normalized in name_normalized:
+                    ratio = max(ratio, 0.95)
+                
+                if ratio > best_ratio and ratio >= self.LOCATION_SIMILARITY_THRESHOLD:
+                    best_ratio = ratio
+                    logger.info(f"✅ Found location via alias: '{name}' -> '{alias['alias_name']}' (match: {best_ratio:.2%})")
+                    self.location_cache[name_lower] = alias['location_id']
+                    return alias['location_id']
+        except MySQLError as e:
+            logger.warning(f"Error querying aliases for fuzzy match: {e}")
+        
         return None
     
     def get_or_create_location(self, name: str, location_type: str = 'bus_stop') -> int:
@@ -393,16 +510,35 @@ class BusDataUploader:
         
         # 4. Create new location if not found
         try:
-            query = """
-                INSERT INTO locations (name, type, latitude, longitude, created_at, updated_at)
-                VALUES (%s, %s, %s, %s, NOW(), NOW())
-            """
-            self.cursor.execute(query, (
-                name.strip(),
-                location_type,
-                None,  # Latitude (to be added later)
-                None   # Longitude (to be added later)
-            ))
+            params = []
+            if self._has_column('location_type'):
+                # New schema with hierarchy support
+                inferred_type, parent_id = self._infer_location_type_and_parent(name, location_type)
+                query = """
+                    INSERT INTO locations (name, location_type, parent_id, latitude, longitude, created_at, updated_at)
+                    VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
+                """
+                params = [
+                    name.strip(),
+                    inferred_type,
+                    parent_id,
+                    None,
+                    None
+                ]
+            else:
+                # Backward-compatible insert for older schema
+                query = """
+                    INSERT INTO locations (name, type, latitude, longitude, created_at, updated_at)
+                    VALUES (%s, %s, %s, %s, NOW(), NOW())
+                """
+                params = [
+                    name.strip(),
+                    location_type,
+                    None,
+                    None
+                ]
+
+            self.cursor.execute(query, tuple(params))
             location_id = self.cursor.lastrowid
             
             # Translate location name to Tamil and store
@@ -440,6 +576,16 @@ class BusDataUploader:
             # Note: MTC data only has departure time, no arrival time information
             departure_time = route_data.get('departure_time', '').strip() or None
             
+            # Create bus name from available fields
+            # Priority: busName field > service_code + bus_type > "origin - destination"
+            bus_name = (
+                route_data.get('busName', '').strip() or
+                route_data.get('bus_name', '').strip() or
+                (f"{route_data.get('service_code', '')} ({route_data.get('bus_type', '')})" 
+                 if route_data.get('service_code') and route_data.get('bus_type') else None) or
+                f"{origin} - {destination}"
+            )
+            
             # Create bus entry
             # arrival_time is NULL because MTC data doesn't include estimated arrival times
             query = """
@@ -447,7 +593,6 @@ class BusDataUploader:
                                    departure_time, arrival_time, capacity, created_at, updated_at)
                 VALUES (%s, %s, %s, %s, %s, NULL, %s, NOW(), NOW())
             """
-            bus_name = f"{origin} - {destination}"
             self.cursor.execute(query, (
                 bus_name,
                 route_number,
@@ -459,7 +604,7 @@ class BusDataUploader:
             bus_id = self.cursor.lastrowid
             self.stats['buses_created'] += 1
             
-            logger.info(f"Created bus: {route_number} ({origin} → {destination}) [ID: {bus_id}] departure: {departure_time}")
+            logger.info(f"Created bus: {route_number} ({origin} → {destination}) [ID: {bus_id}] Name: {bus_name} Departure: {departure_time}")
             return bus_id
         except MySQLError as e:
             logger.error(f"Failed to create bus: {e}")
@@ -469,9 +614,11 @@ class BusDataUploader:
         """Create stops for a bus route"""
         try:
             for stop_info in stops_data:
-                stop_name = stop_info.get('name', '').strip()
+                # For TNSTC: Use 'landmark' field instead of 'city' to avoid route-like names
+                # For MTC: Use 'name' field as before
+                stop_name = stop_info.get('landmark', stop_info.get('name', '')).strip()
                 stop_order = stop_info.get('order', 0)
-                arrival_time = stop_info.get('arrival_time')
+                arrival_time = stop_info.get('arrival_time') or stop_info.get('time')
                 
                 if not stop_name:
                     continue
@@ -500,8 +647,9 @@ class BusDataUploader:
                 from_stop = stops_data[i]
                 to_stop = stops_data[i + 1]
                 
-                from_location_id = self.get_or_create_location(from_stop.get('name', ''), 'bus_stop')
-                to_location_id = self.get_or_create_location(to_stop.get('name', ''), 'bus_stop')
+                # For TNSTC: Use 'landmark' field instead of 'city'
+                from_location_id = self.get_or_create_location(from_stop.get('landmark', from_stop.get('name', '')), 'bus_stop')
+                to_location_id = self.get_or_create_location(to_stop.get('landmark', to_stop.get('name', '')), 'bus_stop')
                 
                 # Calculate travel time if arrival times are available
                 travel_time_minutes = None
@@ -589,14 +737,39 @@ class BusDataUploader:
         with open(data_file, 'r', encoding='utf-8') as f:
             raw_data = json.load(f)
         
-        # Transform raw data: extract origin_name, destination_name, and departure_time
+        # Handle different data structures for different operators
+        # TNSTC consolidated: {"routes": [...], "metadata": {...}}
+        # MTC merged: [...]
+        if isinstance(raw_data, dict) and 'routes' in raw_data:
+            # TNSTC consolidated format
+            routes = raw_data['routes']
+            logger.info(f"Loaded TNSTC consolidated data with {len(routes)} routes")
+        else:
+            # MTC or other format (flat array)
+            routes = raw_data
+            logger.info(f"Loaded data with {len(routes)} records")
+        
+        # Transform raw data: extract origin, destination, and departure_time
         timings_data = []
-        for record in raw_data:
+        for record in routes:
+            # For TNSTC: stops contain {city, landmark, time}
+            # For MTC: stops contain {name, order, arrival_time}
+            
+            # Determine operator/bus name
+            # For MTC, default busName to 'MTC' if not provided
+            bus_name_value = record.get('busName', '')
+            if not bus_name_value and self.operator.upper() == 'MTC':
+                bus_name_value = 'MTC'
+            
             timings_data.append({
                 'route_number': record.get('route_number', ''),
-                'origin': record.get('origin_name', ''),
-                'destination': record.get('destination_name', ''),
-                'departure_time': record.get('departure_time', ''),  # Use departure_time field
+                'origin': record.get('origin', record.get('origin_name', '')),
+                'destination': record.get('destination', record.get('destination_name', '')),
+                'departure_time': record.get('departure_time', ''),
+                'service_code': record.get('service_code', ''),
+                'bus_type': record.get('bus_type', ''),
+                'busName': bus_name_value,
+                'bus_name': record.get('bus_name', ''),
                 'stops': record.get('stops', [])
             })
         

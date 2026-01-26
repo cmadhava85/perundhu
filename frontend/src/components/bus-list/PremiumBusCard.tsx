@@ -116,7 +116,7 @@ const PremiumBusCard: React.FC<PremiumBusCardProps> = ({
             <h2 className="route-title">
               {bus.from} <span className="arrow-separator">→</span> {bus.to}
             </h2>
-            <p className="operator-name">{bus.busName || bus.busNumber}</p>
+            <p className="operator-name">{bus.name || bus.busName || bus.busNumber}</p>
           </div>
 
           <div className="badges-group">

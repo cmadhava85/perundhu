@@ -126,10 +126,11 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     @Override
     @Cacheable(value = "busSearchCache", key = "#fromLocationId + '-' + #toLocationId")
     public List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId) {
-        LocationId fromId = new LocationId(fromLocationId);
-        LocationId toId = new LocationId(toLocationId);
+        // Expand to hierarchical sets (parent city + child terminals)
+        List<Long> fromLocationIds = locationRepository.findLocationIdsForHierarchicalSearch(fromLocationId);
+        List<Long> toLocationIds = locationRepository.findLocationIdsForHierarchicalSearch(toLocationId);
 
-        List<Bus> buses = busRepository.findBusesBetweenLocations(fromId.value(), toId.value());
+        List<Bus> buses = busRepository.findBusesBetweenLocationSets(fromLocationIds, toLocationIds);
 
         // Sort buses by departure time with smart ordering:
         // 1. Current/upcoming buses first (based on current time)
@@ -142,10 +143,11 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     @Override
     @Cacheable(value = "busSearchCache", key = "#fromLocationId + '-' + #toLocationId + '-' + #languageCode")
     public List<BusDTO> findBusesBetweenLocations(Long fromLocationId, Long toLocationId, String languageCode) {
-        LocationId fromId = new LocationId(fromLocationId);
-        LocationId toId = new LocationId(toLocationId);
+        // Expand to hierarchical sets (parent city + child terminals)
+        List<Long> fromLocationIds = locationRepository.findLocationIdsForHierarchicalSearch(fromLocationId);
+        List<Long> toLocationIds = locationRepository.findLocationIdsForHierarchicalSearch(toLocationId);
 
-        List<Bus> buses = busRepository.findBusesBetweenLocations(fromId.value(), toId.value());
+        List<Bus> buses = busRepository.findBusesBetweenLocationSets(fromLocationIds, toLocationIds);
 
         // If English or no language specified, use standard method
         if (languageCode == null || "en".equals(languageCode)) {
@@ -507,7 +509,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             // that has a translation stored
         }
 
-        // Also search by English name (standard search)
+        // Search by English name (standard search)
         List<Location> englishResults = locationRepository.findByNameContaining(trimmedQuery);
         for (Location loc : englishResults) {
             if (!results.contains(loc)) {
@@ -515,8 +517,17 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
         }
 
-        // Also search for bus stands (e.g., "Madurai - Periyar", "Coimbatore -
-        // Gandhipuram")
+        // ENHANCED: Search by aliases (e.g., "Broadway", "BROADWAY", "Broadway Bus Terminus")
+        // This enables flexible location search with all name variations
+        List<Location> aliasResults = locationRepository.findByAliasContaining(trimmedQuery);
+        for (Location loc : aliasResults) {
+            if (!results.contains(loc)) {
+                results.add(loc);
+                log.debug("Found location by alias search: {}", loc.getName());
+            }
+        }
+
+        // Also search for bus stands (e.g., "Madurai - Periyar", "Coimbatore - Gandhipuram")
         List<BusStand> busStandResults = busStandRepository.findByNameContaining(trimmedQuery);
         for (BusStand busStand : busStandResults) {
             // Convert BusStand to Location for the autocomplete result
@@ -539,7 +550,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
         }
 
-        log.debug("Location search for '{}' returned {} results (including bus stands)", trimmedQuery, results.size());
+        log.debug("Location search for '{}' returned {} results (including aliases and bus stands)", 
+                trimmedQuery, results.size());
         return results;
     }
 
@@ -892,7 +904,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         // BusDTO record fields: id, number, name, operator, type, departureTime,
         // arrivalTime, rating, features,
         // fromLocationId, fromLocationName, fromLocationNameTranslated, toLocationId,
-        // toLocationName, toLocationNameTranslated, capacity, active
+        // toLocationName, toLocationNameTranslated, capacity, active,
+        // isMultiLegJourney, legNumber, totalLegs, journeyId, intermediateLocationId, intermediateLocationName
         return new BusDTO(
                 dto.id(),
                 dto.number(),
@@ -910,7 +923,14 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 toWithStand, // Use bus stand name instead of city name
                 dto.toLocationNameTranslated(),
                 dto.capacity(),
-                dto.active());
+                dto.active(),
+                // Multi-leg metadata - preserve from original dto
+                dto.isMultiLegJourney(),
+                dto.legNumber(),
+                dto.totalLegs(),
+                dto.journeyId(),
+                dto.intermediateLocationId(),
+                dto.intermediateLocationName());
     }
 
     /**
@@ -974,17 +994,18 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             String languageCode) {
         log.info("Falling back to location-based search for from='{}' to='{}'", fromLocation, toLocation);
 
-        // Find location IDs
-        Optional<Location> fromLoc = locationRepository.findByExactName(fromLocation);
-        Optional<Location> toLoc = locationRepository.findByExactName(toLocation);
+        // Find location IDs (alias-aware)
+        List<Long> fromIds = locationRepository.findLocationIdsByNameOrAlias(fromLocation);
+        List<Long> toIds = locationRepository.findLocationIdsByNameOrAlias(toLocation);
 
-        if (fromLoc.isEmpty() || toLoc.isEmpty()) {
-            log.warn("Could not find locations: from={}, to={}", fromLoc.isPresent(), toLoc.isPresent());
+        if (fromIds.isEmpty() || toIds.isEmpty()) {
+            log.warn("Could not find locations with alias support: fromFound={}, toFound={}",
+                    !fromIds.isEmpty(), !toIds.isEmpty());
             return MultiStandSearchResponse.forSingleStand(fromLocation, toLocation, List.of());
         }
 
-        Long fromId = fromLoc.get().id().value();
-        Long toId = toLoc.get().id().value();
+        Long fromId = fromIds.getFirst();
+        Long toId = toIds.getFirst();
 
         List<BusDTO> buses = findBusesBetweenLocations(fromId, toId, languageCode);
         return MultiStandSearchResponse.forSingleStand(fromLocation, toLocation, buses);
@@ -994,16 +1015,25 @@ public class BusScheduleServiceImpl implements BusScheduleService {
      * Search routes and return as BusDTO list
      */
     private List<BusDTO> searchRoutesAsDTO(String fromLocation, String toLocation) {
-        Optional<Location> fromLoc = locationRepository.findByExactName(fromLocation);
-        Optional<Location> toLoc = locationRepository.findByExactName(toLocation);
+        // Use alias-aware search to handle all location name variations
+        // This will resolve: "Broadway", "BROADWAY", "Broadway Bus Terminus", etc. → same location
+        List<Long> fromLocationIds = locationRepository.findLocationIdsByNameOrAlias(fromLocation);
+        List<Long> toLocationIds = locationRepository.findLocationIdsByNameOrAlias(toLocation);
 
-        if (fromLoc.isEmpty() || toLoc.isEmpty()) {
+        if (fromLocationIds.isEmpty() || toLocationIds.isEmpty()) {
+            log.debug("No locations found for from='{}' or to='{}'", fromLocation, toLocation);
             return List.of();
         }
 
-        return findBusesBetweenLocations(
-                fromLoc.get().id().value(),
-                toLoc.get().id().value());
+        log.debug("Searching buses: from='{}' ({} location IDs) to='{}' ({} location IDs)",
+                fromLocation, fromLocationIds.size(), toLocation, toLocationIds.size());
+
+        // Search across all matched location IDs (includes aliases + hierarchy)
+        List<Bus> buses = busRepository.findBusesPassingThroughAnyLocations(fromLocationIds, toLocationIds);
+        
+        return buses.stream()
+                .map(BusDTO::fromDomain)
+                .toList();
     }
 
     @Override

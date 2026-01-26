@@ -35,6 +35,7 @@ import com.perundhu.application.dto.StopDTO;
 import com.perundhu.application.service.BusScheduleService;
 import com.perundhu.application.service.ConnectingRouteService;
 import com.perundhu.application.service.OverpassGeocodingService;
+import com.perundhu.application.util.MultiLegJourneyWrapper;
 import com.perundhu.domain.model.Location;
 import com.perundhu.infrastructure.exception.RateLimitException;
 
@@ -349,6 +350,10 @@ public class BusScheduleController {
                 log.warn("Insufficient search parameters provided");
                 return ResponseEntity.badRequest().build();
             }
+
+            // Detect and tag multi-leg journeys before sorting
+            allResults = MultiLegJourneyWrapper.wrapMultiLegJourneys(allResults, toLocationId);
+            log.debug("Multi-leg journey detection completed, {} buses in result set", allResults.size());
 
             // Sort by smart time ordering: upcoming buses first, then by departure time
             LocalTime currentTime = LocalTime.now();
@@ -863,7 +868,14 @@ public class BusScheduleController {
                         Map.of(), // features as empty map
                         null, null, null, null, null, null, // location info
                         route.capacity(),
-                        route.active()
+                        route.active(),
+                        // Multi-leg metadata - preserve from original
+                        route.isMultiLegJourney(),
+                        route.legNumber(),
+                        route.totalLegs(),
+                        route.journeyId(),
+                        route.intermediateLocationId(),
+                        route.intermediateLocationName()
                 ))
                 .toList();
     }

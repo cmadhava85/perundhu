@@ -205,6 +205,9 @@ start_backend() {
         
         log_info "Local development mode: security filters disabled"
         
+        # Set Tesseract data path for OCR processing
+        export TESSDATA_PREFIX=/opt/homebrew/Cellar/tesseract/5.5.1_1/share/tessdata/
+        
         # Start backend with nohup - completely detached
         # Pass database credentials and Gemini API key as system properties to ensure they reach Gradle/Spring
         nohup ./gradlew bootRun --no-daemon \

@@ -90,4 +90,37 @@ public interface LocationJpaRepository extends JpaRepository<LocationJpaEntity, 
                         @Param("latitude") Double latitude,
                         @Param("longitude") Double longitude,
                         @Param("tolerance") Double tolerance);
+
+        /**
+         * Find all child locations of a parent location
+         * Used for hierarchical searches (e.g., finding all Chennai terminals)
+         */
+        @Query("SELECT l FROM LocationJpaEntity l WHERE l.parent.id = :parentId")
+        List<LocationJpaEntity> findByParentId(@Param("parentId") Long parentId);
+
+        /**
+         * Find location with its children eagerly loaded
+         * Useful for hierarchical operations
+         */
+        @Query("SELECT l FROM LocationJpaEntity l LEFT JOIN FETCH l.children WHERE l.id = :id")
+        Optional<LocationJpaEntity> findByIdWithChildren(@Param("id") Long id);
+
+        /**
+         * Get all location IDs that should be included when searching from a location
+         * Handles both parent (city) and child (terminal) locations:
+         * - If searching from a CITY: returns city + all its child terminals
+         * - If searching from a TERMINAL: returns terminal + its parent city + sibling terminals
+         * 
+         * Examples:
+         * - From Chennai (ID 1): returns [1, 62428, 99355, 99295, ...] (city + all terminals)
+         * - From KCBT (ID 62571, parent=1): returns [1, 62571, 62428, 99355, ...] (parent city + all terminals)
+         */
+        @Query("SELECT DISTINCT l.id FROM LocationJpaEntity l WHERE l.id = :locationId " +
+                        "UNION " +
+                        "SELECT c.id FROM LocationJpaEntity c WHERE c.parent.id = :locationId " +
+                        "UNION " +
+                        "SELECT parent.id FROM LocationJpaEntity l JOIN l.parent parent WHERE l.id = :locationId AND parent IS NOT NULL " +
+                        "UNION " +
+                        "SELECT sibling.id FROM LocationJpaEntity l JOIN l.parent parent JOIN parent.children sibling WHERE l.id = :locationId AND parent IS NOT NULL")
+        List<Long> findLocationIdsForHierarchicalSearch(@Param("locationId") Long locationId);
 }

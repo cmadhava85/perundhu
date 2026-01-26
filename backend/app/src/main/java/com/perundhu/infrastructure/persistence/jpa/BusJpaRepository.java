@@ -106,6 +106,8 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
          * Find buses between two locations using location IDs
          * Uses JOIN FETCH to load locations in single query (prevents N+1)
          * Only returns active buses
+         * NOTE: Allows both LOCAL and INTERCITY routes - route_type may not be accurate
+         * for all buses due to missing location coordinates
          * 
          * @param fromLocationId The ID of the origin location
          * @param toLocationId   The ID of the destination location
@@ -220,6 +222,31 @@ public interface BusJpaRepository extends JpaRepository<BusJpaEntity, Long> {
                   AND (b.active = true OR b.active IS NULL)
                 """)
         List<BusJpaEntity> findBusesPassingThroughAnyLocations(
+                        @Param("fromLocationIds") List<Long> fromLocationIds,
+                        @Param("toLocationIds") List<Long> toLocationIds);
+
+        /**
+         * Find direct buses from any source location to any destination location.
+         * Used for hierarchical search (e.g., Chennai → Madurai includes all terminals).
+         * Only returns active buses with direct routes (not via intermediate stops).
+         * 
+         * Example: Search "Chennai → Madurai" where Chennai includes [1, 62428, 99355]
+         * and Madurai includes [3, 62434]. Returns buses where:
+         * - from_location_id IN (1, 62428, 99355) AND to_location_id IN (3, 62434)
+         * 
+         * @param fromLocationIds List of source location IDs (parent city + child terminals)
+         * @param toLocationIds List of destination location IDs (parent city + child terminals)
+         * @return List of active direct buses from any source to any destination
+         */
+        @Query("""
+                SELECT b FROM BusJpaEntity b
+                JOIN FETCH b.fromLocation
+                JOIN FETCH b.toLocation
+                WHERE b.fromLocation.id IN :fromLocationIds
+                  AND b.toLocation.id IN :toLocationIds
+                  AND (b.active = true OR b.active IS NULL)
+                """)
+        List<BusJpaEntity> findBusesBetweenLocationSets(
                         @Param("fromLocationIds") List<Long> fromLocationIds,
                         @Param("toLocationIds") List<Long> toLocationIds);
 }

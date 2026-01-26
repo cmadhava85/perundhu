@@ -1,15 +1,24 @@
 package com.perundhu.infrastructure.persistence.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.perundhu.domain.model.Location;
 import com.perundhu.domain.model.LocationId;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,6 +28,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "locations")
@@ -27,12 +37,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(exclude = {"parent", "children"}) // Avoid circular reference in toString
 public class LocationJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+
+    // Hierarchical relationship: parent location (e.g., Chennai is parent of CMBT, KCBT)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private LocationJpaEntity parent;
+
+    // Hierarchical relationship: child locations (e.g., CMBT, KCBT are children of Chennai)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<LocationJpaEntity> children = new ArrayList<>();
+
+    // Location type for hierarchical management
+    @Enumerated(EnumType.STRING)
+    @Column(name = "location_type", length = 20)
+    @Builder.Default
+    private LocationType locationType = LocationType.CITY;
 
     @NotBlank(message = "Name must not be blank")
     private String name;

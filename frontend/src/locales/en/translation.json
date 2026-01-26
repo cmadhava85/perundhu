@@ -130,6 +130,9 @@
     "edit": "Edit",
     "newSearch": "New Search",
     "new": "New",
+    "showingResults": "Showing {{count}} of {{total}} results",
+    "loadMore": "Load More Buses",
+    "loadingMore": "Loading...",
     "error": {
       "title": "No Routes Found",
       "message": "No routes found for this selection. Please try different locations.",
