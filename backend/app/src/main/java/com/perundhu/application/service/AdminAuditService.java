@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perundhu.application.port.out.AdminAuditLogPersistencePort;
 import com.perundhu.domain.model.AdminAuditLog;
-import com.perundhu.infrastructure.persistence.entity.AdminAuditLogJpaEntity;
-import com.perundhu.infrastructure.persistence.repository.AdminAuditLogRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminAuditService {
 
-    private final AdminAuditLogRepository auditLogRepository;
+    private final AdminAuditLogPersistencePort auditLogPort;
     private final ObjectMapper objectMapper;
 
     /**
@@ -82,8 +78,7 @@ public class AdminAuditService {
                     .sessionId(sessionId)
                     .build();
 
-            AdminAuditLogJpaEntity entity = AdminAuditLogJpaEntity.fromDomain(auditLog);
-            auditLogRepository.save(entity);
+            auditLogPort.save(auditLog);
 
             log.info("Audit log created: {} - {} - {} by {}",
                     actionType, resourceType, resourceId, adminUsername);
@@ -135,9 +130,7 @@ public class AdminAuditService {
      */
     @Transactional(readOnly = true)
     public Page<AdminAuditLog> getAuditLogs(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
-        return auditLogRepository.findAll(pageable)
-                .map(AdminAuditLogJpaEntity::toDomain);
+        return auditLogPort.findAll(page, size);
     }
 
     /**
@@ -145,9 +138,7 @@ public class AdminAuditService {
      */
     @Transactional(readOnly = true)
     public Page<AdminAuditLog> getAuditLogsByAdmin(String adminUsername, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
-        return auditLogRepository.findByAdminUsername(adminUsername, pageable)
-                .map(AdminAuditLogJpaEntity::toDomain);
+        return auditLogPort.findByAdminUsername(adminUsername, page, size);
     }
 
     /**
@@ -158,9 +149,7 @@ public class AdminAuditService {
             AdminAuditLog.AdminActionType actionType,
             int page,
             int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
-        return auditLogRepository.findByActionType(actionType, pageable)
-                .map(AdminAuditLogJpaEntity::toDomain);
+        return auditLogPort.findByActionType(actionType, page, size);
     }
 
     /**
@@ -172,9 +161,7 @@ public class AdminAuditService {
             String resourceId,
             int page,
             int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
-        return auditLogRepository.findByResourceTypeAndResourceId(resourceType, resourceId, pageable)
-                .map(AdminAuditLogJpaEntity::toDomain);
+        return auditLogPort.findByResourceTypeAndResourceId(resourceType, resourceId, page, size);
     }
 
     /**
@@ -186,9 +173,7 @@ public class AdminAuditService {
             LocalDateTime end,
             int page,
             int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
-        return auditLogRepository.findByTimestampBetween(start, end, pageable)
-                .map(AdminAuditLogJpaEntity::toDomain);
+        return auditLogPort.findByTimestampBetween(start, end, page, size);
     }
 
     /**
@@ -196,13 +181,13 @@ public class AdminAuditService {
      */
     @Transactional(readOnly = true)
     public Map<String, Object> getAdminActivityStatistics(LocalDateTime since) {
-        List<Object[]> actionTypeStats = auditLogRepository.getActionTypeStatistics(since);
-        List<Object[]> suspiciousActivities = auditLogRepository.findSuspiciousActivities(since, 10);
+        List<Object[]> actionTypeStats = auditLogPort.getActionTypeStatistics(since);
+        List<Object[]> suspiciousActivities = auditLogPort.findSuspiciousActivities(since, 10);
 
         return Map.of(
                 "actionTypeStatistics", actionTypeStats,
                 "suspiciousActivities", suspiciousActivities,
-                "totalActions", auditLogRepository.count(),
+                "totalActions", auditLogPort.count(),
                 "since", since,
                 "generated", LocalDateTime.now());
     }
@@ -213,9 +198,7 @@ public class AdminAuditService {
     @Transactional(readOnly = true)
     public Page<AdminAuditLog> getMyRecentActions(int page, int size) {
         String adminUsername = getCurrentAdminUsername();
-        Pageable pageable = PageRequest.of(page, size);
-        return auditLogRepository.findRecentActionsByAdmin(adminUsername, pageable)
-                .map(AdminAuditLogJpaEntity::toDomain);
+        return auditLogPort.findRecentActionsByAdmin(adminUsername, page, size);
     }
 
     /**
