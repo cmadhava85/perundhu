@@ -9,7 +9,8 @@
 -- =====================================================
 -- 1. PRIMARY ALIASES: Exact location names
 -- =====================================================
-INSERT INTO location_aliases (location_id, alias_name, is_primary)
+-- Using INSERT IGNORE to skip duplicates (multiple locations may have the same name)
+INSERT IGNORE INTO location_aliases (location_id, alias_name, is_primary)
 SELECT id, name COLLATE utf8mb4_unicode_ci, TRUE
 FROM locations
 WHERE name IS NOT NULL AND name != ''
