@@ -365,7 +365,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       selectedFrom = locations.find(loc => 
         normalizeLocationName(loc.name.toLowerCase()) === normalizedQuery ||
         normalizeLocationName(loc.translatedName?.toLowerCase() || '').toLowerCase() === normalizedQuery
-      );
+      ) ?? null;
       
       // If no exact match, try partial match
       if (!selectedFrom) {
@@ -374,7 +374,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           normalizedQuery.includes(loc.name.toLowerCase()) ||
           loc.translatedName?.toLowerCase().includes(normalizedQuery) ||
           normalizedQuery.includes(loc.translatedName?.toLowerCase() || '')
-        );
+        ) ?? null;
       }
     }
     
@@ -385,7 +385,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
       selectedTo = locations.find(loc => 
         normalizeLocationName(loc.name.toLowerCase()) === normalizedQuery ||
         normalizeLocationName(loc.translatedName?.toLowerCase() || '').toLowerCase() === normalizedQuery
-      );
+      ) ?? null;
       
       // If no exact match, try partial match
       if (!selectedTo) {
@@ -394,7 +394,7 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
           normalizedQuery.includes(loc.name.toLowerCase()) ||
           loc.translatedName?.toLowerCase().includes(normalizedQuery) ||
           normalizedQuery.includes(loc.translatedName?.toLowerCase() || '')
-        );
+        ) ?? null;
       }
     }
     
