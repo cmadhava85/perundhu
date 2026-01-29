@@ -79,7 +79,7 @@ export const RouteContribution: React.FC = () => {
     } else if (navigationState?.method === 'report-issue' && navigationState?.fromSearch) {
       setContributionMethod('reportIssue');
     }
-  }, [navigationState?.method, navigationState?.fromSearch]);
+  }, [navigationState]);
 
   // Update selected method if current method becomes disabled
   // But allow addStops/reportIssue when coming from search results
@@ -107,14 +107,9 @@ export const RouteContribution: React.FC = () => {
     }
   }, [
     contributionMethod, 
-    navigationState?.fromSearch, 
-    flags.enableManualContribution,
-    flags.enablePasteContribution,
-    flags.enableImageContribution,
-    flags.enableVoiceContribution,
-    flags.enableRouteVerification,
-    publicFlags.enableAddStops,
-    publicFlags.enableReportIssue
+    navigationState, 
+    flags,
+    publicFlags
   ]);
 
   // Clear submission status and messages when switching tabs/methods

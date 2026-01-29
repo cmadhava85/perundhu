@@ -8,7 +8,7 @@
  */
 
 import { useQuery } from '@tanstack/react-query';
-import api from '../services/api';
+import { apiRequest } from '../services/api';
 
 interface UsePublicFeatureFlagResult {
   enabled: boolean;
@@ -26,11 +26,9 @@ export function usePublicFeatureFlag(featureName: string): UsePublicFeatureFlagR
     queryKey: ['public-feature-flag', featureName],
     queryFn: async (): Promise<boolean> => {
       try {
-        const response = await api.get('/api/v1/settings/feature-enabled', {
-          params: { feature: featureName }
-        });
+        const response = await apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-enabled', undefined, { feature: featureName });
         // Response is { [featureName]: boolean }
-        return response.data[featureName] ?? false;
+        return response[featureName] ?? false;
       } catch (err) {
         console.warn(`Failed to fetch feature flag ${featureName}:`, err);
         return false; // Default to disabled if API fails
@@ -67,9 +65,8 @@ export function usePublicFeatureFlags(flagNames: string[]): {
       try {
         // Fetch all flags in parallel
         const promises = flagNames.map(name =>
-          api.get('/api/v1/settings/feature-enabled', {
-            params: { feature: name }
-          }).then(res => ({ [name]: res.data[name] ?? false }))
+          apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-enabled', undefined, { feature: name })
+            .then((res: Record<string, boolean>) => ({ [name]: res[name] ?? false }))
         );
         
         const results = await Promise.all(promises);

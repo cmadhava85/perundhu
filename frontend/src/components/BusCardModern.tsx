@@ -426,6 +426,8 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
           </button>
         )}
 
+      </div>
+
       {/* Fare Section */}
       {bus.fare && (
         <div className="bus-card-fare">
