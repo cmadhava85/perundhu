@@ -211,17 +211,37 @@ class DatabaseManager:
     def connect(self) -> bool:
         """Establish database connection"""
         try:
-            self.conn = mysql.connector.connect(
-                host=self.config.host,
-                port=self.config.port,
-                user=self.config.user,
-                password=self.config.password,
-                database=self.config.database,
-                ssl_ca=self.config.ssl_ca,
-                autocommit=False
-            )
+            # Check if using Unix socket (Cloud SQL)
+            if self.config.host.startswith('/'):
+                # Unix socket connection
+                conn_params = {
+                    'user': self.config.user,
+                    'password': self.config.password,
+                    'database': self.config.database,
+                    'unix_socket': self.config.host,
+                    'autocommit': False
+                }
+                logger.info(f"📍 Connecting via Unix socket: {self.config.host}")
+            else:
+                # TCP connection
+                conn_params = {
+                    'host': self.config.host,
+                    'port': self.config.port,
+                    'user': self.config.user,
+                    'password': self.config.password,
+                    'database': self.config.database,
+                    'autocommit': False
+                }
+                if self.config.ssl_ca:
+                    conn_params['ssl_ca'] = self.config.ssl_ca
+                    conn_params['ssl_verify_cert'] = True
+                    conn_params['ssl_verify_identity'] = False
+                
+                logger.info(f"📍 Connecting to {self.config.host}:{self.config.port}")
+            
+            self.conn = mysql.connector.connect(**conn_params)
             self.cursor = self.conn.cursor(dictionary=True)
-            logger.info(f"✅ Connected to {self.config.database} @ {self.config.host}:{self.config.port}")
+            logger.info(f"✅ Connected to {self.config.database}")
             return True
         except MySQLError as err:
             logger.error(f"❌ Database connection failed: {err}")
@@ -309,10 +329,45 @@ class ConfigurationLoader:
         """Load from environment variables or config file"""
         env_name = env.value.upper()
         
-        host = os.getenv(f"DB_HOST_{env_name}", "localhost")
-        port = int(os.getenv(f"DB_PORT_{env_name}", "3306"))
-        user = os.getenv(f"DB_USER_{env_name}", "root")
-        password = os.getenv(f"DB_PASSWORD_{env_name}", "")
+        # First, check if TCP host is explicitly provided
+        host = os.getenv(f"DB_HOST_{env_name}")
+        port_str = os.getenv(f"DB_PORT_{env_name}")
+        
+        # If TCP host is provided, use it (overrides Cloud SQL socket)
+        if host and not host.startswith('/'):
+            port = int(port_str) if port_str else 3306
+            logger.info(f"📍 Using TCP connection to {host}:{port}")
+        else:
+            # Check for Cloud SQL instance (GCP)
+            cloud_sql_instance = os.getenv(f"CLOUD_SQL_INSTANCE_{env_name}") or \
+                                os.getenv(f"GCP_CLOUD_SQL_INSTANCE_{env_name}")
+            
+            # For preprod, use hardcoded Cloud SQL instance if env vars not set and no TCP host
+            if env == Environment.PREPROD and not cloud_sql_instance and not host:
+                cloud_sql_instance = "astute-strategy-406601:asia-south1:perundhu-preprod-mysql"
+            
+            # If Cloud SQL instance provided, use Unix socket (preprod on GCP)
+            if cloud_sql_instance:
+                host = f"/cloudsql/{cloud_sql_instance}"
+                port = 0  # Unix socket doesn't use port
+                logger.info(f"📍 Using Cloud SQL Unix socket: {host}")
+            else:
+                # Fall back to TCP with defaults
+                host = "localhost"
+                port = 3306
+        
+        # Try multiple sources for credentials (Cloud Run secrets pattern)
+        user = (os.getenv(f"DB_USER_{env_name}") or 
+                os.getenv(f"DB_USERNAME_{env_name}") or 
+                os.getenv("DB_USERNAME") or
+                os.getenv("MYSQL_USERNAME") or 
+                "root")
+        
+        password = (os.getenv(f"DB_PASSWORD_{env_name}") or 
+                   os.getenv("DB_PASSWORD") or
+                   os.getenv("MYSQL_PASSWORD") or
+                   "")
+        
         database = os.getenv(f"DB_NAME_{env_name}", "perundhu")
         ssl_ca = os.getenv(f"DB_SSL_CA_{env_name}")
         
@@ -513,6 +568,7 @@ class BusLoader:
         self.stats = {
             'total_buses': 0,
             'inserted_buses': 0,
+            'skipped_buses': 0,
             'inserted_stops': 0,
             'errors': []
         }
@@ -739,6 +795,24 @@ class BusLoader:
             self.stats['errors'].append(f"Location '{name}': {e}")
             return None
     
+    def _bus_exists(self, bus_number: str, from_loc_id: Optional[int], 
+                    to_loc_id: Optional[int], departure_time: Optional[str]) -> bool:
+        """Check if bus already exists in database"""
+        query = """
+            SELECT id FROM buses 
+            WHERE bus_number = %s 
+            AND from_location_id = %s 
+            AND to_location_id = %s 
+            AND departure_time = %s 
+            LIMIT 1
+        """
+        try:
+            result = self.db.execute(query, (bus_number, from_loc_id, to_loc_id, departure_time), fetch=True)
+            return len(result) > 0
+        except Exception as e:
+            logger.debug(f"Error checking bus existence: {e}")
+            return False
+    
     def upload(self, buses: List[BusData], batch_size: int = 100) -> bool:
         """Upload buses and stops to database"""
         logger.info(f"\n🚀 Uploading {len(buses)} buses with stops...")
@@ -775,6 +849,12 @@ class BusLoader:
                     if not from_loc_id:
                         logger.warning(f"⚠️  Could not resolve FROM location for bus: {bus.name} (origin={bus.origin})")
                         self.stats['errors'].append(f"Bus '{bus.name}': Cannot resolve FROM location")
+                        continue
+                    
+                    # Check if bus already exists (duplicate detection)
+                    if self._bus_exists(bus.bus_number, from_loc_id, to_loc_id, bus.departure_time):
+                        self.stats['skipped_buses'] += 1
+                        logger.debug(f"⏭️  Skipped duplicate bus: {bus.bus_number} ({bus.name}) at {bus.departure_time}")
                         continue
                     
                     # Insert bus
@@ -826,6 +906,7 @@ class BusLoader:
             
             logger.info(f"\n✅ Buses upload complete:")
             logger.info(f"   Buses inserted:  {self.stats['inserted_buses']}")
+            logger.info(f"   Buses skipped:   {self.stats['skipped_buses']} (duplicates)")
             logger.info(f"   Stops inserted:  {self.stats['inserted_stops']}")
             logger.info(f"   Errors:          {len(self.stats['errors'])}")
             

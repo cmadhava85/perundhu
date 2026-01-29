@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Stop, Location as AppLocation } from '../types';
+import { usePublicFeatureFlags } from '../hooks/usePublicFeatureFlag';
 import '../styles/premium-design-system.css';
 import '../styles/bus-card-modern-premium.css';
 import '../styles/premium-bus-grid.css';
@@ -34,6 +35,9 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
   const { i18n } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [leavingIn, setLeavingIn] = useState<string | null>(null);
+  
+  // Fetch feature flags from public endpoint (no auth required)
+  const { flags } = usePublicFeatureFlags(['enableAddStops', 'enableReportIssue', 'enableShareRoute']);
 
   // Calculate bus title with operator name
   const busTitle = React.useMemo(() => {
@@ -330,87 +334,97 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
 
       {/* Action Buttons Section */}
       <div className="bus-card-actions">
-        <button
-          className="btn btn-add"
-          onClick={(e) => {
-            e.stopPropagation();
-            _onAddStops?.(bus);
-          }}
-          title="Add stops"
-          aria-label={`Add stops to ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
-        >
-          ➕ Add Stops
-        </button>
-        <button
-          className="btn btn-report"
-          onClick={(e) => {
-            e.stopPropagation();
-            _onReportIssue?.(bus);
-          }}
-          title="Report issue"
-          aria-label={`Report issue with ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
-        >
-          ⚠️ Report
-        </button>
-        <button
-          className="btn btn-share"
-          aria-label={`Share ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''} details`}
-          onClick={(e) => {
-            e.stopPropagation();
-            
-            const formatTimeWithoutSecs = (time?: string) => {
-              if (!time) return '';
-              const parts = time.split(':');
-              return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
-            };
-            
-            const shareLines = [
-              `🚌 Bus Route Information`,
-              ``,
-              `🚍 Bus: ${bus.name || bus.number || 'Bus'}`,
-              `⏰ Departure: ${bus.departureTime || 'Check'}`,
-              `⏱️ Arrival: ${bus.arrivalTime || 'Check'}`,
-            ];
-            
-            if (bus.fare) {
-              shareLines.push(`💰 Fare: ₹${bus.fare}`);
-            }
-            
-            if (bus.duration) {
-              shareLines.push(`⏳ Duration: ${bus.duration}`);
-            }
+        {/* Add Stops Button - controlled by public feature flag */}
+        {flags.enableAddStops && (
+          <button
+            className="btn btn-add"
+            onClick={(e) => {
+              e.stopPropagation();
+              _onAddStops?.(bus);
+            }}
+            title="Add stops"
+            aria-label={`Add stops to ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
+          >
+            ➕ Add Stops
+          </button>
+        )}
+        
+        {/* Report Issue Button - controlled by public feature flag */}
+        {flags.enableReportIssue && (
+          <button
+            className="btn btn-report"
+            onClick={(e) => {
+              e.stopPropagation();
+              _onReportIssue?.(bus);
+            }}
+            title="Report issue"
+            aria-label={`Report issue with ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''}`}
+          >
+            ⚠️ Report
+          </button>
+        )}
+        
+        {/* Share Button - controlled by public feature flag */}
+        {flags.enableShareRoute && (
+          <button
+            className="btn btn-share"
+            aria-label={`Share ${bus.busName || 'bus'} ${bus.busNumber ? `(${bus.busNumber})` : ''} details`}
+            onClick={(e) => {
+              e.stopPropagation();
+              
+              const formatTimeWithoutSecs = (time?: string) => {
+                if (!time) return '';
+                const parts = time.split(':');
+                return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
+              };
+              
+              const shareLines = [
+                `🚌 Bus Route Information`,
+                ``,
+                `🚍 Bus: ${bus.name || bus.number || 'Bus'}`,
+                `⏰ Departure: ${bus.departureTime || 'Check'}`,
+                `⏱️ Arrival: ${bus.arrivalTime || 'Check'}`,
+              ];
+              
+              if (bus.fare) {
+                shareLines.push(`💰 Fare: ₹${bus.fare}`);
+              }
+              
+              if (bus.duration) {
+                shareLines.push(`⏳ Duration: ${bus.duration}`);
+              }
 
-            // Add stops if available
-            if (stops && stops.length > 0) {
+              // Add stops if available
+              if (stops && stops.length > 0) {
+                shareLines.push(``);
+                shareLines.push(`🛑 Intermediate Stops:`);
+                stops.forEach((stop, idx) => {
+                  const stopName = i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name;
+                  const arrivalTime = stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : '';
+                  const departureTime = stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : '';
+                  const times = [arrivalTime, departureTime].filter(t => t).join(' | ');
+                  const timeInfo = times ? ` (${times})` : '';
+                  shareLines.push(`  ${idx + 1}. ${stopName}${timeInfo}`);
+                });
+              }
+              
               shareLines.push(``);
-              shareLines.push(`🛑 Intermediate Stops:`);
-              stops.forEach((stop, idx) => {
-                const stopName = i18n.language === 'ta' && stop.translatedName ? stop.translatedName : stop.name;
-                const arrivalTime = stop.arrivalTime ? `Arr: ${formatTimeWithoutSecs(stop.arrivalTime)}` : '';
-                const departureTime = stop.departureTime ? `Dep: ${formatTimeWithoutSecs(stop.departureTime)}` : '';
-                const times = [arrivalTime, departureTime].filter(t => t).join(' | ');
-                const timeInfo = times ? ` (${times})` : '';
-                shareLines.push(`  ${idx + 1}. ${stopName}${timeInfo}`);
-              });
-            }
-            
-            shareLines.push(``);
-            shareLines.push(`📱 Shared via Perundhu - Tamil Nadu Bus Tracker`);
-            shareLines.push(`🔗 https://perundhu.app`);
-            
-            const text = shareLines.join('\n');
-            
-            if (navigator.share) {
-              navigator.share({ title: 'Share Bus', text });
-            } else {
-              navigator.clipboard.writeText(text);
-            }
-          }}
-          title="Share"
-        >
-          📤 Share
-        </button>
-      </div>
+              shareLines.push(`📱 Shared via Perundhu - Tamil Nadu Bus Tracker`);
+              shareLines.push(`🔗 https://perundhu.app`);
+              
+              const text = shareLines.join('\n');
+              
+              if (navigator.share) {
+                navigator.share({ title: 'Share Bus', text });
+              } else {
+                navigator.clipboard.writeText(text);
+              }
+            }}
+            title="Share"
+          >
+            📤 Share
+          </button>
+        )}
 
       {/* Fare Section */}
       {bus.fare && (

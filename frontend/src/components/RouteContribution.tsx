@@ -12,6 +12,7 @@ import { RouteVerification } from './contribution/RouteVerification';
 import { AddStopsToRoute } from './contribution/AddStopsToRoute';
 import { ReportIssue } from './contribution/ReportIssue';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
+import { usePublicFeatureFlags } from '../hooks/usePublicFeatureFlag';
 import { useRecaptcha } from '../hooks/useRecaptcha';
 import type { Bus } from '../types';
 import './RouteContribution.css';
@@ -20,6 +21,10 @@ export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
   const routerLocation = useLocation();
   const { flags } = useFeatureFlags();
+  
+  // Fetch feature flags from public endpoint for Add Stops and Report Issue
+  // These should be publicly available without auth since they're on search results
+  const { flags: publicFlags } = usePublicFeatureFlags(['enableAddStops', 'enableReportIssue']);
   const { executeRecaptcha, isConfigured } = useRecaptcha();
   
   // Get pre-selected bus from navigation state (from search results "Add Stops" button)
@@ -46,8 +51,8 @@ export const RouteContribution: React.FC = () => {
     if (flags.enableImageContribution) return 'image';
     if (flags.enableVoiceContribution) return 'voice';
     if (flags.enableRouteVerification) return 'verify';
-    if (flags.enableAddStops) return 'addStops';
-    if (flags.enableReportIssue) return 'reportIssue';
+    if (publicFlags.enableAddStops) return 'addStops';
+    if (publicFlags.enableReportIssue) return 'reportIssue';
     return 'manual'; // Fallback
   };
   
@@ -86,8 +91,8 @@ export const RouteContribution: React.FC = () => {
       (contributionMethod === 'voice' && flags.enableVoiceContribution) ||
       (contributionMethod === 'paste' && flags.enablePasteContribution) ||
       (contributionMethod === 'verify' && flags.enableRouteVerification) ||
-      (contributionMethod === 'addStops' && (flags.enableAddStops || isFromSearch)) ||
-      (contributionMethod === 'reportIssue' && (flags.enableReportIssue || isFromSearch));
+      (contributionMethod === 'addStops' && (publicFlags.enableAddStops || isFromSearch)) ||
+      (contributionMethod === 'reportIssue' && (publicFlags.enableReportIssue || isFromSearch));
     
     if (!isCurrentMethodEnabled) {
       // Find the first enabled method instead of calling getDefaultMethod
@@ -96,8 +101,8 @@ export const RouteContribution: React.FC = () => {
       else if (flags.enableImageContribution) setContributionMethod('image');
       else if (flags.enableVoiceContribution) setContributionMethod('voice');
       else if (flags.enableRouteVerification) setContributionMethod('verify');
-      else if (flags.enableAddStops) setContributionMethod('addStops');
-      else if (flags.enableReportIssue) setContributionMethod('reportIssue');
+      else if (publicFlags.enableAddStops) setContributionMethod('addStops');
+      else if (publicFlags.enableReportIssue) setContributionMethod('reportIssue');
       else setContributionMethod('manual');
     }
   }, [
@@ -108,8 +113,8 @@ export const RouteContribution: React.FC = () => {
     flags.enableImageContribution,
     flags.enableVoiceContribution,
     flags.enableRouteVerification,
-    flags.enableAddStops,
-    flags.enableReportIssue
+    publicFlags.enableAddStops,
+    publicFlags.enableReportIssue
   ]);
 
   // Clear submission status and messages when switching tabs/methods
