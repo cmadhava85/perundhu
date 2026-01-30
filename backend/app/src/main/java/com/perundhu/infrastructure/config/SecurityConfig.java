@@ -85,7 +85,15 @@ public class SecurityConfig {
                 "/api/v1/analytics/**", // Analytics can be without CSRF (stateless API)
                 "/api/v1/contributions/analyze-image", // Image analysis is stateless
                 "/api/v1/contributions/paste/validate", // Validation endpoint (read-only)
-                "/api/v1/contributions/voice/transcribe" // Voice transcription (read-only, no persistence)
+                "/api/v1/contributions/voice/transcribe", // Voice transcription (read-only, no persistence)
+                "/api/v1/contributions/routes", // Anonymous route contributions (public write with built-in security)
+                "/api/v1/contributions/routes/stops", // Anonymous stop contributions (public write)
+                "/api/v1/contributions/buses/**", // Anonymous bus contributions (public write)
+                "/api/v1/contributions/stops/**", // Anonymous stop contributions (public write)
+                "/api/v1/duplicates/**", // Duplicate check is stateless (read-only validation)
+                "/api/v1/route-issues", // Public route issue submission (includes CSRF via reCAPTCHA)
+                "/api/v1/route-issues/**", // Route issue endpoints with wildcard
+                "/api/admin/auth/**" // Admin auth endpoints (login/logout with built-in security)
             ))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
