@@ -296,6 +296,20 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
     );
 
     try {
+      // Client-side honeypot guard (prevents false-positive success from bot traps)
+      if (honeypot && honeypot.trim() !== '') {
+        const errorMessage = t('contribution.imageUpload.honeypotError', 'Invalid submission detected. Please clear any auto-filled hidden fields and try again.');
+        setUploadedImages(prev =>
+          prev.map(img =>
+            img.id === imageId
+              ? { ...img, processing: false, error: errorMessage, errorType: 'general' }
+              : img
+          )
+        );
+        onError?.(errorMessage);
+        return;
+      }
+
       // Get reCAPTCHA token for spam protection
       const captchaToken = await getRecaptchaToken('image_upload');
       
@@ -316,7 +330,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
 
       const response = await submitImageContribution(contributionData, image.file);
 
-      if (response.success) {
+      if (response.success && response.contributionId) {
         setUploadedImages(prev =>
           prev.map(img =>
             img.id === imageId
