@@ -291,7 +291,7 @@ export const UploadState = {
  * }
  * ```
  */
-export type AuthState<TUser = any> =
+export type AuthState<TUser = unknown> =
   | { status: 'unauthenticated' }
   | { status: 'authenticating' }
   | { status: 'authenticated'; user: TUser; token: string; expiresAt: number }

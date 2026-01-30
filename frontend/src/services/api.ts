@@ -356,7 +356,7 @@ interface BusDTO {
 const FALLBACK_DEPARTURE_TIMES = ['06:00', '07:30', '09:15', '11:00', '13:45', '16:20', '18:30', '20:15'];
 
 // Calculate arrival time from departure time and travel hours
-const calculateArrivalTime = (departureTime: string, travelHours: number): string => {
+const _calculateArrivalTime = (departureTime: string, travelHours: number): string => {
   const [depHour, depMinute] = departureTime.split(':').map(Number);
   const arrHour = (depHour + travelHours) % 24;
   return `${arrHour.toString().padStart(2, '0')}:${depMinute.toString().padStart(2, '0')}`;
@@ -366,7 +366,7 @@ const calculateArrivalTime = (departureTime: string, travelHours: number): strin
 const transformBusDTOToBus = (busDTO: BusDTO, fromLocation: Location, toLocation: Location): Bus => {
   // Use actual departure/arrival times from backend if available
   let departureTime = busDTO.departureTime;
-  let arrivalTime = busDTO.arrivalTime;
+  const arrivalTime = busDTO.arrivalTime;
   
   // Fallback to sample times only if backend doesn't provide them
   if (!departureTime) {

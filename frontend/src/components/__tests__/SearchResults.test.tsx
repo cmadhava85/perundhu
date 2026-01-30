@@ -58,7 +58,7 @@ vi.mock('../FallbackMapComponent', () => ({
 }));
 
 vi.mock('../BusCardModern', () => ({
-  default: ({ bus, onSelect, onAddStops, onReportIssue }: any) => (
+  default: ({ bus, onSelect, onAddStops, onReportIssue }: Record<string, unknown>) => (
     <div data-testid={`bus-card-${bus.id}`}>
       <div>{bus.name}</div>
       <button onClick={() => onSelect(bus)}>Select</button>
@@ -69,7 +69,7 @@ vi.mock('../BusCardModern', () => ({
 }));
 
 vi.mock('../contribution/ReportIssue', () => ({
-  default: ({ onSubmit, onClose }: any) => (
+  default: ({ onSubmit, onClose }: Record<string, unknown>) => (
     <div data-testid="report-issue-modal">
       <button onClick={onSubmit}>Submit</button>
       <button onClick={onClose}>Close</button>

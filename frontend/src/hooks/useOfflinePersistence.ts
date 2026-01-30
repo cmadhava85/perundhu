@@ -52,7 +52,7 @@ export function useOfflinePersistence(
   options: UseOfflinePersistenceOptions = {}
 ): UseOfflinePersistenceReturn {
   const {
-    autoSaveInterval = 30000, // 30 seconds
+    autoSaveInterval: _autoSaveInterval = 30000, // 30 seconds
     loadDraftOnMount = true,
     processRetryOnOnline = true
   } = options;

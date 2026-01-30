@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from 'react';
 import AdminService from '../services/adminService';
+import { apiRequest } from '../services/api';
 
 /**
  * Feature flags that can be controlled by admin settings
@@ -149,13 +150,38 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
     return null;
   }, []);
 
-  // Sync with backend
+  // Sync with public feature flags endpoint
   const syncWithBackend = useCallback(async () => {
     setIsSyncing(true);
     setLastSyncError(null);
     
     try {
-      const backendFlags = await AdminService.getFeatureFlags();
+      const flagNames = Object.keys(defaultFlags).filter((key) => {
+        const value = defaultFlags[key as keyof FeatureFlags];
+        return typeof value === 'boolean';
+      });
+
+      const results = await Promise.allSettled(
+        flagNames.map((name) =>
+          apiRequest<Record<string, boolean>>('GET', '/api/v1/settings/feature-enabled', undefined, { feature: name })
+        )
+      );
+
+      const backendFlags = results.reduce<Record<string, boolean>>((acc, result, index) => {
+        const name = flagNames[index];
+        if (result.status === 'fulfilled') {
+          acc[name] = result.value[name] ?? false;
+        } else {
+          acc[name] = false;
+        }
+        return acc;
+      }, {});
+
+      const hasSuccess = results.some(result => result.status === 'fulfilled');
+      if (!hasSuccess) {
+        throw new Error('Public feature flags unavailable');
+      }
+
       setIsBackendAvailable(true);
       
       // Merge backend flags with defaults (backend takes priority)
@@ -163,9 +189,9 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
       setFlags(mergedFlags);
       saveToLocalStorage(mergedFlags);
       
-      console.log('Feature flags synced from backend');
+      console.log('Feature flags synced from public endpoint');
     } catch (error) {
-      console.warn('Backend not available, using local settings:', error);
+      console.warn('Public feature flags not available, using local settings:', error);
       setIsBackendAvailable(false);
       
       // Try to load from localStorage
@@ -272,7 +298,7 @@ export const FeatureFlagsProvider: React.FC<FeatureFlagsProviderProps> = ({ chil
         setFlags(localFlags);
       }
       
-      // Then try to sync with backend (admin only feature)
+      // Then try to sync with public endpoint
       try {
         await syncWithBackend();
       } catch {

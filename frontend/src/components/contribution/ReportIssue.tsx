@@ -53,7 +53,7 @@ interface IssueTypeOption {
   description: string;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const _API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 export const ReportIssue: React.FC<ReportIssueProps> = ({
   preSelectedBus,

@@ -9,7 +9,7 @@ import { test, expect, type Page } from '@playwright/test';
 
 // Test configuration
 const BASE_URL = process.env.VITE_API_URL || 'http://localhost:5173';
-const API_URL = process.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const _API_URL = process.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 test.describe('Bus Search Flow', () => {
   

@@ -56,7 +56,7 @@ function calculateRetryDelay(retryCount: number, config: RetryConfig): number {
 /**
  * Check if the error should trigger a retry
  */
-function shouldRetry(error: AxiosError, config: RetryConfig, currentRetryCount: number): boolean {
+function _shouldRetry(error: AxiosError, config: RetryConfig, currentRetryCount: number): boolean {
   // Don't retry if we've exceeded max retries
   if (currentRetryCount >= config.maxRetries) {
     return false;
@@ -153,7 +153,7 @@ export function setupRetryInterceptor(
         `API request failed. Retrying (${retryCount}/${config.maxRetries}) for ${error.config?.url} - Status: ${status}`
       );
     },
-    onMaxRetryTimesExceeded: (error: any) => {
+    onMaxRetryTimesExceeded: (error: AxiosError) => {
       logger.error(`Max retries exceeded for ${error.config?.url}`, {
         status: error.response?.status,
         message: error.message

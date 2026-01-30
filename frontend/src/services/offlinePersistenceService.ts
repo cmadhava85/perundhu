@@ -29,7 +29,7 @@ export interface ContributionData {
   contributionMethod?: string;
   imageData?: string;
   voiceData?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface DraftContribution extends ContributionData {

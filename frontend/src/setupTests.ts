@@ -46,8 +46,8 @@ afterEach(() => {
   // Remove all event listeners from window
   const listeners = ['resize', 'scroll', 'beforeunload', 'unload', 'storage', 'popstate'];
   listeners.forEach(event => {
-    const oldListeners = (window as any)[`_${event}Listeners`] || [];
-    oldListeners.forEach((listener: any) => {
+    const oldListeners = (window as unknown as Record<string, unknown>)[`_${event}Listeners`] || [];
+    oldListeners.forEach((listener: unknown) => {
       window.removeEventListener(event, listener);
     });
   });
@@ -439,14 +439,14 @@ vi.mock('axios', () => {
     request: vi.fn().mockResolvedValue({ data: {}, headers: {} }),
     interceptors: {
       request: { 
-        use: vi.fn((fulfilled, rejected) => {
+        use: vi.fn((_fulfilled, _rejected) => {
           // Store interceptors but don't execute them
           return 0;
         }), 
         eject: vi.fn() 
       },
       response: { 
-        use: vi.fn((fulfilled, rejected) => {
+        use: vi.fn((_fulfilled, _rejected) => {
           // Store interceptors but don't execute them
           return 0;
         }), 
