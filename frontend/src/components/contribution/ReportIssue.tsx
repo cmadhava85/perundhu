@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Bus, Location } from '../../types';
-import { searchBuses, getLocations } from '../../services/api';
+import { searchBuses, getLocations, api } from '../../services/api';
 import { useEffect } from 'react';
 import HoneypotFields from '../common/HoneypotFields';
 import { useSubmissionSecurity } from '../../hooks/useSubmissionSecurity';
@@ -223,13 +223,12 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
     }
     
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/route-issues`, {
-        method: 'POST',
-        headers: securePayload.headers,
-        body: JSON.stringify(securePayload.data)
+      // Use axios api instance to leverage interceptors (CSRF token, trace headers)
+      const response = await api.post('/api/v1/route-issues', securePayload.data, {
+        headers: securePayload.headers
       });
       
-      const data = await response.json();
+      const data = response.data;
       
       if (data.success) {
         setSubmitSuccess(true);
