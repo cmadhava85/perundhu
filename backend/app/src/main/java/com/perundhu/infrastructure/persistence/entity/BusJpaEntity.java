@@ -72,8 +72,9 @@ public class BusJpaEntity {
 
     private String category;
 
-    @Nullable
-    private String routeType;
+    // TODO: route_type column not present in database - add migration if needed
+    // @Nullable
+    // private String routeType;
 
     @Builder.Default
     private Boolean active = true;
