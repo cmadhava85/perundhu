@@ -216,7 +216,7 @@ export const ReportIssue: React.FC<ReportIssueProps> = ({
     };
     
     // Validate security (honeypot, reCAPTCHA)
-    const securePayload = await prepareSubmission(issueData as unknown as Record<string, unknown>);
+    const securePayload = await prepareSubmission(issueData as unknown as Record<string, unknown>, 'report_issue');
     if (!securePayload.isValid) {
       setSubmitError(t('reportIssue.securityFailed', 'Security validation failed. Please try again.'));
       return;

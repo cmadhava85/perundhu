@@ -2323,7 +2323,7 @@ public class ContributionController {
 
   /**
    * Extract reCAPTCHA token from request.
-   * First checks the X-Recaptcha-Token header (preferred),
+   * First checks the X-reCAPTCHA-Token header (preferred),
    * then falls back to request body/parameter.
    *
    * @param request   The HTTP request
@@ -2331,8 +2331,8 @@ public class ContributionController {
    * @return The captcha token, or null if not found
    */
   private String extractCaptchaToken(HttpServletRequest request, String bodyToken) {
-    // First, check the X-Recaptcha-Token header (preferred method)
-    String headerToken = request.getHeader("X-Recaptcha-Token");
+    // First, check the X-reCAPTCHA-Token header (preferred method)
+    String headerToken = request.getHeader("X-reCAPTCHA-Token");
     if (headerToken != null && !headerToken.isEmpty()) {
       return headerToken;
     }

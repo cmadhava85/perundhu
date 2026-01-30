@@ -40,7 +40,7 @@ export const loadRecaptchaScript = (): Promise<void> => {
 
   loadPromise = new Promise((resolve, _reject) => {
     // Check if script already exists in DOM
-    const existingScript = document.querySelector(`script[src*="recaptcha/api.js"]`);
+    const existingScript = document.querySelector(`script[src*="recaptcha/enterprise.js"]`);
     if (existingScript) {
       // Script exists, wait for grecaptcha to be available
       const checkReady = setInterval(() => {
@@ -68,7 +68,7 @@ export const loadRecaptchaScript = (): Promise<void> => {
     }
 
     const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`;
+    script.src = 'https://www.google.com/recaptcha/enterprise.js';
     script.async = true;
     script.defer = true;
 
@@ -133,21 +133,21 @@ export const executeRecaptcha = async (action: string = 'submit'): Promise<strin
     return new Promise((resolve) => {
       try {
         const grecaptchaObj = window.grecaptcha;
-        if (!grecaptchaObj?.ready) {
-          logger.warn('grecaptcha.ready not available');
+        if (!grecaptchaObj?.enterprise?.ready) {
+          logger.warn('grecaptcha.enterprise.ready not available');
           resolve(null);
           return;
         }
 
-        grecaptchaObj.ready(() => {
+        grecaptchaObj.enterprise.ready(() => {
           try {
-            if (!grecaptchaObj?.execute) {
-              logger.warn('grecaptcha.execute not available');
+            if (!grecaptchaObj?.enterprise?.execute) {
+              logger.warn('grecaptcha.enterprise.execute not available');
               resolve(null);
               return;
             }
 
-            grecaptchaObj
+            grecaptchaObj.enterprise
               .execute(SITE_KEY, { action })
               .then((token: string) => {
                 resolve(token);

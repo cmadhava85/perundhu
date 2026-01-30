@@ -110,7 +110,7 @@ export const useSubmissionSecurity = (): SubmissionSecurityResult => {
 
       // Add reCAPTCHA token to headers if available
       if (recaptchaToken) {
-        headers['X-Recaptcha-Token'] = recaptchaToken;
+        headers['X-reCAPTCHA-Token'] = recaptchaToken;
       }
 
       // Add form timestamp for server-side time validation

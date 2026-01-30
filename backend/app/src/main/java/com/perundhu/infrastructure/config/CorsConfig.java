@@ -39,7 +39,7 @@ public class CorsConfig {
         config.addAllowedHeader("Accept");
         config.addAllowedHeader("Accept-Language"); // Important for i18n
         config.addAllowedHeader("Authorization");
-        config.addAllowedHeader("X-Recaptcha-Token"); // reCAPTCHA v3 token
+        config.addAllowedHeader("X-reCAPTCHA-Token"); // reCAPTCHA Enterprise token (standardized header name)
         config.addAllowedHeader("X-Form-Timestamp"); // Honeypot form timestamp
         config.addAllowedHeader("X-Trace-Id"); // Distributed tracing
         config.addAllowedHeader("X-Session-Id"); // Session tracking

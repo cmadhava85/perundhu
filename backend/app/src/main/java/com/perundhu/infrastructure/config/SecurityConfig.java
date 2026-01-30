@@ -172,7 +172,7 @@ public class SecurityConfig {
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
     configuration.setAllowedHeaders(List.of(
         "Authorization", "Content-Type", "X-Requested-With", "X-API-Key", "Accept-Language",
-        "X-Recaptcha-Token", "X-Form-Timestamp",
+        "X-reCAPTCHA-Token", "X-Form-Timestamp",
         "X-Trace-Id", "X-Session-Id", "X-Request-Id",
         "X-CSRF-TOKEN", "X-XSRF-TOKEN")); // CSRF tokens headers
     configuration.setExposedHeaders(List.of(
