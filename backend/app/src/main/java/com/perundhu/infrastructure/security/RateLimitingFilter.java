@@ -63,9 +63,17 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     String clientIp = getClientIp(request);
     String path = request.getRequestURI();
     String method = request.getMethod();
+    String authHeader = request.getHeader("Authorization");
 
     // Skip rate limiting for health checks
     if (path.contains("/actuator/health")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
+    // Skip rate limiting for authenticated admin requests (Basic or Bearer auth)
+    if (authHeader != null && (authHeader.startsWith("Basic ") || authHeader.startsWith("Bearer "))) {
+      log.debug("Skipping rate limiting for authenticated request to: {}", path);
       filterChain.doFilter(request, response);
       return;
     }

@@ -72,9 +72,17 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     String origin = request.getHeader("Origin");
     String referer = request.getHeader("Referer");
     String method = request.getMethod();
+    String authHeader = request.getHeader("Authorization");
 
     // Skip filtering for admin auth endpoints (they have their own security)
     if (requestUri != null && requestUri.startsWith("/api/admin/auth/")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
+    // Skip IP filtering for authenticated admin requests (Basic or Bearer auth)
+    if (authHeader != null && (authHeader.startsWith("Basic ") || authHeader.startsWith("Bearer "))) {
+      log.debug("Skipping IP filtering for authenticated admin request: {}", requestUri);
       filterChain.doFilter(request, response);
       return;
     }

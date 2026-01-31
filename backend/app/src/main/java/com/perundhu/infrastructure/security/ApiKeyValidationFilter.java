@@ -61,9 +61,17 @@ public class ApiKeyValidationFilter extends OncePerRequestFilter {
     }
 
     String path = request.getRequestURI();
+    String authHeader = request.getHeader("Authorization");
 
     // Skip exempt paths
     if (isExemptPath(path)) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
+    // Skip API key validation for authenticated requests (Basic or Bearer auth)
+    if (authHeader != null && (authHeader.startsWith("Basic ") || authHeader.startsWith("Bearer "))) {
+      log.debug("Skipping API key validation for authenticated request to: {}", path);
       filterChain.doFilter(request, response);
       return;
     }
