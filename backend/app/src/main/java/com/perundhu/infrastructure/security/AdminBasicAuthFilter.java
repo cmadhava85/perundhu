@@ -126,6 +126,15 @@ public class AdminBasicAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String requestUri = request.getRequestURI();
+        String method = request.getMethod();
+
+        // Allow CORS preflight requests (OPTIONS) without authentication
+        // CORS preflight must succeed with appropriate headers for browsers to proceed
+        if ("OPTIONS".equalsIgnoreCase(method)) {
+            log.debug("Allowing CORS preflight request (OPTIONS) without authentication: {}", requestUri);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // Only apply to admin endpoints
         if (!isAdminEndpoint(requestUri)) {

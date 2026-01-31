@@ -565,6 +565,7 @@ class BusLoader:
         self.location_map: Dict[str, int] = {}
         self.location_columns: List[str] = []
         self.city_cache: Dict[str, int] = {}
+        self.existing_bus_keys: Optional[set] = None
         self.stats = {
             'total_buses': 0,
             'inserted_buses': 0,
@@ -798,20 +799,60 @@ class BusLoader:
     def _bus_exists(self, bus_number: str, from_loc_id: Optional[int], 
                     to_loc_id: Optional[int], departure_time: Optional[str]) -> bool:
         """Check if bus already exists in database"""
-        query = """
-            SELECT id FROM buses 
-            WHERE bus_number = %s 
-            AND from_location_id = %s 
-            AND to_location_id = %s 
-            AND departure_time = %s 
-            LIMIT 1
-        """
+        if self.existing_bus_keys is None:
+            self._load_existing_bus_keys()
+
+        key = (bus_number, from_loc_id, to_loc_id, str(departure_time) if departure_time is not None else None)
+        return key in self.existing_bus_keys
+
+    def _load_existing_bus_keys(self):
+        """Load existing bus keys once to avoid per-record DB lookups."""
+        self.existing_bus_keys = set()
         try:
-            result = self.db.execute(query, (bus_number, from_loc_id, to_loc_id, departure_time), fetch=True)
-            return len(result) > 0
+            logger.info("📋 Loading existing bus keys for duplicate detection...")
+            query = "SELECT bus_number, from_location_id, to_location_id, departure_time FROM buses"
+            results = self.db.execute(query, fetch=True) or []
+
+            for row in results:
+                key = (
+                    row.get('bus_number'),
+                    row.get('from_location_id'),
+                    row.get('to_location_id'),
+                    str(row.get('departure_time')) if row.get('departure_time') is not None else None
+                )
+                self.existing_bus_keys.add(key)
+
+            logger.info(f"✅ Loaded {len(self.existing_bus_keys)} existing buses for fast checks")
         except Exception as e:
-            logger.debug(f"Error checking bus existence: {e}")
-            return False
+            logger.warning(f"⚠️  Could not pre-load existing buses: {e}")
+            self.existing_bus_keys = set()
+
+    def _filter_new_buses(self, buses: List[BusData]) -> List[BusData]:
+        """Pre-filter buses to only include new ones (not in database)."""
+        new_buses = []
+        
+        for bus in buses:
+            # Resolve location IDs for comparison
+            if bus.origin:
+                from_loc_id = self._resolve_location_id(bus.origin, fallback_type='bus_terminal')
+            else:
+                from_loc_id = self._resolve_location_id(bus.name.split('-')[0].strip(), fallback_type='bus_terminal') if '-' in bus.name else None
+            
+            if bus.destination:
+                to_loc_id = self._resolve_location_id(bus.destination, fallback_type='bus_terminal')
+            else:
+                to_loc_id = self._resolve_location_id(bus.name.split('-')[-1].strip(), fallback_type='bus_terminal') if '-' in bus.name else None
+            
+            # Create comparison key
+            key = (bus.bus_number, from_loc_id, to_loc_id, str(bus.departure_time) if bus.departure_time is not None else None)
+            
+            # Only include if not in existing set
+            if key not in self.existing_bus_keys:
+                new_buses.append(bus)
+            else:
+                self.stats['skipped_buses'] += 1
+        
+        return new_buses
     
     def upload(self, buses: List[BusData], batch_size: int = 100) -> bool:
         """Upload buses and stops to database"""
@@ -820,6 +861,14 @@ class BusLoader:
         
         # Load location mappings first
         self._load_location_map()
+        # Load existing buses once to avoid per-record DB lookups
+        self._load_existing_bus_keys()
+        
+        # Pre-filter buses to skip duplicates BEFORE processing
+        logger.info(f"📋 Pre-filtering {len(buses)} buses against {len(self.existing_bus_keys)} existing records...")
+        new_buses = self._filter_new_buses(buses)
+        logger.info(f"✅ Found {len(new_buses)} new buses to upload (skipping {len(buses) - len(new_buses)} duplicates)")
+        buses = new_buses
         
         bus_query = """
             INSERT INTO buses (name, bus_number, from_location_id, to_location_id, 
@@ -851,13 +900,7 @@ class BusLoader:
                         self.stats['errors'].append(f"Bus '{bus.name}': Cannot resolve FROM location")
                         continue
                     
-                    # Check if bus already exists (duplicate detection)
-                    if self._bus_exists(bus.bus_number, from_loc_id, to_loc_id, bus.departure_time):
-                        self.stats['skipped_buses'] += 1
-                        logger.debug(f"⏭️  Skipped duplicate bus: {bus.bus_number} ({bus.name}) at {bus.departure_time}")
-                        continue
-                    
-                    # Insert bus
+                    # Insert bus (duplicates already filtered out)
                     bus_params = (
                         bus.name,
                         bus.bus_number,
