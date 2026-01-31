@@ -87,18 +87,23 @@ public class IpFilteringFilter extends OncePerRequestFilter {
       return;
     }
 
-    // Skip IP filtering for validation/analysis endpoints that use POST but don't modify state
+    // Skip IP filtering for validation/analysis endpoints that use POST but don't
+    // modify state
     // These are preview/validation endpoints that should be treated as read-only
-    if (isValidationEndpoint(requestUri) && isApiPath(requestUri) && (isAllowedOrigin(origin) || isAllowedReferer(referer))) {
+    if (isValidationEndpoint(requestUri) && isApiPath(requestUri)
+        && (isAllowedOrigin(origin) || isAllowedReferer(referer))) {
       log.debug("Allowing validation endpoint from allowed origin: {} - Method: {}", requestUri, method);
       filterChain.doFilter(request, response);
       return;
     }
 
-    // Skip IP filtering for state-changing POST endpoints from allowed frontend origins
-    // These endpoints include contributions, route issues, etc. that require user interaction
+    // Skip IP filtering for state-changing POST endpoints from allowed frontend
+    // origins
+    // These endpoints include contributions, route issues, etc. that require user
+    // interaction
     // and are submitted from the frontend with proper CSRF protection
-    if (isStateChangingContributionEndpoint(requestUri) && "POST".equalsIgnoreCase(method) && isApiPath(requestUri) && (isAllowedOrigin(origin) || isAllowedReferer(referer))) {
+    if (isStateChangingContributionEndpoint(requestUri) && "POST".equalsIgnoreCase(method) && isApiPath(requestUri)
+        && (isAllowedOrigin(origin) || isAllowedReferer(referer))) {
       log.debug("Allowing contribution endpoint from allowed origin: {} - Method: {}", requestUri, method);
       filterChain.doFilter(request, response);
       return;
@@ -142,7 +147,8 @@ public class IpFilteringFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Check if URI is a validation/analysis endpoint that uses POST but doesn't modify state.
+   * Check if URI is a validation/analysis endpoint that uses POST but doesn't
+   * modify state.
    * These endpoints should be treated as read-only for IP filtering purposes.
    */
   private boolean isValidationEndpoint(String uri) {
@@ -157,8 +163,10 @@ public class IpFilteringFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Check if URI is a state-changing contribution endpoint that accepts POST submissions from users.
-   * These are legitimate user contributions that should be allowed from frontend origins.
+   * Check if URI is a state-changing contribution endpoint that accepts POST
+   * submissions from users.
+   * These are legitimate user contributions that should be allowed from frontend
+   * origins.
    */
   private boolean isStateChangingContributionEndpoint(String uri) {
     if (uri == null) {
@@ -166,8 +174,11 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     }
     // User contribution endpoints (POST to submit data)
     return uri.equals("/api/v1/contributions/routes") || // Submit route contributions
-      uri.equals("/api/v1/contributions/routes/stops") || // Submit stop contributions to routes
-      uri.equals("/api/v1/contributions/paste") || // Submit paste/text contributions        uri.equals("/api/v1/contributions/images") || // Submit image contributions        uri.equals("/api/v1/contributions/buses") || // Submit bus contributions
+        uri.equals("/api/v1/contributions/routes/stops") || // Submit stop contributions to routes
+        uri.equals("/api/v1/contributions/paste") || // Submit paste/text contributions
+                                                     // uri.equals("/api/v1/contributions/images") || // Submit image
+                                                     // contributions uri.equals("/api/v1/contributions/buses") || //
+                                                     // Submit bus contributions
         uri.startsWith("/api/v1/contributions/buses/") || // Bus contribution sub-paths
         uri.equals("/api/v1/contributions/stops") || // Submit stop contributions
         uri.startsWith("/api/v1/contributions/stops/") || // Stop contribution sub-paths

@@ -73,7 +73,8 @@ public class OriginValidationFilter extends OncePerRequestFilter {
       return;
     }
 
-    // Skip origin validation for authenticated requests (Authorization header present)
+    // Skip origin validation for authenticated requests (Authorization header
+    // present)
     // Admin endpoints with valid Basic/Bearer auth don't need origin validation
     String authHeader = request.getHeader("Authorization");
     if (authHeader != null && (authHeader.startsWith("Basic ") || authHeader.startsWith("Bearer "))) {
