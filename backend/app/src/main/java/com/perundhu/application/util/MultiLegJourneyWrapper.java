@@ -218,6 +218,11 @@ public class MultiLegJourneyWrapper {
         long currentLoc = originId;
         
         for (BusDTO leg : legs) {
+            // Skip legs with null location IDs
+            if (leg.fromLocationId() == null || leg.toLocationId() == null) {
+                continue;
+            }
+            
             if (currentLoc != leg.fromLocationId()) {
                 // This shouldn't happen in well-formed journeys
                 continue;
