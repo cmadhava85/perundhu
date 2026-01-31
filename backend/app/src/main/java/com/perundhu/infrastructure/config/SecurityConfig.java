@@ -86,6 +86,7 @@ public class SecurityConfig {
                 "/api/v1/contributions/analyze-image", // Image analysis is stateless
                 "/api/v1/contributions/paste/validate", // Validation endpoint (read-only)
               "/api/v1/contributions/paste", // Paste contributions (public write with built-in security)
+                "/api/v1/contributions/images", // Image contributions (public write with built-in security)
                 "/api/v1/contributions/voice/transcribe", // Voice transcription (read-only, no persistence)
                 "/api/v1/contributions/routes", // Anonymous route contributions (public write with built-in security)
                 "/api/v1/contributions/routes/stops", // Anonymous stop contributions (public write)

@@ -167,8 +167,7 @@ public class IpFilteringFilter extends OncePerRequestFilter {
     // User contribution endpoints (POST to submit data)
     return uri.equals("/api/v1/contributions/routes") || // Submit route contributions
       uri.equals("/api/v1/contributions/routes/stops") || // Submit stop contributions to routes
-      uri.equals("/api/v1/contributions/paste") || // Submit paste/text contributions
-        uri.equals("/api/v1/contributions/buses") || // Submit bus contributions
+      uri.equals("/api/v1/contributions/paste") || // Submit paste/text contributions        uri.equals("/api/v1/contributions/images") || // Submit image contributions        uri.equals("/api/v1/contributions/buses") || // Submit bus contributions
         uri.startsWith("/api/v1/contributions/buses/") || // Bus contribution sub-paths
         uri.equals("/api/v1/contributions/stops") || // Submit stop contributions
         uri.startsWith("/api/v1/contributions/stops/") || // Stop contribution sub-paths
