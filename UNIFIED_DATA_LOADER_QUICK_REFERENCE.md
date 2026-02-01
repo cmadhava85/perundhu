@@ -3,11 +3,17 @@
 ## One-Liner Cheat Sheet
 
 ```bash
+# FULL BULK UPLOAD (single script, strict by default)
+python3 scripts/bulk_upload_full.py --environment preprod
+
+# FULL BULK UPLOAD WITH TAMIL TRANSLATION
+python3 scripts/bulk_upload_full.py --environment preprod --enable-translation
+
 # LOCATIONS
 python3 scripts/unified_data_loader.py --mode locations --environment local --data-file data/tamil_nadu_locations_enhanced.json
 
-# BUSES
-python3 scripts/unified_data_loader.py --mode buses --environment preprod --data-file data/mtc_consolidated.json --operator MTC
+# BUSES WITH TAMIL TRANSLATION
+python3 scripts/unified_data_loader.py --mode buses --environment preprod --data-file data/mtc_consolidated.json --operator MTC --enable-translation
 
 # FULL MIGRATION
 python3 scripts/unified_data_loader.py --mode full --environment prod --locations data/tamil_nadu_locations_enhanced.json --buses data/tnstc_consolidated.json --operator TNSTC
@@ -42,6 +48,59 @@ python3 scripts/unified_data_loader.py --mode buses --environment local --checkp
 
 ---
 
+## Configuration Sources (Priority Order)
+
+The data loader automatically loads configuration from multiple sources:
+
+### 1. Spring Properties Files (Recommended for Cloud Run)
+- **Location**: `backend/app/src/main/resources/application-{env}.properties`
+- **Features**:
+  - ✅ Nested placeholders: `${DB_USER:${MYSQL_USER:default}}`
+  - ✅ GCP Secret Manager: `${sm://secret-name}`
+  - ✅ Environment variables: `${ENV_VAR:default}`
+  - ✅ JDBC URL parsing (TCP & Unix sockets)
+- **Example**:
+  ```properties
+  spring.datasource.url=jdbc:mysql:///perundhu?socketFactory=com.google.cloud.sql.mysql.SocketFactory&cloudSqlInstance=project:region:instance
+  spring.datasource.username=${DB_USERNAME:${MYSQL_USERNAME:perundhu_user}}
+  spring.datasource.password=${sm://db-password}
+  ```
+
+### 2. Environment Variables (Fallback)
+- **Format**: `DB_{PARAM}_{ENV}` (e.g., `DB_HOST_PREPROD`, `DB_USER_PROD`)
+- **Example**:
+  ```bash
+  export DB_HOST_PREPROD="127.0.0.1"
+  export DB_PORT_PREPROD="3307"
+  export DB_USER_PREPROD="perundhu_user"
+  export DB_PASSWORD_PREPROD="your_password"
+  export DB_NAME_PREPROD="perundhu"
+  ```
+
+### Connection Types
+
+**TCP Connection (Local/Development)**:
+```bash
+export DB_HOST_PREPROD="127.0.0.1"
+export DB_PORT_PREPROD="3307"
+```
+
+**Unix Socket (Cloud Run with Cloud SQL)**:
+```properties
+# Properties file automatically parsed to: host=/cloudsql/project:region:instance, port=0
+spring.datasource.url=jdbc:mysql:///database?socketFactory=...&cloudSqlInstance=project:region:instance
+```
+
+**GCP Secret Manager**:
+```bash
+export GCP_PROJECT_ID="your-project-id"  # Required for Secret Manager
+```
+```properties
+spring.datasource.password=${sm://production-db-password}
+```
+
+---
+
 ## Common Scenarios
 
 ### Scenario 1: First-time Setup (Local)
@@ -66,6 +125,9 @@ mysql -h localhost -P 3307 -u perundhu_user -p -e "SELECT COUNT(*) as locations 
 ### Scenario 2: Deploy to Preprod
 
 ```bash
+# Single-command full migration (strict by default)
+python3 scripts/bulk_upload_full.py --environment preprod
+
 # Full migration in one command
 python3 scripts/unified_data_loader.py \
   --mode full \
@@ -134,6 +196,8 @@ python3 scripts/unified_data_loader.py \
 - `--force-overwrite` - Overwrite existing data
 - `--batch-size N` - Records per batch (default: 1000)
 - `--dry-run` - Validate without uploading
+- `--strict` - Fail fast if any location or stop cannot be resolved
+- `--enable-translation` - Enable Tamil translation for locations and buses
 - `--verbose` - Debug logging
 
 ---

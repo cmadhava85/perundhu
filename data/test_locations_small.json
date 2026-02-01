@@ -1,0 +1,902 @@
+[
+  {
+    "name": "\u0bae\u0bc8\u0bb2\u0bbe\u0baa\u0bcd\u0baa\u0bc2\u0bb0\u0bcd",
+    "type": "bus_stop",
+    "latitude": 13.0334336,
+    "longitude": 80.2679457,
+    "osm_id": 243060332,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Foreshore Estate Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0224016,
+    "longitude": 80.2763268,
+    "osm_id": 247677936,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "V House Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0512112,
+    "longitude": 80.2778386,
+    "osm_id": 247691544,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Poonamallee MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0511602,
+    "longitude": 80.0949546,
+    "osm_id": 248454339,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "GingerBread",
+    "type": "bus_stop",
+    "latitude": 13.0802164,
+    "longitude": 80.1736956,
+    "osm_id": 262308392,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Nanganallur Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 12.9778068,
+    "longitude": 80.1812484,
+    "osm_id": 278746634,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Puratchi Thalaivar Dr. M.G.R Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 13.06846,
+    "longitude": 80.2051255,
+    "osm_id": 306104406,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Ramapuram Bus Stand",
+    "type": "bus_stop",
+    "latitude": 13.0348049,
+    "longitude": 80.1738571,
+    "osm_id": 306105674,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Taramani",
+    "type": "bus_stop",
+    "latitude": 12.9854773,
+    "longitude": 80.2405635,
+    "osm_id": 306113099,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Saligramam Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0533394,
+    "longitude": 80.1970832,
+    "osm_id": 308032774,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Perambur MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.1085691,
+    "longitude": 80.2482521,
+    "osm_id": 311284385,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "ICF MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.1002428,
+    "longitude": 80.2147138,
+    "osm_id": 311337040,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Kovilpalayam Main Bus Stop",
+    "type": "bus_stop",
+    "latitude": 11.1354175,
+    "longitude": 77.0337521,
+    "osm_id": 321420713,
+    "state": "Tamil Nadu",
+    "district": "Coimbatore"
+  },
+  {
+    "name": "Minjur MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.2820098,
+    "longitude": 80.2537049,
+    "osm_id": 321652675,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Manali MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.1699771,
+    "longitude": 80.2571585,
+    "osm_id": 321659385,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "\u0bae\u0bbe\u0ba4\u0bb5\u0bb0\u0bae\u0bcd \u0bae\u0bbe\u0ba8\u0b95\u0bb0 \u0baa\u0bc7\u0bb0\u0bc1\u0ba8\u0bcd\u0ba4\u0bc1 \u0bae\u0bc1\u0ba9\u0bc8\u0baf\u0bae\u0bcd",
+    "type": "bus_stop",
+    "latitude": 13.1523676,
+    "longitude": 80.2283452,
+    "osm_id": 321661962,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Kundrathur Temple MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 12.9872165,
+    "longitude": 80.0932375,
+    "osm_id": 332004894,
+    "state": "Tamil Nadu",
+    "district": "Kanchipuram"
+  },
+  {
+    "name": "Hasthinapuram MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 12.9404439,
+    "longitude": 80.1505864,
+    "osm_id": 340042533,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Tambaram MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 12.9253393,
+    "longitude": 80.1167451,
+    "osm_id": 340088810,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Tambaram East MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 12.923598,
+    "longitude": 80.1170906,
+    "osm_id": 340088821,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "\u0baa\u0bb4\u0bb5\u0bc7\u0bb1\u0bcd\u0b95\u0bbe\u0b9f\u0bc1",
+    "type": "bus_stop",
+    "latitude": 13.4177224,
+    "longitude": 80.313942,
+    "osm_id": 340766697,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Ayanavaram MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0985912,
+    "longitude": 80.2420039,
+    "osm_id": 344420267,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "\u0b95\u0bc1\u0bb1\u0bcd\u0bb1\u0bbe\u0bb2\u0bae\u0bcd - \u0d15\u0d41\u0d31\u0d4d\u0d31\u0d3e\u0d32\u0d02",
+    "type": "bus_stop",
+    "latitude": 8.9333098,
+    "longitude": 77.2738226,
+    "osm_id": 353064229,
+    "state": "Tamil Nadu",
+    "district": "Tenkasi"
+  },
+  {
+    "name": "\u0b9a\u0bc6\u0b99\u0bcd\u0b95\u0bcb\u0b9f\u0bcd\u0b9f\u0bc8 \u0baa\u0bb8\u0bcd \u0bb8\u0bcd\u0b9f\u0bbe\u0ba3\u0bcd\u0b9f\u0bcd",
+    "type": "bus_stop",
+    "latitude": 8.9768317,
+    "longitude": 77.2498908,
+    "osm_id": 353065113,
+    "state": "Tamil Nadu",
+    "district": "Tenkasi"
+  },
+  {
+    "name": "Town Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.086309,
+    "longitude": 77.0600795,
+    "osm_id": 353409857,
+    "state": "Tamil Nadu",
+    "district": "Theni"
+  },
+  {
+    "name": "\u0bae\u0b95\u0bbe\u0baa\u0bb2\u0bbf\u0baa\u0bc1\u0bb0\u0bae\u0bcd",
+    "type": "bus_stop",
+    "latitude": 12.6174735,
+    "longitude": 80.1938815,
+    "osm_id": 353978506,
+    "state": "Tamil Nadu",
+    "district": "Chengalpattu"
+  },
+  {
+    "name": "East Fort",
+    "type": "bus_stop",
+    "latitude": 8.4834042,
+    "longitude": 76.9474622,
+    "osm_id": 354065017,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Yercaud Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.7767655,
+    "longitude": 78.2091269,
+    "osm_id": 354952665,
+    "state": "Tamil Nadu",
+    "district": "Namakkal"
+  },
+  {
+    "name": "Erumaivettipalayam Bus Stand",
+    "type": "bus_stop",
+    "latitude": 13.2424549,
+    "longitude": 80.120113,
+    "osm_id": 359120280,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Kattakada",
+    "type": "bus_stop",
+    "latitude": 8.5069532,
+    "longitude": 77.0809575,
+    "osm_id": 360378970,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Puzhuthivakkam Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.9739799,
+    "longitude": 80.2029314,
+    "osm_id": 360562773,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Ayyapanthangal",
+    "type": "bus_stop",
+    "latitude": 13.0377933,
+    "longitude": 80.1349425,
+    "osm_id": 370969659,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Ennore MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.214722,
+    "longitude": 80.320837,
+    "osm_id": 373077167,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Old Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.7869544,
+    "longitude": 79.1376046,
+    "osm_id": 389531981,
+    "state": "Tamil Nadu",
+    "district": "Thanjavur"
+  },
+  {
+    "name": "KK Nagar West MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0441595,
+    "longitude": 80.1933034,
+    "osm_id": 389964614,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Kannagi Nagar MTCTerminus",
+    "type": "bus_stop",
+    "latitude": 12.9256543,
+    "longitude": 80.2383079,
+    "osm_id": 401695312,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "NGO Colony Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 12.9947894,
+    "longitude": 80.2068161,
+    "osm_id": 401769770,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Thiruverkadu MTC Bus Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0695846,
+    "longitude": 80.1240223,
+    "osm_id": 402290805,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Semmanchery MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 12.874697,
+    "longitude": 80.2097654,
+    "osm_id": 402298612,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Elango Nagar MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0906021,
+    "longitude": 80.1854736,
+    "osm_id": 402656745,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Parvathi Nagar MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.1457511,
+    "longitude": 80.250441,
+    "osm_id": 402750050,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Tambaram Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.927719,
+    "longitude": 80.1187421,
+    "osm_id": 442132009,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Madipakkam Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.9628608,
+    "longitude": 80.1982835,
+    "osm_id": 442538699,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Mysore City Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.3079885,
+    "longitude": 76.653633,
+    "osm_id": 444454814,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Chikkamaranahalli",
+    "type": "bus_stop",
+    "latitude": 13.0362217,
+    "longitude": 77.5663481,
+    "osm_id": 446805877,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Uttarahalli Bus Station",
+    "type": "bus_stop",
+    "latitude": 12.9052725,
+    "longitude": 77.5432875,
+    "osm_id": 471760581,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Jalahalli Village",
+    "type": "bus_stop",
+    "latitude": 13.0452298,
+    "longitude": 77.547996,
+    "osm_id": 521144263,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Bhavani Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.4527483,
+    "longitude": 77.688559,
+    "osm_id": 540535250,
+    "state": "Tamil Nadu",
+    "district": "Erode"
+  },
+  {
+    "name": "Thiruvayar Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.7876947,
+    "longitude": 79.1385287,
+    "osm_id": 541983076,
+    "state": "Tamil Nadu",
+    "district": "Thanjavur"
+  },
+  {
+    "name": "Kolathur Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.94716,
+    "longitude": 76.1376332,
+    "osm_id": 548339155,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Old Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.1196933,
+    "longitude": 76.1205926,
+    "osm_id": 561154744,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Tirumayam Bus Stop",
+    "type": "bus_stop",
+    "latitude": 10.2457851,
+    "longitude": 78.7468408,
+    "osm_id": 608384703,
+    "state": "Tamil Nadu",
+    "district": "Sivaganga"
+  },
+  {
+    "name": "Channarayapatna Bus Station",
+    "type": "bus_stop",
+    "latitude": 12.8980853,
+    "longitude": 76.3912145,
+    "osm_id": 647850387,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Sirkazhi Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.2344627,
+    "longitude": 79.7384669,
+    "osm_id": 648952834,
+    "state": "Tamil Nadu",
+    "district": "Nagapattinam"
+  },
+  {
+    "name": "Srirangapatna",
+    "type": "bus_stop",
+    "latitude": 12.4207897,
+    "longitude": 76.6915116,
+    "osm_id": 666629369,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Vinayakapuram",
+    "type": "bus_stop",
+    "latitude": 13.1398634,
+    "longitude": 80.2056795,
+    "osm_id": 675894194,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Nechipuzhoor",
+    "type": "bus_stop",
+    "latitude": 9.7525024,
+    "longitude": 76.6612829,
+    "osm_id": 679055132,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Kuravilangad Ksrtc Busstop",
+    "type": "bus_stop",
+    "latitude": 9.7530238,
+    "longitude": 76.5615324,
+    "osm_id": 737863508,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Muttom Bus Stand",
+    "type": "bus_stop",
+    "latitude": 9.8371923,
+    "longitude": 76.7455168,
+    "osm_id": 765697277,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Ramapuram Private BusStand",
+    "type": "bus_stop",
+    "latitude": 9.7996742,
+    "longitude": 76.6598304,
+    "osm_id": 801907220,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Karamadai Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.2395203,
+    "longitude": 76.9598692,
+    "osm_id": 811321015,
+    "state": "Tamil Nadu",
+    "district": "Coimbatore"
+  },
+  {
+    "name": "Maralawadi",
+    "type": "bus_stop",
+    "latitude": 12.6121332,
+    "longitude": 77.5252122,
+    "osm_id": 818936326,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Harohalli Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.6800823,
+    "longitude": 77.4699084,
+    "osm_id": 821795675,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Srinagar Bus Station",
+    "type": "bus_stop",
+    "latitude": 12.9444378,
+    "longitude": 77.5546637,
+    "osm_id": 954610622,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "main bus station",
+    "type": "bus_stop",
+    "latitude": 9.2349086,
+    "longitude": 78.7876884,
+    "osm_id": 958185174,
+    "state": "Tamil Nadu",
+    "district": "Ramanathapuram"
+  },
+  {
+    "name": "Padappai Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.8867242,
+    "longitude": 80.0215006,
+    "osm_id": 978253320,
+    "state": "Tamil Nadu",
+    "district": "Kanchipuram"
+  },
+  {
+    "name": "Private Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.3187256,
+    "longitude": 76.6482804,
+    "osm_id": 992742255,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Kerala state road transport coperation bus stand ettumanoor",
+    "type": "bus_stop",
+    "latitude": 9.6677898,
+    "longitude": 76.5557469,
+    "osm_id": 997591145,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Kovilpatti Town Bus Stand",
+    "type": "bus_stop",
+    "latitude": 9.1750336,
+    "longitude": 77.8659275,
+    "osm_id": 1083228335,
+    "state": "Tamil Nadu",
+    "district": "Virudhunagar"
+  },
+  {
+    "name": "Ramanathapuram Bus Station",
+    "type": "bus_stop",
+    "latitude": 9.3603855,
+    "longitude": 78.8374921,
+    "osm_id": 1083550811,
+    "state": "Tamil Nadu",
+    "district": "Ramanathapuram"
+  },
+  {
+    "name": "Mohanur Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.0617525,
+    "longitude": 78.1386215,
+    "osm_id": 1106092622,
+    "state": "Tamil Nadu",
+    "district": "Karur"
+  },
+  {
+    "name": "Tenkasi Old Bus Stand",
+    "type": "bus_stop",
+    "latitude": 8.9583534,
+    "longitude": 77.3060223,
+    "osm_id": 1113380367,
+    "state": "Tamil Nadu",
+    "district": "Tenkasi"
+  },
+  {
+    "name": "Bus Stand Kovalam",
+    "type": "bus_stop",
+    "latitude": 12.7866073,
+    "longitude": 80.2501989,
+    "osm_id": 1141167996,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.6110716,
+    "longitude": 80.0565107,
+    "osm_id": 1141197866,
+    "state": "Tamil Nadu",
+    "district": "Chengalpattu"
+  },
+  {
+    "name": "APSRTC Bus Station , Puttur",
+    "type": "bus_stop",
+    "latitude": 13.4352118,
+    "longitude": 79.552878,
+    "osm_id": 1141197878,
+    "state": "Tamil Nadu",
+    "district": "Villupuram"
+  },
+  {
+    "name": "Guduvancheri MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 12.8447958,
+    "longitude": 80.0618036,
+    "osm_id": 1145642404,
+    "state": "Tamil Nadu",
+    "district": "Chengalpattu"
+  },
+  {
+    "name": "\u0bb5\u0bbe\u0bb2\u0bcd\u0baa\u0bbe\u0bb1\u0bc8 - \u0d35\u0d3e\u0d7d\u0d2a\u0d4d\u0d2a\u0d3e\u0d31",
+    "type": "bus_stop",
+    "latitude": 10.326354,
+    "longitude": 76.9549984,
+    "osm_id": 1147742296,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Krishnarajanagara Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.4385986,
+    "longitude": 76.3812339,
+    "osm_id": 1153301702,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.7859523,
+    "longitude": 76.2451325,
+    "osm_id": 1153302066,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Private bus stand",
+    "type": "bus_stop",
+    "latitude": 10.3019364,
+    "longitude": 76.3359263,
+    "osm_id": 1161721527,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Sulur Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.0259441,
+    "longitude": 77.1252174,
+    "osm_id": 1161722780,
+    "state": "Tamil Nadu",
+    "district": "Coimbatore"
+  },
+  {
+    "name": "Local Bus Stand",
+    "type": "bus_stop",
+    "latitude": 11.4055841,
+    "longitude": 76.7042216,
+    "osm_id": 1165014624,
+    "state": "Tamil Nadu",
+    "district": "Coimbatore"
+  },
+  {
+    "name": "Sembatti Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.2810401,
+    "longitude": 77.871426,
+    "osm_id": 1166263035,
+    "state": "Tamil Nadu",
+    "district": "Dindigul"
+  },
+  {
+    "name": "Vadipatti Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.0824449,
+    "longitude": 77.9665547,
+    "osm_id": 1166461239,
+    "state": "Tamil Nadu",
+    "district": "Dindigul"
+  },
+  {
+    "name": "Guruvayur Private Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.5933319,
+    "longitude": 76.0438602,
+    "osm_id": 1166965746,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Avadi Market",
+    "type": "bus_stop",
+    "latitude": 13.1160521,
+    "longitude": 80.1062634,
+    "osm_id": 1185703062,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Ooralpatty",
+    "type": "bus_stop",
+    "latitude": 10.2840464,
+    "longitude": 77.6302972,
+    "osm_id": 1191337551,
+    "state": "Tamil Nadu",
+    "district": "Dindigul"
+  },
+  {
+    "name": "Bus Stand",
+    "type": "bus_stop",
+    "latitude": 10.2749119,
+    "longitude": 77.1599206,
+    "osm_id": 1195120299,
+    "state": "Tamil Nadu",
+    "district": "Theni"
+  },
+  {
+    "name": "Uttangarai",
+    "type": "bus_stop",
+    "latitude": 12.2673379,
+    "longitude": 78.5356699,
+    "osm_id": 1300454510,
+    "state": "Tamil Nadu",
+    "district": "Dharmapuri"
+  },
+  {
+    "name": "\u0b95\u0bc1\u0ba9\u0bcd\u0ba9\u0bc2\u0bb0\u0bcd",
+    "type": "bus_stop",
+    "latitude": 11.3437289,
+    "longitude": 76.7946651,
+    "osm_id": 1311589260,
+    "state": "Tamil Nadu",
+    "district": "Coimbatore"
+  },
+  {
+    "name": "Vallam main bus station",
+    "type": "bus_stop",
+    "latitude": 10.7181509,
+    "longitude": 79.0624594,
+    "osm_id": 1324158650,
+    "state": "Tamil Nadu",
+    "district": "Thanjavur"
+  },
+  {
+    "name": "Vellore Old Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.9221524,
+    "longitude": 79.1325219,
+    "osm_id": 1348980037,
+    "state": "Tamil Nadu",
+    "district": "Ranipet"
+  },
+  {
+    "name": "boarder",
+    "type": "bus_stop",
+    "latitude": 8.9713384,
+    "longitude": 77.2616747,
+    "osm_id": 1354561546,
+    "state": "Tamil Nadu",
+    "district": "Tenkasi"
+  },
+  {
+    "name": "vanji nagar busstop",
+    "type": "bus_stop",
+    "latitude": 8.9571904,
+    "longitude": 77.2669211,
+    "osm_id": 1354562623,
+    "state": "Tamil Nadu",
+    "district": "Tenkasi"
+  },
+  {
+    "name": "KK Nagar MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.0354223,
+    "longitude": 80.2057167,
+    "osm_id": 1391028778,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "IOC MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.1390688,
+    "longitude": 80.2820311,
+    "osm_id": 1391573894,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Thirovttriyur MTC Terminus",
+    "type": "bus_stop",
+    "latitude": 13.1721641,
+    "longitude": 80.3050914,
+    "osm_id": 1391573897,
+    "state": "Tamil Nadu",
+    "district": "Chennai"
+  },
+  {
+    "name": "Puttalam Bus Station",
+    "type": "bus_stop",
+    "latitude": 8.0278817,
+    "longitude": 79.8333513,
+    "osm_id": 1400433846,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  },
+  {
+    "name": "Thiruporur Bus Stand",
+    "type": "bus_stop",
+    "latitude": 12.7220793,
+    "longitude": 80.1877141,
+    "osm_id": 1423338598,
+    "state": "Tamil Nadu",
+    "district": "Chengalpattu"
+  },
+  {
+    "name": "Mangammanapalya",
+    "type": "bus_stop",
+    "latitude": 12.9070833,
+    "longitude": 77.6351607,
+    "osm_id": 1428116573,
+    "state": "Tamil Nadu",
+    "district": "Unknown"
+  }
+]

@@ -36,6 +36,11 @@ interface FilterOptions {
 type SortOption = 'name' | 'size' | 'date' | 'status';
 type _ViewMode = 'grid' | 'list' | 'compact';
 
+// Polling configuration constants for image processing status
+const POLLING_INTERVAL_MS = 3000; // Poll every 3 seconds
+const MAX_POLLING_DURATION_MS = 600000; // Stop polling after 10 minutes (600s)
+const MAX_RETRY_ATTEMPTS = 3; // Maximum retry attempts on polling errors
+
 const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuccess, onError, onClearStatus }) => {
   const { t } = useTranslation();
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
@@ -397,7 +402,6 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
 
   const pollProcessingStatus = async (contributionId: string, imageId: string, successCallback?: (contributionId: string) => void) => {
     let retryCount = 0;
-    const maxRetries = 3;
     
     const pollInterval = setInterval(async () => {
       try {
@@ -439,7 +443,7 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         retryCount++;
         
         // Show error to user after max retries
-        if (retryCount >= maxRetries) {
+        if (retryCount >= MAX_RETRY_ATTEMPTS) {
           clearInterval(pollInterval);
           
           // Extract error message from ApiError
@@ -464,11 +468,12 @@ const ImageContributionUpload: React.FC<ImageContributionUploadProps> = ({ onSuc
         }
         // Continue polling for a few more attempts before giving up
       }
-    }, 3000);
+    }, POLLING_INTERVAL_MS);
 
+    // Auto-stop polling after maximum duration to prevent indefinite polling
     setTimeout(() => {
       clearInterval(pollInterval);
-    }, 600000);
+    }, MAX_POLLING_DURATION_MS);
   };
 
   const retryProcessing = async (contributionId: string, imageId: string) => {

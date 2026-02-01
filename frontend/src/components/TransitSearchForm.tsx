@@ -79,6 +79,10 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   // Validation state
   const [validationError, setValidationError] = useState<ValidationResult | null>(null);
   
+  // Debounce timers for autocomplete
+  const fromDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const toDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
   // Load recent searches from localStorage
   useEffect(() => {
     try {
@@ -90,6 +94,16 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
     } catch {
       // Ignore localStorage errors
     }
+    
+    // Cleanup debounce timers on unmount
+    return () => {
+      if (fromDebounceTimerRef.current) {
+        clearTimeout(fromDebounceTimerRef.current);
+      }
+      if (toDebounceTimerRef.current) {
+        clearTimeout(toDebounceTimerRef.current);
+      }
+    };
   }, []);
 
   // Check GPS support and permission status on mount
@@ -251,29 +265,40 @@ const TransitSearchForm: React.FC<TransitSearchFormProps> = ({
   }, [locations]);
 
   // Fetch dynamic suggestions when query changes (DB-first, OpenStreetMap fallback)
+  // Now with proper debouncing at the component level to prevent multiple simultaneous calls
   const fetchDynamicSuggestions = useCallback((query: string, isFromField: boolean) => {
+    // Clear existing timer for this field
+    const timerRef = isFromField ? fromDebounceTimerRef : toDebounceTimerRef;
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    
     if (query.trim().length < 3) {
       if (isFromField) setDynamicFromSuggestions([]);
       else setDynamicToSuggestions([]);
       return;
     }
     
+    // Set loading immediately for better UX
     if (isFromField) setIsLoadingFrom(true);
     else setIsLoadingTo(true);
     
-    locationAutocompleteService.getDebouncedSuggestions(
-      query,
-      (suggestions) => {
-        if (isFromField) {
-          setDynamicFromSuggestions(suggestions);
-          setIsLoadingFrom(false);
-        } else {
-          setDynamicToSuggestions(suggestions);
-          setIsLoadingTo(false);
-        }
-      },
-      i18n.language
-    );
+    // Debounce API calls to prevent multiple simultaneous requests
+    timerRef.current = setTimeout(() => {
+      locationAutocompleteService.getDebouncedSuggestions(
+        query,
+        (suggestions) => {
+          if (isFromField) {
+            setDynamicFromSuggestions(suggestions);
+            setIsLoadingFrom(false);
+          } else {
+            setDynamicToSuggestions(suggestions);
+            setIsLoadingTo(false);
+          }
+        },
+        i18n.language
+      );
+    }, 300); // 300ms debounce delay
   }, [i18n.language]);
 
   // Convert LocationSuggestion to AppLocation

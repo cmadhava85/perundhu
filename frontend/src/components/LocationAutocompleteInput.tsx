@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { locationAutocompleteService } from '../services/locationAutocompleteService';
 import type { LocationSuggestion } from '../services/locationAutocompleteService';
+import type { Location as AppLocation } from '../types';
 
 interface LocationAutocompleteInputProps {
   id: string;
@@ -17,6 +18,7 @@ interface LocationAutocompleteInputProps {
   label?: string;
   language?: string;
   className?: string;
+  staticLocations?: AppLocation[];
 }
 
 const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
@@ -28,13 +30,15 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   required = false,
   label,
   language = 'en',
-  className = ''
+  className = '',
+  staticLocations
 }) => {
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
   const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const latestQueryRef = React.useRef<string>(value);
 
   // Helper function to get display name based on language
   const getDisplayName = (suggestion: LocationSuggestion): string => {
@@ -44,18 +48,73 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
     return suggestion.name;
   };
 
+  const getLocationDisplayName = (location: AppLocation): string => {
+    if (language === 'ta' && location.translatedName) {
+      return location.translatedName;
+    }
+    return location.name;
+  };
+
+  const getStaticSuggestions = useCallback((query: string): LocationSuggestion[] => {
+    if (!staticLocations || !query.trim()) return [];
+    const normalizedQuery = query.toLowerCase();
+    return staticLocations
+      .filter(location => {
+        const displayName = getLocationDisplayName(location);
+        return displayName.toLowerCase().includes(normalizedQuery) ||
+          location.name.toLowerCase().includes(normalizedQuery);
+      })
+      .map(location => ({
+        id: location.id,
+        name: location.name,
+        translatedName: location.translatedName,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        source: 'database'
+      }));
+  }, [staticLocations, language]);
+
+  const combineSuggestions = useCallback((staticResults: LocationSuggestion[], dynamicResults: LocationSuggestion[]) => {
+    const merged: LocationSuggestion[] = [];
+    const seen = new Set<string>();
+    const addItem = (item: LocationSuggestion) => {
+      const key = item.id ? `id:${item.id}` : `name:${item.name.toLowerCase()}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      merged.push(item);
+    };
+
+    staticResults.forEach(addItem);
+    dynamicResults.forEach(addItem);
+    return merged;
+  }, []);
+
   const handleSuggestionsCallback = useCallback((newSuggestions: LocationSuggestion[]) => {
     if (!isSelecting) {
-      setSuggestions(newSuggestions);
-      setShowSuggestions(newSuggestions.length > 0);
+      const query = latestQueryRef.current;
+      const staticResults = getStaticSuggestions(query);
+      const combined = combineSuggestions(staticResults, newSuggestions).slice(0, 10);
+      setSuggestions(combined);
+      setShowSuggestions(combined.length > 0);
       setIsLoading(false);
     }
-  }, [isSelecting]);
+  }, [isSelecting, getStaticSuggestions, combineSuggestions]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
+    latestQueryRef.current = inputValue;
     setIsSelecting(false);
     onChange(inputValue);
+
+    const staticResults = getStaticSuggestions(inputValue);
+    if (staticResults.length > 0) {
+      const limitedStatic = staticResults.slice(0, 10);
+      setSuggestions(limitedStatic);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
 
     if (inputValue.length >= 3) {
       setIsLoading(true);
@@ -68,13 +127,17 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
       } catch (error) {
         console.error('Error getting suggestions:', error);
         setIsLoading(false);
-        setSuggestions([]);
-        setShowSuggestions(false);
+        if (staticResults.length === 0) {
+          setSuggestions([]);
+          setShowSuggestions(false);
+        }
       }
     } else {
       setIsLoading(false);
-      setSuggestions([]);
-      setShowSuggestions(false);
+      if (staticResults.length === 0) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
     }
   };
 
@@ -101,7 +164,7 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
       blurTimeoutRef.current = null;
     }
     
-    if (value.length >= 3 && suggestions.length > 0) {
+    if (value.length >= 1 && suggestions.length > 0) {
       setShowSuggestions(true);
     }
   };

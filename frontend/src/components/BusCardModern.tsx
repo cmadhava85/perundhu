@@ -377,14 +377,45 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
                 const parts = time.split(':');
                 return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : time;
               };
+
+              const getStopDisplayName = (stop?: Stop) => {
+                if (!stop) return '';
+                if (i18n.language === 'ta') {
+                  return (
+                    stop.translatedName ||
+                    stop.translations?.ta?.name ||
+                    stop.translatedNames?.ta ||
+                    stop.name ||
+                    ''
+                  );
+                }
+                return stop.name || stop.translatedName || '';
+              };
+
+              // Determine source and destination
+              const explicitFrom = getLocationDisplayName(fromLocation) || bus.from || '';
+              const explicitTo = getLocationDisplayName(toLocation) || bus.to || '';
+              const firstStop = stops && stops.length > 0 ? stops[0] : undefined;
+              const lastStop = stops && stops.length > 0 ? stops[stops.length - 1] : undefined;
+              const fallbackFrom = getStopDisplayName(firstStop);
+              const fallbackTo = getStopDisplayName(lastStop);
+
+              const sourceLocation = explicitFrom || fallbackFrom;
+              const destinationLocation = explicitTo || fallbackTo;
               
               const shareLines = [
                 `🚌 Bus Route Information`,
                 ``,
+              ];
+              
+              if (sourceLocation) shareLines.push(`📍 From: ${sourceLocation}`);
+              if (destinationLocation) shareLines.push(`🎯 To: ${destinationLocation}`);
+              
+              shareLines.push(
                 `🚍 Bus: ${bus.name || bus.number || 'Bus'}`,
                 `⏰ Departure: ${bus.departureTime || 'Check'}`,
                 `⏱️ Arrival: ${bus.arrivalTime || 'Check'}`,
-              ];
+              );
               
               if (bus.fare) {
                 shareLines.push(`💰 Fare: ₹${bus.fare}`);

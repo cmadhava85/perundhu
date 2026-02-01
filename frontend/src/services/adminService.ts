@@ -7,7 +7,7 @@ import AuthService from './authService';
 const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 // Preprod API URL for syncing settings to preprod environment
-const PREPROD_API_URL = import.meta.env.VITE_PREPROD_API_URL || 'https://perundhu-backend-preprod-1032721240281.asia-south1.run.app';
+const PREPROD_API_URL = import.meta.env.VITE_PREPROD_API_URL || 'https://perundhu-backend-preprod-c6qn3mz4wa-el.a.run.app';
 
 // Session storage keys for admin auth
 const ADMIN_AUTH_KEY = 'admin_auth_credentials';

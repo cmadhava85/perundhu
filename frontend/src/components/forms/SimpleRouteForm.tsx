@@ -4,6 +4,7 @@ import { AlertTriangle } from 'lucide-react';
 import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
+import type { Location as AppLocation } from '../../types';
 import { getRecaptchaToken } from '../../services/recaptchaService';
 import { isKnownLocation } from '../../services/geocodingService';
 import { checkForDuplicates, type MatchedBusInfo } from '../../services/duplicateCheckService';
@@ -52,10 +53,11 @@ interface EnhancedFormData extends FormData {
 
 interface SimpleRouteFormProps {
   onSubmit: (data: EnhancedFormData) => void;
+  locations?: AppLocation[];
 }
 
-export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) => {
-  const { t } = useTranslation();
+export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, locations }) => {
+  const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState<FormData>({
     busNumber: '',
     route: '',
@@ -552,6 +554,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               placeholder={t('route.originPlaceholder', 'e.g., Chennai Central')}
               label=""
               required
+              language={i18n.language}
+              staticLocations={locations}
             />
             {validationErrors.origin && (
               <span className="field-error-text">{validationErrors.origin}</span>
@@ -605,6 +609,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit }) =>
               placeholder={t('route.destinationPlaceholder', 'e.g., Madurai')}
               label=""
               required
+              language={i18n.language}
+              staticLocations={locations}
             />
             {validationErrors.destination && (
               <span className="field-error-text">{validationErrors.destination}</span>

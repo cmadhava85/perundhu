@@ -14,6 +14,7 @@ import { ReportIssue } from './contribution/ReportIssue';
 import { useFeatureFlags } from '../contexts/FeatureFlagsContext';
 import { usePublicFeatureFlags } from '../hooks/usePublicFeatureFlag';
 import { useRecaptcha } from '../hooks/useRecaptcha';
+import { useLocationData } from '../hooks/useLocationData';
 import type { Bus } from '../types';
 import './RouteContribution.css';
 
@@ -21,6 +22,7 @@ export const RouteContribution: React.FC = () => {
   const { t } = useTranslation();
   const routerLocation = useLocation();
   const { flags } = useFeatureFlags();
+  const { locations } = useLocationData();
   
   // Fetch feature flags from public endpoint for Add Stops and Report Issue
   // These should be publicly available without auth since they're on search results
@@ -304,7 +306,8 @@ export const RouteContribution: React.FC = () => {
             <div>
               <SimpleRouteForm 
                 key={formKey}
-                onSubmit={(data) => handleSecureSubmission(data, false)} 
+                onSubmit={(data) => handleSecureSubmission(data, false)}
+                locations={locations}
               />
             </div>
           )}

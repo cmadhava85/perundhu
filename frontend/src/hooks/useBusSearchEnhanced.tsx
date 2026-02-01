@@ -120,24 +120,39 @@ export function useBusSearchEnhanced() {
     let isMounted = true;
     const abortController = new AbortController();
 
-    // Fetch stops for all buses in parallel
+    // Fetch stops for all buses with concurrent request limiting
     const fetchAllStops = async () => {
       const newStopsMap: Record<number, Stop[]> = {};
       
-      // Parallelize API calls for better performance
-      const promises = allBuses.map((bus: Bus) => 
-        fetchBusStops(bus, abortController.signal)
-      );
-
-      const results = await Promise.all(promises);
+      // Limit concurrent API calls to prevent server overload
+      // Process buses in batches of 5 to balance speed and server load
+      const CONCURRENT_LIMIT = 5;
+      const batches: Bus[][] = [];
       
-      // Only update state if component is still mounted
-      if (isMounted) {
+      for (let i = 0; i < allBuses.length; i += CONCURRENT_LIMIT) {
+        batches.push(allBuses.slice(i, i + CONCURRENT_LIMIT));
+      }
+      
+      // Process each batch sequentially, but requests within batch are parallel
+      for (const batch of batches) {
+        if (!isMounted) break; // Stop if component unmounted
+        
+        const promises = batch.map((bus: Bus) => 
+          fetchBusStops(bus, abortController.signal)
+        );
+        
+        const results = await Promise.all(promises);
+        
+        // Update map with results from this batch
         for (const result of results) {
           if (result) {
             newStopsMap[result.busId] = result.stops;
           }
         }
+      }
+      
+      // Only update state if component is still mounted
+      if (isMounted) {
         setStopsMap(newStopsMap);
       }
     };

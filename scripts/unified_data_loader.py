@@ -11,6 +11,7 @@ Features:
 ✓ Validation: Data integrity checks
 ✓ Recovery: Checkpoint/resume capability
 ✓ Logging: Detailed operation tracking
+✓ Tamil Translation: Automatic translation support for locations and buses
 
 Usage:
   # Load locations only
@@ -48,6 +49,13 @@ from datetime import datetime
 from dataclasses import dataclass, asdict
 from enum import Enum
 import difflib
+
+# Tamil translation support (optional)
+try:
+    from tamil_translator import TamilTranslator
+    TAMIL_TRANSLATION_AVAILABLE = True
+except ImportError:
+    TAMIL_TRANSLATION_AVAILABLE = False
 
 # Try to import mysql.connector, provide helpful error if missing
 try:
@@ -295,6 +303,117 @@ class DatabaseManager:
 
 class ConfigurationLoader:
     """Load database configuration based on environment"""
+
+    @staticmethod
+    def _read_properties_file(path: Path) -> Dict[str, str]:
+        if not path.exists():
+            return {}
+        props: Dict[str, str] = {}
+        with open(path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('#') or '=' not in line:
+                    continue
+                key, value = line.split('=', 1)
+                props[key.strip()] = value.strip()
+        return props
+
+    @staticmethod
+    def _get_gcp_project_id() -> Optional[str]:
+        return (
+            os.getenv('GCP_PROJECT_ID') or
+            os.getenv('GOOGLE_CLOUD_PROJECT') or
+            os.getenv('GCLOUD_PROJECT')
+        )
+
+    @staticmethod
+    def _get_secret(secret_name: str) -> str:
+        try:
+            from google.cloud import secretmanager
+        except ImportError as exc:
+            raise RuntimeError(
+                "google-cloud-secret-manager not installed; cannot resolve secrets"
+            ) from exc
+
+        project_id = ConfigurationLoader._get_gcp_project_id()
+        if not project_id:
+            raise RuntimeError("GCP project ID not set for Secret Manager")
+
+        client = secretmanager.SecretManagerServiceClient()
+        name = f"projects/{project_id}/secrets/{secret_name}/versions/latest"
+        response = client.access_secret_version(request={"name": name})
+        return response.payload.data.decode("UTF-8")
+
+    @staticmethod
+    def _resolve_property_value(raw_value: str) -> str:
+        """Resolve property value including nested placeholders"""
+        value = raw_value.strip()
+        
+        # Recursively resolve nested placeholders like ${VAR:${OTHER:default}}
+        while '${' in value:
+            # Find innermost placeholder
+            start = value.rfind('${')
+            if start == -1:
+                break
+            end = value.find('}', start)
+            if end == -1:
+                break
+            
+            placeholder = value[start:end+1]
+            inner = placeholder[2:-1]
+            
+            # Resolve Secret Manager reference
+            if inner.startswith('sm://'):
+                secret_name = inner.replace('sm://', '', 1)
+                resolved = ConfigurationLoader._get_secret(secret_name)
+            # Resolve env var with default
+            elif ':' in inner:
+                env_key, default = inner.split(':', 1)
+                resolved = os.getenv(env_key, default)
+            # Resolve env var without default
+            else:
+                resolved = os.getenv(inner, '')
+            
+            # Replace placeholder with resolved value
+            value = value[:start] + resolved + value[end+1:]
+            
+            # Prevent infinite loop
+            if value == raw_value:
+                break
+        
+        return value
+
+    @staticmethod
+    def _parse_jdbc_url(url: str) -> Tuple[Optional[str], Optional[int], Optional[str], Optional[str]]:
+        if not url:
+            return None, None, None, None
+
+        cloud_sql_instance = None
+        database = None
+
+        if 'cloudSqlInstance=' in url:
+            cloud_sql_instance = url.split('cloudSqlInstance=', 1)[1].split('&', 1)[0]
+
+        if url.startswith('jdbc:mysql:///'):
+            database = url.split('jdbc:mysql:///', 1)[1].split('?', 1)[0]
+            return None, None, database, cloud_sql_instance
+
+        if url.startswith('jdbc:mysql://'):
+            host_port_db = url.split('jdbc:mysql://', 1)[1]
+            host_port, _, db_part = host_port_db.partition('/')
+            database = db_part.split('?', 1)[0] if db_part else None
+            if ':' in host_port:
+                host, port_str = host_port.split(':', 1)
+                try:
+                    port = int(port_str)
+                except ValueError:
+                    port = None
+            else:
+                host = host_port
+                port = None
+            return host, port, database, cloud_sql_instance
+
+        return None, None, None, cloud_sql_instance
     
     @staticmethod
     def load(environment: str) -> DatabaseConfig:
@@ -328,6 +447,37 @@ class ConfigurationLoader:
     def _load_from_env(env: Environment) -> DatabaseConfig:
         """Load from environment variables or config file"""
         env_name = env.value.upper()
+
+        # First, attempt to load Spring properties if present
+        props_path = Path("backend/app/src/main/resources") / f"application-{env.value}.properties"
+        props = ConfigurationLoader._read_properties_file(props_path)
+        if props:
+            url_raw = props.get("spring.datasource.url", "")
+            username_raw = props.get("spring.datasource.username", "")
+            password_raw = props.get("spring.datasource.password", "")
+
+            try:
+                url = ConfigurationLoader._resolve_property_value(url_raw) if url_raw else ''
+                user = ConfigurationLoader._resolve_property_value(username_raw) if username_raw else ''
+                password = ConfigurationLoader._resolve_property_value(password_raw) if password_raw else ''
+
+                host, port, database, cloud_sql_instance = ConfigurationLoader._parse_jdbc_url(url)
+                if cloud_sql_instance:
+                    host = f"/cloudsql/{cloud_sql_instance}"
+                    port = 0
+
+                if host or database:
+                    logger.info(f"📍 Loaded DB config from {props_path}")
+                    return DatabaseConfig(
+                        host=host if host is not None else os.getenv(f"DB_HOST_{env_name}", "localhost"),
+                        port=port if port is not None else int(os.getenv(f"DB_PORT_{env_name}", "3306")),
+                        user=user if user else os.getenv(f"DB_USER_{env_name}", "root"),
+                        password=password if password else os.getenv(f"DB_PASSWORD_{env_name}", ""),
+                        database=database if database else os.getenv(f"DB_NAME_{env_name}", "perundhu"),
+                        ssl_ca=os.getenv(f"DB_SSL_CA_{env_name}")
+                    )
+            except Exception as exc:
+                logger.warning(f"⚠️  Failed to load config from properties: {exc}")
         
         # First, check if TCP host is explicitly provided
         host = os.getenv(f"DB_HOST_{env_name}")
@@ -388,16 +538,28 @@ class ConfigurationLoader:
 class LocationLoader:
     """Load and migrate location data"""
     
-    def __init__(self, db_manager: DatabaseManager):
+    def __init__(self, db_manager: DatabaseManager, enable_translation: bool = False):
         self.db = db_manager
+        self.enable_translation = enable_translation
+        self.translator = None
         self.location_cache: Dict[str, int] = {}
         self.stats = {
             'total': 0,
             'inserted': 0,
             'updated': 0,
             'skipped': 0,
+            'translations': 0,
             'errors': []
         }
+        
+        # Initialize Tamil translator if enabled
+        if self.enable_translation:
+            if TAMIL_TRANSLATION_AVAILABLE:
+                self.translator = TamilTranslator(use_api=False)
+                logger.info("✅ Tamil translation enabled")
+            else:
+                logger.warning("⚠️  Tamil translation requested but module not available")
+                self.enable_translation = False
     
     def load_from_file(self, filepath: str) -> List[LocationData]:
         """Load locations from JSON/CSV file"""
@@ -503,7 +665,10 @@ class LocationLoader:
             INSERT INTO locations (name, latitude, longitude, district, state, osm_id, type, neighborhood, priority)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
+                id = LAST_INSERT_ID(id),
                 district = VALUES(district),
+                latitude = VALUES(latitude),
+                longitude = VALUES(longitude),
                 updated_at = NOW()
         """
         
@@ -530,7 +695,12 @@ class LocationLoader:
                             loc.priority
                         )
                         self.db.execute(query, params)
+                        location_id = self.db.cursor.lastrowid
                         self.stats['inserted'] += 1
+                        
+                        # Insert Tamil translation if enabled
+                        if self.enable_translation and location_id:
+                            self._insert_translation('location', location_id, 'name', loc.name)
                     except MySQLError as err:
                         logger.warning(f"⚠️  Failed to insert location '{loc.name}': {err}")
                         self.stats['errors'].append(f"Location '{loc.name}': {err}")
@@ -541,6 +711,8 @@ class LocationLoader:
             logger.info(f"\n✅ Locations upload complete:")
             logger.info(f"   Inserted: {self.stats['inserted']}")
             logger.info(f"   Skipped:  {self.stats['skipped']}")
+            if self.enable_translation:
+                logger.info(f"   Tamil Translations: {self.stats['translations']}")
             logger.info(f"   Errors:   {len(self.stats['errors'])}")
             
             return len(self.stats['errors']) == 0
@@ -555,13 +727,38 @@ class LocationLoader:
         query = "SELECT id FROM locations WHERE name = %s AND district = %s LIMIT 1"
         result = self.db.execute(query, (name, district), fetch=True)
         return len(result) > 0
+    
+    def _insert_translation(self, entity_type: str, entity_id: int, field_name: str, english_text: str):
+        """Insert Tamil translation for an entity"""
+        if not self.translator:
+            return
+        
+        try:
+            # Translate text
+            tamil_text = self.translator.translate(english_text)
+            
+            if tamil_text:
+                query = """
+                    INSERT INTO translations (entity_type, entity_id, language_code, field_name, translated_value)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON DUPLICATE KEY UPDATE
+                        translated_value = VALUES(translated_value),
+                        updated_at = NOW()
+                """
+                self.db.execute(query, (entity_type, entity_id, 'ta', field_name, tamil_text))
+                self.stats['translations'] += 1
+        except Exception as e:
+            logger.debug(f"Translation failed for '{english_text}': {e}")
 
 
 class BusLoader:
     """Load and migrate bus data with stops"""
     
-    def __init__(self, db_manager: DatabaseManager):
+    def __init__(self, db_manager: DatabaseManager, strict: bool = False, enable_translation: bool = False):
         self.db = db_manager
+        self.strict = strict
+        self.enable_translation = enable_translation
+        self.translator = None
         self.location_map: Dict[str, int] = {}
         self.location_columns: List[str] = []
         self.city_cache: Dict[str, int] = {}
@@ -571,8 +768,18 @@ class BusLoader:
             'inserted_buses': 0,
             'skipped_buses': 0,
             'inserted_stops': 0,
+            'translations': 0,
             'errors': []
         }
+        
+        # Initialize Tamil translator if enabled
+        if self.enable_translation:
+            if TAMIL_TRANSLATION_AVAILABLE:
+                self.translator = TamilTranslator(use_api=False)
+                logger.info("✅ Tamil translation enabled for buses")
+            else:
+                logger.warning("⚠️  Tamil translation requested but module not available")
+                self.enable_translation = False
     
     def load_from_file(self, filepath: str) -> List[BusData]:
         """Load buses from JSON file (supports both array and consolidated formats)"""
@@ -796,6 +1003,28 @@ class BusLoader:
             self.stats['errors'].append(f"Location '{name}': {e}")
             return None
     
+    def _insert_translation(self, entity_type: str, entity_id: int, field_name: str, english_text: str):
+        """Insert Tamil translation for an entity"""
+        if not self.translator:
+            return
+        
+        try:
+            # Translate text
+            tamil_text = self.translator.translate(english_text)
+            
+            if tamil_text:
+                query = """
+                    INSERT INTO translations (entity_type, entity_id, language_code, field_name, translated_value)
+                    VALUES (%s, %s, %s, %s, %s)
+                    ON DUPLICATE KEY UPDATE
+                        translated_value = VALUES(translated_value),
+                        updated_at = NOW()
+                """
+                self.db.execute(query, (entity_type, entity_id, 'ta', field_name, tamil_text))
+                self.stats['translations'] += 1
+        except Exception as e:
+            logger.debug(f"Translation failed for '{english_text}': {e}")
+    
     def _bus_exists(self, bus_number: str, from_loc_id: Optional[int], 
                     to_loc_id: Optional[int], departure_time: Optional[str]) -> bool:
         """Check if bus already exists in database"""
@@ -864,21 +1093,40 @@ class BusLoader:
         # Load existing buses once to avoid per-record DB lookups
         self._load_existing_bus_keys()
         
-        # Pre-filter buses to skip duplicates BEFORE processing
-        logger.info(f"📋 Pre-filtering {len(buses)} buses against {len(self.existing_bus_keys)} existing records...")
-        new_buses = self._filter_new_buses(buses)
-        logger.info(f"✅ Found {len(new_buses)} new buses to upload (skipping {len(buses) - len(new_buses)} duplicates)")
-        buses = new_buses
+        # DISABLED: Pre-filtering is too slow (O(n*m) string comparisons)
+        # Let database handle duplicates with INSERT ... ON DUPLICATE KEY UPDATE
+        # logger.info(f"📋 Pre-filtering {len(buses)} buses against {len(self.existing_bus_keys)} existing records...")
+        # new_buses = self._filter_new_buses(buses)
+        # logger.info(f"✅ Found {len(new_buses)} new buses to upload (skipping {len(buses) - len(new_buses)} duplicates)")
+        # buses = new_buses
+        logger.info(f"⚡ Skipping pre-filtering to avoid performance issues. Database will handle duplicates.")
         
         bus_query = """
             INSERT INTO buses (name, bus_number, from_location_id, to_location_id, 
                              departure_time, arrival_time, capacity, category, active)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                id = LAST_INSERT_ID(id),
+                name = VALUES(name),
+                from_location_id = VALUES(from_location_id),
+                to_location_id = VALUES(to_location_id),
+                departure_time = VALUES(departure_time),
+                arrival_time = VALUES(arrival_time),
+                capacity = VALUES(capacity),
+                category = VALUES(category),
+                active = VALUES(active),
+                updated_at = NOW()
         """
         
         stop_query = """
             INSERT INTO stops (bus_id, name, location_id, arrival_time, departure_time, stop_order, stops_json)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                location_id = VALUES(location_id),
+                arrival_time = VALUES(arrival_time),
+                departure_time = VALUES(departure_time),
+                stops_json = VALUES(stops_json),
+                updated_at = NOW()
         """
         
         try:
@@ -898,12 +1146,21 @@ class BusLoader:
                     if not from_loc_id:
                         logger.warning(f"⚠️  Could not resolve FROM location for bus: {bus.name} (origin={bus.origin})")
                         self.stats['errors'].append(f"Bus '{bus.name}': Cannot resolve FROM location")
+                        if self.strict:
+                            logger.error("❌ Strict mode enabled. Aborting due to unresolved FROM location.")
+                            return False
                         continue
+
+                    if self.strict and not to_loc_id:
+                        logger.warning(f"⚠️  Could not resolve TO location for bus: {bus.name} (destination={bus.destination})")
+                        self.stats['errors'].append(f"Bus '{bus.name}': Cannot resolve TO location")
+                        logger.error("❌ Strict mode enabled. Aborting due to unresolved TO location.")
+                        return False
                     
                     # Insert bus (duplicates already filtered out)
                     bus_params = (
                         bus.name,
-                        bus.bus_number,
+                        bus.bus_number or '',
                         from_loc_id,
                         to_loc_id,
                         bus.departure_time,
@@ -916,11 +1173,19 @@ class BusLoader:
                     bus_id = self.db.cursor.lastrowid
                     self.stats['inserted_buses'] += 1
                     
+                    # Insert Tamil translation for bus name if enabled
+                    if self.enable_translation and bus_id:
+                        self._insert_translation('bus', bus_id, 'name', bus.name)
+                    
                     # Insert stops
                     if bus.stops:
                         for stop in bus.stops:
                             try:
                                 stop_loc_id = self._resolve_location_id(stop.name, fallback_type='bus_stop')
+                                if self.strict and not stop_loc_id:
+                                    self.stats['errors'].append(f"Stop '{stop.name}': Cannot resolve location")
+                                    logger.error("❌ Strict mode enabled. Aborting due to unresolved stop location.")
+                                    return False
                                 
                                 stop_params = (
                                     bus_id,
@@ -951,6 +1216,8 @@ class BusLoader:
             logger.info(f"   Buses inserted:  {self.stats['inserted_buses']}")
             logger.info(f"   Buses skipped:   {self.stats['skipped_buses']} (duplicates)")
             logger.info(f"   Stops inserted:  {self.stats['inserted_stops']}")
+            if self.enable_translation:
+                logger.info(f"   Tamil Translations: {self.stats['translations']}")
             logger.info(f"   Errors:          {len(self.stats['errors'])}")
             
             return len(self.stats['errors']) == 0
@@ -982,6 +1249,10 @@ class BusLoader:
         if matches:
             return self.location_map[matches[0]]
         
+        if self.strict:
+            logger.debug(f"Could not find location: '{location_name}' (strict mode, no auto-create)")
+            return None
+
         logger.debug(f"Could not find location: '{location_name}', creating new one")
         return self._insert_location(location_name, fallback_type)
 
@@ -1095,7 +1366,7 @@ class UnifiedDataLoader:
         
         if args.data_file:
             if 'location' in args.data_file.lower():
-                loader = LocationLoader(self.db)
+                loader = LocationLoader(self.db, enable_translation=args.enable_translation)
                 locations = loader.load_from_file(args.data_file)
                 valid, errors = DataValidator.validate_locations(locations)
                 
@@ -1109,7 +1380,7 @@ class UnifiedDataLoader:
                 
                 return valid
             else:
-                loader = BusLoader(self.db)
+                loader = BusLoader(self.db, enable_translation=args.enable_translation)
                 buses = loader.load_from_file(args.data_file)
                 valid, errors = DataValidator.validate_buses(buses)
                 
@@ -1135,7 +1406,7 @@ class UnifiedDataLoader:
             logger.error("❌ --data-file is required for locations mode")
             return False
         
-        loader = LocationLoader(self.db)
+        loader = LocationLoader(self.db, enable_translation=args.enable_translation)
         locations = loader.load_from_file(args.data_file)
         
         # Validate
@@ -1158,7 +1429,7 @@ class UnifiedDataLoader:
             logger.error("❌ Either --data-file or --checkpoint is required")
             return False
         
-        loader = BusLoader(self.db)
+        loader = BusLoader(self.db, strict=args.strict, enable_translation=args.enable_translation)
         
         # Load from file or checkpoint
         if args.checkpoint:
@@ -1191,7 +1462,7 @@ class UnifiedDataLoader:
             logger.error("❌ --locations is required for full mode")
             return False
         
-        loc_loader = LocationLoader(self.db)
+        loc_loader = LocationLoader(self.db, enable_translation=args.enable_translation)
         locations = loc_loader.load_from_file(args.locations)
         valid, errors = DataValidator.validate_locations(locations)
         if not valid:
@@ -1207,7 +1478,7 @@ class UnifiedDataLoader:
             logger.warning("⚠️  No buses file specified, skipping buses")
             return True
         
-        bus_loader = BusLoader(self.db)
+        bus_loader = BusLoader(self.db, strict=args.strict, enable_translation=args.enable_translation)
         buses = bus_loader.load_from_file(args.buses)
         valid, errors = DataValidator.validate_buses(buses)
         if not valid:
@@ -1309,6 +1580,18 @@ Examples:
         action='store_true',
         help='Validate without uploading'
     )
+
+    parser.add_argument(
+        '--strict',
+        action='store_true',
+        help='Fail fast if any location or stop cannot be resolved (no auto-create)'
+    )
+    
+    parser.add_argument(
+        '--enable-translation',
+        action='store_true',
+        help='Enable Tamil translation support for locations and buses'
+    )
     
     parser.add_argument(
         '--verbose',
@@ -1333,6 +1616,7 @@ def main():
     logger.info(f"Mode:        {args.mode}")
     logger.info(f"Environment: {args.environment}")
     logger.info(f"Dry Run:     {args.dry_run}")
+    logger.info(f"Strict:      {args.strict}")
     logger.info("=" * 60)
     
     loader = UnifiedDataLoader(args.environment)

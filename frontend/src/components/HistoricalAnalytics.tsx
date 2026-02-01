@@ -240,7 +240,9 @@ const HistoricalAnalytics: React.FC<HistoricalAnalyticsProps> = ({ fromLocation,
     if (fromLocation && toLocation) {
       fetchData();
     }
-  }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, page, fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Note: fetchData is intentionally excluded to prevent duplicate calls when it recreates
+  }, [fromLocation, toLocation, bus, timeRange, dataType, customStartDate, customEndDate, page]);
 
   // Handle exporting data
   const handleExport = useCallback(() => {

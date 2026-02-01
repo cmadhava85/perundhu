@@ -134,10 +134,29 @@ public class SecurityConfig {
             .anyRequest().permitAll());
 
     // Configure OAuth2 Resource Server with JWT for development
+    // Exclude admin endpoints from OAuth2 authentication (handled by AdminBasicAuthFilter)
     http.oauth2ResourceServer(oauth2 -> oauth2
         .jwt(jwt -> jwt
             .decoder(jwtDecoder)
-            .jwtAuthenticationConverter(jwtAuthenticationConverter())));
+            .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+        .authenticationEntryPoint((request, response, authException) -> {
+          // Check if this is an admin endpoint
+          String requestUri = request.getRequestURI();
+          if (requestUri.startsWith("/api/admin/") || requestUri.startsWith("/api/v1/admin/") 
+              || requestUri.contains("/admin/")) {
+            // For admin endpoints, let AdminBasicAuthFilter handle authentication
+            // Don't send WWW-Authenticate: Bearer header
+            response.setStatus(401);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\":\"UNAUTHORIZED\",\"message\":\"Authentication required\",\"status\":401}");
+            return;
+          }
+          // For non-admin endpoints, use default OAuth2 behavior
+          response.setStatus(401);
+          response.setHeader("WWW-Authenticate", "Bearer");
+          response.setContentType("application/json");
+          response.getWriter().write("{\"error\":\"UNAUTHORIZED\",\"message\":\"JWT token required\",\"status\":401}");
+        }));
 
     return http.build();
   }
