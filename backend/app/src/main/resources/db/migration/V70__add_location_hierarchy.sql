@@ -1,29 +1,89 @@
--- V101__add_location_hierarchy.sql
+-- V70__add_location_hierarchy.sql
 -- Adds hierarchical location support for parent-child relationships
 -- Purpose: Enable city-level searches to include buses from all child terminals
 -- Example: Searching "Chennai" will include buses from CMBT, KCBT, Madhavaram, etc.
 
--- Add parent_id column for hierarchical relationships
-ALTER TABLE locations 
-ADD COLUMN parent_id BIGINT DEFAULT NULL 
-COMMENT 'Reference to parent location (e.g., Chennai is parent of CMBT, KCBT)' 
-AFTER id;
+-- Create stored procedures for idempotent schema changes
+DELIMITER //
 
--- Add location_type column to distinguish between cities, terminals, stations, etc.
-ALTER TABLE locations 
-ADD COLUMN location_type VARCHAR(20) DEFAULT 'CITY' 
-COMMENT 'Type of location: CITY, TERMINAL, STATION, VILLAGE, TOWN' 
-AFTER parent_id;
+CREATE PROCEDURE IF NOT EXISTS add_parent_id_column()
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_NAME = 'locations' 
+    AND COLUMN_NAME = 'parent_id' 
+    AND TABLE_SCHEMA = DATABASE()
+  ) THEN
+    ALTER TABLE locations 
+    ADD COLUMN parent_id BIGINT DEFAULT NULL 
+    COMMENT 'Reference to parent location (e.g., Chennai is parent of CMBT, KCBT)' 
+    AFTER id;
+  END IF;
+END //
 
--- Add foreign key constraint for parent relationship
-ALTER TABLE locations 
-ADD CONSTRAINT fk_location_parent 
-FOREIGN KEY (parent_id) REFERENCES locations(id) 
-ON DELETE SET NULL;
+CREATE PROCEDURE IF NOT EXISTS add_location_type_column()
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_NAME = 'locations' 
+    AND COLUMN_NAME = 'location_type' 
+    AND TABLE_SCHEMA = DATABASE()
+  ) THEN
+    ALTER TABLE locations 
+    ADD COLUMN location_type VARCHAR(20) DEFAULT 'CITY' 
+    COMMENT 'Type of location: CITY, TERMINAL, STATION, VILLAGE, TOWN' 
+    AFTER parent_id;
+  END IF;
+END //
 
--- Add indexes for performance
-CREATE INDEX idx_locations_parent_id ON locations(parent_id);
-CREATE INDEX idx_locations_location_type ON locations(location_type);
+CREATE PROCEDURE IF NOT EXISTS add_location_parent_fk()
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
+    WHERE TABLE_NAME = 'locations' 
+    AND COLUMN_NAME = 'parent_id' 
+    AND CONSTRAINT_NAME = 'fk_location_parent' 
+    AND TABLE_SCHEMA = DATABASE()
+  ) THEN
+    ALTER TABLE locations 
+    ADD CONSTRAINT fk_location_parent 
+    FOREIGN KEY (parent_id) REFERENCES locations(id) 
+    ON DELETE SET NULL;
+  END IF;
+END //
+
+CREATE PROCEDURE IF NOT EXISTS add_parent_id_index()
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS 
+    WHERE TABLE_NAME = 'locations' 
+    AND INDEX_NAME = 'idx_locations_parent_id' 
+    AND TABLE_SCHEMA = DATABASE()
+  ) THEN
+    CREATE INDEX idx_locations_parent_id ON locations(parent_id);
+  END IF;
+END //
+
+CREATE PROCEDURE IF NOT EXISTS add_location_type_index()
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS 
+    WHERE TABLE_NAME = 'locations' 
+    AND INDEX_NAME = 'idx_locations_location_type' 
+    AND TABLE_SCHEMA = DATABASE()
+  ) THEN
+    CREATE INDEX idx_locations_location_type ON locations(location_type);
+  END IF;
+END //
+
+DELIMITER ;
+
+-- Execute all procedures
+CALL add_parent_id_column();
+CALL add_location_type_column();
+CALL add_location_parent_fk();
+CALL add_parent_id_index();
+CALL add_location_type_index();
 
 -- Set up Chennai hierarchy
 -- Mark Chennai as CITY
