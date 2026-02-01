@@ -65,4 +65,16 @@ public interface TranslationRepository {
      * Find all translations for a specific entity type and language
      */
     List<Translation> findByEntityTypeAndLanguage(String entityType, String languageCode);
+
+    /**
+     * Find translations by entity type, language, and translated value pattern (for efficient autocomplete)
+     * This method performs indexed database query instead of loading all translations
+     * 
+     * @param entityType The entity type (e.g., "LOCATION")
+     * @param languageCode The language code (e.g., "ta")
+     * @param translatedValuePattern The pattern to search for in translated values
+     * @return List of matching translations
+     */
+    List<Translation> findByEntityTypeAndLanguageAndTranslatedValueContaining(
+            String entityType, String languageCode, String translatedValuePattern);
 }

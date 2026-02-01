@@ -111,4 +111,15 @@ public class TranslationJpaRepositoryAdapter implements TranslationRepository {
                 .map(TranslationJpaEntity::toDomainModel)
                 .toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Translation> findByEntityTypeAndLanguageAndTranslatedValueContaining(
+            String entityType, String languageCode, String translatedValuePattern) {
+        return jpaRepository.findByEntityTypeAndLanguageCodeAndTranslatedValueContaining(
+                entityType, languageCode, translatedValuePattern)
+                .stream()
+                .map(TranslationJpaEntity::toDomainModel)
+                .toList();
+    }
 }

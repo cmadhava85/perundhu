@@ -487,26 +487,21 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         if (isTamilQuery) {
             log.debug("Tamil search query detected: {}", trimmedQuery);
 
-            // Search in translations table for Tamil names
-            List<Translation> tamilTranslations = translationRepository.findByEntityTypeAndLanguage(
-                    ENTITY_TYPE_LOCATION, "ta");
+            // OPTIMIZED: Use indexed database query instead of loading all translations
+            List<Translation> matchingTranslations = translationRepository
+                    .findByEntityTypeAndLanguageAndTranslatedValueContaining(
+                            ENTITY_TYPE_LOCATION, "ta", trimmedQuery);
 
-            for (Translation translation : tamilTranslations) {
-                String tamilName = translation.getTranslatedValue();
-                if (tamilName != null && tamilName.toLowerCase().contains(trimmedQuery.toLowerCase())) {
-                    // Found a matching Tamil translation - get the location
-                    Optional<Location> location = locationRepository.findById(translation.getEntityId());
-                    if (location.isPresent() && !results.contains(location.get())) {
-                        results.add(location.get());
-                        log.debug("Found location by Tamil search: {} -> {}",
-                                tamilName, location.get().getName());
-                    }
+            log.debug("Found {} Tamil translations matching '{}'", matchingTranslations.size(), trimmedQuery);
+
+            for (Translation translation : matchingTranslations) {
+                Optional<Location> location = locationRepository.findById(translation.getEntityId());
+                if (location.isPresent() && !results.contains(location.get())) {
+                    results.add(location.get());
+                    log.debug("Found location by Tamil search: {} -> {}",
+                            translation.getTranslatedValue(), location.get().getName());
                 }
             }
-
-            // Also try to translate Tamil to English and search in English names
-            // This handles cases where the Tamil name might match an English location
-            // that has a translation stored
         }
 
         // Search by English name (standard search)

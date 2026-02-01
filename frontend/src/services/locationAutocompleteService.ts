@@ -30,6 +30,7 @@ export class LocationAutocompleteService {
   private static readonly INSTANT_DEBOUNCE = 50; // Ultra-fast for instant suggestions
   
   private debounceTimeout: NodeJS.Timeout | null = null;
+  private currentAbortController: AbortController | null = null; // Track active requests
 
   /**
    * Get ultra-fast location suggestions with instant responses
@@ -46,11 +47,21 @@ export class LocationAutocompleteService {
       return [];
     }
 
+    // Cancel any previous request
+    if (this.currentAbortController) {
+      this.currentAbortController.abort();
+      logger.debug(`🚫 Aborted previous request for optimization`);
+    }
+
+    // Create new abort controller for this request
+    this.currentAbortController = new AbortController();
+    const signal = this.currentAbortController.signal;
+
     try {
       logger.debug(`🚀 FastAutocomplete: Searching for "${query}" (${query.length} chars) in ${language}`);
       
       // Use fast parallel search for better performance
-      const locations = await this.searchDatabaseAndOverpassParallel(query, 10, language);
+      const locations = await this.searchDatabaseAndOverpassParallel(query, 10, language, signal);
       
       if (!locations || !Array.isArray(locations)) {
         logger.error(`❌ Invalid locations result:`, locations);
@@ -69,6 +80,12 @@ export class LocationAutocompleteService {
       return suggestions;
       
     } catch (error) {
+      // Ignore abort errors as they're expected when user types quickly
+      if (error instanceof Error && error.name === 'AbortError') {
+        logger.debug(`⏭️ Request aborted for "${query}" - user typing`);
+        return [];
+      }
+      
       logger.error('Error in fast autocomplete:', error);
       
       // Fallback to instant suggestions
@@ -78,7 +95,7 @@ export class LocationAutocompleteService {
         return this.convertToSuggestions(instantResults);
       }
       
-      // Final fallback to original API
+      // Final fallback to original API (without abort since this is last resort)
       try {
         const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
           params: {
@@ -106,8 +123,14 @@ export class LocationAutocompleteService {
    * Comprehensive search: Use new backend /search-comprehensive endpoint
    * This now searches both database AND locations via Overpass API
    * Falls back to old methods if the new endpoint fails
+   * @param signal Optional AbortSignal to cancel the request
    */
-  private async searchDatabaseAndOverpassParallel(query: string, limit: number, language: string = 'en'): Promise<LocationSuggestion[]> {
+  private async searchDatabaseAndOverpassParallel(
+    query: string, 
+    limit: number, 
+    language: string = 'en',
+    signal?: AbortSignal
+  ): Promise<LocationSuggestion[]> {
     logger.debug(`🚀 Starting comprehensive search for "${query}" (language: ${language})`);
     
     try {
@@ -115,10 +138,13 @@ export class LocationAutocompleteService {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000);
       
+      // Combine the timeout controller with the passed signal
+      const combinedSignal = signal || controller.signal;
+      
       try {
         const response = await api.get(
           `/api/v1/locations/search-comprehensive?q=${encodeURIComponent(query.trim())}&language=${language}`,
-          { signal: controller.signal }
+          { signal: combinedSignal }
         );
         
         clearTimeout(timeoutId);
@@ -137,6 +163,10 @@ export class LocationAutocompleteService {
         }
       } catch (comprehensiveError) {
         clearTimeout(timeoutId);
+        // Re-throw if it's an abort error
+        if (comprehensiveError instanceof Error && comprehensiveError.name === 'AbortError') {
+          throw comprehensiveError;
+        }
         logger.error(`Comprehensive endpoint failed, falling back to legacy search`, comprehensiveError);
       }
       
@@ -144,7 +174,7 @@ export class LocationAutocompleteService {
       logger.debug(`⚠️ Comprehensive endpoint unavailable, using legacy database-first search for "${query}"`);
       
       // Try database first
-      const databaseResults = await this.searchDatabase(query, language);
+      const databaseResults = await this.searchDatabase(query, language, signal);
       
       logger.debug(`📊 Database results: ${databaseResults.length}`);
       
@@ -163,7 +193,7 @@ export class LocationAutocompleteService {
       
       // Only call Nominatim if database and local are empty
       logger.debug(`🌍 Calling Nominatim for neighborhoods of "${query}"`);
-      const nominatimResults = await this.searchNominatimFast(query, limit, language);
+      const nominatimResults = await this.searchNominatimFast(query, limit, language, signal);
       
       if (nominatimResults.length > 0) {
         logger.debug(`🌍 Nominatim found ${nominatimResults.length} results`);
@@ -174,6 +204,11 @@ export class LocationAutocompleteService {
       return [];
       
     } catch (error) {
+      // Re-throw abort errors
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw error;
+      }
+      
       logger.error('Comprehensive search failed:', error);
       // Fallback to instant suggestions
       const instantResults = GeocodingService.getInstantSuggestions(query, 10);
@@ -183,9 +218,13 @@ export class LocationAutocompleteService {
       
       try {
         logger.debug(`🔄 Final fallback: Trying Nominatim for "${query}"`);
-        const nominatimFallback = await this.searchNominatimFast(query, 10, language);
+        const nominatimFallback = await this.searchNominatimFast(query, 10, language, signal);
         return nominatimFallback.map(loc => ({ ...loc, source: 'nominatim' }));
       } catch (nominatimError) {
+        // Re-throw abort errors
+        if (nominatimError instanceof Error && nominatimError.name === 'AbortError') {
+          throw nominatimError;
+        }
         logger.error('All search methods failed:', nominatimError);
         return [];
       }
@@ -194,17 +233,25 @@ export class LocationAutocompleteService {
   
   /**
    * Fast database search with timeout
+   * @param signal Optional AbortSignal to cancel the request
    */
-  private async searchDatabase(query: string, language: string = 'en'): Promise<LocationSuggestion[]> {
+  private async searchDatabase(
+    query: string, 
+    language: string = 'en',
+    signal?: AbortSignal
+  ): Promise<LocationSuggestion[]> {
     try {
       logger.debug(`📊 Fast database search for "${query}" (language: ${language})`);
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1500); // Reduced to 1.5 seconds
       
+      // Use passed signal if available, otherwise use timeout controller
+      const requestSignal = signal || controller.signal;
+      
       const response = await api.get('/api/v1/bus-schedules/locations/autocomplete', {
         params: { q: query.trim(), language: language },
-        signal: controller.signal
+        signal: requestSignal
       });
       
       clearTimeout(timeoutId);
@@ -219,7 +266,7 @@ export class LocationAutocompleteService {
       
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
-        logger.warn('Database search timed out - using Nominatim fallback');
+        throw error; // Re-throw abort errors for proper handling
       } else {
         logger.warn(`Database search error: ${error instanceof Error ? error.message : String(error)} - using Nominatim fallback`);
       }
@@ -230,8 +277,14 @@ export class LocationAutocompleteService {
   /**
    * Fast Nominatim search with minimal delays and single query
    * Returns both English and Tamil names when available
+   * @param signal Optional AbortSignal to cancel the request
    */
-  private async searchNominatimFast(query: string, limit: number, language: string = 'en'): Promise<LocationSuggestion[]> {
+  private async searchNominatimFast(
+    query: string, 
+    limit: number, 
+    language: string = 'en',
+    signal?: AbortSignal
+  ): Promise<LocationSuggestion[]> {
     try {
       logger.debug(`🌍 Fast Nominatim search for "${query}" (language: ${language})`);
       
@@ -240,6 +293,9 @@ export class LocationAutocompleteService {
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+      
+      // Use passed signal if available, otherwise use timeout controller
+      const requestSignal = signal || controller.signal;
       
       // Map language code to Nominatim accept-language format
       // When Tamil, request Tamil first so 'name' field returns Tamil
@@ -260,7 +316,7 @@ export class LocationAutocompleteService {
             'User-Agent': 'Perundhu Bus App (https://perundhu.com)',
             'Accept-Language': acceptLanguage
           },
-          signal: controller.signal
+          signal: requestSignal
         }
       );
       
@@ -371,7 +427,7 @@ export class LocationAutocompleteService {
       
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
-        logger.warn('Nominatim search timed out');
+        throw error; // Re-throw abort errors for proper handling
       } else {
         logger.error('Nominatim search error:', error);
       }
@@ -710,12 +766,19 @@ export class LocationAutocompleteService {
   }
 
   /**
-   * Clear any pending debounced requests
+   * Clear any pending debounced requests and abort in-flight requests
    */
   clearDebounce(): void {
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
       this.debounceTimeout = null;
+    }
+    
+    // Also abort any in-flight request
+    if (this.currentAbortController) {
+      this.currentAbortController.abort();
+      this.currentAbortController = null;
+      logger.debug('🚫 Cleared debounce and aborted in-flight request');
     }
   }
 
