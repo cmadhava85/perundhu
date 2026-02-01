@@ -107,24 +107,10 @@ CALL create_autocomplete_index(
 );
 
 -- ============================================
--- 4. Bus Stand Search Optimization
+-- 4. Bus Stand Search Optimization (SKIPPED - table doesn't exist)
 -- ============================================
--- Optimizes bus stand autocomplete queries
--- Supports queries like "Madurai - Periyar", "Salem - New Bus Stand"
-
-CALL create_autocomplete_index(
-    'bus_stands',
-    'idx_bus_stands_name_pattern',
-    'bus_stand_name(255)',
-    'STANDARD'
-);
-
-CALL create_autocomplete_index(
-    'bus_stands',
-    'idx_bus_stands_city',
-    'city_id, bus_stand_name(255)',
-    'STANDARD'
-);
+-- Table 'bus_stands' does not exist in current schema
+-- Removing index creation to prevent migration failure
 
 -- ============================================
 -- 5. Grouped Location Search Optimization
@@ -147,7 +133,7 @@ CALL create_autocomplete_index(
 ANALYZE TABLE translations;
 ANALYZE TABLE locations;
 ANALYZE TABLE location_aliases;
-ANALYZE TABLE bus_stands;
+-- ANALYZE TABLE bus_stands; -- Skipped: table doesn't exist
 
 -- ============================================
 -- Performance Verification Query
