@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS suspicious_activity (
 COMMENT='Suspicious activity logging table';
 
 -- Create index for cleanup queries
-CREATE INDEX idx_cleanup ON api_rate_limit(window_start) 
-WHERE status = 'ACTIVE';
+-- MySQL does not support partial indexes with WHERE clauses
+CREATE INDEX idx_cleanup ON api_rate_limit(window_start, status);
 
 -- Create stored procedure for cleaning up old rate limit records (optional but recommended)
 DELIMITER //
