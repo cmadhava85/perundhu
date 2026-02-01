@@ -19,10 +19,24 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
   onAddStop,
   error
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [isStopSelected, setIsStopSelected] = React.useState(false);
+  const [selectionError, setSelectionError] = React.useState('');
+
+  React.useEffect(() => {
+    if (!currentStop.name.trim()) {
+      setIsStopSelected(false);
+      setSelectionError('');
+    }
+  }, [currentStop.name]);
 
   // Handle stop name change from autocomplete
-  const handleStopNameChange = (value: string, _location?: unknown) => {
+  const handleStopNameChange = (value: string, location?: unknown) => {
+    const wasSelected = !!location;
+    setIsStopSelected(wasSelected);
+    if (wasSelected || !value.trim()) {
+      setSelectionError('');
+    }
     // Create a synthetic event that mimics the standard input onChange event
     const syntheticEvent = {
       target: {
@@ -32,6 +46,14 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
     } as React.ChangeEvent<HTMLInputElement>;
     
     onChange(syntheticEvent);
+  };
+
+  const handleAddStop = () => {
+    if (currentStop.name.trim() && !isStopSelected) {
+      setSelectionError(t('validation.location.selectFromList', 'Please select stop from the suggestions list'));
+      return;
+    }
+    onAddStop();
   };
 
   return (
@@ -49,8 +71,11 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
             onChange={handleStopNameChange}
             placeholder={t('contribution.stopNamePlaceholder', 'e.g. Vellore Bus Stand')}
             required={true}
+            language={i18n.language}
+            debounceMs={300}
           />
           {error && <div className="field-error-text">{error}</div>}
+          {selectionError && <div className="field-error-text">{selectionError}</div>}
         </div>
         
         <div className="form-group">
@@ -87,7 +112,7 @@ const StopEntryForm: React.FC<StopEntryFormProps> = ({
           <button 
             type="button" 
             className="add-stop-btn"
-            onClick={onAddStop}
+            onClick={handleAddStop}
             disabled={!currentStop.name.trim()}
             title={currentStop.name.trim() ? t('contribution.addThisStop', 'Add this stop to the route') : t('contribution.enterStopName', 'Enter stop name first')}
           >

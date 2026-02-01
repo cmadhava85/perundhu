@@ -19,6 +19,7 @@ interface LocationAutocompleteInputProps {
   language?: string;
   className?: string;
   staticLocations?: AppLocation[];
+  debounceMs?: number;
 }
 
 const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
@@ -31,13 +32,15 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
   label,
   language = 'en',
   className = '',
-  staticLocations
+  staticLocations,
+  debounceMs
 }) => {
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
   const blurTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const latestQueryRef = React.useRef<string>(value);
 
   // Helper function to get display name based on language
@@ -119,11 +122,26 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
     if (inputValue.length >= 3) {
       setIsLoading(true);
       try {
-        locationAutocompleteService.getDebouncedSuggestions(
-          inputValue,
-          handleSuggestionsCallback,
-          language
-        );
+        if (debounceTimeoutRef.current) {
+          clearTimeout(debounceTimeoutRef.current);
+          debounceTimeoutRef.current = null;
+        }
+        const delayMs = typeof debounceMs === 'number' ? debounceMs : 0;
+        if (delayMs > 0) {
+          debounceTimeoutRef.current = setTimeout(() => {
+            locationAutocompleteService.getDebouncedSuggestions(
+              inputValue,
+              handleSuggestionsCallback,
+              language
+            );
+          }, delayMs);
+        } else {
+          locationAutocompleteService.getDebouncedSuggestions(
+            inputValue,
+            handleSuggestionsCallback,
+            language
+          );
+        }
       } catch (error) {
         console.error('Error getting suggestions:', error);
         setIsLoading(false);
@@ -195,6 +213,9 @@ const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps> = ({
       locationAutocompleteService.clearDebounce();
       if (blurTimeoutRef.current) {
         clearTimeout(blurTimeoutRef.current);
+      }
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
       }
     };
   }, []);

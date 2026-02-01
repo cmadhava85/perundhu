@@ -40,8 +40,10 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
   const [showStopSuggestions, setShowStopSuggestions] = useState(false);
   const [isLoadingStopSuggestions, setIsLoadingStopSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [isStopSelected, setIsStopSelected] = useState(false);
   const stopInputRef = useRef<HTMLInputElement>(null);
   const isSelectingRef = useRef(false);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const steps: WizardStep[] = ['name', 'arrival', 'departure', 'notes', 'review'];
   const currentStepIndex = steps.indexOf(currentStep);
@@ -51,29 +53,41 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
   const fetchDynamicSuggestions = useCallback((query: string) => {
     console.log(`🔍 Wizard: fetchDynamicSuggestions called for "${query}" (length: ${query.length})`);
     
-    if (query.trim().length < 2) {
+    if (query.trim().length < 3) {
       console.log(`⏭️ Wizard: Query too short (${query.trim().length} chars), clearing suggestions`);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+        debounceTimerRef.current = null;
+      }
       setDynamicStopSuggestions([]);
       setShowStopSuggestions(false);
+      setIsLoadingStopSuggestions(false);
       return;
     }
     
     console.log(`📡 Wizard: Starting API call for "${query}"`);
     setIsLoadingStopSuggestions(true);
-    
-    locationAutocompleteService.getDebouncedSuggestions(
-      query,
-      (suggestions) => {
-        console.log(`✅ Wizard: Got ${suggestions.length} suggestions for "${query}"`);
-        console.log(`📋 Wizard: Suggestions:`, suggestions);
-        setDynamicStopSuggestions(suggestions);
-        setIsLoadingStopSuggestions(false);
-        if (suggestions.length > 0) {
-          setShowStopSuggestions(true);
-        }
-      },
-      i18n.language
-    );
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      locationAutocompleteService.getDebouncedSuggestions(
+        query,
+        (suggestions) => {
+          console.log(`✅ Wizard: Got ${suggestions.length} suggestions for "${query}"`);
+          console.log(`📋 Wizard: Suggestions:`, suggestions);
+          setDynamicStopSuggestions(suggestions);
+          setIsLoadingStopSuggestions(false);
+          if (suggestions.length > 0) {
+            setShowStopSuggestions(true);
+          }
+        },
+        i18n.language
+      );
+    }, 300);
   }, [i18n.language]);
 
   // Helper function to get display name based on current language
@@ -91,6 +105,7 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
     setStopLocationQuery(displayName);
     setShowStopSuggestions(false);
     setHighlightedIndex(-1);
+    setIsStopSelected(true);
   };
 
   // Debug: Log render state
@@ -98,11 +113,25 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
     console.log(`🎯 Wizard render state - showSuggestions: ${showStopSuggestions}, count: ${dynamicStopSuggestions.length}`);
   }, [showStopSuggestions, dynamicStopSuggestions]);
 
+  React.useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
   const handleNext = () => {
     // Validation
-    if (currentStep === 'name' && !formData.locationName.trim()) {
-      alert(t('addStops.enterStopName', 'Please enter a stop name'));
-      return;
+    if (currentStep === 'name') {
+      if (!formData.locationName.trim()) {
+        alert(t('addStops.enterStopName', 'Please enter a stop name'));
+        return;
+      }
+      if (!isStopSelected) {
+        alert(t('validation.location.selectFromList', 'Please select stop from the suggestions list'));
+        return;
+      }
     }
     if (currentStepIndex < steps.length - 1) {
       setCurrentStep(steps[currentStepIndex + 1]);
@@ -161,6 +190,7 @@ const StopEntryWizard: React.FC<StopEntryWizardProps> = ({
                   const value = e.target.value;
                   setStopLocationQuery(value);
                   setFormData({ ...formData, locationName: value });
+                  setIsStopSelected(false);
                   setShowStopSuggestions(true);
                   setHighlightedIndex(-1);
                   fetchDynamicSuggestions(value);

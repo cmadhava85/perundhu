@@ -5,8 +5,8 @@ import { FormInput } from "../ui/FormInput";
 import { FormTextArea } from "../ui/FormTextArea";
 import LocationAutocompleteInput from "../LocationAutocompleteInput";
 import type { Location as AppLocation } from '../../types';
+import type { LocationSuggestion } from '../../services/locationAutocompleteService';
 import { getRecaptchaToken } from '../../services/recaptchaService';
-import { isKnownLocation } from '../../services/geocodingService';
 import { checkForDuplicates, type MatchedBusInfo } from '../../services/duplicateCheckService';
 import { DuplicateMatchAlert } from '../contribution/DuplicateMatchAlert';
 import {
@@ -15,13 +15,8 @@ import {
   validateDurationForDistance
 } from '../../utils/validationService';
 import { calculateDistance } from '../../services/geolocation';
+import { normalizeLocationName } from '../../utils/locationNormalizer';
 import './SimpleRouteForm.css';
-
-interface LocationData {
-  lat?: number;
-  lng?: number;
-  name?: string;
-}
 
 interface Stop {
   id: string;
@@ -29,6 +24,10 @@ interface Stop {
   arrivalTime?: string;
   departureTime?: string;
   notes?: string;
+  isVerified?: boolean;
+  locationId?: number;
+  latitude?: number;
+  longitude?: number;
 }
 
 interface FormData {
@@ -77,6 +76,9 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
     origin: boolean;
     destination: boolean;
   }>({ origin: false, destination: false });
+
+  const [selectedOriginLocation, setSelectedOriginLocation] = useState<AppLocation | null>(null);
+  const [selectedDestinationLocation, setSelectedDestinationLocation] = useState<AppLocation | null>(null);
   
   // Store coordinates for distance-based validation
   const [originCoords, setOriginCoords] = useState<{ lat: number; lng: number } | null>(null);
@@ -84,6 +86,8 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
   
   // Track location warnings (unverified locations)
   const [locationWarnings, setLocationWarnings] = useState<{[key: string]: string}>({});
+
+  const [stopValidationErrors, setStopValidationErrors] = useState<{[key: string]: string}>({});
   
   // Honeypot field for bot detection (invisible to users)
   const [honeypot, setHoneypot] = useState('');
@@ -99,6 +103,35 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
   const validateForm = (): boolean => {
     const errors: {[key: string]: string} = {};
     const warnings: {[key: string]: string} = {};
+
+    const resolveLocationFromInput = (inputValue: string): AppLocation | null => {
+      if (!locations || locations.length === 0 || !inputValue.trim()) {
+        return null;
+      }
+
+      const normalizedInput = normalizeLocationName(inputValue.toLowerCase());
+
+      const exactMatch = locations.find(loc => {
+        const normalizedName = normalizeLocationName(loc.name.toLowerCase());
+        const normalizedTranslated = normalizeLocationName(loc.translatedName?.toLowerCase() || '');
+        return normalizedName === normalizedInput || normalizedTranslated === normalizedInput;
+      });
+
+      if (exactMatch) {
+        return exactMatch;
+      }
+
+      const partialMatch = locations.find(loc => {
+        const normalizedName = normalizeLocationName(loc.name.toLowerCase());
+        const normalizedTranslated = normalizeLocationName(loc.translatedName?.toLowerCase() || '');
+        return normalizedName.includes(normalizedInput) ||
+          normalizedInput.includes(normalizedName) ||
+          normalizedTranslated.includes(normalizedInput) ||
+          normalizedInput.includes(normalizedTranslated);
+      });
+
+      return partialMatch || null;
+    };
     
     // Either bus number or route name is required
     if (!formData.busNumber?.trim() && !formData.route?.trim()) {
@@ -108,23 +141,32 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
     // Origin is required
     if (!formData.origin?.trim()) {
       errors.origin = 'Departure location is required';
-    } else if (!locationVerified.origin) {
-      // Only show warning if location is not verified AND not a known city
-      // This prevents false warnings for valid cities like "Aruppukottai" or "Madurai"
-      const originName = formData.origin.trim();
-      if (!isKnownLocation(originName)) {
-        warnings.origin = 'Location not recognized. Select from suggestions for better accuracy.';
+    } else {
+      const resolvedOrigin = selectedOriginLocation || resolveLocationFromInput(formData.origin);
+      if (!resolvedOrigin) {
+        errors.origin = t('validation.location.selectFromList', 'Please select origin from the suggestions list');
+      } else {
+        setSelectedOriginLocation(resolvedOrigin);
+        setLocationVerified(prev => ({ ...prev, origin: true }));
+        if (resolvedOrigin.latitude && resolvedOrigin.longitude) {
+          setOriginCoords({ lat: resolvedOrigin.latitude, lng: resolvedOrigin.longitude });
+        }
       }
     }
     
     // Destination is required
     if (!formData.destination?.trim()) {
       errors.destination = 'Arrival location is required';
-    } else if (!locationVerified.destination) {
-      // Only show warning if location is not verified AND not a known city
-      const destName = formData.destination.trim();
-      if (!isKnownLocation(destName)) {
-        warnings.destination = 'Location not recognized. Select from suggestions for better accuracy.';
+    } else {
+      const resolvedDestination = selectedDestinationLocation || resolveLocationFromInput(formData.destination);
+      if (!resolvedDestination) {
+        errors.destination = t('validation.location.selectDestFromList', 'Please select destination from the suggestions list');
+      } else {
+        setSelectedDestinationLocation(resolvedDestination);
+        setLocationVerified(prev => ({ ...prev, destination: true }));
+        if (resolvedDestination.latitude && resolvedDestination.longitude) {
+          setDestCoords({ lat: resolvedDestination.latitude, lng: resolvedDestination.longitude });
+        }
       }
     }
     
@@ -192,8 +234,27 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
       }
     }
     
+    const stopErrors: {[key: string]: string} = {};
+    if (intermediateStops.length > 0 && locations && locations.length > 0) {
+      for (const stop of intermediateStops) {
+        if (!stop.name?.trim()) {
+          continue;
+        }
+        if (stop.isVerified) {
+          continue;
+        }
+        const resolvedStop = resolveLocationFromInput(stop.name);
+        if (!resolvedStop) {
+          stopErrors[stop.id] = t('validation.location.selectFromList', 'Please select stop from the suggestions list');
+        }
+      }
+    }
+    if (Object.keys(stopErrors).length > 0) {
+      errors.stops = t('validation.location.selectFromList', 'Please select stops from the suggestions list');
+    }
     setValidationErrors(errors);
     setLocationWarnings(warnings);
+    setStopValidationErrors(stopErrors);
     return Object.keys(errors).length === 0;
   };
 
@@ -306,13 +367,26 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
   };
 
   // Handle stop name autocomplete
-  const updateStopName = (id: string, value: string, _location?: LocationData) => {
+  const updateStopName = (id: string, value: string, location?: LocationSuggestion) => {
+    const wasSelected = !!(location?.id || (location?.latitude && location?.longitude));
     setIntermediateStops(prev => 
       prev.map(stop => 
-        stop.id === id ? { ...stop, name: value } : stop
+        stop.id === id ? {
+          ...stop,
+          name: value,
+          isVerified: wasSelected,
+          locationId: location?.id,
+          latitude: location?.latitude,
+          longitude: location?.longitude
+        } : stop
       )
     );
-    // Stop name selected with location data
+    if (wasSelected || !value.trim()) {
+      setStopValidationErrors(prev => {
+        const { [id]: _, ...rest } = prev;
+        return rest;
+      });
+    }
   };
 
   const removeStop = (id: string) => {
@@ -341,19 +415,27 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
   };
 
   // Handle location autocomplete changes - Memoized to prevent refresh issues
-  const handleOriginChange = useCallback((value: string, location?: LocationData) => {
+  const handleOriginChange = useCallback((value: string, location?: LocationSuggestion) => {
     setFormData(prev => ({
       ...prev,
       origin: value
     }));
     
-    // Track if location was selected from autocomplete (has lat/lng data)
-    const wasSelected = !!(location?.lat && location?.lng);
+    // Track if location was selected from autocomplete (has location data)
+    const wasSelected = !!(location?.id || (location?.latitude && location?.longitude));
     setLocationVerified(prev => ({ ...prev, origin: wasSelected }));
+    setSelectedOriginLocation(wasSelected ? {
+      id: location?.id || -1,
+      name: location?.name || value,
+      translatedName: location?.translatedName,
+      latitude: location?.latitude || 0,
+      longitude: location?.longitude || 0,
+      source: (location?.source as AppLocation['source']) || 'database'
+    } : null);
     
     // Store coordinates for distance-based validation
-    if (wasSelected && location?.lat && location?.lng) {
-      setOriginCoords({ lat: location.lat, lng: location.lng });
+    if (wasSelected && location?.latitude && location?.longitude) {
+      setOriginCoords({ lat: location.latitude, lng: location.longitude });
     } else {
       setOriginCoords(null);
     }
@@ -367,19 +449,27 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
     }
   }, []);
 
-  const handleDestinationChange = useCallback((value: string, location?: LocationData) => {
+  const handleDestinationChange = useCallback((value: string, location?: LocationSuggestion) => {
     setFormData(prev => ({
       ...prev,
       destination: value
     }));
     
-    // Track if location was selected from autocomplete (has lat/lng data)
-    const wasSelected = !!(location?.lat && location?.lng);
+    // Track if location was selected from autocomplete (has location data)
+    const wasSelected = !!(location?.id || (location?.latitude && location?.longitude));
     setLocationVerified(prev => ({ ...prev, destination: wasSelected }));
+    setSelectedDestinationLocation(wasSelected ? {
+      id: location?.id || -1,
+      name: location?.name || value,
+      translatedName: location?.translatedName,
+      latitude: location?.latitude || 0,
+      longitude: location?.longitude || 0,
+      source: (location?.source as AppLocation['source']) || 'database'
+    } : null);
     
     // Store coordinates for distance-based validation
-    if (wasSelected && location?.lat && location?.lng) {
-      setDestCoords({ lat: location.lat, lng: location.lng });
+    if (wasSelected && location?.latitude && location?.longitude) {
+      setDestCoords({ lat: location.latitude, lng: location.longitude });
     } else {
       setDestCoords(null);
     }
@@ -556,6 +646,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
               required
               language={i18n.language}
               staticLocations={locations}
+              debounceMs={300}
             />
             {validationErrors.origin && (
               <span className="field-error-text">{validationErrors.origin}</span>
@@ -611,6 +702,7 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
               required
               language={i18n.language}
               staticLocations={locations}
+              debounceMs={300}
             />
             {validationErrors.destination && (
               <span className="field-error-text">{validationErrors.destination}</span>
@@ -733,7 +825,13 @@ export const SimpleRouteForm: React.FC<SimpleRouteFormProps> = ({ onSubmit, loca
                           placeholder={t('route.stopNamePlaceholder', 'e.g., Central Metro Station')}
                           label=""
                           required
+                          language={i18n.language}
+                          staticLocations={locations}
+                          debounceMs={300}
                         />
+                        {stopValidationErrors[stop.id] && (
+                          <span className="field-error-text">{stopValidationErrors[stop.id]}</span>
+                        )}
                       </div>
                       
                       <div className="stop-timing-row">
