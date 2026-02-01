@@ -37,29 +37,29 @@ public class OpenStreetMapGeocodingService {
   private static final String NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
   private static final String USER_AGENT = "PerundhuBusApp/1.0 (contact@perundhu.com)";
   private static final String ADDRESS_KEY = "address";
-  
+
   // Cache configuration
   private static final long CACHE_EXPIRY_SECONDS = TimeUnit.HOURS.toSeconds(1); // 1 hour cache
   private static final int MAX_CACHE_SIZE = 1000; // Max 1000 cached queries
 
   private final HttpClient httpClient;
   private final ObjectMapper objectMapper;
-  
+
   // Simple in-memory cache with expiry tracking
   private final Map<String, CachedResult> searchCache = new ConcurrentHashMap<>();
-  
+
   /**
    * Cached search result with timestamp
    */
   private static class CachedResult {
     final List<LocationDTO> results;
     final long timestamp;
-    
+
     CachedResult(List<LocationDTO> results) {
       this.results = results;
       this.timestamp = System.currentTimeMillis();
     }
-    
+
     boolean isExpired() {
       return (System.currentTimeMillis() - timestamp) > (CACHE_EXPIRY_SECONDS * 1000);
     }
@@ -106,14 +106,14 @@ public class OpenStreetMapGeocodingService {
 
     // Create cache key
     String cacheKey = createCacheKey(query, limit, language);
-    
+
     // Check cache first
     CachedResult cachedResult = searchCache.get(cacheKey);
     if (cachedResult != null && !cachedResult.isExpired()) {
       log.debug("Cache HIT for query '{}' (lang: {})", query, language);
       return new ArrayList<>(cachedResult.results); // Return copy to prevent modification
     }
-    
+
     // Cache miss or expired - clean up if needed
     if (searchCache.size() > MAX_CACHE_SIZE) {
       cleanupExpiredCache();
@@ -122,11 +122,11 @@ public class OpenStreetMapGeocodingService {
     try {
       List<LocationDTO> locations = fetchLocationsFromOSM(query, limit, language);
       log.info("OSM search for '{}' (lang: {}) returned {} results", query, language, locations.size());
-      
+
       // Cache the results
       searchCache.put(cacheKey, new CachedResult(locations));
       log.debug("Cached results for query '{}' (cache size: {})", query, searchCache.size());
-      
+
       return locations;
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
@@ -137,14 +137,14 @@ public class OpenStreetMapGeocodingService {
       return new ArrayList<>();
     }
   }
-  
+
   /**
    * Create a cache key from query parameters
    */
   private String createCacheKey(String query, int limit, String language) {
     return String.format("%s:%d:%s", query.trim().toLowerCase(), limit, language);
   }
-  
+
   /**
    * Clean up expired cache entries to prevent memory bloat
    */
@@ -153,8 +153,8 @@ public class OpenStreetMapGeocodingService {
     searchCache.entrySet().removeIf(entry -> entry.getValue().isExpired());
     int afterSize = searchCache.size();
     if (beforeSize != afterSize) {
-      log.debug("Cache cleanup: removed {} expired entries ({}->{})", 
-                beforeSize - afterSize, beforeSize, afterSize);
+      log.debug("Cache cleanup: removed {} expired entries ({}->{})",
+          beforeSize - afterSize, beforeSize, afterSize);
     }
   }
 
@@ -248,11 +248,11 @@ public class OpenStreetMapGeocodingService {
       }
 
       String name = extractPlaceName(result, displayName);
-      
+
       // Extract coordinates from OSM response
       Double latitude = null;
       Double longitude = null;
-      
+
       if (result.has("lat") && result.has("lon")) {
         try {
           latitude = result.get("lat").asDouble();
@@ -261,8 +261,9 @@ public class OpenStreetMapGeocodingService {
           log.debug("Could not parse coordinates from OSM result for '{}'", name);
         }
       }
-      
-      // Create LocationDTO with coordinates if available (ID is null since not from DB)
+
+      // Create LocationDTO with coordinates if available (ID is null since not from
+      // DB)
       if (latitude != null && longitude != null) {
         locations.add(LocationDTO.withCoordinates((Long) null, name, latitude, longitude));
       } else {

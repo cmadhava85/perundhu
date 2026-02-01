@@ -1,9 +1,9 @@
 package com.perundhu.domain.port;
 
-import com.perundhu.domain.model.Translation;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.perundhu.domain.model.Translation;
 
 /**
  * Domain port for Translation repository operations
@@ -67,11 +67,13 @@ public interface TranslationRepository {
     List<Translation> findByEntityTypeAndLanguage(String entityType, String languageCode);
 
     /**
-     * Find translations by entity type, language, and translated value pattern (for efficient autocomplete)
-     * This method performs indexed database query instead of loading all translations
+     * Find translations by entity type, language, and translated value pattern (for
+     * efficient autocomplete)
+     * This method performs indexed database query instead of loading all
+     * translations
      * 
-     * @param entityType The entity type (e.g., "LOCATION")
-     * @param languageCode The language code (e.g., "ta")
+     * @param entityType             The entity type (e.g., "LOCATION")
+     * @param languageCode           The language code (e.g., "ta")
      * @param translatedValuePattern The pattern to search for in translated values
      * @return List of matching translations
      */

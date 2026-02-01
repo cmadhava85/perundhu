@@ -79,12 +79,13 @@ public interface TranslationJpaRepository extends JpaRepository<TranslationJpaEn
                         @Param("entityId") Long entityId);
 
         /**
-         * Efficient search for translations by entity type, language, and translated value pattern
+         * Efficient search for translations by entity type, language, and translated
+         * value pattern
          * Uses indexed query for fast autocomplete instead of loading all translations
          */
         @Query("SELECT t FROM TranslationJpaEntity t WHERE t.entityType = :entityType " +
-               "AND t.languageCode = :languageCode " +
-               "AND LOWER(t.translatedValue) LIKE LOWER(CONCAT('%', :pattern, '%'))")
+                        "AND t.languageCode = :languageCode " +
+                        "AND LOWER(t.translatedValue) LIKE LOWER(CONCAT('%', :pattern, '%'))")
         List<TranslationJpaEntity> findByEntityTypeAndLanguageCodeAndTranslatedValueContaining(
                         @Param("entityType") String entityType,
                         @Param("languageCode") String languageCode,

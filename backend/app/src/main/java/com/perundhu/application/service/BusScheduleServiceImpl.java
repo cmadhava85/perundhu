@@ -512,7 +512,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
         }
 
-        // ENHANCED: Search by aliases (e.g., "Broadway", "BROADWAY", "Broadway Bus Terminus")
+        // ENHANCED: Search by aliases (e.g., "Broadway", "BROADWAY", "Broadway Bus
+        // Terminus")
         // This enables flexible location search with all name variations
         List<Location> aliasResults = locationRepository.findByAliasContaining(trimmedQuery);
         for (Location loc : aliasResults) {
@@ -522,7 +523,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
         }
 
-        // Also search for bus stands (e.g., "Madurai - Periyar", "Coimbatore - Gandhipuram")
+        // Also search for bus stands (e.g., "Madurai - Periyar", "Coimbatore -
+        // Gandhipuram")
         List<BusStand> busStandResults = busStandRepository.findByNameContaining(trimmedQuery);
         for (BusStand busStand : busStandResults) {
             // Convert BusStand to Location for the autocomplete result
@@ -545,7 +547,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
             }
         }
 
-        log.debug("Location search for '{}' returned {} results (including aliases and bus stands)", 
+        log.debug("Location search for '{}' returned {} results (including aliases and bus stands)",
                 trimmedQuery, results.size());
         return results;
     }
@@ -553,38 +555,36 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     @Override
     public List<LocationGroupDTO> searchLocationsGrouped(String query, String languageCode) {
         log.info("Grouped location search for '{}' (language: {})", query, languageCode);
-        
+
         if (query == null || query.trim().isEmpty()) {
             return new ArrayList<>();
         }
-        
+
         // Get all matching locations using existing search
         List<Location> allLocations = searchLocationsByName(query.trim());
-        
+
         // Group locations by base name (city name)
         Map<String, LocationGroupDTO> groupedMap = new java.util.LinkedHashMap<>();
-        
+
         for (Location location : allLocations) {
             String baseName = extractBaseLocationName(location.name());
-            
+
             // Create or get existing group
             LocationGroupDTO group = groupedMap.computeIfAbsent(
-                baseName, 
-                key -> LocationGroupDTO.of(key, null)
-            );
-            
+                    baseName,
+                    key -> LocationGroupDTO.of(key, null));
+
             // Convert location to DTO with translation
             LocationDTO locationDTO = locationToDTO(location, languageCode);
-            
+
             // Categorize location
             if (isGenericCityLocation(location.name())) {
                 // This is a generic city option (no " - " in name)
                 groupedMap.put(baseName, new LocationGroupDTO(
-                    baseName,
-                    locationDTO,
-                    group.busStands(),
-                    group.neighborhoods()
-                ));
+                        baseName,
+                        locationDTO,
+                        group.busStands(),
+                        group.neighborhoods()));
             } else if (isBusStandLocation(location.name())) {
                 // This is a specific bus stand
                 group.addBusStand(locationDTO);
@@ -593,13 +593,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 group.addNeighborhood(locationDTO);
             }
         }
-        
+
         // Convert to list and sort
         List<LocationGroupDTO> result = groupedMap.values().stream()
-            .filter(group -> !group.isEmpty())
-            .sorted(Comparator.comparing(LocationGroupDTO::cityName))
-            .toList();
-        
+                .filter(group -> !group.isEmpty())
+                .sorted(Comparator.comparing(LocationGroupDTO::cityName))
+                .toList();
+
         log.debug("Grouped search for '{}' resulted in {} groups", query, result.size());
         return result;
     }
@@ -615,22 +615,22 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         if (fullName == null || fullName.isEmpty()) {
             return fullName;
         }
-        
+
         // If contains " - " pattern, take the first part
         if (fullName.contains(" - ")) {
             return fullName.split(" - ")[0].trim();
         }
-        
+
         // For "Chennai Bus Stop" style, extract the city name
         String lower = fullName.toLowerCase();
-        if (lower.contains(" bus stop") || lower.contains(" bus stand") || 
-            lower.contains(" bus station") || lower.contains(" bus terminus")) {
-            return fullName.substring(0, fullName.lastIndexOf(" Bus") 
-                    + (lower.contains(" bus stop") ? 9 : 
-                       lower.contains(" bus stand") ? 10 : 
-                       lower.contains(" bus station") ? 12 : 13)).trim();
+        if (lower.contains(" bus stop") || lower.contains(" bus stand") ||
+                lower.contains(" bus station") || lower.contains(" bus terminus")) {
+            return fullName.substring(0, fullName.lastIndexOf(" Bus")
+                    + (lower.contains(" bus stop") ? 9
+                            : lower.contains(" bus stand") ? 10 : lower.contains(" bus station") ? 12 : 13))
+                    .trim();
         }
-        
+
         return fullName;
     }
 
@@ -639,11 +639,11 @@ public class BusScheduleServiceImpl implements BusScheduleService {
      */
     private boolean isGenericCityLocation(String name) {
         String lower = name.toLowerCase();
-        return !(lower.contains(" - ") || 
-                 lower.contains("bus stop") || 
-                 lower.contains("bus stand") || 
-                 lower.contains("bus station") || 
-                 lower.contains("bus terminus"));
+        return !(lower.contains(" - ") ||
+                lower.contains("bus stop") ||
+                lower.contains("bus stand") ||
+                lower.contains("bus station") ||
+                lower.contains("bus terminus"));
     }
 
     /**
@@ -651,10 +651,10 @@ public class BusScheduleServiceImpl implements BusScheduleService {
      */
     private boolean isBusStandLocation(String name) {
         String lower = name.toLowerCase();
-        return lower.contains(" - ") || 
-               lower.contains("bus station") || 
-               lower.contains("bus stand") || 
-               lower.contains("bus stop");
+        return lower.contains(" - ") ||
+                lower.contains("bus station") ||
+                lower.contains("bus stand") ||
+                lower.contains("bus stop");
     }
 
     /**
@@ -663,7 +663,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
     private LocationDTO locationToDTO(Location location, String languageCode) {
         String englishName = location.name();
         String translatedName = englishName;
-        
+
         // Try to get translation for the requested language
         if (languageCode != null && !"en".equals(languageCode)) {
             String translated = getLocationTranslation(location.id().value(), languageCode);
@@ -671,14 +671,13 @@ public class BusScheduleServiceImpl implements BusScheduleService {
                 translatedName = translated;
             }
         }
-        
+
         return LocationDTO.withTranslation(
-            location.id().value(),
-            englishName,
-            translatedName,
-            location.latitude(),
-            location.longitude()
-        );
+                location.id().value(),
+                englishName,
+                translatedName,
+                location.latitude(),
+                location.longitude());
     }
 
     @Override
@@ -900,7 +899,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
         // arrivalTime, rating, features,
         // fromLocationId, fromLocationName, fromLocationNameTranslated, toLocationId,
         // toLocationName, toLocationNameTranslated, capacity, active,
-        // isMultiLegJourney, legNumber, totalLegs, journeyId, intermediateLocationId, intermediateLocationName
+        // isMultiLegJourney, legNumber, totalLegs, journeyId, intermediateLocationId,
+        // intermediateLocationName
         return new BusDTO(
                 dto.id(),
                 dto.number(),
@@ -1011,7 +1011,8 @@ public class BusScheduleServiceImpl implements BusScheduleService {
      */
     private List<BusDTO> searchRoutesAsDTO(String fromLocation, String toLocation) {
         // Use alias-aware search to handle all location name variations
-        // This will resolve: "Broadway", "BROADWAY", "Broadway Bus Terminus", etc. → same location
+        // This will resolve: "Broadway", "BROADWAY", "Broadway Bus Terminus", etc. →
+        // same location
         List<Long> fromLocationIds = locationRepository.findLocationIdsByNameOrAlias(fromLocation);
         List<Long> toLocationIds = locationRepository.findLocationIdsByNameOrAlias(toLocation);
 
@@ -1025,7 +1026,7 @@ public class BusScheduleServiceImpl implements BusScheduleService {
 
         // Search across all matched location IDs (includes aliases + hierarchy)
         List<Bus> buses = busRepository.findBusesPassingThroughAnyLocations(fromLocationIds, toLocationIds);
-        
+
         return buses.stream()
                 .map(BusDTO::fromDomain)
                 .toList();
