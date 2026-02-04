@@ -393,8 +393,18 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
               };
 
               // Determine source and destination
-              const explicitFrom = getLocationDisplayName(fromLocation) || bus.from || '';
-              const explicitTo = getLocationDisplayName(toLocation) || bus.to || '';
+              const explicitFrom =
+                getLocationDisplayName(fromLocation) ||
+                bus.from ||
+                bus.fromLocationName ||
+                bus.fromLocationNameTranslated ||
+                '';
+              const explicitTo =
+                getLocationDisplayName(toLocation) ||
+                bus.to ||
+                bus.toLocationName ||
+                bus.toLocationNameTranslated ||
+                '';
               const firstStop = stops && stops.length > 0 ? stops[0] : undefined;
               const lastStop = stops && stops.length > 0 ? stops[stops.length - 1] : undefined;
               const fallbackFrom = getStopDisplayName(firstStop);
@@ -412,7 +422,7 @@ const BusCardModern: React.FC<BusCardModernProps> = memo(({
               if (destinationLocation) shareLines.push(`🎯 To: ${destinationLocation}`);
               
               shareLines.push(
-                `🚍 Bus: ${bus.name || bus.number || 'Bus'}`,
+                `🚍 Bus: ${bus.busName || bus.busNumber || bus.name || bus.number || 'Bus'}`,
                 `⏰ Departure: ${bus.departureTime || 'Check'}`,
                 `⏱️ Arrival: ${bus.arrivalTime || 'Check'}`,
               );

@@ -26,8 +26,41 @@ export function useBusSearchEnhanced() {
   // Flatten all pages of results for infinite query
   const allBuses = React.useMemo(() => {
     if (!busSearchQuery.data?.pages) return [];
-    return busSearchQuery.data.pages.flatMap((page: { buses?: Bus[] }) => page.buses || []);
-  }, [busSearchQuery.data]);
+    const pickName = (...values: Array<string | undefined | null>) =>
+      values.find(value => value && value.trim().length > 0) || '';
+
+    const rawBuses = busSearchQuery.data.pages.flatMap((page: { buses?: Bus[] }) => page.buses || []);
+    return rawBuses.map((bus: Bus) => {
+      const fromName = pickName(
+        bus.from,
+        bus.fromLocationNameTranslated,
+        bus.fromLocationName,
+        bus.fromLocation?.translatedName,
+        bus.fromLocation?.name,
+        fromLocation?.translatedName,
+        fromLocation?.name
+      );
+      const toName = pickName(
+        bus.to,
+        bus.toLocationNameTranslated,
+        bus.toLocationName,
+        bus.toLocation?.translatedName,
+        bus.toLocation?.name,
+        toLocation?.translatedName,
+        toLocation?.name
+      );
+
+      return {
+        ...bus,
+        from: fromName,
+        to: toName,
+        busName: bus.busName || bus.name || '',
+        busNumber: bus.busNumber || bus.number || '',
+        fromLocation: bus.fromLocation || fromLocation || undefined,
+        toLocation: bus.toLocation || toLocation || undefined,
+      };
+    });
+  }, [busSearchQuery.data, fromLocation, toLocation]);
 
   // Get total count from first page
   const totalCount = busSearchQuery.data?.pages?.[0]?.totalCount ?? 0;

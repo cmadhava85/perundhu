@@ -61,6 +61,10 @@ export interface Bus {
   toLocationId?: number;
   fromLocation?: Location;
   toLocation?: Location;
+  fromLocationName?: string;
+  toLocationName?: string;
+  fromLocationNameTranslated?: string;
+  toLocationNameTranslated?: string;
   // Adding missing properties referenced in other components
   routeName?: string;
   estimatedArrival?: string;
