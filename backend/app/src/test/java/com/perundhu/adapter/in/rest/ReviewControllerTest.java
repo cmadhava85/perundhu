@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,6 +29,7 @@ import com.perundhu.domain.model.ReviewId;
 
 @SpringBootTest(properties = { "spring.flyway.enabled=false" })
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 @Disabled("ReviewControllerTest has circular dependency issues with Flyway and EntityManagerFactory - needs migration config fixes")
 @DisplayName("ReviewController Integration Tests")
 class ReviewControllerTest {
