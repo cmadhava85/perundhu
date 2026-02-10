@@ -75,7 +75,7 @@ export const VoiceContributionRecorder: React.FC<VoiceContributionRecorderProps>
   const [recordingTime, setRecordingTime] = useState(0);
   const [audioURL, setAudioURL] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string>('');
+  const [_error, _setError] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<'en-IN' | 'ta-IN' | 'auto'>(language);
   const [transcribedText, setTranscribedText] = useState<string>('');
   const [interimTranscript, setInterimTranscript] = useState<string>('');

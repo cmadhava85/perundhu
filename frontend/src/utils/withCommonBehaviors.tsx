@@ -48,7 +48,8 @@ export function withCommonBehaviors<P extends object>(
         };
       }
       return () => {}; // Return empty cleanup when not tracking
-    }, []);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [componentName, withPerformanceTracking]);
     
     // Mark component as rendered after first render
     useEffect(() => {
@@ -91,7 +92,7 @@ export function useComponentPerformance(componentName: string, dependencies: unk
     return () => {
       performanceMonitor.endMark(markName, 'component_render');
     };
-  }, []); // Empty array ensures this only runs on mount and unmount
+  }, [componentName]); // Track mount/unmount only
   
   // Track re-renders based on dependencies
   useEffect(() => {
@@ -102,7 +103,8 @@ export function useComponentPerformance(componentName: string, dependencies: unk
         'component_rerender'
       );
     }
-  }, dependencies);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [componentName, ...dependencies]); // Spread dependencies into array literal
 }
 
 export default withCommonBehaviors;

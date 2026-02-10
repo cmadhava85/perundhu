@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Structured Logger - JSON-formatted logging for production debugging
  * Outputs logs in structured JSON format suitable for:

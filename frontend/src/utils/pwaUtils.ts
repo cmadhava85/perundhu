@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Service Worker Registration for PWA support
  * Enables offline functionality and app installation on mobile devices

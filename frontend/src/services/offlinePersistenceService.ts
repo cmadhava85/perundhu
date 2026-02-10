@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Offline Persistence Service using IndexedDB
  * 

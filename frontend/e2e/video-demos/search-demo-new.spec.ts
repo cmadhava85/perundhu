@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
 /**
  * Video Demo 1: Search & Results
@@ -75,7 +75,7 @@ test.describe('Video Demo: Search & Results', () => {
     
     if (!isDisabled) {
       // Wait for navigation to results page
-      const [response] = await Promise.all([
+      const [_response] = await Promise.all([
         page.waitForURL('**/results**', { timeout: 10000 }).catch(() => null),
         searchButton.click()
       ]);
