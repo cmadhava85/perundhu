@@ -10,6 +10,7 @@ export interface LocationSuggestion {
   latitude?: number;
   longitude?: number;
   source?: string;
+  routeCount?: number;
 }
 
 export interface LocationDTO {

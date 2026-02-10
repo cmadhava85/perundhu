@@ -56,6 +56,7 @@ export interface LocationSuggestion {
   id: number;
   name: string;
   district: string | null;
+  routeCount?: number;
 }
 
 export interface BusFilters {
